@@ -46,6 +46,7 @@ class ProjectListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
@@ -122,12 +123,16 @@ class ProjectListItem extends StatelessWidget {
                                         ? '  📎'
                                         : ''),
                                 style: textStyle),
-                            Text(
-                              subtitle ?? filterMatch,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.subtitle2,
-                            ),
+                            Text(subtitle ?? filterMatch,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    .copyWith(
+                                      color: textColor
+                                          .withOpacity(kLighterOpacity),
+                                    )),
                           ],
                         ),
                       ),
@@ -185,11 +190,12 @@ class ProjectListItem extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      subtitle ?? filterMatch,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    Text(subtitle ?? filterMatch,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                              color: textColor.withOpacity(kLighterOpacity),
+                            )),
                     EntityStateLabel(project),
                   ],
                 ),

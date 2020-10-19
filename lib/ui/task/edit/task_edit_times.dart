@@ -28,6 +28,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
 
   void _showTaskTimeEditor(TaskTime taskTime, BuildContext context) {
     showDialog<ResponsivePadding>(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
@@ -50,8 +51,10 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final task = viewModel.task;
-    final taskTime =
-        task.taskTimes.contains(viewModel.taskTime) ? viewModel.taskTime : null;
+    final taskTime = viewModel.taskTimeIndex != null &&
+            task.taskTimes.length > viewModel.taskTimeIndex
+        ? task.taskTimes[viewModel.taskTimeIndex]
+        : null;
 
     if (taskTime != null && taskTime != selectedTaskTime) {
       selectedTaskTime = taskTime;

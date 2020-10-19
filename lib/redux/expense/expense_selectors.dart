@@ -191,6 +191,29 @@ List<String> clientExpenseList(
   return list;
 }
 
+var memoizedExpenseStatsForProject = memo2((
+  String projectId,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+) =>
+    expenseStatsForProject(projectId, expenseMap));
+
+EntityStats expenseStatsForProject(
+    String projectId, BuiltMap<String, ExpenseEntity> expenseMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.projectId == projectId) {
+      if (expense.isActive) {
+        countActive++;
+      } else if (expense.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasExpenseChanges(
         ExpenseEntity expense, BuiltMap<String, ExpenseEntity> expenseMap) =>
     expense.isNew ? expense.isChanged : expense != expenseMap[expense.id];

@@ -85,12 +85,7 @@ class _AccountManagementState extends State<AccountManagement>
             children: <Widget>[
               FormCard(
                   // TODO change to kModules.keys
-                  children: [
-                kModuleInvoices,
-                kModuleRecurringInvoices,
-                kModuleQuotes,
-                kModuleCredits,
-              ].map((module) {
+                  children: kModules.keys.map((module) {
                 return CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
                   title: Text(localization.lookup(kModules[module])),

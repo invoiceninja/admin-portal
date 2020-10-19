@@ -42,6 +42,7 @@ class VendorListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
     final documents = vendor.documents ?? <DocumentEntity>[];
 
     return DismissibleEntity(
@@ -122,12 +123,16 @@ class VendorListItem extends StatelessWidget {
                                     (documents.isNotEmpty ? '  📎' : ''),
                                 style: textStyle),
                             if (filterMatch != null)
-                              Text(
-                                filterMatch,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.subtitle2,
-                              ),
+                              Text(filterMatch,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      .copyWith(
+                                        color: textColor
+                                            .withOpacity(kLighterOpacity),
+                                      )),
                           ],
                         ),
                       ),
@@ -170,8 +175,7 @@ class VendorListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          vendor.name +
-                              (documents.isNotEmpty ? '  📎' : ''),
+                          vendor.name + (documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
@@ -190,11 +194,16 @@ class VendorListItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           filterMatch != null
-                              ? Text(
-                                  filterMatch,
+                              ? Text(filterMatch,
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
-                                )
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2
+                                      .copyWith(
+                                        color: textColor
+                                            .withOpacity(kLighterOpacity),
+                                      ))
                               : SizedBox(),
                           EntityStateLabel(vendor),
                         ],

@@ -1455,6 +1455,14 @@ abstract class SettingsEntity
   int get paymentNumberCounter;
 
   @nullable
+  @BuiltValueField(wireName: 'project_number_pattern')
+  String get projectNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'project_number_counter')
+  int get projectNumberCounter;
+
+  @nullable
   @BuiltValueField(wireName: 'invoice_number_pattern')
   String get invoiceNumberPattern;
 

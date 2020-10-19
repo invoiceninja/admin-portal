@@ -30,9 +30,9 @@ class TaskPresenter extends EntityPresenter {
 
     switch (field) {
       case TaskFields.client:
-        return Text(state.clientState.map[task.clientId] ?? '');
+        return Text(state.clientState.map[task.clientId]?.displayName ?? '');
       case TaskFields.project:
-        return Text(state.productState.map[task.projectId] ?? '');
+        return Text(state.projectState.map[task.projectId]?.name ?? '');
       case TaskFields.description:
         return Text(task.description);
       case TaskFields.duration:

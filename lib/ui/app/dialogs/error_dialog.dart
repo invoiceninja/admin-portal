@@ -20,8 +20,16 @@ class ErrorDialog extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
 
     return AlertDialog(
-      title: Text(localization.anErrorOccurred),
-      content: error != null ? Text(error.toString()) : SizedBox(),
+      title: Text(localization.error),
+      content: error != null
+          ? ConstrainedBox(
+              child: Text(error.toString()),
+              constraints: BoxConstraints(
+                maxWidth: 600,
+                maxHeight: 400,
+              ),
+            )
+          : SizedBox(),
       actions: [
         if (clearErrorOnDismiss && !Config.DEMO_MODE)
           FlatButton(

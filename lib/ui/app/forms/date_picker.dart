@@ -61,6 +61,7 @@ class _DatePickerState extends State<DatePicker> {
       initialDate: initialDate,
       firstDate: firstDate,
       lastDate: DateTime(2101),
+      //initialEntryMode: DatePickerEntryMode.input,
     );
 
     if (selectedDate != null) {

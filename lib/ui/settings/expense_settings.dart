@@ -52,9 +52,9 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
             children: <Widget>[
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
-                title: Text(localization.markInvoiceable),
+                title: Text(localization.shouldBeInvoiced),
                 value: company.markExpensesInvoiceable ?? false,
-                subtitle: Text(localization.markInvoiceableHelp),
+                subtitle: Text(localization.shouldBeInvoicedHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..markExpensesInvoiceable = value)),
               ),

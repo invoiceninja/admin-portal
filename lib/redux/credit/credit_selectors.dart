@@ -98,6 +98,9 @@ List<String> filteredCreditsSelector(
     } else if (filterEntityType == EntityType.user &&
         credit.assignedUserId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.project &&
+        credit.projectId != filterEntityId) {
+      return false;
     }
 
     if (!credit.matchesStates(creditListState.stateFilters)) {
@@ -167,6 +170,29 @@ EntityStats creditStatsForUser(
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
     if (credit.assignedUserId == userId) {
+      if (credit.isActive) {
+        countActive++;
+      } else if (credit.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedCreditStatsForProject = memo2((
+  String projectId,
+  BuiltMap<String, InvoiceEntity> creditMap,
+) =>
+    creditStatsForProject(projectId, creditMap));
+
+EntityStats creditStatsForProject(
+    String projectId, BuiltMap<String, InvoiceEntity> creditMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  creditMap.forEach((creditId, credit) {
+    if (credit.projectId == projectId) {
       if (credit.isActive) {
         countActive++;
       } else if (credit.isArchived) {

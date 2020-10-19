@@ -34,7 +34,7 @@ class TaskEditDetailsVM {
   TaskEditDetailsVM({
     @required this.state,
     @required this.task,
-    @required this.taskTime,
+    @required this.taskTimeIndex,
     @required this.company,
     @required this.onChanged,
     @required this.onAddClientPressed,
@@ -53,7 +53,7 @@ class TaskEditDetailsVM {
       isSaving: state.isSaving,
       origTask: state.taskState.map[task.id],
       task: task,
-      taskTime: state.taskUIState.editingTime,
+      taskTimeIndex: state.taskUIState.editingTimeIndex,
       state: state,
       company: state.company,
       onChanged: (TaskEntity task) {
@@ -92,7 +92,7 @@ class TaskEditDetailsVM {
   }
 
   final TaskEntity task;
-  final TaskTime taskTime;
+  final int taskTimeIndex;
   final CompanyEntity company;
   final Function(TaskEntity) onChanged;
   final bool isLoading;

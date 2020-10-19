@@ -62,7 +62,7 @@ class TaskFields {
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
-
+  static const String documents = 'documents';
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
@@ -173,6 +173,7 @@ abstract class TaskEntity extends Object
       vendorId: '',
       taskStatusId: '',
       taskStatusSortOrder: 0,
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -189,8 +190,7 @@ abstract class TaskEntity extends Object
     ..invoiceId = null
     ..isRunning = false
     ..duration = 0
-    ..timeLog = '[]'
-    ..description = '');
+    ..timeLog = '[]');
 
   TaskEntity toggle() => isRunning ? stop() : start();
 
@@ -398,6 +398,8 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
+  BuiltList<DocumentEntity> get documents;
+
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
@@ -512,6 +514,9 @@ abstract class TaskEntity extends Object
         break;
       case TaskFields.updatedAt:
         response = taskA.updatedAt.compareTo(taskB.updatedAt);
+        break;
+      case TaskFields.documents:
+        response = taskA.documents.length.compareTo(taskB.documents.length);
         break;
       default:
         print('## ERROR: sort by task.$sortField is not implemented');

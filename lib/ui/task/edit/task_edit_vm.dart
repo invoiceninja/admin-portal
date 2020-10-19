@@ -39,7 +39,7 @@ class TaskEditVM {
     @required this.state,
     @required this.task,
     @required this.onFabPressed,
-    @required this.taskTime,
+    @required this.taskTimeIndex,
     @required this.company,
     @required this.isSaving,
     @required this.origTask,
@@ -57,7 +57,7 @@ class TaskEditVM {
       isSaving: state.isSaving,
       origTask: state.taskState.map[task.id],
       task: task,
-      taskTime: state.taskUIState.editingTime,
+      taskTimeIndex: state.taskUIState.editingTimeIndex,
       state: state,
       company: state.company,
       onCancelPressed: (BuildContext context) {
@@ -108,7 +108,7 @@ class TaskEditVM {
   }
 
   final TaskEntity task;
-  final TaskTime taskTime;
+  final int taskTimeIndex;
   final CompanyEntity company;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

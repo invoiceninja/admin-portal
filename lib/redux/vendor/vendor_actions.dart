@@ -360,3 +360,27 @@ class RemoveFromVendorMultiselect {
 }
 
 class ClearVendorMultiselect {}
+
+class SaveVendorDocumentRequest implements StartSaving {
+  SaveVendorDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.vendor,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final VendorEntity vendor;
+}
+
+class SaveVendorDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveVendorDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveVendorDocumentFailure implements StopSaving {
+  SaveVendorDocumentFailure(this.error);
+
+  final Object error;
+}

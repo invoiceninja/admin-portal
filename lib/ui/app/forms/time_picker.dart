@@ -51,7 +51,10 @@ class _TimePickerState extends State<TimePicker> {
     final minute = selectedDate?.minute ?? now.minute;
 
     final TimeOfDay selectedTime = await showTimePicker(
-        context: context, initialTime: TimeOfDay(hour: hour, minute: minute));
+      context: context,
+      initialTime: TimeOfDay(hour: hour, minute: minute),
+      //initialEntryMode: TimePickerEntryMode.input,
+    );
 
     if (selectedTime != null) {
       var dateTime = convertTimeOfDayToDateTime(selectedTime, selectedDate);

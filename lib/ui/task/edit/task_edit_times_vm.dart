@@ -29,7 +29,7 @@ class TaskEditTimesVM {
   TaskEditTimesVM({
     @required this.company,
     @required this.task,
-    @required this.taskTime,
+    @required this.taskTimeIndex,
     @required this.onRemoveTaskTimePressed,
     @required this.onDoneTaskTimePressed,
   });
@@ -41,7 +41,7 @@ class TaskEditTimesVM {
     return TaskEditTimesVM(
       company: state.company,
       task: task,
-      taskTime: state.taskUIState.editingTime,
+      taskTimeIndex: state.taskUIState.editingTimeIndex,
       onRemoveTaskTimePressed: (index) => store.dispatch(DeleteTaskTime(index)),
       onDoneTaskTimePressed: (taskTime, index) {
         store.dispatch(UpdateTaskTime(taskTime: taskTime, index: index));
@@ -52,7 +52,7 @@ class TaskEditTimesVM {
 
   final CompanyEntity company;
   final TaskEntity task;
-  final TaskTime taskTime;
+  final int taskTimeIndex;
   final Function(int) onRemoveTaskTimePressed;
   final Function(TaskTime, int) onDoneTaskTimePressed;
 }

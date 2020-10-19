@@ -143,7 +143,6 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'transaction_reference')
   String get transactionReference;
 
-  @BuiltValueField(wireName: 'date')
   String get date;
 
   @BuiltValueField(wireName: 'type_id')

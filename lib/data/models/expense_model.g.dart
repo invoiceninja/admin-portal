@@ -204,12 +204,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.categoryId != null) {
-      result
-        ..add('expense_category_id')
-        ..add(serializers.serialize(object.categoryId,
-            specifiedType: const FullType(String)));
-    }
     if (object.clientId != null) {
       result
         ..add('client_id')
@@ -315,10 +309,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'expense_currency_id':
           result.expenseCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'expense_category_id':
-          result.categoryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'amount':

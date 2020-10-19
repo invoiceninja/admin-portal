@@ -4,18 +4,29 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedPaymentsByInvoice = memo3((String invoiceId,
-        BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltList<String> paymentList) =>
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltList<String> paymentList) =>
     paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList));
 
 List<PaymentEntity> paymentsByInvoiceSelector(String invoiceId,
     BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
-  return paymentList
-      .map((paymentId) => paymentMap[paymentId])
-      .where((payment) =>
-          payment.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
-          !payment.isDeleted)
-      .toList();
+  return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
+    return payment.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
+        !payment.isDeleted;
+  }).toList();
+}
+
+var memoizedPaymentsByCredit = memo3((String invoiceId,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltList<String> paymentList) =>
+    paymentsByCreditSelector(invoiceId, paymentMap, paymentList));
+
+List<PaymentEntity> paymentsByCreditSelector(String creditId,
+    BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
+  return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
+    return payment.paymentables.map((p) => p.creditId).contains(creditId) &&
+        !payment.isDeleted;
+  }).toList();
 }
 
 var memoizedDropdownPaymentList = memo5((

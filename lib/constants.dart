@@ -8,7 +8,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.18';
+const String kClientVersion = '5.0.19';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -101,6 +101,7 @@ const String kPlanEnterprise = 'enterprise';
 const String kPlanWhiteLabel = 'white_label';
 
 const double kGutterWidth = 16;
+const double kLighterOpacity = .6;
 
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
@@ -437,19 +438,19 @@ Color kColorRed = convertHexStringToColor('#8D3E3F');
 Color kColorGreen = convertHexStringToColor('#407535');
 
 const Map<int, String> kModules = {
+  kModuleInvoices: 'invoices',
+  kModuleRecurringInvoices: 'recurring_invoices',
   kModuleQuotes: 'quotes',
   kModuleCredits: 'credits',
   kModuleProjects: 'projects',
   kModuleTasks: 'tasks',
   kModuleVendors: 'vendors',
   kModuleExpenses: 'expenses',
-  kModuleProposals: 'proposals',
-  kModuleTickets: 'tickets',
-  kModuleRecurringInvoices: 'recurring_invoices',
-  kModuleRecurringTasks: 'recurring_tasks',
-  kModuleRecurringExpenses: 'recurring_expenses',
-  kModuleRecurringQuotes: 'recurring_quotes',
-  kModuleInvoices: 'invoices',
+  //kModuleProposals: 'proposals',
+  //kModuleTickets: 'tickets',
+  //kModuleRecurringTasks: 'recurring_tasks',
+  //kModuleRecurringExpenses: 'recurring_expenses',
+  //kModuleRecurringQuotes: 'recurring_quotes',
 };
 
 class InvoiceStatusColors {

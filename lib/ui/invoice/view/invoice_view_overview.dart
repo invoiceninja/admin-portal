@@ -38,14 +38,26 @@ class InvoiceOverview extends StatelessWidget {
     final company = viewModel.company;
 
     final state = StoreProvider.of<AppState>(context).state;
+    final creditMap = <PaymentableEntity, PaymentEntity>{};
+    final paymentMap = <PaymentableEntity, PaymentEntity>{};
     final payments = invoice.isInvoice
         ? memoizedPaymentsByInvoice(
             invoice.id, state.paymentState.map, state.paymentState.list)
-        : <PaymentEntity>[];
-    final credits = <InvoiceEntity>[];
+        : invoice.isCredit
+            ? memoizedPaymentsByCredit(
+                invoice.id, state.paymentState.map, state.paymentState.list)
+            : <PaymentEntity>[];
+
     payments.forEach((payment) {
+      payment.invoicePaymentables.forEach((paymentable) {
+        if (paymentable.invoiceId == invoice.id) {
+          paymentMap[paymentable] = payment;
+        }
+      });
       payment.creditPaymentables.forEach((paymentable) {
-        credits.add(state.creditState.get(paymentable.creditId));
+        if (paymentable.creditId == invoice.id) {
+          creditMap[paymentable] = payment;
+        }
       });
     });
 
@@ -219,16 +231,22 @@ class InvoiceOverview extends StatelessWidget {
       }
     }
 
-    if (payments.isNotEmpty) {
-      payments.forEach((payment) {
+    if (paymentMap.isNotEmpty) {
+      paymentMap.entries.forEach((entry) {
+        final payment = entry.value;
+        final paymentable = entry.key;
+        String amount =
+            formatNumber(paymentable.amount, context, clientId: client.id);
+        if (paymentable.amount != payment.amount) {
+          amount +=
+              '/' + formatNumber(payment.amount, context, clientId: client.id);
+        }
+
         widgets.add(
           EntityListTile(
             isFilter: isFilter,
             entity: payment,
-            subtitle:
-                formatNumber(payment.amount, context, clientId: client.id) +
-                    ' • ' +
-                    formatDate(payment.date, context),
+            subtitle: amount + ' • ' + formatDate(payment.date, context),
           ),
         );
       });
@@ -238,16 +256,22 @@ class InvoiceOverview extends StatelessWidget {
       ]);
     }
 
-    if (credits.isNotEmpty) {
-      credits.forEach((credit) {
+    if (creditMap.isNotEmpty) {
+      creditMap.entries.forEach((entry) {
+        final credit = entry.value;
+        final paymentable = entry.key;
+        String amount =
+            formatNumber(paymentable.amount, context, clientId: client.id);
+        if (paymentable.amount != credit.amount) {
+          amount +=
+              '/' + formatNumber(credit.amount, context, clientId: client.id);
+        }
+
         widgets.add(
           EntityListTile(
             isFilter: isFilter,
             entity: credit,
-            subtitle:
-                formatNumber(credit.amount, context, clientId: client.id) +
-                    ' • ' +
-                    formatDate(credit.date, context),
+            subtitle: amount + ' • ' + formatDate(credit.date, context),
           ),
         );
       });

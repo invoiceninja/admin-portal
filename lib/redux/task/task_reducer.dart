@@ -12,18 +12,27 @@ EntityUIState taskUIReducer(TaskUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(taskListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..editingTime.replace(editingTimeReducer(state.editingTime, action))
+    ..editingTimeIndex = editingTimeReducer(state.editingTimeIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-final editingTimeReducer = combineReducers<TaskTime>([
-  TypedReducer<TaskTime, EditTask>(editTaskTime),
-  TypedReducer<TaskTime, EditTaskTime>(editTaskTime),
+final editingTimeReducer = combineReducers<int>([
+  TypedReducer<int, EditTask>((index, action) => action.taskTimeIndex),
+  TypedReducer<int, EditTaskTime>((index, action) => action.taskTimeIndex),
+
+  /*
+  TypedReducer<int, EditInvoice>((index, action) => action.invoiceItemIndex),
+  TypedReducer<int, EditInvoiceItem>(
+          (index, action) => action.invoiceItemIndex),
+          
+   */
 ]);
 
+/*
 TaskTime editTaskTime(TaskTime taskTime, dynamic action) {
   return action.taskTime ?? TaskTime(startDate: DateTime(2000).toUtc());
 }
+ */
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewTask>((selectedId, action) => action.taskId),

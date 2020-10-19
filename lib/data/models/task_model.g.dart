@@ -179,6 +179,10 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -332,6 +336,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -733,6 +743,8 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String vendorId;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -767,6 +779,7 @@ class _$TaskEntity extends TaskEntity {
       this.taskStatusId,
       this.taskStatusSortOrder,
       this.vendorId,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -793,6 +806,9 @@ class _$TaskEntity extends TaskEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
+    }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'documents');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'createdAt');
@@ -833,6 +849,7 @@ class _$TaskEntity extends TaskEntity {
         taskStatusId == other.taskStatusId &&
         taskStatusSortOrder == other.taskStatusSortOrder &&
         vendorId == other.vendorId &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -864,18 +881,18 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, description.hashCode), duration.hashCode), invoiceId.hashCode),
-                                                                                clientId.hashCode),
-                                                                            projectId.hashCode),
-                                                                        timeLog.hashCode),
-                                                                    isRunning.hashCode),
-                                                                customValue1.hashCode),
-                                                            customValue2.hashCode),
-                                                        customValue3.hashCode),
-                                                    customValue4.hashCode),
-                                                taskStatusId.hashCode),
-                                            taskStatusSortOrder.hashCode),
-                                        vendorId.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
+                                                                                projectId.hashCode),
+                                                                            timeLog.hashCode),
+                                                                        isRunning.hashCode),
+                                                                    customValue1.hashCode),
+                                                                customValue2.hashCode),
+                                                            customValue3.hashCode),
+                                                        customValue4.hashCode),
+                                                    taskStatusId.hashCode),
+                                                taskStatusSortOrder.hashCode),
+                                            vendorId.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -903,6 +920,7 @@ class _$TaskEntity extends TaskEntity {
           ..add('taskStatusId', taskStatusId)
           ..add('taskStatusSortOrder', taskStatusSortOrder)
           ..add('vendorId', vendorId)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -975,6 +993,12 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1027,6 +1051,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _taskStatusId = _$v.taskStatusId;
       _taskStatusSortOrder = _$v.taskStatusSortOrder;
       _vendorId = _$v.vendorId;
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1055,30 +1080,44 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
 
   @override
   _$TaskEntity build() {
-    final _$result = _$v ??
-        new _$TaskEntity._(
-            description: description,
-            duration: duration,
-            invoiceId: invoiceId,
-            clientId: clientId,
-            projectId: projectId,
-            timeLog: timeLog,
-            isRunning: isRunning,
-            customValue1: customValue1,
-            customValue2: customValue2,
-            customValue3: customValue3,
-            customValue4: customValue4,
-            taskStatusId: taskStatusId,
-            taskStatusSortOrder: taskStatusSortOrder,
-            vendorId: vendorId,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+    _$TaskEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$TaskEntity._(
+              description: description,
+              duration: duration,
+              invoiceId: invoiceId,
+              clientId: clientId,
+              projectId: projectId,
+              timeLog: timeLog,
+              isRunning: isRunning,
+              customValue1: customValue1,
+              customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
+              taskStatusId: taskStatusId,
+              taskStatusSortOrder: taskStatusSortOrder,
+              vendorId: vendorId,
+              documents: documents.build(),
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'documents';
+        documents.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'TaskEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

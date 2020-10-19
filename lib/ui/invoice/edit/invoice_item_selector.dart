@@ -240,15 +240,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         itemBuilder: (BuildContext context, int index) {
           final String entityId = matches[index];
           final task = state.taskState.map[entityId];
-          final project = state.projectState.map[task.projectId];
-          final client = state.clientState.map[task.clientId];
           return TaskListItem(
-            userCompany: state.userCompany,
+            user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(task),
             isChecked: _selected.contains(task),
-            project: project,
             task: task,
-            client: client,
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(task);
