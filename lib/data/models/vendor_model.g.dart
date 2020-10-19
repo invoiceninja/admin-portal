@@ -177,6 +177,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.number != null) {
+      result
+        ..add('number')
+        ..add(serializers.serialize(object.number,
+            specifiedType: const FullType(String)));
+    }
     if (object.documents != null) {
       result
         ..add('documents')
@@ -260,6 +266,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'website':
           result.website = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'number':
+          result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'vat_number':
@@ -694,6 +704,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String website;
   @override
+  final String number;
+  @override
   final String vatNumber;
   @override
   final String idNumber;
@@ -742,6 +754,7 @@ class _$VendorEntity extends VendorEntity {
       this.phone,
       this.privateNotes,
       this.website,
+      this.number,
       this.vatNumber,
       this.idNumber,
       this.currencyId,
@@ -849,6 +862,7 @@ class _$VendorEntity extends VendorEntity {
         phone == other.phone &&
         privateNotes == other.privateNotes &&
         website == other.website &&
+        number == other.number &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
         currencyId == other.currencyId &&
@@ -889,9 +903,9 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode),
-                                                                                privateNotes.hashCode),
-                                                                            website.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode),
+                                                                                website.hashCode),
+                                                                            number.hashCode),
                                                                         vatNumber.hashCode),
                                                                     idNumber.hashCode),
                                                                 currencyId.hashCode),
@@ -924,6 +938,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('phone', phone)
           ..add('privateNotes', privateNotes)
           ..add('website', website)
+          ..add('number', number)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
           ..add('currencyId', currencyId)
@@ -988,6 +1003,10 @@ class VendorEntityBuilder
   String _website;
   String get website => _$this._website;
   set website(String website) => _$this._website = website;
+
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
 
   String _vatNumber;
   String get vatNumber => _$this._vatNumber;
@@ -1077,6 +1096,7 @@ class VendorEntityBuilder
       _phone = _$v.phone;
       _privateNotes = _$v.privateNotes;
       _website = _$v.website;
+      _number = _$v.number;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
       _currencyId = _$v.currencyId;
@@ -1128,6 +1148,7 @@ class VendorEntityBuilder
               phone: phone,
               privateNotes: privateNotes,
               website: website,
+              number: number,
               vatNumber: vatNumber,
               idNumber: idNumber,
               currencyId: currencyId,

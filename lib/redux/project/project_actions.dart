@@ -266,7 +266,6 @@ void handleProjectAction(
   final state = store.state;
   final project = projects.first as ProjectEntity;
   final projectIds = projects.map((project) => project.id).toList();
-  final client = state.clientState.get(project.clientId);
 
   switch (action) {
     case EntityAction.edit:

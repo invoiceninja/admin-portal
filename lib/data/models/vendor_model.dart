@@ -45,6 +45,7 @@ abstract class VendorItemResponse
 
 class VendorFields {
   static const String name = 'name';
+  static const String number = 'number';
   static const String balance = 'balance';
   static const String address1 = 'address1';
   static const String address2 = 'address2';
@@ -74,6 +75,7 @@ abstract class VendorEntity extends Object
   factory VendorEntity({String id, AppState state}) {
     return _$VendorEntity._(
       id: id ?? BaseEntity.nextId,
+      number: '',
       isChanged: false,
       name: '',
       address1: '',
@@ -146,6 +148,9 @@ abstract class VendorEntity extends Object
   String get privateNotes;
 
   String get website;
+
+  @nullable // TODO remove this
+  String get number;
 
   @BuiltValueField(wireName: 'vat_number')
   String get vatNumber;

@@ -44,6 +44,7 @@ abstract class ProjectItemResponse
 }
 
 class ProjectFields {
+  static const String number = 'number';
   static const String name = 'name';
   static const String clientId = 'client_id';
   static const String client = 'client';
@@ -68,6 +69,7 @@ abstract class ProjectEntity extends Object
   factory ProjectEntity({String id, AppState state}) {
     return _$ProjectEntity._(
       id: id ?? BaseEntity.nextId,
+      number: '',
       isChanged: false,
       name: '',
       clientId: '',
@@ -138,6 +140,9 @@ abstract class ProjectEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @nullable // TODO remove this
+  String get number;
 
   BuiltList<DocumentEntity> get documents;
 

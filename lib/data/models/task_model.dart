@@ -48,7 +48,7 @@ abstract class TaskItemResponse
 }
 
 class TaskFields {
-  static const String name = 'name';
+  static const String number = 'number';
   static const String description = 'description';
   static const String duration = 'duration';
   static const String invoiceId = 'invoice_id';
@@ -150,6 +150,7 @@ abstract class TaskEntity extends Object
     final isRunning = state?.prefState?.autoStartTasks ?? false;
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
+      number: '',
       isChanged: false,
       description: '',
       duration: 0,
@@ -211,6 +212,8 @@ abstract class TaskEntity extends Object
   }
 
   String get description;
+
+  String get number;
 
   int get duration;
 

@@ -166,6 +166,12 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.number != null) {
+      result
+        ..add('number')
+        ..add(serializers.serialize(object.number,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -247,6 +253,10 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'number':
+          result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'documents':
@@ -509,6 +519,8 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String customValue4;
   @override
+  final String number;
+  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
@@ -542,6 +554,7 @@ class _$ProjectEntity extends ProjectEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.number,
       this.documents,
       this.isChanged,
       this.createdAt,
@@ -624,6 +637,7 @@ class _$ProjectEntity extends ProjectEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        number == other.number &&
         documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -656,27 +670,17 @@ class _$ProjectEntity extends ProjectEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                $jc(
-                                                                                    0,
-                                                                                    name
-                                                                                        .hashCode),
-                                                                                clientId
-                                                                                    .hashCode),
-                                                                            taskRate
-                                                                                .hashCode),
-                                                                        dueDate
-                                                                            .hashCode),
-                                                                    privateNotes
-                                                                        .hashCode),
-                                                                publicNotes
-                                                                    .hashCode),
-                                                            budgetedHours
-                                                                .hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
+                                                                            $jc($jc($jc(0, name.hashCode), clientId.hashCode),
+                                                                                taskRate.hashCode),
+                                                                            dueDate.hashCode),
+                                                                        privateNotes.hashCode),
+                                                                    publicNotes.hashCode),
+                                                                budgetedHours.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            number.hashCode),
                                         documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -702,6 +706,7 @@ class _$ProjectEntity extends ProjectEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('number', number)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -764,6 +769,10 @@ class ProjectEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
+
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -819,6 +828,7 @@ class ProjectEntityBuilder
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
+      _number = _$v.number;
       _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -863,6 +873,7 @@ class ProjectEntityBuilder
               customValue2: customValue2,
               customValue3: customValue3,
               customValue4: customValue4,
+              number: number,
               documents: documents.build(),
               isChanged: isChanged,
               createdAt: createdAt,

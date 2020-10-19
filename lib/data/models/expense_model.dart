@@ -45,6 +45,7 @@ abstract class ExpenseItemResponse
 }
 
 class ExpenseFields {
+  static const String number = 'number';
   static const String privateNotes = 'private_notes';
   static const String publicNotes = 'public_notes';
   static const String shouldBeInvoiced = 'should_be_invoiced';
@@ -86,6 +87,7 @@ abstract class ExpenseEntity extends Object
     final company = state?.company;
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
+      number: '',
       isChanged: false,
       privateNotes: '',
       publicNotes: '',
@@ -248,6 +250,9 @@ abstract class ExpenseEntity extends Object
   String get customValue4;
 
   BuiltList<DocumentEntity> get documents;
+
+  @nullable // TODO remove this
+  String get number;
 
   @override
   List<EntityAction> getActions(
