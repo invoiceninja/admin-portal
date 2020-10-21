@@ -141,11 +141,12 @@ class _EntityListTileState extends State<EntityListTile> {
 
 class EntitiesListTile extends StatefulWidget {
   const EntitiesListTile({
+    @required this.isFilter,
+    @required this.entity,
     this.entityType,
     this.title,
     this.subtitle,
-    @required this.isFilter,
-    @required this.entity,
+    this.hideNew = false,
   });
 
   final BaseEntity entity;
@@ -153,6 +154,7 @@ class EntitiesListTile extends StatefulWidget {
   final String title;
   final String subtitle;
   final bool isFilter;
+  final bool hideNew;
 
   @override
   _EntitiesListTileState createState() => _EntitiesListTileState();
@@ -198,7 +200,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
               subtitle: Text((widget.subtitle ?? '').isEmpty
                   ? AppLocalization.of(context).none
                   : widget.subtitle),
-              leading: _isHovered
+              leading: _isHovered && !widget.hideNew
                   ? IconButton(
                       icon: Icon(Icons.add_circle_outline),
                       onPressed: _onLongPress,
@@ -207,7 +209,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
                       child: IconButton(
                         icon:
                             Icon(getEntityIcon(widget.entityType), size: 18.0),
-                        onPressed:() =>  _onTap(context),
+                        onPressed: () => _onTap(context),
                       ),
                     ),
               trailing: widget.isFilter

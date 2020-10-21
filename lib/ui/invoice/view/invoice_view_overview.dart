@@ -208,6 +208,7 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(EntitiesListTile(
         entity: invoice,
         isFilter: isFilter,
+        hideNew: true,
         entityType: EntityType.invoice,
         title: localization.invoices,
         subtitle: memoizedRecurringInvoiceStatsForInvoice(
