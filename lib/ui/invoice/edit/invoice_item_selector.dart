@@ -276,14 +276,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         itemBuilder: (BuildContext context, int index) {
           final String entityId = matches[index];
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
-          final vendor = state.vendorState.map[expense.vendorId];
-          final client = state.clientState.map[expense.clientId];
           return ExpenseListItem(
+            user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(expense),
             isChecked: _selected.contains(expense),
             expense: expense,
-            vendor: vendor,
-            client: client,
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(expense);
@@ -293,7 +290,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
             filter: _filter,
-            userCompany: state.userCompany,
           );
         },
       );

@@ -26,6 +26,14 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
 
   BuiltMap<String, VendorEntity> get map;
 
+  VendorEntity get(String vendorId) {
+    if (map.containsKey(vendorId)) {
+      return map[vendorId];
+    } else {
+      return VendorEntity(id: vendorId);
+    }
+  }
+
   BuiltList<String> get list;
 
   VendorState loadVendors(BuiltList<VendorEntity> clients) {
