@@ -57,10 +57,6 @@ class _ExpenseViewDetailsState extends State<ExpenseViewDetails> {
       };
 
       final listTiles = <Widget>[
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
         FieldGrid(fields),
         Divider(
           height: 1.0,
