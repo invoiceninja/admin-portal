@@ -145,6 +145,7 @@ class __OnlinePaymentFormState extends State<_OnlinePaymentForm> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final company = viewModel.state.settingsUIState.company;
     final settings = viewModel.settings;
 
     return AppForm(
@@ -167,6 +168,27 @@ class __OnlinePaymentFormState extends State<_OnlinePaymentForm> {
             ),
           ],
         ),
+        AppDropdownButton<String>(
+            labelText: localization.useAvailableCredits,
+            value: company.useCreditsPayment,
+            onChanged: (dynamic value) {
+              viewModel.onCompanyChanged(
+                  company.rebuild((b) => b..useCreditsPayment = value));
+            },
+            items: [
+              DropdownMenuItem(
+                child: Text(localization.always),
+                value: CompanyEntity.USE_CREDITS_ALWAYS,
+              ),
+              DropdownMenuItem(
+                child: Text(localization.showOption),
+                value: CompanyEntity.USE_CREDITS_OPTION,
+              ),
+              DropdownMenuItem(
+                child: Text(localization.off),
+                value: CompanyEntity.USE_CREDITS_OFF,
+              ),
+            ]),
         SizedBox(height: 16),
         BoolDropdownButton(
           label: localization.allowOverPayment,

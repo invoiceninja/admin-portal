@@ -146,6 +146,9 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'expense_currency_id',
       serializers.serialize(object.expenseCurrencyId,
           specifiedType: const FullType(String)),
+      'category_id',
+      serializers.serialize(object.categoryId,
+          specifiedType: const FullType(String)),
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -315,6 +318,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'expense_currency_id':
           result.expenseCurrencyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'category_id':
+          result.categoryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'amount':
@@ -957,6 +964,9 @@ class _$ExpenseEntity extends ExpenseEntity {
     }
     if (expenseCurrencyId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCurrencyId');
+    }
+    if (categoryId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'categoryId');
     }
     if (amount == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'amount');

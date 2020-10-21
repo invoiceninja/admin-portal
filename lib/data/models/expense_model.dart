@@ -178,9 +178,7 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'expense_currency_id')
   String get expenseCurrencyId;
 
-  @nullable
-  @BuiltValueField(
-      wireName: 'expense_category_id', serialize: false) // TODO remove this
+  @BuiltValueField(wireName: 'category_id')
   String get categoryId;
 
   double get amount;

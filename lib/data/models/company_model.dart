@@ -42,6 +42,7 @@ abstract class CompanyEntity extends Object
     implements Built<CompanyEntity, CompanyEntityBuilder> {
   factory CompanyEntity() {
     return _$CompanyEntity._(
+      entityType: EntityType.company,
       id: '',
       updatedAt: 0,
       archivedAt: 0,
@@ -79,6 +80,10 @@ abstract class CompanyEntity extends Object
       enableCustomSurchargeTaxes4: false,
       numberOfInvoiceTaxRates: 0,
       numberOfItemTaxRates: 0,
+      invoiceExpenseDocuments: false,
+      markExpensesInvoiceable: false,
+      markExpensesPaid: false,
+      useCreditsPayment: '',
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -108,6 +113,10 @@ abstract class CompanyEntity extends Object
   }
 
   CompanyEntity._();
+
+  static const USE_CREDITS_ALWAYS = 'always';
+  static const USE_CREDITS_OPTION = 'option';
+  static const USE_CREDITS_OFF = 'off';
 
   @override
   @memoized
@@ -253,17 +262,18 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'google_analytics_key')
   String get googleAnalyticsKey;
 
-  @nullable // TODO remove nullable
   @BuiltValueField(wireName: 'mark_expenses_invoiceable')
   bool get markExpensesInvoiceable;
 
-  @nullable // TODO remove nullable
   @BuiltValueField(wireName: 'mark_expenses_paid')
   bool get markExpensesPaid;
 
   @nullable // TODO remove nullable
   @BuiltValueField(wireName: 'invoice_expense_documents')
   bool get invoiceExpenseDocuments;
+
+  @BuiltValueField(wireName: 'use_credits_payment')
+  String get useCreditsPayment;
 
   SettingsEntity get settings;
 
