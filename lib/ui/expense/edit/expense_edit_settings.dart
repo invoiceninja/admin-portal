@@ -93,7 +93,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             toCurrencyId: currency.id);
 
     viewModel.onChanged(expense.rebuild((b) => b
-      ..invoiceCurrencyId = currency?.id ?? 1
+      ..invoiceCurrencyId = currency?.id ?? expense.invoiceCurrencyId
       ..exchangeRate = exchangeRate));
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       _exchangeRateController.text = formatNumber(exchangeRate, context,
