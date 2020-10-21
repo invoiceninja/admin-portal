@@ -298,6 +298,13 @@ void handleClientAction(
         section: isMobile(context) ? null : kSettingsCompanyDetails,
       ));
       break;
+    case EntityAction.newTask:
+      createEntity(
+          context: context,
+          entity:
+              TaskEntity(state: state).rebuild((b) => b..clientId = client.id),
+          filterEntity: client);
+      break;
     case EntityAction.newInvoice:
       createEntity(
           context: context,

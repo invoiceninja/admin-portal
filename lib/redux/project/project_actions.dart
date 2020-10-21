@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -265,7 +266,6 @@ void handleProjectAction(
   final state = store.state;
   final project = projects.first as ProjectEntity;
   final projectIds = projects.map((project) => project.id).toList();
-  final client = state.clientState.get(project.clientId);
 
   switch (action) {
     case EntityAction.edit:
@@ -279,12 +279,6 @@ void handleProjectAction(
             ..clientId = project.clientId));
       break;
     case EntityAction.newInvoice:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId));
-      /*
       final items =
           convertProjectToInvoiceItem(project: project, context: context);
       createEntity(
@@ -292,32 +286,7 @@ void handleProjectAction(
           entity: InvoiceEntity(state: state).rebuild((b) => b
             ..hasTasks = true
             ..clientId = project.clientId
-            ..lineItems.addAll(items)));            
-       */
-      break;
-    case EntityAction.newQuote:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId
-            ..entityType = EntityType.quote));
-      break;
-    case EntityAction.newCredit:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId
-            ..entityType = EntityType.credit));
-      break;
-    case EntityAction.newRecurringInvoice:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId
-            ..entityType = EntityType.recurringInvoice));
+            ..lineItems.addAll(items)));
       break;
     case EntityAction.newExpense:
       createEntity(

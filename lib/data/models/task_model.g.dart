@@ -164,6 +164,9 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'description',
       serializers.serialize(object.description,
           specifiedType: const FullType(String)),
+      'number',
+      serializers.serialize(object.number,
+          specifiedType: const FullType(String)),
       'duration',
       serializers.serialize(object.duration,
           specifiedType: const FullType(int)),
@@ -283,6 +286,10 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       switch (key) {
         case 'description':
           result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'number':
+          result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'duration':
@@ -717,6 +724,8 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String description;
   @override
+  final String number;
+  @override
   final int duration;
   @override
   final String invoiceId;
@@ -766,6 +775,7 @@ class _$TaskEntity extends TaskEntity {
 
   _$TaskEntity._(
       {this.description,
+      this.number,
       this.duration,
       this.invoiceId,
       this.clientId,
@@ -791,6 +801,9 @@ class _$TaskEntity extends TaskEntity {
       : super._() {
     if (description == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'description');
+    }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'number');
     }
     if (duration == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'duration');
@@ -836,6 +849,7 @@ class _$TaskEntity extends TaskEntity {
     if (identical(other, this)) return true;
     return other is TaskEntity &&
         description == other.description &&
+        number == other.number &&
         duration == other.duration &&
         invoiceId == other.invoiceId &&
         clientId == other.clientId &&
@@ -881,7 +895,7 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
                                                                                 projectId.hashCode),
                                                                             timeLog.hashCode),
                                                                         isRunning.hashCode),
@@ -907,6 +921,7 @@ class _$TaskEntity extends TaskEntity {
   String toString() {
     return (newBuiltValueToStringHelper('TaskEntity')
           ..add('description', description)
+          ..add('number', number)
           ..add('duration', duration)
           ..add('invoiceId', invoiceId)
           ..add('clientId', clientId)
@@ -939,6 +954,10 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String _description;
   String get description => _$this._description;
   set description(String description) => _$this._description = description;
+
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
 
   int _duration;
   int get duration => _$this._duration;
@@ -1038,6 +1057,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   TaskEntityBuilder get _$this {
     if (_$v != null) {
       _description = _$v.description;
+      _number = _$v.number;
       _duration = _$v.duration;
       _invoiceId = _$v.invoiceId;
       _clientId = _$v.clientId;
@@ -1085,6 +1105,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _$result = _$v ??
           new _$TaskEntity._(
               description: description,
+              number: number,
               duration: duration,
               invoiceId: invoiceId,
               clientId: clientId,

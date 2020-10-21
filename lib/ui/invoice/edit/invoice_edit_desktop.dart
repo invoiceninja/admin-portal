@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
@@ -472,9 +471,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ],
                   ),
                   SizedBox(
-                    height: ((client.isOld &&
-                                client.currencyId != company.currencyId) ||
-                            company.isModuleEnabled(EntityType.project))
+                    height: (client.isOld &&
+                            client.currencyId != company.currencyId)
                         ? 140
                         : 100,
                     child: TabBarView(
@@ -531,44 +529,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             ),
                             Row(
                               children: [
-                                Expanded(
-                                  child: company
-                                          .isModuleEnabled(EntityType.project)
-                                      ? ProjectPicker(
-                                          key: Key(
-                                              '__project_${invoice.clientId}__'),
-                                          projectId: invoice.projectId,
-                                          clientId: invoice.clientId,
-                                          onChanged: (selectedId) {
-                                            final project = state.projectState
-                                                .get(selectedId);
-                                            final updatedInvoice =
-                                                invoice.rebuild((b) =>
-                                                    b..projectId = project?.id);
-                                            viewModel.onChanged(updatedInvoice);
-                                            if ((invoice.clientId ?? '')
-                                                .isEmpty) {
-                                              final projectClient = state
-                                                  .clientState
-                                                  .get(project.clientId);
-                                              viewModel.onClientChanged(
-                                                  context,
-                                                  updatedInvoice,
-                                                  projectClient);
-                                            }
-                                          },
-                                          /*
-                                      onAddPressed: (completer) {
-                                        viewModel.onAddProjectPressed(
-                                            context, completer);
-                                      },
-                                       */
-                                        )
-                                      : SizedBox(),
-                                ),
-                                SizedBox(
-                                  width: 38,
-                                ),
                                 if (client.isOld &&
                                     client.currencyId != company.currencyId)
                                   Expanded(
@@ -595,6 +555,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   Expanded(
                                     child: SizedBox(),
                                   ),
+                                SizedBox(
+                                  width: 38,
+                                ),
+                                Expanded(
+                                  child: SizedBox(),
+                                ),
                               ],
                             )
                           ],

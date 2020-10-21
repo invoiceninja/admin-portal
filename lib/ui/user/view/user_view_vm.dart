@@ -50,7 +50,6 @@ class UserViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
-    @required this.onEntityPressed,
   });
 
   factory UserViewVM.fromStore(Store<AppState> store) {
@@ -78,16 +77,6 @@ class UserViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [user], action, autoPop: true),
-      onEntityPressed: (BuildContext context, EntityType entityType,
-          [longPress = false]) {
-        if (longPress && user.isActive) {
-          handleEntityAction(
-              context, user, EntityAction.newEntityType(entityType));
-        } else {
-          viewEntitiesByType(
-              context: context, entityType: entityType, filterEntity: user);
-        }
-      },
     );
   }
 
@@ -95,7 +84,6 @@ class UserViewVM {
   final UserEntity user;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;

@@ -215,6 +215,15 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'google_analytics_key',
       serializers.serialize(object.googleAnalyticsKey,
           specifiedType: const FullType(String)),
+      'mark_expenses_invoiceable',
+      serializers.serialize(object.markExpensesInvoiceable,
+          specifiedType: const FullType(bool)),
+      'mark_expenses_paid',
+      serializers.serialize(object.markExpensesPaid,
+          specifiedType: const FullType(bool)),
+      'use_credits_payment',
+      serializers.serialize(object.useCreditsPayment,
+          specifiedType: const FullType(String)),
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
@@ -235,18 +244,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('plan')
         ..add(serializers.serialize(object.plan,
             specifiedType: const FullType(String)));
-    }
-    if (object.markExpensesInvoiceable != null) {
-      result
-        ..add('mark_expenses_invoiceable')
-        ..add(serializers.serialize(object.markExpensesInvoiceable,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.markExpensesPaid != null) {
-      result
-        ..add('mark_expenses_paid')
-        ..add(serializers.serialize(object.markExpensesPaid,
-            specifiedType: const FullType(bool)));
     }
     if (object.invoiceExpenseDocuments != null) {
       result
@@ -575,6 +572,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'invoice_expense_documents':
           result.invoiceExpenseDocuments = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'use_credits_payment':
+          result.useCreditsPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
@@ -2966,6 +2967,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool invoiceExpenseDocuments;
   @override
+  final String useCreditsPayment;
+  @override
   final SettingsEntity settings;
   @override
   final int enabledModules;
@@ -3047,6 +3050,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.markExpensesInvoiceable,
       this.markExpensesPaid,
       this.invoiceExpenseDocuments,
+      this.useCreditsPayment,
       this.settings,
       this.enabledModules,
       this.isChanged,
@@ -3220,6 +3224,16 @@ class _$CompanyEntity extends CompanyEntity {
     if (googleAnalyticsKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'googleAnalyticsKey');
     }
+    if (markExpensesInvoiceable == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'markExpensesInvoiceable');
+    }
+    if (markExpensesPaid == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'markExpensesPaid');
+    }
+    if (useCreditsPayment == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'useCreditsPayment');
+    }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
     }
@@ -3303,6 +3317,7 @@ class _$CompanyEntity extends CompanyEntity {
         markExpensesInvoiceable == other.markExpensesInvoiceable &&
         markExpensesPaid == other.markExpensesPaid &&
         invoiceExpenseDocuments == other.invoiceExpenseDocuments &&
+        useCreditsPayment == other.useCreditsPayment &&
         settings == other.settings &&
         enabledModules == other.enabledModules &&
         isChanged == other.isChanged &&
@@ -3337,15 +3352,15 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode),
-                                                                                webhooks.hashCode),
-                                                                            paymentTerms.hashCode),
-                                                                        customFields.hashCode),
-                                                                    slackWebhookUrl.hashCode),
-                                                                googleAnalyticsKey.hashCode),
-                                                            markExpensesInvoiceable.hashCode),
-                                                        markExpensesPaid.hashCode),
-                                                    invoiceExpenseDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode),
+                                                                                paymentTerms.hashCode),
+                                                                            customFields.hashCode),
+                                                                        slackWebhookUrl.hashCode),
+                                                                    googleAnalyticsKey.hashCode),
+                                                                markExpensesInvoiceable.hashCode),
+                                                            markExpensesPaid.hashCode),
+                                                        invoiceExpenseDocuments.hashCode),
+                                                    useCreditsPayment.hashCode),
                                                 settings.hashCode),
                                             enabledModules.hashCode),
                                         isChanged.hashCode),
@@ -3417,6 +3432,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('markExpensesInvoiceable', markExpensesInvoiceable)
           ..add('markExpensesPaid', markExpensesPaid)
           ..add('invoiceExpenseDocuments', invoiceExpenseDocuments)
+          ..add('useCreditsPayment', useCreditsPayment)
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
           ..add('isChanged', isChanged)
@@ -3720,6 +3736,11 @@ class CompanyEntityBuilder
   set invoiceExpenseDocuments(bool invoiceExpenseDocuments) =>
       _$this._invoiceExpenseDocuments = invoiceExpenseDocuments;
 
+  String _useCreditsPayment;
+  String get useCreditsPayment => _$this._useCreditsPayment;
+  set useCreditsPayment(String useCreditsPayment) =>
+      _$this._useCreditsPayment = useCreditsPayment;
+
   SettingsEntityBuilder _settings;
   SettingsEntityBuilder get settings =>
       _$this._settings ??= new SettingsEntityBuilder();
@@ -3827,6 +3848,7 @@ class CompanyEntityBuilder
       _markExpensesInvoiceable = _$v.markExpensesInvoiceable;
       _markExpensesPaid = _$v.markExpensesPaid;
       _invoiceExpenseDocuments = _$v.invoiceExpenseDocuments;
+      _useCreditsPayment = _$v.useCreditsPayment;
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
       _isChanged = _$v.isChanged;
@@ -3917,6 +3939,7 @@ class CompanyEntityBuilder
               markExpensesInvoiceable: markExpensesInvoiceable,
               markExpensesPaid: markExpensesPaid,
               invoiceExpenseDocuments: invoiceExpenseDocuments,
+              useCreditsPayment: useCreditsPayment,
               settings: settings.build(),
               enabledModules: enabledModules,
               isChanged: isChanged,

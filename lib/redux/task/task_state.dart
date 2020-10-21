@@ -54,7 +54,7 @@ abstract class TaskUIState extends Object
     implements Built<TaskUIState, TaskUIStateBuilder> {
   factory TaskUIState() {
     return _$TaskUIState._(
-      listUIState: ListUIState(TaskFields.updatedAt, sortAscending: false),
+      listUIState: ListUIState(TaskFields.number, sortAscending: false),
       editing: TaskEntity(),
       selectedId: '',
     );

@@ -1279,6 +1279,9 @@ void handleEntitiesActions(
     case EntityType.credit:
       handleCreditAction(context, entities, action);
       break;
+    default:
+      print(
+          'Error: unhandled type ${entities.first.entityType} in handleEntitiesActions');
   }
 }
 

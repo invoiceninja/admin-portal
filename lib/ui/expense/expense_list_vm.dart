@@ -37,18 +37,14 @@ class ExpenseListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final expenseId = viewModel.expenseList[index];
               final expense = viewModel.expenseMap[expenseId];
-              final client = viewModel.state.clientState.map[expense.clientId];
-              final vendor = viewModel.state.vendorState.map[expense.vendorId];
               final state = viewModel.state;
               final listUIState = state.getListState(EntityType.expense);
               final isInMultiselect = listUIState.isInMultiselect();
 
               return ExpenseListItem(
-                userCompany: viewModel.state.userCompany,
+                user: state.user,
                 filter: viewModel.filter,
                 expense: expense,
-                client: client,
-                vendor: vendor,
                 isChecked:
                     isInMultiselect && listUIState.isSelected(expense.id),
               );

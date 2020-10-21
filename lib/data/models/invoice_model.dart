@@ -223,10 +223,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  @nullable // TODO remove nullable
-  @BuiltValueField(wireName: 'project_id')
-  String get projectId;
-
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 

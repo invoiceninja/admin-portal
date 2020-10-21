@@ -56,7 +56,7 @@ abstract class ProjectUIState extends Object
     implements Built<ProjectUIState, ProjectUIStateBuilder> {
   factory ProjectUIState() {
     return _$ProjectUIState._(
-      listUIState: ListUIState(ProjectFields.name),
+      listUIState: ListUIState(ProjectFields.number),
       editing: ProjectEntity(),
       selectedId: '',
     );

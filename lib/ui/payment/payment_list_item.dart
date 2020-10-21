@@ -135,7 +135,8 @@ class PaymentListItem extends StatelessWidget {
                                   .textTheme
                                   .subtitle2
                                   .copyWith(
-                                    color: textColor.withOpacity(kLighterOpacity),
+                                    color:
+                                        textColor.withOpacity(kLighterOpacity),
                                   ),
                             ),
                           ],

@@ -108,6 +108,7 @@ class _ClientPortalState extends State<ClientPortal>
       final company = widget.viewModel.company.rebuild((b) => b
         ..portalDomain = _portalDomainController.text.trim()
         ..subdomain = _subdomainController.text.trim());
+
       if (company != widget.viewModel.company) {
         widget.viewModel.onCompanyChanged(company);
       }

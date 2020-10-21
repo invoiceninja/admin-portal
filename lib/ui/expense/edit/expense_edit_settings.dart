@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 
 class ExpenseEditSettings extends StatefulWidget {
   const ExpenseEditSettings({
@@ -82,24 +83,22 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _setCurrency(CurrencyEntity currency) {
-    /*
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
 
     final exchangeRate = currency == null
-        ? 0.0
-        : getExchangeRate(context,
+        ? 1
+        : getExchangeRate(viewModel.state.staticState.currencyMap,
             fromCurrencyId: expense.expenseCurrencyId,
             toCurrencyId: currency.id);
 
     viewModel.onChanged(expense.rebuild((b) => b
-      ..invoiceCurrencyId = currency?.id ?? 0
+      ..invoiceCurrencyId = currency?.id ?? expense.invoiceCurrencyId
       ..exchangeRate = exchangeRate));
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       _exchangeRateController.text = formatNumber(exchangeRate, context,
           formatNumberType: FormatNumberType.inputAmount);
     });
-     */
   }
 
   @override
@@ -226,7 +225,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                       staticState.currencyMap[expense.invoiceCurrencyId]);
                 } else {
                   viewModel
-                      .onChanged(expense.rebuild((b) => b..exchangeRate = 0));
+                      .onChanged(expense.rebuild((b) => b..exchangeRate = 1));
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _exchangeRateController.text = '';
                   });
@@ -247,6 +246,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         entityId: expense.invoiceCurrencyId,
                         onSelected: (SelectableEntity currency) =>
                             _setCurrency(currency),
+                        allowClearing: true,
                       ),
                       DecoratedFormField(
                         key: ValueKey('__${expense.invoiceCurrencyId}__'),

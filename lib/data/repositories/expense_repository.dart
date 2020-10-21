@@ -84,7 +84,7 @@ class ExpenseRepository {
         data: fields, filePath: filePath, fileIndex: 'documents[]');
 
     final ExpenseItemResponse expenseResponse =
-    serializers.deserializeWith(ExpenseItemResponse.serializer, response);
+        serializers.deserializeWith(ExpenseItemResponse.serializer, response);
 
     return expenseResponse.data;
   }

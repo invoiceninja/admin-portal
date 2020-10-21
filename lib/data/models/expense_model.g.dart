@@ -146,6 +146,9 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'expense_currency_id',
       serializers.serialize(object.expenseCurrencyId,
           specifiedType: const FullType(String)),
+      'category_id',
+      serializers.serialize(object.categoryId,
+          specifiedType: const FullType(String)),
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -240,6 +243,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(object.customValue4,
             specifiedType: const FullType(String)));
     }
+    if (object.number != null) {
+      result
+        ..add('number')
+        ..add(serializers.serialize(object.number,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -309,6 +318,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'expense_currency_id':
           result.expenseCurrencyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'category_id':
+          result.categoryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'amount':
@@ -396,6 +409,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
+          break;
+        case 'number':
+          result.number = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -861,6 +878,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
+  final String number;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -911,6 +930,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.customValue3,
       this.customValue4,
       this.documents,
+      this.number,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -944,6 +964,9 @@ class _$ExpenseEntity extends ExpenseEntity {
     }
     if (expenseCurrencyId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCurrencyId');
+    }
+    if (categoryId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'categoryId');
     }
     if (amount == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'amount');
@@ -1045,6 +1068,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         documents == other.documents &&
+        number == other.number &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1076,18 +1100,18 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode),
-                                                                                taxName3.hashCode),
-                                                                            taxRate3.hashCode),
-                                                                        clientId.hashCode),
-                                                                    invoiceId.hashCode),
-                                                                vendorId.hashCode),
-                                                            projectId.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        documents.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode),
+                                                                                taxRate3.hashCode),
+                                                                            clientId.hashCode),
+                                                                        invoiceId.hashCode),
+                                                                    vendorId.hashCode),
+                                                                projectId.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            documents.hashCode),
+                                        number.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1131,6 +1155,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('documents', documents)
+          ..add('number', number)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1276,6 +1301,10 @@ class ExpenseEntityBuilder
   set documents(ListBuilder<DocumentEntity> documents) =>
       _$this._documents = documents;
 
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1344,6 +1373,7 @@ class ExpenseEntityBuilder
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _documents = _$v.documents?.toBuilder();
+      _number = _$v.number;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1406,6 +1436,7 @@ class ExpenseEntityBuilder
               customValue3: customValue3,
               customValue4: customValue4,
               documents: documents.build(),
+              number: number,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,

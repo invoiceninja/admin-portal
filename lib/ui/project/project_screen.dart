@@ -66,6 +66,7 @@ class ProjectScreen extends StatelessWidget {
             store.dispatch(FilterProjectsByCustom4(value)),
         sortFields: [
           ProjectFields.name,
+          ProjectFields.number,
           ProjectFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {

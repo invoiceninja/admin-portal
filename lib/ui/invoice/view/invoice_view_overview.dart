@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
@@ -207,13 +206,11 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(EntityListTile(entity: recurringInvoice, isFilter: isFilter));
     } else if (invoice.isRecurring) {
       widgets.add(EntitiesListTile(
+        entity: invoice,
         isFilter: isFilter,
+        hideNew: true,
         entityType: EntityType.invoice,
         title: localization.invoices,
-        onTap: () => viewEntitiesByType(
-            context: context,
-            entityType: EntityType.invoice,
-            filterEntity: invoice),
         subtitle: memoizedRecurringInvoiceStatsForInvoice(
                 invoice.id, state.invoiceState.map)
             .present(localization.active, localization.archived),

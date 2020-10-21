@@ -44,11 +44,7 @@ class InvoiceListItem extends StatelessWidget {
     final statusLabel =
         localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]);
     final statusColor = InvoiceStatusColors.colors[invoice.calculatedStatusId];
-    final textColor = Theme
-        .of(context)
-        .textTheme
-        .bodyText1
-        .color;
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     String subtitle = '';
     if (invoice.date.isNotEmpty) {
@@ -152,7 +148,8 @@ class InvoiceListItem extends StatelessWidget {
                                     .textTheme
                                     .subtitle2
                                     .copyWith(
-                                      color: textColor.withOpacity(kLighterOpacity),
+                                      color: textColor
+                                          .withOpacity(kLighterOpacity),
                                     ),
                               ),
                             ],
@@ -239,7 +236,8 @@ class InvoiceListItem extends StatelessWidget {
                                                 : ''))
                                         .trim(),
                                     style: TextStyle(
-                                      color: textColor.withOpacity(kLighterOpacity),
+                                      color: textColor
+                                          .withOpacity(kLighterOpacity),
                                     ),
                                   )
                                 : Text(

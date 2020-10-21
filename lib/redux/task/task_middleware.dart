@@ -242,8 +242,7 @@ Middleware<AppState> _saveDocument(TaskRepository repository) {
     final action = dynamicAction as SaveTaskDocumentRequest;
     if (store.state.isEnterprisePlan) {
       repository
-          .uploadDocument(
-          store.state.credentials, action.task, action.filePath)
+          .uploadDocument(store.state.credentials, action.task, action.filePath)
           .then((task) {
         store.dispatch(SaveTaskSuccess(task));
         action.completer.complete(null);

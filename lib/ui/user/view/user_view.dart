@@ -47,38 +47,30 @@ class UserView extends StatelessWidget {
           ListDivider(),
           if (userCompany.canViewOrCreate(EntityType.invoice))
             EntitiesListTile(
+              entity: user,
               isFilter: isFilter,
               title: localization.invoices,
               entityType: EntityType.invoice,
-              onTap: () =>
-                  viewModel.onEntityPressed(context, EntityType.invoice),
-              onLongPress: () =>
-                  viewModel.onEntityPressed(context, EntityType.invoice, true),
               subtitle:
                   memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
                       .present(localization.active, localization.archived),
             ),
           if (userCompany.canViewOrCreate(EntityType.recurringInvoice))
             EntitiesListTile(
+              entity: user,
               isFilter: isFilter,
               title: localization.recurringInvoices,
               entityType: EntityType.recurringInvoice,
-              onTap: () => viewModel.onEntityPressed(
-                  context, EntityType.recurringInvoice),
-              onLongPress: () => viewModel.onEntityPressed(
-                  context, EntityType.recurringInvoice, true),
               subtitle: memoizedRecurringInvoiceStatsForUser(
                       user.id, state.recurringInvoiceState.map)
                   .present(localization.active, localization.archived),
             ),
           if (userCompany.canViewOrCreate(EntityType.quote))
             EntitiesListTile(
+              entity: user,
               isFilter: isFilter,
               entityType: EntityType.quote,
               title: localization.quotes,
-              onTap: () => viewModel.onEntityPressed(context, EntityType.quote),
-              onLongPress: () =>
-                  viewModel.onEntityPressed(context, EntityType.quote, true),
               subtitle: memoizedQuoteStatsForUser(
                 user.id,
                 state.quoteState.map,
@@ -86,13 +78,10 @@ class UserView extends StatelessWidget {
             ),
           if (userCompany.canViewOrCreate(EntityType.credit))
             EntitiesListTile(
+              entity: user,
               isFilter: isFilter,
               entityType: EntityType.credit,
               title: localization.credits,
-              onTap: () =>
-                  viewModel.onEntityPressed(context, EntityType.credit),
-              onLongPress: () =>
-                  viewModel.onEntityPressed(context, EntityType.credit, true),
               subtitle: memoizedCreditStatsForUser(
                 user.id,
                 state.creditState.map,

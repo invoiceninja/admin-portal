@@ -101,10 +101,6 @@ class EntityType extends EnumClass {
         return [
           EntityType.task,
           EntityType.expense,
-          EntityType.invoice,
-          EntityType.quote,
-          EntityType.credit,
-          EntityType.recurringInvoice,
         ];
       case EntityType.group:
         return [
@@ -129,6 +125,15 @@ class EntityType extends EnumClass {
       case EntityType.vendor:
         return [
           EntityType.expense,
+        ];
+      case EntityType.task:
+        return [
+          EntityType.project,
+        ];
+      case EntityType.expense:
+        return [
+          EntityType.vendor,
+          EntityType.project,
         ];
       default:
         return [];

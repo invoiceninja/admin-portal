@@ -72,12 +72,10 @@ class VendorOverview extends StatelessWidget {
           height: 1.0,
         ),
         EntitiesListTile(
+          entity: vendor,
           title: localization.expenses,
           entityType: EntityType.expense,
           isFilter: isFilter,
-          onTap: () => viewModel.onEntityPressed(context, EntityType.expense),
-          onLongPress: () =>
-              viewModel.onEntityPressed(context, EntityType.expense, true),
           subtitle:
               memoizedExpenseStatsForVendor(vendor.id, state.expenseState.map)
                   .present(localization.active, localization.archived),

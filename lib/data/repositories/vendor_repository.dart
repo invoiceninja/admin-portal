@@ -84,7 +84,7 @@ class VendorRepository {
         data: fields, filePath: filePath, fileIndex: 'documents[]');
 
     final VendorItemResponse vendorResponse =
-    serializers.deserializeWith(VendorItemResponse.serializer, response);
+        serializers.deserializeWith(VendorItemResponse.serializer, response);
 
     return vendorResponse.data;
   }

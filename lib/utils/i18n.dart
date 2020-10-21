@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'use_available_credits': 'Use Available Credits',
+      'show_option': 'Show Option',
       'negative_payment_error':
           'The credit amount cannot exceed the payment amount',
       'view_changes': 'View Changes',
@@ -4671,6 +4673,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['negative_payment_error'] ?? '';
 
   String get viewChanges => _localizedValues[localeCode]['view_changes'] ?? '';
+
+  String get showOption => _localizedValues[localeCode]['show_option'] ?? '';
+
+  String get useAvailableCredits =>
+      _localizedValues[localeCode]['use_available_credits'] ?? '';
 
   String get shouldBeInvoiced =>
       _localizedValues[localeCode]['should_be_invoiced'] ?? '';

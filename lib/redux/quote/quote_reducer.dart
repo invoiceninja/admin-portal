@@ -73,10 +73,6 @@ final editingReducer = combineReducers<InvoiceEntity>([
     return quote.rebuild((b) => b
       ..isChanged = true
       ..clientId = client?.id ?? ''
-      ..projectId =
-          (quote.clientId ?? '').isEmpty || quote.clientId == client?.id
-              ? quote.projectId
-              : ''
       ..invitations.replace((client?.contacts ?? <ContactEntity>[])
           .where((contact) => contact.sendEmail)
           .map((contact) => InvitationEntity(contactId: contact.id))

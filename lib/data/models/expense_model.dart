@@ -45,6 +45,7 @@ abstract class ExpenseItemResponse
 }
 
 class ExpenseFields {
+  static const String number = 'number';
   static const String privateNotes = 'private_notes';
   static const String publicNotes = 'public_notes';
   static const String shouldBeInvoiced = 'should_be_invoiced';
@@ -86,6 +87,7 @@ abstract class ExpenseEntity extends Object
     final company = state?.company;
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
+      number: '',
       isChanged: false,
       privateNotes: '',
       publicNotes: '',
@@ -176,8 +178,7 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'expense_currency_id')
   String get expenseCurrencyId;
 
-  @nullable
-  @BuiltValueField(wireName: 'expense_category_id', serialize: false) // TODO remove this
+  @BuiltValueField(wireName: 'category_id')
   String get categoryId;
 
   double get amount;
@@ -247,6 +248,9 @@ abstract class ExpenseEntity extends Object
   String get customValue4;
 
   BuiltList<DocumentEntity> get documents;
+
+  @nullable // TODO remove this
+  String get number;
 
   @override
   List<EntityAction> getActions(
@@ -468,9 +472,11 @@ abstract class ExpenseEntity extends Object
     }
   }
 
-  double get convertedAmount => round(amount * exchangeRate, 2);
+  double get convertedExchangeRate => exchangeRate == 0 ? 1 : exchangeRate;
 
-  double get convertedAmountWithTax => round(amountWithTax * exchangeRate, 2);
+  double get convertedAmount => round(amount * convertedExchangeRate, 2);
+
+  double get convertedAmountWithTax => round(amountWithTax * convertedExchangeRate, 2);
 
   bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 
