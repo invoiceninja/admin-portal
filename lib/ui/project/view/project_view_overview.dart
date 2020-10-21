@@ -94,26 +94,20 @@ class _ProjectOverviewState extends State<ProjectOverview> {
         ),
         if (company.isModuleEnabled(EntityType.task))
           EntitiesListTile(
+            entity: project,
             isFilter: widget.isFilter,
             entityType: EntityType.task,
             title: localization.tasks,
-            onTap: () =>
-                widget.viewModel.onEntityPressed(context, EntityType.task),
-            onLongPress: () => widget.viewModel
-                .onEntityPressed(context, EntityType.task, longPress: true),
             subtitle:
                 memoizedTaskStatsForProject(project.id, state.taskState.map)
                     .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.expense))
           EntitiesListTile(
+            entity: project,
             isFilter: widget.isFilter,
             entityType: EntityType.expense,
             title: localization.expenses,
-            onTap: () =>
-                widget.viewModel.onEntityPressed(context, EntityType.expense),
-            onLongPress: () => widget.viewModel
-                .onEntityPressed(context, EntityType.expense, longPress: true),
             subtitle: memoizedExpenseStatsForProject(
                     project.id, state.expenseState.map)
                 .present(localization.active, localization.archived),

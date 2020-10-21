@@ -139,73 +139,92 @@ class _EntityListTileState extends State<EntityListTile> {
   }
 }
 
-class EntitiesListTile extends StatelessWidget {
+class EntitiesListTile extends StatefulWidget {
   const EntitiesListTile({
     this.entityType,
-    this.onTap,
-    this.onLongPress,
     this.title,
     this.subtitle,
     @required this.isFilter,
+    @required this.entity,
   });
 
-  final Function onTap;
-  final Function onLongPress;
+  final BaseEntity entity;
   final EntityType entityType;
   final String title;
   final String subtitle;
   final bool isFilter;
 
   @override
+  _EntitiesListTileState createState() => _EntitiesListTileState();
+}
+
+class _EntitiesListTileState extends State<EntitiesListTile> {
+  bool _isHovered = false;
+
+  void _onTap(BuildContext context) => viewEntitiesByType(
+      context: context,
+      entityType: widget.entityType,
+      filterEntity: widget.entity);
+
+  void _onLongPress() => handleEntityAction(
+      context, widget.entity, EntityAction.newEntityType(widget.entityType));
+
+  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final mainRoute = state.uiState.mainRoute;
-    final isFilterMatch = isFilter && '$entityType' == mainRoute;
+    final isFilterMatch =
+        widget.isFilter && '${widget.entityType}' == mainRoute;
 
     if (![EntityType.invoice, EntityType.task, EntityType.expense]
-            .contains(entityType) &&
-        (subtitle ?? '').isEmpty) {
+            .contains(widget.entityType) &&
+        (widget.subtitle ?? '').isEmpty) {
       return SizedBox();
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SelectedIndicator(
-          isSelected: isFilterMatch,
-          isMenu: true,
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-            title: Text(title),
-            subtitle: Text((subtitle ?? '').isEmpty
-                ? AppLocalization.of(context).none
-                : subtitle),
-            leading: IgnorePointer(
-              child: IconButton(
-                icon: Icon(getEntityIcon(entityType), size: 18.0),
-                onPressed: onTap,
-              ),
-            ),
-            trailing: isFilter
-                ? onLongPress == null
-                    ? SizedBox()
-                    : IconButton(
-                        icon: Icon(Icons.add_circle_outline),
-                        onPressed: onLongPress,
-                      )
-                : IgnorePointer(
-                    child: IconButton(
-                      icon: Icon(Icons.navigate_next),
-                      onPressed: () => null,
+    return MouseRegion(
+      onEnter: (event) => setState(() => _isHovered = true),
+      onExit: (event) => setState(() => _isHovered = false),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SelectedIndicator(
+            isSelected: isFilterMatch,
+            isMenu: true,
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              title: Text(widget.title),
+              subtitle: Text((widget.subtitle ?? '').isEmpty
+                  ? AppLocalization.of(context).none
+                  : widget.subtitle),
+              leading: _isHovered
+                  ? IconButton(
+                      icon: Icon(Icons.add_circle_outline),
+                      onPressed: _onLongPress,
+                    )
+                  : IgnorePointer(
+                      child: IconButton(
+                        icon:
+                            Icon(getEntityIcon(widget.entityType), size: 18.0),
+                        onPressed:() =>  _onTap(context),
+                      ),
                     ),
-                  ),
-            onTap: onTap,
-            onLongPress: onLongPress,
+              trailing: widget.isFilter
+                  ? SizedBox()
+                  : IgnorePointer(
+                      child: IconButton(
+                        icon: Icon(Icons.navigate_next),
+                        onPressed: () => null,
+                      ),
+                    ),
+              onTap: () => _onTap(context),
+              onLongPress: _onLongPress,
+            ),
           ),
-        ),
-        ListDivider(),
-      ],
+          ListDivider(),
+        ],
+      ),
     );
   }
 }

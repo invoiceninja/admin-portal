@@ -55,11 +55,10 @@ class _GroupViewState extends State<GroupView> {
           ),
           ListDivider(),
           EntitiesListTile(
+            entity: group,
             isFilter: widget.isFilter,
             entityType: EntityType.client,
             title: localization.clients,
-            onTap: () => viewModel.onClientsPressed(context),
-            onLongPress: () => viewModel.onClientsPressed(context, true),
             subtitle:
                 memoizedClientStatsForGroup(state.clientState.map, group.id)
                     .present(localization.active, localization.archived),
