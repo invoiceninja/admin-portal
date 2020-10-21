@@ -226,7 +226,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                       staticState.currencyMap[expense.invoiceCurrencyId]);
                 } else {
                   viewModel
-                      .onChanged(expense.rebuild((b) => b..exchangeRate = 0));
+                      .onChanged(expense.rebuild((b) => b..exchangeRate = 1));
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _exchangeRateController.text = '';
                   });

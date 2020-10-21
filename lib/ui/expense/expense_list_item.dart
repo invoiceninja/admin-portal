@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseListItem extends StatelessWidget {
@@ -164,15 +165,12 @@ class ExpenseListItem extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 10),
-                      /*
-                    Text(
-                      formatDuration(
-                          Duration(hours: expense.budgetedHours.toInt()),
-                          showSeconds: false),
-                      style: textStyle,
-                      textAlign: TextAlign.end,
-                    ),                    
-                     */
+                      Text(
+                        formatNumber(expense.convertedAmount, context,
+                            currencyId: expense.expenseCurrencyId),
+                        style: textStyle,
+                        textAlign: TextAlign.end,
+                      ),
                     ],
                   ),
                 ),
@@ -208,14 +206,10 @@ class ExpenseListItem extends StatelessWidget {
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
-                      /*
-                    Text(
-                        formatDuration(
-                            Duration(hours: expense.budgetedHours.toInt()),
-                            showSeconds: false),
-                        style: Theme.of(context).textTheme.headline6),
-                        
-                     */
+                      Text(
+                          formatNumber(expense.convertedAmount, context,
+                              currencyId: expense.expenseCurrencyId),
+                          style: Theme.of(context).textTheme.headline6),
                     ],
                   ),
                 ),
