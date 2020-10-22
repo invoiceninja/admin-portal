@@ -150,6 +150,7 @@ IconData getSettingIcon(String section) {
     case kSettingsLocalization:
       return Icons.language;
     case kSettingsOnlinePayments:
+    case kSettingsCompanyGateways:
       return MdiIcons.creditCard;
     case kSettingsTaxSettings:
     case kSettingsTaxRates:

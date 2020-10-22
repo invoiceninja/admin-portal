@@ -284,7 +284,7 @@ class SettingsSearch extends StatelessWidget {
       'first_month_of_the_year',
       'custom_labels',
     ],
-    kSettingsOnlinePayments: [
+    kSettingsCompanyGateways: [
       'accepted_card_logos',
       'limits_and_fees',
     ],

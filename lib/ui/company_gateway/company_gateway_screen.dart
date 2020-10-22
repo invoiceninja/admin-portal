@@ -24,7 +24,7 @@ class CompanyGatewayScreen extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  static const String route = '/$kSettings/$kSettingsOnlinePayments';
+  static const String route = '/$kSettings/$kSettingsCompanyGateways';
 
   final CompanyGatewayScreenVM viewModel;
 

@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CompanyGatewayEditScreen extends StatelessWidget {
   const CompanyGatewayEditScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingsOnlinePaymentsEdit';
+  static const String route = '/$kSettings/$kSettingsCompanyGatewaysEdit';
 
   @override
   Widget build(BuildContext context) {
