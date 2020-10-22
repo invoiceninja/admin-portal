@@ -97,7 +97,7 @@ abstract class ExpenseEntity extends Object
       transactionReference: '',
       bankId: '',
       amount: 0,
-      expenseDate: convertDateTimeToSqlDate(),
+      date: convertDateTimeToSqlDate(),
       paymentDate: (company?.markExpensesPaid ?? false)
           ? convertDateTimeToSqlDate()
           : '',
@@ -144,7 +144,7 @@ abstract class ExpenseEntity extends Object
     ..isChanged = false
     ..isDeleted = false
     ..invoiceId = null
-    ..expenseDate = convertDateTimeToSqlDate()
+    ..date = convertDateTimeToSqlDate()
     ..transactionReference = ''
     ..paymentTypeId = null
     ..paymentDate = '');
@@ -183,8 +183,9 @@ abstract class ExpenseEntity extends Object
 
   double get amount;
 
-  @BuiltValueField(wireName: 'expense_date')
-  String get expenseDate;
+  @nullable // TODO remove this
+  @BuiltValueField(wireName: 'date')
+  String get date;
 
   @BuiltValueField(wireName: 'payment_date')
   String get paymentDate;
@@ -342,9 +343,8 @@ abstract class ExpenseEntity extends Object
             .compareTo(expenseB.publicNotes.toLowerCase());
         break;
       case ExpenseFields.expenseDate:
-        response = expenseA.expenseDate
-            .toLowerCase()
-            .compareTo(expenseB.expenseDate.toLowerCase());
+        response =
+            expenseA.date.toLowerCase().compareTo(expenseB.date.toLowerCase());
         break;
       case ExpenseFields.paymentDate:
         response = expenseA.paymentDate
@@ -436,13 +436,12 @@ abstract class ExpenseEntity extends Object
     if (publicNotes != null && publicNotes.isNotEmpty) {
       return publicNotes;
     } else {
-      return expenseDate;
+      return number ?? '';
     }
   }
 
   bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(expenseDate) <= 0 &&
-        endDate.compareTo(expenseDate) >= 0;
+    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
 
   @override
@@ -476,7 +475,8 @@ abstract class ExpenseEntity extends Object
 
   double get convertedAmount => round(amount * convertedExchangeRate, 2);
 
-  double get convertedAmountWithTax => round(amountWithTax * convertedExchangeRate, 2);
+  double get convertedAmountWithTax =>
+      round(amountWithTax * convertedExchangeRate, 2);
 
   bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 

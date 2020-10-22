@@ -81,7 +81,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'allow_over_payment_help': 'Support paying extra to accept tips',
       'allow_under_payment': 'Allow Under Payment',
       'allow_under_payment_help':
-          'Support paying at minimum the partial/deposit amount',
+          'Support paying a minimum amount',
       'test_mode': 'Test Mode',
       'opened': 'opened',
       'payment_reconciliation_failure': 'Reconciliation Failure',
@@ -570,7 +570,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_tax_rates': 'Invoice Tax Rates',
       'item_tax_rates': 'Item Tax Rates',
       'no_client_selected': 'No client selected',
-      'configure_rates': 'Configure rates',
+      'configure_rates': 'Configure Rates',
+      'configure_gateways': 'Configure Gateways',
       'tax_settings': 'Tax Settings',
       'tax_settings_rates': 'Tax Rates',
       'accent_color': 'Accent Color',
@@ -3127,6 +3128,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get configureRates =>
       _localizedValues[localeCode]['configure_rates'] ?? '';
+
+  String get configureGateways =>
+      _localizedValues[localeCode]['configure_gateways'] ?? '';
 
   String get taxSettingsRates =>
       _localizedValues[localeCode]['tax_settings_rates'] ?? '';

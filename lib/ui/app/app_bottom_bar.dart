@@ -356,8 +356,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
             final settings = state.userCompany.settings.rebuild((b) => b
               ..tableColumns['${widget.entityType}'] =
                   BuiltList<String>(selected));
-            final user = state.user
-                .rebuild((b) => b..userCompany.settings.replace(settings));
+            final userCompany =
+                state.userCompany.rebuild((b) => b..settings.replace(settings));
+            final user =
+                state.user.rebuild((b) => b..userCompany.replace(userCompany));
             final completer = snackBarCompleter<Null>(
                 context, AppLocalization.of(context).savedSettings);
             store.dispatch(

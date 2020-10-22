@@ -164,7 +164,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                               ? localization.pleaseSelectAClient
                               : null,
                           autoValidate: _autoValidate,
-                          allowClearing: true,
                           onSelected: (client) {
                             viewModel.onChanged(project.rebuild(
                                 (b) => b..clientId = client?.id ?? ''));

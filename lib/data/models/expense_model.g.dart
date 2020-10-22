@@ -152,9 +152,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
-      'expense_date',
-      serializers.serialize(object.expenseDate,
-          specifiedType: const FullType(String)),
       'payment_date',
       serializers.serialize(object.paymentDate,
           specifiedType: const FullType(String)),
@@ -207,6 +204,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.date != null) {
+      result
+        ..add('date')
+        ..add(serializers.serialize(object.date,
+            specifiedType: const FullType(String)));
+    }
     if (object.clientId != null) {
       result
         ..add('client_id')
@@ -328,8 +331,8 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.amount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'expense_date':
-          result.expenseDate = serializers.deserialize(value,
+        case 'date':
+          result.date = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'payment_date':
@@ -838,7 +841,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final double amount;
   @override
-  final String expenseDate;
+  final String date;
   @override
   final String paymentDate;
   @override
@@ -910,7 +913,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.expenseCurrencyId,
       this.categoryId,
       this.amount,
-      this.expenseDate,
+      this.date,
       this.paymentDate,
       this.exchangeRate,
       this.invoiceCurrencyId,
@@ -970,9 +973,6 @@ class _$ExpenseEntity extends ExpenseEntity {
     }
     if (amount == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'amount');
-    }
-    if (expenseDate == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseDate');
     }
     if (paymentDate == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'paymentDate');
@@ -1048,7 +1048,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         expenseCurrencyId == other.expenseCurrencyId &&
         categoryId == other.categoryId &&
         amount == other.amount &&
-        expenseDate == other.expenseDate &&
+        date == other.date &&
         paymentDate == other.paymentDate &&
         exchangeRate == other.exchangeRate &&
         invoiceCurrencyId == other.invoiceCurrencyId &&
@@ -1100,7 +1100,7 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode),
                                                                                 taxRate3.hashCode),
                                                                             clientId.hashCode),
                                                                         invoiceId.hashCode),
@@ -1135,7 +1135,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('expenseCurrencyId', expenseCurrencyId)
           ..add('categoryId', categoryId)
           ..add('amount', amount)
-          ..add('expenseDate', expenseDate)
+          ..add('date', date)
           ..add('paymentDate', paymentDate)
           ..add('exchangeRate', exchangeRate)
           ..add('invoiceCurrencyId', invoiceCurrencyId)
@@ -1217,9 +1217,9 @@ class ExpenseEntityBuilder
   double get amount => _$this._amount;
   set amount(double amount) => _$this._amount = amount;
 
-  String _expenseDate;
-  String get expenseDate => _$this._expenseDate;
-  set expenseDate(String expenseDate) => _$this._expenseDate = expenseDate;
+  String _date;
+  String get date => _$this._date;
+  set date(String date) => _$this._date = date;
 
   String _paymentDate;
   String get paymentDate => _$this._paymentDate;
@@ -1353,7 +1353,7 @@ class ExpenseEntityBuilder
       _expenseCurrencyId = _$v.expenseCurrencyId;
       _categoryId = _$v.categoryId;
       _amount = _$v.amount;
-      _expenseDate = _$v.expenseDate;
+      _date = _$v.date;
       _paymentDate = _$v.paymentDate;
       _exchangeRate = _$v.exchangeRate;
       _invoiceCurrencyId = _$v.invoiceCurrencyId;
@@ -1416,7 +1416,7 @@ class ExpenseEntityBuilder
               expenseCurrencyId: expenseCurrencyId,
               categoryId: categoryId,
               amount: amount,
-              expenseDate: expenseDate,
+              date: date,
               paymentDate: paymentDate,
               exchangeRate: exchangeRate,
               invoiceCurrencyId: invoiceCurrencyId,

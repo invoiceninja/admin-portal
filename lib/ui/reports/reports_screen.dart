@@ -91,7 +91,6 @@ class ReportsScreen extends StatelessWidget {
         DatePicker(
           labelText: localization.startDate,
           selectedDate: reportsState.customStartDate,
-          allowClearing: true,
           onSelected: (date) =>
               viewModel.onSettingsChanged(
                   customStartDate: date),
@@ -99,7 +98,6 @@ class ReportsScreen extends StatelessWidget {
         DatePicker(
           labelText: localization.endDate,
           selectedDate: reportsState.customEndDate,
-          allowClearing: true,
           onSelected: (date) =>
               viewModel.onSettingsChanged(customEndDate: date),
         ),

@@ -8,7 +8,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.19';
+const String kClientVersion = '5.0.20';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -291,19 +291,6 @@ const kAgeGroups = {
   kAgeGroup120: 120,
 };
 
-/*
-const String kEmailTemplateInvoice = 'invoice_email';
-const String kEmailTemplateQuote = 'quote_email';
-const String kEmailTemplatePayment = 'payment_email';
-const String kEmailTemplateReminder1 = 'first_reminder';
-const String kEmailTemplateReminder2 = 'second_reminder';
-const String kEmailTemplateReminder3 = 'third_reminder';
-const String kEmailTemplateReminder4 = 'endless_reminder';
-const String kEmailTemplateCustom1 = 'first_custom';
-const String kEmailTemplateCustom2 = 'second_custom';
-const String kEmailTemplateCustom3 = 'third_custom';
-*/
-
 const String kReminderScheduleAfterInvoiceDate = 'after_invoice_date';
 const String kReminderScheduleBeforeDueDate = 'before_due_date';
 const String kReminderScheduleAfterDueDate = 'after_due_date';
@@ -315,8 +302,9 @@ const String kSettingsPaymentTermEdit = 'payment_term_edit';
 const String kSettingsUserDetails = 'user_details';
 const String kSettingsLocalization = 'localization';
 const String kSettingsOnlinePayments = 'online_payments';
-const String kSettingsOnlinePaymentsView = 'online_payments_view';
-const String kSettingsOnlinePaymentsEdit = 'online_payments_edit';
+const String kSettingsCompanyGateways = 'company_gateways';
+const String kSettingsCompanyGatewaysView = 'company_gateways_view';
+const String kSettingsCompanyGatewaysEdit = 'company_gateways_edit';
 const String kSettingsTaxSettings = 'tax_settings';
 const String kSettingsTaxRates = 'tax_settings_rates';
 const String kSettingsTaxRatesView = 'tax_settings_rates_view';

@@ -104,6 +104,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 children: <Widget>[
                   if (companyGateway.isNew)
                     EntityDropdown(
+                      allowClearing: false,
                       key: ValueKey('__gateway_${companyGateway.gatewayId}__'),
                       entityType: EntityType.gateway,
                       entityList:

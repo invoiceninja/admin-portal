@@ -103,7 +103,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
           children: <Widget>[
             EntityDropdown(
               key: ValueKey('__vendor_${expense.vendorId}__'),
-              allowClearing: true,
               entityType: EntityType.vendor,
               labelText: localization.vendor,
               entityId: expense.vendorId,
@@ -120,7 +119,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             if (!expense.isInvoiced) ...[
               EntityDropdown(
                 key: ValueKey('__client_${expense.clientId}__'),
-                allowClearing: true,
                 entityType: EntityType.client,
                 labelText: localization.client,
                 entityId: expense.clientId,
@@ -164,7 +162,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityId: expense.categoryId,
               entityList: memoizedDropdownExpenseCategoriesList(
                   company.expenseCategoryMap, company.expenseCategories),
-              allowClearing: true,
               onSelected: (category) {
                 viewModel.onChanged(
                     expense.rebuild((b) => b..categoryId = category?.id ?? ''));
@@ -183,17 +180,16 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
               entityId: expense.expenseCurrencyId,
-              allowClearing: true,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
                   viewModel.expense.rebuild(
                       (b) => b..expenseCurrencyId = currency?.id ?? '')),
             ),
             DatePicker(
               labelText: localization.date,
-              selectedDate: expense.expenseDate,
+              selectedDate: expense.date,
               onSelected: (date) {
                 viewModel
-                    .onChanged(expense.rebuild((b) => b..expenseDate = date));
+                    .onChanged(expense.rebuild((b) => b..date = date));
               },
             ),
             CustomField(

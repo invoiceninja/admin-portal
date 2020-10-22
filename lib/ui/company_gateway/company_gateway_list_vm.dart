@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +44,6 @@ class CompanyGatewayListVM {
     @required this.onRefreshed,
     @required this.onSortChanged,
     @required this.onRemovePressed,
-    @required this.onSettingsChanged,
-    @required this.settings,
-    @required this.onCompanyChanged,
   });
 
   static CompanyGatewayListVM fromStore(Store<AppState> store) {
@@ -81,9 +77,6 @@ class CompanyGatewayListVM {
       state: state,
       listState: state.companyGatewayListState,
       companyGatewayList: gatewayIds,
-      settings: state.uiState.settingsUIState.settings,
-      onCompanyChanged: (company) =>
-          store.dispatch(UpdateCompany(company: company)),
       companyGatewayMap: state.companyGatewayState.map,
       filter: state.companyGatewayUIState.listUIState.filter,
       onCompanyGatewayTap: (context, companyGateway) {
@@ -111,8 +104,6 @@ class CompanyGatewayListVM {
             .rebuild((b) => b..companyGatewayIds = gatewayIds.join(','));
         store.dispatch(UpdateSettings(settings: settings));
       },
-      onSettingsChanged: (settings) =>
-          store.dispatch(UpdateSettings(settings: settings)),
     );
   }
 
@@ -125,7 +116,4 @@ class CompanyGatewayListVM {
   final Function(BuildContext) onRefreshed;
   final Function(int, int) onSortChanged;
   final Function(String) onRemovePressed;
-  final SettingsEntity settings;
-  final Function(SettingsEntity) onSettingsChanged;
-  final Function(CompanyEntity) onCompanyChanged;
 }

@@ -649,7 +649,7 @@ List<ChartDataGroup> chartExpenses(
 
   expenseMap.forEach((int, expense) {
     final currencyId = expense.expenseCurrencyId;
-    final date = expense.expenseDate;
+    final date = expense.date;
     double amount = expense.amountWithTax;
 
     if (expense.isDeleted) {

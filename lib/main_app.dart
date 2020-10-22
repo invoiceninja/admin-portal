@@ -37,6 +37,7 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
@@ -292,7 +293,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       RecurringInvoiceViewScreen(),
                   RecurringInvoiceEditScreen.route: (context) =>
                       RecurringInvoiceEditScreen(),
-
                   WebhookScreen.route: (context) => WebhookScreenBuilder(),
                   WebhookViewScreen.route: (context) => WebhookViewScreen(),
                   WebhookEditScreen.route: (context) => WebhookEditScreen(),
@@ -323,6 +323,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       CompanyDetailsScreen(),
                   UserDetailsScreen.route: (context) => UserDetailsScreen(),
                   LocalizationScreen.route: (context) => LocalizationScreen(),
+                  OnlinePaymentsScreen.route: (context) =>
+                      OnlinePaymentsScreen(),
                   CompanyGatewayScreen.route: (context) =>
                       CompanyGatewayScreenBuilder(),
                   CompanyGatewayViewScreen.route: (context) =>

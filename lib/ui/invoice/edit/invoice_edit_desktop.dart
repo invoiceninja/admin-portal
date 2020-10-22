@@ -316,7 +316,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                     if (entityType != EntityType.credit)
                       DatePicker(
-                        allowClearing: true,
                         labelText: entityType == EntityType.quote
                             ? localization.validUntil
                             : localization.dueDate,
