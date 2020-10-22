@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({
@@ -26,17 +27,29 @@ class DatePicker extends StatefulWidget {
 
 class _DatePickerState extends State<DatePicker> {
   final _textController = TextEditingController();
+  final _focusNode = FocusNode();
 
   @override
   void didChangeDependencies() {
     _textController.text = formatDate(widget.selectedDate, context);
+    _focusNode.addListener(_onFoucsChanged);
 
     super.didChangeDependencies();
+  }
+
+  void _onFoucsChanged() {
+    if (_focusNode.hasFocus) {
+      _textController.text = widget.selectedDate;
+    } else {
+      _textController.text = formatDate(widget.selectedDate, context);
+    }
   }
 
   @override
   void dispose() {
     _textController.dispose();
+    _focusNode.removeListener(_onFoucsChanged);
+    _focusNode.dispose();
 
     super.dispose();
   }
@@ -73,37 +86,53 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => _showDatePicker(),
-      child: Stack(
-        alignment: Alignment.centerRight,
-        children: <Widget>[
-          IgnorePointer(
-            child: TextFormField(
-              validator: widget.validator,
-              autovalidateMode: widget.autoValidate
-                  ? AutovalidateMode.always
-                  : AutovalidateMode.onUserInteraction,
-              controller: _textController,
-              decoration: InputDecoration(
-                labelText: widget.labelText,
-              ),
-            ),
+    return Stack(
+      alignment: Alignment.centerRight,
+      children: <Widget>[
+        TextFormField(
+          focusNode: _focusNode,
+          validator: widget.validator,
+          autovalidateMode: widget.autoValidate
+              ? AutovalidateMode.always
+              : AutovalidateMode.onUserInteraction,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: widget.labelText,
           ),
-          widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
-              ? IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    _textController.text = '';
-                    widget.onSelected('');
-                  },
-                )
-              : IconButton(
-                  icon: Icon(Icons.date_range),
-                  onPressed: () => _showDatePicker(),
-                )
-        ],
-      ),
+          onChanged: (value) {
+            if (value.isEmpty) {
+              widget.onSelected('');
+            } else {
+              if (value.length < 5) {
+                if (value.length < 4) {
+                  value = '0$value';
+                }
+                value = '${DateTime.now().year}$value';
+              }
+
+              final date = DateTime.tryParse(value);
+              if (date != null) {
+                final sqlDate = convertDateTimeToSqlDate(date);
+                if (sqlDate != widget.selectedDate) {
+                  widget.onSelected(sqlDate);
+                }
+              }
+            }
+          },
+        ),
+        widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
+            ? IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  _textController.text = '';
+                  widget.onSelected('');
+                },
+              )
+            : IconButton(
+                icon: Icon(Icons.date_range),
+                onPressed: () => _showDatePicker(),
+              )
+      ],
     );
   }
 }
