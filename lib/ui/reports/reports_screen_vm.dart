@@ -273,8 +273,10 @@ class ReportsScreenVM {
             ..reportSettings[state.uiState.reportsUIState.report] =
                 reportSettings.rebuild(
                     (b) => b..columns.replace(BuiltList<String>(columns))));
-          final user = state.user
-              .rebuild((b) => b..userCompany.settings.replace(settings));
+          final userCompany =
+              state.userCompany.rebuild((b) => b..settings.replace(settings));
+          final user =
+              state.user.rebuild((b) => b..userCompany.replace(userCompany));
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(

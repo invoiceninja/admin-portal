@@ -102,9 +102,8 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
         ..user.replace(action.user)
         ..settings.replace(action.user.userCompany.settings))),
   TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(
-      (userCompany, action) => userCompany.rebuild((b) => b
-        ..user.userCompany.settings.replace(userCompany.settings)
-        ..settings.replace(action.userCompany.settings))),
+      (userCompany, action) => userCompany
+          .rebuild((b) => b..settings.replace(action.userCompany.settings))),
   TypedReducer<UserCompanyEntity, UpdateCompanyLanguage>(
     (userCompany, action) => userCompany
         .rebuild((b) => b..company.settings.languageId = action.languageId),

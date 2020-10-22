@@ -81,7 +81,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'allow_over_payment_help': 'Support paying extra to accept tips',
       'allow_under_payment': 'Allow Under Payment',
       'allow_under_payment_help':
-          'Support paying at minimum the partial/deposit amount',
+          'Support paying a minimum amount',
       'test_mode': 'Test Mode',
       'opened': 'opened',
       'payment_reconciliation_failure': 'Reconciliation Failure',

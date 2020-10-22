@@ -47,7 +47,6 @@ abstract class UserCompanyState
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
       recurringInvoiceState: RecurringInvoiceState(),
-
       webhookState: WebhookState(),
       tokenState: TokenState(),
       paymentTermState: PaymentTermState(),

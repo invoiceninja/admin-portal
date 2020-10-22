@@ -101,27 +101,21 @@ final lastErrorReducer = combineReducers<String>([
   TypedReducer<String, LoadRecurringInvoicesFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadWebhooksFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadTokensFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadPaymentTermsFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadDesignsFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadCreditsFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, RefreshDataFailure>((state, action) {
     return '${action.error}';
   }),

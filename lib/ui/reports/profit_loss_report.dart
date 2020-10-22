@@ -183,7 +183,7 @@ ReportResult profitAndLossReport(
           value = -expense.amount;
           break;
         case ProfitAndLossReportFields.date:
-          value = expense.expenseDate;
+          value = expense.date;
           break;
       }
 
