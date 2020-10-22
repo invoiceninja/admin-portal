@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -64,13 +65,13 @@ class VendorOverview extends StatelessWidget {
               context,
               currencyId: vendor.currencyId ?? company.currencyId),
         ),
-        vendor.privateNotes != null && vendor.privateNotes.isNotEmpty
-            ? IconMessage(vendor.privateNotes)
-            : Container(),
+        ListDivider(),
+        if ((vendor.privateNotes ?? '').isNotEmpty) ...[
+          IconMessage(vendor.privateNotes, iconData: Icons.lock),
+          ListDivider()
+        ],
         FieldGrid(fields),
-        Divider(
-          height: 1.0,
-        ),
+        ListDivider(),
         EntitiesListTile(
           entity: vendor,
           title: localization.expenses,
@@ -80,6 +81,10 @@ class VendorOverview extends StatelessWidget {
               memoizedExpenseStatsForVendor(vendor.id, state.expenseState.map)
                   .present(localization.active, localization.archived),
         ),
+        if ((vendor.publicNotes ?? '').isNotEmpty) ...[
+          IconMessage(vendor.publicNotes),
+          ListDivider()
+        ],
       ],
     );
   }

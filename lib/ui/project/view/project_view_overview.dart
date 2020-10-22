@@ -88,6 +88,10 @@ class _ProjectOverviewState extends State<ProjectOverview> {
               showSeconds: false),
         ),
         ListDivider(),
+        if ((project.privateNotes ?? '').isNotEmpty) ...[
+          IconMessage(project.privateNotes, iconData: Icons.lock),
+          ListDivider()
+        ],
         EntityListTile(
           entity: client,
           isFilter: widget.isFilter,
@@ -114,19 +118,16 @@ class _ProjectOverviewState extends State<ProjectOverview> {
           ),
       ];
 
-      if (project.privateNotes != null && project.privateNotes.isNotEmpty) {
-        widgets.addAll([
-          IconMessage(project.privateNotes),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
-        ]);
-      }
-
       widgets.addAll([
         FieldGrid(fields),
       ]);
+
+      if ((project.publicNotes ?? '').isNotEmpty) {
+        widgets.addAll([
+          IconMessage(project.publicNotes),
+          ListDivider()
+        ]);
+      }
 
       return widgets;
     }

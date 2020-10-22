@@ -137,6 +137,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
+      'public_notes',
+      serializers.serialize(object.publicNotes,
+          specifiedType: const FullType(String)),
       'website',
       serializers.serialize(object.website,
           specifiedType: const FullType(String)),
@@ -262,6 +265,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'public_notes':
+          result.publicNotes = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'website':
@@ -702,6 +709,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String privateNotes;
   @override
+  final String publicNotes;
+  @override
   final String website;
   @override
   final String number;
@@ -753,6 +762,7 @@ class _$VendorEntity extends VendorEntity {
       this.countryId,
       this.phone,
       this.privateNotes,
+      this.publicNotes,
       this.website,
       this.number,
       this.vatNumber,
@@ -799,6 +809,9 @@ class _$VendorEntity extends VendorEntity {
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'privateNotes');
+    }
+    if (publicNotes == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'publicNotes');
     }
     if (website == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'website');
@@ -861,6 +874,7 @@ class _$VendorEntity extends VendorEntity {
         countryId == other.countryId &&
         phone == other.phone &&
         privateNotes == other.privateNotes &&
+        publicNotes == other.publicNotes &&
         website == other.website &&
         number == other.number &&
         vatNumber == other.vatNumber &&
@@ -903,7 +917,7 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode),
                                                                                 website.hashCode),
                                                                             number.hashCode),
                                                                         vatNumber.hashCode),
@@ -937,6 +951,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('countryId', countryId)
           ..add('phone', phone)
           ..add('privateNotes', privateNotes)
+          ..add('publicNotes', publicNotes)
           ..add('website', website)
           ..add('number', number)
           ..add('vatNumber', vatNumber)
@@ -999,6 +1014,10 @@ class VendorEntityBuilder
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+
+  String _publicNotes;
+  String get publicNotes => _$this._publicNotes;
+  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
 
   String _website;
   String get website => _$this._website;
@@ -1095,6 +1114,7 @@ class VendorEntityBuilder
       _countryId = _$v.countryId;
       _phone = _$v.phone;
       _privateNotes = _$v.privateNotes;
+      _publicNotes = _$v.publicNotes;
       _website = _$v.website;
       _number = _$v.number;
       _vatNumber = _$v.vatNumber;
@@ -1147,6 +1167,7 @@ class VendorEntityBuilder
               countryId: countryId,
               phone: phone,
               privateNotes: privateNotes,
+              publicNotes: publicNotes,
               website: website,
               number: number,
               vatNumber: vatNumber,

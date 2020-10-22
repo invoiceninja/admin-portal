@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,44 @@ class ExpenseOverview extends StatelessWidget {
           value: expense.customValue2);
     }
 
+    List<Widget> _buildDetailsList() {
+      String tax = '';
+      if (expense.taxName1.isNotEmpty) {
+        tax += formatNumber(expense.taxRate1, context,
+                formatNumberType: FormatNumberType.percent) +
+            ' ' +
+            expense.taxName1;
+      }
+      if (expense.taxName2.isNotEmpty) {
+        tax += ' ' +
+            formatNumber(expense.taxRate2, context,
+                formatNumberType: FormatNumberType.percent) +
+            ' ' +
+            expense.taxName2;
+      }
+
+      final fields = <String, String>{
+        localization.tax: tax,
+        localization.paymentType:
+            state.staticState.paymentTypeMap[expense.paymentTypeId]?.name,
+        localization.paymentDate: formatDate(expense.paymentDate, context),
+        localization.transactionReference: expense.transactionReference,
+        localization.exchangeRate: expense.isConverted
+            ? formatNumber(expense.exchangeRate, context,
+                formatNumberType: FormatNumberType.double)
+            : null,
+        localization.currency: expense.isConverted
+            ? state.staticState.currencyMap[expense.invoiceCurrencyId]?.name
+            : null,
+      };
+
+      final listTiles = <Widget>[
+        FieldGrid(fields),
+      ];
+
+      return listTiles;
+    }
+
     return ListView(
       children: <Widget>[
         expense.isConverted
@@ -74,13 +113,12 @@ class ExpenseOverview extends StatelessWidget {
                 value: formatNumber(expense.amountWithTax, context,
                     currencyId: expense.expenseCurrencyId),
               ),
-        expense.privateNotes != null && expense.privateNotes.isNotEmpty
-            ? IconMessage(expense.privateNotes)
-            : Container(),
+        ListDivider(),
+        if ((expense.privateNotes ?? '').isNotEmpty) ...[
+          IconMessage(expense.privateNotes, iconData: Icons.lock),
+        ],
         FieldGrid(fields),
-        Divider(
-          height: 1.0,
-        ),
+        ListDivider(),
         vendor == null
             ? SizedBox()
             : Material(
@@ -137,12 +175,11 @@ class ExpenseOverview extends StatelessWidget {
                       context, EntityType.invoice, true),
                 ),
               ),
-        invoice == null
-            ? SizedBox()
-            : Container(
-                color: Theme.of(context).backgroundColor,
-                height: 12.0,
-              ),
+        ..._buildDetailsList(),
+        if ((expense.publicNotes ?? '').isNotEmpty) ...[
+          IconMessage(expense.publicNotes),
+          ListDivider()
+        ],
       ],
     );
   }

@@ -441,7 +441,8 @@ abstract class ExpenseEntity extends Object
   }
 
   bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
+    return (startDate ?? '').compareTo(date ?? '') <= 0 &&
+        (endDate ?? '').compareTo(date ?? '') >= 0;
   }
 
   @override

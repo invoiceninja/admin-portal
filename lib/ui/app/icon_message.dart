@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class IconMessage extends StatelessWidget {
-  const IconMessage(this.text);
+  const IconMessage(this.text, {this.iconData});
   final String text;
+  final IconData iconData;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class IconMessage extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Icon(
-              Icons.info_outline,
+              iconData ?? Icons.info_outline,
               size: 18.0,
               color: Colors.white,
             ),

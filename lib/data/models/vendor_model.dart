@@ -55,6 +55,7 @@ class VendorFields {
   static const String countryId = 'country_id';
   static const String phone = 'phone';
   static const String privateNotes = 'private_notes';
+  static const String publicNotes = 'public_notes';
   static const String website = 'website';
   static const String vatNumber = 'vat_number';
   static const String idNumber = 'id_number';
@@ -86,6 +87,7 @@ abstract class VendorEntity extends Object
       countryId: '',
       phone: '',
       privateNotes: '',
+      publicNotes: '',
       website: '',
       vatNumber: '',
       idNumber: '',
@@ -146,6 +148,9 @@ abstract class VendorEntity extends Object
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
+
+  @BuiltValueField(wireName: 'public_notes')
+  String get publicNotes;
 
   String get website;
 

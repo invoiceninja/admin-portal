@@ -39,7 +39,7 @@ class VendorEditNotesState extends State<VendorEditNotes> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final vendor = widget.viewModel.vendor;
-    //_publicNotesController.text = vendor.publicNotes;
+    _publicNotesController.text = vendor.publicNotes;
     _privateNotesController.text = vendor.privateNotes;
 
     _controllers
@@ -62,7 +62,7 @@ class VendorEditNotesState extends State<VendorEditNotes> {
     _debouncer.run(() {
       final viewModel = widget.viewModel;
       final vendor = viewModel.vendor.rebuild((b) => b
-        //..publicNotes = _publicNotesController.text
+        ..publicNotes = _publicNotesController.text
         ..privateNotes = _privateNotesController.text);
       if (vendor != viewModel.vendor) {
         viewModel.onChanged(vendor);
