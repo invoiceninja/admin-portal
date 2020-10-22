@@ -52,14 +52,14 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.dueDate:
         return Text(formatDate(project.dueDate, context));
       case ProjectFields.publicNotes:
-        return Text(project.publicNotes);
+        return Text(project.publicNotes ?? '');
       case ProjectFields.privateNotes:
-        return Text(project.privateNotes);
+        return Text(project.privateNotes ?? '');
       case ProjectFields.budgetedHours:
         return Text(formatNumber(project.budgetedHours, context,
             formatNumberType: FormatNumberType.double));
       case ProjectFields.number:
-        return Text(project.number);
+        return Text(project.number ?? '');
       case ProjectFields.customValue1:
         return Text(project.customValue1);
       case ProjectFields.customValue2:
