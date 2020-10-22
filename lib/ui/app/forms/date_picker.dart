@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({
@@ -38,9 +39,7 @@ class _DatePickerState extends State<DatePicker> {
   }
 
   void _onFoucsChanged() {
-    if (_focusNode.hasFocus) {
-      _textController.text = widget.selectedDate;
-    } else {
+    if (!_focusNode.hasFocus) {
       _textController.text = formatDate(widget.selectedDate, context);
     }
   }
@@ -103,19 +102,21 @@ class _DatePickerState extends State<DatePicker> {
             if (value.isEmpty) {
               widget.onSelected('');
             } else {
-              if (value.length < 5) {
+              String date = '';
+              if (isAllDigits(value)) {
                 if (value.length < 4) {
                   value = '0$value';
                 }
-                value = '${DateTime.now().year}$value';
+                if (value.length < 5) {
+                  value = '${DateTime.now().year}$value';
+                }
+                date = convertDateTimeToSqlDate(DateTime.tryParse(value));
+              } else {
+                date = parseDate(value, context);
               }
 
-              final date = DateTime.tryParse(value);
-              if (date != null) {
-                final sqlDate = convertDateTimeToSqlDate(date);
-                if (sqlDate != widget.selectedDate) {
-                  widget.onSelected(sqlDate);
-                }
+              if ((date ?? '').isNotEmpty) {
+                widget.onSelected(date);
               }
             }
           },

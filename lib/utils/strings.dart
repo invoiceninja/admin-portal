@@ -1,3 +1,8 @@
+bool isAllDigits(String value) {
+  print('## COMPARE: ${value.replaceAll(RegExp('[^\\d]'), '')} to $value');
+  return value.replaceAll(RegExp('[^\\d]'), '') == value;
+}
+
 String toSnakeCase(String value) {
   if ((value ?? '').isEmpty) {
     return '';

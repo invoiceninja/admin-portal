@@ -275,6 +275,26 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
   return '$startDateTimeString - $endDateTimeString';
 }
 
+String parseDate(String value, BuildContext context) {
+  if (value == null || value.isEmpty) {
+    return '';
+  }
+
+  final state = StoreProvider.of<AppState>(context).state;
+  final CompanyEntity company = state.company;
+
+  final dateFormats = state.staticState.dateFormatMap;
+  final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
+      ? company.settings.dateFormatId
+      : kDefaultDateFormat;
+  String format = dateFormats[dateFormatId].format;
+
+  final formatter = DateFormat(
+      dateFormats[company.settings.dateFormatId].format, localeSelector(state));
+
+  return convertDateTimeToSqlDate(formatter.parse(value));
+}
+
 String formatDate(String value, BuildContext context,
     {bool showDate = true, bool showTime = false, bool showSeconds = true}) {
   if (value == null || value.isEmpty) {
@@ -283,10 +303,6 @@ String formatDate(String value, BuildContext context,
 
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company;
-
-  if (state.staticState.dateFormatMap.isEmpty) {
-    return '';
-  }
 
   if (showTime) {
     String format;
