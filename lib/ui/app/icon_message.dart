@@ -10,7 +10,7 @@ class IconMessage extends StatelessWidget {
     return Container(
       color: Theme.of(context).primaryColorDark,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         child: Row(
           children: <Widget>[
             Icon(
