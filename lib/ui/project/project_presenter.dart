@@ -23,6 +23,16 @@ class ProjectPresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
+      ProjectFields.number,
+      ProjectFields.clientId,
+      ProjectFields.customValue1,
+      ProjectFields.customValue2,
+      ProjectFields.customValue3,
+      ProjectFields.customValue4,
+      ProjectFields.updatedAt,
+      ProjectFields.archivedAt,
+      ProjectFields.isDeleted,
+      ProjectFields.documents,
     ];
   }
 
@@ -35,6 +45,7 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.name:
         return Text(project.name);
       case ProjectFields.client:
+      case ProjectFields.clientId:
         return Text(state.clientState.get(project.clientId).displayName);
       case ProjectFields.taskRate:
         return Text(formatNumber(project.taskRate, context));
@@ -47,6 +58,26 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.budgetedHours:
         return Text(formatNumber(project.budgetedHours, context,
             formatNumberType: FormatNumberType.double));
+      case ProjectFields.number:
+        return Text(project.number);
+      case ProjectFields.customValue1:
+        return Text(project.customValue1);
+      case ProjectFields.customValue2:
+        return Text(project.customValue2);
+      case ProjectFields.customValue3:
+        return Text(project.customValue3);
+      case ProjectFields.customValue4:
+        return Text(project.customValue4);
+      case ProjectFields.updatedAt:
+        return Text(formatDate(
+            convertTimestampToDateString(project.updatedAt), context));
+      case ProjectFields.archivedAt:
+        return Text(formatDate(
+            convertTimestampToDateString(project.archivedAt), context));
+      case ProjectFields.isDeleted:
+        return Text(project.isDeleted.toString());
+      case ProjectFields.documents:
+        return Text('${project.documents.length}');
     }
 
     return super.getField(field: field, context: context);
