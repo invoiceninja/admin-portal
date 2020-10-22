@@ -118,7 +118,6 @@ class ClientEditNotesState extends State<ClientEditNotes> {
               entityId: client.industryId,
               onSelected: (SelectableEntity industry) => viewModel.onChanged(
                   client.rebuild((b) => b..industryId = industry?.id)),
-              allowClearing: true,
             ),
           ],
         ),

@@ -476,7 +476,8 @@ abstract class ExpenseEntity extends Object
 
   double get convertedAmount => round(amount * convertedExchangeRate, 2);
 
-  double get convertedAmountWithTax => round(amountWithTax * convertedExchangeRate, 2);
+  double get convertedAmountWithTax =>
+      round(amountWithTax * convertedExchangeRate, 2);
 
   bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 

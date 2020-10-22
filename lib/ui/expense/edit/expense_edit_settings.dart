@@ -190,7 +190,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                             memoizedPaymentTypeList(staticState.paymentTypeMap),
                         labelText: localization.paymentType,
                         entityId: expense.paymentTypeId,
-                        allowClearing: true,
                         onSelected: (paymentType) => viewModel.onChanged(
                             expense.rebuild((b) =>
                                 b..paymentTypeId = paymentType?.id ?? '')),
@@ -246,7 +245,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         entityId: expense.invoiceCurrencyId,
                         onSelected: (SelectableEntity currency) =>
                             _setCurrency(currency),
-                        allowClearing: true,
                       ),
                       DecoratedFormField(
                         key: ValueKey('__${expense.invoiceCurrencyId}__'),

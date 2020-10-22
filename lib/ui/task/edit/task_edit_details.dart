@@ -96,7 +96,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             if (!task.isInvoiced) ...[
               EntityDropdown(
                 key: Key('__client_${task.clientId}__'),
-                allowClearing: true,
                 entityType: EntityType.client,
                 labelText: localization.client,
                 entityId: task.clientId,
@@ -135,6 +134,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             company.taskStatusMap.isNotEmpty
                 ? EntityDropdown(
                     key: ValueKey('__task_status_${task.taskStatusId}__'),
+                    allowClearing: false,
                     entityType: EntityType.taskStatus,
                     labelText: localization.status,
                     entityId: task.taskStatusId,

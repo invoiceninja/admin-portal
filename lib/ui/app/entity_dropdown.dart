@@ -20,7 +20,7 @@ class EntityDropdown extends StatefulWidget {
     @required this.onSelected,
     this.entityMap,
     this.entityList,
-    this.allowClearing = false,
+    this.allowClearing = true,
     this.autoValidate = false,
     this.validator,
     this.entityId,
