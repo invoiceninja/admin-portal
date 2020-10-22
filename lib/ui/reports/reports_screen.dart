@@ -1056,7 +1056,7 @@ class ReportResult {
               columnType == ReportColumnType.date) {
             value = formatDate(group, context);
           } else if (columnType == ReportColumnType.age ||
-              ['status'].contains(column)) {
+              EntityPresenter.isFieldLocalized(column)) {
             value = localization.lookup(group);
           } else {
             value = group;
@@ -1286,7 +1286,7 @@ class ReportStringValue extends ReportElement {
       return formatDate(value, context,
           showTime: getReportColumnType(column, context) ==
               ReportColumnType.dateTime);
-    } else if (['status'].contains(column)) {
+    } else if (EntityPresenter.isFieldLocalized(column)) {
       return AppLocalization.of(context).lookup(value);
     } else {
       return value ?? '';

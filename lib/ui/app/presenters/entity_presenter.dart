@@ -60,6 +60,10 @@ class EntityPresenter {
     return Text('Error: $field not found');
   }
 
+  static bool isFieldLocalized(String field) => [
+    'status',
+  ].contains(field);
+
   static bool isFieldNumeric(String field) => [
         'balance',
         'paid_to_date',
