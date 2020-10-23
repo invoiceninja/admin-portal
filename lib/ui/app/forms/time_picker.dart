@@ -10,6 +10,7 @@ class TimePicker extends StatefulWidget {
     this.previousDate,
     this.validator,
     this.autoValidate = false,
+    this.allowClearing = false,
   }) : super(key: key);
 
   final String labelText;
@@ -18,6 +19,7 @@ class TimePicker extends StatefulWidget {
   final Function(DateTime) onSelected;
   final Function validator;
   final bool autoValidate;
+  final bool allowClearing;
 
   @override
   _TimePickerState createState() => new _TimePickerState();
@@ -47,7 +49,7 @@ class _TimePickerState extends State<TimePicker> {
   void _onFoucsChanged() {
     if (!_focusNode.hasFocus) {
       _textController.text = formatDate(
-          widget.selectedDate.toIso8601String(), context,
+          widget.selectedDate?.toIso8601String(), context,
           showDate: false, showTime: true);
     }
   }
@@ -99,14 +101,25 @@ class _TimePickerState extends State<TimePicker> {
       controller: _textController,
       decoration: InputDecoration(
         labelText: widget.labelText,
-        suffixIcon: IconButton(
-          icon: Icon(Icons.access_time),
-          onPressed: () => _showTimePicker(),
-        ),
+        suffixIcon: widget.allowClearing && widget.selectedDate != null
+            ? IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  _textController.text = '';
+                  widget.onSelected(null);
+                },
+              )
+            : IconButton(
+                icon: Icon(Icons.access_time),
+                onPressed: () => _showTimePicker(),
+              ),
       ),
       onChanged: (value) {
         if (value.isEmpty) {
-          //widget.onSelected(null);
+          if (widget.allowClearing) {
+            widget.onSelected(null);
+          }
+
         } else {
           final dateTime = parseTime(value, context);
 

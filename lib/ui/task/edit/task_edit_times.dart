@@ -227,6 +227,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               labelText: localization.endTime,
               selectedDate: _endDate,
               previousDate: _startDate,
+              allowClearing: true,
               onSelected: (timeOfDay) {
                 setState(() {
                   _endDate = timeOfDay;
