@@ -154,7 +154,6 @@ abstract class VendorEntity extends Object
 
   String get website;
 
-  @nullable // TODO remove this
   String get number;
 
   @BuiltValueField(wireName: 'vat_number')

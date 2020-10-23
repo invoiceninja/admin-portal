@@ -192,6 +192,9 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       serializers.serialize(object.documents,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DocumentEntity)])),
+      'number',
+      serializers.serialize(object.number,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -244,12 +247,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       result
         ..add('custom_value4')
         ..add(serializers.serialize(object.customValue4,
-            specifiedType: const FullType(String)));
-    }
-    if (object.number != null) {
-      result
-        ..add('number')
-        ..add(serializers.serialize(object.number,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -1012,6 +1009,9 @@ class _$ExpenseEntity extends ExpenseEntity {
     }
     if (documents == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'documents');
+    }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'number');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'createdAt');

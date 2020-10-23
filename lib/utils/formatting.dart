@@ -287,10 +287,9 @@ String parseDate(String value, BuildContext context) {
   final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
       ? company.settings.dateFormatId
       : kDefaultDateFormat;
-  String format = dateFormats[dateFormatId].format;
 
-  final formatter = DateFormat(
-      dateFormats[company.settings.dateFormatId].format, localeSelector(state));
+  final format = dateFormats[dateFormatId].format;
+  final formatter = DateFormat(format, localeSelector(state));
 
   return convertDateTimeToSqlDate(formatter.parse(value));
 }

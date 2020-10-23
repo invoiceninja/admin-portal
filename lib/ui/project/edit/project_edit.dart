@@ -98,6 +98,7 @@ class _ProjectEditState extends State<ProjectEdit> {
         ..name = _nameController.text.trim()
         ..budgetedHours = parseDouble(_hoursController.text)
         ..taskRate = parseDouble(_taskRateController.text)
+        ..publicNotes = _publicNotesController.text.trim()
         ..privateNotes = _privateNotesController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()

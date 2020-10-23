@@ -250,7 +250,6 @@ abstract class ExpenseEntity extends Object
 
   BuiltList<DocumentEntity> get documents;
 
-  @nullable // TODO remove this
   String get number;
 
   @override

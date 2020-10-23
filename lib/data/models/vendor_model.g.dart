@@ -143,6 +143,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'website',
       serializers.serialize(object.website,
           specifiedType: const FullType(String)),
+      'number',
+      serializers.serialize(object.number,
+          specifiedType: const FullType(String)),
       'vat_number',
       serializers.serialize(object.vatNumber,
           specifiedType: const FullType(String)),
@@ -180,12 +183,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.number != null) {
-      result
-        ..add('number')
-        ..add(serializers.serialize(object.number,
-            specifiedType: const FullType(String)));
-    }
     if (object.documents != null) {
       result
         ..add('documents')
@@ -815,6 +812,9 @@ class _$VendorEntity extends VendorEntity {
     }
     if (website == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'website');
+    }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'number');
     }
     if (vatNumber == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'vatNumber');
