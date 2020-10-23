@@ -25,6 +25,13 @@ class TimePicker extends StatefulWidget {
 
 class _TimePickerState extends State<TimePicker> {
   final _textController = TextEditingController();
+  final _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFoucsChanged);
+  }
 
   @override
   void didChangeDependencies() {
@@ -37,9 +44,19 @@ class _TimePickerState extends State<TimePicker> {
     super.didChangeDependencies();
   }
 
+  void _onFoucsChanged() {
+    if (!_focusNode.hasFocus) {
+      _textController.text = formatDate(
+          widget.selectedDate.toIso8601String(), context,
+          showDate: false, showTime: true);
+    }
+  }
+
   @override
   void dispose() {
     _textController.dispose();
+    _focusNode.removeListener(_onFoucsChanged);
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -73,21 +90,39 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => _showTimePicker(),
-      child: IgnorePointer(
-        child: TextFormField(
-          validator: widget.validator,
-          autovalidateMode: widget.autoValidate
-              ? AutovalidateMode.always
-              : AutovalidateMode.onUserInteraction,
-          controller: _textController,
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            suffixIcon: Icon(Icons.access_time),
-          ),
+    return TextFormField(
+      focusNode: _focusNode,
+      validator: widget.validator,
+      autovalidateMode: widget.autoValidate
+          ? AutovalidateMode.always
+          : AutovalidateMode.onUserInteraction,
+      controller: _textController,
+      decoration: InputDecoration(
+        labelText: widget.labelText,
+        suffixIcon: IconButton(
+          icon: Icon(Icons.access_time),
+          onPressed: () => _showTimePicker(),
         ),
       ),
+      onChanged: (value) {
+        if (value.isEmpty) {
+          //widget.onSelected(null);
+        } else {
+          final dateTime = parseTime(value, context);
+
+          if (dateTime != null) {
+            final selectedDate = widget.selectedDate;
+            widget.onSelected(DateTime(
+              selectedDate.year,
+              selectedDate.month,
+              selectedDate.day,
+              dateTime.hour,
+              dateTime.minute,
+              dateTime.second,
+            ));
+          }
+        }
+      },
     );
   }
 }

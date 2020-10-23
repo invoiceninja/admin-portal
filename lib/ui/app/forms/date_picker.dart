@@ -30,9 +30,14 @@ class _DatePickerState extends State<DatePicker> {
   final _focusNode = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFoucsChanged);
+  }
+
+  @override
   void didChangeDependencies() {
     _textController.text = formatDate(widget.selectedDate, context);
-    _focusNode.addListener(_onFoucsChanged);
 
     super.didChangeDependencies();
   }
@@ -84,55 +89,50 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.centerRight,
-      children: <Widget>[
-        TextFormField(
-          focusNode: _focusNode,
-          validator: widget.validator,
-          autovalidateMode: widget.autoValidate
-              ? AutovalidateMode.always
-              : AutovalidateMode.onUserInteraction,
-          controller: _textController,
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-          ),
-          onChanged: (value) {
-            if (value.isEmpty) {
-              widget.onSelected('');
-            } else {
-              String date = '';
-              if (isAllDigits(value)) {
-                if (value.length < 4) {
-                  value = '0$value';
-                }
-                if (value.length < 5) {
-                  value = '${DateTime.now().year}$value';
-                }
-                date = convertDateTimeToSqlDate(DateTime.tryParse(value));
-              } else {
-                date = parseDate(value, context);
-              }
-
-              if ((date ?? '').isNotEmpty) {
-                widget.onSelected(date);
-              }
+    return TextFormField(
+      focusNode: _focusNode,
+      validator: widget.validator,
+      autovalidateMode: widget.autoValidate
+          ? AutovalidateMode.always
+          : AutovalidateMode.onUserInteraction,
+      controller: _textController,
+      decoration: InputDecoration(
+          labelText: widget.labelText,
+          suffixIcon:
+              widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
+                  ? IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        _textController.text = '';
+                        widget.onSelected('');
+                      },
+                    )
+                  : IconButton(
+                      icon: Icon(Icons.date_range),
+                      onPressed: () => _showDatePicker(),
+                    )),
+      onChanged: (value) {
+        if (value.isEmpty) {
+          widget.onSelected('');
+        } else {
+          String date = '';
+          if (isAllDigits(value)) {
+            if (value.length < 4) {
+              value = '0$value';
             }
-          },
-        ),
-        widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
-            ? IconButton(
-                icon: Icon(Icons.clear),
-                onPressed: () {
-                  _textController.text = '';
-                  widget.onSelected('');
-                },
-              )
-            : IconButton(
-                icon: Icon(Icons.date_range),
-                onPressed: () => _showDatePicker(),
-              )
-      ],
+            if (value.length < 5) {
+              value = '${DateTime.now().year}$value';
+            }
+            date = convertDateTimeToSqlDate(DateTime.tryParse(value));
+          } else {
+            date = parseDate(value, context);
+          }
+
+          if ((date ?? '').isNotEmpty) {
+            widget.onSelected(date);
+          }
+        }
+      },
     );
   }
 }

@@ -213,22 +213,27 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               labelText: localization.startTime,
               selectedDate: _startDate,
               onSelected: (timeOfDay) {
-                _startDate = timeOfDay;
-                _durationController.text = _endDate != null
-                    ? formatDuration(_endDate.difference(_startDate))
-                    : '';
+                setState(() {
+                  _startDate = timeOfDay;
+                  _durationController.text = _endDate != null
+                      ? formatDuration(_endDate.difference(_startDate))
+                      : '';
+                });
               },
             ),
             TimePicker(
-              key: ValueKey(_endDate),
+              //key: ValueKey(_endDate),
               labelText: localization.endTime,
               selectedDate: _endDate,
               previousDate: _startDate,
               onSelected: (timeOfDay) {
-                _endDate = timeOfDay;
-                _durationController.text = _endDate != null
-                    ? formatDuration(_endDate.difference(_startDate))
-                    : '';
+                setState(() {
+                  _endDate = timeOfDay;
+                  print('## Start UTC: ${_startDate.isUtc ? 'true' : 'false'}, End UTC: ${_endDate.isUtc ? 'true' : 'false'}');
+                  _durationController.text = _endDate != null
+                      ? formatDuration(_endDate.difference(_startDate))
+                      : '';
+                });
               },
             ),
             PopupMenuButton<int>(
