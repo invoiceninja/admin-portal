@@ -102,6 +102,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   String _date;
   DateTime _startDate;
   DateTime _endDate;
+  int _duration;
 
   final _durationController = TextEditingController();
 
@@ -222,14 +223,13 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               },
             ),
             TimePicker(
-              //key: ValueKey(_endDate),
+              key: ValueKey(_duration),
               labelText: localization.endTime,
               selectedDate: _endDate,
               previousDate: _startDate,
               onSelected: (timeOfDay) {
                 setState(() {
                   _endDate = timeOfDay;
-                  print('## Start UTC: ${_startDate.isUtc ? 'true' : 'false'}, End UTC: ${_endDate.isUtc ? 'true' : 'false'}');
                   _durationController.text = _endDate != null
                       ? formatDuration(_endDate.difference(_startDate))
                       : '';
@@ -254,6 +254,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                       formatDuration(Duration(minutes: minutes));
                   final dateTime = _startDate.add(Duration(minutes: minutes));
                   _endDate = dateTime;
+                  _duration = minutes;
                 });
               },
               child: InkWell(
