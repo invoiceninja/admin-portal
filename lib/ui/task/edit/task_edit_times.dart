@@ -203,7 +203,11 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             DatePicker(
               labelText: localization.date,
               selectedDate: _date,
-              onSelected: (date) => _date = date,
+              onSelected: (date) {
+                setState(() {
+                  _date = date;
+                });
+              },
             ),
             TimePicker(
               labelText: localization.startTime,

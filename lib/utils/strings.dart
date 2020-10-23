@@ -1,5 +1,4 @@
 bool isAllDigits(String value) {
-  print('## COMPARE: ${value.replaceAll(RegExp('[^\\d]'), '')} to $value');
   return value.replaceAll(RegExp('[^\\d]'), '') == value;
 }
 
