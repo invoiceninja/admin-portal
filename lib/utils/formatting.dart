@@ -302,8 +302,8 @@ DateTime parseTime(String value, BuildContext context) {
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company;
 
-  bool showSeconds = true;
-  bool enableMilitaryTime = company.settings.enableMilitaryTime;
+  final showSeconds = ':'.allMatches(value).length >= 2;
+  final enableMilitaryTime = company.settings.enableMilitaryTime;
   String format;
 
   format = showSeconds

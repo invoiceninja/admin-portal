@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class TimePicker extends StatefulWidget {
@@ -119,20 +121,34 @@ class _TimePickerState extends State<TimePicker> {
           if (widget.allowClearing) {
             widget.onSelected(null);
           }
-
         } else {
-          final dateTime = parseTime(value, context);
+          print('## Value was: $value');
+          if (value.allMatches(':').length < 2) {
+            value += ':00';
+            if (value.allMatches(':').length < 2) {
+              value += ':00';
+            }
+          }
 
+          final store = StoreProvider.of<AppState>(context);
+          if (!store.state.company.settings.enableMilitaryTime) {
+            final hour = parseDouble(value.split(':').first);
+            value += hour >= 6 ? ' AM' : ' PM';
+          }
+
+          final dateTime = parseTime(value, context);
+          print('## DATE TIME: $dateTime');
           if (dateTime != null) {
-            final selectedDate = widget.selectedDate;
-            widget.onSelected(DateTime(
-              selectedDate.year,
-              selectedDate.month,
-              selectedDate.day,
+            final date = widget.selectedDate ?? DateTime.now();
+            final selectedDate = DateTime(
+              date.year,
+              date.month,
+              date.day,
               dateTime.hour,
               dateTime.minute,
               dateTime.second,
-            ));
+            );
+            widget.onSelected(selectedDate);
           }
         }
       },
