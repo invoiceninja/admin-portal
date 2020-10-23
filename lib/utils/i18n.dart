@@ -80,8 +80,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'allow_over_payment': 'Allow Over Payment',
       'allow_over_payment_help': 'Support paying extra to accept tips',
       'allow_under_payment': 'Allow Under Payment',
-      'allow_under_payment_help':
-          'Support paying a minimum amount',
+      'allow_under_payment_help': 'Support paying a minimum amount',
       'test_mode': 'Test Mode',
       'opened': 'opened',
       'payment_reconciliation_failure': 'Reconciliation Failure',
@@ -1387,6 +1386,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_paid': 'Tax Paid Amount',
       'payment_amount': 'Payment Amount',
       'age': 'Age',
+      'is_running': 'Is Running',
+      'time_log': 'Time Log',
+      'bank_id': 'Bank Id',
+      'expense_category_id': 'Expense Category ID',
+      'expense_category': 'Expense Category',
+      'expense_currency_id': 'Expense Currency ID',
+      'invoice_currency_id': 'Invoice Currency ID',
+      'tax_name1': 'Tax Name 1',
+      'tax_name2': 'Tax Name 2',
+      'transaction_id': 'Transaction ID',
     },
     // OTHER_LANGUAGES
   };
@@ -4688,6 +4697,31 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get shouldBeInvoicedHelp =>
       _localizedValues[localeCode]['should_be_invoiced_help'] ?? '';
+
+  String get isRunning => _localizedValues[localeCode]['is_running'] ?? '';
+
+  String get timeLog => _localizedValues[localeCode]['time_log'] ?? '';
+
+  String get bankId => _localizedValues[localeCode]['bank_id'] ?? '';
+
+  String get expenseCategoryId =>
+      _localizedValues[localeCode]['expense_category_id'] ?? '';
+
+  String get expenseCategory =>
+      _localizedValues[localeCode]['expense_category'] ?? '';
+
+  String get expenseCurrencyId =>
+      _localizedValues[localeCode]['expense_currency_id'] ?? '';
+
+  String get invoiceCurrencyId =>
+      _localizedValues[localeCode]['invoice_currency_id'] ?? '';
+
+  String get taxName1 => _localizedValues[localeCode]['tax_name1'] ?? '';
+
+  String get taxName2 => _localizedValues[localeCode]['tax_name2'] ?? '';
+
+  String get transactionId =>
+      _localizedValues[localeCode]['transaction_id'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
