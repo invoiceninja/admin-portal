@@ -213,6 +213,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             TimePicker(
               labelText: localization.startTime,
               selectedDate: _startDate,
+              selectedDateTime: _startDate,
               onSelected: (timeOfDay) {
                 setState(() {
                   _startDate = timeOfDay;
@@ -225,8 +226,8 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             TimePicker(
               key: ValueKey(_duration),
               labelText: localization.endTime,
-              selectedDate: _endDate,
-              previousDate: _startDate,
+              selectedDate: _startDate,
+              selectedDateTime: _endDate,
               allowClearing: true,
               onSelected: (timeOfDay) {
                 setState(() {

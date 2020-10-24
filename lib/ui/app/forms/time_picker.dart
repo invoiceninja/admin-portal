@@ -8,16 +8,16 @@ class TimePicker extends StatefulWidget {
     Key key,
     @required this.labelText,
     @required this.onSelected,
+    @required this.selectedDateTime,
     @required this.selectedDate,
-    this.previousDate,
     this.validator,
     this.autoValidate = false,
     this.allowClearing = false,
   }) : super(key: key);
 
   final String labelText;
-  final DateTime previousDate;
   final DateTime selectedDate;
+  final DateTime selectedDateTime;
   final Function(DateTime) onSelected;
   final Function validator;
   final bool autoValidate;
@@ -39,9 +39,9 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   void didChangeDependencies() {
-    if (widget.selectedDate != null) {
+    if (widget.selectedDateTime != null) {
       _textController.text = formatDate(
-          widget.selectedDate.toIso8601String(), context,
+          widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
     }
 
@@ -51,7 +51,7 @@ class _TimePickerState extends State<TimePicker> {
   void _onFoucsChanged() {
     if (!_focusNode.hasFocus) {
       _textController.text = formatDate(
-          widget.selectedDate?.toIso8601String(), context,
+          widget.selectedDateTime?.toIso8601String(), context,
           showDate: false, showTime: true);
     }
   }
@@ -65,11 +65,11 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   void _showTimePicker() async {
-    final selectedDate = widget.selectedDate;
+    final selectedDateTime = widget.selectedDateTime;
     final now = DateTime.now();
 
-    final hour = selectedDate?.hour ?? now.hour;
-    final minute = selectedDate?.minute ?? now.minute;
+    final hour = selectedDateTime?.hour ?? now.hour;
+    final minute = selectedDateTime?.minute ?? now.minute;
 
     final TimeOfDay selectedTime = await showTimePicker(
       context: context,
@@ -78,10 +78,11 @@ class _TimePickerState extends State<TimePicker> {
     );
 
     if (selectedTime != null) {
-      var dateTime = convertTimeOfDayToDateTime(selectedTime, selectedDate);
+      var dateTime =
+          convertTimeOfDayToDateTime(selectedTime, widget.selectedDate);
 
-      if (widget.previousDate != null &&
-          dateTime.isBefore(widget.previousDate)) {
+      if (widget.selectedDate != null &&
+          dateTime.isBefore(widget.selectedDate)) {
         dateTime = dateTime.add(Duration(days: 1));
       }
 
@@ -103,7 +104,7 @@ class _TimePickerState extends State<TimePicker> {
       controller: _textController,
       decoration: InputDecoration(
         labelText: widget.labelText,
-        suffixIcon: widget.allowClearing && widget.selectedDate != null
+        suffixIcon: widget.allowClearing && widget.selectedDateTime != null
             ? IconButton(
                 icon: Icon(Icons.clear),
                 onPressed: () {
@@ -139,8 +140,8 @@ class _TimePickerState extends State<TimePicker> {
           final dateTime = parseTime(value, context);
           print('## DATE TIME: $dateTime');
           if (dateTime != null) {
-            final date = widget.selectedDate ?? DateTime.now();
-            final selectedDate = DateTime(
+            final date = widget.selectedDate;
+            var selectedDate = DateTime(
               date.year,
               date.month,
               date.day,
@@ -148,6 +149,9 @@ class _TimePickerState extends State<TimePicker> {
               dateTime.minute,
               dateTime.second,
             );
+            if (selectedDate.isBefore(date)) {
+              selectedDate = selectedDate.add(Duration(days: 1));
+            }
             widget.onSelected(selectedDate);
           }
         }
