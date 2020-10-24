@@ -123,22 +123,40 @@ class _TimePickerState extends State<TimePicker> {
             widget.onSelected(null);
           }
         } else {
-          print('## Value was: $value');
-          if (value.allMatches(':').length < 2) {
-            value += ':00';
-            if (value.allMatches(':').length < 2) {
-              value += ':00';
+          print('## Value was: $value (${value.length})');
+          final initialValue = value;
+          value = value.replaceAll(RegExp('[^\\d\:]'), '');
+          value = value.toLowerCase().replaceAll('.', ':');
+
+          final parts = value.split(':');
+          String dateTimeStr = '';
+
+          if (parts.length < 3) {
+            if (parts.length == 1) {
+              dateTimeStr = parts[0] + ':00:00';
+            } else if (parts.length == 2) {
+              dateTimeStr = parts[0] + ':' + parts[1];
+              if (parts[1].length == 1) {
+                dateTimeStr += '0';
+              }
+              dateTimeStr += ':00';
+            }
+
+            if (initialValue.contains('a')) {
+              dateTimeStr += ' AM';
+            } else if (initialValue.contains('p')) {
+              dateTimeStr += ' PM';
+            } else {
+              final store = StoreProvider.of<AppState>(context);
+              if (!store.state.company.settings.enableMilitaryTime) {
+                final hour = parseDouble(parts[0]);
+                dateTimeStr += hour > 6 ? ' AM' : ' PM';
+              }
             }
           }
 
-          final store = StoreProvider.of<AppState>(context);
-          if (!store.state.company.settings.enableMilitaryTime) {
-            final hour = parseDouble(value.split(':').first);
-            value += hour >= 6 ? ' AM' : ' PM';
-          }
+          final dateTime = parseTime(dateTimeStr, context);
 
-          final dateTime = parseTime(value, context);
-          print('## DATE TIME: $dateTime');
           if (dateTime != null) {
             final date = widget.selectedDate;
             var selectedDate = DateTime(
@@ -148,7 +166,7 @@ class _TimePickerState extends State<TimePicker> {
               dateTime.hour,
               dateTime.minute,
               dateTime.second,
-            );
+            ).toLocal();
             if (selectedDate.isBefore(date)) {
               selectedDate = selectedDate.add(Duration(days: 1));
             }
