@@ -272,6 +272,7 @@ void handleExpenseCategoryAction(BuildContext context,
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final expenseCategory = expenseCategories.first as ExpenseCategoryEntity;
   final expenseCategoryIds =
@@ -298,6 +299,14 @@ void handleExpenseCategoryAction(BuildContext context,
           snackBarCompleter<Null>(context, localization.deletedExpenseCategory),
           expenseCategoryIds));
       break;
+    case EntityAction.newExpense:
+      createEntity(
+        context: context,
+        filterEntity: expenseCategory,
+        entity: ExpenseEntity(state: state)
+            .rebuild((b) => b..categoryId = expenseCategory.id),
+      );
+      break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseCategoryListState.isInMultiselect()) {
         store.dispatch(StartExpenseCategoryMultiselect());
@@ -323,6 +332,9 @@ void handleExpenseCategoryAction(BuildContext context,
         entities: [expenseCategory],
         context: context,
       );
+      break;
+    default:
+      print('Error: unhandled action $action');
       break;
   }
 }

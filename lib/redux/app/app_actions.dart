@@ -1308,7 +1308,6 @@ void handleEntitiesActions(
     case EntityType.expenseCategory:
       handleExpenseCategoryAction(context, entities, action);
       break;
-
     case EntityType.recurringInvoice:
       handleRecurringInvoiceAction(context, entities, action);
       break;
