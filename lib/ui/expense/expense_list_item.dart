@@ -53,21 +53,17 @@ class ExpenseListItem extends StatelessWidget {
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else if (client != null || vendor != null || category != null) {
+      List<String> parts = [];
       if (category != null) {
-        //subtitle += category.name;
-        if (vendor != null || client != null) {
-          subtitle += ' • ';
-        }
+        //parts.add(category.name);
       }
       if (vendor != null) {
-        subtitle += vendor.name;
-        if (client != null) {
-          subtitle += ' • ';
-        }
+        parts.add(vendor.name);
       }
       if (client != null) {
-        subtitle += client.displayName;
+        parts.add(client.displayName);
       }
+      subtitle = parts.join(' • ');
     }
     if (expense.documents.isNotEmpty) {
       if (subtitle.isNotEmpty) {
