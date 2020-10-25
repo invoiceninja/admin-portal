@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -15,7 +16,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ExpenseCategoryEditScreen extends StatelessWidget {
   const ExpenseCategoryEditScreen({Key key}) : super(key: key);
-  static const String route = '/expense_category/edit';
+
+  static const String route = '/$kSettings/$kSettingsExpenseCategoryEdit';
 
   @override
   Widget build(BuildContext context) {
