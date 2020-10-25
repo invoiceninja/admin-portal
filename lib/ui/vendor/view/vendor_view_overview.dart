@@ -32,6 +32,8 @@ class VendorOverview extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final statics = state.staticState;
     final fields = <String, String>{};
+    final user =
+        vendor.hasUser ? state.userState.get(vendor.assignedUserId) : null;
 
     if (vendor.hasCurrency && vendor.currencyId != company.currencyId) {
       fields[VendorFields.currencyId] =
@@ -70,6 +72,11 @@ class VendorOverview extends StatelessWidget {
           IconMessage(vendor.privateNotes, iconData: Icons.lock),
           ListDivider()
         ],
+        if (vendor.hasUser)
+          EntityListTile(
+            entity: user,
+            isFilter: isFilter,
+          ),
         FieldGrid(fields),
         ListDivider(),
         EntitiesListTile(

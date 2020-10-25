@@ -67,7 +67,10 @@ class _ExpenseViewState extends State<ExpenseView>
           children: <Widget>[
             RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
-              child: ExpenseOverview(viewModel: viewModel),
+              child: ExpenseOverview(
+                viewModel: viewModel,
+                isFilter: widget.isFilter,
+              ),
             ),
             RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),

@@ -334,6 +334,8 @@ abstract class VendorEntity extends Object
 
   bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
 
+  bool get hasUser => assignedUserId != null && assignedUserId.isNotEmpty;
+
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 
   bool get hasNameSet {

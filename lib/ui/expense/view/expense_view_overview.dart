@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -15,9 +16,11 @@ class ExpenseOverview extends StatelessWidget {
   const ExpenseOverview({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final ExpenseViewVM viewModel;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,7 @@ class ExpenseOverview extends StatelessWidget {
     final client = state.clientState.map[expense.clientId];
     final invoice = state.invoiceState.map[expense.invoiceId];
     final category = company.expenseCategoryMap[expense.categoryId];
+    final user = state.userState.get(expense.assignedUserId);
 
     final fields = <String, String>{
       localization.category: category?.name,
@@ -119,62 +123,10 @@ class ExpenseOverview extends StatelessWidget {
         ],
         FieldGrid(fields),
         ListDivider(),
-        vendor == null
-            ? SizedBox()
-            : Material(
-                color: Theme.of(context).canvasColor,
-                child: ListTile(
-                  title: EntityStateTitle(entity: vendor),
-                  leading: Icon(getEntityIcon(EntityType.vendor), size: 18),
-                  trailing: Icon(Icons.navigate_next),
-                  onTap: () =>
-                      viewModel.onEntityPressed(context, EntityType.vendor),
-                  onLongPress: () => viewModel.onEntityPressed(
-                      context, EntityType.vendor, true),
-                ),
-              ),
-        vendor == null
-            ? SizedBox()
-            : Container(
-                color: Theme.of(context).backgroundColor,
-                height: 12.0,
-              ),
-        client == null
-            ? SizedBox()
-            : Material(
-                color: Theme.of(context).canvasColor,
-                child: ListTile(
-                  title: EntityStateTitle(entity: client),
-                  leading: Icon(getEntityIcon(EntityType.client), size: 18),
-                  trailing: Icon(Icons.navigate_next),
-                  onTap: () =>
-                      viewModel.onEntityPressed(context, EntityType.client),
-                  onLongPress: () => viewModel.onEntityPressed(
-                      context, EntityType.client, true),
-                ),
-              ),
-        client == null
-            ? SizedBox()
-            : Container(
-                color: Theme.of(context).backgroundColor,
-                height: 12.0,
-              ),
-        invoice == null
-            ? SizedBox()
-            : Material(
-                color: Theme.of(context).canvasColor,
-                child: ListTile(
-                  title: EntityStateTitle(
-                    entity: invoice,
-                  ),
-                  leading: Icon(getEntityIcon(EntityType.invoice), size: 18),
-                  trailing: Icon(Icons.navigate_next),
-                  onTap: () =>
-                      viewModel.onEntityPressed(context, EntityType.invoice),
-                  onLongPress: () => viewModel.onEntityPressed(
-                      context, EntityType.invoice, true),
-                ),
-              ),
+        EntityListTile(entity: vendor, isFilter: isFilter),
+        EntityListTile(entity: client, isFilter: isFilter),
+        EntityListTile(entity: invoice, isFilter: isFilter),
+        EntityListTile(entity: user, isFilter: isFilter),
         ..._buildDetailsList(),
         if ((expense.publicNotes ?? '').isNotEmpty) ...[
           IconMessage(expense.publicNotes),
