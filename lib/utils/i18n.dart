@@ -25,7 +25,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_expense_category': 'Successfully deleted expense category',
       'removed_expense_category': 'Successfully removed expense category',
       'restored_expense_category': 'Successfully restored expense category',
-      'search_expense_category': 'Search Expense Category',
+      'search_expense_category': 'Search 1 Expense Category',
       'search_expense_categories': 'Search :count Expense Categories',
       'use_available_credits': 'Use Available Credits',
       'show_option': 'Show Option',
