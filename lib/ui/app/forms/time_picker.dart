@@ -123,7 +123,6 @@ class _TimePickerState extends State<TimePicker> {
             widget.onSelected(null);
           }
         } else {
-          print('## Value was: $value (${value.length})');
           final initialValue = value;
           value = value.replaceAll(RegExp('[^\\d\:]'), '');
           value = value.toLowerCase().replaceAll('.', ':');
@@ -166,9 +165,9 @@ class _TimePickerState extends State<TimePicker> {
               dateTime.hour,
               dateTime.minute,
               dateTime.second,
-            ).toLocal();
+            );
             if (selectedDate.isBefore(date)) {
-              selectedDate = selectedDate.add(Duration(days: 1));
+              selectedDate = selectedDate.add(Duration(hours: 24));
             }
             widget.onSelected(selectedDate);
           }
