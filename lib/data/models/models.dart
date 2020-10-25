@@ -10,6 +10,7 @@ export 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 export 'package:invoiceninja_flutter/data/models/document_model.dart';
 export 'package:invoiceninja_flutter/data/models/entities.dart';
 export 'package:invoiceninja_flutter/data/models/expense_model.dart';
+export 'package:invoiceninja_flutter/data/models/expense_category_model.dart';
 export 'package:invoiceninja_flutter/data/models/token_model.dart';
 export 'package:invoiceninja_flutter/data/models/webhook_model.dart';
 export 'package:invoiceninja_flutter/data/models/invoice_model.dart';
