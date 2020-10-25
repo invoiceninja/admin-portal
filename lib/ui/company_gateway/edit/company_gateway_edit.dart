@@ -201,7 +201,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           const EdgeInsets.only(left: 16, top: 16, bottom: 16),
                       child: Text(
                         localization.acceptedCardLogos,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                     CardListTile(
