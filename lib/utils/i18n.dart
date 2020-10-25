@@ -1402,7 +1402,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'time_log': 'Time Log',
       'bank_id': 'Bank Id',
       'expense_category_id': 'Expense Category ID',
-      'expense_category': 'Expense Category',
+      'expense_category': 'Category',
       'expense_currency_id': 'Expense Currency ID',
       'invoice_currency_id': 'Invoice Currency ID',
       'tax_name1': 'Tax Name 1',
