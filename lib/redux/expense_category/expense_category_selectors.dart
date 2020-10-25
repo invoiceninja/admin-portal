@@ -92,6 +92,29 @@ double calculateExpenseCategoryAmount({
   return total;
 }
 
+var memoizedExpenseStatsForExpenseCategory = memo2(
+    (String companyGatewayId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        expenseStatsForExpenseCategory(companyGatewayId, expenseMap));
+
+EntityStats expenseStatsForExpenseCategory(
+  String categoryId,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+) {
+  int countActive = 0;
+  int countArchived = 0;
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.categoryId == categoryId) {
+      if (expense.isActive) {
+        countActive++;
+      } else if (expense.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasExpenseCategoryChanges(ExpenseCategoryEntity expenseCategory,
         BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap) =>
     expenseCategory.isNew
