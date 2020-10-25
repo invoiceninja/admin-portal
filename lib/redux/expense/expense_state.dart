@@ -55,7 +55,7 @@ abstract class ExpenseUIState extends Object
     implements Built<ExpenseUIState, ExpenseUIStateBuilder> {
   factory ExpenseUIState() {
     return _$ExpenseUIState._(
-      listUIState: ListUIState(ExpenseFields.number),
+      listUIState: ListUIState(ExpenseFields.number, sortAscending: false),
       editing: ExpenseEntity(),
       selectedId: '',
     );

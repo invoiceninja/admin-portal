@@ -56,7 +56,7 @@ abstract class VendorUIState extends Object
     implements Built<VendorUIState, VendorUIStateBuilder> {
   factory VendorUIState() {
     return _$VendorUIState._(
-      listUIState: ListUIState(VendorFields.number),
+      listUIState: ListUIState(VendorFields.number, sortAscending: false),
       editing: VendorEntity(),
       editingContact: VendorContactEntity(),
       selectedId: '',
