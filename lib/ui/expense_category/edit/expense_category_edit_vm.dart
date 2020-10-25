@@ -65,6 +65,7 @@ class ExpenseCategoryEditVM {
       onCancelPressed: (BuildContext context) {
         createEntity(
             context: context, entity: ExpenseCategoryEntity(), force: true);
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
         final Completer<ExpenseCategoryEntity> completer =

@@ -3,6 +3,8 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -43,6 +45,7 @@ class ExpenseCategoryViewVM {
     @required this.expenseCategory,
     @required this.company,
     @required this.onEntityAction,
+    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -70,6 +73,8 @@ class ExpenseCategoryViewVM {
       isLoading: state.isLoading,
       isDirty: expenseCategory.isNew,
       expenseCategory: expenseCategory,
+      onBackPressed: () =>
+          store.dispatch(UpdateCurrentRoute(ExpenseCategoryScreen.route)),
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [expenseCategory], action,
@@ -82,6 +87,7 @@ class ExpenseCategoryViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
+  final Function onBackPressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

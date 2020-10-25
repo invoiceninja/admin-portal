@@ -26,6 +26,7 @@ class _ExpenseCategoryViewState extends State<ExpenseCategoryView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: expenseCategory,
+      onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[],
       ),
