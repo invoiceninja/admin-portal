@@ -72,6 +72,26 @@ List<String> filteredExpenseCategoriesSelector(
   return list;
 }
 
+var memoizedCalculateExpenseCategoryAmount = memo2(
+    (String categoryId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        calculateExpenseCategoryAmount(
+            categoryId: categoryId, expenseMap: expenseMap));
+
+double calculateExpenseCategoryAmount({
+  String categoryId,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+}) {
+  double total = 0;
+
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.categoryId == categoryId) {
+      total += expense.amount;
+    }
+  });
+
+  return total;
+}
+
 bool hasExpenseCategoryChanges(ExpenseCategoryEntity expenseCategory,
         BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap) =>
     expenseCategory.isNew

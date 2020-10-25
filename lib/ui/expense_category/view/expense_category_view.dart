@@ -1,7 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseCategoryView extends StatefulWidget {
   const ExpenseCategoryView({
@@ -22,13 +26,21 @@ class _ExpenseCategoryViewState extends State<ExpenseCategoryView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final expenseCategory = viewModel.expenseCategory;
+    final localization = AppLocalization.of(context);
+    final amount = memoizedCalculateExpenseCategoryAmount(
+        expenseCategory.id, viewModel.state.expenseState.map);
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: expenseCategory,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
-        children: <Widget>[],
+        children: <Widget>[
+          EntityHeader(
+              entity: expenseCategory,
+              label: localization.total,
+              value: formatNumber(amount, context)),
+        ],
       ),
     );
   }
