@@ -142,7 +142,7 @@ Duration taskDurationForProject(
 }
 
 var memoizedProjectStatsForClient = memo2(
-        (String clientId, BuiltMap<String, ProjectEntity> projectMap) =>
+    (String clientId, BuiltMap<String, ProjectEntity> projectMap) =>
         projectStatsForClient(clientId, projectMap));
 
 EntityStats projectStatsForClient(
@@ -163,7 +163,7 @@ EntityStats projectStatsForClient(
 }
 
 var memoizedProjectStatsForUser = memo2(
-        (String userId, BuiltMap<String, ProjectEntity> projectMap) =>
+    (String userId, BuiltMap<String, ProjectEntity> projectMap) =>
         projectStatsForClient(userId, projectMap));
 
 EntityStats projectStatsForUser(

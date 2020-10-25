@@ -16,6 +16,12 @@ Serializer<ExpenseCategoryEntity> _$expenseCategoryEntitySerializer =
     new _$ExpenseCategoryEntitySerializer();
 Serializer<ExpenseStatusEntity> _$expenseStatusEntitySerializer =
     new _$ExpenseStatusEntitySerializer();
+Serializer<ExpenseCategoryListResponse>
+    _$expenseCategoryListResponseSerializer =
+    new _$ExpenseCategoryListResponseSerializer();
+Serializer<ExpenseCategoryItemResponse>
+    _$expenseCategoryItemResponseSerializer =
+    new _$ExpenseCategoryItemResponseSerializer();
 
 class _$ExpenseListResponseSerializer
     implements StructuredSerializer<ExpenseListResponse> {
@@ -617,6 +623,102 @@ class _$ExpenseStatusEntitySerializer
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ExpenseCategoryListResponseSerializer
+    implements StructuredSerializer<ExpenseCategoryListResponse> {
+  @override
+  final Iterable<Type> types = const [
+    ExpenseCategoryListResponse,
+    _$ExpenseCategoryListResponse
+  ];
+  @override
+  final String wireName = 'ExpenseCategoryListResponse';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, ExpenseCategoryListResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'data',
+      serializers.serialize(object.data,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ExpenseCategoryEntity)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  ExpenseCategoryListResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ExpenseCategoryListResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ExpenseCategoryEntity)]))
+              as BuiltList<Object>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ExpenseCategoryItemResponseSerializer
+    implements StructuredSerializer<ExpenseCategoryItemResponse> {
+  @override
+  final Iterable<Type> types = const [
+    ExpenseCategoryItemResponse,
+    _$ExpenseCategoryItemResponse
+  ];
+  @override
+  final String wireName = 'ExpenseCategoryItemResponse';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, ExpenseCategoryItemResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'data',
+      serializers.serialize(object.data,
+          specifiedType: const FullType(ExpenseCategoryEntity)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ExpenseCategoryItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ExpenseCategoryItemResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ExpenseCategoryEntity))
+              as ExpenseCategoryEntity);
           break;
       }
     }
@@ -1766,6 +1868,202 @@ class ExpenseStatusEntityBuilder
   @override
   _$ExpenseStatusEntity build() {
     final _$result = _$v ?? new _$ExpenseStatusEntity._(id: id, name: name);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ExpenseCategoryListResponse extends ExpenseCategoryListResponse {
+  @override
+  final BuiltList<ExpenseCategoryEntity> data;
+
+  factory _$ExpenseCategoryListResponse(
+          [void Function(ExpenseCategoryListResponseBuilder) updates]) =>
+      (new ExpenseCategoryListResponseBuilder()..update(updates)).build();
+
+  _$ExpenseCategoryListResponse._({this.data}) : super._() {
+    if (data == null) {
+      throw new BuiltValueNullFieldError('ExpenseCategoryListResponse', 'data');
+    }
+  }
+
+  @override
+  ExpenseCategoryListResponse rebuild(
+          void Function(ExpenseCategoryListResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ExpenseCategoryListResponseBuilder toBuilder() =>
+      new ExpenseCategoryListResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ExpenseCategoryListResponse && data == other.data;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(0, data.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ExpenseCategoryListResponse')
+          ..add('data', data))
+        .toString();
+  }
+}
+
+class ExpenseCategoryListResponseBuilder
+    implements
+        Builder<ExpenseCategoryListResponse,
+            ExpenseCategoryListResponseBuilder> {
+  _$ExpenseCategoryListResponse _$v;
+
+  ListBuilder<ExpenseCategoryEntity> _data;
+  ListBuilder<ExpenseCategoryEntity> get data =>
+      _$this._data ??= new ListBuilder<ExpenseCategoryEntity>();
+  set data(ListBuilder<ExpenseCategoryEntity> data) => _$this._data = data;
+
+  ExpenseCategoryListResponseBuilder();
+
+  ExpenseCategoryListResponseBuilder get _$this {
+    if (_$v != null) {
+      _data = _$v.data?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ExpenseCategoryListResponse other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$ExpenseCategoryListResponse;
+  }
+
+  @override
+  void update(void Function(ExpenseCategoryListResponseBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ExpenseCategoryListResponse build() {
+    _$ExpenseCategoryListResponse _$result;
+    try {
+      _$result = _$v ?? new _$ExpenseCategoryListResponse._(data: data.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'data';
+        data.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ExpenseCategoryListResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ExpenseCategoryItemResponse extends ExpenseCategoryItemResponse {
+  @override
+  final ExpenseCategoryEntity data;
+
+  factory _$ExpenseCategoryItemResponse(
+          [void Function(ExpenseCategoryItemResponseBuilder) updates]) =>
+      (new ExpenseCategoryItemResponseBuilder()..update(updates)).build();
+
+  _$ExpenseCategoryItemResponse._({this.data}) : super._() {
+    if (data == null) {
+      throw new BuiltValueNullFieldError('ExpenseCategoryItemResponse', 'data');
+    }
+  }
+
+  @override
+  ExpenseCategoryItemResponse rebuild(
+          void Function(ExpenseCategoryItemResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ExpenseCategoryItemResponseBuilder toBuilder() =>
+      new ExpenseCategoryItemResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ExpenseCategoryItemResponse && data == other.data;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(0, data.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ExpenseCategoryItemResponse')
+          ..add('data', data))
+        .toString();
+  }
+}
+
+class ExpenseCategoryItemResponseBuilder
+    implements
+        Builder<ExpenseCategoryItemResponse,
+            ExpenseCategoryItemResponseBuilder> {
+  _$ExpenseCategoryItemResponse _$v;
+
+  ExpenseCategoryEntityBuilder _data;
+  ExpenseCategoryEntityBuilder get data =>
+      _$this._data ??= new ExpenseCategoryEntityBuilder();
+  set data(ExpenseCategoryEntityBuilder data) => _$this._data = data;
+
+  ExpenseCategoryItemResponseBuilder();
+
+  ExpenseCategoryItemResponseBuilder get _$this {
+    if (_$v != null) {
+      _data = _$v.data?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ExpenseCategoryItemResponse other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$ExpenseCategoryItemResponse;
+  }
+
+  @override
+  void update(void Function(ExpenseCategoryItemResponseBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ExpenseCategoryItemResponse build() {
+    _$ExpenseCategoryItemResponse _$result;
+    try {
+      _$result = _$v ?? new _$ExpenseCategoryItemResponse._(data: data.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'data';
+        data.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ExpenseCategoryItemResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

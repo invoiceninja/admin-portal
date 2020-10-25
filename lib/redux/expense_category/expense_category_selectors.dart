@@ -1,0 +1,79 @@
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:memoize/memoize.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+
+var memoizedDropdownExpenseCategoryList = memo5(
+    (BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+            BuiltList<String> expenseCategoryList,
+            StaticState staticState,
+            BuiltMap<String, UserEntity> userMap,
+            String clientId) =>
+        dropdownExpenseCategoriesSelector(expenseCategoryMap,
+            expenseCategoryList, staticState, userMap, clientId));
+
+List<String> dropdownExpenseCategoriesSelector(
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltList<String> expenseCategoryList,
+    StaticState staticState,
+    BuiltMap<String, UserEntity> userMap,
+    String clientId) {
+  final list = expenseCategoryList.where((expenseCategoryId) {
+    final expenseCategory = expenseCategoryMap[expenseCategoryId];
+    /*
+    if (clientId != null && clientId > 0 && expenseCategory.clientId != clientId) {
+      return false;
+    }
+    */
+    return expenseCategory.isActive;
+  }).toList();
+
+  list.sort((expenseCategoryAId, expenseCategoryBId) {
+    final expenseCategoryA = expenseCategoryMap[expenseCategoryAId];
+    final expenseCategoryB = expenseCategoryMap[expenseCategoryBId];
+    return expenseCategoryA.compareTo(
+        expenseCategory: expenseCategoryB,
+        sortField: ExpenseCategoryFields.name,
+        sortAscending: true);
+  });
+
+  return list;
+}
+
+var memoizedFilteredExpenseCategoryList = memo3(
+    (BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+            BuiltList<String> expenseCategoryList,
+            ListUIState expenseCategoryListState) =>
+        filteredExpenseCategoriesSelector(
+            expenseCategoryMap, expenseCategoryList, expenseCategoryListState));
+
+List<String> filteredExpenseCategoriesSelector(
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltList<String> expenseCategoryList,
+    ListUIState expenseCategoryListState) {
+  final list = expenseCategoryList.where((expenseCategoryId) {
+    final expenseCategory = expenseCategoryMap[expenseCategoryId];
+
+    if (!expenseCategory.matchesStates(expenseCategoryListState.stateFilters)) {
+      return false;
+    }
+    return expenseCategory.matchesFilter(expenseCategoryListState.filter);
+  }).toList();
+
+  list.sort((expenseCategoryAId, expenseCategoryBId) {
+    return expenseCategoryMap[expenseCategoryAId].compareTo(
+      expenseCategory: expenseCategoryMap[expenseCategoryBId],
+      sortField: expenseCategoryListState.sortField,
+      sortAscending: expenseCategoryListState.sortAscending,
+    );
+  });
+
+  return list;
+}
+
+bool hasExpenseCategoryChanges(ExpenseCategoryEntity expenseCategory,
+        BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap) =>
+    expenseCategory.isNew
+        ? expenseCategory.isChanged
+        : expenseCategory != expenseCategoryMap[expenseCategory.id];

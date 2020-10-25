@@ -21,7 +21,10 @@ List<String> dropdownExpenseCategoriesSelector(
   list.sort((categoryAId, categoryBId) {
     final categoryA = categoryMap[categoryAId];
     final categoryB = categoryMap[categoryBId];
-    return categoryA.compareTo(categoryB, ExpenseCategoryFields.name, true);
+    return categoryA.compareTo(
+        expenseCategory: categoryB,
+        sortAscending: true,
+        sortField: ExpenseCategoryFields.name);
   });
 
   return list;

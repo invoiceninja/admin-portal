@@ -36,14 +36,20 @@ List<String> dropdownStubsSelector(BuiltMap<String, StubEntity> stubMap,
   return list;
 }
 
-var memoizedFilteredStubList = memo7((BuiltMap<String, StubEntity> stubMap,
+var memoizedFilteredStubList = memo7((
+        String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, StubEntity> stubMap,
         BuiltList<String> stubList,
         StaticState staticState,
         BuiltMap<String, UserEntity> userMap, 
         ListUIState stubListState) =>
-    filteredStubsSelector(stubMap, stubList, staticState, userMap, stubListState));
+    filteredStubsSelector(filterEntityId, filterEntityType, stubMap, stubList, staticState, userMap, stubListState));
 
-List<String> filteredStubsSelector(BuiltMap<String, StubEntity> stubMap,
+List<String> filteredStubsSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
+    BuiltMap<String, StubEntity> stubMap,
     BuiltList<String> stubList, 
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
@@ -75,9 +81,6 @@ List<String> filteredStubsSelector(BuiltMap<String, StubEntity> stubMap,
       stub: stubMap[stubBId],
       sortField: stubListState.sortField,
       sortAscending: stubListState.sortAscending,
-      //clientMap: clientMap,
-      staticState: staticState,
-      userMap: userMap,
     );
   });
 

@@ -23,6 +23,8 @@ import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
@@ -318,6 +320,19 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.group.id, entityType: EntityType.group))),
   // STARTER: history - do not remove comment
+  TypedReducer<BuiltList<HistoryRecord>, ViewExpenseCategory>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.expenseCategoryId,
+              entityType: EntityType.expenseCategory))),
+  TypedReducer<BuiltList<HistoryRecord>, EditExpenseCategory>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.expenseCategory.id,
+              entityType: EntityType.expenseCategory))),
+
   TypedReducer<BuiltList<HistoryRecord>, ViewRecurringInvoice>(
       (historyList, action) => _addToHistory(
           historyList,

@@ -123,10 +123,7 @@ class _ProjectOverviewState extends State<ProjectOverview> {
       ]);
 
       if ((project.publicNotes ?? '').isNotEmpty) {
-        widgets.addAll([
-          IconMessage(project.publicNotes),
-          ListDivider()
-        ]);
+        widgets.addAll([IconMessage(project.publicNotes), ListDivider()]);
       }
 
       return widgets;

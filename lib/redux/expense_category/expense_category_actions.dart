@@ -1,0 +1,328 @@
+import 'dart:async';
+import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+
+class ViewExpenseCategoryList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
+  ViewExpenseCategoryList({
+    @required NavigatorState navigator,
+    this.force = false,
+  }) : super(navigator: navigator);
+
+  final bool force;
+}
+
+class ViewExpenseCategory extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  ViewExpenseCategory({
+    @required NavigatorState navigator,
+    @required this.expenseCategoryId,
+    this.force = false,
+  }) : super(navigator: navigator);
+
+  final String expenseCategoryId;
+  final bool force;
+}
+
+class EditExpenseCategory extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  EditExpenseCategory(
+      {@required this.expenseCategory,
+      @required NavigatorState navigator,
+      this.completer,
+      this.cancelCompleter,
+      this.force = false})
+      : super(navigator: navigator);
+
+  final ExpenseCategoryEntity expenseCategory;
+  final Completer completer;
+  final Completer cancelCompleter;
+  final bool force;
+}
+
+class UpdateExpenseCategory implements PersistUI {
+  UpdateExpenseCategory(this.expenseCategory);
+
+  final ExpenseCategoryEntity expenseCategory;
+}
+
+class LoadExpenseCategory {
+  LoadExpenseCategory({this.completer, this.expenseCategoryId});
+
+  final Completer completer;
+  final String expenseCategoryId;
+}
+
+class LoadExpenseCategoryActivity {
+  LoadExpenseCategoryActivity({this.completer, this.expenseCategoryId});
+
+  final Completer completer;
+  final String expenseCategoryId;
+}
+
+class LoadExpenseCategories {
+  LoadExpenseCategories({this.completer});
+
+  final Completer completer;
+}
+
+class LoadExpenseCategoryRequest implements StartLoading {}
+
+class LoadExpenseCategoryFailure implements StopLoading {
+  LoadExpenseCategoryFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadExpenseCategoryFailure{error: $error}';
+  }
+}
+
+class LoadExpenseCategorySuccess implements StopLoading, PersistData {
+  LoadExpenseCategorySuccess(this.expenseCategory);
+
+  final ExpenseCategoryEntity expenseCategory;
+
+  @override
+  String toString() {
+    return 'LoadExpenseCategorySuccess{expenseCategory: $expenseCategory}';
+  }
+}
+
+class LoadExpenseCategoriesRequest implements StartLoading {}
+
+class LoadExpenseCategoriesFailure implements StopLoading {
+  LoadExpenseCategoriesFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadExpenseCategoriesFailure{error: $error}';
+  }
+}
+
+class LoadExpenseCategoriesSuccess implements StopLoading {
+  LoadExpenseCategoriesSuccess(this.expenseCategories);
+
+  final BuiltList<ExpenseCategoryEntity> expenseCategories;
+
+  @override
+  String toString() {
+    return 'LoadExpenseCategoriesSuccess{expenseCategories: $expenseCategories}';
+  }
+}
+
+class SaveExpenseCategoryRequest implements StartSaving {
+  SaveExpenseCategoryRequest({this.completer, this.expenseCategory});
+
+  final Completer completer;
+  final ExpenseCategoryEntity expenseCategory;
+}
+
+class SaveExpenseCategorySuccess implements StopSaving, PersistData, PersistUI {
+  SaveExpenseCategorySuccess(this.expenseCategory);
+
+  final ExpenseCategoryEntity expenseCategory;
+}
+
+class AddExpenseCategorySuccess implements StopSaving, PersistData, PersistUI {
+  AddExpenseCategorySuccess(this.expenseCategory);
+
+  final ExpenseCategoryEntity expenseCategory;
+}
+
+class SaveExpenseCategoryFailure implements StopSaving {
+  SaveExpenseCategoryFailure(this.error);
+
+  final Object error;
+}
+
+class ArchiveExpenseCategoriesRequest implements StartSaving {
+  ArchiveExpenseCategoriesRequest(this.completer, this.expenseCategoryIds);
+
+  final Completer completer;
+  final List<String> expenseCategoryIds;
+}
+
+class ArchiveExpenseCategoriesSuccess implements StopSaving, PersistData {
+  ArchiveExpenseCategoriesSuccess(this.expenseCategories);
+
+  final List<ExpenseCategoryEntity> expenseCategories;
+}
+
+class ArchiveExpenseCategoriesFailure implements StopSaving {
+  ArchiveExpenseCategoriesFailure(this.expenseCategories);
+
+  final List<ExpenseCategoryEntity> expenseCategories;
+}
+
+class DeleteExpenseCategoriesRequest implements StartSaving {
+  DeleteExpenseCategoriesRequest(this.completer, this.expenseCategoryIds);
+
+  final Completer completer;
+  final List<String> expenseCategoryIds;
+}
+
+class DeleteExpenseCategoriesSuccess implements StopSaving, PersistData {
+  DeleteExpenseCategoriesSuccess(this.expenseCategories);
+
+  final List<ExpenseCategoryEntity> expenseCategories;
+}
+
+class DeleteExpenseCategoriesFailure implements StopSaving {
+  DeleteExpenseCategoriesFailure(this.expenseCategories);
+
+  final List<ExpenseCategoryEntity> expenseCategories;
+}
+
+class RestoreExpenseCategoriesRequest implements StartSaving {
+  RestoreExpenseCategoriesRequest(this.completer, this.expenseCategoryIds);
+
+  final Completer completer;
+  final List<String> expenseCategoryIds;
+}
+
+class RestoreExpenseCategoriesSuccess implements StopSaving, PersistData {
+  RestoreExpenseCategoriesSuccess(this.expenseCategories);
+
+  final List<ExpenseCategoryEntity> expenseCategories;
+}
+
+class RestoreExpenseCategoriesFailure implements StopSaving {
+  RestoreExpenseCategoriesFailure(this.expenseCategories);
+
+  final List<ExpenseCategoryEntity> expenseCategories;
+}
+
+class FilterExpenseCategories implements PersistUI {
+  FilterExpenseCategories(this.filter);
+
+  final String filter;
+}
+
+class SortExpenseCategories implements PersistUI {
+  SortExpenseCategories(this.field);
+
+  final String field;
+}
+
+class FilterExpenseCategoriesByState implements PersistUI {
+  FilterExpenseCategoriesByState(this.state);
+
+  final EntityState state;
+}
+
+class FilterExpenseCategoriesByCustom1 implements PersistUI {
+  FilterExpenseCategoriesByCustom1(this.value);
+
+  final String value;
+}
+
+class FilterExpenseCategoriesByCustom2 implements PersistUI {
+  FilterExpenseCategoriesByCustom2(this.value);
+
+  final String value;
+}
+
+class FilterExpenseCategoriesByCustom3 implements PersistUI {
+  FilterExpenseCategoriesByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterExpenseCategoriesByCustom4 implements PersistUI {
+  FilterExpenseCategoriesByCustom4(this.value);
+
+  final String value;
+}
+
+class StartExpenseCategoryMultiselect {
+  StartExpenseCategoryMultiselect();
+}
+
+class AddToExpenseCategoryMultiselect {
+  AddToExpenseCategoryMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromExpenseCategoryMultiselect {
+  RemoveFromExpenseCategoryMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearExpenseCategoryMultiselect {
+  ClearExpenseCategoryMultiselect();
+}
+
+void handleExpenseCategoryAction(BuildContext context,
+    List<BaseEntity> expenseCategories, EntityAction action) {
+  if (expenseCategories.isEmpty) {
+    return;
+  }
+
+  final store = StoreProvider.of<AppState>(context);
+  final localization = AppLocalization.of(context);
+  final expenseCategory = expenseCategories.first as ExpenseCategoryEntity;
+  final expenseCategoryIds =
+      expenseCategories.map((expenseCategory) => expenseCategory.id).toList();
+
+  switch (action) {
+    case EntityAction.edit:
+      editEntity(context: context, entity: expenseCategory);
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreExpenseCategoriesRequest(
+          snackBarCompleter<Null>(
+              context, localization.restoredExpenseCategory),
+          expenseCategoryIds));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveExpenseCategoriesRequest(
+          snackBarCompleter<Null>(
+              context, localization.archivedExpenseCategory),
+          expenseCategoryIds));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteExpenseCategoriesRequest(
+          snackBarCompleter<Null>(context, localization.deletedExpenseCategory),
+          expenseCategoryIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.expenseCategoryListState.isInMultiselect()) {
+        store.dispatch(StartExpenseCategoryMultiselect());
+      }
+
+      if (expenseCategories.isEmpty) {
+        break;
+      }
+
+      for (final expenseCategory in expenseCategories) {
+        if (!store.state.expenseCategoryListState
+            .isSelected(expenseCategory.id)) {
+          store.dispatch(
+              AddToExpenseCategoryMultiselect(entity: expenseCategory));
+        } else {
+          store.dispatch(
+              RemoveFromExpenseCategoryMultiselect(entity: expenseCategory));
+        }
+      }
+      break;
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [expenseCategory],
+        context: context,
+      );
+      break;
+  }
+}

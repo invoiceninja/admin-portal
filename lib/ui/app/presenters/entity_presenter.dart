@@ -61,8 +61,8 @@ class EntityPresenter {
   }
 
   static bool isFieldLocalized(String field) => [
-    'status',
-  ].contains(field);
+        'status',
+      ].contains(field);
 
   static bool isFieldNumeric(String field) => [
         'balance',

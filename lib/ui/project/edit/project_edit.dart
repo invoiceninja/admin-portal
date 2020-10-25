@@ -177,8 +177,8 @@ class _ProjectEditState extends State<ProjectEdit> {
                       : SizedBox(),
                   UserPicker(
                     userId: project.assignedUserId,
-                    onChanged: (userId) => viewModel
-                        .onChanged(project.rebuild((b) => b..assignedUserId = userId)),
+                    onChanged: (userId) => viewModel.onChanged(
+                        project.rebuild((b) => b..assignedUserId = userId)),
                   ),
                   DatePicker(
                     labelText: localization.dueDate,

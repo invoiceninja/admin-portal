@@ -494,12 +494,18 @@ class ExpenseCategoryFields {
 abstract class ExpenseCategoryEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
-  factory ExpenseCategoryEntity() {
+  factory ExpenseCategoryEntity({String id, AppState state}) {
     return _$ExpenseCategoryEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
       name: '',
       isDeleted: false,
+      createdAt: 0,
+      updatedAt: 0,
+      entityType: EntityType.expenseCategory,
+      createdUserId: '',
+      assignedUserId: '',
+      archivedAt: 0,
     );
   }
 
@@ -546,10 +552,10 @@ abstract class ExpenseCategoryEntity extends Object
   String get name;
 
   int compareTo(
-      ExpenseCategoryEntity category, String sortField, bool sortAscending) {
+      {ExpenseCategoryEntity expenseCategory, String sortField, bool sortAscending}) {
     int response = 0;
-    final ExpenseCategoryEntity categoryA = sortAscending ? this : category;
-    final ExpenseCategoryEntity categoryB = sortAscending ? category : this;
+    final ExpenseCategoryEntity categoryA = sortAscending ? this : expenseCategory;
+    final ExpenseCategoryEntity categoryB = sortAscending ? expenseCategory : this;
 
     switch (sortField) {
       case ExpenseCategoryFields.name:
@@ -591,4 +597,42 @@ abstract class ExpenseStatusEntity extends Object
 
   static Serializer<ExpenseStatusEntity> get serializer =>
       _$expenseStatusEntitySerializer;
+}
+
+abstract class ExpenseCategoryListResponse
+    implements
+        Built<ExpenseCategoryListResponse, ExpenseCategoryListResponseBuilder> {
+  factory ExpenseCategoryListResponse(
+          [void updates(ExpenseCategoryListResponseBuilder b)]) =
+      _$ExpenseCategoryListResponse;
+
+  ExpenseCategoryListResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  BuiltList<ExpenseCategoryEntity> get data;
+
+  static Serializer<ExpenseCategoryListResponse> get serializer =>
+      _$expenseCategoryListResponseSerializer;
+}
+
+abstract class ExpenseCategoryItemResponse
+    implements
+        Built<ExpenseCategoryItemResponse, ExpenseCategoryItemResponseBuilder> {
+  factory ExpenseCategoryItemResponse(
+          [void updates(ExpenseCategoryItemResponseBuilder b)]) =
+      _$ExpenseCategoryItemResponse;
+
+  ExpenseCategoryItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  ExpenseCategoryEntity get data;
+
+  static Serializer<ExpenseCategoryItemResponse> get serializer =>
+      _$expenseCategoryItemResponseSerializer;
 }
