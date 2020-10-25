@@ -683,10 +683,6 @@ abstract class UserCompanyEntity
       return true;
     }
 
-    if (!company.isModuleEnabled(entityType)) {
-      return false;
-    }
-
     if (isAdmin ?? false) {
       return true;
     }

@@ -42,7 +42,6 @@ class UserView extends StatelessWidget {
             value: user.email,
             label: localization.email,
             secondLabel: localization.phone,
-            secondValue: user.phone,
           ),
           ListDivider(),
           if (userCompany.canViewOrCreate(EntityType.invoice))

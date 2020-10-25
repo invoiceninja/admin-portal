@@ -179,12 +179,6 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
     final isFilterMatch =
         widget.isFilter && '${widget.entityType}' == mainRoute;
 
-    if (![EntityType.invoice, EntityType.task, EntityType.expense]
-            .contains(widget.entityType) &&
-        (widget.subtitle ?? '').isEmpty) {
-      return SizedBox();
-    }
-
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),
       onExit: (event) => setState(() => _isHovered = false),

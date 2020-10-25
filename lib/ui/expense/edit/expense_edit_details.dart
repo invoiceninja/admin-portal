@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -167,6 +168,11 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     expense.rebuild((b) => b..categoryId = category?.id ?? ''));
               },
             ),
+            UserPicker(
+              userId: expense.assignedUserId,
+              onChanged: (userId) => viewModel.onChanged(
+                  expense.rebuild((b) => b..assignedUserId = userId)),
+            ),
             DecoratedFormField(
               controller: _amountController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -188,8 +194,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               labelText: localization.date,
               selectedDate: expense.date,
               onSelected: (date) {
-                viewModel
-                    .onChanged(expense.rebuild((b) => b..date = date));
+                viewModel.onChanged(expense.rebuild((b) => b..date = date));
               },
             ),
             CustomField(
