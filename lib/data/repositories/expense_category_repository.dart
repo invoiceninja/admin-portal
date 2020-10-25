@@ -17,7 +17,7 @@ class ExpenseCategoryRepository {
   Future<ExpenseCategoryEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/expense_categorys/$entityId', credentials.token);
+        '${credentials.url}/expense_categories/$entityId', credentials.token);
 
     final ExpenseCategoryItemResponse expenseCategoryResponse = serializers
         .deserializeWith(ExpenseCategoryItemResponse.serializer, response);
@@ -27,7 +27,7 @@ class ExpenseCategoryRepository {
 
   Future<BuiltList<ExpenseCategoryEntity>> loadList(
       Credentials credentials) async {
-    final String url = credentials.url + '/expense_categorys?';
+    final String url = credentials.url + '/expense_categories?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ExpenseCategoryListResponse expenseCategoryResponse = serializers
@@ -38,7 +38,7 @@ class ExpenseCategoryRepository {
 
   Future<List<ExpenseCategoryEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    final url = credentials.url + '/expense_categorys/bulk';
+    final url = credentials.url + '/expense_categories/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -56,10 +56,10 @@ class ExpenseCategoryRepository {
 
     if (expenseCategory.isNew) {
       response = await webClient.post(
-          credentials.url + '/expense_categorys', credentials.token,
+          credentials.url + '/expense_categories', credentials.token,
           data: json.encode(data));
     } else {
-      final url = '${credentials.url}/expense_categorys/${expenseCategory.id}';
+      final url = '${credentials.url}/expense_categories/${expenseCategory.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
