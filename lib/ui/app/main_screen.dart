@@ -23,6 +23,9 @@ import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
@@ -496,6 +499,15 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsWebhookEdit:
         screen = WebhookEditScreen();
+        break;
+      case kSettingsExpenseCategories:
+        screen = ExpenseCategoryScreenBuilder();
+        break;
+      case kSettingsExpenseCategoryView:
+        screen = ExpenseCategoryViewScreen();
+        break;
+      case kSettingsExpenseCategoryEdit:
+        screen = ExpenseCategoryEditScreen();
         break;
     }
 

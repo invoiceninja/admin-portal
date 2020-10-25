@@ -37,6 +37,7 @@ class EntityType extends EnumClass {
   static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
+
   // STARTER: entity type - do not remove comment
   static const EntityType webhook = _$webhook;
   static const EntityType token = _$token;
@@ -57,6 +58,10 @@ class EntityType extends EnumClass {
   static const EntityType font = _$font;
 
   String get plural {
+    if (this == EntityType.expenseCategory) {
+      return 'expenseCategories';
+    }
+
     return toString() + 's';
   }
 
@@ -69,6 +74,7 @@ class EntityType extends EnumClass {
         EntityType.design,
         EntityType.token,
         EntityType.webhook,
+        EntityType.expenseCategory,
       ].contains(this);
 
   List<EntityType> get relatedTypes {

@@ -20,7 +20,7 @@ class ExpenseCategoryScreen extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  static const String route = '/$kSettings/$kSettingsExpenseCategory';
+  static const String route = '/$kSettings/$kSettingsExpenseCategories';
 
   final ExpenseCategoryScreenVM viewModel;
 

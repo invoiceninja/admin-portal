@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'configure_categories': 'Configure Categories',
       'expense_categories': 'Expense Categories',
       'new_expense_category': 'New Expense Category',
       'edit_expense_category': 'Edit Expense Category',
@@ -24,7 +25,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_expense_category': 'Successfully deleted expense category',
       'removed_expense_category': 'Successfully removed expense category',
       'restored_expense_category': 'Successfully restored expense category',
-      'search_expense_category': 'Search ExpenseCategory',
+      'search_expense_category': 'Search Expense Category',
+      'search_expense_categories': 'Search :count Expense Categories',
       'use_available_credits': 'Use Available Credits',
       'show_option': 'Show Option',
       'negative_payment_error':
@@ -3705,22 +3707,31 @@ mixin LocalizationsProvider on LocaleCodeAware {
 // STARTER: lang field - do not remove comment
   String get expenseCategory =>
       _localizedValues[localeCode]['expense_category'];
+
   String get expenseCategories =>
       _localizedValues[localeCode]['expense_categories'];
+
   String get newExpenseCategory =>
       _localizedValues[localeCode]['new_expense_category'];
+
   String get createdExpenseCategory =>
       _localizedValues[localeCode]['created_expense_category'];
+
   String get updatedExpenseCategory =>
       _localizedValues[localeCode]['updated_expense_category'];
+
   String get archivedExpenseCategory =>
       _localizedValues[localeCode]['archived_expense_category'];
+
   String get deletedExpenseCategory =>
       _localizedValues[localeCode]['deleted_expense_category'];
+
   String get restoredExpenseCategory =>
       _localizedValues[localeCode]['restored_expense_category'];
+
   String get editExpenseCategory =>
       _localizedValues[localeCode]['edit_expense_category'];
+
   String get searchExpenseCategory =>
       _localizedValues[localeCode]['search_expense_category'];
 
@@ -4750,6 +4761,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get transactionId =>
       _localizedValues[localeCode]['transaction_id'] ?? '';
+
+  String get configureCategories =>
+      _localizedValues[localeCode]['configure_categories'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

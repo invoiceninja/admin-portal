@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
@@ -75,6 +76,14 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                     company.rebuild((b) => b..invoiceExpenseDocuments = value)),
               ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: AppButton(
+              iconData: Icons.settings,
+              label: localization.configureCategories.toUpperCase(),
+              onPressed: () => viewModel.onConfigureCategoriesPressed(context),
+            ),
           ),
         ],
       ),

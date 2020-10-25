@@ -341,7 +341,7 @@ const String kSettingsTokenEdit = 'token_edit';
 const String kSettingsWebhooks = 'webhook';
 const String kSettingsWebhookView = 'webhook_view';
 const String kSettingsWebhookEdit = 'webhook_edit';
-const String kSettingsExpenseCategory = 'expense_category';
+const String kSettingsExpenseCategories = 'expense_category';
 const String kSettingsExpenseCategoryView = 'expense_category_view';
 const String kSettingsExpenseCategoryEdit = 'expense_category_edit';
 
