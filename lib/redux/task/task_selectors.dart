@@ -237,5 +237,28 @@ EntityStats taskStatsForProject(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedTaskStatsForUser = memo2((
+  String userId,
+  BuiltMap<String, TaskEntity> taskMap,
+) =>
+    taskStatsForProject(userId, taskMap));
+
+EntityStats taskStatsForUser(
+    String userId, BuiltMap<String, TaskEntity> taskMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  taskMap.forEach((taskId, task) {
+    if (task.assignedUserId == userId) {
+      if (task.isActive) {
+        countActive++;
+      } else if (task.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasTaskChanges(TaskEntity task, BuiltMap<String, TaskEntity> taskMap) =>
     task.isNew ? task.isChanged : task != taskMap[task.id];

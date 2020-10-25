@@ -66,6 +66,27 @@ List<String> filteredVendorsSelector(
   return list;
 }
 
+var memoizedVendorStatsForUser = memo2(
+    (String userId, BuiltMap<String, VendorEntity> vendorMap) =>
+        vendorStatsForUser(userId, vendorMap));
+
+EntityStats vendorStatsForUser(
+    String userId, BuiltMap<String, VendorEntity> vendorMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  vendorMap.forEach((vendorId, vendor) {
+    if (vendor.assignedUserId == userId) {
+      if (vendor.isActive) {
+        countActive++;
+      } else if (vendor.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 var memoizedCalculateVendorBalance = memo4((String vendorId,
         String currencyId,
         BuiltMap<String, ExpenseEntity> expenseMap,

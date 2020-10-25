@@ -142,7 +142,7 @@ Duration taskDurationForProject(
 }
 
 var memoizedProjectStatsForClient = memo2(
-    (String clientId, BuiltMap<String, ProjectEntity> projectMap) =>
+        (String clientId, BuiltMap<String, ProjectEntity> projectMap) =>
         projectStatsForClient(clientId, projectMap));
 
 EntityStats projectStatsForClient(
@@ -151,6 +151,27 @@ EntityStats projectStatsForClient(
   int countArchived = 0;
   projectMap.forEach((projectId, project) {
     if (project.clientId == clientId) {
+      if (project.isActive) {
+        countActive++;
+      } else if (project.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedProjectStatsForUser = memo2(
+        (String userId, BuiltMap<String, ProjectEntity> projectMap) =>
+        projectStatsForClient(userId, projectMap));
+
+EntityStats projectStatsForUser(
+    String userId, BuiltMap<String, ProjectEntity> projectMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  projectMap.forEach((projectId, project) {
+    if (project.assignedUserId == userId) {
       if (project.isActive) {
         countActive++;
       } else if (project.isArchived) {
