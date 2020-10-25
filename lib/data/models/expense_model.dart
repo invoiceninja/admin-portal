@@ -516,6 +516,9 @@ abstract class ExpenseCategoryEntity extends Object
   int get hashCode;
 
   @override
+  EntityType get entityType => EntityType.expenseCategory;
+
+  @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
       return true;
@@ -552,10 +555,14 @@ abstract class ExpenseCategoryEntity extends Object
   String get name;
 
   int compareTo(
-      {ExpenseCategoryEntity expenseCategory, String sortField, bool sortAscending}) {
+      {ExpenseCategoryEntity expenseCategory,
+      String sortField,
+      bool sortAscending}) {
     int response = 0;
-    final ExpenseCategoryEntity categoryA = sortAscending ? this : expenseCategory;
-    final ExpenseCategoryEntity categoryB = sortAscending ? expenseCategory : this;
+    final ExpenseCategoryEntity categoryA =
+        sortAscending ? this : expenseCategory;
+    final ExpenseCategoryEntity categoryB =
+        sortAscending ? expenseCategory : this;
 
     switch (sortField) {
       case ExpenseCategoryFields.name:
