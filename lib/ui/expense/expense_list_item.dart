@@ -53,7 +53,7 @@ class ExpenseListItem extends StatelessWidget {
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else if (client != null || vendor != null || category != null) {
-      List<String> parts = [];
+      final parts = <String>[];
       if (category != null) {
         //parts.add(category.name);
       }

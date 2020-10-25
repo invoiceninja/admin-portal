@@ -6,6 +6,7 @@ class RecurringInvoiceFields {
   static const String status = 'status';
   static const String invoiceNumber = 'number';
   static const String discount = 'discount';
+  static const String number = 'number';
   static const String poNumber = 'po_number';
   static const String date = 'date';
   static const String dueDateDays = 'due_date_days';
