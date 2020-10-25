@@ -1,3 +1,4 @@
+import 'package:contact_picker/contact_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -108,6 +109,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     final state = viewModel.state;
     final client = viewModel.client;
 
+    final ContactPicker _contactPicker = ContactPicker();
+
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
@@ -150,11 +153,38 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               keyboardType: TextInputType.url,
               onSavePressed: viewModel.onSavePressed,
             ),
-            DecoratedFormField(
-              label: localization.phone,
-              controller: _phoneController,
-              keyboardType: TextInputType.phone,
-              onSavePressed: viewModel.onSavePressed,
+            Stack(
+              children: <Widget>[
+                DecoratedFormField(
+                  label: localization.phone,
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
+                  onSavePressed: viewModel.onSavePressed,
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    color: Theme.of(context).cardColor,
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () async {
+                      Contact contact = await _contactPicker.selectContact();
+                        setState(() {
+                          if(contact != null)
+                          {
+                            _phoneController.text = contact.phoneNumber.number;
+                          }
+                          else {
+                            _phoneController.text = "";
+                          }
+                        });
+                    },
+                  ),
+                ),
+              ],
             ),
             CustomField(
               controller: _custom1Controller,

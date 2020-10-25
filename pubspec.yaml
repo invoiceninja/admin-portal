@@ -57,6 +57,7 @@ dependencies:
   #idb_shim: ^1.11.1+1
   flutter_launcher_icons: ^0.8.0
   overflow_view: ^0.2.1
+  contact_picker: ^0.0.2
 
 dev_dependencies:
   flutter_driver:
