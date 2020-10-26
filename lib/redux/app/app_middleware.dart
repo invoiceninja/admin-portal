@@ -509,6 +509,7 @@ Middleware<AppState> _createDeleteState(
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(kSharedPrefToken, '');
+    prefs.setString(kSharedPrefUrl, '');
 
     next(action);
   };
