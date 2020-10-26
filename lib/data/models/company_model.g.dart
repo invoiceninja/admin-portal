@@ -248,6 +248,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.plan,
             specifiedType: const FullType(String)));
     }
+    if (object.invoiceTaskDocuments != null) {
+      result
+        ..add('invoice_task_documents')
+        ..add(serializers.serialize(object.invoiceTaskDocuments,
+            specifiedType: const FullType(bool)));
+    }
     if (object.enabledModules != null) {
       result
         ..add('enabled_modules')
@@ -561,6 +567,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'invoice_expense_documents':
           result.invoiceExpenseDocuments = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_task_documents':
+          result.invoiceTaskDocuments = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'invoice_task_timelog':
@@ -2963,6 +2973,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool invoiceExpenseDocuments;
   @override
+  final bool invoiceTaskDocuments;
+  @override
   final bool invoiceTaskTimelog;
   @override
   final bool autoStartTasks;
@@ -3049,6 +3061,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.markExpensesInvoiceable,
       this.markExpensesPaid,
       this.invoiceExpenseDocuments,
+      this.invoiceTaskDocuments,
       this.invoiceTaskTimelog,
       this.autoStartTasks,
       this.useCreditsPayment,
@@ -3324,6 +3337,7 @@ class _$CompanyEntity extends CompanyEntity {
         markExpensesInvoiceable == other.markExpensesInvoiceable &&
         markExpensesPaid == other.markExpensesPaid &&
         invoiceExpenseDocuments == other.invoiceExpenseDocuments &&
+        invoiceTaskDocuments == other.invoiceTaskDocuments &&
         invoiceTaskTimelog == other.invoiceTaskTimelog &&
         autoStartTasks == other.autoStartTasks &&
         useCreditsPayment == other.useCreditsPayment &&
@@ -3361,12 +3375,12 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode),
-                                                                                slackWebhookUrl.hashCode),
-                                                                            googleAnalyticsKey.hashCode),
-                                                                        markExpensesInvoiceable.hashCode),
-                                                                    markExpensesPaid.hashCode),
-                                                                invoiceExpenseDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
+                                                                                googleAnalyticsKey.hashCode),
+                                                                            markExpensesInvoiceable.hashCode),
+                                                                        markExpensesPaid.hashCode),
+                                                                    invoiceExpenseDocuments.hashCode),
+                                                                invoiceTaskDocuments.hashCode),
                                                             invoiceTaskTimelog.hashCode),
                                                         autoStartTasks.hashCode),
                                                     useCreditsPayment.hashCode),
@@ -3440,6 +3454,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('markExpensesInvoiceable', markExpensesInvoiceable)
           ..add('markExpensesPaid', markExpensesPaid)
           ..add('invoiceExpenseDocuments', invoiceExpenseDocuments)
+          ..add('invoiceTaskDocuments', invoiceTaskDocuments)
           ..add('invoiceTaskTimelog', invoiceTaskTimelog)
           ..add('autoStartTasks', autoStartTasks)
           ..add('useCreditsPayment', useCreditsPayment)
@@ -3738,6 +3753,11 @@ class CompanyEntityBuilder
   set invoiceExpenseDocuments(bool invoiceExpenseDocuments) =>
       _$this._invoiceExpenseDocuments = invoiceExpenseDocuments;
 
+  bool _invoiceTaskDocuments;
+  bool get invoiceTaskDocuments => _$this._invoiceTaskDocuments;
+  set invoiceTaskDocuments(bool invoiceTaskDocuments) =>
+      _$this._invoiceTaskDocuments = invoiceTaskDocuments;
+
   bool _invoiceTaskTimelog;
   bool get invoiceTaskTimelog => _$this._invoiceTaskTimelog;
   set invoiceTaskTimelog(bool invoiceTaskTimelog) =>
@@ -3859,6 +3879,7 @@ class CompanyEntityBuilder
       _markExpensesInvoiceable = _$v.markExpensesInvoiceable;
       _markExpensesPaid = _$v.markExpensesPaid;
       _invoiceExpenseDocuments = _$v.invoiceExpenseDocuments;
+      _invoiceTaskDocuments = _$v.invoiceTaskDocuments;
       _invoiceTaskTimelog = _$v.invoiceTaskTimelog;
       _autoStartTasks = _$v.autoStartTasks;
       _useCreditsPayment = _$v.useCreditsPayment;
@@ -3951,6 +3972,7 @@ class CompanyEntityBuilder
               markExpensesInvoiceable: markExpensesInvoiceable,
               markExpensesPaid: markExpensesPaid,
               invoiceExpenseDocuments: invoiceExpenseDocuments,
+              invoiceTaskDocuments: invoiceTaskDocuments,
               invoiceTaskTimelog: invoiceTaskTimelog,
               autoStartTasks: autoStartTasks,
               useCreditsPayment: useCreditsPayment,

@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_task_timelog': 'Invoice Task Timelog',
+      'invoice_task_timelog_help': 'Add task timelog to invoice line item',
+      'auto_start_tasks_help': 'Start task counter before saving',
+      'configure_statuses': 'Configure Statuses',
+      'task_settings': 'Task Settings',
       'configure_categories': 'Configure Categories',
       'expense_categories': 'Expense Categories',
       'new_expense_category': 'New Expense Category',
@@ -2317,6 +2322,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get autoStartTasks =>
       _localizedValues[localeCode]['auto_start_tasks'] ?? '';
+
+  String get autoStartTasksHelp =>
+      _localizedValues[localeCode]['auto_start_tasks_help'] ?? '';
 
   String get now => _localizedValues[localeCode]['now'] ?? '';
 
@@ -4764,6 +4772,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get configureCategories =>
       _localizedValues[localeCode]['configure_categories'] ?? '';
+
+  String get configureStatuses =>
+      _localizedValues[localeCode]['configure_statuses'] ?? '';
+
+  String get taskSettings =>
+      _localizedValues[localeCode]['task_settings'] ?? '';
+
+  String get invoiceTaskTimelog =>
+      _localizedValues[localeCode]['invoice_task_timelog'] ?? '';
+
+  String get invoiceTaskTimelogHelp =>
+      _localizedValues[localeCode]['invoice_task_timelog_help'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -270,6 +270,10 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'invoice_expense_documents')
   bool get invoiceExpenseDocuments;
 
+  @nullable // TODO remove this nullable
+  @BuiltValueField(wireName: 'invoice_task_documents')
+  bool get invoiceTaskDocuments;
+
   @BuiltValueField(wireName: 'invoice_task_timelog')
   bool get invoiceTaskTimelog;
 
