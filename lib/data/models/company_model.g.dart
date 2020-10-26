@@ -135,12 +135,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.expenseCategories,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ExpenseCategoryEntity)])),
-      'expenseCategoryMap',
-      serializers.serialize(object.expenseCategoryMap,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(ExpenseCategoryEntity)
-          ])),
       'users',
       serializers.serialize(object.users,
           specifiedType:
@@ -221,6 +215,15 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'mark_expenses_paid',
       serializers.serialize(object.markExpensesPaid,
           specifiedType: const FullType(bool)),
+      'invoice_expense_documents',
+      serializers.serialize(object.invoiceExpenseDocuments,
+          specifiedType: const FullType(bool)),
+      'invoice_task_timelog',
+      serializers.serialize(object.invoiceTaskTimelog,
+          specifiedType: const FullType(bool)),
+      'auto_start_tasks',
+      serializers.serialize(object.autoStartTasks,
+          specifiedType: const FullType(bool)),
       'use_credits_payment',
       serializers.serialize(object.useCreditsPayment,
           specifiedType: const FullType(String)),
@@ -244,12 +247,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('plan')
         ..add(serializers.serialize(object.plan,
             specifiedType: const FullType(String)));
-    }
-    if (object.invoiceExpenseDocuments != null) {
-      result
-        ..add('invoice_expense_documents')
-        ..add(serializers.serialize(object.invoiceExpenseDocuments,
-            specifiedType: const FullType(bool)));
     }
     if (object.enabledModules != null) {
       result
@@ -445,13 +442,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(ExpenseCategoryEntity)]))
               as BuiltList<Object>);
           break;
-        case 'expenseCategoryMap':
-          result.expenseCategoryMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(ExpenseCategoryEntity)
-              ])));
-          break;
         case 'users':
           result.users.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -571,6 +561,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'invoice_expense_documents':
           result.invoiceExpenseDocuments = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_task_timelog':
+          result.invoiceTaskTimelog = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'auto_start_tasks':
+          result.autoStartTasks = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'use_credits_payment':
@@ -2921,8 +2919,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<ExpenseCategoryEntity> expenseCategories;
   @override
-  final BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap;
-  @override
   final BuiltList<UserEntity> users;
   @override
   final BuiltList<ClientEntity> clients;
@@ -2966,6 +2962,10 @@ class _$CompanyEntity extends CompanyEntity {
   final bool markExpensesPaid;
   @override
   final bool invoiceExpenseDocuments;
+  @override
+  final bool invoiceTaskTimelog;
+  @override
+  final bool autoStartTasks;
   @override
   final String useCreditsPayment;
   @override
@@ -3027,7 +3027,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.taskStatusMap,
       this.companyGateways,
       this.expenseCategories,
-      this.expenseCategoryMap,
       this.users,
       this.clients,
       this.products,
@@ -3050,6 +3049,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.markExpensesInvoiceable,
       this.markExpensesPaid,
       this.invoiceExpenseDocuments,
+      this.invoiceTaskTimelog,
+      this.autoStartTasks,
       this.useCreditsPayment,
       this.settings,
       this.enabledModules,
@@ -3164,9 +3165,6 @@ class _$CompanyEntity extends CompanyEntity {
     if (expenseCategories == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategories');
     }
-    if (expenseCategoryMap == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategoryMap');
-    }
     if (users == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'users');
     }
@@ -3231,6 +3229,16 @@ class _$CompanyEntity extends CompanyEntity {
     if (markExpensesPaid == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'markExpensesPaid');
     }
+    if (invoiceExpenseDocuments == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'invoiceExpenseDocuments');
+    }
+    if (invoiceTaskTimelog == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceTaskTimelog');
+    }
+    if (autoStartTasks == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'autoStartTasks');
+    }
     if (useCreditsPayment == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'useCreditsPayment');
     }
@@ -3294,7 +3302,6 @@ class _$CompanyEntity extends CompanyEntity {
         taskStatusMap == other.taskStatusMap &&
         companyGateways == other.companyGateways &&
         expenseCategories == other.expenseCategories &&
-        expenseCategoryMap == other.expenseCategoryMap &&
         users == other.users &&
         clients == other.clients &&
         products == other.products &&
@@ -3317,6 +3324,8 @@ class _$CompanyEntity extends CompanyEntity {
         markExpensesInvoiceable == other.markExpensesInvoiceable &&
         markExpensesPaid == other.markExpensesPaid &&
         invoiceExpenseDocuments == other.invoiceExpenseDocuments &&
+        invoiceTaskTimelog == other.invoiceTaskTimelog &&
+        autoStartTasks == other.autoStartTasks &&
         useCreditsPayment == other.useCreditsPayment &&
         settings == other.settings &&
         enabledModules == other.enabledModules &&
@@ -3352,14 +3361,14 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode),
-                                                                                paymentTerms.hashCode),
-                                                                            customFields.hashCode),
-                                                                        slackWebhookUrl.hashCode),
-                                                                    googleAnalyticsKey.hashCode),
-                                                                markExpensesInvoiceable.hashCode),
-                                                            markExpensesPaid.hashCode),
-                                                        invoiceExpenseDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode),
+                                                                                slackWebhookUrl.hashCode),
+                                                                            googleAnalyticsKey.hashCode),
+                                                                        markExpensesInvoiceable.hashCode),
+                                                                    markExpensesPaid.hashCode),
+                                                                invoiceExpenseDocuments.hashCode),
+                                                            invoiceTaskTimelog.hashCode),
+                                                        autoStartTasks.hashCode),
                                                     useCreditsPayment.hashCode),
                                                 settings.hashCode),
                                             enabledModules.hashCode),
@@ -3409,7 +3418,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('taskStatusMap', taskStatusMap)
           ..add('companyGateways', companyGateways)
           ..add('expenseCategories', expenseCategories)
-          ..add('expenseCategoryMap', expenseCategoryMap)
           ..add('users', users)
           ..add('clients', clients)
           ..add('products', products)
@@ -3432,6 +3440,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('markExpensesInvoiceable', markExpensesInvoiceable)
           ..add('markExpensesPaid', markExpensesPaid)
           ..add('invoiceExpenseDocuments', invoiceExpenseDocuments)
+          ..add('invoiceTaskTimelog', invoiceTaskTimelog)
+          ..add('autoStartTasks', autoStartTasks)
           ..add('useCreditsPayment', useCreditsPayment)
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
@@ -3609,14 +3619,6 @@ class CompanyEntityBuilder
   set expenseCategories(ListBuilder<ExpenseCategoryEntity> expenseCategories) =>
       _$this._expenseCategories = expenseCategories;
 
-  MapBuilder<String, ExpenseCategoryEntity> _expenseCategoryMap;
-  MapBuilder<String, ExpenseCategoryEntity> get expenseCategoryMap =>
-      _$this._expenseCategoryMap ??=
-          new MapBuilder<String, ExpenseCategoryEntity>();
-  set expenseCategoryMap(
-          MapBuilder<String, ExpenseCategoryEntity> expenseCategoryMap) =>
-      _$this._expenseCategoryMap = expenseCategoryMap;
-
   ListBuilder<UserEntity> _users;
   ListBuilder<UserEntity> get users =>
       _$this._users ??= new ListBuilder<UserEntity>();
@@ -3736,6 +3738,16 @@ class CompanyEntityBuilder
   set invoiceExpenseDocuments(bool invoiceExpenseDocuments) =>
       _$this._invoiceExpenseDocuments = invoiceExpenseDocuments;
 
+  bool _invoiceTaskTimelog;
+  bool get invoiceTaskTimelog => _$this._invoiceTaskTimelog;
+  set invoiceTaskTimelog(bool invoiceTaskTimelog) =>
+      _$this._invoiceTaskTimelog = invoiceTaskTimelog;
+
+  bool _autoStartTasks;
+  bool get autoStartTasks => _$this._autoStartTasks;
+  set autoStartTasks(bool autoStartTasks) =>
+      _$this._autoStartTasks = autoStartTasks;
+
   String _useCreditsPayment;
   String get useCreditsPayment => _$this._useCreditsPayment;
   set useCreditsPayment(String useCreditsPayment) =>
@@ -3825,7 +3837,6 @@ class CompanyEntityBuilder
       _taskStatusMap = _$v.taskStatusMap?.toBuilder();
       _companyGateways = _$v.companyGateways?.toBuilder();
       _expenseCategories = _$v.expenseCategories?.toBuilder();
-      _expenseCategoryMap = _$v.expenseCategoryMap?.toBuilder();
       _users = _$v.users?.toBuilder();
       _clients = _$v.clients?.toBuilder();
       _products = _$v.products?.toBuilder();
@@ -3848,6 +3859,8 @@ class CompanyEntityBuilder
       _markExpensesInvoiceable = _$v.markExpensesInvoiceable;
       _markExpensesPaid = _$v.markExpensesPaid;
       _invoiceExpenseDocuments = _$v.invoiceExpenseDocuments;
+      _invoiceTaskTimelog = _$v.invoiceTaskTimelog;
+      _autoStartTasks = _$v.autoStartTasks;
       _useCreditsPayment = _$v.useCreditsPayment;
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
@@ -3916,7 +3929,6 @@ class CompanyEntityBuilder
               taskStatusMap: taskStatusMap.build(),
               companyGateways: companyGateways.build(),
               expenseCategories: expenseCategories.build(),
-              expenseCategoryMap: expenseCategoryMap.build(),
               users: users.build(),
               clients: clients.build(),
               products: products.build(),
@@ -3939,6 +3951,8 @@ class CompanyEntityBuilder
               markExpensesInvoiceable: markExpensesInvoiceable,
               markExpensesPaid: markExpensesPaid,
               invoiceExpenseDocuments: invoiceExpenseDocuments,
+              invoiceTaskTimelog: invoiceTaskTimelog,
+              autoStartTasks: autoStartTasks,
               useCreditsPayment: useCreditsPayment,
               settings: settings.build(),
               enabledModules: enabledModules,
@@ -3968,8 +3982,6 @@ class CompanyEntityBuilder
         companyGateways.build();
         _$failedField = 'expenseCategories';
         expenseCategories.build();
-        _$failedField = 'expenseCategoryMap';
-        expenseCategoryMap.build();
         _$failedField = 'users';
         users.build();
         _$failedField = 'clients';

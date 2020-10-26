@@ -29,7 +29,8 @@ class ExpenseOverview extends StatelessWidget {
     final vendor = state.vendorState.map[expense.vendorId];
     final client = state.clientState.map[expense.clientId];
     final invoice = state.invoiceState.map[expense.invoiceId];
-    final category = company.expenseCategoryMap[expense.categoryId];
+    final project = state.projectState.map[expense.projectId];
+    final category = state.expenseCategoryState.map[expense.categoryId];
     final user = state.userState.get(expense.assignedUserId);
 
     final fields = <String, String>{
@@ -123,8 +124,10 @@ class ExpenseOverview extends StatelessWidget {
         ListDivider(),
         EntityListTile(entity: vendor, isFilter: isFilter),
         EntityListTile(entity: client, isFilter: isFilter),
-        EntityListTile(entity: invoice, isFilter: isFilter),
+        EntityListTile(entity: project, isFilter: isFilter),
+        EntityListTile(entity: category, isFilter: isFilter),
         EntityListTile(entity: user, isFilter: isFilter),
+        EntityListTile(entity: invoice, isFilter: isFilter),
         ..._buildDetailsList(),
         if ((expense.publicNotes ?? '').isNotEmpty) ...[
           IconMessage(expense.publicNotes),

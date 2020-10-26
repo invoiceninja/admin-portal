@@ -89,7 +89,7 @@ class ExpensePresenter extends EntityPresenter {
             '');
       case ExpenseFields.expenseCategory:
       case ExpenseFields.expenseCategoryId:
-        return Text(state.company.expenseCategoryMap[expense.categoryId]
+        return Text(state.expenseCategoryState.map[expense.categoryId]
                 ?.listDisplayName ??
             '');
       case ExpenseFields.paymentDate:

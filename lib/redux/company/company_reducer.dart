@@ -131,8 +131,7 @@ UserCompanyEntity loadCompanySuccessReducer(
   userCompany = userCompany.rebuild((b) => b.company
     ..taskStatuses.replace(<TaskStatusEntity>[])
     ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
-    ..expenseCategories.replace(<ExpenseCategoryEntity>[])
-    ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>()));
+    ..expenseCategories.replace(<ExpenseCategoryEntity>[]));
 
   /*
 
@@ -173,7 +172,6 @@ UserCompanyEntity saveCompanySuccessReducer(
     ..taskStatuses.replace(userCompany.company.taskStatuses)
     ..taskStatusMap.replace(userCompany.company.taskStatusMap)
     ..expenseCategories.replace(userCompany.company.expenseCategories)
-    ..expenseCategoryMap.replace(userCompany.company.expenseCategoryMap)
     ..users.replace(userCompany.company.users));
 
   userCompany = userCompany.rebuild((b) => b..company.replace(company));

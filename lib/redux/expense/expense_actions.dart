@@ -278,7 +278,7 @@ void handleExpenseAction(
     case EntityAction.newInvoice:
       final item = convertExpenseToInvoiceItem(
           expense: expense,
-          categoryMap: company.expenseCategoryMap,
+          categoryMap: state.expenseCategoryState.map,
           company: company);
       createEntity(
           context: context,

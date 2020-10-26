@@ -162,7 +162,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               labelText: localization.category,
               entityId: expense.categoryId,
               entityList: memoizedDropdownExpenseCategoriesList(
-                  company.expenseCategoryMap, company.expenseCategories),
+                  state.expenseCategoryState.map, company.expenseCategories),
               onSelected: (category) {
                 viewModel.onChanged(
                     expense.rebuild((b) => b..categoryId = category?.id ?? ''));

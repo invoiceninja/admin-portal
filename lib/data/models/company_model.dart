@@ -71,6 +71,8 @@ abstract class CompanyEntity extends Object
       slackWebhookUrl: '',
       googleAnalyticsKey: '',
       clientCanRegister: true,
+      autoStartTasks: false,
+      invoiceTaskTimelog: true,
       isLarge: false,
       enableShopApi: false,
       convertProductExchangeRate: false,
@@ -90,7 +92,6 @@ abstract class CompanyEntity extends Object
       taskStatusMap: BuiltMap<String, TaskStatusEntity>(),
       companyGateways: BuiltList<CompanyGatewayEntity>(),
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
-      expenseCategoryMap: BuiltMap<String, ExpenseCategoryEntity>(),
       users: BuiltList<UserEntity>(),
       customFields: BuiltMap<String, String>(),
       activities: BuiltList<ActivityEntity>(),
@@ -216,8 +217,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'expense_categories')
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
 
-  BuiltMap<String, ExpenseCategoryEntity> get expenseCategoryMap;
-
   BuiltList<UserEntity> get users;
 
   BuiltList<ClientEntity> get clients;
@@ -268,9 +267,14 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'mark_expenses_paid')
   bool get markExpensesPaid;
 
-  @nullable // TODO remove nullable
   @BuiltValueField(wireName: 'invoice_expense_documents')
   bool get invoiceExpenseDocuments;
+
+  @BuiltValueField(wireName: 'invoice_task_timelog')
+  bool get invoiceTaskTimelog;
+
+  @BuiltValueField(wireName: 'auto_start_tasks')
+  bool get autoStartTasks;
 
   @BuiltValueField(wireName: 'use_credits_payment')
   String get useCreditsPayment;

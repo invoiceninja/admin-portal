@@ -82,7 +82,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         final expense = entity as ExpenseEntity;
         items.add(convertExpenseToInvoiceItem(
             expense: expense,
-            categoryMap: company.expenseCategoryMap,
+            categoryMap: state.expenseCategoryState.map,
             company: company));
       }
     });
