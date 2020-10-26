@@ -38,7 +38,7 @@ class _EntityListTileState extends State<EntityListTile> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.entity == null) {
+    if (widget.entity == null || widget.entity.isNew) {
       return SizedBox();
     }
 

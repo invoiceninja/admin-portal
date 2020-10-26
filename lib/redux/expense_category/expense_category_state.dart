@@ -23,6 +23,16 @@ abstract class ExpenseCategoryState
   int get hashCode;
 
   BuiltMap<String, ExpenseCategoryEntity> get map;
+
+  ExpenseCategoryEntity get(String categoryId) {
+    if (map.containsKey(categoryId)) {
+      return map[categoryId];
+    } else {
+      return ExpenseCategoryEntity(id: categoryId);
+    }
+  }
+
+
   BuiltList<String> get list;
 
   ExpenseCategoryState loadExpenseCategories(

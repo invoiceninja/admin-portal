@@ -26,17 +26,14 @@ class ExpenseOverview extends StatelessWidget {
     final expense = viewModel.expense;
     final company = viewModel.company;
     final state = viewModel.state;
-    final vendor = state.vendorState.map[expense.vendorId];
-    final client = state.clientState.map[expense.clientId];
-    final invoice = state.invoiceState.map[expense.invoiceId];
-    final project = state.projectState.map[expense.projectId];
-    final category = state.expenseCategoryState.map[expense.categoryId];
+    final vendor = state.vendorState.get(expense.vendorId);
+    final client = state.clientState.get(expense.clientId);
+    final invoice = state.invoiceState.get(expense.invoiceId);
+    final project = state.projectState.get(expense.projectId);
+    final category = state.expenseCategoryState.get(expense.categoryId);
     final user = state.userState.get(expense.assignedUserId);
 
-    final fields = <String, String>{
-      localization.category: category?.name,
-    };
-
+    final fields = <String, String>{};
     if (expense.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.expense1);
       fields[label1] = formatCustomValue(

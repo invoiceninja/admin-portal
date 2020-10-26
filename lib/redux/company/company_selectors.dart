@@ -7,16 +7,13 @@ import 'package:memoize/memoize.dart';
 
 var memoizedDropdownExpenseCategoriesList = memo2(
     (BuiltMap<String, ExpenseCategoryEntity> categoryMap,
-            BuiltList<ExpenseCategoryEntity> categoryList) =>
+            BuiltList<String> categoryList) =>
         dropdownExpenseCategoriesSelector(categoryMap, categoryList));
 
 List<String> dropdownExpenseCategoriesSelector(
     BuiltMap<String, ExpenseCategoryEntity> categoryMap,
-    BuiltList<ExpenseCategoryEntity> categoryList) {
-  final list = categoryList
-      //.where((category) => category.isActive)
-      .map((category) => category.id)
-      .toList();
+    BuiltList<String> categoryList) {
+  final list = categoryList.toList();
 
   list.sort((categoryAId, categoryBId) {
     final categoryA = categoryMap[categoryAId];

@@ -114,6 +114,8 @@ IconData getEntityIcon(EntityType entityType) {
       return MdiIcons.key;
     case EntityType.webhook:
       return MdiIcons.link;
+    case EntityType.expenseCategory:
+      return MdiIcons.label;
     default:
       return MdiIcons.crosshairsQuestion;
   }
