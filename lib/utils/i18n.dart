@@ -16,8 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'invoice_task_timelog': 'Invoice Task Timelog',
-      'invoice_task_timelog_help': 'Add task timelog to invoice line item',
-      'auto_start_tasks_help': 'Start task counter before saving',
+      'invoice_task_timelog_help': 'Add time details to the invoice line items',
+      'auto_start_tasks_help': 'Start tasks before saving',
       'configure_statuses': 'Configure Statuses',
       'task_settings': 'Task Settings',
       'configure_categories': 'Configure Categories',
@@ -43,7 +43,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'mark_paid_help': 'Track the expense has been paid',
       'should_be_invoiced': 'Should be Invoiced',
       'should_be_invoiced_help': 'Enable the expense to be invoiced',
-      'add_documents_to_invoice_help': 'Make the documents visible',
+      'add_documents_to_invoice_help': 'Make the documents visible to clients',
       'convert_currency_help': 'Set an exchange rate',
       'expense_settings': 'Expense Settings',
       'clone_to_recurring': 'Clone to Recurring',

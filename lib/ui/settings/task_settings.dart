@@ -81,7 +81,7 @@ class _TaskSettingsState extends State<TaskSettings> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: AppButton(
               iconData: Icons.settings,
-              label: localization.configureCategories.toUpperCase(),
+              label: localization.configureStatuses.toUpperCase(),
               onPressed: () => viewModel.onConfigureStatusesPressed(context),
             ),
           ),
