@@ -47,10 +47,6 @@ const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefToken = 'checksum';
 
-// TODO remove these
-const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
-const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
-
 const String kProductPlanPro = 'v1_pro_yearly';
 const String kProductPlanEnterprise2 = 'v1_enterprise_2_yearly';
 const String kProductPlanEnterprise5 = 'v1_enterprise_5_yearly';

@@ -60,7 +60,6 @@ PrefState prefReducer(
           showFilterSidebarReducer(state.showFilterSidebar, action)
       ..longPressSelectionIsDefault =
           longPressReducer(state.longPressSelectionIsDefault, action)
-      ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
       ..requireAuthentication =
           requireAuthenticationReducer(state.requireAuthentication, action),
   );
@@ -163,12 +162,6 @@ Reducer<bool> longPressReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>(
       (longPressSelectionIsDefault, action) {
     return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
-  }),
-]);
-
-Reducer<bool> autoStartTasksReducer = combineReducers([
-  TypedReducer<bool, UpdateUserPreferences>((autoStartTasks, action) {
-    return action.autoStartTasks ?? autoStartTasks;
   }),
 ]);
 

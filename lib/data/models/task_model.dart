@@ -147,7 +147,7 @@ abstract class TaskEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<TaskEntity, TaskEntityBuilder> {
   factory TaskEntity({String id, AppState state}) {
-    final isRunning = state?.prefState?.autoStartTasks ?? false;
+    final isRunning = state?.company?.autoStartTasks ?? false;
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
       number: '',

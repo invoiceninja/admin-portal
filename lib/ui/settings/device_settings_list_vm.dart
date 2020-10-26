@@ -41,7 +41,6 @@ class DeviceSettingsVM {
     @required this.onRefreshTap,
     @required this.onDarkModeChanged,
     @required this.onLayoutChanged,
-    @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
     @required this.onLongPressSelectionIsDefault,
     @required this.onAlwaysShowSidebarChanged,
@@ -89,9 +88,6 @@ class DeviceSettingsVM {
       onDarkModeChanged: (BuildContext context, bool value) async {
         store.dispatch(UpdateUserPreferences(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
-      },
-      onAutoStartTasksChanged: (BuildContext context, bool value) async {
-        store.dispatch(UpdateUserPreferences(autoStartTasks: value));
       },
       onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
         store.dispatch(
@@ -170,7 +166,6 @@ class DeviceSettingsVM {
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
   final Function(BuildContext, AppSidebarMode) onHistoryModeChanged;
-  final Function(BuildContext, bool) onAutoStartTasksChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onAlwaysShowSidebarChanged;

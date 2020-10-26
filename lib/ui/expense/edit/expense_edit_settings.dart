@@ -265,7 +265,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 onChanged: (value) {
                   viewModel.onChanged(
                       expense.rebuild((b) => b..invoiceDocuments = value));
-                  viewModel.onAddDocumentsChanged(value);
                 })
           ],
         ),

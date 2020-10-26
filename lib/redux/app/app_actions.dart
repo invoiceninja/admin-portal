@@ -110,9 +110,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.sidebar,
     this.enableDarkMode,
     this.requireAuthentication,
-    this.autoStartTasks,
     this.longPressSelectionIsDefault,
-    this.addDocumentsToInvoice,
     this.isPreviewVisible,
     this.accentColor,
     this.menuMode,
@@ -130,9 +128,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
-  final bool autoStartTasks;
   final bool isPreviewVisible;
-  final bool addDocumentsToInvoice;
   final bool showFilterSidebar;
   final bool alwaysShowFilterSidebar;
   final String accentColor;
