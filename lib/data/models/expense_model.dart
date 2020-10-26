@@ -146,7 +146,7 @@ abstract class ExpenseEntity extends Object
     ..invoiceId = null
     ..date = convertDateTimeToSqlDate()
     ..transactionReference = ''
-    ..paymentTypeId = null
+    ..paymentTypeId = ''
     ..paymentDate = '');
 
   @override

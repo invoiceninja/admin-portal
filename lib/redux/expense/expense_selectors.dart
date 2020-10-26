@@ -93,6 +93,15 @@ List<String> filteredExpensesSelector(
       } else if (filterEntityType == EntityType.vendor &&
           expense.vendorId != filterEntityId) {
         return false;
+      } else if (filterEntityType == EntityType.expenseCategory &&
+          expense.categoryId != filterEntityId) {
+        return false;
+      } else if (filterEntityType == EntityType.user &&
+          expense.assignedUserId != filterEntityId) {
+        return false;
+      } else if (filterEntityType == EntityType.project &&
+          expense.projectId != filterEntityId) {
+        return false;
       }
     } else if (expense.vendorId != null && !vendor.isActive) {
       return false;

@@ -38,7 +38,7 @@ class ExpenseListItem extends StatelessWidget {
     final expenseUIState = uiState.expenseUIState;
     final client = state.clientState.get(expense.clientId);
     final vendor = state.vendorState.get(expense.vendorId);
-    final category = '';
+    final category = state.expenseCategoryState.get(expense.categoryId);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (expense.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
@@ -54,13 +54,13 @@ class ExpenseListItem extends StatelessWidget {
       subtitle = filterMatch;
     } else if (client != null || vendor != null || category != null) {
       final parts = <String>[];
-      if (category != null) {
-        //parts.add(category.name);
+      if (category != null && category.isOld) {
+        parts.add(category.name);
       }
-      if (vendor != null) {
+      if (vendor != null && vendor.isOld) {
         parts.add(vendor.name);
       }
-      if (client != null) {
+      if (client != null && client.isOld) {
         parts.add(client.displayName);
       }
       subtitle = parts.join(' • ');
