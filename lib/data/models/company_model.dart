@@ -1037,7 +1037,7 @@ abstract class SettingsEntity
         autoBill: clientSettings?.autoBill ?? groupSettings?.autoBill ?? companySettings?.autoBill,
         emailBodyStatement: clientSettings?.emailBodyStatement ?? groupSettings?.emailBodyStatement ?? companySettings?.emailBodyStatement,
         emailSubjectStatement: clientSettings?.emailSubjectStatement ?? groupSettings?.emailSubjectStatement ?? companySettings?.emailSubjectStatement,
-        useCreditsPayment: clientSettings?.useCreditsPayment ?? groupSettings?.useCreditsPayment ?? companySettings.useCreditsPayment);
+        useCreditsPayment: clientSettings?.useCreditsPayment ?? groupSettings?.useCreditsPayment ?? companySettings?.useCreditsPayment);
   }
 
   SettingsEntity._();
