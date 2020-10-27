@@ -14,21 +14,24 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
   const RecurringInvoiceEditItemsScreen({
     Key key,
     @required this.viewModel,
+    this.typeId = InvoiceItemEntity.TYPE_STANDARD,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
+  final String typeId;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, RecurringInvoiceEditItemsVM>(
       converter: (Store<AppState> store) {
-        return RecurringInvoiceEditItemsVM.fromStore(store);
+        return RecurringInvoiceEditItemsVM.fromStore(store, typeId);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
+            typeId: typeId,
           );
         } else {
           return InvoiceEditItems(
@@ -64,7 +67,7 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
           onChangedInvoiceItem: onChangedInvoiceItem,
         );
 
-  factory RecurringInvoiceEditItemsVM.fromStore(Store<AppState> store) {
+  factory RecurringInvoiceEditItemsVM.fromStore(Store<AppState> store, String typeId) {
     return RecurringInvoiceEditItemsVM(
         state: store.state,
         company: store.state.company,
@@ -77,7 +80,7 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
         onChangedInvoiceItem: (item, index) {
           final invoice = store.state.recurringInvoiceUIState.editing;
           if (index == invoice.lineItems.length) {
-            store.dispatch(AddRecurringInvoiceItem(invoiceItem: item));
+            store.dispatch(AddRecurringInvoiceItem(invoiceItem: item.rebuild((b) => b..typeId = typeId)));
           } else {
             store
                 .dispatch(UpdateRecurringInvoiceItem(item: item, index: index));

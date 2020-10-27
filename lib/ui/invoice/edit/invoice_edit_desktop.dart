@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
@@ -42,9 +43,11 @@ class InvoiceEditDesktop extends StatefulWidget {
 }
 
 class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
-    with SingleTickerProviderStateMixin {
-  TabController _tabController;
+    with TickerProviderStateMixin {
+  TabController _optionTabController;
+  TabController _tableTabController;
 
+  String _typeId = InvoiceItemEntity.TYPE_STANDARD;
   FocusNode _focusNode;
 
   final _invoiceNumberController = TextEditingController();
@@ -72,7 +75,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     super.initState();
 
     _focusNode = FocusScopeNode();
-    _tabController = TabController(vsync: this, length: 5);
+    _optionTabController = TabController(vsync: this, length: 5);
+    _tableTabController = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -132,7 +136,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   @override
   void dispose() {
     _focusNode.dispose();
-    _tabController.dispose();
+    _optionTabController.dispose();
+    _tableTabController.dispose();
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -420,22 +425,53 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
+        if (invoice.hasTasks ||
+            invoice.lineItems
+                .where((item) => item.typeId == InvoiceItemEntity.TYPE_TASK)
+                .isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: AppTabBar(
+              onTap: (index) {
+                setState(() {
+                  _typeId = index == 0
+                      ? InvoiceItemEntity.TYPE_STANDARD
+                      : InvoiceItemEntity.TYPE_TASK;
+                });
+              },
+              controller: _tableTabController,
+              tabs: [
+                Tab(
+                  text: localization.products,
+                ),
+                Tab(
+                  text: localization.services,
+                ),
+              ],
+            ),
+          ),
         if (entityType == EntityType.credit)
           CreditEditItemsScreen(
             viewModel: widget.entityViewModel,
+            typeId: _typeId,
           )
         else if (entityType == EntityType.quote)
           QuoteEditItemsScreen(
             viewModel: widget.entityViewModel,
+            typeId: _typeId,
           )
         else if (entityType == EntityType.invoice)
           InvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
+            typeId: _typeId,
           )
         else if (entityType == EntityType.recurringInvoice)
           RecurringInvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
-          ),
+            typeId: _typeId,
+          )
+        else
+          SizedBox(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -450,7 +486,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 children: <Widget>[
                   AppTabBar(
                     isScrollable: true,
-                    controller: _tabController,
+                    controller: _optionTabController,
                     tabs: [
                       Tab(text: localization.publicNotes),
                       Tab(text: localization.privateNotes),
@@ -475,7 +511,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         ? 140
                         : 100,
                     child: TabBarView(
-                      controller: _tabController,
+                      controller: _optionTabController,
                       children: <Widget>[
                         DecoratedFormField(
                           maxLines: 6,
