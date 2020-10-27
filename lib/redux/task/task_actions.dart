@@ -283,16 +283,6 @@ class FilterTasksByCustom4 implements PersistUI {
 
 void handleTaskAction(
     BuildContext context, List<BaseEntity> tasks, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          tasks.length == 1,
-      'Cannot perform this action on more than one task');
-
   if (tasks.isEmpty) {
     return;
   }
@@ -334,12 +324,14 @@ void handleTaskAction(
 
       break;
     case EntityAction.newInvoice:
-      final item = convertTaskToInvoiceItem(task: task, context: context);
+      final items = tasks
+          .map((task) => convertTaskToInvoiceItem(task: task, context: context))
+          .toList();
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
             ..hasTasks = true
-            ..lineItems.add(item)));
+            ..lineItems.addAll(items)));
       break;
     case EntityAction.viewInvoice:
       viewEntityById(

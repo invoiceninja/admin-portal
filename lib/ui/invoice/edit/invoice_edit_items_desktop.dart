@@ -103,8 +103,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
               TableHeader(localization.tax),
             if ((company.numberOfItemTaxRates ?? 0) >= 3)
               TableHeader(localization.tax),
-            TableHeader(localization.unitCost, isNumeric: true),
-            TableHeader(localization.quantity, isNumeric: true),
+            TableHeader(
+                widget.isTasks ? localization.rate : localization.unitCost,
+                isNumeric: true),
+            TableHeader(
+                widget.isTasks ? localization.hours : localization.quantity,
+                isNumeric: true),
             TableHeader(localization.lineTotal, isNumeric: true),
             TableHeader(''),
           ]),

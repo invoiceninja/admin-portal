@@ -412,7 +412,7 @@ abstract class TaskEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this) && !isDeleted) {
+      if (includeEdit && userCompany.canEditEntity(this) && !isDeleted && !multiselect) {
         actions.add(EntityAction.edit);
       }
 
@@ -420,10 +420,12 @@ abstract class TaskEntity extends Object
         if (isRunning) {
           actions.add(EntityAction.stop);
         } else {
-          if (duration > 0) {
-            actions.add(EntityAction.resume);
-          } else {
-            actions.add(EntityAction.start);
+          if (!multiselect) {
+            if (duration > 0) {
+              actions.add(EntityAction.resume);
+            } else {
+              actions.add(EntityAction.start);
+            }
           }
 
           if (userCompany.canCreate(EntityType.invoice)) {
@@ -433,12 +435,14 @@ abstract class TaskEntity extends Object
       }
     }
 
-    if (isInvoiced) {
-      actions.add(EntityAction.viewInvoice);
-    }
+    if (!multiselect) {
+      if (isInvoiced) {
+        actions.add(EntityAction.viewInvoice);
+      }
 
-    if (userCompany.canCreate(EntityType.task)) {
-      actions.add(EntityAction.clone);
+      if (userCompany.canCreate(EntityType.task)) {
+        actions.add(EntityAction.clone);
+      }
     }
 
     actions.add(null);
