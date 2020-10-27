@@ -34,7 +34,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     ..notes = notes
     ..cost = taskRateSelector(
         company: state.company, project: project, client: client)
-    ..quantity = round(task.duration / 3600, 3));
+    ..quantity = round(task.calculateDuration.inSeconds / 3600, 3));
 }
 
 var memoizedTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
