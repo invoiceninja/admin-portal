@@ -1194,9 +1194,9 @@ abstract class SettingsEntity
       enableReminder3: clientSettings?.enableReminder3 ??
           groupSettings?.enableReminder3 ??
           companySettings?.enableReminder3,
-      enableReminder4: clientSettings?.enableReminder4 ??
-          groupSettings?.enableReminder4 ??
-          companySettings?.enableReminder4,
+      enableReminderEndless: clientSettings?.enableReminderEndless ??
+          groupSettings?.enableReminderEndless ??
+          companySettings?.enableReminderEndless,
       numDaysReminder1: clientSettings?.numDaysReminder1 ??
           groupSettings?.numDaysReminder1 ??
           companySettings?.numDaysReminder1,
@@ -1242,12 +1242,12 @@ abstract class SettingsEntity
       lateFeePercentEndless: clientSettings?.lateFeePercentEndless ??
           groupSettings?.lateFeePercentEndless ??
           companySettings?.lateFeePercentEndless,
-      emailSubjectReminder4: clientSettings?.emailSubjectReminder4 ??
-          groupSettings?.emailSubjectReminder4 ??
-          companySettings?.emailSubjectReminder4,
-      emailBodyReminder4: clientSettings?.emailBodyReminder4 ??
-          groupSettings?.emailBodyReminder4 ??
-          companySettings?.emailBodyReminder4,
+      emailSubjectReminderEndless: clientSettings?.emailSubjectReminderEndless ??
+          groupSettings?.emailSubjectReminderEndless ??
+          companySettings?.emailSubjectReminderEndless,
+      emailBodyReminderEndless: clientSettings?.emailBodyReminderEndless ??
+          groupSettings?.emailBodyReminderEndless ??
+          companySettings?.emailBodyReminderEndless,
       customPaymentTerms: clientSettings?.customPaymentTerms ??
           groupSettings?.customPaymentTerms ??
           companySettings?.customPaymentTerms,
@@ -1830,8 +1830,8 @@ abstract class SettingsEntity
   bool get enableReminder3;
 
   @nullable
-  @BuiltValueField(wireName: 'enable_reminder4')
-  bool get enableReminder4;
+  @BuiltValueField(wireName: 'enable_reminder_endless')
+  bool get enableReminderEndless;
 
   @nullable
   @BuiltValueField(wireName: 'num_days_reminder1')
@@ -1894,12 +1894,12 @@ abstract class SettingsEntity
   double get lateFeePercentEndless;
 
   @nullable
-  @BuiltValueField(wireName: 'email_subject_reminder4')
-  String get emailSubjectReminder4;
+  @BuiltValueField(wireName: 'email_subject_reminder_endless')
+  String get emailSubjectReminderEndless;
 
   @nullable
-  @BuiltValueField(wireName: 'email_template_reminder4')
-  String get emailBodyReminder4;
+  @BuiltValueField(wireName: 'email_template_reminder_endless')
+  String get emailBodyReminderEndless;
 
   @nullable
   @BuiltValueField(wireName: 'client_online_payment_notification')
