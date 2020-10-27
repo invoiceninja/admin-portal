@@ -212,6 +212,7 @@ abstract class ProjectEntity extends Object
       case ProjectFields.taskRate:
         response = projectA.taskRate.compareTo(projectB.taskRate);
         break;
+      case ProjectFields.clientId:
       case ProjectFields.client:
         final clientA = clientMap[projectA.clientId] ?? ClientEntity();
         final clientB = clientMap[projectB.clientId] ?? ClientEntity();
@@ -266,6 +267,21 @@ abstract class ProjectEntity extends Object
         response =
             projectA.documents.length.compareTo(projectB.documents.length);
         break;
+      case ProjectFields.number:
+        response = projectA.number.compareTo(projectB.number);
+        break;
+      case ProjectFields.customValue1:
+        response = projectA.customValue1.compareTo(projectB.customValue1);
+        break;
+      case ProjectFields.customValue2:
+        response = projectA.customValue2.compareTo(projectB.customValue2);
+        break;
+      case ProjectFields.customValue3:
+        response = projectA.customValue3.compareTo(projectB.customValue3);
+        break;
+      case ProjectFields.customValue4:
+        response = projectA.customValue4.compareTo(projectB.customValue4);
+        break;
       default:
         print('## ERROR: sort by project.$sortField is not implemented');
         break;
@@ -279,6 +295,7 @@ abstract class ProjectEntity extends Object
     return matchesStrings(
       haystacks: [
         name,
+        number,
         customValue1,
         customValue2,
         customValue3,
@@ -292,6 +309,8 @@ abstract class ProjectEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
+        name,
+        number,
         customValue1,
         customValue2,
         customValue3,
