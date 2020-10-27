@@ -14,24 +14,22 @@ class QuoteEditItemsScreen extends StatelessWidget {
   const QuoteEditItemsScreen({
     Key key,
     @required this.viewModel,
-    this.typeId  = InvoiceItemEntity.TYPE_STANDARD,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
-  final String typeId;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteEditItemsVM>(
       converter: (Store<AppState> store) {
-        return QuoteEditItemsVM.fromStore(store, typeId);
+        return QuoteEditItemsVM.fromStore(store);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
-            typeId: typeId,
+            isTasks: false,
           );
         } else {
           return InvoiceEditItems(
@@ -67,7 +65,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
           onChangedInvoiceItem: onChangedInvoiceItem,
         );
 
-  factory QuoteEditItemsVM.fromStore(Store<AppState> store, String typeId) {
+  factory QuoteEditItemsVM.fromStore(Store<AppState> store) {
     return QuoteEditItemsVM(
         state: store.state,
         company: store.state.company,
@@ -79,7 +77,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
         onChangedInvoiceItem: (quoteItem, index) {
           final quote = store.state.quoteUIState.editing;
           if (index == quote.lineItems.length) {
-            store.dispatch(AddQuoteItem(quoteItem: quoteItem.rebuild((b) => b..typeId = typeId)));
+            store.dispatch(AddQuoteItem(quoteItem: quoteItem));
           } else {
             store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
           }

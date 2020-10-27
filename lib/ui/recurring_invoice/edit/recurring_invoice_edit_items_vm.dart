@@ -14,24 +14,24 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
   const RecurringInvoiceEditItemsScreen({
     Key key,
     @required this.viewModel,
-    this.typeId = InvoiceItemEntity.TYPE_STANDARD,
+    this.isTasks = false,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
-  final String typeId;
+  final bool isTasks;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, RecurringInvoiceEditItemsVM>(
       converter: (Store<AppState> store) {
-        return RecurringInvoiceEditItemsVM.fromStore(store, typeId);
+        return RecurringInvoiceEditItemsVM.fromStore(store, isTasks);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
-            typeId: typeId,
+            isTasks: isTasks,
           );
         } else {
           return InvoiceEditItems(
@@ -67,7 +67,8 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
           onChangedInvoiceItem: onChangedInvoiceItem,
         );
 
-  factory RecurringInvoiceEditItemsVM.fromStore(Store<AppState> store, String typeId) {
+  factory RecurringInvoiceEditItemsVM.fromStore(
+      Store<AppState> store, bool isTasks) {
     return RecurringInvoiceEditItemsVM(
         state: store.state,
         company: store.state.company,
@@ -80,7 +81,11 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
         onChangedInvoiceItem: (item, index) {
           final invoice = store.state.recurringInvoiceUIState.editing;
           if (index == invoice.lineItems.length) {
-            store.dispatch(AddRecurringInvoiceItem(invoiceItem: item.rebuild((b) => b..typeId = typeId)));
+            store.dispatch(AddRecurringInvoiceItem(
+                invoiceItem: item.rebuild((b) => b
+                  ..typeId = isTasks
+                      ? InvoiceItemEntity.TYPE_TASK
+                      : InvoiceItemEntity.TYPE_STANDARD)));
           } else {
             store
                 .dispatch(UpdateRecurringInvoiceItem(item: item, index: index));

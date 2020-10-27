@@ -47,7 +47,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   TabController _optionTabController;
   TabController _tableTabController;
 
-  String _typeId = InvoiceItemEntity.TYPE_STANDARD;
+  bool _showTasksTable = false;
   FocusNode _focusNode;
 
   final _invoiceNumberController = TextEditingController();
@@ -434,19 +434,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        if (invoice.hasTasks ||
-            invoice.lineItems
-                .where((item) => item.typeId == InvoiceItemEntity.TYPE_TASK)
-                .isNotEmpty)
+        if (invoice.hasTasks)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: AppTabBar(
               onTap: (index) {
-                setState(() {
-                  _typeId = index == 0
-                      ? InvoiceItemEntity.TYPE_STANDARD
-                      : InvoiceItemEntity.TYPE_TASK;
-                });
+                setState(() => _showTasksTable = index == 1);
               },
               controller: _tableTabController,
               tabs: [
@@ -464,22 +457,21 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         if (entityType == EntityType.credit)
           CreditEditItemsScreen(
             viewModel: widget.entityViewModel,
-            typeId: _typeId,
+            isTasks: _showTasksTable,
           )
         else if (entityType == EntityType.quote)
           QuoteEditItemsScreen(
             viewModel: widget.entityViewModel,
-            typeId: _typeId,
           )
         else if (entityType == EntityType.invoice)
           InvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
-            typeId: _typeId,
+            isTasks: _showTasksTable,
           )
         else if (entityType == EntityType.recurringInvoice)
           RecurringInvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
-            typeId: _typeId,
+            isTasks: _showTasksTable,
           )
         else
           SizedBox(),

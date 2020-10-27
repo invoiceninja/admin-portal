@@ -18,12 +18,12 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
     @required this.viewModel,
     @required this.entityViewModel,
-    @required this.typeId,
+    @required this.isTasks,
   });
 
   final EntityEditItemsVM viewModel;
   final EntityEditVM entityViewModel;
-  final String typeId;
+  final bool isTasks;
 
   @override
   _InvoiceEditItemsDesktopState createState() =>
@@ -109,10 +109,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             TableHeader(''),
           ]),
           for (var index = 0; index < lineItems.length; index++)
-            if (lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
-                    widget.typeId == InvoiceItemEntity.TYPE_TASK ||
-                lineItems[index].typeId != InvoiceItemEntity.TYPE_TASK &&
-                    widget.typeId != InvoiceItemEntity.TYPE_TASK ||
+            if ((lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
+                    widget.isTasks) ||
+                (lineItems[index].typeId != InvoiceItemEntity.TYPE_TASK &&
+                    !widget.isTasks) ||
                 lineItems[index].isEmpty)
               TableRow(
                   key: ValueKey(
