@@ -183,6 +183,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         invoice.partial != 0 ? invoice.partial : invoice.calculateTotal;
     final entityType = invoice.entityType;
 
+    final countProducts = invoice.lineItems
+        .where((item) =>
+            !item.isEmpty && item.typeId != InvoiceItemEntity.TYPE_TASK)
+        .length;
+    final countServices = invoice.lineItems
+        .where((item) =>
+            !item.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
+        .length;
+
     return ListView(
       key: ValueKey('__invoice_${invoice.id}__'),
       children: <Widget>[
@@ -442,10 +451,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
               controller: _tableTabController,
               tabs: [
                 Tab(
-                  text: localization.products,
+                  text: localization.products +
+                      (countProducts > 0 ? ' ($countProducts)' : ''),
                 ),
                 Tab(
-                  text: localization.services,
+                  text: localization.services +
+                      (countServices > 0 ? ' ($countServices)' : ''),
                 ),
               ],
             ),
