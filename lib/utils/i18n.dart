@@ -15,7 +15,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'services': 'Services',
       'invoice_task_timelog': 'Invoice Task Timelog',
       'invoice_task_timelog_help': 'Add time details to the invoice line items',
       'auto_start_tasks_help': 'Start tasks before saving',
@@ -4785,9 +4784,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get invoiceTaskTimelogHelp =>
       _localizedValues[localeCode]['invoice_task_timelog_help'] ?? '';
-
-  String get services =>
-      _localizedValues[localeCode]['services'] ?? '';
 
 
   String lookup(String key) {

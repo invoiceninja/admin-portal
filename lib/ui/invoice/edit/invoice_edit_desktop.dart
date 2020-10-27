@@ -448,7 +448,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       (countProducts > 0 ? ' ($countProducts)' : ''),
                 ),
                 Tab(
-                  text: localization.services +
+                  text: localization.tasks +
                       (countServices > 0 ? ' ($countServices)' : ''),
                 ),
               ],
