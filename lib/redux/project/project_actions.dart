@@ -266,6 +266,7 @@ void handleProjectAction(
   final state = store.state;
   final project = projects.first as ProjectEntity;
   final projectIds = projects.map((project) => project.id).toList();
+  final client = state.clientState.get(project.clientId);
 
   switch (action) {
     case EntityAction.edit:
@@ -283,17 +284,15 @@ void handleProjectAction(
           convertProjectToInvoiceItem(project: project, context: context);
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state).rebuild((b) => b
+          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
             ..hasTasks = true
-            ..clientId = project.clientId
             ..lineItems.addAll(items)));
       break;
     case EntityAction.newExpense:
       createEntity(
           context: context,
-          entity: ExpenseEntity(state: state).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId));
+          entity: ExpenseEntity(state: state, client: client)
+              .rebuild((b) => b..projectId = project.id));
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: project.clone);

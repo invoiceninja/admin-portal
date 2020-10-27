@@ -301,6 +301,7 @@ void handleTaskAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final task = tasks.first as TaskEntity;
+  final client = state.clientState.get(task.clientId);
   final taskIds = tasks.map((task) => task.id).toList();
 
   switch (action) {
@@ -336,9 +337,8 @@ void handleTaskAction(
       final item = convertTaskToInvoiceItem(task: task, context: context);
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state).rebuild((b) => b
+          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
             ..hasTasks = true
-            ..clientId = task.clientId
             ..lineItems.add(item)));
       break;
     case EntityAction.viewInvoice:
