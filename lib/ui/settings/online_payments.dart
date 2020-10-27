@@ -105,10 +105,10 @@ class _OnlinePaymentsState extends State<OnlinePayments> {
             ),
             AppDropdownButton<String>(
                 labelText: localization.useAvailableCredits,
-                value: company.useCreditsPayment,
+                value: settings.useCreditsPayment,
                 onChanged: (dynamic value) {
-                  viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..useCreditsPayment = value));
+                  viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..useCreditsPayment = value));
                 },
                 items: [
                   DropdownMenuItem(
