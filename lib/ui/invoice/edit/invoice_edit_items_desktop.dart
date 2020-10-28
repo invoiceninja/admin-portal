@@ -178,12 +178,18 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
                               final updatedItem = item.rebuild((b) => b
                                 ..productKey = product.productKey
-                                ..notes = product.notes
-                                ..cost = cost
-                                ..quantity = item.quantity == 0 &&
-                                        viewModel.state.company.defaultQuantity
-                                    ? 1
-                                    : item.quantity
+                                ..notes =
+                                    item.isTask ? item.notes : product.notes
+                                ..cost = item.isTask && item.cost != 0
+                                    ? item.cost
+                                    : cost
+                                ..quantity = item.isTask
+                                    ? item.quantity
+                                    : item.quantity == 0 &&
+                                            viewModel
+                                                .state.company.defaultQuantity
+                                        ? 1
+                                        : item.quantity
                                 ..customValue1 = product.customValue1
                                 ..customValue2 = product.customValue2
                                 ..customValue3 = product.customValue3
@@ -221,12 +227,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
                           final updatedItem = item.rebuild((b) => b
                             ..productKey = product.productKey
-                            ..notes = product.notes
-                            ..cost = cost
-                            ..quantity = item.quantity == 0 &&
-                                    viewModel.state.company.defaultQuantity
-                                ? 1
-                                : item.quantity
+                            ..notes = item.isTask ? item.notes : product.notes
+                            ..cost =
+                                item.isTask && item.cost != 0 ? item.cost : cost
+                            ..quantity = item.isTask
+                                ? item.quantity
+                                : item.quantity == 0 &&
+                                        viewModel.state.company.defaultQuantity
+                                    ? 1
+                                    : item.quantity
                             ..customValue1 = product.customValue1
                             ..customValue2 = product.customValue2
                             ..customValue3 = product.customValue3
