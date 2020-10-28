@@ -657,6 +657,11 @@ class EntityScreens extends StatelessWidget {
                 ? ExpenseCategoryEditScreen()
                 : ExpenseCategoryViewScreen(isFilter: true);
             break;
+          case EntityType.taskStatus:
+            leftFilterChild = editingFIlterEntity
+                ? TaskStatusEditScreen()
+                : TaskStatusViewScreen(isFilter: true);
+            break;
           default:
             print(
                 'Error: filter view not implemented for ${uiState.filterEntityType}');

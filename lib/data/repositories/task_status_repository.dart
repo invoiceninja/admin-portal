@@ -17,7 +17,7 @@ class TaskStatusRepository {
   Future<TaskStatusEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/task_statuss/$entityId', credentials.token);
+        '${credentials.url}/task_statuses/$entityId', credentials.token);
 
     final TaskStatusItemResponse taskStatusResponse = serializers
         .deserializeWith(TaskStatusItemResponse.serializer, response);
@@ -26,7 +26,7 @@ class TaskStatusRepository {
   }
 
   Future<BuiltList<TaskStatusEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/task_statuss?';
+    final String url = credentials.url + '/task_statuses?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TaskStatusListResponse taskStatusResponse = serializers
@@ -37,7 +37,7 @@ class TaskStatusRepository {
 
   Future<List<TaskStatusEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    final url = credentials.url + '/task_statuss/bulk';
+    final url = credentials.url + '/task_statuses/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -55,10 +55,10 @@ class TaskStatusRepository {
 
     if (taskStatus.isNew) {
       response = await webClient.post(
-          credentials.url + '/task_statuss', credentials.token,
+          credentials.url + '/task_status', credentials.token,
           data: json.encode(data));
     } else {
-      final url = '${credentials.url}/task_statuss/${taskStatus.id}';
+      final url = '${credentials.url}/task_status/${taskStatus.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

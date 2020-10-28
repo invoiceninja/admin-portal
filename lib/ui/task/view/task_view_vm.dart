@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -23,7 +22,7 @@ class TaskViewScreen extends StatelessWidget {
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
-  static const String route = '/$kSettings/$kSettingsTaskStatusView';
+  static const String route = '/task/view';
 
   @override
   Widget build(BuildContext context) {

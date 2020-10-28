@@ -303,14 +303,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       TaskStatusViewScreen(),
                   TaskStatusEditScreen.route: (context) =>
                       TaskStatusEditScreen(),
-
                   ExpenseCategoryScreen.route: (context) =>
                       ExpenseCategoryScreenBuilder(),
                   ExpenseCategoryViewScreen.route: (context) =>
                       ExpenseCategoryViewScreen(),
                   ExpenseCategoryEditScreen.route: (context) =>
                       ExpenseCategoryEditScreen(),
-
                   RecurringInvoiceScreen.route: (context) =>
                       RecurringInvoiceScreenBuilder(),
                   RecurringInvoiceViewScreen.route: (context) =>

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -22,8 +23,8 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taskStatusEdit');
   final _debouncer = Debouncer();
+  bool _autoValidate = false;
 
-  // STARTER: controllers - do not remove comment
   final _nameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
@@ -31,14 +32,12 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
   @override
   void didChangeDependencies() {
     _controllers = [
-      // STARTER: array - do not remove comment
       _nameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final taskStatus = widget.viewModel.taskStatus;
-    // STARTER: read value - do not remove comment
     _nameController.text = taskStatus.name;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -59,7 +58,6 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
   void _onChanged() {
     _debouncer.run(() {
       final taskStatus = widget.viewModel.taskStatus.rebuild((b) => b
-        // STARTER: set value - do not remove comment
         ..name = _nameController.text.trim());
       if (taskStatus != widget.viewModel.taskStatus) {
         widget.viewModel.onChanged(taskStatus);
@@ -81,11 +79,9 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        /*
           setState(() {
             _autoValidate = !isValid;
           });
-            */
 
         if (!isValid) {
           return;
@@ -100,13 +96,14 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    // STARTER: widgets - do not remove comment
-                    TextFormField(
+                    DecoratedFormField(
                       controller: _nameController,
                       autocorrect: false,
-                      decoration: InputDecoration(
-                        labelText: 'Task_statuses',
-                      ),
+                      autovalidate: _autoValidate,
+                      label: localization.name,
+                      validator: (val) => val.isEmpty || val.trim().isEmpty
+                          ? localization.pleaseEnterAName
+                          : null,
                     ),
                   ],
                 ),

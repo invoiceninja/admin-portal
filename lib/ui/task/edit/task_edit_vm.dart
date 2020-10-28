@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -18,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TaskEditScreen extends StatelessWidget {
   const TaskEditScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingsTaskStatusEdit';
+  static const String route = '/task/edit';
 
   @override
   Widget build(BuildContext context) {

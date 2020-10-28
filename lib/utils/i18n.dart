@@ -25,7 +25,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_task_status': 'Successfully deleted task status',
       'removed_task_status': 'Successfully removed task status',
       'restored_task_status': 'Successfully restored task status',
-      'search_task_status': 'Search TaskStatus',
+      'search_task_status': 'Search 1 Task Status',
+      'search_task_statuses': 'Search :count Task Statuses',
       'show_tasks_table': 'Show Tasks Table',
       'show_tasks_table_help':
           'Always show the tasks section when creating invoices',
