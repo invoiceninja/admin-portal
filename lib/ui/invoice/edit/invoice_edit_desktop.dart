@@ -435,7 +435,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        if (invoice.hasTasks)
+        if (invoice.hasTasks || (company.showTasksTable ?? false))
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: AppTabBar(
