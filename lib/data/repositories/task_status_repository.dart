@@ -55,10 +55,10 @@ class TaskStatusRepository {
 
     if (taskStatus.isNew) {
       response = await webClient.post(
-          credentials.url + '/task_status', credentials.token,
+          credentials.url + '/task_statuses', credentials.token,
           data: json.encode(data));
     } else {
-      final url = '${credentials.url}/task_status/${taskStatus.id}';
+      final url = '${credentials.url}/task_statuses/${taskStatus.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
