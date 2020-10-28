@@ -60,6 +60,8 @@ class EntityType extends EnumClass {
   String get plural {
     if (this == EntityType.expenseCategory) {
       return 'expenseCategories';
+    } else if (this == EntityType.taskStatus) {
+      return 'taskStatuses';
     }
 
     return toString() + 's';
