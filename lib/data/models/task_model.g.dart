@@ -180,6 +180,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'status_id',
+      serializers.serialize(object.statusId,
+          specifiedType: const FullType(String)),
+      'status_sort_order',
+      serializers.serialize(object.statusSortOrder,
+          specifiedType: const FullType(int)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -225,18 +231,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add('custom_value4')
         ..add(serializers.serialize(object.customValue4,
             specifiedType: const FullType(String)));
-    }
-    if (object.taskStatusId != null) {
-      result
-        ..add('task_status_id')
-        ..add(serializers.serialize(object.taskStatusId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taskStatusSortOrder != null) {
-      result
-        ..add('task_status_sort_order')
-        ..add(serializers.serialize(object.taskStatusSortOrder,
-            specifiedType: const FullType(int)));
     }
     if (object.vendorId != null) {
       result
@@ -330,12 +324,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'task_status_id':
-          result.taskStatusId = serializers.deserialize(value,
+        case 'status_id':
+          result.statusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'task_status_sort_order':
-          result.taskStatusSortOrder = serializers.deserialize(value,
+        case 'status_sort_order':
+          result.statusSortOrder = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'vendor_id':
@@ -690,9 +684,9 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String customValue4;
   @override
-  final String taskStatusId;
+  final String statusId;
   @override
-  final int taskStatusSortOrder;
+  final int statusSortOrder;
   @override
   final String vendorId;
   @override
@@ -730,8 +724,8 @@ class _$TaskEntity extends TaskEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
-      this.taskStatusId,
-      this.taskStatusSortOrder,
+      this.statusId,
+      this.statusSortOrder,
       this.vendorId,
       this.documents,
       this.isChanged,
@@ -763,6 +757,12 @@ class _$TaskEntity extends TaskEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
+    }
+    if (statusId == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'statusId');
+    }
+    if (statusSortOrder == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'statusSortOrder');
     }
     if (documents == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'documents');
@@ -804,8 +804,8 @@ class _$TaskEntity extends TaskEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
-        taskStatusId == other.taskStatusId &&
-        taskStatusSortOrder == other.taskStatusSortOrder &&
+        statusId == other.statusId &&
+        statusSortOrder == other.statusSortOrder &&
         vendorId == other.vendorId &&
         documents == other.documents &&
         isChanged == other.isChanged &&
@@ -847,8 +847,8 @@ class _$TaskEntity extends TaskEntity {
                                                                 customValue2.hashCode),
                                                             customValue3.hashCode),
                                                         customValue4.hashCode),
-                                                    taskStatusId.hashCode),
-                                                taskStatusSortOrder.hashCode),
+                                                    statusId.hashCode),
+                                                statusSortOrder.hashCode),
                                             vendorId.hashCode),
                                         documents.hashCode),
                                     isChanged.hashCode),
@@ -876,8 +876,8 @@ class _$TaskEntity extends TaskEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
-          ..add('taskStatusId', taskStatusId)
-          ..add('taskStatusSortOrder', taskStatusSortOrder)
+          ..add('statusId', statusId)
+          ..add('statusSortOrder', statusSortOrder)
           ..add('vendorId', vendorId)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
@@ -943,14 +943,14 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
-  String _taskStatusId;
-  String get taskStatusId => _$this._taskStatusId;
-  set taskStatusId(String taskStatusId) => _$this._taskStatusId = taskStatusId;
+  String _statusId;
+  String get statusId => _$this._statusId;
+  set statusId(String statusId) => _$this._statusId = statusId;
 
-  int _taskStatusSortOrder;
-  int get taskStatusSortOrder => _$this._taskStatusSortOrder;
-  set taskStatusSortOrder(int taskStatusSortOrder) =>
-      _$this._taskStatusSortOrder = taskStatusSortOrder;
+  int _statusSortOrder;
+  int get statusSortOrder => _$this._statusSortOrder;
+  set statusSortOrder(int statusSortOrder) =>
+      _$this._statusSortOrder = statusSortOrder;
 
   String _vendorId;
   String get vendorId => _$this._vendorId;
@@ -1012,8 +1012,8 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
-      _taskStatusId = _$v.taskStatusId;
-      _taskStatusSortOrder = _$v.taskStatusSortOrder;
+      _statusId = _$v.statusId;
+      _statusSortOrder = _$v.statusSortOrder;
       _vendorId = _$v.vendorId;
       _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
@@ -1060,8 +1060,8 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               customValue2: customValue2,
               customValue3: customValue3,
               customValue4: customValue4,
-              taskStatusId: taskStatusId,
-              taskStatusSortOrder: taskStatusSortOrder,
+              statusId: statusId,
+              statusSortOrder: statusSortOrder,
               vendorId: vendorId,
               documents: documents.build(),
               isChanged: isChanged,

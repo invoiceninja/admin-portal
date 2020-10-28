@@ -172,8 +172,8 @@ abstract class TaskEntity extends Object
       createdAt: 0,
       createdUserId: '',
       vendorId: '',
-      taskStatusId: '',
-      taskStatusSortOrder: 0,
+      statusId: '',
+      statusSortOrder: 0,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -389,13 +389,11 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  @nullable
-  @BuiltValueField(wireName: 'task_status_id')
-  String get taskStatusId;
+  @BuiltValueField(wireName: 'status_id')
+  String get statusId;
 
-  @nullable
-  @BuiltValueField(wireName: 'task_status_sort_order')
-  int get taskStatusSortOrder;
+  @BuiltValueField(wireName: 'status_sort_order')
+  int get statusSortOrder;
 
   @nullable
   @BuiltValueField(wireName: 'vendor_id')

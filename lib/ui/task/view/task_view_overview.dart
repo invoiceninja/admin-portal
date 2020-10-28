@@ -57,11 +57,9 @@ class _TaskOverviewState extends State<TaskOverview> {
 
     final Map<String, String> fields = {};
 
-    // TODO Remove isNotEmpty check in v2
-    if (company.taskStatusMap.isNotEmpty &&
-        (task.taskStatusId ?? '').isNotEmpty) {
+    if ((task.statusId ?? '').isNotEmpty) {
       fields[localization.status] =
-          company.taskStatusMap[task.taskStatusId]?.name ?? '';
+          company.taskStatusMap[task.statusId]?.name ?? '';
     }
 
     if (task.customValue1.isNotEmpty) {

@@ -87,7 +87,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
     final task = viewModel.task;
-    final company = viewModel.company;
     final state = viewModel.state;
 
     return ListView(
@@ -137,22 +136,20 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                   .onChanged(task.rebuild((b) => b..assignedUserId = userId)),
             ),
             // TODO Remove isNotEmpty check in v2
-            company.taskStatusMap.isNotEmpty
-                ? EntityDropdown(
-                    key: ValueKey('__task_status_${task.taskStatusId}__'),
-                    allowClearing: false,
-                    entityType: EntityType.taskStatus,
-                    labelText: localization.status,
-                    entityId: task.taskStatusId,
-                    entityList: company.taskStatusMap.keys.toList(),
-                    onSelected: (selected) {
-                      final taskStatus = selected as TaskStatusEntity;
-                      viewModel.onChanged(task.rebuild((b) => b
-                        ..taskStatusId = taskStatus?.id
-                        ..taskStatusSortOrder = 9999));
-                    },
-                  )
-                : SizedBox(),
+            EntityDropdown(
+              key: ValueKey('__task_status_${task.statusId}__'),
+              allowClearing: false,
+              entityType: EntityType.taskStatus,
+              labelText: localization.status,
+              entityId: task.statusId,
+              entityList: state.taskStatusState.list.toList(),
+              onSelected: (selected) {
+                final taskStatus = selected as TaskStatusEntity;
+                viewModel.onChanged(task.rebuild((b) => b
+                  ..statusId = taskStatus?.id
+                  ..statusSortOrder = 9999));
+              },
+            ),
             DecoratedFormField(
               maxLines: 4,
               controller: _descriptionController,

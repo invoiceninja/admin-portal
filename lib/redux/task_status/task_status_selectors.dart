@@ -74,6 +74,48 @@ List<String> filteredTaskStatusesSelector(
   return list;
 }
 
+var memoizedCalculateTaskStatusAmount = memo2((String taskStatusId,
+        BuiltMap<String, TaskEntity> taskMap) =>
+    calculateTaskStatusAmount(taskStatusId: taskStatusId, taskMap: taskMap));
+
+int calculateTaskStatusAmount({
+  String taskStatusId,
+  BuiltMap<String, TaskEntity> taskMap,
+}) {
+  int total = 0;
+
+  taskMap.forEach((taskId, task) {
+    if (task.statusId == taskStatusId) {
+      total += task.calculateDuration.inSeconds;
+    }
+  });
+
+  return total;
+}
+
+var memoizedTaskStatsForTaskStatus = memo2(
+        (String companyGatewayId, BuiltMap<String, TaskEntity> taskMap) =>
+        taskStatsForTaskStatus(companyGatewayId, taskMap));
+
+EntityStats taskStatsForTaskStatus(
+    String statusId,
+    BuiltMap<String, TaskEntity> taskMap,
+    ) {
+  int countActive = 0;
+  int countArchived = 0;
+  taskMap.forEach((taskId, task) {
+    if (task.statusId == statusId) {
+      if (task.isActive) {
+        countActive++;
+      } else if (task.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasTaskStatusChanges(TaskStatusEntity taskStatus,
         BuiltMap<String, TaskStatusEntity> taskStatusMap) =>
     taskStatus.isNew

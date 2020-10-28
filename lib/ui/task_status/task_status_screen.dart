@@ -31,7 +31,6 @@ class TaskStatusScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.taskStatusUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.taskStatus,
