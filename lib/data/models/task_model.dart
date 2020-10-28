@@ -49,6 +49,7 @@ abstract class TaskItemResponse
 
 class TaskFields {
   static const String number = 'number';
+  static const String rate = 'rate';
   static const String description = 'description';
   static const String duration = 'duration';
   static const String invoiceId = 'invoice_id';
@@ -154,6 +155,7 @@ abstract class TaskEntity extends Object
       isChanged: false,
       description: '',
       duration: 0,
+      rate: 0,
       invoiceId: null,
       clientId: null,
       projectId: null,
@@ -364,6 +366,8 @@ abstract class TaskEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
+
+  double get rate;
 
   @nullable
   @BuiltValueField(wireName: 'project_id')

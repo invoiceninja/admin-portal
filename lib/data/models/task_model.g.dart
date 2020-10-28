@@ -168,6 +168,8 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'duration',
       serializers.serialize(object.duration,
           specifiedType: const FullType(int)),
+      'rate',
+      serializers.serialize(object.rate, specifiedType: const FullType(double)),
       'time_log',
       serializers.serialize(object.timeLog,
           specifiedType: const FullType(String)),
@@ -295,6 +297,10 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'client_id':
           result.clientId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'rate':
+          result.rate = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
           break;
         case 'project_id':
           result.projectId = serializers.deserialize(value,
@@ -670,6 +676,8 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String clientId;
   @override
+  final double rate;
+  @override
   final String projectId;
   @override
   final String timeLog;
@@ -717,6 +725,7 @@ class _$TaskEntity extends TaskEntity {
       this.duration,
       this.invoiceId,
       this.clientId,
+      this.rate,
       this.projectId,
       this.timeLog,
       this.isRunning,
@@ -745,6 +754,9 @@ class _$TaskEntity extends TaskEntity {
     }
     if (duration == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'duration');
+    }
+    if (rate == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'rate');
     }
     if (timeLog == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'timeLog');
@@ -797,6 +809,7 @@ class _$TaskEntity extends TaskEntity {
         duration == other.duration &&
         invoiceId == other.invoiceId &&
         clientId == other.clientId &&
+        rate == other.rate &&
         projectId == other.projectId &&
         timeLog == other.timeLog &&
         isRunning == other.isRunning &&
@@ -839,7 +852,7 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode), rate.hashCode),
                                                                                 projectId.hashCode),
                                                                             timeLog.hashCode),
                                                                         isRunning.hashCode),
@@ -869,6 +882,7 @@ class _$TaskEntity extends TaskEntity {
           ..add('duration', duration)
           ..add('invoiceId', invoiceId)
           ..add('clientId', clientId)
+          ..add('rate', rate)
           ..add('projectId', projectId)
           ..add('timeLog', timeLog)
           ..add('isRunning', isRunning)
@@ -914,6 +928,10 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String _clientId;
   String get clientId => _$this._clientId;
   set clientId(String clientId) => _$this._clientId = clientId;
+
+  double _rate;
+  double get rate => _$this._rate;
+  set rate(double rate) => _$this._rate = rate;
 
   String _projectId;
   String get projectId => _$this._projectId;
@@ -1005,6 +1023,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _duration = _$v.duration;
       _invoiceId = _$v.invoiceId;
       _clientId = _$v.clientId;
+      _rate = _$v.rate;
       _projectId = _$v.projectId;
       _timeLog = _$v.timeLog;
       _isRunning = _$v.isRunning;
@@ -1053,6 +1072,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               duration: duration,
               invoiceId: invoiceId,
               clientId: clientId,
+              rate: rate,
               projectId: projectId,
               timeLog: timeLog,
               isRunning: isRunning,
