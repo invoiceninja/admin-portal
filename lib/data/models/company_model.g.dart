@@ -218,6 +218,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'invoice_expense_documents',
       serializers.serialize(object.invoiceExpenseDocuments,
           specifiedType: const FullType(bool)),
+      'invoice_task_documents',
+      serializers.serialize(object.invoiceTaskDocuments,
+          specifiedType: const FullType(bool)),
       'invoice_task_timelog',
       serializers.serialize(object.invoiceTaskTimelog,
           specifiedType: const FullType(bool)),
@@ -245,10 +248,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.plan,
             specifiedType: const FullType(String)));
     }
-    if (object.invoiceTaskDocuments != null) {
+    if (object.showTasksTable != null) {
       result
-        ..add('invoice_task_documents')
-        ..add(serializers.serialize(object.invoiceTaskDocuments,
+        ..add('show_tasks_table')
+        ..add(serializers.serialize(object.showTasksTable,
             specifiedType: const FullType(bool)));
     }
     if (object.enabledModules != null) {
@@ -576,6 +579,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'auto_start_tasks':
           result.autoStartTasks = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_tasks_table':
+          result.showTasksTable = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'settings':
@@ -2982,6 +2989,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool autoStartTasks;
   @override
+  final bool showTasksTable;
+  @override
   final SettingsEntity settings;
   @override
   final int enabledModules;
@@ -3065,6 +3074,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.invoiceTaskDocuments,
       this.invoiceTaskTimelog,
       this.autoStartTasks,
+      this.showTasksTable,
       this.settings,
       this.enabledModules,
       this.isChanged,
@@ -3246,6 +3256,10 @@ class _$CompanyEntity extends CompanyEntity {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'invoiceExpenseDocuments');
     }
+    if (invoiceTaskDocuments == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'invoiceTaskDocuments');
+    }
     if (invoiceTaskTimelog == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceTaskTimelog');
     }
@@ -3337,6 +3351,7 @@ class _$CompanyEntity extends CompanyEntity {
         invoiceTaskDocuments == other.invoiceTaskDocuments &&
         invoiceTaskTimelog == other.invoiceTaskTimelog &&
         autoStartTasks == other.autoStartTasks &&
+        showTasksTable == other.showTasksTable &&
         settings == other.settings &&
         enabledModules == other.enabledModules &&
         isChanged == other.isChanged &&
@@ -3371,15 +3386,15 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode),
-                                                                                slackWebhookUrl.hashCode),
-                                                                            googleAnalyticsKey.hashCode),
-                                                                        markExpensesInvoiceable.hashCode),
-                                                                    markExpensesPaid.hashCode),
-                                                                invoiceExpenseDocuments.hashCode),
-                                                            invoiceTaskDocuments.hashCode),
-                                                        invoiceTaskTimelog.hashCode),
-                                                    autoStartTasks.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
+                                                                                googleAnalyticsKey.hashCode),
+                                                                            markExpensesInvoiceable.hashCode),
+                                                                        markExpensesPaid.hashCode),
+                                                                    invoiceExpenseDocuments.hashCode),
+                                                                invoiceTaskDocuments.hashCode),
+                                                            invoiceTaskTimelog.hashCode),
+                                                        autoStartTasks.hashCode),
+                                                    showTasksTable.hashCode),
                                                 settings.hashCode),
                                             enabledModules.hashCode),
                                         isChanged.hashCode),
@@ -3453,6 +3468,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('invoiceTaskDocuments', invoiceTaskDocuments)
           ..add('invoiceTaskTimelog', invoiceTaskTimelog)
           ..add('autoStartTasks', autoStartTasks)
+          ..add('showTasksTable', showTasksTable)
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
           ..add('isChanged', isChanged)
@@ -3763,6 +3779,11 @@ class CompanyEntityBuilder
   set autoStartTasks(bool autoStartTasks) =>
       _$this._autoStartTasks = autoStartTasks;
 
+  bool _showTasksTable;
+  bool get showTasksTable => _$this._showTasksTable;
+  set showTasksTable(bool showTasksTable) =>
+      _$this._showTasksTable = showTasksTable;
+
   SettingsEntityBuilder _settings;
   SettingsEntityBuilder get settings =>
       _$this._settings ??= new SettingsEntityBuilder();
@@ -3872,6 +3893,7 @@ class CompanyEntityBuilder
       _invoiceTaskDocuments = _$v.invoiceTaskDocuments;
       _invoiceTaskTimelog = _$v.invoiceTaskTimelog;
       _autoStartTasks = _$v.autoStartTasks;
+      _showTasksTable = _$v.showTasksTable;
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
       _isChanged = _$v.isChanged;
@@ -3964,6 +3986,7 @@ class CompanyEntityBuilder
               invoiceTaskDocuments: invoiceTaskDocuments,
               invoiceTaskTimelog: invoiceTaskTimelog,
               autoStartTasks: autoStartTasks,
+              showTasksTable: showTasksTable,
               settings: settings.build(),
               enabledModules: enabledModules,
               isChanged: isChanged,

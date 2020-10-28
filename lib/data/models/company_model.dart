@@ -85,6 +85,8 @@ abstract class CompanyEntity extends Object
       invoiceExpenseDocuments: false,
       markExpensesInvoiceable: false,
       markExpensesPaid: false,
+      showTasksTable: false,
+      invoiceTaskDocuments: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -269,7 +271,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'invoice_expense_documents')
   bool get invoiceExpenseDocuments;
 
-  @nullable // TODO remove this nullable
   @BuiltValueField(wireName: 'invoice_task_documents')
   bool get invoiceTaskDocuments;
 
@@ -278,6 +279,10 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'auto_start_tasks')
   bool get autoStartTasks;
+
+  @nullable // TODO remove this nullable
+  @BuiltValueField(wireName: 'show_tasks_table')
+  bool get showTasksTable;
 
   SettingsEntity get settings;
 

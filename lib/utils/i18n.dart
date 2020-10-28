@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'show_tasks_table': 'Show Tasks Table',
+      'show_tasks_table_help':
+          'Always show the tasks section when creating invoices',
       'invoice_task_timelog': 'Invoice Task Timelog',
       'invoice_task_timelog_help': 'Add time details to the invoice line items',
       'auto_start_tasks_help': 'Start tasks before saving',
@@ -4785,6 +4788,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get invoiceTaskTimelogHelp =>
       _localizedValues[localeCode]['invoice_task_timelog_help'] ?? '';
 
+  String get showTasksTable =>
+      _localizedValues[localeCode]['show_tasks_table'] ?? '';
+
+  String get showTasksTableHelp =>
+      _localizedValues[localeCode]['show_tasks_table_help'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
