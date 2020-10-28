@@ -46,6 +46,8 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
@@ -296,6 +298,10 @@ void viewEntitiesByType({
             action = ViewGroupList(navigator: navigator);
             break;
           // STARTER: view list - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(ViewTaskStatusList(navigator: navigator));
+            break;
+
           case EntityType.expenseCategory:
             store.dispatch(ViewExpenseCategoryList(navigator: navigator));
             break;
@@ -477,6 +483,14 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(ViewTaskStatus(
+              taskStatusId: entityId,
+              navigator: navigator,
+              force: force,
+            ));
+            break;
+
           case EntityType.expenseCategory:
             store.dispatch(ViewExpenseCategory(
               expenseCategoryId: entityId,
@@ -662,6 +676,14 @@ void createEntityByType(
             ));
             break;
           // STARTER: create type - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(EditTaskStatus(
+              navigator: navigator,
+              force: force,
+              taskStatus: TaskStatusEntity(state: state),
+            ));
+            break;
+
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
               navigator: navigator,
@@ -865,6 +887,15 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(EditTaskStatus(
+              navigator: navigator,
+              taskStatus: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
+
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
               navigator: navigator,
@@ -1114,6 +1145,19 @@ void editEntity(
             ));
             break;
           // STARTER: edit - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(EditTaskStatus(
+              taskStatus: entity,
+              navigator: navigator,
+              completer: completer ??
+                  snackBarCompleter<TaskStatusEntity>(
+                      context,
+                      entity.isNew
+                          ? localization.createdTaskStatus
+                          : localization.updatedTaskStatus),
+            ));
+            break;
+
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
               expenseCategory: entity,
@@ -1301,6 +1345,10 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.taskStatus:
+      handleTaskStatusAction(context, entities, action);
+      break;
+
     case EntityType.expenseCategory:
       handleExpenseCategoryAction(context, entities, action);
       break;

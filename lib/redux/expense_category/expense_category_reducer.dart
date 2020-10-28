@@ -115,7 +115,8 @@ ListUIState _filterExpenseCategoriesByCustom2(
   }
 }
 
-ListUIState _filterExpenseCategoriesByState(ListUIState expenseCategoryListState,
+ListUIState _filterExpenseCategoriesByState(
+    ListUIState expenseCategoryListState,
     FilterExpenseCategoriesByState action) {
   if (expenseCategoryListState.stateFilters.contains(action.state)) {
     return expenseCategoryListState

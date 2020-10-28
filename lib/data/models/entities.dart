@@ -37,6 +37,7 @@ class EntityType extends EnumClass {
   static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
+
   // STARTER: entity type - do not remove comment
   static const EntityType webhook = _$webhook;
   static const EntityType token = _$token;
@@ -74,6 +75,7 @@ class EntityType extends EnumClass {
         EntityType.token,
         EntityType.webhook,
         EntityType.expenseCategory,
+        EntityType.taskStatus,
       ].contains(this);
 
   List<EntityType> get relatedTypes {

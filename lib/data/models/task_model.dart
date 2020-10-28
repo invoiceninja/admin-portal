@@ -412,7 +412,10 @@ abstract class TaskEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this) && !isDeleted && !multiselect) {
+      if (includeEdit &&
+          userCompany.canEditEntity(this) &&
+          !isDeleted &&
+          !multiselect) {
         actions.add(EntityAction.edit);
       }
 
@@ -602,31 +605,4 @@ abstract class TaskEntity extends Object
   bool get isStopped => !isRunning;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
-}
-
-abstract class TaskStatusEntity extends Object
-    with EntityStatus, SelectableEntity
-    implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
-  factory TaskStatusEntity() {
-    return _$TaskStatusEntity._(
-      id: '',
-      name: '',
-      sortOrder: 0,
-    );
-  }
-
-  TaskStatusEntity._();
-
-  @override
-  @memoized
-  int get hashCode;
-
-  @BuiltValueField(wireName: 'sort_order')
-  int get sortOrder;
-
-  @override
-  String get listDisplayName => name;
-
-  static Serializer<TaskStatusEntity> get serializer =>
-      _$taskStatusEntitySerializer;
 }

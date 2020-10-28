@@ -30,6 +30,7 @@ export 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/timezone_model.dart';
 export 'package:invoiceninja_flutter/data/models/task_model.dart';
+export 'package:invoiceninja_flutter/data/models/task_status_model.dart';
 export 'package:invoiceninja_flutter/data/models/user_model.dart';
 export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 

@@ -32,7 +32,6 @@ abstract class ExpenseCategoryState
     }
   }
 
-
   BuiltList<String> get list;
 
   ExpenseCategoryState loadExpenseCategories(

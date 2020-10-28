@@ -76,7 +76,6 @@ class _OnlinePaymentsState extends State<OnlinePayments> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
     final settings = viewModel.settings;
 
     return EditScaffold(

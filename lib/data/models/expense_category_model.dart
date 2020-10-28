@@ -12,8 +12,8 @@ abstract class ExpenseCategoryListResponse
     implements
         Built<ExpenseCategoryListResponse, ExpenseCategoryListResponseBuilder> {
   factory ExpenseCategoryListResponse(
-      [void updates(ExpenseCategoryListResponseBuilder b)]) =
-  _$ExpenseCategoryListResponse;
+          [void updates(ExpenseCategoryListResponseBuilder b)]) =
+      _$ExpenseCategoryListResponse;
 
   ExpenseCategoryListResponse._();
 
@@ -31,8 +31,8 @@ abstract class ExpenseCategoryItemResponse
     implements
         Built<ExpenseCategoryItemResponse, ExpenseCategoryItemResponseBuilder> {
   factory ExpenseCategoryItemResponse(
-      [void updates(ExpenseCategoryItemResponseBuilder b)]) =
-  _$ExpenseCategoryItemResponse;
+          [void updates(ExpenseCategoryItemResponseBuilder b)]) =
+      _$ExpenseCategoryItemResponse;
 
   ExpenseCategoryItemResponse._();
 
@@ -116,13 +116,13 @@ abstract class ExpenseCategoryEntity extends Object
 
   int compareTo(
       {ExpenseCategoryEntity expenseCategory,
-        String sortField,
-        bool sortAscending}) {
+      String sortField,
+      bool sortAscending}) {
     int response = 0;
     final ExpenseCategoryEntity categoryA =
-    sortAscending ? this : expenseCategory;
+        sortAscending ? this : expenseCategory;
     final ExpenseCategoryEntity categoryB =
-    sortAscending ? expenseCategory : this;
+        sortAscending ? expenseCategory : this;
 
     switch (sortField) {
       case ExpenseCategoryFields.name:

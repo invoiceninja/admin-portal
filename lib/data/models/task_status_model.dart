@@ -1,0 +1,137 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
+
+part 'task_status_model.g.dart';
+
+abstract class TaskStatusListResponse
+    implements Built<TaskStatusListResponse, TaskStatusListResponseBuilder> {
+  factory TaskStatusListResponse(
+          [void updates(TaskStatusListResponseBuilder b)]) =
+      _$TaskStatusListResponse;
+
+  TaskStatusListResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  BuiltList<TaskStatusEntity> get data;
+
+  static Serializer<TaskStatusListResponse> get serializer =>
+      _$taskStatusListResponseSerializer;
+}
+
+abstract class TaskStatusItemResponse
+    implements Built<TaskStatusItemResponse, TaskStatusItemResponseBuilder> {
+  factory TaskStatusItemResponse(
+          [void updates(TaskStatusItemResponseBuilder b)]) =
+      _$TaskStatusItemResponse;
+
+  TaskStatusItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  TaskStatusEntity get data;
+
+  static Serializer<TaskStatusItemResponse> get serializer =>
+      _$taskStatusItemResponseSerializer;
+}
+
+class TaskStatusFields {
+  static const String name = 'name';
+  static const String sortOrder = 'sort_order';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
+}
+
+abstract class TaskStatusEntity extends Object
+    with BaseEntity, SelectableEntity
+    implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
+  factory TaskStatusEntity({String id, AppState state}) {
+    return _$TaskStatusEntity._(
+      id: id ?? BaseEntity.nextId,
+      name: '',
+      sortOrder: 9999,
+      createdUserId: '',
+      isDeleted: false,
+      isChanged: false,
+      assignedUserId: '',
+      archivedAt: 0,
+      updatedAt: 0,
+      createdAt: 0,
+    );
+  }
+
+  TaskStatusEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @override
+  EntityType get entityType {
+    return EntityType.taskStatus;
+  }
+
+  String get name;
+
+  @BuiltValueField(wireName: 'sort_order')
+  int get sortOrder;
+
+  int compareTo({
+    TaskStatusEntity taskStatus,
+    String sortField,
+    bool sortAscending,
+  }) {
+    int response = 0;
+    final TaskStatusEntity taskStatusA = sortAscending ? this : taskStatus;
+    final TaskStatusEntity taskStatusB = sortAscending ? taskStatus : this;
+
+    switch (sortField) {
+      case TaskStatusFields.name:
+        response = taskStatusA.name.compareTo(taskStatusB.name);
+        break;
+      default:
+        print('## ERROR: sort by taskStatus.$sortField is not implemented');
+        break;
+    }
+
+    return response;
+  }
+
+  @override
+  bool matchesFilter(String filter) {
+    return matchesStrings(
+      haystacks: [
+        name,
+      ],
+      needle: filter,
+    );
+  }
+
+  @override
+  String matchesFilterValue(String filter) {
+    return matchesStringsValue(
+      haystacks: [
+        name,
+      ],
+      needle: filter,
+    );
+  }
+
+  @override
+  String get listDisplayName {
+    return name;
+  }
+
+  static Serializer<TaskStatusEntity> get serializer =>
+      _$taskStatusEntitySerializer;
+}

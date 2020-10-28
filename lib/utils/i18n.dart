@@ -15,6 +15,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'task_status': 'Status',
+      'task_statuses': 'Task Statuses',
+      'new_task_status': 'New Task Status',
+      'edit_task_status': 'Edit Task Status',
+      'created_task_status': 'Successfully created task status',
+      'updated_task_status': 'Successfully updated task status',
+      'archived_task_status': 'Successfully archived task status',
+      'deleted_task_status': 'Successfully deleted task status',
+      'removed_task_status': 'Successfully removed task status',
+      'restored_task_status': 'Successfully restored task status',
+      'search_task_status': 'Search TaskStatus',
       'show_tasks_table': 'Show Tasks Table',
       'show_tasks_table_help':
           'Always show the tasks section when creating invoices',
@@ -3716,6 +3727,32 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
 // STARTER: lang field - do not remove comment
+  String get taskStatus => _localizedValues[localeCode]['task_status'];
+
+  String get taskStatuses => _localizedValues[localeCode]['task_statuses'];
+
+  String get newTaskStatus => _localizedValues[localeCode]['new_task_status'];
+
+  String get createdTaskStatus =>
+      _localizedValues[localeCode]['created_task_status'];
+
+  String get updatedTaskStatus =>
+      _localizedValues[localeCode]['updated_task_status'];
+
+  String get archivedTaskStatus =>
+      _localizedValues[localeCode]['archived_task_status'];
+
+  String get deletedTaskStatus =>
+      _localizedValues[localeCode]['deleted_task_status'];
+
+  String get restoredTaskStatus =>
+      _localizedValues[localeCode]['restored_task_status'];
+
+  String get editTaskStatus => _localizedValues[localeCode]['edit_task_status'];
+
+  String get searchTaskStatus =>
+      _localizedValues[localeCode]['search_task_status'];
+
   String get expenseCategory =>
       _localizedValues[localeCode]['expense_category'];
 

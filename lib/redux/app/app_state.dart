@@ -49,6 +49,10 @@ import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_selectors.dart';
@@ -226,6 +230,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.taskStatus:
+        return taskStatusState.map;
+
       case EntityType.expenseCategory:
         return expenseCategoryState.map;
       case EntityType.recurringInvoice:
@@ -295,6 +302,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.taskStatus:
+        return taskStatusState.list;
+
       case EntityType.expenseCategory:
         return expenseCategoryState.list;
 
@@ -346,6 +356,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.taskStatus:
+        return taskStatusUIState;
+
       case EntityType.expenseCategory:
         return expenseCategoryUIState;
       case EntityType.recurringInvoice:
@@ -410,6 +423,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  TaskStatusState get taskStatusState => userCompanyState.taskStatusState;
+  ListUIState get taskStatusListState => uiState.taskStatusUIState.listUIState;
+  TaskStatusUIState get taskStatusUIState => uiState.taskStatusUIState;
+
   ExpenseCategoryState get expenseCategoryState =>
       userCompanyState.expenseCategoryState;
   ListUIState get expenseCategoryListState =>
@@ -558,6 +575,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CreditEditScreen.route:
         return hasCreditChanges(creditUIState.editing, creditState.map);
       // STARTER: has changes - do not remove comment
+      case TaskStatusEditScreen.route:
+        return hasTaskStatusChanges(
+            taskStatusUIState.editing, taskStatusState.map);
+
       case ExpenseCategoryEditScreen.route:
         return hasExpenseCategoryChanges(
             expenseCategoryUIState.editing, expenseCategoryState.map);

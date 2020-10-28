@@ -52,6 +52,11 @@ import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
+
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
@@ -292,6 +297,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   QuoteEditScreen.route: (context) => QuoteEditScreen(),
                   QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                   // STARTER: routes - do not remove comment
+                  TaskStatusScreen.route: (context) =>
+                      TaskStatusScreenBuilder(),
+                  TaskStatusViewScreen.route: (context) =>
+                      TaskStatusViewScreen(),
+                  TaskStatusEditScreen.route: (context) =>
+                      TaskStatusEditScreen(),
+
                   ExpenseCategoryScreen.route: (context) =>
                       ExpenseCategoryScreenBuilder(),
                   ExpenseCategoryViewScreen.route: (context) =>

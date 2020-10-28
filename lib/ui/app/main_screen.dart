@@ -41,6 +41,9 @@ import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
@@ -407,6 +410,15 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsTaxRatesEdit:
         screen = TaxRateEditScreen();
+        break;
+      case kSettingsTaskStatuses:
+        screen = TaskStatusScreenBuilder();
+        break;
+      case kSettingsTaskStatusView:
+        screen = TaskStatusViewScreen();
+        break;
+      case kSettingsTaskStatusEdit:
+        screen = TaskStatusEditScreen();
         break;
       case kSettingsProducts:
         screen = ProductSettingsScreen();

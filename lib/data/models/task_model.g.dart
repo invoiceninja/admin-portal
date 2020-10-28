@@ -12,8 +12,6 @@ Serializer<TaskItemResponse> _$taskItemResponseSerializer =
     new _$TaskItemResponseSerializer();
 Serializer<TaskTime> _$taskTimeSerializer = new _$TaskTimeSerializer();
 Serializer<TaskEntity> _$taskEntitySerializer = new _$TaskEntitySerializer();
-Serializer<TaskStatusEntity> _$taskStatusEntitySerializer =
-    new _$TaskStatusEntitySerializer();
 
 class _$TaskListResponseSerializer
     implements StructuredSerializer<TaskListResponse> {
@@ -380,60 +378,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$TaskStatusEntitySerializer
-    implements StructuredSerializer<TaskStatusEntity> {
-  @override
-  final Iterable<Type> types = const [TaskStatusEntity, _$TaskStatusEntity];
-  @override
-  final String wireName = 'TaskStatusEntity';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, TaskStatusEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'sort_order',
-      serializers.serialize(object.sortOrder,
-          specifiedType: const FullType(int)),
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-    ];
-
-    return result;
-  }
-
-  @override
-  TaskStatusEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskStatusEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'sort_order':
-          result.sortOrder = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'name':
-          result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -1139,114 +1083,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       }
       rethrow;
     }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$TaskStatusEntity extends TaskStatusEntity {
-  @override
-  final int sortOrder;
-  @override
-  final String id;
-  @override
-  final String name;
-
-  factory _$TaskStatusEntity(
-          [void Function(TaskStatusEntityBuilder) updates]) =>
-      (new TaskStatusEntityBuilder()..update(updates)).build();
-
-  _$TaskStatusEntity._({this.sortOrder, this.id, this.name}) : super._() {
-    if (sortOrder == null) {
-      throw new BuiltValueNullFieldError('TaskStatusEntity', 'sortOrder');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('TaskStatusEntity', 'id');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('TaskStatusEntity', 'name');
-    }
-  }
-
-  @override
-  TaskStatusEntity rebuild(void Function(TaskStatusEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  TaskStatusEntityBuilder toBuilder() =>
-      new TaskStatusEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is TaskStatusEntity &&
-        sortOrder == other.sortOrder &&
-        id == other.id &&
-        name == other.name;
-  }
-
-  int __hashCode;
-  @override
-  int get hashCode {
-    return __hashCode ??=
-        $jf($jc($jc($jc(0, sortOrder.hashCode), id.hashCode), name.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('TaskStatusEntity')
-          ..add('sortOrder', sortOrder)
-          ..add('id', id)
-          ..add('name', name))
-        .toString();
-  }
-}
-
-class TaskStatusEntityBuilder
-    implements Builder<TaskStatusEntity, TaskStatusEntityBuilder> {
-  _$TaskStatusEntity _$v;
-
-  int _sortOrder;
-  int get sortOrder => _$this._sortOrder;
-  set sortOrder(int sortOrder) => _$this._sortOrder = sortOrder;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
-
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
-
-  TaskStatusEntityBuilder();
-
-  TaskStatusEntityBuilder get _$this {
-    if (_$v != null) {
-      _sortOrder = _$v.sortOrder;
-      _id = _$v.id;
-      _name = _$v.name;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(TaskStatusEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$TaskStatusEntity;
-  }
-
-  @override
-  void update(void Function(TaskStatusEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$TaskStatusEntity build() {
-    final _$result = _$v ??
-        new _$TaskStatusEntity._(sortOrder: sortOrder, id: id, name: name);
     replace(_$result);
     return _$result;
   }
