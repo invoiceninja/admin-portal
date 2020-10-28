@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'sort_order': 'Sort Order',
       'task_status': 'Status',
       'task_statuses': 'Task Statuses',
       'new_task_status': 'New Task Status',
@@ -4831,6 +4832,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get showTasksTableHelp =>
       _localizedValues[localeCode]['show_tasks_table_help'] ?? '';
+
+  String get sortOrder => _localizedValues[localeCode]['sort_order'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

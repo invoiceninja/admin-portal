@@ -26,6 +26,7 @@ class _TaskStatusViewState extends State<TaskStatusView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: taskStatus,
+      onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[],
       ),

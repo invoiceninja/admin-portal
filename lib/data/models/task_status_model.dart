@@ -99,6 +99,9 @@ abstract class TaskStatusEntity extends Object
       case TaskStatusFields.name:
         response = taskStatusA.name.compareTo(taskStatusB.name);
         break;
+      case TaskStatusFields.sortOrder:
+        response = taskStatusA.sortOrder.compareTo(taskStatusB.sortOrder);
+        break;
       default:
         print('## ERROR: sort by taskStatus.$sortField is not implemented');
         break;

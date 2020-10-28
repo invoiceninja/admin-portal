@@ -64,6 +64,7 @@ class TaskStatusEditVM {
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: TaskStatusEntity(), force: true);
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
         final Completer<TaskStatusEntity> completer =
