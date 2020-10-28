@@ -26,6 +26,7 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditDesktop extends StatefulWidget {
@@ -187,7 +188,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         .where((item) =>
             !item.isEmpty && item.typeId != InvoiceItemEntity.TYPE_TASK)
         .length;
-    final countServices = invoice.lineItems
+    final countTasks = invoice.lineItems
         .where((item) =>
             !item.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
         .length;
@@ -444,12 +445,26 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
               controller: _tableTabController,
               tabs: [
                 Tab(
-                  text: localization.products +
-                      (countProducts > 0 ? ' ($countProducts)' : ''),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(getEntityIcon(EntityType.product)),
+                      SizedBox(width: 8),
+                      Text(localization.products +
+                          (countProducts > 0 ? ' ($countProducts)' : '')),
+                    ],
+                  ),
                 ),
                 Tab(
-                  text: localization.tasks +
-                      (countServices > 0 ? ' ($countServices)' : ''),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(getEntityIcon(EntityType.task)),
+                      SizedBox(width: 8),
+                      Text(localization.tasks +
+                          (countTasks > 0 ? ' ($countTasks)' : '')),
+                    ],
+                  ),
                 ),
               ],
             ),
