@@ -478,6 +478,9 @@ abstract class TaskEntity extends Object
       case TaskFields.customValue3:
         response = taskA.customValue3.compareTo(taskB.customValue3);
         break;
+      case TaskFields.customValue4:
+        response = taskA.customValue4.compareTo(taskB.customValue4);
+        break;
       case TaskFields.clientId:
       case TaskFields.client:
         final clientA = clientMap[taskA.clientId] ?? ClientEntity();
@@ -525,6 +528,9 @@ abstract class TaskEntity extends Object
       case TaskFields.documents:
         response = taskA.documents.length.compareTo(taskB.documents.length);
         break;
+      case TaskFields.number:
+        response = taskA.number.compareTo(taskB.number);
+        break;
       default:
         print('## ERROR: sort by task.$sortField is not implemented');
         break;
@@ -537,6 +543,7 @@ abstract class TaskEntity extends Object
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
+        number,
         description,
         customValue1,
         customValue2,
@@ -570,6 +577,7 @@ abstract class TaskEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
+        number,
         description,
         customValue1,
         customValue2,

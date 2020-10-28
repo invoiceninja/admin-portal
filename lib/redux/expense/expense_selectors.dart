@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -22,15 +23,18 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..taxRate2 = expense.taxRate2);
 }
 
-var memoizedDropdownExpenseList = memo6(
+var memoizedDropdownExpenseList = memo9(
     (BuiltMap<String, ExpenseEntity> expenseMap,
             BuiltList<String> expenseList,
             BuiltMap<String, ClientEntity> clientMap,
             BuiltMap<String, UserEntity> userMap,
             BuiltMap<String, VendorEntity> vendorMap,
+            BuiltMap<String, InvoiceEntity> invoiceMap,
+            BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+            StaticState staticState,
             String clientId) =>
-        dropdownExpensesSelector(
-            expenseMap, expenseList, clientMap, userMap, vendorMap, clientId));
+        dropdownExpensesSelector(expenseMap, expenseList, clientMap, userMap,
+            vendorMap, invoiceMap, expenseCategoryMap, staticState, clientId));
 
 List<String> dropdownExpensesSelector(
     BuiltMap<String, ExpenseEntity> expenseMap,
@@ -38,6 +42,9 @@ List<String> dropdownExpensesSelector(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    StaticState staticState,
     String clientId) {
   final list = expenseList.where((expenseId) {
     final expense = expenseMap[expenseId];
@@ -52,23 +59,42 @@ List<String> dropdownExpensesSelector(
   list.sort((expenseAId, expenseBId) {
     final expenseA = expenseMap[expenseAId];
     final expenseB = expenseMap[expenseBId];
-    return expenseA.compareTo(expenseB, ExpenseFields.expenseDate, true,
-        clientMap, userMap, vendorMap);
+    return expenseA.compareTo(
+        expenseB,
+        ExpenseFields.expenseDate,
+        true,
+        clientMap,
+        userMap,
+        vendorMap,
+        invoiceMap,
+        expenseCategoryMap,
+        staticState);
   });
 
   return list;
 }
 
-var memoizedFilteredExpenseList = memo8((String filterEntityId,
+var memoizedFilteredExpenseList = memo10((String filterEntityId,
         EntityType filterEntityType,
         BuiltMap<String, ExpenseEntity> expenseMap,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, VendorEntity> vendorMap,
         BuiltMap<String, UserEntity> userMap,
-        BuiltList<String> expenseList,
-        ListUIState expenseListState) =>
-    filteredExpensesSelector(filterEntityId, filterEntityType, expenseMap,
-        clientMap, vendorMap, userMap, expenseList, expenseListState));
+        ListUIState expenseListState,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+        StaticState staticState) =>
+    filteredExpensesSelector(
+        filterEntityId,
+        filterEntityType,
+        expenseMap,
+        clientMap,
+        vendorMap,
+        userMap,
+        expenseListState,
+        invoiceMap,
+        expenseCategoryMap,
+        staticState));
 
 List<String> filteredExpensesSelector(
     String filterEntityId,
@@ -77,9 +103,11 @@ List<String> filteredExpensesSelector(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, UserEntity> userMap,
-    BuiltList<String> expenseList,
-    ListUIState expenseListState) {
-  final list = expenseList.where((expenseId) {
+    ListUIState expenseListState,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    StaticState staticState) {
+  final list = expenseMap.keys.where((expenseId) {
     final expense = expenseMap[expenseId];
     final vendor =
         vendorMap[expense.vendorId] ?? VendorEntity(id: expense.vendorId);
@@ -130,8 +158,16 @@ List<String> filteredExpensesSelector(
   list.sort((expenseAId, expenseBId) {
     final expenseA = expenseMap[expenseAId];
     final expenseB = expenseMap[expenseBId];
-    return expenseA.compareTo(expenseB, expenseListState.sortField,
-        expenseListState.sortAscending, clientMap, userMap, vendorMap);
+    return expenseA.compareTo(
+        expenseB,
+        expenseListState.sortField,
+        expenseListState.sortAscending,
+        clientMap,
+        userMap,
+        vendorMap,
+        invoiceMap,
+        expenseCategoryMap,
+        staticState);
   });
 
   return list;

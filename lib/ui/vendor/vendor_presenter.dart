@@ -20,7 +20,6 @@ class VendorPresenter extends EntityPresenter {
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
       VendorFields.number,
-      VendorFields.balance,
       VendorFields.address1,
       VendorFields.address2,
       VendorFields.postalCode,

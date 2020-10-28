@@ -107,8 +107,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityType: EntityType.vendor,
               labelText: localization.vendor,
               entityId: expense.vendorId,
-              entityList: memoizedDropdownVendorList(
-                  vendorState.map, vendorState.list, state.userState.map),
+              entityList: memoizedDropdownVendorList(vendorState.map,
+                  vendorState.list, state.userState.map, state.staticState),
               onSelected: (vendor) {
                 viewModel.onChanged(
                     expense.rebuild((b) => b..vendorId = vendor?.id));
@@ -162,7 +162,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               labelText: localization.category,
               entityId: expense.categoryId,
               entityList: memoizedDropdownExpenseCategoriesList(
-                  state.expenseCategoryState.map, state.expenseCategoryState.list),
+                  state.expenseCategoryState.map,
+                  state.expenseCategoryState.list),
               onSelected: (category) {
                 viewModel.onChanged(
                     expense.rebuild((b) => b..categoryId = category?.id ?? ''));

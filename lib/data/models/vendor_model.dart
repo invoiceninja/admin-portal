@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -208,7 +209,7 @@ abstract class VendorEntity extends Object
   }
 
   int compareTo(VendorEntity vendor, String sortField, bool sortAscending,
-      BuiltMap<String, UserEntity> userMap) {
+      BuiltMap<String, UserEntity> userMap, StaticState staticState) {
     int response = 0;
     final VendorEntity vendorA = sortAscending ? this : vendor;
     final VendorEntity vendorB = sortAscending ? vendor : this;
@@ -261,6 +262,54 @@ abstract class VendorEntity extends Object
       case VendorFields.documents:
         response = vendorA.documents.length.compareTo(vendorB.documents.length);
         break;
+      case VendorFields.number:
+        response = vendorA.number.compareTo(vendorB.number);
+        break;
+      case VendorFields.address1:
+        response = vendorA.address1.compareTo(vendorB.address1);
+        break;
+      case VendorFields.address2:
+        response = vendorA.address2.compareTo(vendorB.address2);
+        break;
+      case VendorFields.postalCode:
+        response = vendorA.postalCode.compareTo(vendorB.postalCode);
+        break;
+      case VendorFields.countryId:
+        response = vendorA.countryId.compareTo(vendorB.countryId);
+        break;
+      case VendorFields.privateNotes:
+        response = vendorA.privateNotes.compareTo(vendorB.privateNotes);
+        break;
+      case VendorFields.publicNotes:
+        response = vendorA.publicNotes.compareTo(vendorB.publicNotes);
+        break;
+      case VendorFields.website:
+        response = vendorA.website.compareTo(vendorB.website);
+        break;
+      case VendorFields.vatNumber:
+        response = vendorA.vatNumber.compareTo(vendorB.vatNumber);
+        break;
+      case VendorFields.idNumber:
+        response = vendorA.idNumber.compareTo(vendorB.idNumber);
+        break;
+      case VendorFields.currencyId:
+        final currencyMap = staticState.currencyMap;
+        response = currencyMap[vendorA.currencyId]
+            .listDisplayName
+            .compareTo(currencyMap[vendorB.currencyId].listDisplayName);
+        break;
+      case VendorFields.customValue1:
+        response = vendorA.customValue1.compareTo(vendorB.customValue1);
+        break;
+      case VendorFields.customValue2:
+        response = vendorA.customValue2.compareTo(vendorB.customValue2);
+        break;
+      case VendorFields.customValue3:
+        response = vendorA.customValue3.compareTo(vendorB.customValue3);
+        break;
+      case VendorFields.customValue4:
+        response = vendorA.customValue4.compareTo(vendorB.customValue4);
+        break;
       default:
         print('## ERROR: sort by vendor.$sortField is not implemented');
         break;
@@ -284,7 +333,9 @@ abstract class VendorEntity extends Object
         idNumber,
         phone,
         address1,
+        address2,
         city,
+        state,
         postalCode,
         customValue1,
         customValue2,
@@ -306,11 +357,14 @@ abstract class VendorEntity extends Object
 
     return matchesStringsValue(
       haystacks: [
+        name,
         vatNumber,
         idNumber,
         phone,
         address1,
+        address2,
         city,
+        state,
         postalCode,
         customValue1,
         customValue2,

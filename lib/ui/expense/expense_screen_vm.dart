@@ -51,8 +51,10 @@ class ExpenseScreenVM {
           state.clientState.map,
           state.vendorState.map,
           state.userState.map,
-          state.expenseState.list,
-          state.expenseListState),
+          state.expenseListState,
+          state.invoiceState.map,
+          state.expenseCategoryState.map,
+          state.staticState),
       userCompany: state.userCompany,
       isInMultiselect: state.expenseListState.isInMultiselect(),
     );

@@ -44,8 +44,12 @@ class VendorScreenVM {
 
     return VendorScreenVM(
       vendorMap: state.vendorState.map,
-      vendorList: memoizedFilteredVendorList(state.vendorState.map,
-          state.vendorState.list, state.vendorListState, state.userState.map),
+      vendorList: memoizedFilteredVendorList(
+          state.vendorState.map,
+          state.vendorState.list,
+          state.vendorListState,
+          state.userState.map,
+          state.staticState),
       userCompany: state.userCompany,
       isInMultiselect: state.vendorListState.isInMultiselect(),
     );
