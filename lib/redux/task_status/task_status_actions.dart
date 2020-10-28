@@ -272,9 +272,11 @@ void handleTaskStatusAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final taskStatus = taskStatuses.first as TaskStatusEntity;
-  final taskStatusIds = taskStatuses.map((taskStatus) => taskStatus.id).toList();
+  final taskStatusIds =
+      taskStatuses.map((taskStatus) => taskStatus.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -294,6 +296,12 @@ void handleTaskStatusAction(
       store.dispatch(DeleteTaskStatusesRequest(
           snackBarCompleter<Null>(context, localization.deletedTaskStatus),
           taskStatusIds));
+      break;
+    case EntityAction.newTask:
+      createEntity(
+          context: context,
+          entity: TaskEntity(state: state)
+              .rebuild((b) => b..statusId = taskStatus.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskStatusListState.isInMultiselect()) {
