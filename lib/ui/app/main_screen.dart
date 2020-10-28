@@ -640,6 +640,11 @@ class EntityScreens extends StatelessWidget {
                 ? RecurringInvoiceEditScreen()
                 : RecurringInvoiceViewScreen(isFilter: true);
             break;
+          case EntityType.expenseCategory:
+            leftFilterChild = editingFIlterEntity
+                ? ExpenseCategoryEditScreen()
+                : ExpenseCategoryViewScreen(isFilter: true);
+            break;
           default:
             print(
                 'Error: filter view not implemented for ${uiState.filterEntityType}');

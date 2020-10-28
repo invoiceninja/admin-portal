@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -131,6 +132,7 @@ class ExpenseListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Text(expense.number),
                             if (!expense.isActive) EntityStateLabel(expense)
                           ],
                         ),
@@ -142,11 +144,11 @@ class ExpenseListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                (expense.number ?? '') +
-                                    (expense.documents.isNotEmpty
-                                        ? '  📎'
-                                        : ''),
-                                style: textStyle),
+                              (expense.publicNotes ?? '') +
+                                  (expense.documents.isNotEmpty ? '  📎' : ''),
+                              style: textStyle,
+                              maxLines: 1,
+                            ),
                             Text(subtitle ?? filterMatch,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
@@ -167,6 +169,8 @@ class ExpenseListItem extends StatelessWidget {
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
+                      SizedBox(width: 25),
+                      EntityStatusChip(entity: expense),
                     ],
                   ),
                 ),

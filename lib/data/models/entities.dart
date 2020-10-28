@@ -138,6 +138,11 @@ class EntityType extends EnumClass {
         return [
           EntityType.vendor,
           EntityType.project,
+          EntityType.expenseCategory,
+        ];
+      case EntityType.expenseCategory:
+        return [
+          EntityType.expense,
         ];
       default:
         return [];

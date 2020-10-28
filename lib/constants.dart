@@ -394,6 +394,12 @@ const String kExpenseStatusLogged = '1';
 const String kExpenseStatusPending = '2';
 const String kExpenseStatusInvoiced = '3';
 
+const kExpenseStatuses = {
+  kExpenseStatusLogged: 'logged',
+  kExpenseStatusPending: 'pending',
+  kExpenseStatusInvoiced: 'invoiced',
+};
+
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultAccentColor = '#0091EA';

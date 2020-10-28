@@ -228,7 +228,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch map - do not remove comment
       case EntityType.expenseCategory:
         return expenseCategoryState.map;
-
       case EntityType.recurringInvoice:
         return recurringInvoiceState.map;
       case EntityType.webhook:

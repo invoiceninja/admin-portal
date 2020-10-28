@@ -50,6 +50,11 @@ class EntityStatusChip extends StatelessWidget {
         label = kCreditStatuses[credit.statusId];
         color = CreditStatusColors.colors[credit.statusId];
         break;
+      case EntityType.expense:
+        final expense = entity as ExpenseEntity;
+        label = kExpenseStatuses[expense.statusId];
+        color = ExpenseStatusColors.colors[expense.statusId];
+        break;
       default:
         print(
             'ERROR: unhandled entityType ${entity.entityType} in entity_status_chip.dart');
