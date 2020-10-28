@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
     @required this.clientId,
+    @required this.showTasksAndExpenses,
     this.onItemsSelected,
     this.excluded,
   });
@@ -25,6 +26,7 @@ class InvoiceItemSelector extends StatefulWidget {
   final Function(List<InvoiceItemEntity>, [String]) onItemsSelected;
   final String clientId;
   final List<BaseEntity> excluded;
+  final bool showTasksAndExpenses;
 
   @override
   _InvoiceItemSelectorState createState() => new _InvoiceItemSelectorState();
@@ -126,8 +128,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
-    final showTabBar = company.isModuleEnabled(EntityType.task) ||
-        company.isModuleEnabled(EntityType.expense);
+    final showTabBar = widget.showTasksAndExpenses &&
+        (company.isModuleEnabled(EntityType.task) ||
+            company.isModuleEnabled(EntityType.expense));
 
     Widget _headerRow() {
       return Row(
