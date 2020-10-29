@@ -83,10 +83,17 @@ List<String> filteredProjectsSelector(
     final project = projectMap[projectId];
     final client =
         clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
+    final user = userMap[project.assignedUserId] ??
+        UserEntity(id: project.assignedUserId);
 
-    if (filterEntityId != null &&
-        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
-      return false;
+    if (filterEntityId != null) {
+      if (filterEntityType == EntityType.client &&
+          !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
+        return false;
+      } else if (filterEntityType == EntityType.user &&
+          !user.matchesEntityFilter(filterEntityType, filterEntityId)) {
+        return false;
+      }
     } else if (!client.isActive) {
       return false;
     }

@@ -96,6 +96,10 @@ class _ProjectOverviewState extends State<ProjectOverview> {
           entity: client,
           isFilter: widget.isFilter,
         ),
+        EntityListTile(
+          entity: state.userState.get(project.assignedUserId),
+          isFilter: widget.isFilter,
+        ),
         if (company.isModuleEnabled(EntityType.task))
           EntitiesListTile(
             entity: project,

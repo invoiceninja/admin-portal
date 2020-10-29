@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 
@@ -25,6 +26,7 @@ class TaskEditDetails extends StatefulWidget {
 }
 
 class _TaskEditDetailsState extends State<TaskEditDetails> {
+  final _rateController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -37,6 +39,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   @override
   void didChangeDependencies() {
     _controllers = [
+      _rateController,
       _descriptionController,
       _custom1Controller,
       _custom2Controller,
@@ -47,6 +50,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final task = widget.viewModel.task;
+    _rateController.text = formatNumber(task.rate, context,
+        formatNumberType: FormatNumberType.inputMoney);
     _descriptionController.text = task.description;
     _custom1Controller.text = task.customValue1;
     _custom2Controller.text = task.customValue2;
@@ -71,6 +76,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   void _onChanged() {
     _debouncer.run(() {
       final task = widget.viewModel.task.rebuild((b) => b
+        ..rate = parseDouble(_rateController.text.trim())
         ..description = _descriptionController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
@@ -149,6 +155,11 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                   ..statusId = taskStatus?.id
                   ..statusSortOrder = 9999));
               },
+            ),
+            DecoratedFormField(
+              controller: _rateController,
+              label: localization.rate,
+              keyboardType: TextInputType.number,
             ),
             DecoratedFormField(
               maxLines: 4,

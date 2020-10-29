@@ -101,7 +101,7 @@ class VendorEditNotesState extends State<VendorEditNotes> {
               maxLines: 4,
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
-              label: localization.publicNotes,
+              label: localization.privateNotes,
             ),
           ],
         ),
