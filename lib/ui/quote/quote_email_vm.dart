@@ -90,7 +90,7 @@ class EmailQuoteVM extends EmailEntityVM {
         }
         store.dispatch(EmailQuoteRequest(
           completer: completer,
-          invoiceId: quote.id,
+          quoteId: quote.id,
           template: template,
           subject: subject,
           body: body,
