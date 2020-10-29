@@ -107,6 +107,11 @@ class ProjectListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Text(
+                              project.number,
+                              style: textStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             if (!project.isActive) EntityStateLabel(project)
                           ],
                         ),
