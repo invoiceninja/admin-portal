@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/health_check_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -49,6 +52,32 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     });
   }
 
+  void clearCache() {
+    setState(() {
+      _response = null;
+    });
+
+    final webClient = WebClient();
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final credentials = state.credentials;
+    final url = '${credentials.url}/ping?clear_cache=true';
+
+    webClient.get(url, credentials.token).then((dynamic response) {
+      store.dispatch(RefreshData(
+          completer: Completer<Null>()
+            ..future.then((value) {
+              runCheck();
+            })));
+    }).catchError((dynamic error) {
+      showDialog<ErrorDialog>(
+          context: context,
+          builder: (BuildContext context) {
+            return ErrorDialog(error);
+          });
+    });
+  }
+
   String _parseVersion(String version) =>
       RegExp(r'(\d+\.\d+.\d+)').stringMatch(version);
 
@@ -63,8 +92,16 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
 
     return AlertDialog(
       content: _response == null
-          ? LoadingIndicator(
-              height: 100,
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: LinearProgressIndicator(),
+                ),
+                Text('${localization.loading}...'),
+              ],
             )
           : Column(
               mainAxisSize: MainAxisSize.min,
@@ -103,6 +140,10 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
       actions: _response == null
           ? []
           : [
+              FlatButton(
+                child: Text(localization.clearCache.toUpperCase()),
+                onPressed: () => clearCache(),
+              ),
               FlatButton(
                 child: Text(localization.refresh.toUpperCase()),
                 onPressed: () => runCheck(),
