@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -87,7 +88,7 @@ class EmailQuoteVM extends EmailEntityVM {
             viewEntity(entity: quote, context: context);
           });
         }
-        store.dispatch(EmailInvoiceRequest(
+        store.dispatch(EmailQuoteRequest(
           completer: completer,
           invoiceId: quote.id,
           template: template,
