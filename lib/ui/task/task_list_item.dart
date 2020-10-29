@@ -114,6 +114,11 @@ class TaskListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Text(
+                              task.number,
+                              style: textStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             if (!task.isActive) EntityStateLabel(task)
                           ],
                         ),

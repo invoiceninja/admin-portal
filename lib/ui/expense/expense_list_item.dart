@@ -132,7 +132,11 @@ class ExpenseListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(expense.number),
+                            Text(
+                              expense.number,
+                              style: textStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             if (!expense.isActive) EntityStateLabel(expense)
                           ],
                         ),
