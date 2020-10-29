@@ -154,6 +154,7 @@ class RefreshData implements StartLoading {
     this.includeStatic = false,
   });
 
+
   final Completer completer;
   final bool clearData;
   final bool includeStatic;
