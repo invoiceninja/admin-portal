@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
@@ -441,17 +440,6 @@ abstract class CompanyEntity extends Object
       );
 
   bool isModuleEnabled(EntityType entityType) {
-    // TODO remove this
-    if (kReleaseMode &&
-        [
-          EntityType.project,
-          EntityType.task,
-          EntityType.expense,
-          EntityType.vendor,
-        ].contains(entityType)) {
-      return false;
-    }
-
     if ((entityType == EntityType.invoice ||
             entityType == EntityType.payment) &&
         enabledModules & kModuleInvoices == 0) {
