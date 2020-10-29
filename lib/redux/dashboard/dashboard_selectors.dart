@@ -544,7 +544,11 @@ List<ChartDataGroup> chartTasks(
           }
 
           final taskRate = taskRateSelector(
-              company: company, project: project, client: client);
+            company: company,
+            project: project,
+            client: client,
+            task: task,
+          );
           double amount = taskRate * round(duration.inSeconds / 3600, 3);
 
           // Handle "All"

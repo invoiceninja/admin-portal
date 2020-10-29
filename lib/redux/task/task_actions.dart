@@ -325,13 +325,19 @@ void handleTaskAction(
       break;
     case EntityAction.newInvoice:
       final items = tasks
+          .where((entity) {
+            final task = entity as TaskEntity;
+            return !task.isRunning && !task.isInvoiced;
+          })
           .map((task) => convertTaskToInvoiceItem(task: task, context: context))
           .toList();
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..hasTasks = true
-            ..lineItems.addAll(items)));
+      if (items.isNotEmpty) {
+        createEntity(
+            context: context,
+            entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
+              ..hasTasks = true
+              ..lineItems.addAll(items)));
+      }
       break;
     case EntityAction.viewInvoice:
       viewEntityById(

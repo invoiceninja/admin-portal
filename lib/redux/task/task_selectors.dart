@@ -33,7 +33,11 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     ..typeId = InvoiceItemEntity.TYPE_TASK
     ..notes = notes
     ..cost = taskRateSelector(
-        company: state.company, project: project, client: client)
+      company: state.company,
+      project: project,
+      client: client,
+      task: task,
+    )
     ..quantity = round(task.calculateDuration.inSeconds / 3600, 3));
 }
 
@@ -185,9 +189,15 @@ List<String> filteredTasksSelector(
   return list;
 }
 
-double taskRateSelector(
-    {CompanyEntity company, ProjectEntity project, ClientEntity client}) {
-  if (project != null && project.taskRate > 0) {
+double taskRateSelector({
+  @required CompanyEntity company,
+  @required ProjectEntity project,
+  @required ClientEntity client,
+  @required TaskEntity task,
+}) {
+  if (task != null && task.rate > 0) {
+    return task.rate;
+  } else if (project != null && project.taskRate > 0) {
     return project.taskRate;
   } else if (client != null && (client.settings.defaultTaskRate ?? 0) > 0) {
     return client.settings.defaultTaskRate;

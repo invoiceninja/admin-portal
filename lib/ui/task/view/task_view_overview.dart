@@ -55,7 +55,9 @@ class _TaskOverviewState extends State<TaskOverview> {
     final company = viewModel.company;
     final invoice = viewModel.state.invoiceState.map[task.invoiceId];
 
-    final Map<String, String> fields = {};
+    final Map<String, String> fields = {
+      TaskFields.rate: formatNumber(task.rate, context, zeroIsNull: true),
+    };
 
     if ((task.statusId ?? '').isNotEmpty) {
       fields[localization.status] =
@@ -95,6 +97,7 @@ class _TaskOverviewState extends State<TaskOverview> {
                 company: company,
                 project: project,
                 client: client,
+                task: task,
               ),
             ),
             context,

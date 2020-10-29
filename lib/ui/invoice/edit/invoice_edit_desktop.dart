@@ -75,9 +75,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   void initState() {
     super.initState();
 
+    final invoice = widget.viewModel.invoice;
+    _showTasksTable = invoice.hasTasks;
+
     _focusNode = FocusScopeNode();
     _optionTabController = TabController(vsync: this, length: 5);
-    _tableTabController = TabController(vsync: this, length: 2);
+    _tableTabController = TabController(
+        vsync: this, length: 2, initialIndex: _showTasksTable ? 1 : 0);
   }
 
   @override
