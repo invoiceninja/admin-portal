@@ -724,7 +724,6 @@ void createEntityByType(
               paymentTerm: PaymentTermEntity(state: state),
             ));
             break;
-
           case EntityType.design:
             store.dispatch(EditDesign(
               navigator: navigator,
@@ -732,7 +731,6 @@ void createEntityByType(
               design: DesignEntity(state: state),
             ));
             break;
-
           case EntityType.credit:
             store.dispatch(EditCredit(
               navigator: navigator,

@@ -24,6 +24,7 @@ class TaskPresenter extends EntityPresenter {
       ...EntityPresenter.getBaseFields(),
       TaskFields.number,
       TaskFields.rate,
+      TaskFields.calculatedRate,
       TaskFields.invoiceId,
       TaskFields.clientId,
       TaskFields.projectId,
@@ -50,6 +51,8 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.client:
         return Text(state.clientState.map[task.clientId]?.displayName ?? '');
       case TaskFields.rate:
+        return Text(formatNumber(task.rate, context));
+      case TaskFields.calculatedRate:
         final rate = taskRateSelector(
           company: state.company,
           project: state.projectState.get(task.projectId),

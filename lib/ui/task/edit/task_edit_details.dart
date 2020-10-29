@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
@@ -141,16 +142,15 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               onChanged: (userId) => viewModel
                   .onChanged(task.rebuild((b) => b..assignedUserId = userId)),
             ),
-            // TODO Remove isNotEmpty check in v2
-            EntityDropdown(
+            DynamicSelector(
               key: ValueKey('__task_status_${task.statusId}__'),
               allowClearing: false,
               entityType: EntityType.taskStatus,
               labelText: localization.status,
               entityId: task.statusId,
-              entityList: state.taskStatusState.list.toList(),
-              onSelected: (selected) {
-                final taskStatus = selected as TaskStatusEntity;
+              entityIds: state.taskStatusState.list.toList(),
+              onChanged: (selectedId) {
+                final taskStatus = state.taskStatusState.map[selectedId];
                 viewModel.onChanged(task.rebuild((b) => b
                   ..statusId = taskStatus?.id
                   ..statusSortOrder = 9999));

@@ -12,6 +12,7 @@ import 'package:memoize/memoize.dart';
 
 enum TaskReportFields {
   rate,
+  calculated_rate,
   start_date,
   end_date,
   description,
@@ -104,6 +105,9 @@ ReportResult taskReport(
       dynamic value = '';
 
       switch (column) {
+        case TaskReportFields.calculated_rate:
+          value = task.rate;
+          break;
         case TaskReportFields.rate:
           value = taskRateSelector(
             company: userCompany.company,

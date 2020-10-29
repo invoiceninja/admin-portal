@@ -50,6 +50,7 @@ abstract class TaskItemResponse
 class TaskFields {
   static const String number = 'number';
   static const String rate = 'rate';
+  static const String calculatedRate = 'calculated_rate';
   static const String description = 'description';
   static const String duration = 'duration';
   static const String invoiceId = 'invoice_id';
