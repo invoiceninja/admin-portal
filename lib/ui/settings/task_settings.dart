@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskSettings extends StatefulWidget {
@@ -23,6 +25,8 @@ class _TaskSettingsState extends State<TaskSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taskSettings');
   FocusScopeNode _focusNode;
+  final _taskRateController = TextEditingController();
+  List<TextEditingController> _controllers;
 
   @override
   void initState() {
@@ -31,9 +35,43 @@ class _TaskSettingsState extends State<TaskSettings> {
   }
 
   @override
+  void didChangeDependencies() {
+    _controllers = [
+      _taskRateController,
+    ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    _taskRateController.text = formatNumber(
+        widget.viewModel.settings.defaultTaskRate, context,
+        formatNumberType: FormatNumberType.inputMoney);
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
     _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onChanged() {
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings.rebuild((b) => b
+      ..defaultTaskRate =
+          parseDouble(_taskRateController.text, zeroIsNull: true));
+
+    if (settings != viewModel.settings) {
+      viewModel.onSettingsChanged(settings);
+    }
   }
 
   @override
@@ -51,6 +89,13 @@ class _TaskSettingsState extends State<TaskSettings> {
         children: <Widget>[
           FormCard(
             children: <Widget>[
+              DecoratedFormField(
+                controller: _taskRateController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                label: localization.defaultTaskRate,
+                onSavePressed: viewModel.onSavePressed,
+              ),
+              SizedBox(height: 32),
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.autoStartTasks),
@@ -62,8 +107,8 @@ class _TaskSettingsState extends State<TaskSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.showTasksTable),
-                value:
-                    company.showTasksTable ?? false, // TODO remove null check
+                value: company.showTasksTable ?? false,
+                // TODO remove null check
                 subtitle: Text(localization.showTasksTableHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..showTasksTable = value)),

@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'default_task_rate': 'Default Task Rate',
       'clear_cache': 'Clear Cache',
       'sort_order': 'Sort Order',
       'task_status': 'Status',
@@ -3356,6 +3357,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get defaultQuantity =>
       _localizedValues[localeCode]['default_quantity'] ?? '';
+
+  String get defaultTaskRate =>
+      _localizedValues[localeCode]['default_task_rate'] ?? '';
 
   String get defaultQuantityHelp =>
       _localizedValues[localeCode]['default_quantity_help'] ?? '';

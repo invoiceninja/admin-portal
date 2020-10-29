@@ -33,7 +33,9 @@ class TaskSettingsVM {
   TaskSettingsVM({
     @required this.state,
     @required this.company,
+    @required this.settings,
     @required this.onCompanyChanged,
+    @required this.onSettingsChanged,
     @required this.onSavePressed,
     @required this.onConfigureStatusesPressed,
   });
@@ -44,8 +46,12 @@ class TaskSettingsVM {
     return TaskSettingsVM(
       state: state,
       company: state.uiState.settingsUIState.company,
+      settings: state.uiState.settingsUIState.settings,
       onCompanyChanged: (company) =>
           store.dispatch(UpdateCompany(company: company)),
+      onSettingsChanged: (settings) {
+        store.dispatch(UpdateSettings(settings: settings));
+      },
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;
         final completer = snackBarCompleter<Null>(
@@ -63,6 +69,8 @@ class TaskSettingsVM {
   final AppState state;
   final Function(BuildContext) onSavePressed;
   final CompanyEntity company;
+  final SettingsEntity settings;
   final Function(CompanyEntity) onCompanyChanged;
+  final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onConfigureStatusesPressed;
 }
