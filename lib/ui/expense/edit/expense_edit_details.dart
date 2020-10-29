@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
@@ -156,15 +157,17 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                  */
               ),
             ],
-            EntityDropdown(
+            DynamicSelector(
+              allowClearing: true,
               key: ValueKey('__category_${expense.categoryId}__'),
               entityType: EntityType.expenseCategory,
               labelText: localization.category,
               entityId: expense.categoryId,
-              entityList: memoizedDropdownExpenseCategoriesList(
+              entityIds: memoizedDropdownExpenseCategoriesList(
                   state.expenseCategoryState.map,
                   state.expenseCategoryState.list),
-              onSelected: (category) {
+              onChanged: (categoryId) {
+                final category = state.expenseCategoryState.get(categoryId);
                 viewModel.onChanged(
                     expense.rebuild((b) => b..categoryId = category?.id ?? ''));
               },
