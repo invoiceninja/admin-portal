@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -22,6 +23,7 @@ class TaskPresenter extends EntityPresenter {
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
       TaskFields.number,
+      TaskFields.rate,
       TaskFields.invoiceId,
       TaskFields.clientId,
       TaskFields.projectId,
@@ -47,6 +49,14 @@ class TaskPresenter extends EntityPresenter {
     switch (field) {
       case TaskFields.client:
         return Text(state.clientState.map[task.clientId]?.displayName ?? '');
+      case TaskFields.rate:
+        final rate = taskRateSelector(
+          company: state.company,
+          project: state.projectState.get(task.projectId),
+          client: state.clientState.get(task.clientId),
+          task: task,
+        );
+        return Text(formatNumber(rate, context));
       case TaskFields.project:
         return Text(state.projectState.map[task.projectId]?.name ?? '');
       case TaskFields.description:
