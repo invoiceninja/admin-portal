@@ -47,6 +47,7 @@ class _TaskOverviewState extends State<TaskOverview> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final task = viewModel.task;
     final localization = AppLocalization.of(context);
 
@@ -83,6 +84,7 @@ class _TaskOverviewState extends State<TaskOverview> {
       final widgets = <Widget>[
         EntityHeader(
           entity: task,
+          statusLabel: state.taskStatusState.get(task.statusId).name,
           statusColor: task.isInvoiced
               ? Colors.green
               : task.isRunning

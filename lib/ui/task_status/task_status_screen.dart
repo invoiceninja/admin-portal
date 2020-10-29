@@ -30,7 +30,6 @@ class TaskStatusScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.taskStatusUIState.listUIState;
 
     return ListScaffold(
       entityType: EntityType.taskStatus,

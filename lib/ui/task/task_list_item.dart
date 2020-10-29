@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -150,8 +151,10 @@ class TaskListItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 8),
                       duration,
+                      SizedBox(width: 16),
+                      EntityStatusChip(entity: task),
                     ],
                   ),
                 ),

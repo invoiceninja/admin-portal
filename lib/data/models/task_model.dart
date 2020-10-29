@@ -68,6 +68,7 @@ class TaskFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String status = 'status';
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {

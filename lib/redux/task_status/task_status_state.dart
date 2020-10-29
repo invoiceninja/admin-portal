@@ -24,6 +24,15 @@ abstract class TaskStatusState
   int get hashCode;
 
   BuiltMap<String, TaskStatusEntity> get map;
+
+  TaskStatusEntity get(String statusId) {
+    if (map.containsKey(statusId)) {
+      return map[statusId];
+    } else {
+      return TaskStatusEntity(id: statusId);
+    }
+  }
+
   BuiltList<String> get list;
 
   TaskStatusState loadTaskStatuses(BuiltList<TaskStatusEntity> clients) {

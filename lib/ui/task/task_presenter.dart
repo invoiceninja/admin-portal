@@ -14,6 +14,7 @@ class TaskPresenter extends EntityPresenter {
       TaskFields.project,
       TaskFields.description,
       TaskFields.duration,
+      TaskFields.status,
       EntityFields.state,
     ];
   }
@@ -98,6 +99,8 @@ class TaskPresenter extends EntityPresenter {
             formatDate(convertTimestampToDateString(task.archivedAt), context));
       case TaskFields.isDeleted:
         return Text(task.isDeleted.toString());
+      case TaskFields.status:
+        return Text(state.taskStatusState.get(task.statusId).name);
     }
 
     return super.getField(field: field, context: context);
