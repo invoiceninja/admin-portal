@@ -165,7 +165,7 @@ class TaskListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       duration,
-                      SizedBox(width: 16),
+                      SizedBox(width: 24),
                       EntityStatusChip(entity: task),
                       SizedBox(width: 8),
                       startStopButton,
