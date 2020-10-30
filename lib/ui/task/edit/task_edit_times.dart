@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/duration_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
@@ -102,9 +103,10 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   String _date;
   DateTime _startDate;
   DateTime _endDate;
-  int _duration;
+  Duration _duration;
 
-  final _durationController = TextEditingController();
+  DateTime _endDateChanged;
+  DateTime _durationChanged;
 
   @override
   void didChangeDependencies() {
@@ -117,16 +119,10 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
     if (endDate != null) {
       _endDate = endDate.toLocal();
-      _durationController.text = formatDuration(taskTime.duration);
+      _duration = taskTime.duration;
     }
 
     super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _durationController.dispose();
-    super.dispose();
   }
 
   @override
@@ -217,14 +213,11 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               onSelected: (timeOfDay) {
                 setState(() {
                   _startDate = timeOfDay;
-                  _durationController.text = _endDate != null
-                      ? formatDuration(_endDate.difference(_startDate))
-                      : '';
                 });
               },
             ),
             TimePicker(
-              key: ValueKey(_duration),
+              key: ValueKey('$_startDate$_durationChanged'),
               labelText: localization.endTime,
               selectedDate: _startDate,
               selectedDateTime: _endDate,
@@ -232,44 +225,21 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               onSelected: (timeOfDay) {
                 setState(() {
                   _endDate = timeOfDay;
-                  _durationController.text = _endDate != null
-                      ? formatDuration(_endDate.difference(_startDate))
-                      : '';
+                  _endDateChanged = DateTime.now();
                 });
               },
             ),
-            PopupMenuButton<int>(
-              padding: EdgeInsets.zero,
-              initialValue: null,
-              itemBuilder: (BuildContext context) =>
-                  [15, 30, 45, 60, 75, 90, 105, 120]
-                      .map((minutes) => PopupMenuItem<int>(
-                            child: Text(formatDuration(
-                                Duration(minutes: minutes),
-                                showSeconds: false)),
-                            value: minutes,
-                          ))
-                      .toList(),
-              onSelected: (minutes) {
+            DurationPicker(
+              key: ValueKey(_endDateChanged),
+              onSelected: (Duration duration) {
                 setState(() {
-                  _durationController.text =
-                      formatDuration(Duration(minutes: minutes));
-                  final dateTime = _startDate.add(Duration(minutes: minutes));
-                  _endDate = dateTime;
-                  _duration = minutes;
+                  _endDate = _startDate.add(duration);
+                  _durationChanged = DateTime.now();
                 });
               },
-              child: InkWell(
-                child: IgnorePointer(
-                  child: TextFormField(
-                    controller: _durationController,
-                    decoration: InputDecoration(
-                      labelText: localization.duration,
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ),
-                  ),
-                ),
-              ),
+              duration: (_endDate != null && _startDate != null)
+                  ? _endDate.difference(_startDate)
+                  : null,
             ),
           ],
         ),
