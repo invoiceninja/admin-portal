@@ -231,13 +231,14 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             ),
             DurationPicker(
               key: ValueKey(_endDateChanged),
+              allowClearing: true,
               onSelected: (Duration duration) {
                 setState(() {
                   _endDate = _startDate.add(duration);
                   _durationChanged = DateTime.now();
                 });
               },
-              duration: (_endDate != null && _startDate != null)
+              selectedDuration: (_endDate != null && _startDate != null)
                   ? _endDate.difference(_startDate)
                   : null,
             ),
