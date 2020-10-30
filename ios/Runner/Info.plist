@@ -62,25 +62,7 @@
     <true/>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Music!</string>
-	<key>kTCCServiceMediaLibrary</key>
-	<string>media</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>Calendars</string>
-	<key>NSCameraUsageDescription</key>
-	<string>camera</string>
 	<key>NSContactsUsageDescription</key>  
 	<string>This app requires contacts access to function properly.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>microphone</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>speech</string>
-	<key>NSMotionUsageDescription</key>
-	<string>motion</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>photos</string>
-	<key>NSRemindersUsageDescription</key>
-	<string>reminders</string>
 </dict>
 </plist>

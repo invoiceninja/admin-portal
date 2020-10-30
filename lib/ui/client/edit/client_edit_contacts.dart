@@ -253,12 +253,15 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     });
   }
 
-  //Check contacts permission
-  Future<PermissionStatus> _getContactPermission() async {
+  // Check contacts permission
+  Future<PermissionStatus> _getPermission() async {
     final PermissionStatus permission = await Permission.contacts.status;
-    if (permission != PermissionStatus.granted) {
-      final Map<Permission, PermissionStatus> permissionStatus = await [Permission.contacts].request();
-      return permissionStatus[Permission.contacts] ?? PermissionStatus.undetermined;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.denied) {
+      final Map<Permission, PermissionStatus> permissionStatus =
+          await [Permission.contacts].request();
+      return permissionStatus[Permission.contacts] ??
+          PermissionStatus.undetermined;
     } else {
       return permission;
     }
@@ -319,44 +322,37 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     ],
                   )
                 : Container(),
-            Stack(
-              children: <Widget>[
-                DecoratedFormField(
-                  controller: _firstNameController,
-                  label: localization.firstName,
-                  validator: (String val) => !viewModel.client.hasNameSet
-                      ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-                      : null,
-                  onSavePressed: (_) => _onDoneContactPressed(),
-                ),
-                Container(
-                  alignment: Alignment.bottomRight,
-                  padding: EdgeInsets.only(bottom: 0),
-                  margin: EdgeInsets.only(bottom: 0),
-                  child: IconButton(
-                    alignment: Alignment.bottomCenter,
-                    padding: EdgeInsets.only(bottom: 0),
-                    color: Theme.of(context).cardColor,
-                    icon: Icon(
-                      Icons.person,
-                        color: Colors.grey,
-                      ),
-                    onPressed: () async {
-                      final PermissionStatus permissionStatus = await _getContactPermission();
-                      if (permissionStatus == PermissionStatus.granted) {
-                        try {
-                          _contact = await ContactsService.openDeviceContactPicker();
-                          setState(() {
-                            _setContactControllers();
-                          });
-                        } catch (e) {
-                          print(e.toString());
-                        }
+            DecoratedFormField(
+              controller: _firstNameController,
+              
+              validator: (String val) => !viewModel.client.hasNameSet
+                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                  : null,
+              onSavePressed: (_) => _onDoneContactPressed(),
+              decoration: InputDecoration(
+                labelText: localization.firstName,
+                suffixIcon: IconButton(
+                  alignment: Alignment.bottomCenter,
+                  color: Theme.of(context).cardColor,
+                  icon: Icon(
+                    Icons.person,
+                      color: Colors.grey,
+                    ),
+                  onPressed: () async {
+                    final PermissionStatus permissionStatus = await _getPermission();
+                    if (permissionStatus == PermissionStatus.granted) {
+                      try {
+                        _contact = await ContactsService.openDeviceContactPicker();
+                        setState(() {
+                          _setContactControllers();
+                        });
+                      } catch (e) {
+                        print(e.toString());
                       }
                     }
-                  ),
+                  }
                 ),
-              ],
+              ),
             ),
             DecoratedFormField(
               controller: _lastNameController,
