@@ -27,9 +27,9 @@ class ExpensePresenter extends EntityPresenter {
       ExpenseFields.transactionId,
       ExpenseFields.transactionReference,
       ExpenseFields.bankId,
-      ExpenseFields.expenseCurrencyId,
-      ExpenseFields.expenseCategoryId,
-      ExpenseFields.expenseCategory,
+      ExpenseFields.currencyId,
+      ExpenseFields.categoryId,
+      ExpenseFields.category,
       ExpenseFields.paymentDate,
       ExpenseFields.exchangeRate,
       ExpenseFields.invoiceCurrencyId,
@@ -83,12 +83,12 @@ class ExpensePresenter extends EntityPresenter {
         return Text(expense.transactionReference);
       case ExpenseFields.bankId:
         return Text(expense.bankId);
-      case ExpenseFields.expenseCurrencyId:
-        return Text(state.staticState.currencyMap[expense.expenseCurrencyId]
-                ?.listDisplayName ??
+      case ExpenseFields.currencyId:
+        return Text(state
+                .staticState.currencyMap[expense.currencyId]?.listDisplayName ??
             '');
-      case ExpenseFields.expenseCategory:
-      case ExpenseFields.expenseCategoryId:
+      case ExpenseFields.category:
+      case ExpenseFields.categoryId:
         return Text(state.expenseCategoryState.map[expense.categoryId]
                 ?.listDisplayName ??
             '');

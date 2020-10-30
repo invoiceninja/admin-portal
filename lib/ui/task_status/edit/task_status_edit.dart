@@ -57,8 +57,8 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final taskStatus = widget.viewModel.taskStatus.rebuild((b) => b
-        ..name = _nameController.text.trim());
+      final taskStatus = widget.viewModel.taskStatus
+          .rebuild((b) => b..name = _nameController.text.trim());
       if (taskStatus != widget.viewModel.taskStatus) {
         widget.viewModel.onChanged(taskStatus);
       }
@@ -79,9 +79,9 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-          setState(() {
-            _autoValidate = !isValid;
-          });
+        setState(() {
+          _autoValidate = !isValid;
+        });
 
         if (!isValid) {
           return;

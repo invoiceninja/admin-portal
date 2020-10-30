@@ -1427,7 +1427,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'bank_id': 'Bank Id',
       'expense_category_id': 'Expense Category ID',
       'expense_category': 'Category',
-      'expense_currency_id': 'Expense Currency ID',
       'invoice_currency_id': 'Invoice Currency ID',
       'tax_name1': 'Tax Name 1',
       'tax_name2': 'Tax Name 2',
@@ -4804,9 +4803,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get expenseCategoryId =>
       _localizedValues[localeCode]['expense_category_id'] ?? '';
-
-  String get expenseCurrencyId =>
-      _localizedValues[localeCode]['expense_currency_id'] ?? '';
 
   String get invoiceCurrencyId =>
       _localizedValues[localeCode]['invoice_currency_id'] ?? '';

@@ -184,15 +184,14 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               onSavePressed: viewModel.onSavePressed,
             ),
             EntityDropdown(
-              key:
-                  ValueKey('__expense_currency_${expense.expenseCurrencyId}__'),
+              key: ValueKey('__expense_currency_${expense.currencyId}__'),
               entityType: EntityType.currency,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
-              entityId: expense.expenseCurrencyId,
+              entityId: expense.currencyId,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  viewModel.expense.rebuild(
-                      (b) => b..expenseCurrencyId = currency?.id ?? '')),
+                  viewModel.expense
+                      .rebuild((b) => b..currencyId = currency?.id ?? '')),
             ),
             DatePicker(
               labelText: localization.date,

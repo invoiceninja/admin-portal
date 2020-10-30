@@ -98,7 +98,7 @@ class ExpenseOverview extends StatelessWidget {
                     localization.lookup('expense_status_${expense.statusId}'),
                 label: localization.amount,
                 value: formatNumber(expense.amountWithTax, context,
-                    currencyId: expense.expenseCurrencyId),
+                    currencyId: expense.currencyId),
                 secondLabel: localization.converted,
                 secondValue: formatNumber(
                     expense.convertedAmountWithTax, context,
@@ -111,7 +111,7 @@ class ExpenseOverview extends StatelessWidget {
                     localization.lookup('expense_status_${expense.statusId}'),
                 label: localization.amount,
                 value: formatNumber(expense.amountWithTax, context,
-                    currencyId: expense.expenseCurrencyId),
+                    currencyId: expense.currencyId),
               ),
         ListDivider(),
         if ((expense.privateNotes ?? '').isNotEmpty) ...[

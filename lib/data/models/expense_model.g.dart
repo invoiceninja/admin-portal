@@ -141,8 +141,8 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'bank_id',
       serializers.serialize(object.bankId,
           specifiedType: const FullType(String)),
-      'expense_currency_id',
-      serializers.serialize(object.expenseCurrencyId,
+      'currency_id',
+      serializers.serialize(object.currencyId,
           specifiedType: const FullType(String)),
       'category_id',
       serializers.serialize(object.categoryId,
@@ -314,8 +314,8 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.bankId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'expense_currency_id':
-          result.expenseCurrencyId = serializers.deserialize(value,
+        case 'currency_id':
+          result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'category_id':
@@ -709,7 +709,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String bankId;
   @override
-  final String expenseCurrencyId;
+  final String currencyId;
   @override
   final String categoryId;
   @override
@@ -784,7 +784,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.transactionId,
       this.transactionReference,
       this.bankId,
-      this.expenseCurrencyId,
+      this.currencyId,
       this.categoryId,
       this.amount,
       this.date,
@@ -839,8 +839,8 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (bankId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'bankId');
     }
-    if (expenseCurrencyId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCurrencyId');
+    if (currencyId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'currencyId');
     }
     if (categoryId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'categoryId');
@@ -922,7 +922,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         transactionId == other.transactionId &&
         transactionReference == other.transactionReference &&
         bankId == other.bankId &&
-        expenseCurrencyId == other.expenseCurrencyId &&
+        currencyId == other.currencyId &&
         categoryId == other.categoryId &&
         amount == other.amount &&
         date == other.date &&
@@ -977,7 +977,7 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode),
                                                                                 taxRate3.hashCode),
                                                                             clientId.hashCode),
                                                                         invoiceId.hashCode),
@@ -1009,7 +1009,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('transactionId', transactionId)
           ..add('transactionReference', transactionReference)
           ..add('bankId', bankId)
-          ..add('expenseCurrencyId', expenseCurrencyId)
+          ..add('currencyId', currencyId)
           ..add('categoryId', categoryId)
           ..add('amount', amount)
           ..add('date', date)
@@ -1081,10 +1081,9 @@ class ExpenseEntityBuilder
   String get bankId => _$this._bankId;
   set bankId(String bankId) => _$this._bankId = bankId;
 
-  String _expenseCurrencyId;
-  String get expenseCurrencyId => _$this._expenseCurrencyId;
-  set expenseCurrencyId(String expenseCurrencyId) =>
-      _$this._expenseCurrencyId = expenseCurrencyId;
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   String _categoryId;
   String get categoryId => _$this._categoryId;
@@ -1227,7 +1226,7 @@ class ExpenseEntityBuilder
       _transactionId = _$v.transactionId;
       _transactionReference = _$v.transactionReference;
       _bankId = _$v.bankId;
-      _expenseCurrencyId = _$v.expenseCurrencyId;
+      _currencyId = _$v.currencyId;
       _categoryId = _$v.categoryId;
       _amount = _$v.amount;
       _date = _$v.date;
@@ -1290,7 +1289,7 @@ class ExpenseEntityBuilder
               transactionId: transactionId,
               transactionReference: transactionReference,
               bankId: bankId,
-              expenseCurrencyId: expenseCurrencyId,
+              currencyId: currencyId,
               categoryId: categoryId,
               amount: amount,
               date: date,

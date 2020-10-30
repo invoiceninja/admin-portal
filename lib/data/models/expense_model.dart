@@ -53,9 +53,9 @@ class ExpenseFields {
   static const String transactionId = 'transaction_id';
   static const String transactionReference = 'transaction_reference';
   static const String bankId = 'bank_id';
-  static const String expenseCurrencyId = 'expense_currency_id';
-  static const String expenseCategoryId = 'expense_category_id';
-  static const String expenseCategory = 'expense_category';
+  static const String currencyId = 'currency_id';
+  static const String categoryId = 'category_id';
+  static const String category = 'category';
   static const String amount = 'amount';
   static const String expenseDate = 'date';
   static const String paymentDate = 'payment_date';
@@ -104,7 +104,7 @@ abstract class ExpenseEntity extends Object
           : '',
       paymentTypeId: '',
       exchangeRate: 1,
-      expenseCurrencyId: (vendor != null && vendor.hasCurrency)
+      currencyId: (vendor != null && vendor.hasCurrency)
           ? vendor.currencyId
           : (state?.company?.currencyId ?? kDefaultCurrencyId),
       invoiceCurrencyId: (client != null && client.hasCurrency)
@@ -176,8 +176,8 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'bank_id')
   String get bankId;
 
-  @BuiltValueField(wireName: 'expense_currency_id')
-  String get expenseCurrencyId;
+  @BuiltValueField(wireName: 'currency_id')
+  String get currencyId;
 
   @BuiltValueField(wireName: 'category_id')
   String get categoryId;
@@ -385,14 +385,14 @@ abstract class ExpenseEntity extends Object
       case ExpenseFields.bankId:
         response = expenseA.bankId.compareTo(expenseB.bankId);
         break;
-      case ExpenseFields.expenseCurrencyId:
+      case ExpenseFields.currencyId:
         final currencyMap = staticState.currencyMap;
-        response = currencyMap[expenseA.expenseCurrencyId]
+        response = currencyMap[expenseA.currencyId]
             .name
-            .compareTo(currencyMap[expenseB.expenseCurrencyId].name);
+            .compareTo(currencyMap[expenseB.currencyId].name);
         break;
-      case ExpenseFields.expenseCategoryId:
-      case ExpenseFields.expenseCategory:
+      case ExpenseFields.categoryId:
+      case ExpenseFields.category:
         response = expenseCategoryMap[expenseA.categoryId]
             .name
             .compareTo(expenseCategoryMap[expenseB.categoryId].name);

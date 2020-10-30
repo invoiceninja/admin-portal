@@ -153,7 +153,8 @@ ListUIState _clearListMultiselect(
 final taskStatusesReducer = combineReducers<TaskStatusState>([
   TypedReducer<TaskStatusState, SaveTaskStatusSuccess>(_updateTaskStatus),
   TypedReducer<TaskStatusState, AddTaskStatusSuccess>(_addTaskStatus),
-  TypedReducer<TaskStatusState, LoadTaskStatusesSuccess>(_setLoadedTaskStatuses),
+  TypedReducer<TaskStatusState, LoadTaskStatusesSuccess>(
+      _setLoadedTaskStatuses),
   TypedReducer<TaskStatusState, LoadTaskStatusSuccess>(_setLoadedTaskStatus),
   TypedReducer<TaskStatusState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<TaskStatusState, ArchiveTaskStatusesSuccess>(

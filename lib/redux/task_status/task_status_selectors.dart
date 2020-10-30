@@ -94,13 +94,13 @@ int calculateTaskStatusAmount({
 }
 
 var memoizedTaskStatsForTaskStatus = memo2(
-        (String companyGatewayId, BuiltMap<String, TaskEntity> taskMap) =>
+    (String companyGatewayId, BuiltMap<String, TaskEntity> taskMap) =>
         taskStatsForTaskStatus(companyGatewayId, taskMap));
 
 EntityStats taskStatsForTaskStatus(
-    String statusId,
-    BuiltMap<String, TaskEntity> taskMap,
-    ) {
+  String statusId,
+  BuiltMap<String, TaskEntity> taskMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
