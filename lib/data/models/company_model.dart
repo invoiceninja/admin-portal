@@ -86,6 +86,7 @@ abstract class CompanyEntity extends Object
       markExpensesPaid: false,
       showTasksTable: false,
       invoiceTaskDocuments: false,
+      isDisabled: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -176,6 +177,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'is_large')
   bool get isLarge;
+
+  @BuiltValueField(wireName: 'is_disabled')
+  bool get isDisabled;
 
   @BuiltValueField(wireName: 'enable_shop_api')
   bool get enableShopApi;
