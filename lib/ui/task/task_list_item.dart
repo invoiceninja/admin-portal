@@ -58,14 +58,17 @@ class TaskListItem extends StatelessWidget {
     }, style: textStyle);
 
     final startStopButton = IconButton(
-      icon: Icon(
-        getEntityActionIcon(task.isRunning
-            ? EntityAction.stop
-            : EntityAction.start),
-        color: task.isRunning ? state.accentColor : null,
-      ),
-      onPressed: () => handleEntityAction(context, task,
-          task.isRunning ? EntityAction.stop : EntityAction.start),
+      icon: task.isInvoiced
+          ? SizedBox()
+          : Icon(
+              getEntityActionIcon(
+                  task.isRunning ? EntityAction.stop : EntityAction.start),
+              color: task.isRunning ? state.accentColor : null,
+            ),
+      onPressed: task.isInvoiced
+          ? null
+          : () => handleEntityAction(context, task,
+              task.isRunning ? EntityAction.stop : EntityAction.start),
       visualDensity: VisualDensity.compact,
     );
 

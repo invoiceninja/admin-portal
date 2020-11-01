@@ -606,6 +606,16 @@ abstract class TaskEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.duration;
 
+  String get calculateStatusId {
+    if (isInvoiced) {
+      return kTaskStatusInvoiced;
+    //} else if (isRunning) {
+    //  return kTaskStatusRunning;
+    } else {
+      return statusId;
+    }
+  }
+
   bool get isStopped => !isRunning;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;

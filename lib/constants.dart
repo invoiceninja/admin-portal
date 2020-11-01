@@ -514,6 +514,14 @@ class ExpenseStatusColors {
   };
 }
 
+class TaskStatusColors {
+  static var colors = {
+    kTaskStatusLogged: convertHexStringToColor('#444444'),
+    kTaskStatusRunning: Colors.blue,
+    kTaskStatusInvoiced: kColorGreen,
+  };
+}
+
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
 const List<String> kLanguages = [

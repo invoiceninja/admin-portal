@@ -130,6 +130,9 @@ List<String> filteredExpensesSelector(
       } else if (filterEntityType == EntityType.project &&
           expense.projectId != filterEntityId) {
         return false;
+      } else if (filterEntityType == EntityType.invoice &&
+          expense.invoiceId != filterEntityId) {
+        return false;
       }
     } else if (expense.vendorId != null && !vendor.isActive) {
       return false;

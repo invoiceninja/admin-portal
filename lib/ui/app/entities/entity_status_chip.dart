@@ -61,8 +61,10 @@ class EntityStatusChip extends StatelessWidget {
         break;
       case EntityType.task:
         final task = entity as TaskEntity;
-        label = state.taskStatusState.get(task.statusId).name;
-        color = Colors.grey;
+        label = task.isInvoiced
+            ? localization.invoiced
+            : state.taskStatusState.get(task.calculateStatusId).name;
+        color = TaskStatusColors.colors[task.calculateStatusId] ?? Colors.grey;
         break;
       default:
         print(
