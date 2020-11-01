@@ -1074,11 +1074,11 @@ abstract class InvoiceItemEntity
   double get discount;
 
   @nullable
-  @BuiltValueField(wireName: 'task_public_id')
+  @BuiltValueField(wireName: 'task_id')
   String get taskId;
 
   @nullable
-  @BuiltValueField(wireName: 'expense_public_id')
+  @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
 
   @nullable

@@ -597,7 +597,7 @@ abstract class TaskEntity extends Object
 
   @override
   String get listDisplayName {
-    return description;
+    return number;
   }
 
   @override

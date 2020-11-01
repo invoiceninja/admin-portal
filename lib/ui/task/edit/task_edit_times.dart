@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
@@ -103,7 +102,6 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   String _date;
   DateTime _startDate;
   DateTime _endDate;
-  Duration _duration;
 
   DateTime _endDateChanged;
   DateTime _durationChanged;
@@ -119,7 +117,6 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
     if (endDate != null) {
       _endDate = endDate.toLocal();
-      _duration = taskTime.duration;
     }
 
     super.didChangeDependencies();
