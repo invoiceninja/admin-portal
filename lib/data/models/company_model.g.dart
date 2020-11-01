@@ -87,6 +87,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'is_large',
       serializers.serialize(object.isLarge,
           specifiedType: const FullType(bool)),
+      'is_disabled',
+      serializers.serialize(object.isDisabled,
+          specifiedType: const FullType(bool)),
       'enable_shop_api',
       serializers.serialize(object.enableShopApi,
           specifiedType: const FullType(bool)),
@@ -375,6 +378,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'is_large':
           result.isLarge = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_disabled':
+          result.isDisabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'enable_shop_api':
@@ -2911,6 +2918,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool isLarge;
   @override
+  final bool isDisabled;
+  @override
   final bool enableShopApi;
   @override
   final String plan;
@@ -3035,6 +3044,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.showProductDetails,
       this.clientCanRegister,
       this.isLarge,
+      this.isDisabled,
       this.enableShopApi,
       this.plan,
       this.companyKey,
@@ -3146,6 +3156,9 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (isLarge == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'isLarge');
+    }
+    if (isDisabled == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'isDisabled');
     }
     if (enableShopApi == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'enableShopApi');
@@ -3312,6 +3325,7 @@ class _$CompanyEntity extends CompanyEntity {
         showProductDetails == other.showProductDetails &&
         clientCanRegister == other.clientCanRegister &&
         isLarge == other.isLarge &&
+        isDisabled == other.isDisabled &&
         enableShopApi == other.enableShopApi &&
         plan == other.plan &&
         companyKey == other.companyKey &&
@@ -3386,7 +3400,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
                                                                                 googleAnalyticsKey.hashCode),
                                                                             markExpensesInvoiceable.hashCode),
                                                                         markExpensesPaid.hashCode),
@@ -3429,6 +3443,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('showProductDetails', showProductDetails)
           ..add('clientCanRegister', clientCanRegister)
           ..add('isLarge', isLarge)
+          ..add('isDisabled', isDisabled)
           ..add('enableShopApi', enableShopApi)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
@@ -3570,6 +3585,10 @@ class CompanyEntityBuilder
   bool _isLarge;
   bool get isLarge => _$this._isLarge;
   set isLarge(bool isLarge) => _$this._isLarge = isLarge;
+
+  bool _isDisabled;
+  bool get isDisabled => _$this._isDisabled;
+  set isDisabled(bool isDisabled) => _$this._isDisabled = isDisabled;
 
   bool _enableShopApi;
   bool get enableShopApi => _$this._enableShopApi;
@@ -3854,6 +3873,7 @@ class CompanyEntityBuilder
       _showProductDetails = _$v.showProductDetails;
       _clientCanRegister = _$v.clientCanRegister;
       _isLarge = _$v.isLarge;
+      _isDisabled = _$v.isDisabled;
       _enableShopApi = _$v.enableShopApi;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
@@ -3947,6 +3967,7 @@ class CompanyEntityBuilder
               showProductDetails: showProductDetails,
               clientCanRegister: clientCanRegister,
               isLarge: isLarge,
+              isDisabled: isDisabled,
               enableShopApi: enableShopApi,
               plan: plan,
               companyKey: companyKey,
