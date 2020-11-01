@@ -94,6 +94,7 @@ abstract class DesignEntity extends Object
       isChanged: false,
       name: '',
       design: design ??
+          state?.designState?.cleanDesign?.design ??
           BuiltMap<String, String>({
             kDesignHeader: '',
             kDesignBody: '',

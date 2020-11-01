@@ -49,6 +49,8 @@ abstract class TaskItemResponse
 
 class TaskFields {
   static const String number = 'number';
+  static const String rate = 'rate';
+  static const String calculatedRate = 'calculated_rate';
   static const String description = 'description';
   static const String duration = 'duration';
   static const String invoiceId = 'invoice_id';
@@ -66,6 +68,7 @@ class TaskFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String status = 'status';
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
@@ -147,13 +150,14 @@ abstract class TaskEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<TaskEntity, TaskEntityBuilder> {
   factory TaskEntity({String id, AppState state}) {
-    final isRunning = state?.prefState?.autoStartTasks ?? false;
+    final isRunning = state?.company?.autoStartTasks ?? false;
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
       number: '',
       isChanged: false,
       description: '',
       duration: 0,
+      rate: 0,
       invoiceId: null,
       clientId: null,
       projectId: null,
@@ -172,8 +176,8 @@ abstract class TaskEntity extends Object
       createdAt: 0,
       createdUserId: '',
       vendorId: '',
-      taskStatusId: '',
-      taskStatusSortOrder: 0,
+      statusId: '',
+      statusSortOrder: 0,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -365,6 +369,8 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
+  double get rate;
+
   @nullable
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
@@ -389,13 +395,11 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  @nullable
-  @BuiltValueField(wireName: 'task_status_id')
-  String get taskStatusId;
+  @BuiltValueField(wireName: 'status_id')
+  String get statusId;
 
-  @nullable
-  @BuiltValueField(wireName: 'task_status_sort_order')
-  int get taskStatusSortOrder;
+  @BuiltValueField(wireName: 'status_sort_order')
+  int get statusSortOrder;
 
   @nullable
   @BuiltValueField(wireName: 'vendor_id')
@@ -412,7 +416,10 @@ abstract class TaskEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this) && !isDeleted) {
+      if (includeEdit &&
+          userCompany.canEditEntity(this) &&
+          !isDeleted &&
+          !multiselect) {
         actions.add(EntityAction.edit);
       }
 
@@ -420,10 +427,12 @@ abstract class TaskEntity extends Object
         if (isRunning) {
           actions.add(EntityAction.stop);
         } else {
-          if (duration > 0) {
-            actions.add(EntityAction.resume);
-          } else {
-            actions.add(EntityAction.start);
+          if (!multiselect) {
+            if (duration > 0) {
+              actions.add(EntityAction.resume);
+            } else {
+              actions.add(EntityAction.start);
+            }
           }
 
           if (userCompany.canCreate(EntityType.invoice)) {
@@ -433,12 +442,14 @@ abstract class TaskEntity extends Object
       }
     }
 
-    if (isInvoiced) {
-      actions.add(EntityAction.viewInvoice);
-    }
+    if (!multiselect) {
+      if (isInvoiced) {
+        actions.add(EntityAction.viewInvoice);
+      }
 
-    if (userCompany.canCreate(EntityType.task)) {
-      actions.add(EntityAction.clone);
+      if (userCompany.canCreate(EntityType.task)) {
+        actions.add(EntityAction.clone);
+      }
     }
 
     actions.add(null);
@@ -473,6 +484,9 @@ abstract class TaskEntity extends Object
         break;
       case TaskFields.customValue3:
         response = taskA.customValue3.compareTo(taskB.customValue3);
+        break;
+      case TaskFields.customValue4:
+        response = taskA.customValue4.compareTo(taskB.customValue4);
         break;
       case TaskFields.clientId:
       case TaskFields.client:
@@ -521,6 +535,9 @@ abstract class TaskEntity extends Object
       case TaskFields.documents:
         response = taskA.documents.length.compareTo(taskB.documents.length);
         break;
+      case TaskFields.number:
+        response = taskA.number.compareTo(taskB.number);
+        break;
       default:
         print('## ERROR: sort by task.$sortField is not implemented');
         break;
@@ -533,6 +550,7 @@ abstract class TaskEntity extends Object
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
+        number,
         description,
         customValue1,
         customValue2,
@@ -566,6 +584,7 @@ abstract class TaskEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
+        number,
         description,
         customValue1,
         customValue2,
@@ -578,7 +597,7 @@ abstract class TaskEntity extends Object
 
   @override
   String get listDisplayName {
-    return description;
+    return number;
   }
 
   @override
@@ -587,34 +606,17 @@ abstract class TaskEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.duration;
 
+  String get calculateStatusId {
+    if (isInvoiced) {
+      return kTaskStatusInvoiced;
+    //} else if (isRunning) {
+    //  return kTaskStatusRunning;
+    } else {
+      return statusId;
+    }
+  }
+
   bool get isStopped => !isRunning;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
-}
-
-abstract class TaskStatusEntity extends Object
-    with EntityStatus, SelectableEntity
-    implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
-  factory TaskStatusEntity() {
-    return _$TaskStatusEntity._(
-      id: '',
-      name: '',
-      sortOrder: 0,
-    );
-  }
-
-  TaskStatusEntity._();
-
-  @override
-  @memoized
-  int get hashCode;
-
-  @BuiltValueField(wireName: 'sort_order')
-  int get sortOrder;
-
-  @override
-  String get listDisplayName => name;
-
-  static Serializer<TaskStatusEntity> get serializer =>
-      _$taskStatusEntitySerializer;
 }

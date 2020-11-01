@@ -29,6 +29,7 @@ class QuoteEditItemsScreen extends StatelessWidget {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
+            isTasks: false,
           );
         } else {
           return InvoiceEditItems(

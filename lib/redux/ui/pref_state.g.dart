@@ -144,9 +144,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'requireAuthentication',
       serializers.serialize(object.requireAuthentication,
           specifiedType: const FullType(bool)),
-      'autoStartTasks',
-      serializers.serialize(object.autoStartTasks,
-          specifiedType: const FullType(bool)),
       'rowsPerPage',
       serializers.serialize(object.rowsPerPage,
           specifiedType: const FullType(int)),
@@ -214,10 +211,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'requireAuthentication':
           result.requireAuthentication = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'autoStartTasks':
-          result.autoStartTasks = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'rowsPerPage':
@@ -433,8 +426,6 @@ class _$PrefState extends PrefState {
   @override
   final bool requireAuthentication;
   @override
-  final bool autoStartTasks;
-  @override
   final int rowsPerPage;
   @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
@@ -454,7 +445,6 @@ class _$PrefState extends PrefState {
       this.showFilterSidebar,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
-      this.autoStartTasks,
       this.rowsPerPage,
       this.companyPrefs})
       : super._() {
@@ -492,9 +482,6 @@ class _$PrefState extends PrefState {
     if (requireAuthentication == null) {
       throw new BuiltValueNullFieldError('PrefState', 'requireAuthentication');
     }
-    if (autoStartTasks == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'autoStartTasks');
-    }
     if (rowsPerPage == null) {
       throw new BuiltValueNullFieldError('PrefState', 'rowsPerPage');
     }
@@ -525,7 +512,6 @@ class _$PrefState extends PrefState {
         showFilterSidebar == other.showFilterSidebar &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
-        autoStartTasks == other.autoStartTasks &&
         rowsPerPage == other.rowsPerPage &&
         companyPrefs == other.companyPrefs;
   }
@@ -544,21 +530,17 @@ class _$PrefState extends PrefState {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(0,
-                                                            appLayout.hashCode),
-                                                        moduleLayout.hashCode),
-                                                    menuSidebarMode.hashCode),
-                                                historySidebarMode.hashCode),
-                                            isPreviewVisible.hashCode),
-                                        isMenuVisible.hashCode),
-                                    isHistoryVisible.hashCode),
-                                enableDarkMode.hashCode),
-                            showFilterSidebar.hashCode),
-                        longPressSelectionIsDefault.hashCode),
-                    requireAuthentication.hashCode),
-                autoStartTasks.hashCode),
+                                                $jc($jc(0, appLayout.hashCode),
+                                                    moduleLayout.hashCode),
+                                                menuSidebarMode.hashCode),
+                                            historySidebarMode.hashCode),
+                                        isPreviewVisible.hashCode),
+                                    isMenuVisible.hashCode),
+                                isHistoryVisible.hashCode),
+                            enableDarkMode.hashCode),
+                        showFilterSidebar.hashCode),
+                    longPressSelectionIsDefault.hashCode),
+                requireAuthentication.hashCode),
             rowsPerPage.hashCode),
         companyPrefs.hashCode));
   }
@@ -577,7 +559,6 @@ class _$PrefState extends PrefState {
           ..add('showFilterSidebar', showFilterSidebar)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
-          ..add('autoStartTasks', autoStartTasks)
           ..add('rowsPerPage', rowsPerPage)
           ..add('companyPrefs', companyPrefs))
         .toString();
@@ -641,11 +622,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set requireAuthentication(bool requireAuthentication) =>
       _$this._requireAuthentication = requireAuthentication;
 
-  bool _autoStartTasks;
-  bool get autoStartTasks => _$this._autoStartTasks;
-  set autoStartTasks(bool autoStartTasks) =>
-      _$this._autoStartTasks = autoStartTasks;
-
   int _rowsPerPage;
   int get rowsPerPage => _$this._rowsPerPage;
   set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
@@ -671,7 +647,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _showFilterSidebar = _$v.showFilterSidebar;
       _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
       _requireAuthentication = _$v.requireAuthentication;
-      _autoStartTasks = _$v.autoStartTasks;
       _rowsPerPage = _$v.rowsPerPage;
       _companyPrefs = _$v.companyPrefs?.toBuilder();
       _$v = null;
@@ -709,7 +684,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               showFilterSidebar: showFilterSidebar,
               longPressSelectionIsDefault: longPressSelectionIsDefault,
               requireAuthentication: requireAuthentication,
-              autoStartTasks: autoStartTasks,
               rowsPerPage: rowsPerPage,
               companyPrefs: companyPrefs.build());
     } catch (_) {

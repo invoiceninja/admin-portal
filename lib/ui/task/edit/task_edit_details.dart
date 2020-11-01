@@ -5,9 +5,12 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 
@@ -24,6 +27,7 @@ class TaskEditDetails extends StatefulWidget {
 }
 
 class _TaskEditDetailsState extends State<TaskEditDetails> {
+  final _rateController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -36,6 +40,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   @override
   void didChangeDependencies() {
     _controllers = [
+      _rateController,
       _descriptionController,
       _custom1Controller,
       _custom2Controller,
@@ -46,6 +51,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final task = widget.viewModel.task;
+    _rateController.text = formatNumber(task.rate, context,
+        formatNumberType: FormatNumberType.inputMoney);
     _descriptionController.text = task.description;
     _custom1Controller.text = task.customValue1;
     _custom2Controller.text = task.customValue2;
@@ -70,6 +77,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   void _onChanged() {
     _debouncer.run(() {
       final task = widget.viewModel.task.rebuild((b) => b
+        ..rate = parseDouble(_rateController.text.trim())
         ..description = _descriptionController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
@@ -86,7 +94,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
     final task = viewModel.task;
-    final company = viewModel.company;
     final state = viewModel.state;
 
     return ListView(
@@ -130,23 +137,30 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                 },
               ),
             ],
-            // TODO Remove isNotEmpty check in v2
-            company.taskStatusMap.isNotEmpty
-                ? EntityDropdown(
-                    key: ValueKey('__task_status_${task.taskStatusId}__'),
-                    allowClearing: false,
-                    entityType: EntityType.taskStatus,
-                    labelText: localization.status,
-                    entityId: task.taskStatusId,
-                    entityList: company.taskStatusMap.keys.toList(),
-                    onSelected: (selected) {
-                      final taskStatus = selected as TaskStatusEntity;
-                      viewModel.onChanged(task.rebuild((b) => b
-                        ..taskStatusId = taskStatus?.id
-                        ..taskStatusSortOrder = 9999));
-                    },
-                  )
-                : SizedBox(),
+            UserPicker(
+              userId: task.assignedUserId,
+              onChanged: (userId) => viewModel
+                  .onChanged(task.rebuild((b) => b..assignedUserId = userId)),
+            ),
+            DynamicSelector(
+              key: ValueKey('__task_status_${task.statusId}__'),
+              allowClearing: false,
+              entityType: EntityType.taskStatus,
+              labelText: localization.status,
+              entityId: task.statusId,
+              entityIds: state.taskStatusState.list.toList(),
+              onChanged: (selectedId) {
+                final taskStatus = state.taskStatusState.map[selectedId];
+                viewModel.onChanged(task.rebuild((b) => b
+                  ..statusId = taskStatus?.id
+                  ..statusSortOrder = 9999));
+              },
+            ),
+            DecoratedFormField(
+              controller: _rateController,
+              label: localization.rate,
+              keyboardType: TextInputType.number,
+            ),
             DecoratedFormField(
               maxLines: 4,
               controller: _descriptionController,

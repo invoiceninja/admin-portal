@@ -38,7 +38,7 @@ class _EntityListTileState extends State<EntityListTile> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.entity == null) {
+    if (widget.entity == null || widget.entity.isNew) {
       return SizedBox();
     }
 
@@ -178,12 +178,6 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
     final mainRoute = state.uiState.mainRoute;
     final isFilterMatch =
         widget.isFilter && '${widget.entityType}' == mainRoute;
-
-    if (![EntityType.invoice, EntityType.task, EntityType.expense]
-            .contains(widget.entityType) &&
-        (widget.subtitle ?? '').isEmpty) {
-      return SizedBox();
-    }
 
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),

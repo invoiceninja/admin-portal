@@ -122,8 +122,10 @@ InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
 
 InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
   return invoice.rebuild((b) => b
-    ..hasTasks = action.lineItems.where((item) => item.isTask).isNotEmpty
-    ..hasExpenses = action.lineItems.where((item) => item.isExpense).isNotEmpty
+    ..hasTasks =
+        b.hasTasks || action.lineItems.where((item) => item.isTask).isNotEmpty
+    ..hasExpenses = b.hasExpenses ||
+        action.lineItems.where((item) => item.isExpense).isNotEmpty
     ..lineItems.addAll(action.lineItems));
 }
 

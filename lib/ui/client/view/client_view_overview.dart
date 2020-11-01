@@ -119,9 +119,10 @@ class ClientOverview extends StatelessWidget {
               formatNumber(client.balance, context, clientId: client.id),
         ),
         ListDivider(),
-        client.privateNotes != null && client.privateNotes.isNotEmpty
-            ? IconMessage(client.privateNotes)
-            : Container(),
+        if ((client.privateNotes ?? '').isNotEmpty) ...[
+          IconMessage(client.privateNotes, iconData: Icons.lock),
+          ListDivider()
+        ],
         if (client.hasGroup)
           EntityListTile(
             entity: group,
@@ -244,6 +245,10 @@ class ClientOverview extends StatelessWidget {
                 memoizedExpenseStatsForClient(client.id, state.expenseState.map)
                     .present(localization.active, localization.archived),
           ),
+        if ((client.publicNotes ?? '').isNotEmpty) ...[
+          IconMessage(client.publicNotes),
+          ListDivider()
+        ],
       ],
     );
   }

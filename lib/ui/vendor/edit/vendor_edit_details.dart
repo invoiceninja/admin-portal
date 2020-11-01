@@ -110,6 +110,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
         FormCard(
           children: <Widget>[
             DecoratedFormField(
+              autofocus: true,
               controller: _nameController,
               label: localization.name,
               validator: (String val) => val == null || val.isEmpty

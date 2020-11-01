@@ -18,6 +18,10 @@ import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task_status/task_status_reducer.dart';
+
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_reducer.dart';
+
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_reducer.dart';
 
 import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
@@ -46,6 +50,10 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     // STARTER: reducer - do not remove comment
+    ..taskStatusState
+        .replace(taskStatusesReducer(state.taskStatusState, action))
+    ..expenseCategoryState
+        .replace(expenseCategoriesReducer(state.expenseCategoryState, action))
     ..recurringInvoiceState
         .replace(recurringInvoicesReducer(state.recurringInvoiceState, action))
     ..webhookState.replace(webhooksReducer(state.webhookState, action))
@@ -127,8 +135,7 @@ UserCompanyEntity loadCompanySuccessReducer(
   userCompany = userCompany.rebuild((b) => b.company
     ..taskStatuses.replace(<TaskStatusEntity>[])
     ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
-    ..expenseCategories.replace(<ExpenseCategoryEntity>[])
-    ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>()));
+    ..expenseCategories.replace(<ExpenseCategoryEntity>[]));
 
   /*
 
@@ -169,7 +176,6 @@ UserCompanyEntity saveCompanySuccessReducer(
     ..taskStatuses.replace(userCompany.company.taskStatuses)
     ..taskStatusMap.replace(userCompany.company.taskStatusMap)
     ..expenseCategories.replace(userCompany.company.expenseCategories)
-    ..expenseCategoryMap.replace(userCompany.company.expenseCategoryMap)
     ..users.replace(userCompany.company.users));
 
   userCompany = userCompany.rebuild((b) => b..company.replace(company));

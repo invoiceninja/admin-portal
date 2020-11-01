@@ -46,6 +46,10 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
+
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
@@ -108,9 +112,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.sidebar,
     this.enableDarkMode,
     this.requireAuthentication,
-    this.autoStartTasks,
     this.longPressSelectionIsDefault,
-    this.addDocumentsToInvoice,
     this.isPreviewVisible,
     this.accentColor,
     this.menuMode,
@@ -128,9 +130,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
-  final bool autoStartTasks;
   final bool isPreviewVisible;
-  final bool addDocumentsToInvoice;
   final bool showFilterSidebar;
   final bool alwaysShowFilterSidebar;
   final String accentColor;
@@ -298,6 +298,14 @@ void viewEntitiesByType({
             action = ViewGroupList(navigator: navigator);
             break;
           // STARTER: view list - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(ViewTaskStatusList(navigator: navigator));
+            break;
+
+          case EntityType.expenseCategory:
+            store.dispatch(ViewExpenseCategoryList(navigator: navigator));
+            break;
+
           case EntityType.recurringInvoice:
             store.dispatch(ViewRecurringInvoiceList(navigator: navigator));
             break;
@@ -475,6 +483,22 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(ViewTaskStatus(
+              taskStatusId: entityId,
+              navigator: navigator,
+              force: force,
+            ));
+            break;
+
+          case EntityType.expenseCategory:
+            store.dispatch(ViewExpenseCategory(
+              expenseCategoryId: entityId,
+              navigator: navigator,
+              force: force,
+            ));
+            break;
+
           case EntityType.recurringInvoice:
             store.dispatch(ViewRecurringInvoice(
               recurringInvoiceId: entityId,
@@ -652,6 +676,22 @@ void createEntityByType(
             ));
             break;
           // STARTER: create type - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(EditTaskStatus(
+              navigator: navigator,
+              force: force,
+              taskStatus: TaskStatusEntity(state: state),
+            ));
+            break;
+
+          case EntityType.expenseCategory:
+            store.dispatch(EditExpenseCategory(
+              navigator: navigator,
+              force: force,
+              expenseCategory: ExpenseCategoryEntity(state: state),
+            ));
+            break;
+
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
               navigator: navigator,
@@ -684,7 +724,6 @@ void createEntityByType(
               paymentTerm: PaymentTermEntity(state: state),
             ));
             break;
-
           case EntityType.design:
             store.dispatch(EditDesign(
               navigator: navigator,
@@ -692,7 +731,6 @@ void createEntityByType(
               design: DesignEntity(state: state),
             ));
             break;
-
           case EntityType.credit:
             store.dispatch(EditCredit(
               navigator: navigator,
@@ -847,6 +885,24 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(EditTaskStatus(
+              navigator: navigator,
+              taskStatus: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
+
+          case EntityType.expenseCategory:
+            store.dispatch(EditExpenseCategory(
+              navigator: navigator,
+              expenseCategory: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
+
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
               navigator: navigator,
@@ -1087,6 +1143,32 @@ void editEntity(
             ));
             break;
           // STARTER: edit - do not remove comment
+          case EntityType.taskStatus:
+            store.dispatch(EditTaskStatus(
+              taskStatus: entity,
+              navigator: navigator,
+              completer: completer ??
+                  snackBarCompleter<TaskStatusEntity>(
+                      context,
+                      entity.isNew
+                          ? localization.createdTaskStatus
+                          : localization.updatedTaskStatus),
+            ));
+            break;
+
+          case EntityType.expenseCategory:
+            store.dispatch(EditExpenseCategory(
+              expenseCategory: entity,
+              navigator: navigator,
+              completer: completer ??
+                  snackBarCompleter<ExpenseCategoryEntity>(
+                      context,
+                      entity.isNew
+                          ? localization.createdExpenseCategory
+                          : localization.updatedExpenseCategory),
+            ));
+            break;
+
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
               recurringInvoice: entity,
@@ -1261,6 +1343,13 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.taskStatus:
+      handleTaskStatusAction(context, entities, action);
+      break;
+
+    case EntityType.expenseCategory:
+      handleExpenseCategoryAction(context, entities, action);
+      break;
     case EntityType.recurringInvoice:
       handleRecurringInvoiceAction(context, entities, action);
       break;

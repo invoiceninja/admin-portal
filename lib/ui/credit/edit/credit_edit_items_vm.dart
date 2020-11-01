@@ -14,21 +14,24 @@ class CreditEditItemsScreen extends StatelessWidget {
   const CreditEditItemsScreen({
     Key key,
     @required this.viewModel,
+    this.isTasks = false,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
+  final bool isTasks;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CreditEditItemsVM>(
       converter: (Store<AppState> store) {
-        return CreditEditItemsVM.fromStore(store);
+        return CreditEditItemsVM.fromStore(store, isTasks);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
+            isTasks: isTasks,
           );
         } else {
           return InvoiceEditItems(
@@ -64,7 +67,7 @@ class CreditEditItemsVM extends EntityEditItemsVM {
           onChangedInvoiceItem: onChangedInvoiceItem,
         );
 
-  factory CreditEditItemsVM.fromStore(Store<AppState> store) {
+  factory CreditEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
     return CreditEditItemsVM(
         state: store.state,
         company: store.state.company,
@@ -76,7 +79,11 @@ class CreditEditItemsVM extends EntityEditItemsVM {
         onChangedInvoiceItem: (creditItem, index) {
           final credit = store.state.creditUIState.editing;
           if (index == credit.lineItems.length) {
-            store.dispatch(AddCreditItem(creditItem: creditItem));
+            store.dispatch(AddCreditItem(
+                creditItem: creditItem.rebuild((b) => b
+                  ..typeId = isTasks
+                      ? InvoiceItemEntity.TYPE_TASK
+                      : InvoiceItemEntity.TYPE_STANDARD)));
           } else {
             store.dispatch(
                 UpdateCreditItem(creditItem: creditItem, index: index));

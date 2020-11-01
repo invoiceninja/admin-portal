@@ -781,13 +781,13 @@ class _$InvoiceItemEntitySerializer
     }
     if (object.taskId != null) {
       result
-        ..add('task_public_id')
+        ..add('task_id')
         ..add(serializers.serialize(object.taskId,
             specifiedType: const FullType(String)));
     }
     if (object.expenseId != null) {
       result
-        ..add('expense_public_id')
+        ..add('expense_id')
         ..add(serializers.serialize(object.expenseId,
             specifiedType: const FullType(String)));
     }
@@ -876,11 +876,11 @@ class _$InvoiceItemEntitySerializer
           result.discount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'task_public_id':
+        case 'task_id':
           result.taskId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'expense_public_id':
+        case 'expense_id':
           result.expenseId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;

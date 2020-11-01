@@ -20,11 +20,19 @@ abstract class StubState implements Built<StubState, StubStateBuilder> {
   StubState._();
 
   @override
-@memoized
+  @memoized
   int get hashCode;
 
   BuiltMap<String, StubEntity> get map;
   BuiltList<String> get list;
+
+  StubEntity get(String stubId) {
+    if (map.containsKey(stubId)) {
+      return map[stubId];
+    } else {
+      return StubEntity(id: stubId);
+    }
+  }
 
   StubState loadStubs(BuiltList<StubEntity> clients) {
     final map = Map<String, StubEntity>.fromIterable(

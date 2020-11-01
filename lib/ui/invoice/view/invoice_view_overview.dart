@@ -104,6 +104,16 @@ class InvoiceOverview extends StatelessWidget {
       ListDivider(),
     ];
 
+    if ((invoice.privateNotes ?? '').isNotEmpty) {
+      widgets.addAll([
+        IconMessage(
+          invoice.privateNotes,
+          iconData: Icons.lock,
+        ),
+        ListDivider(),
+      ]);
+    }
+
     String dueDateField = InvoiceFields.dueDate;
     if (invoice.isQuote) {
       dueDateField = QuoteFields.validUntil;
@@ -282,13 +292,6 @@ class InvoiceOverview extends StatelessWidget {
       FieldGrid(fields),
     ]);
 
-    if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
-      widgets.addAll([
-        IconMessage(invoice.privateNotes),
-        ListDivider(),
-      ]);
-    }
-
     if (invoice.lineItems.isNotEmpty) {
       invoice.lineItems.forEach((invoiceItem) {
         widgets.addAll([
@@ -384,6 +387,13 @@ class InvoiceOverview extends StatelessWidget {
 
     widgets.add(surchargeRow(localization.total,
         invoice.partial != 0 ? invoice.partial : invoice.calculateTotal));
+
+    if ((invoice.publicNotes ?? '').isNotEmpty) {
+      widgets.addAll([
+        ListDivider(),
+        IconMessage(invoice.publicNotes),
+      ]);
+    }
 
     return ListView(
       children: widgets,

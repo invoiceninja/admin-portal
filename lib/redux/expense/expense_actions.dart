@@ -267,6 +267,7 @@ void handleExpenseAction(
   final localization = AppLocalization.of(context);
   final expense = expenses.first as ExpenseEntity;
   final expenseIds = expenses.map((expense) => expense.id).toList();
+  final client = state.clientState.get(expense.clientId);
 
   switch (action) {
     case EntityAction.edit:
@@ -278,13 +279,12 @@ void handleExpenseAction(
     case EntityAction.newInvoice:
       final item = convertExpenseToInvoiceItem(
           expense: expense,
-          categoryMap: company.expenseCategoryMap,
+          categoryMap: state.expenseCategoryState.map,
           company: company);
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state).rebuild((b) => b
+          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
             ..hasExpenses = true
-            ..clientId = expense.clientId
             ..lineItems.add(item)));
       break;
     case EntityAction.viewInvoice:

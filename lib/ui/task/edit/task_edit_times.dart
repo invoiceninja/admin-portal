@@ -1,13 +1,13 @@
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/duration_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
@@ -103,7 +103,8 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   DateTime _startDate;
   DateTime _endDate;
 
-  final _durationController = TextEditingController();
+  DateTime _endDateChanged;
+  DateTime _durationChanged;
 
   @override
   void didChangeDependencies() {
@@ -116,16 +117,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
     if (endDate != null) {
       _endDate = endDate.toLocal();
-      _durationController.text = formatDuration(taskTime.duration);
     }
 
     super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _durationController.dispose();
-    super.dispose();
   }
 
   @override
@@ -203,61 +197,47 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             DatePicker(
               labelText: localization.date,
               selectedDate: _date,
-              onSelected: (date) => _date = date,
+              onSelected: (date) {
+                setState(() {
+                  _date = date;
+                });
+              },
             ),
             TimePicker(
               labelText: localization.startTime,
               selectedDate: _startDate,
+              selectedDateTime: _startDate,
               onSelected: (timeOfDay) {
-                _startDate = timeOfDay;
-                _durationController.text = _endDate != null
-                    ? formatDuration(_endDate.difference(_startDate))
-                    : '';
+                setState(() {
+                  _startDate = timeOfDay;
+                });
               },
             ),
             TimePicker(
-              key: ValueKey(_endDate),
+              key: ValueKey('$_startDate$_durationChanged'),
               labelText: localization.endTime,
-              selectedDate: _endDate,
-              previousDate: _startDate,
+              selectedDate: _startDate,
+              selectedDateTime: _endDate,
+              allowClearing: true,
               onSelected: (timeOfDay) {
-                _endDate = timeOfDay;
-                _durationController.text = _endDate != null
-                    ? formatDuration(_endDate.difference(_startDate))
-                    : '';
-              },
-            ),
-            PopupMenuButton<int>(
-              padding: EdgeInsets.zero,
-              initialValue: null,
-              itemBuilder: (BuildContext context) =>
-                  [15, 30, 45, 60, 75, 90, 105, 120]
-                      .map((minutes) => PopupMenuItem<int>(
-                            child: Text(formatDuration(
-                                Duration(minutes: minutes),
-                                showSeconds: false)),
-                            value: minutes,
-                          ))
-                      .toList(),
-              onSelected: (minutes) {
                 setState(() {
-                  _durationController.text =
-                      formatDuration(Duration(minutes: minutes));
-                  final dateTime = _startDate.add(Duration(minutes: minutes));
-                  _endDate = dateTime;
+                  _endDate = timeOfDay;
+                  _endDateChanged = DateTime.now();
                 });
               },
-              child: InkWell(
-                child: IgnorePointer(
-                  child: TextFormField(
-                    controller: _durationController,
-                    decoration: InputDecoration(
-                      labelText: localization.duration,
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ),
-                  ),
-                ),
-              ),
+            ),
+            DurationPicker(
+              key: ValueKey(_endDateChanged),
+              allowClearing: true,
+              onSelected: (Duration duration) {
+                setState(() {
+                  _endDate = _startDate.add(duration);
+                  _durationChanged = DateTime.now();
+                });
+              },
+              selectedDuration: (_endDate != null && _startDate != null)
+                  ? _endDate.difference(_startDate)
+                  : null,
             ),
           ],
         ),

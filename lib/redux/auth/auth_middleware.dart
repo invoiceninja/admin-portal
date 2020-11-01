@@ -43,9 +43,8 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   ];
 }
 
-void _saveAuthLocal({String email = '', String url = ''}) async {
+void _saveAuthLocal(String url) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kSharedPrefEmail, email);
   prefs.setString(kSharedPrefUrl, formatApiUrl(url));
 }
 
@@ -75,10 +74,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
             platform: action.platform,
             oneTimePassword: action.oneTimePassword)
         .then((data) {
-      _saveAuthLocal(
-        email: action.email,
-        url: action.url,
-      );
+      _saveAuthLocal(action.url);
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
@@ -107,7 +103,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
       password: action.password,
     )
         .then((data) {
-      _saveAuthLocal(email: action.email, url: kAppProductionUrl);
+      _saveAuthLocal(kAppProductionUrl);
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
@@ -140,10 +136,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
             secret: action.secret,
             platform: action.platform)
         .then((data) {
-      _saveAuthLocal(
-        email: action.email,
-        url: action.url,
-      );
+      _saveAuthLocal(action.url);
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
@@ -174,7 +167,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
       serverAuthCode: action.serverAuthCode,
     )
         .then((data) {
-      _saveAuthLocal(url: kAppProductionUrl);
+      _saveAuthLocal(kAppProductionUrl);
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));

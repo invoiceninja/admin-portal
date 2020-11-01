@@ -47,6 +47,7 @@ class _TaskOverviewState extends State<TaskOverview> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final task = viewModel.task;
     final localization = AppLocalization.of(context);
 
@@ -55,13 +56,13 @@ class _TaskOverviewState extends State<TaskOverview> {
     final company = viewModel.company;
     final invoice = viewModel.state.invoiceState.map[task.invoiceId];
 
-    final Map<String, String> fields = {};
+    final Map<String, String> fields = {
+      TaskFields.rate: formatNumber(task.rate, context, zeroIsNull: true),
+    };
 
-    // TODO Remove isNotEmpty check in v2
-    if (company.taskStatusMap.isNotEmpty &&
-        (task.taskStatusId ?? '').isNotEmpty) {
+    if ((task.statusId ?? '').isNotEmpty) {
       fields[localization.status] =
-          company.taskStatusMap[task.taskStatusId]?.name ?? '';
+          company.taskStatusMap[task.statusId]?.name ?? '';
     }
 
     if (task.customValue1.isNotEmpty) {
@@ -83,6 +84,7 @@ class _TaskOverviewState extends State<TaskOverview> {
       final widgets = <Widget>[
         EntityHeader(
           entity: task,
+          statusLabel: state.taskStatusState.get(task.statusId).name,
           statusColor: task.isInvoiced
               ? Colors.green
               : task.isRunning
@@ -97,6 +99,7 @@ class _TaskOverviewState extends State<TaskOverview> {
                 company: company,
                 project: project,
                 client: client,
+                task: task,
               ),
             ),
             context,

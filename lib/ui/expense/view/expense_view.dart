@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/expense/view/expense_view_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
@@ -31,7 +32,7 @@ class _ExpenseViewState extends State<ExpenseView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -56,9 +57,6 @@ class _ExpenseViewState extends State<ExpenseView>
             text: localization.overview,
           ),
           Tab(
-            text: localization.details,
-          ),
-          Tab(
             text: expense.documents.isEmpty
                 ? localization.documents
                 : '${localization.documents} (${expense.documents.length})',
@@ -66,22 +64,34 @@ class _ExpenseViewState extends State<ExpenseView>
         ],
       ),
       body: Builder(builder: (context) {
-        return TabBarView(
-          controller: _controller,
-          children: <Widget>[
-            RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: ExpenseOverview(viewModel: viewModel),
+        return Column(
+          children: [
+            Expanded(
+              child: TabBarView(
+                controller: _controller,
+                children: <Widget>[
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: ExpenseOverview(
+                      viewModel: viewModel,
+                      isFilter: widget.isFilter,
+                    ),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: ExpenseViewDocuments(
+                        viewModel: viewModel, expense: viewModel.expense),
+                  ),
+                ],
+              ),
             ),
-            RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: ExpenseViewDetails(expense: viewModel.expense),
-            ),
-            RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: ExpenseViewDocuments(
-                  viewModel: viewModel, expense: viewModel.expense),
-            ),
+            BottomButtons(
+              entity: expense,
+              action1: EntityAction.clone,
+              action2: expense.isInvoiced
+                  ? EntityAction.viewInvoice
+                  : EntityAction.newInvoice,
+            )
           ],
         );
       }),

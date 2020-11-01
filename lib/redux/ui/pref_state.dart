@@ -19,7 +19,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isHistoryVisible: false,
       enableDarkMode: enableDarkMode ?? false,
       requireAuthentication: false,
-      autoStartTasks: false,
       showFilterSidebar: false,
       longPressSelectionIsDefault: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
@@ -53,8 +52,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get longPressSelectionIsDefault;
 
   bool get requireAuthentication;
-
-  bool get autoStartTasks;
 
   int get rowsPerPage;
 

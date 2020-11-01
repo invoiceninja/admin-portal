@@ -93,7 +93,10 @@ class _TaskViewState extends State<TaskView>
                   : task.taskTimes.isEmpty
                       ? EntityAction.start
                       : EntityAction.resume,
-              action2: EntityAction.newInvoice,
+              action2: task.isInvoiced
+                  ? EntityAction.viewInvoice
+                  : EntityAction.newInvoice,
+              action1Enabled: !task.isInvoiced,
             ),
           ],
         );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -72,21 +71,7 @@ class TaskScreen extends StatelessWidget {
           TaskFields.duration,
           TaskFields.updatedAt,
         ],
-        statuses: [
-          TaskStatusEntity().rebuild((b) => b
-            ..id = kTaskStatusLogged
-            ..name = localization.logged),
-          TaskStatusEntity().rebuild(
-            (b) => b
-              ..id = kTaskStatusRunning
-              ..name = localization.running,
-          ),
-          TaskStatusEntity().rebuild(
-            (b) => b
-              ..id = kTaskStatusInvoiced
-              ..name = localization.invoiced,
-          ),
-        ],
+        statuses: [],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTasksByState(state));
         },

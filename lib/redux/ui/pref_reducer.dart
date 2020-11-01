@@ -23,6 +23,10 @@ import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
+
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
@@ -58,7 +62,6 @@ PrefState prefReducer(
           showFilterSidebarReducer(state.showFilterSidebar, action)
       ..longPressSelectionIsDefault =
           longPressReducer(state.longPressSelectionIsDefault, action)
-      ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
       ..requireAuthentication =
           requireAuthenticationReducer(state.requireAuthentication, action),
   );
@@ -161,12 +164,6 @@ Reducer<bool> longPressReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>(
       (longPressSelectionIsDefault, action) {
     return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
-  }),
-]);
-
-Reducer<bool> autoStartTasksReducer = combineReducers([
-  TypedReducer<bool, UpdateUserPreferences>((autoStartTasks, action) {
-    return action.autoStartTasks ?? autoStartTasks;
   }),
 ]);
 
@@ -318,6 +315,30 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.group.id, entityType: EntityType.group))),
   // STARTER: history - do not remove comment
+  TypedReducer<BuiltList<HistoryRecord>, ViewTaskStatus>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.taskStatusId, entityType: EntityType.taskStatus))),
+  TypedReducer<BuiltList<HistoryRecord>, EditTaskStatus>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.taskStatus.id, entityType: EntityType.taskStatus))),
+
+  TypedReducer<BuiltList<HistoryRecord>, ViewExpenseCategory>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.expenseCategoryId,
+              entityType: EntityType.expenseCategory))),
+  TypedReducer<BuiltList<HistoryRecord>, EditExpenseCategory>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.expenseCategory.id,
+              entityType: EntityType.expenseCategory))),
+
   TypedReducer<BuiltList<HistoryRecord>, ViewRecurringInvoice>(
       (historyList, action) => _addToHistory(
           historyList,

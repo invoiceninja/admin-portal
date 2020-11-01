@@ -76,7 +76,6 @@ class _OnlinePaymentsState extends State<OnlinePayments> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
     final settings = viewModel.settings;
 
     return EditScaffold(
@@ -105,10 +104,10 @@ class _OnlinePaymentsState extends State<OnlinePayments> {
             ),
             AppDropdownButton<String>(
                 labelText: localization.useAvailableCredits,
-                value: company.useCreditsPayment,
+                value: settings.useCreditsPayment,
                 onChanged: (dynamic value) {
-                  viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..useCreditsPayment = value));
+                  viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..useCreditsPayment = value));
                 },
                 items: [
                   DropdownMenuItem(

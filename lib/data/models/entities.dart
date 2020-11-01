@@ -58,6 +58,12 @@ class EntityType extends EnumClass {
   static const EntityType font = _$font;
 
   String get plural {
+    if (this == EntityType.expenseCategory) {
+      return 'expenseCategories';
+    } else if (this == EntityType.taskStatus) {
+      return 'taskStatuses';
+    }
+
     return toString() + 's';
   }
 
@@ -70,6 +76,8 @@ class EntityType extends EnumClass {
         EntityType.design,
         EntityType.token,
         EntityType.webhook,
+        EntityType.expenseCategory,
+        EntityType.taskStatus,
       ].contains(this);
 
   List<EntityType> get relatedTypes {
@@ -134,6 +142,11 @@ class EntityType extends EnumClass {
         return [
           EntityType.vendor,
           EntityType.project,
+          EntityType.expenseCategory,
+        ];
+      case EntityType.expenseCategory:
+        return [
+          EntityType.expense,
         ];
       default:
         return [];

@@ -21,15 +21,7 @@ class ErrorDialog extends StatelessWidget {
 
     return AlertDialog(
       title: Text(localization.error),
-      content: error != null
-          ? ConstrainedBox(
-              child: Text(error.toString()),
-              constraints: BoxConstraints(
-                maxWidth: 600,
-                maxHeight: 400,
-              ),
-            )
-          : SizedBox(),
+      content: error != null ? Text(error.toString()) : SizedBox(),
       actions: [
         if (clearErrorOnDismiss && !Config.DEMO_MODE)
           FlatButton(

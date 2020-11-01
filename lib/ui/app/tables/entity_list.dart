@@ -259,22 +259,24 @@ class _EntityListState extends State<EntityList> {
                   curve: Curves.easeInOutCubic,
                   child: Row(
                     children: [
-                      Checkbox(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        onChanged: (value) {
-                          final entities = entityList
-                              .where((entityId) =>
-                                  value != listUIState.isSelected(entityId))
-                              .map<BaseEntity>(
-                                  (entityId) => entityMap[entityId])
-                              .toList();
-                          handleEntitiesActions(context, entities,
-                              EntityAction.toggleMultiselect);
-                        },
-                        activeColor: Theme.of(context).accentColor,
-                        value: entityList.length ==
-                            (listUIState.selectedIds ?? <String>[]).length,
-                      ),
+                      if (state.prefState.moduleLayout == ModuleLayout.list)
+                        Checkbox(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          onChanged: (value) {
+                            final entities = entityList
+                                .where((entityId) =>
+                                    value != listUIState.isSelected(entityId))
+                                .map<BaseEntity>(
+                                    (entityId) => entityMap[entityId])
+                                .toList();
+                            handleEntitiesActions(context, entities,
+                                EntityAction.toggleMultiselect);
+                          },
+                          activeColor: Theme.of(context).accentColor,
+                          value: entityList.length ==
+                              (listUIState.selectedIds ?? <String>[]).length,
+                        ),
                       SizedBox(width: 16),
                       Expanded(
                         child: Text((countSelected == 1

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -98,6 +99,7 @@ class _ProjectEditState extends State<ProjectEdit> {
         ..name = _nameController.text.trim()
         ..budgetedHours = parseDouble(_hoursController.text)
         ..taskRate = parseDouble(_taskRateController.text)
+        ..publicNotes = _publicNotesController.text.trim()
         ..privateNotes = _privateNotesController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
@@ -173,6 +175,11 @@ class _ProjectEditState extends State<ProjectEdit> {
                           },
                         )
                       : SizedBox(),
+                  UserPicker(
+                    userId: project.assignedUserId,
+                    onChanged: (userId) => viewModel.onChanged(
+                        project.rebuild((b) => b..assignedUserId = userId)),
+                  ),
                   DatePicker(
                     labelText: localization.dueDate,
                     selectedDate: project.dueDate,

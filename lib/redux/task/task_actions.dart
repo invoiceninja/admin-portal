@@ -283,16 +283,6 @@ class FilterTasksByCustom4 implements PersistUI {
 
 void handleTaskAction(
     BuildContext context, List<BaseEntity> tasks, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          tasks.length == 1,
-      'Cannot perform this action on more than one task');
-
   if (tasks.isEmpty) {
     return;
   }
@@ -301,6 +291,7 @@ void handleTaskAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final task = tasks.first as TaskEntity;
+  final client = state.clientState.get(task.clientId);
   final taskIds = tasks.map((task) => task.id).toList();
 
   switch (action) {
@@ -333,13 +324,20 @@ void handleTaskAction(
 
       break;
     case EntityAction.newInvoice:
-      final item = convertTaskToInvoiceItem(task: task, context: context);
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state).rebuild((b) => b
-            ..hasTasks = true
-            ..clientId = task.clientId
-            ..lineItems.add(item)));
+      final items = tasks
+          .where((entity) {
+            final task = entity as TaskEntity;
+            return !task.isRunning && !task.isInvoiced;
+          })
+          .map((task) => convertTaskToInvoiceItem(task: task, context: context))
+          .toList();
+      if (items.isNotEmpty) {
+        createEntity(
+            context: context,
+            entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
+              ..hasTasks = true
+              ..lineItems.addAll(items)));
+      }
       break;
     case EntityAction.viewInvoice:
       viewEntityById(

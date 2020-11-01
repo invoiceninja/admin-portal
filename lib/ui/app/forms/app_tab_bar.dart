@@ -7,11 +7,13 @@ class AppTabBar extends StatelessWidget {
     this.tabs,
     this.controller,
     this.isScrollable = false,
+    this.onTap,
   });
 
   final List<Widget> tabs;
   final TabController controller;
   final bool isScrollable;
+  final Function(int) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class AppTabBar extends StatelessWidget {
       controller: controller,
       isScrollable: isScrollable,
       indicatorColor: Theme.of(context).accentColor,
+      onTap: onTap,
     );
 
     if (state.prefState.enableDarkMode || !state.hasAccentColor) {

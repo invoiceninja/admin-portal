@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -56,6 +57,21 @@ class TaskListItem extends StatelessWidget {
           formatNumberType: FormatNumberType.duration);
     }, style: textStyle);
 
+    final startStopButton = IconButton(
+      icon: task.isInvoiced
+          ? SizedBox()
+          : Icon(
+              getEntityActionIcon(
+                  task.isRunning ? EntityAction.stop : EntityAction.start),
+              color: task.isRunning ? state.accentColor : null,
+            ),
+      onPressed: task.isInvoiced
+          ? null
+          : () => handleEntityAction(context, task,
+              task.isRunning ? EntityAction.stop : EntityAction.start),
+      visualDensity: VisualDensity.compact,
+    );
+
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
           task.id ==
@@ -78,7 +94,7 @@ class TaskListItem extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
-                    right: 28,
+                    right: 16,
                     top: 4,
                     bottom: 4,
                   ),
@@ -114,6 +130,11 @@ class TaskListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Text(
+                              task.number,
+                              style: textStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             if (!task.isActive) EntityStateLabel(task)
                           ],
                         ),
@@ -145,8 +166,12 @@ class TaskListItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 8),
                       duration,
+                      SizedBox(width: 24),
+                      EntityStatusChip(entity: task),
+                      SizedBox(width: 8),
+                      startStopButton,
                     ],
                   ),
                 ),
@@ -171,17 +196,7 @@ class TaskListItem extends StatelessWidget {
                         ),
                       )
                     : null,
-                trailing: IconButton(
-                  icon: Icon(
-                    getEntityActionIcon(task.isRunning
-                        ? EntityAction.stop
-                        : EntityAction.start),
-                    color: task.isRunning ? state.accentColor : null,
-                  ),
-                  onPressed: () => handleEntityAction(context, task,
-                      task.isRunning ? EntityAction.stop : EntityAction.start),
-                  visualDensity: VisualDensity.compact,
-                ),
+                trailing: startStopButton,
                 title: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Row(

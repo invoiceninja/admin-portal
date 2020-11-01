@@ -93,31 +93,32 @@ class EmailInvoiceVM extends EmailEntityVM {
     final state = store.state;
 
     return EmailInvoiceVM(
-        isLoading: state.isLoading,
-        isSaving: state.isSaving,
-        company: state.company,
-        invoice: invoice,
-        client: state.clientState.map[invoice.clientId] ??
-            ClientEntity(id: invoice.clientId),
-        loadClient: () {
-          store.dispatch(LoadClient(clientId: invoice.clientId));
-        },
-        onSendPressed: (context, template, subject, body) {
-          final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).emailedInvoice,
-              shouldPop: isMobile(context));
-          if (!isMobile(context)) {
-            completer.future.then((value) {
-              viewEntity(entity: invoice, context: context);
-            });
-          }
-          store.dispatch(EmailInvoiceRequest(
-            completer: completer,
-            invoiceId: invoice.id,
-            template: template,
-            subject: subject,
-            body: body,
-          ));
-        });
+      isLoading: state.isLoading,
+      isSaving: state.isSaving,
+      company: state.company,
+      invoice: invoice,
+      client: state.clientState.map[invoice.clientId] ??
+          ClientEntity(id: invoice.clientId),
+      loadClient: () {
+        store.dispatch(LoadClient(clientId: invoice.clientId));
+      },
+      onSendPressed: (context, template, subject, body) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).emailedInvoice,
+            shouldPop: isMobile(context));
+        if (!isMobile(context)) {
+          completer.future.then((value) {
+            viewEntity(entity: invoice, context: context);
+          });
+        }
+        store.dispatch(EmailInvoiceRequest(
+          completer: completer,
+          invoiceId: invoice.id,
+          template: template,
+          subject: subject,
+          body: body,
+        ));
+      },
+    );
   }
 }

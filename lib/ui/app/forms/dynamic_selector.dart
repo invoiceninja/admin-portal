@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DynamicSelector extends StatelessWidget {
   const DynamicSelector({
+    Key key,
     this.entityId,
     this.entityType,
     this.entityIds,
@@ -17,8 +18,12 @@ class DynamicSelector extends StatelessWidget {
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
     this.onAddPressed,
-  });
+    this.allowClearing,
+    this.labelText,
+  }) : super(key: key);
 
+  final String labelText;
+  final bool allowClearing;
   final String entityId;
   final List<String> entityIds;
   final EntityType entityType;
@@ -35,9 +40,9 @@ class DynamicSelector extends StatelessWidget {
 
     if (entityIds.length < 10) {
       return AppDropdownButton(
-        labelText: localization.lookup('$entityType'),
+        labelText: labelText ?? localization.lookup('$entityType'),
         value: entityId,
-        showBlank: true,
+        showBlank: allowClearing,
         onChanged: (dynamic entityId) => onChanged(entityId),
         items: entityIds
             .map((entityId) => DropdownMenuItem(
@@ -51,7 +56,7 @@ class DynamicSelector extends StatelessWidget {
     } else {
       return EntityDropdown(
         key: ValueKey('__${entityType}_${entityId}__'),
-        labelText: localization.lookup('$entityType'),
+        labelText: labelText ?? localization.lookup('$entityType'),
         entityType: entityType,
         onSelected: (entity) => onChanged(entity.id),
         onAddPressed: onAddPressed,
@@ -59,6 +64,7 @@ class DynamicSelector extends StatelessWidget {
         entityList: entityIds,
         overrideSuggestedAmount: overrideSuggestedAmount,
         overrideSuggestedLabel: overrideSuggestedLabel,
+        allowClearing: allowClearing,
       );
     }
   }

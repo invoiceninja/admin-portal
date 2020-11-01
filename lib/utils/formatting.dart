@@ -275,6 +275,50 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
   return '$startDateTimeString - $endDateTimeString';
 }
 
+String parseDate(String value, BuildContext context) {
+  if (value == null || value.isEmpty) {
+    return '';
+  }
+
+  final state = StoreProvider.of<AppState>(context).state;
+  final CompanyEntity company = state.company;
+
+  final dateFormats = state.staticState.dateFormatMap;
+  final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
+      ? company.settings.dateFormatId
+      : kDefaultDateFormat;
+
+  final format = dateFormats[dateFormatId].format;
+  final formatter = DateFormat(format, localeSelector(state));
+
+  return convertDateTimeToSqlDate(formatter.parse(value));
+}
+
+DateTime parseTime(String value, BuildContext context) {
+  if (value == null || value.isEmpty) {
+    return null;
+  }
+
+  final state = StoreProvider.of<AppState>(context).state;
+  final CompanyEntity company = state.company;
+
+  final showSeconds = ':'.allMatches(value).length >= 2;
+  final enableMilitaryTime = company.settings.enableMilitaryTime;
+  String format;
+
+  format = showSeconds
+      ? enableMilitaryTime
+          ? 'H:mm:ss'
+          : 'h:mm:ss a'
+      : enableMilitaryTime
+          ? 'H:mm'
+          : 'h:mm a';
+
+  final formatter = DateFormat(format, localeSelector(state));
+
+  return formatter.parse(value);
+}
+
 String formatDate(String value, BuildContext context,
     {bool showDate = true, bool showTime = false, bool showSeconds = true}) {
   if (value == null || value.isEmpty) {
@@ -283,10 +327,6 @@ String formatDate(String value, BuildContext context,
 
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company;
-
-  if (state.staticState.dateFormatMap.isEmpty) {
-    return '';
-  }
 
   if (showTime) {
     String format;

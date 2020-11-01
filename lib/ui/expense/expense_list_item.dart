@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -38,7 +39,7 @@ class ExpenseListItem extends StatelessWidget {
     final expenseUIState = uiState.expenseUIState;
     final client = state.clientState.get(expense.clientId);
     final vendor = state.vendorState.get(expense.vendorId);
-    final category = '';
+    final category = state.expenseCategoryState.get(expense.categoryId);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (expense.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
@@ -53,21 +54,17 @@ class ExpenseListItem extends StatelessWidget {
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else if (client != null || vendor != null || category != null) {
-      if (category != null) {
-        //subtitle += category.name;
-        if (vendor != null || client != null) {
-          subtitle += ' • ';
-        }
+      final parts = <String>[];
+      if (category != null && category.isOld) {
+        parts.add(category.name);
       }
-      if (vendor != null) {
-        subtitle += vendor.name;
-        if (client != null) {
-          subtitle += ' • ';
-        }
+      if (vendor != null && vendor.isOld) {
+        parts.add(vendor.name);
       }
-      if (client != null) {
-        subtitle += client.displayName;
+      if (client != null && client.isOld) {
+        parts.add(client.displayName);
       }
+      subtitle = parts.join(' • ');
     }
     if (expense.documents.isNotEmpty) {
       if (subtitle.isNotEmpty) {
@@ -135,6 +132,11 @@ class ExpenseListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Text(
+                              expense.number,
+                              style: textStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             if (!expense.isActive) EntityStateLabel(expense)
                           ],
                         ),
@@ -146,11 +148,11 @@ class ExpenseListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                (expense.number ?? '') +
-                                    (expense.documents.isNotEmpty
-                                        ? '  📎'
-                                        : ''),
-                                style: textStyle),
+                              (expense.publicNotes ?? '') +
+                                  (expense.documents.isNotEmpty ? '  📎' : ''),
+                              style: textStyle,
+                              maxLines: 1,
+                            ),
                             Text(subtitle ?? filterMatch,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
@@ -164,13 +166,15 @@ class ExpenseListItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 8),
                       Text(
                         formatNumber(expense.convertedAmount, context,
-                            currencyId: expense.expenseCurrencyId),
+                            currencyId: expense.currencyId),
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
+                      SizedBox(width: 16),
+                      EntityStatusChip(entity: expense),
                     ],
                   ),
                 ),
@@ -208,7 +212,7 @@ class ExpenseListItem extends StatelessWidget {
                       ),
                       Text(
                           formatNumber(expense.convertedAmount, context,
-                              currencyId: expense.expenseCurrencyId),
+                              currencyId: expense.currencyId),
                           style: Theme.of(context).textTheme.headline6),
                     ],
                   ),

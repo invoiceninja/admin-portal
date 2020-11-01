@@ -10,6 +10,7 @@ export 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 export 'package:invoiceninja_flutter/data/models/document_model.dart';
 export 'package:invoiceninja_flutter/data/models/entities.dart';
 export 'package:invoiceninja_flutter/data/models/expense_model.dart';
+export 'package:invoiceninja_flutter/data/models/expense_category_model.dart';
 export 'package:invoiceninja_flutter/data/models/token_model.dart';
 export 'package:invoiceninja_flutter/data/models/webhook_model.dart';
 export 'package:invoiceninja_flutter/data/models/invoice_model.dart';
@@ -29,6 +30,7 @@ export 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/timezone_model.dart';
 export 'package:invoiceninja_flutter/data/models/task_model.dart';
+export 'package:invoiceninja_flutter/data/models/task_status_model.dart';
 export 'package:invoiceninja_flutter/data/models/user_model.dart';
 export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 

@@ -49,6 +49,14 @@ import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_selectors.dart';
+
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
@@ -222,6 +230,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.taskStatus:
+        return taskStatusState.map;
+
+      case EntityType.expenseCategory:
+        return expenseCategoryState.map;
       case EntityType.recurringInvoice:
         return recurringInvoiceState.map;
       case EntityType.webhook:
@@ -256,9 +269,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return paymentState.map;
       case EntityType.quote:
         return quoteState.map;
-      case EntityType.expenseCategory:
-        // TODO move to expenseCategoryState.map
-        return company.expenseCategoryMap;
       case EntityType.paymentType:
         return staticState.paymentTypeMap;
       case EntityType.currency:
@@ -292,6 +302,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.taskStatus:
+        return taskStatusState.list;
+
+      case EntityType.expenseCategory:
+        return expenseCategoryState.list;
+
       case EntityType.recurringInvoice:
         return recurringInvoiceState.list;
       case EntityType.webhook:
@@ -340,6 +356,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.taskStatus:
+        return taskStatusUIState;
+
+      case EntityType.expenseCategory:
+        return expenseCategoryUIState;
       case EntityType.recurringInvoice:
         return recurringInvoiceUIState;
       case EntityType.webhook:
@@ -402,6 +423,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  TaskStatusState get taskStatusState => userCompanyState.taskStatusState;
+  ListUIState get taskStatusListState => uiState.taskStatusUIState.listUIState;
+  TaskStatusUIState get taskStatusUIState => uiState.taskStatusUIState;
+
+  ExpenseCategoryState get expenseCategoryState =>
+      userCompanyState.expenseCategoryState;
+  ListUIState get expenseCategoryListState =>
+      uiState.expenseCategoryUIState.listUIState;
+  ExpenseCategoryUIState get expenseCategoryUIState =>
+      uiState.expenseCategoryUIState;
+
   RecurringInvoiceState get recurringInvoiceState =>
       userCompanyState.recurringInvoiceState;
 
@@ -543,6 +575,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CreditEditScreen.route:
         return hasCreditChanges(creditUIState.editing, creditState.map);
       // STARTER: has changes - do not remove comment
+      case TaskStatusEditScreen.route:
+        return hasTaskStatusChanges(
+            taskStatusUIState.editing, taskStatusState.map);
+
+      case ExpenseCategoryEditScreen.route:
+        return hasExpenseCategoryChanges(
+            expenseCategoryUIState.editing, expenseCategoryState.map);
+
       case RecurringInvoiceEditScreen.route:
         return hasRecurringInvoiceChanges(
             recurringInvoiceUIState.editing, recurringInvoiceState.map);

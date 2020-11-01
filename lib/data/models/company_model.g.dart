@@ -135,12 +135,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.expenseCategories,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ExpenseCategoryEntity)])),
-      'expenseCategoryMap',
-      serializers.serialize(object.expenseCategoryMap,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(ExpenseCategoryEntity)
-          ])),
       'users',
       serializers.serialize(object.users,
           specifiedType:
@@ -221,9 +215,18 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'mark_expenses_paid',
       serializers.serialize(object.markExpensesPaid,
           specifiedType: const FullType(bool)),
-      'use_credits_payment',
-      serializers.serialize(object.useCreditsPayment,
-          specifiedType: const FullType(String)),
+      'invoice_expense_documents',
+      serializers.serialize(object.invoiceExpenseDocuments,
+          specifiedType: const FullType(bool)),
+      'invoice_task_documents',
+      serializers.serialize(object.invoiceTaskDocuments,
+          specifiedType: const FullType(bool)),
+      'invoice_task_timelog',
+      serializers.serialize(object.invoiceTaskTimelog,
+          specifiedType: const FullType(bool)),
+      'auto_start_tasks',
+      serializers.serialize(object.autoStartTasks,
+          specifiedType: const FullType(bool)),
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
@@ -245,10 +248,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.plan,
             specifiedType: const FullType(String)));
     }
-    if (object.invoiceExpenseDocuments != null) {
+    if (object.showTasksTable != null) {
       result
-        ..add('invoice_expense_documents')
-        ..add(serializers.serialize(object.invoiceExpenseDocuments,
+        ..add('show_tasks_table')
+        ..add(serializers.serialize(object.showTasksTable,
             specifiedType: const FullType(bool)));
     }
     if (object.enabledModules != null) {
@@ -445,13 +448,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(ExpenseCategoryEntity)]))
               as BuiltList<Object>);
           break;
-        case 'expenseCategoryMap':
-          result.expenseCategoryMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(ExpenseCategoryEntity)
-              ])));
-          break;
         case 'users':
           result.users.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -573,9 +569,21 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.invoiceExpenseDocuments = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'use_credits_payment':
-          result.useCreditsPayment = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+        case 'invoice_task_documents':
+          result.invoiceTaskDocuments = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_task_timelog':
+          result.invoiceTaskTimelog = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'auto_start_tasks':
+          result.autoStartTasks = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_tasks_table':
+          result.showTasksTable = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
@@ -1885,10 +1893,10 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.enableReminder3,
             specifiedType: const FullType(bool)));
     }
-    if (object.enableReminder4 != null) {
+    if (object.enableReminderEndless != null) {
       result
-        ..add('enable_reminder4')
-        ..add(serializers.serialize(object.enableReminder4,
+        ..add('enable_reminder_endless')
+        ..add(serializers.serialize(object.enableReminderEndless,
             specifiedType: const FullType(bool)));
     }
     if (object.numDaysReminder1 != null) {
@@ -1981,16 +1989,16 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.lateFeePercentEndless,
             specifiedType: const FullType(double)));
     }
-    if (object.emailSubjectReminder4 != null) {
+    if (object.emailSubjectReminderEndless != null) {
       result
-        ..add('email_subject_reminder4')
-        ..add(serializers.serialize(object.emailSubjectReminder4,
+        ..add('email_subject_reminder_endless')
+        ..add(serializers.serialize(object.emailSubjectReminderEndless,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyReminder4 != null) {
+    if (object.emailBodyReminderEndless != null) {
       result
-        ..add('email_template_reminder4')
-        ..add(serializers.serialize(object.emailBodyReminder4,
+        ..add('email_template_reminder_endless')
+        ..add(serializers.serialize(object.emailBodyReminderEndless,
             specifiedType: const FullType(String)));
     }
     if (object.clientOnlinePaymentNotification != null) {
@@ -2070,6 +2078,12 @@ class _$SettingsEntitySerializer
         ..add('client_portal_under_payment_minimum')
         ..add(serializers.serialize(object.clientPortalUnderPaymentMinimum,
             specifiedType: const FullType(double)));
+    }
+    if (object.useCreditsPayment != null) {
+      result
+        ..add('use_credits_payment')
+        ..add(serializers.serialize(object.useCreditsPayment,
+            specifiedType: const FullType(String)));
     }
     if (object.customPaymentTerms != null) {
       result
@@ -2659,8 +2673,8 @@ class _$SettingsEntitySerializer
           result.enableReminder3 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'enable_reminder4':
-          result.enableReminder4 = serializers.deserialize(value,
+        case 'enable_reminder_endless':
+          result.enableReminderEndless = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'num_days_reminder1':
@@ -2723,12 +2737,12 @@ class _$SettingsEntitySerializer
           result.lateFeePercentEndless = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'email_subject_reminder4':
-          result.emailSubjectReminder4 = serializers.deserialize(value,
+        case 'email_subject_reminder_endless':
+          result.emailSubjectReminderEndless = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'email_template_reminder4':
-          result.emailBodyReminder4 = serializers.deserialize(value,
+        case 'email_template_reminder_endless':
+          result.emailBodyReminderEndless = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'client_online_payment_notification':
@@ -2783,6 +2797,10 @@ class _$SettingsEntitySerializer
           result.clientPortalUnderPaymentMinimum = serializers.deserialize(
               value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'use_credits_payment':
+          result.useCreditsPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_payment_terms':
           result.customPaymentTerms.replace(serializers.deserialize(value,
@@ -2921,8 +2939,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<ExpenseCategoryEntity> expenseCategories;
   @override
-  final BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap;
-  @override
   final BuiltList<UserEntity> users;
   @override
   final BuiltList<ClientEntity> clients;
@@ -2967,7 +2983,13 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool invoiceExpenseDocuments;
   @override
-  final String useCreditsPayment;
+  final bool invoiceTaskDocuments;
+  @override
+  final bool invoiceTaskTimelog;
+  @override
+  final bool autoStartTasks;
+  @override
+  final bool showTasksTable;
   @override
   final SettingsEntity settings;
   @override
@@ -3027,7 +3049,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.taskStatusMap,
       this.companyGateways,
       this.expenseCategories,
-      this.expenseCategoryMap,
       this.users,
       this.clients,
       this.products,
@@ -3050,7 +3071,10 @@ class _$CompanyEntity extends CompanyEntity {
       this.markExpensesInvoiceable,
       this.markExpensesPaid,
       this.invoiceExpenseDocuments,
-      this.useCreditsPayment,
+      this.invoiceTaskDocuments,
+      this.invoiceTaskTimelog,
+      this.autoStartTasks,
+      this.showTasksTable,
       this.settings,
       this.enabledModules,
       this.isChanged,
@@ -3164,9 +3188,6 @@ class _$CompanyEntity extends CompanyEntity {
     if (expenseCategories == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategories');
     }
-    if (expenseCategoryMap == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategoryMap');
-    }
     if (users == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'users');
     }
@@ -3231,8 +3252,19 @@ class _$CompanyEntity extends CompanyEntity {
     if (markExpensesPaid == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'markExpensesPaid');
     }
-    if (useCreditsPayment == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'useCreditsPayment');
+    if (invoiceExpenseDocuments == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'invoiceExpenseDocuments');
+    }
+    if (invoiceTaskDocuments == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'invoiceTaskDocuments');
+    }
+    if (invoiceTaskTimelog == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceTaskTimelog');
+    }
+    if (autoStartTasks == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'autoStartTasks');
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
@@ -3294,7 +3326,6 @@ class _$CompanyEntity extends CompanyEntity {
         taskStatusMap == other.taskStatusMap &&
         companyGateways == other.companyGateways &&
         expenseCategories == other.expenseCategories &&
-        expenseCategoryMap == other.expenseCategoryMap &&
         users == other.users &&
         clients == other.clients &&
         products == other.products &&
@@ -3317,7 +3348,10 @@ class _$CompanyEntity extends CompanyEntity {
         markExpensesInvoiceable == other.markExpensesInvoiceable &&
         markExpensesPaid == other.markExpensesPaid &&
         invoiceExpenseDocuments == other.invoiceExpenseDocuments &&
-        useCreditsPayment == other.useCreditsPayment &&
+        invoiceTaskDocuments == other.invoiceTaskDocuments &&
+        invoiceTaskTimelog == other.invoiceTaskTimelog &&
+        autoStartTasks == other.autoStartTasks &&
+        showTasksTable == other.showTasksTable &&
         settings == other.settings &&
         enabledModules == other.enabledModules &&
         isChanged == other.isChanged &&
@@ -3352,15 +3386,15 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode),
-                                                                                paymentTerms.hashCode),
-                                                                            customFields.hashCode),
-                                                                        slackWebhookUrl.hashCode),
-                                                                    googleAnalyticsKey.hashCode),
-                                                                markExpensesInvoiceable.hashCode),
-                                                            markExpensesPaid.hashCode),
-                                                        invoiceExpenseDocuments.hashCode),
-                                                    useCreditsPayment.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
+                                                                                googleAnalyticsKey.hashCode),
+                                                                            markExpensesInvoiceable.hashCode),
+                                                                        markExpensesPaid.hashCode),
+                                                                    invoiceExpenseDocuments.hashCode),
+                                                                invoiceTaskDocuments.hashCode),
+                                                            invoiceTaskTimelog.hashCode),
+                                                        autoStartTasks.hashCode),
+                                                    showTasksTable.hashCode),
                                                 settings.hashCode),
                                             enabledModules.hashCode),
                                         isChanged.hashCode),
@@ -3409,7 +3443,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('taskStatusMap', taskStatusMap)
           ..add('companyGateways', companyGateways)
           ..add('expenseCategories', expenseCategories)
-          ..add('expenseCategoryMap', expenseCategoryMap)
           ..add('users', users)
           ..add('clients', clients)
           ..add('products', products)
@@ -3432,7 +3465,10 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('markExpensesInvoiceable', markExpensesInvoiceable)
           ..add('markExpensesPaid', markExpensesPaid)
           ..add('invoiceExpenseDocuments', invoiceExpenseDocuments)
-          ..add('useCreditsPayment', useCreditsPayment)
+          ..add('invoiceTaskDocuments', invoiceTaskDocuments)
+          ..add('invoiceTaskTimelog', invoiceTaskTimelog)
+          ..add('autoStartTasks', autoStartTasks)
+          ..add('showTasksTable', showTasksTable)
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
           ..add('isChanged', isChanged)
@@ -3609,14 +3645,6 @@ class CompanyEntityBuilder
   set expenseCategories(ListBuilder<ExpenseCategoryEntity> expenseCategories) =>
       _$this._expenseCategories = expenseCategories;
 
-  MapBuilder<String, ExpenseCategoryEntity> _expenseCategoryMap;
-  MapBuilder<String, ExpenseCategoryEntity> get expenseCategoryMap =>
-      _$this._expenseCategoryMap ??=
-          new MapBuilder<String, ExpenseCategoryEntity>();
-  set expenseCategoryMap(
-          MapBuilder<String, ExpenseCategoryEntity> expenseCategoryMap) =>
-      _$this._expenseCategoryMap = expenseCategoryMap;
-
   ListBuilder<UserEntity> _users;
   ListBuilder<UserEntity> get users =>
       _$this._users ??= new ListBuilder<UserEntity>();
@@ -3736,10 +3764,25 @@ class CompanyEntityBuilder
   set invoiceExpenseDocuments(bool invoiceExpenseDocuments) =>
       _$this._invoiceExpenseDocuments = invoiceExpenseDocuments;
 
-  String _useCreditsPayment;
-  String get useCreditsPayment => _$this._useCreditsPayment;
-  set useCreditsPayment(String useCreditsPayment) =>
-      _$this._useCreditsPayment = useCreditsPayment;
+  bool _invoiceTaskDocuments;
+  bool get invoiceTaskDocuments => _$this._invoiceTaskDocuments;
+  set invoiceTaskDocuments(bool invoiceTaskDocuments) =>
+      _$this._invoiceTaskDocuments = invoiceTaskDocuments;
+
+  bool _invoiceTaskTimelog;
+  bool get invoiceTaskTimelog => _$this._invoiceTaskTimelog;
+  set invoiceTaskTimelog(bool invoiceTaskTimelog) =>
+      _$this._invoiceTaskTimelog = invoiceTaskTimelog;
+
+  bool _autoStartTasks;
+  bool get autoStartTasks => _$this._autoStartTasks;
+  set autoStartTasks(bool autoStartTasks) =>
+      _$this._autoStartTasks = autoStartTasks;
+
+  bool _showTasksTable;
+  bool get showTasksTable => _$this._showTasksTable;
+  set showTasksTable(bool showTasksTable) =>
+      _$this._showTasksTable = showTasksTable;
 
   SettingsEntityBuilder _settings;
   SettingsEntityBuilder get settings =>
@@ -3825,7 +3868,6 @@ class CompanyEntityBuilder
       _taskStatusMap = _$v.taskStatusMap?.toBuilder();
       _companyGateways = _$v.companyGateways?.toBuilder();
       _expenseCategories = _$v.expenseCategories?.toBuilder();
-      _expenseCategoryMap = _$v.expenseCategoryMap?.toBuilder();
       _users = _$v.users?.toBuilder();
       _clients = _$v.clients?.toBuilder();
       _products = _$v.products?.toBuilder();
@@ -3848,7 +3890,10 @@ class CompanyEntityBuilder
       _markExpensesInvoiceable = _$v.markExpensesInvoiceable;
       _markExpensesPaid = _$v.markExpensesPaid;
       _invoiceExpenseDocuments = _$v.invoiceExpenseDocuments;
-      _useCreditsPayment = _$v.useCreditsPayment;
+      _invoiceTaskDocuments = _$v.invoiceTaskDocuments;
+      _invoiceTaskTimelog = _$v.invoiceTaskTimelog;
+      _autoStartTasks = _$v.autoStartTasks;
+      _showTasksTable = _$v.showTasksTable;
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
       _isChanged = _$v.isChanged;
@@ -3916,7 +3961,6 @@ class CompanyEntityBuilder
               taskStatusMap: taskStatusMap.build(),
               companyGateways: companyGateways.build(),
               expenseCategories: expenseCategories.build(),
-              expenseCategoryMap: expenseCategoryMap.build(),
               users: users.build(),
               clients: clients.build(),
               products: products.build(),
@@ -3939,7 +3983,10 @@ class CompanyEntityBuilder
               markExpensesInvoiceable: markExpensesInvoiceable,
               markExpensesPaid: markExpensesPaid,
               invoiceExpenseDocuments: invoiceExpenseDocuments,
-              useCreditsPayment: useCreditsPayment,
+              invoiceTaskDocuments: invoiceTaskDocuments,
+              invoiceTaskTimelog: invoiceTaskTimelog,
+              autoStartTasks: autoStartTasks,
+              showTasksTable: showTasksTable,
               settings: settings.build(),
               enabledModules: enabledModules,
               isChanged: isChanged,
@@ -3968,8 +4015,6 @@ class CompanyEntityBuilder
         companyGateways.build();
         _$failedField = 'expenseCategories';
         expenseCategories.build();
-        _$failedField = 'expenseCategoryMap';
-        expenseCategoryMap.build();
         _$failedField = 'users';
         users.build();
         _$failedField = 'clients';
@@ -5090,7 +5135,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool enableReminder3;
   @override
-  final bool enableReminder4;
+  final bool enableReminderEndless;
   @override
   final int numDaysReminder1;
   @override
@@ -5122,9 +5167,9 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final double lateFeePercentEndless;
   @override
-  final String emailSubjectReminder4;
+  final String emailSubjectReminderEndless;
   @override
-  final String emailBodyReminder4;
+  final String emailBodyReminderEndless;
   @override
   final bool clientOnlinePaymentNotification;
   @override
@@ -5151,6 +5196,8 @@ class _$SettingsEntity extends SettingsEntity {
   final String autoBillDate;
   @override
   final double clientPortalUnderPaymentMinimum;
+  @override
+  final String useCreditsPayment;
   @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
@@ -5300,7 +5347,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.enableReminder1,
       this.enableReminder2,
       this.enableReminder3,
-      this.enableReminder4,
+      this.enableReminderEndless,
       this.numDaysReminder1,
       this.numDaysReminder2,
       this.numDaysReminder3,
@@ -5316,8 +5363,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.lateFeePercent2,
       this.lateFeePercent3,
       this.lateFeePercentEndless,
-      this.emailSubjectReminder4,
-      this.emailBodyReminder4,
+      this.emailSubjectReminderEndless,
+      this.emailBodyReminderEndless,
       this.clientOnlinePaymentNotification,
       this.clientManualPaymentNotification,
       this.counterNumberApplied,
@@ -5331,6 +5378,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.clientPortalAllowOverPayment,
       this.autoBillDate,
       this.clientPortalUnderPaymentMinimum,
+      this.useCreditsPayment,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -5485,7 +5533,7 @@ class _$SettingsEntity extends SettingsEntity {
         enableReminder1 == other.enableReminder1 &&
         enableReminder2 == other.enableReminder2 &&
         enableReminder3 == other.enableReminder3 &&
-        enableReminder4 == other.enableReminder4 &&
+        enableReminderEndless == other.enableReminderEndless &&
         numDaysReminder1 == other.numDaysReminder1 &&
         numDaysReminder2 == other.numDaysReminder2 &&
         numDaysReminder3 == other.numDaysReminder3 &&
@@ -5501,8 +5549,8 @@ class _$SettingsEntity extends SettingsEntity {
         lateFeePercent2 == other.lateFeePercent2 &&
         lateFeePercent3 == other.lateFeePercent3 &&
         lateFeePercentEndless == other.lateFeePercentEndless &&
-        emailSubjectReminder4 == other.emailSubjectReminder4 &&
-        emailBodyReminder4 == other.emailBodyReminder4 &&
+        emailSubjectReminderEndless == other.emailSubjectReminderEndless &&
+        emailBodyReminderEndless == other.emailBodyReminderEndless &&
         clientOnlinePaymentNotification ==
             other.clientOnlinePaymentNotification &&
         clientManualPaymentNotification ==
@@ -5519,6 +5567,7 @@ class _$SettingsEntity extends SettingsEntity {
         autoBillDate == other.autoBillDate &&
         clientPortalUnderPaymentMinimum ==
             other.clientPortalUnderPaymentMinimum &&
+        useCreditsPayment == other.useCreditsPayment &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -5546,22 +5595,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode),
-                                                                                emailSubjectReminder4.hashCode),
-                                                                            emailBodyReminder4.hashCode),
-                                                                        clientOnlinePaymentNotification.hashCode),
-                                                                    clientManualPaymentNotification.hashCode),
-                                                                counterNumberApplied.hashCode),
-                                                            emailSendingMethod.hashCode),
-                                                        gmailSendingUserId.hashCode),
-                                                    clientPortalTerms.hashCode),
-                                                clientPortalPrivacy.hashCode),
-                                            lockInvoices.hashCode),
-                                        autoBill.hashCode),
-                                    clientPortalAllowUnderPayment.hashCode),
-                                clientPortalAllowOverPayment.hashCode),
-                            autoBillDate.hashCode),
-                        clientPortalUnderPaymentMinimum.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode),
+                                                                                emailBodyReminderEndless.hashCode),
+                                                                            clientOnlinePaymentNotification.hashCode),
+                                                                        clientManualPaymentNotification.hashCode),
+                                                                    counterNumberApplied.hashCode),
+                                                                emailSendingMethod.hashCode),
+                                                            gmailSendingUserId.hashCode),
+                                                        clientPortalTerms.hashCode),
+                                                    clientPortalPrivacy.hashCode),
+                                                lockInvoices.hashCode),
+                                            autoBill.hashCode),
+                                        clientPortalAllowUnderPayment.hashCode),
+                                    clientPortalAllowOverPayment.hashCode),
+                                autoBillDate.hashCode),
+                            clientPortalUnderPaymentMinimum.hashCode),
+                        useCreditsPayment.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -5707,7 +5756,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('enableReminder1', enableReminder1)
           ..add('enableReminder2', enableReminder2)
           ..add('enableReminder3', enableReminder3)
-          ..add('enableReminder4', enableReminder4)
+          ..add('enableReminderEndless', enableReminderEndless)
           ..add('numDaysReminder1', numDaysReminder1)
           ..add('numDaysReminder2', numDaysReminder2)
           ..add('numDaysReminder3', numDaysReminder3)
@@ -5723,8 +5772,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('lateFeePercent2', lateFeePercent2)
           ..add('lateFeePercent3', lateFeePercent3)
           ..add('lateFeePercentEndless', lateFeePercentEndless)
-          ..add('emailSubjectReminder4', emailSubjectReminder4)
-          ..add('emailBodyReminder4', emailBodyReminder4)
+          ..add('emailSubjectReminderEndless', emailSubjectReminderEndless)
+          ..add('emailBodyReminderEndless', emailBodyReminderEndless)
           ..add('clientOnlinePaymentNotification',
               clientOnlinePaymentNotification)
           ..add('clientManualPaymentNotification',
@@ -5741,6 +5790,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('autoBillDate', autoBillDate)
           ..add('clientPortalUnderPaymentMinimum',
               clientPortalUnderPaymentMinimum)
+          ..add('useCreditsPayment', useCreditsPayment)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -6409,10 +6459,10 @@ class SettingsEntityBuilder
   set enableReminder3(bool enableReminder3) =>
       _$this._enableReminder3 = enableReminder3;
 
-  bool _enableReminder4;
-  bool get enableReminder4 => _$this._enableReminder4;
-  set enableReminder4(bool enableReminder4) =>
-      _$this._enableReminder4 = enableReminder4;
+  bool _enableReminderEndless;
+  bool get enableReminderEndless => _$this._enableReminderEndless;
+  set enableReminderEndless(bool enableReminderEndless) =>
+      _$this._enableReminderEndless = enableReminderEndless;
 
   int _numDaysReminder1;
   int get numDaysReminder1 => _$this._numDaysReminder1;
@@ -6489,15 +6539,15 @@ class SettingsEntityBuilder
   set lateFeePercentEndless(double lateFeePercentEndless) =>
       _$this._lateFeePercentEndless = lateFeePercentEndless;
 
-  String _emailSubjectReminder4;
-  String get emailSubjectReminder4 => _$this._emailSubjectReminder4;
-  set emailSubjectReminder4(String emailSubjectReminder4) =>
-      _$this._emailSubjectReminder4 = emailSubjectReminder4;
+  String _emailSubjectReminderEndless;
+  String get emailSubjectReminderEndless => _$this._emailSubjectReminderEndless;
+  set emailSubjectReminderEndless(String emailSubjectReminderEndless) =>
+      _$this._emailSubjectReminderEndless = emailSubjectReminderEndless;
 
-  String _emailBodyReminder4;
-  String get emailBodyReminder4 => _$this._emailBodyReminder4;
-  set emailBodyReminder4(String emailBodyReminder4) =>
-      _$this._emailBodyReminder4 = emailBodyReminder4;
+  String _emailBodyReminderEndless;
+  String get emailBodyReminderEndless => _$this._emailBodyReminderEndless;
+  set emailBodyReminderEndless(String emailBodyReminderEndless) =>
+      _$this._emailBodyReminderEndless = emailBodyReminderEndless;
 
   bool _clientOnlinePaymentNotification;
   bool get clientOnlinePaymentNotification =>
@@ -6564,6 +6614,11 @@ class SettingsEntityBuilder
       _$this._clientPortalUnderPaymentMinimum;
   set clientPortalUnderPaymentMinimum(double clientPortalUnderPaymentMinimum) =>
       _$this._clientPortalUnderPaymentMinimum = clientPortalUnderPaymentMinimum;
+
+  String _useCreditsPayment;
+  String get useCreditsPayment => _$this._useCreditsPayment;
+  set useCreditsPayment(String useCreditsPayment) =>
+      _$this._useCreditsPayment = useCreditsPayment;
 
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
@@ -6726,7 +6781,7 @@ class SettingsEntityBuilder
       _enableReminder1 = _$v.enableReminder1;
       _enableReminder2 = _$v.enableReminder2;
       _enableReminder3 = _$v.enableReminder3;
-      _enableReminder4 = _$v.enableReminder4;
+      _enableReminderEndless = _$v.enableReminderEndless;
       _numDaysReminder1 = _$v.numDaysReminder1;
       _numDaysReminder2 = _$v.numDaysReminder2;
       _numDaysReminder3 = _$v.numDaysReminder3;
@@ -6742,8 +6797,8 @@ class SettingsEntityBuilder
       _lateFeePercent2 = _$v.lateFeePercent2;
       _lateFeePercent3 = _$v.lateFeePercent3;
       _lateFeePercentEndless = _$v.lateFeePercentEndless;
-      _emailSubjectReminder4 = _$v.emailSubjectReminder4;
-      _emailBodyReminder4 = _$v.emailBodyReminder4;
+      _emailSubjectReminderEndless = _$v.emailSubjectReminderEndless;
+      _emailBodyReminderEndless = _$v.emailBodyReminderEndless;
       _clientOnlinePaymentNotification = _$v.clientOnlinePaymentNotification;
       _clientManualPaymentNotification = _$v.clientManualPaymentNotification;
       _counterNumberApplied = _$v.counterNumberApplied;
@@ -6757,6 +6812,7 @@ class SettingsEntityBuilder
       _clientPortalAllowOverPayment = _$v.clientPortalAllowOverPayment;
       _autoBillDate = _$v.autoBillDate;
       _clientPortalUnderPaymentMinimum = _$v.clientPortalUnderPaymentMinimum;
+      _useCreditsPayment = _$v.useCreditsPayment;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -6921,7 +6977,7 @@ class SettingsEntityBuilder
               enableReminder1: enableReminder1,
               enableReminder2: enableReminder2,
               enableReminder3: enableReminder3,
-              enableReminder4: enableReminder4,
+              enableReminderEndless: enableReminderEndless,
               numDaysReminder1: numDaysReminder1,
               numDaysReminder2: numDaysReminder2,
               numDaysReminder3: numDaysReminder3,
@@ -6937,8 +6993,8 @@ class SettingsEntityBuilder
               lateFeePercent2: lateFeePercent2,
               lateFeePercent3: lateFeePercent3,
               lateFeePercentEndless: lateFeePercentEndless,
-              emailSubjectReminder4: emailSubjectReminder4,
-              emailBodyReminder4: emailBodyReminder4,
+              emailSubjectReminderEndless: emailSubjectReminderEndless,
+              emailBodyReminderEndless: emailBodyReminderEndless,
               clientOnlinePaymentNotification: clientOnlinePaymentNotification,
               clientManualPaymentNotification: clientManualPaymentNotification,
               counterNumberApplied: counterNumberApplied,
@@ -6952,6 +7008,7 @@ class SettingsEntityBuilder
               clientPortalAllowOverPayment: clientPortalAllowOverPayment,
               autoBillDate: autoBillDate,
               clientPortalUnderPaymentMinimum: clientPortalUnderPaymentMinimum,
+              useCreditsPayment: useCreditsPayment,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,

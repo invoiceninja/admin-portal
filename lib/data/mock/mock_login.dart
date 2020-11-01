@@ -72,6 +72,13 @@ const dynamic kMockLogin = '''
                 "subdomain": "",
                 "portal_mode": "subdomain",
                 "portal_domain": "",
+                "mark_expenses_invoiceable": true,
+                "mark_expenses_paid": true,
+                "invoice_expense_documents": true,
+                "invoice_task_documents": true,
+                "invoice_task_timelog": true,
+                "auto_start_tasks": true,
+                "use_credits_payment": "",
                 "settings": {
                     "auto_archive_invoice": false,
                     "lock_invoices": "off",
@@ -432,7 +439,8 @@ const dynamic kMockLogin = '''
                                 "contact_key": "BQNrxmoAiNKvCvMFWn3175Q4Zzv6CoVqdReBVcOS",
                                 "send_email": true,
                                 "last_login": 0,
-                                "password": "**********"
+                                "password": "**********",
+                                "link": ""
                             },
                             {
                                 "id": "Wpmbk5ezJn",
@@ -452,7 +460,8 @@ const dynamic kMockLogin = '''
                                 "contact_key": "ChaTbf9jt5OJjU9Xskv1bSSgYVRXNO8eVrefNqGm",
                                 "send_email": true,
                                 "last_login": 0,
-                                "password": "**********"
+                                "password": "**********",
+                                "link": ""
                             },
                             {
                                 "id": "Opnel5aKBz",
@@ -472,7 +481,8 @@ const dynamic kMockLogin = '''
                                 "contact_key": "97AcM5wyU206whuIHiKMklnkPnNqJQwlh2Z02Hwo",
                                 "send_email": true,
                                 "last_login": 0,
-                                "password": "**********"
+                                "password": "**********",
+                                "link": ""
                             }
                         ],
                         "documents": [],
@@ -1980,7 +1990,10 @@ const dynamic kMockLogin = '''
                         "custom_value4": "Minus ut.",
                         "updated_at": 1598303136,
                         "archived_at": 0,
-                        "created_at": 1598303136
+                        "created_at": 1598303136,
+                        "currency_id": "48",
+                        "category_id": "",
+                        "number": ""
                     },
                     {
                         "id": "Wpmbk5ezJn",
@@ -2019,7 +2032,10 @@ const dynamic kMockLogin = '''
                         "custom_value4": "Deleniti.",
                         "updated_at": 1598303136,
                         "archived_at": 0,
-                        "created_at": 1598303136
+                        "created_at": 1598303136,
+                        "currency_id": "48",
+                        "category_id": "",
+                        "number": ""
                     },
                     {
                         "id": "Opnel5aKBz",
@@ -2058,7 +2074,10 @@ const dynamic kMockLogin = '''
                         "custom_value4": "Ea ullam.",
                         "updated_at": 1598303136,
                         "archived_at": 0,
-                        "created_at": 1598303136
+                        "created_at": 1598303136,
+                        "currency_id": "48",
+                        "category_id": "",
+                        "number": ""
                     }
                 ],
                 "vendors": [
@@ -2087,6 +2106,9 @@ const dynamic kMockLogin = '''
                         "updated_at": 1598303137,
                         "archived_at": 0,
                         "created_at": 1598303136,
+                        "public_notes": "",
+                        "number": "",
+                        "currency_id": "48",
                         "contacts": [
                             {
                                 "id": "VolejRejNm",
@@ -2210,7 +2232,7 @@ const dynamic kMockLogin = '''
                         "status_id": "4",
                         "project_id": "",
                         "vendor_id": "",
-                        "currency_id": "48",
+                        "currency_id": "1",
                         "exchange_rate": 1,
                         "exchange_currency_id": "",
                         "paymentables": [
@@ -2787,7 +2809,8 @@ const dynamic kMockLogin = '''
                         "custom_value1": "",
                         "custom_value2": "",
                         "custom_value3": "",
-                        "custom_value4": ""
+                        "custom_value4": "",
+                        "public_notes": ""
                     }
                 ],
                 "tasks": [
@@ -2809,7 +2832,11 @@ const dynamic kMockLogin = '''
                         "custom_value3": "",
                         "custom_value4": "",
                         "task_status_id": "",
-                        "task_status_sort_order": 0
+                        "task_status_sort_order": 0,
+                        "number": "1",
+                        "rate": 1.30,
+                        "status_id": "",
+                        "status_sort_order": 1
                     }
                 ],
                 "webhooks": [],

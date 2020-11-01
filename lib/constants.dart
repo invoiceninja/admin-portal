@@ -8,7 +8,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.20';
+const String kClientVersion = '5.0.21';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -44,13 +44,8 @@ enum AppEnvironment {
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
-const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefToken = 'checksum';
-
-// TODO remove these
-const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
-const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 
 const String kProductPlanPro = 'v1_pro_yearly';
 const String kProductPlanEnterprise2 = 'v1_enterprise_2_yearly';
@@ -311,6 +306,7 @@ const String kSettingsTaxRatesView = 'tax_settings_rates_view';
 const String kSettingsTaxRatesEdit = 'tax_settings_rates_edit';
 const String kSettingsIntegrations = 'integrations';
 const String kSettingsProducts = 'product_settings';
+const String kSettingsTasks = 'task_settings';
 const String kSettingsExpenses = 'expense_settings';
 const String kSettingsImportExport = 'import_export';
 const String kSettingsDeviceSettings = 'device_settings';
@@ -341,6 +337,12 @@ const String kSettingsTokenEdit = 'token_edit';
 const String kSettingsWebhooks = 'webhook';
 const String kSettingsWebhookView = 'webhook_view';
 const String kSettingsWebhookEdit = 'webhook_edit';
+const String kSettingsExpenseCategories = 'expense_category';
+const String kSettingsExpenseCategoryView = 'expense_category_view';
+const String kSettingsExpenseCategoryEdit = 'expense_category_edit';
+const String kSettingsTaskStatuses = 'task_status';
+const String kSettingsTaskStatusView = 'task_status_view';
+const String kSettingsTaskStatusEdit = 'task_status_edit';
 
 const String kReportClient = 'client';
 const String kReportCredit = 'credit';
@@ -391,6 +393,12 @@ const kPaymentStatuses = {
 const String kExpenseStatusLogged = '1';
 const String kExpenseStatusPending = '2';
 const String kExpenseStatusInvoiced = '3';
+
+const kExpenseStatuses = {
+  kExpenseStatusLogged: 'logged',
+  kExpenseStatusPending: 'pending',
+  kExpenseStatusInvoiced: 'invoiced',
+};
 
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
@@ -503,6 +511,14 @@ class ExpenseStatusColors {
     kExpenseStatusLogged: convertHexStringToColor('#505F73'),
     kExpenseStatusPending: Colors.orange,
     kExpenseStatusInvoiced: kColorGreen,
+  };
+}
+
+class TaskStatusColors {
+  static var colors = {
+    kTaskStatusLogged: convertHexStringToColor('#444444'),
+    kTaskStatusRunning: Colors.blue,
+    kTaskStatusInvoiced: kColorGreen,
   };
 }
 

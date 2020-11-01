@@ -15,6 +15,42 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'calculated_rate': 'Calculated Rate',
+      'default_task_rate': 'Default Task Rate',
+      'clear_cache': 'Clear Cache',
+      'sort_order': 'Sort Order',
+      'task_status': 'Status',
+      'task_statuses': 'Task Statuses',
+      'new_task_status': 'New Task Status',
+      'edit_task_status': 'Edit Task Status',
+      'created_task_status': 'Successfully created task status',
+      'updated_task_status': 'Successfully updated task status',
+      'archived_task_status': 'Successfully archived task status',
+      'deleted_task_status': 'Successfully deleted task status',
+      'removed_task_status': 'Successfully removed task status',
+      'restored_task_status': 'Successfully restored task status',
+      'search_task_status': 'Search 1 Task Status',
+      'search_task_statuses': 'Search :count Task Statuses',
+      'show_tasks_table': 'Show Tasks Table',
+      'show_tasks_table_help':
+          'Always show the tasks section when creating invoices',
+      'invoice_task_timelog': 'Invoice Task Timelog',
+      'invoice_task_timelog_help': 'Add time details to the invoice line items',
+      'auto_start_tasks_help': 'Start tasks before saving',
+      'configure_statuses': 'Configure Statuses',
+      'task_settings': 'Task Settings',
+      'configure_categories': 'Configure Categories',
+      'expense_categories': 'Expense Categories',
+      'new_expense_category': 'New Expense Category',
+      'edit_expense_category': 'Edit Expense Category',
+      'created_expense_category': 'Successfully created expense category',
+      'updated_expense_category': 'Successfully updated expense category',
+      'archived_expense_category': 'Successfully archived expense category',
+      'deleted_expense_category': 'Successfully deleted expense category',
+      'removed_expense_category': 'Successfully removed expense category',
+      'restored_expense_category': 'Successfully restored expense category',
+      'search_expense_category': 'Search 1 Expense Category',
+      'search_expense_categories': 'Search :count Expense Categories',
       'use_available_credits': 'Use Available Credits',
       'show_option': 'Show Option',
       'negative_payment_error':
@@ -26,7 +62,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'mark_paid_help': 'Track the expense has been paid',
       'should_be_invoiced': 'Should be Invoiced',
       'should_be_invoiced_help': 'Enable the expense to be invoiced',
-      'add_documents_to_invoice_help': 'Make the documents visible',
+      'add_documents_to_invoice_help': 'Make the documents visible to clients',
       'convert_currency_help': 'Set an exchange rate',
       'expense_settings': 'Expense Settings',
       'clone_to_recurring': 'Clone to Recurring',
@@ -80,8 +116,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'allow_over_payment': 'Allow Over Payment',
       'allow_over_payment_help': 'Support paying extra to accept tips',
       'allow_under_payment': 'Allow Under Payment',
-      'allow_under_payment_help':
-          'Support paying a minimum amount',
+      'allow_under_payment_help': 'Support paying a minimum amount',
       'test_mode': 'Test Mode',
       'opened': 'opened',
       'payment_reconciliation_failure': 'Reconciliation Failure',
@@ -1387,6 +1422,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_paid': 'Tax Paid Amount',
       'payment_amount': 'Payment Amount',
       'age': 'Age',
+      'is_running': 'Is Running',
+      'time_log': 'Time Log',
+      'bank_id': 'Bank Id',
+      'expense_category_id': 'Expense Category ID',
+      'expense_category': 'Category',
+      'invoice_currency_id': 'Invoice Currency ID',
+      'tax_name1': 'Tax Name 1',
+      'tax_name2': 'Tax Name 2',
+      'transaction_id': 'Transaction ID',
     },
     // OTHER_LANGUAGES
   };
@@ -2296,6 +2340,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get autoStartTasks =>
       _localizedValues[localeCode]['auto_start_tasks'] ?? '';
+
+  String get autoStartTasksHelp =>
+      _localizedValues[localeCode]['auto_start_tasks_help'] ?? '';
 
   String get now => _localizedValues[localeCode]['now'] ?? '';
 
@@ -3311,6 +3358,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get defaultQuantity =>
       _localizedValues[localeCode]['default_quantity'] ?? '';
 
+  String get defaultTaskRate =>
+      _localizedValues[localeCode]['default_task_rate'] ?? '';
+
   String get defaultQuantityHelp =>
       _localizedValues[localeCode]['default_quantity_help'] ?? '';
 
@@ -3684,6 +3734,62 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
 // STARTER: lang field - do not remove comment
+  String get taskStatus => _localizedValues[localeCode]['task_status'];
+
+  String get taskStatuses => _localizedValues[localeCode]['task_statuses'];
+
+  String get newTaskStatus => _localizedValues[localeCode]['new_task_status'];
+
+  String get createdTaskStatus =>
+      _localizedValues[localeCode]['created_task_status'];
+
+  String get updatedTaskStatus =>
+      _localizedValues[localeCode]['updated_task_status'];
+
+  String get archivedTaskStatus =>
+      _localizedValues[localeCode]['archived_task_status'];
+
+  String get deletedTaskStatus =>
+      _localizedValues[localeCode]['deleted_task_status'];
+
+  String get restoredTaskStatus =>
+      _localizedValues[localeCode]['restored_task_status'];
+
+  String get editTaskStatus => _localizedValues[localeCode]['edit_task_status'];
+
+  String get searchTaskStatus =>
+      _localizedValues[localeCode]['search_task_status'];
+
+  String get expenseCategory =>
+      _localizedValues[localeCode]['expense_category'];
+
+  String get expenseCategories =>
+      _localizedValues[localeCode]['expense_categories'];
+
+  String get newExpenseCategory =>
+      _localizedValues[localeCode]['new_expense_category'];
+
+  String get createdExpenseCategory =>
+      _localizedValues[localeCode]['created_expense_category'];
+
+  String get updatedExpenseCategory =>
+      _localizedValues[localeCode]['updated_expense_category'];
+
+  String get archivedExpenseCategory =>
+      _localizedValues[localeCode]['archived_expense_category'];
+
+  String get deletedExpenseCategory =>
+      _localizedValues[localeCode]['deleted_expense_category'];
+
+  String get restoredExpenseCategory =>
+      _localizedValues[localeCode]['restored_expense_category'];
+
+  String get editExpenseCategory =>
+      _localizedValues[localeCode]['edit_expense_category'];
+
+  String get searchExpenseCategory =>
+      _localizedValues[localeCode]['search_expense_category'];
+
   String get recurringInvoice =>
       _localizedValues[localeCode]['recurring_invoice'];
 
@@ -4688,6 +4794,53 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get shouldBeInvoicedHelp =>
       _localizedValues[localeCode]['should_be_invoiced_help'] ?? '';
+
+  String get isRunning => _localizedValues[localeCode]['is_running'] ?? '';
+
+  String get timeLog => _localizedValues[localeCode]['time_log'] ?? '';
+
+  String get bankId => _localizedValues[localeCode]['bank_id'] ?? '';
+
+  String get expenseCategoryId =>
+      _localizedValues[localeCode]['expense_category_id'] ?? '';
+
+  String get invoiceCurrencyId =>
+      _localizedValues[localeCode]['invoice_currency_id'] ?? '';
+
+  String get taxName1 => _localizedValues[localeCode]['tax_name1'] ?? '';
+
+  String get taxName2 => _localizedValues[localeCode]['tax_name2'] ?? '';
+
+  String get transactionId =>
+      _localizedValues[localeCode]['transaction_id'] ?? '';
+
+  String get configureCategories =>
+      _localizedValues[localeCode]['configure_categories'] ?? '';
+
+  String get configureStatuses =>
+      _localizedValues[localeCode]['configure_statuses'] ?? '';
+
+  String get taskSettings =>
+      _localizedValues[localeCode]['task_settings'] ?? '';
+
+  String get invoiceTaskTimelog =>
+      _localizedValues[localeCode]['invoice_task_timelog'] ?? '';
+
+  String get invoiceTaskTimelogHelp =>
+      _localizedValues[localeCode]['invoice_task_timelog_help'] ?? '';
+
+  String get showTasksTable =>
+      _localizedValues[localeCode]['show_tasks_table'] ?? '';
+
+  String get showTasksTableHelp =>
+      _localizedValues[localeCode]['show_tasks_table_help'] ?? '';
+
+  String get sortOrder => _localizedValues[localeCode]['sort_order'] ?? '';
+
+  String get clearCache => _localizedValues[localeCode]['clear_cache'] ?? '';
+
+  String get calculatedRate =>
+      _localizedValues[localeCode]['calculatedRate'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

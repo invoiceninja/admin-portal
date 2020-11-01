@@ -100,7 +100,8 @@ class _UpdateDialogState extends State<UpdateDialog> {
   }
 
   void updateApp(BuildContext context) async {
-    final state = StoreProvider.of<AppState>(context).state;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     passwordCallback(
         alwaysRequire: true,
         context: context,
@@ -119,6 +120,11 @@ class _UpdateDialogState extends State<UpdateDialog> {
             });
             if (kIsWeb) {
               WebUtils.reloadBrowser();
+            } else {
+              store.dispatch(RefreshData(
+                clearData: true,
+                includeStatic: true,
+              ));
             }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');

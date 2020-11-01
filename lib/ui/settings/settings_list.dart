@@ -100,6 +100,11 @@ class SettingsList extends StatelessWidget {
             section: kSettingsProducts,
             viewModel: viewModel,
           ),
+        if (showAll && state.company.isModuleEnabled(EntityType.task))
+          SettingsListTile(
+            section: kSettingsTasks,
+            viewModel: viewModel,
+          ),
         if (showAll && state.company.isModuleEnabled(EntityType.expense))
           SettingsListTile(
             section: kSettingsExpenses,

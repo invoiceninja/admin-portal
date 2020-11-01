@@ -153,8 +153,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           ..emailSubjectReminder3 = subject);
       } else if (_template == EmailTemplate.reminder_endless) {
         settings = settings.rebuild((b) => b
-          ..emailBodyReminder4 = body
-          ..emailSubjectReminder4 = subject);
+          ..emailBodyReminderEndless = body
+          ..emailSubjectReminderEndless = subject);
       } else if (_template == EmailTemplate.custom1) {
         settings = settings.rebuild((b) => b
           ..emailBodyCustom1 = body
@@ -352,9 +352,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   children: <Widget>[
                     BoolDropdownButton(
                       label: localization.sendEmail,
-                      value: settings.enableReminder4,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..enableReminder4 = value)),
+                      value: settings.enableReminderEndless,
+                      onChanged: (value) => viewModel.onSettingsChanged(settings
+                          .rebuild((b) => b..enableReminderEndless = value)),
                       iconData: Icons.email,
                     ),
                     AppDropdownButton(
