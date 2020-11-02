@@ -508,8 +508,8 @@ Middleware<AppState> _createDeleteState(
     companyRepositories.forEach((repo) => repo.delete());
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(kSharedPrefToken, '');
-    prefs.setString(kSharedPrefUrl, '');
+    prefs.remove(kSharedPrefToken);
+    prefs.remove(kSharedPrefUrl);
 
     next(action);
   };
