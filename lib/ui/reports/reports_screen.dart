@@ -75,10 +75,10 @@ class ReportsScreen extends StatelessWidget {
           if (state.company.hasTaxes)
             kReportTaxRate,
           kReportDocument,
-          //kReportExpense,
-          //kReportProduct,
-          //kReportProfitAndLoss,
-          //kReportTask,
+          kReportExpense,
+          kReportProduct,
+          kReportProfitAndLoss,
+          kReportTask,
         ]
             .map((report) =>
             DropdownMenuItem(
