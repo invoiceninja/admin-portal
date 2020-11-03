@@ -153,7 +153,6 @@ ReportResult documentReport(
     return skip ? null : row;
   }
 
-  /* TODO enable this code
   clientMap.forEach((clientId, client) {
     client.documents.forEach((document) {
       final row = _getRow(client, document);
@@ -162,8 +161,6 @@ ReportResult documentReport(
       }
     });
   });
-
-   */
 
   productMap.forEach((productId, product) {
     product.documents.forEach((document) {

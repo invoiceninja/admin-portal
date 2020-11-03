@@ -17,3 +17,7 @@ extension ContextHelper on BuildContext {
     return store.state;
   }
 }
+
+extension ListHelper<T> on List<T> {
+  T get firstOrNull => isEmpty ? null : first;
+}
