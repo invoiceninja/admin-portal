@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:memoize/memoize.dart';
+import 'package:invoiceninja_flutter/utils/extensions.dart';
 
 enum TaskReportFields {
   rate,
@@ -117,12 +118,10 @@ ReportResult taskReport(
           );
           break;
         case TaskReportFields.start_date:
-          // TODO: Check
-          value = task.taskTimes[0]?.startDate;
+          value = task.taskTimes.firstOrNull?.startDate;
           break;
         case TaskReportFields.end_date:
-          // TODO: Check
-          value = task.taskTimes[0]?.endDate;
+          value = task.taskTimes.firstOrNull?.endDate;
           break;
         case TaskReportFields.description:
           value = task.description;
