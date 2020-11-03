@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -67,21 +70,31 @@ class EmailQuoteVM extends EmailEntityVM {
     final state = store.state;
 
     return EmailQuoteVM(
-        isLoading: state.isLoading,
-        isSaving: state.isSaving,
-        company: state.company,
-        invoice: quote,
-        client: state.clientState.map[quote.clientId],
-        loadClient: () {
-          store.dispatch(LoadClient(clientId: quote.clientId));
-        },
-        onSendPressed: (context, template, subject, body) =>
-            store.dispatch(EmailQuoteRequest(
-              completer: popCompleter(context, true),
-              quoteId: quote.id,
-              template: template,
-              subject: subject,
-              body: body,
-            )));
+      isLoading: state.isLoading,
+      isSaving: state.isSaving,
+      company: state.company,
+      invoice: quote,
+      client: state.clientState.map[quote.clientId],
+      loadClient: () {
+        store.dispatch(LoadClient(clientId: quote.clientId));
+      },
+      onSendPressed: (context, template, subject, body) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).emailedQuote,
+            shouldPop: isMobile(context));
+        if (!isMobile(context)) {
+          completer.future.then((value) {
+            viewEntity(entity: quote, context: context);
+          });
+        }
+        store.dispatch(EmailQuoteRequest(
+          completer: completer,
+          quoteId: quote.id,
+          template: template,
+          subject: subject,
+          body: body,
+        ));
+      },
+    );
   }
 }

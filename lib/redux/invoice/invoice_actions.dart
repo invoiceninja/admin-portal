@@ -582,6 +582,12 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           entity:
               invoice.clone.rebuild((b) => b..entityType = EntityType.credit));
       break;
+    case EntityAction.cloneToRecurring:
+      createEntity(
+          context: context,
+          entity: invoice.clone
+              .rebuild((b) => b..entityType = EntityType.recurringInvoice));
+      break;
     case EntityAction.newPayment:
       createEntity(
         context: context,

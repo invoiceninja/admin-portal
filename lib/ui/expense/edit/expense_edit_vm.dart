@@ -46,7 +46,6 @@ class ExpenseEditVM {
     @required this.isLoading,
     @required this.onAddClientPressed,
     @required this.onAddVendorPressed,
-    @required this.onAddDocumentsChanged,
   });
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
@@ -125,12 +124,6 @@ class ExpenseEditVM {
               });
         });
       },
-      onAddDocumentsChanged: (value) async {
-        if (expense.isOld) {
-          return;
-        }
-        store.dispatch(UpdateUserPreferences(addDocumentsToInvoice: value));
-      },
     );
   }
 
@@ -147,5 +140,4 @@ class ExpenseEditVM {
       onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddVendorPressed;
-  final Function(bool) onAddDocumentsChanged;
 }

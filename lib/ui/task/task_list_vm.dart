@@ -28,7 +28,7 @@ class TaskListBuilder extends StatelessWidget {
       builder: (context, viewModel) {
         return EntityList(
             onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.taxRate,
+            entityType: EntityType.task,
             presenter: TaskPresenter(),
             state: viewModel.state,
             entityList: viewModel.taskList,
@@ -39,16 +39,14 @@ class TaskListBuilder extends StatelessWidget {
               final taskId = viewModel.taskList[index];
               final task = viewModel.taskMap[taskId];
               final state = viewModel.state;
-              final listUIState = state.getListState(EntityType.client);
+              final listUIState = state.getListState(EntityType.task);
               final isInMultiselect = listUIState.isInMultiselect();
 
               return TaskListItem(
-                userCompany: viewModel.state.userCompany,
                 filter: viewModel.filter,
                 task: task,
-                client: viewModel.clientMap[task.clientId] ?? ClientEntity(),
-                project: viewModel.state.projectState.map[task.projectId],
                 isChecked: isInMultiselect && listUIState.isSelected(task.id),
+                user: state.user,
               );
             });
       },

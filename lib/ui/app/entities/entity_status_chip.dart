@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityStatusChip extends StatelessWidget {
@@ -17,6 +19,8 @@ class EntityStatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final localization = AppLocalization.of(context);
     String label = '';
     Color color;
@@ -50,11 +54,28 @@ class EntityStatusChip extends StatelessWidget {
         label = kCreditStatuses[credit.statusId];
         color = CreditStatusColors.colors[credit.statusId];
         break;
+      case EntityType.expense:
+        final expense = entity as ExpenseEntity;
+        label = kExpenseStatuses[expense.statusId];
+        color = ExpenseStatusColors.colors[expense.statusId];
+        break;
+      case EntityType.task:
+        final task = entity as TaskEntity;
+        label = task.isInvoiced
+            ? localization.invoiced
+            : state.taskStatusState.get(task.calculateStatusId).name;
+        color = TaskStatusColors.colors[task.calculateStatusId] ?? Colors.grey;
+        break;
       default:
         print(
             'ERROR: unhandled entityType ${entity.entityType} in entity_status_chip.dart');
         return SizedBox();
         break;
+    }
+
+    label = localization.lookup(label) ?? '';
+    if (label.isEmpty) {
+      label = localization.logged;
     }
 
     return Padding(
@@ -72,7 +93,7 @@ class EntityStatusChip extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             child: Text(
-              (localization.lookup(label) ?? '').toUpperCase(),
+              label.toUpperCase(),
               style: TextStyle(fontSize: 14, color: Colors.white),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

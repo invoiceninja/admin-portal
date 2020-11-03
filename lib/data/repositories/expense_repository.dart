@@ -72,4 +72,20 @@ class ExpenseRepository {
 
     return expenseResponse.data;
   }
+
+  Future<ExpenseEntity> uploadDocument(
+      Credentials credentials, BaseEntity entity, String filePath) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/expenses/${entity.id}', credentials.token,
+        data: fields, filePath: filePath, fileIndex: 'documents[]');
+
+    final ExpenseItemResponse expenseResponse =
+        serializers.deserializeWith(ExpenseItemResponse.serializer, response);
+
+    return expenseResponse.data;
+  }
 }

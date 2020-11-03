@@ -26,6 +26,7 @@ class DecoratedFormField extends StatelessWidget {
     this.autofillHints,
     this.textAlign = TextAlign.start,
     this.decoration,
+    this.focusNode,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -50,11 +51,13 @@ class DecoratedFormField extends StatelessWidget {
   final Function(BuildContext) onSavePressed;
   final TextAlign textAlign;
   final InputDecoration decoration;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       key: key ?? ValueKey(label),
+      focusNode: focusNode,
       controller: controller,
       autofocus: autofocus,
       decoration: decoration ??

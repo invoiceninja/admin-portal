@@ -320,5 +320,9 @@ void handleStubAction(
           context: context,
         );
         break;
+      default:
+        print('Error: unhandled action $action in stub_actions');
+        break;
+
   }
 }

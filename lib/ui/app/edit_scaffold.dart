@@ -56,7 +56,8 @@ class EditScaffold extends StatelessWidget {
               onSavePressed: (context) {
                 // Clear focus now to prevent un-focus after save from
                 // marking the form as changed and to hide the keyboard
-                FocusScope.of(context).unfocus();
+                FocusScope.of(context).unfocus(
+                    disposition: UnfocusDisposition.previouslyFocusedChild);
 
                 onSavePressed(context);
 

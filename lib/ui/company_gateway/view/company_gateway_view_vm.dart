@@ -22,7 +22,7 @@ class CompanyGatewayViewScreen extends StatelessWidget {
   }) : super(key: key);
   final bool isFilter;
 
-  static const String route = '/$kSettings/$kSettingsOnlinePaymentsView';
+  static const String route = '/$kSettings/$kSettingsCompanyGatewaysView';
 
   @override
   Widget build(BuildContext context) {

@@ -84,6 +84,12 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
         final ledger = ledgers[index];
         final entity = state.getEntityMap(ledger.entityType)[ledger.entityId];
 
+        if (entity == null) {
+          print(
+              'Error: unable to find entity ${ledger.entityType}-${ledger.entityId}');
+          return SizedBox();
+        }
+
         return ListTile(
           onTap: () => viewEntity(context: context, entity: entity),
           onLongPress: () =>

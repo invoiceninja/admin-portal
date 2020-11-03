@@ -43,10 +43,9 @@ class ProjectListBuilder extends StatelessWidget {
               final isInMultiselect = listState.isInMultiselect();
 
               return ProjectListItem(
-                userCompany: viewModel.state.userCompany,
+                user: state.user,
                 filter: viewModel.filter,
                 project: project,
-                client: viewModel.clientMap[project.clientId] ?? ClientEntity(),
                 isChecked: isInMultiselect && listState.isSelected(project.id),
               );
             });

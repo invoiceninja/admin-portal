@@ -53,11 +53,9 @@ class _ClientEditState extends State<ClientEdit>
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        /*
         setState(() {
-          autoValidate = !isValid ?? false;
+          //autoValidate = !isValid;
         });
-         */
 
         if (!isValid) {
           return;

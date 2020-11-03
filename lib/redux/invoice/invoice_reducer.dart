@@ -46,10 +46,12 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.invoice ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) => action
-          .clearSelection
-      ? ''
-      : action.entityType == EntityType.invoice ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>(
+      (selectedId, action) => action.clearSelection
+          ? ''
+          : action.entityType == EntityType.invoice
+              ? action.entityId
+              : selectedId),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -120,8 +122,10 @@ InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
 
 InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
   return invoice.rebuild((b) => b
-    ..hasTasks = action.lineItems.where((item) => item.isTask).isNotEmpty
-    ..hasExpenses = action.lineItems.where((item) => item.isExpense).isNotEmpty
+    ..hasTasks =
+        b.hasTasks || action.lineItems.where((item) => item.isTask).isNotEmpty
+    ..hasExpenses = b.hasExpenses ||
+        action.lineItems.where((item) => item.isExpense).isNotEmpty
     ..lineItems.addAll(action.lineItems));
 }
 

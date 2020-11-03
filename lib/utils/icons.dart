@@ -15,6 +15,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.cloneToInvoice:
     case EntityAction.cloneToQuote:
     case EntityAction.cloneToCredit:
+    case EntityAction.cloneToRecurring:
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
       return Icons.public;
@@ -46,6 +47,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.newPayment:
     case EntityAction.newQuote:
     case EntityAction.newCredit:
+    case EntityAction.newRecurringInvoice:
       return Icons.add_circle_outline;
     case EntityAction.resume:
     case EntityAction.start:
@@ -112,6 +114,8 @@ IconData getEntityIcon(EntityType entityType) {
       return MdiIcons.key;
     case EntityType.webhook:
       return MdiIcons.link;
+    case EntityType.expenseCategory:
+      return MdiIcons.label;
     default:
       return MdiIcons.crosshairsQuestion;
   }
@@ -148,12 +152,11 @@ IconData getSettingIcon(String section) {
     case kSettingsLocalization:
       return Icons.language;
     case kSettingsOnlinePayments:
+    case kSettingsCompanyGateways:
       return MdiIcons.creditCard;
     case kSettingsTaxSettings:
     case kSettingsTaxRates:
       return MdiIcons.percent;
-    case kSettingsProducts:
-      return MdiIcons.cube;
     case kSettingsIntegrations:
       return MdiIcons.link;
     case kSettingsImportExport:
@@ -188,6 +191,12 @@ IconData getSettingIcon(String section) {
       return Icons.people;
     case kSettingsAccountManagement:
       return MdiIcons.shieldAccount;
+    case kSettingsProducts:
+      return getEntityIcon(EntityType.product);
+    case kSettingsExpenses:
+      return getEntityIcon(EntityType.expense);
+    case kSettingsTasks:
+      return getEntityIcon(EntityType.task);
     default:
       return null;
   }

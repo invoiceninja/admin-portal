@@ -137,14 +137,23 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
+      'public_notes',
+      serializers.serialize(object.publicNotes,
+          specifiedType: const FullType(String)),
       'website',
       serializers.serialize(object.website,
+          specifiedType: const FullType(String)),
+      'number',
+      serializers.serialize(object.number,
           specifiedType: const FullType(String)),
       'vat_number',
       serializers.serialize(object.vatNumber,
           specifiedType: const FullType(String)),
       'id_number',
       serializers.serialize(object.idNumber,
+          specifiedType: const FullType(String)),
+      'currency_id',
+      serializers.serialize(object.currencyId,
           specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
@@ -158,7 +167,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
-      'vendor_contacts',
+      'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
@@ -174,11 +183,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.currencyId != null) {
+    if (object.documents != null) {
       result
-        ..add('currency_id')
-        ..add(serializers.serialize(object.currencyId,
-            specifiedType: const FullType(String)));
+        ..add('documents')
+        ..add(serializers.serialize(object.documents,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(DocumentEntity)])));
     }
     if (object.isChanged != null) {
       result
@@ -254,8 +264,16 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.privateNotes = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'public_notes':
+          result.publicNotes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'website':
           result.website = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'number':
+          result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'vat_number':
@@ -286,10 +304,16 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'vendor_contacts':
+        case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorContactEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
           break;
         case 'isChanged':
@@ -682,7 +706,11 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String privateNotes;
   @override
+  final String publicNotes;
+  @override
   final String website;
+  @override
+  final String number;
   @override
   final String vatNumber;
   @override
@@ -699,6 +727,8 @@ class _$VendorEntity extends VendorEntity {
   final String customValue4;
   @override
   final BuiltList<VendorContactEntity> contacts;
+  @override
+  final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
   @override
@@ -729,7 +759,9 @@ class _$VendorEntity extends VendorEntity {
       this.countryId,
       this.phone,
       this.privateNotes,
+      this.publicNotes,
       this.website,
+      this.number,
       this.vatNumber,
       this.idNumber,
       this.currencyId,
@@ -738,6 +770,7 @@ class _$VendorEntity extends VendorEntity {
       this.customValue3,
       this.customValue4,
       this.contacts,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -774,14 +807,23 @@ class _$VendorEntity extends VendorEntity {
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'privateNotes');
     }
+    if (publicNotes == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'publicNotes');
+    }
     if (website == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'website');
+    }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'number');
     }
     if (vatNumber == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'vatNumber');
     }
     if (idNumber == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'idNumber');
+    }
+    if (currencyId == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'currencyId');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue1');
@@ -832,7 +874,9 @@ class _$VendorEntity extends VendorEntity {
         countryId == other.countryId &&
         phone == other.phone &&
         privateNotes == other.privateNotes &&
+        publicNotes == other.publicNotes &&
         website == other.website &&
+        number == other.number &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
         currencyId == other.currencyId &&
@@ -841,6 +885,7 @@ class _$VendorEntity extends VendorEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         contacts == other.contacts &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -872,18 +917,18 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode),
-                                                                                phone.hashCode),
-                                                                            privateNotes.hashCode),
-                                                                        website.hashCode),
-                                                                    vatNumber.hashCode),
-                                                                idNumber.hashCode),
-                                                            currencyId.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        contacts.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode),
+                                                                                website.hashCode),
+                                                                            number.hashCode),
+                                                                        vatNumber.hashCode),
+                                                                    idNumber.hashCode),
+                                                                currencyId.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            contacts.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -906,7 +951,9 @@ class _$VendorEntity extends VendorEntity {
           ..add('countryId', countryId)
           ..add('phone', phone)
           ..add('privateNotes', privateNotes)
+          ..add('publicNotes', publicNotes)
           ..add('website', website)
+          ..add('number', number)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
           ..add('currencyId', currencyId)
@@ -915,6 +962,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('contacts', contacts)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -967,9 +1015,17 @@ class VendorEntityBuilder
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
 
+  String _publicNotes;
+  String get publicNotes => _$this._publicNotes;
+  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
+
   String _website;
   String get website => _$this._website;
   set website(String website) => _$this._website = website;
+
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
 
   String _vatNumber;
   String get vatNumber => _$this._vatNumber;
@@ -1004,6 +1060,12 @@ class VendorEntityBuilder
       _$this._contacts ??= new ListBuilder<VendorContactEntity>();
   set contacts(ListBuilder<VendorContactEntity> contacts) =>
       _$this._contacts = contacts;
+
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -1052,7 +1114,9 @@ class VendorEntityBuilder
       _countryId = _$v.countryId;
       _phone = _$v.phone;
       _privateNotes = _$v.privateNotes;
+      _publicNotes = _$v.publicNotes;
       _website = _$v.website;
+      _number = _$v.number;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
       _currencyId = _$v.currencyId;
@@ -1061,6 +1125,7 @@ class VendorEntityBuilder
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _contacts = _$v.contacts?.toBuilder();
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1102,7 +1167,9 @@ class VendorEntityBuilder
               countryId: countryId,
               phone: phone,
               privateNotes: privateNotes,
+              publicNotes: publicNotes,
               website: website,
+              number: number,
               vatNumber: vatNumber,
               idNumber: idNumber,
               currencyId: currencyId,
@@ -1111,6 +1178,7 @@ class VendorEntityBuilder
               customValue3: customValue3,
               customValue4: customValue4,
               contacts: contacts.build(),
+              documents: _documents?.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1124,6 +1192,8 @@ class VendorEntityBuilder
       try {
         _$failedField = 'contacts';
         contacts.build();
+        _$failedField = 'documents';
+        _documents?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'VendorEntity', _$failedField, e.toString());

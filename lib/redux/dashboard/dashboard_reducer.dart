@@ -11,7 +11,8 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
     ..selectedEntities
         .replace(selectedEntitiesReducer(state.selectedEntities, action))
     ..selectedEntityType =
-        selectedEntityTypeReducer(state.selectedEntityType, action));
+        selectedEntityTypeReducer(state.selectedEntityType, action)
+    ..showSidebar = showSidebarReducer(state.showSidebar, action));
 }
 
 Reducer<BuiltMap<EntityType, BuiltList<String>>> selectedEntitiesReducer =
@@ -30,6 +31,12 @@ Reducer<BuiltMap<EntityType, BuiltList<String>>> selectedEntitiesReducer =
 Reducer<EntityType> selectedEntityTypeReducer = combineReducers([
   TypedReducer<EntityType, UpdateDashboardEntityType>((state, action) {
     return action.entityType;
+  }),
+]);
+
+Reducer<bool> showSidebarReducer = combineReducers([
+  TypedReducer<bool, UpdateDashboardSidebar>((state, action) {
+    return action.showSidebar;
   }),
 ]);
 

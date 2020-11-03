@@ -54,9 +54,8 @@ abstract class TaskUIState extends Object
     implements Built<TaskUIState, TaskUIStateBuilder> {
   factory TaskUIState() {
     return _$TaskUIState._(
-      listUIState: ListUIState(TaskFields.updatedAt, sortAscending: false),
+      listUIState: ListUIState(TaskFields.number, sortAscending: false),
       editing: TaskEntity(),
-      editingTime: TaskTime(),
       selectedId: '',
     );
   }
@@ -70,7 +69,8 @@ abstract class TaskUIState extends Object
   TaskEntity get editing;
 
   @nullable
-  TaskTime get editingTime;
+  @BuiltValueField(serialize: false)
+  int get editingTimeIndex;
 
   @override
   bool get isCreatingNew => editing.isNew;

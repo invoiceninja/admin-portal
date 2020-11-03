@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_details.dart';
+import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -27,7 +28,7 @@ class _VendorViewState extends State<VendorView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -54,6 +55,9 @@ class _VendorViewState extends State<VendorView>
           Tab(
             text: localization.details,
           ),
+          Tab(
+            text: localization.documents,
+          ),
         ],
       ),
       body: Builder(builder: (context) {
@@ -70,6 +74,12 @@ class _VendorViewState extends State<VendorView>
             RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
               child: VendorViewDetails(vendor: viewModel.vendor),
+            ),
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: VendorViewDocuments(
+                viewModel: viewModel,
+              ),
             ),
           ],
         );

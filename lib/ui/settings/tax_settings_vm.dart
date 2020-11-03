@@ -60,14 +60,8 @@ class TaxSettingsVM {
             completer: completer, company: settingsUIState.company));
       },
       onConfigureRatesPressed: (context) {
-        if (state.taxRateState.list.isEmpty) {
-          store.dispatch(ViewSettings(
-              navigator: Navigator.of(context),
-              section: kSettingsTaxRatesEdit));
-        } else {
-          store.dispatch(ViewSettings(
-              navigator: Navigator.of(context), section: kSettingsTaxRates));
-        }
+        store.dispatch(ViewSettings(
+            navigator: Navigator.of(context), section: kSettingsTaxRates));
       },
     );
   }

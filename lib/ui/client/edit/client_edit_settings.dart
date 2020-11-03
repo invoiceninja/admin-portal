@@ -96,13 +96,11 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                   memoizedCurrencyList(viewModel.staticState.currencyMap),
               labelText: localization.currency,
               entityId: client.currencyId,
-              allowClearing: true,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
                   client.rebuild((b) => b..settings.currencyId = currency?.id)),
             ),
             EntityDropdown(
               key: ValueKey('__language_${client.languageId}__'),
-              allowClearing: true,
               entityType: EntityType.language,
               entityList:
                   memoizedLanguageList(viewModel.staticState.languageMap),

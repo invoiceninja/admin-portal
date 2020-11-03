@@ -238,17 +238,17 @@ class MenuDrawer extends StatelessWidget {
                           ),
                           DrawerTile(
                             company: company,
-                            entityType: EntityType.recurringInvoice,
-                            icon: getEntityIcon(EntityType.recurringInvoice),
-                            title: localization.recurringInvoices,
-                            iconTooltip: localization.newRecurringInvoice,
-                          ),
-                          DrawerTile(
-                            company: company,
                             entityType: EntityType.payment,
                             icon: getEntityIcon(EntityType.payment),
                             title: localization.payments,
                             iconTooltip: localization.newPayment,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.recurringInvoice,
+                            icon: getEntityIcon(EntityType.recurringInvoice),
+                            title: localization.recurringInvoices,
+                            iconTooltip: localization.newRecurringInvoice,
                           ),
                           DrawerTile(
                             company: company,
@@ -806,6 +806,15 @@ void _showAbout(BuildContext context) async {
                   return HealthCheckDialog();
                 });
           },
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: AppButton(
+          label: localization.forceUpdate.toUpperCase(),
+          iconData: MdiIcons.update,
+          color: Colors.grey,
+          onPressed: () => _showUpdate(context),
         ),
       ),
     ],

@@ -115,6 +115,9 @@ List<String> filteredInvoicesSelector(
     } else if (filterEntityType == EntityType.user &&
         invoice.assignedUserId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.recurringInvoice &&
+        invoice.recurringId != filterEntityId) {
+      return false;
     } else if (filterEntityType == EntityType.payment) {
       bool isMatch = false;
       (invoicePaymentMap[invoiceId] ?? []).forEach((paymentId) {

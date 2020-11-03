@@ -47,7 +47,6 @@ class ClientViewVM {
     @required this.client,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEntityPressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -78,16 +77,6 @@ class ClientViewVM {
       isDirty: client.isNew,
       client: client,
       company: state.company,
-      onEntityPressed: (BuildContext context, EntityType entityType,
-          [longPress = false]) {
-        if (longPress && client.isActive) {
-          handleEntityAction(
-              context, client, EntityAction.newEntityType(entityType));
-        } else {
-          viewEntitiesByType(
-              context: context, entityType: entityType, filterEntity: client);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [client], action, autoPop: true),
@@ -127,7 +116,6 @@ class ClientViewVM {
   final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String) onUploadDocument;
   final Function(BuildContext, DocumentEntity, String) onDeleteDocument;

@@ -17,6 +17,10 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
+
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
+
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
@@ -44,8 +48,11 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
-      recurringInvoiceUIState: RecurringInvoiceUIState(),
+      taskStatusUIState: TaskStatusUIState(),
 
+      expenseCategoryUIState: ExpenseCategoryUIState(),
+
+      recurringInvoiceUIState: RecurringInvoiceUIState(),
       webhookUIState: WebhookUIState(),
       tokenUIState: TokenUIState(),
       paymentTermUIState: PaymentTermUIState(),
@@ -99,6 +106,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   InvoiceUIState get invoiceUIState;
 
   // STARTER: properties - do not remove comment
+  TaskStatusUIState get taskStatusUIState;
+
+  ExpenseCategoryUIState get expenseCategoryUIState;
+
   RecurringInvoiceUIState get recurringInvoiceUIState;
 
   WebhookUIState get webhookUIState;

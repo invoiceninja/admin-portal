@@ -44,8 +44,6 @@ class CompanyGatewayListVM {
     @required this.onRefreshed,
     @required this.onSortChanged,
     @required this.onRemovePressed,
-    @required this.onSettingsChanged,
-    @required this.settings,
   });
 
   static CompanyGatewayListVM fromStore(Store<AppState> store) {
@@ -79,7 +77,6 @@ class CompanyGatewayListVM {
       state: state,
       listState: state.companyGatewayListState,
       companyGatewayList: gatewayIds,
-      settings: state.uiState.settingsUIState.settings,
       companyGatewayMap: state.companyGatewayState.map,
       filter: state.companyGatewayUIState.listUIState.filter,
       onCompanyGatewayTap: (context, companyGateway) {
@@ -107,8 +104,6 @@ class CompanyGatewayListVM {
             .rebuild((b) => b..companyGatewayIds = gatewayIds.join(','));
         store.dispatch(UpdateSettings(settings: settings));
       },
-      onSettingsChanged: (settings) =>
-          store.dispatch(UpdateSettings(settings: settings)),
     );
   }
 
@@ -121,6 +116,4 @@ class CompanyGatewayListVM {
   final Function(BuildContext) onRefreshed;
   final Function(int, int) onSortChanged;
   final Function(String) onRemovePressed;
-  final SettingsEntity settings;
-  final Function(SettingsEntity) onSettingsChanged;
 }

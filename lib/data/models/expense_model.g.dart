@@ -12,8 +12,6 @@ Serializer<ExpenseItemResponse> _$expenseItemResponseSerializer =
     new _$ExpenseItemResponseSerializer();
 Serializer<ExpenseEntity> _$expenseEntitySerializer =
     new _$ExpenseEntitySerializer();
-Serializer<ExpenseCategoryEntity> _$expenseCategoryEntitySerializer =
-    new _$ExpenseCategoryEntitySerializer();
 Serializer<ExpenseStatusEntity> _$expenseStatusEntitySerializer =
     new _$ExpenseStatusEntitySerializer();
 
@@ -143,15 +141,15 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'bank_id',
       serializers.serialize(object.bankId,
           specifiedType: const FullType(String)),
-      'expense_currency_id',
-      serializers.serialize(object.expenseCurrencyId,
+      'currency_id',
+      serializers.serialize(object.currencyId,
+          specifiedType: const FullType(String)),
+      'category_id',
+      serializers.serialize(object.categoryId,
           specifiedType: const FullType(String)),
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
-      'expense_date',
-      serializers.serialize(object.expenseDate,
-          specifiedType: const FullType(String)),
       'payment_date',
       serializers.serialize(object.paymentDate,
           specifiedType: const FullType(String)),
@@ -192,6 +190,9 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       serializers.serialize(object.documents,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DocumentEntity)])),
+      'number',
+      serializers.serialize(object.number,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -204,10 +205,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.categoryId != null) {
+    if (object.date != null) {
       result
-        ..add('expense_category_id')
-        ..add(serializers.serialize(object.categoryId,
+        ..add('date')
+        ..add(serializers.serialize(object.date,
             specifiedType: const FullType(String)));
     }
     if (object.clientId != null) {
@@ -226,6 +227,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       result
         ..add('vendor_id')
         ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
             specifiedType: const FullType(String)));
     }
     if (object.customValue3 != null) {
@@ -307,11 +314,11 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.bankId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'expense_currency_id':
-          result.expenseCurrencyId = serializers.deserialize(value,
+        case 'currency_id':
+          result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'expense_category_id':
+        case 'category_id':
           result.categoryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
@@ -319,8 +326,8 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.amount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'expense_date':
-          result.expenseDate = serializers.deserialize(value,
+        case 'date':
+          result.date = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'payment_date':
@@ -375,6 +382,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.vendorId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'project_id':
+          result.projectId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -397,121 +408,8 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
                       BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
           break;
-        case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$ExpenseCategoryEntitySerializer
-    implements StructuredSerializer<ExpenseCategoryEntity> {
-  @override
-  final Iterable<Type> types = const [
-    ExpenseCategoryEntity,
-    _$ExpenseCategoryEntity
-  ];
-  @override
-  final String wireName = 'ExpenseCategoryEntity';
-
-  @override
-  Iterable<Object> serialize(
-      Serializers serializers, ExpenseCategoryEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-    ];
-    if (object.isChanged != null) {
-      result
-        ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.isDeleted != null) {
-      result
-        ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.createdUserId != null) {
-      result
-        ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.assignedUserId != null) {
-      result
-        ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.entityType != null) {
-      result
-        ..add('entity_type')
-        ..add(serializers.serialize(object.entityType,
-            specifiedType: const FullType(EntityType)));
-    }
-    return result;
-  }
-
-  @override
-  ExpenseCategoryEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseCategoryEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'name':
-          result.name = serializers.deserialize(value,
+        case 'number':
+          result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -541,10 +439,6 @@ class _$ExpenseCategoryEntitySerializer
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'entity_type':
-          result.entityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -815,13 +709,13 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String bankId;
   @override
-  final String expenseCurrencyId;
+  final String currencyId;
   @override
   final String categoryId;
   @override
   final double amount;
   @override
-  final String expenseDate;
+  final String date;
   @override
   final String paymentDate;
   @override
@@ -849,6 +743,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String vendorId;
   @override
+  final String projectId;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -858,6 +754,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   final String customValue4;
   @override
   final BuiltList<DocumentEntity> documents;
+  @override
+  final String number;
   @override
   final bool isChanged;
   @override
@@ -886,10 +784,10 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.transactionId,
       this.transactionReference,
       this.bankId,
-      this.expenseCurrencyId,
+      this.currencyId,
       this.categoryId,
       this.amount,
-      this.expenseDate,
+      this.date,
       this.paymentDate,
       this.exchangeRate,
       this.invoiceCurrencyId,
@@ -903,11 +801,13 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.clientId,
       this.invoiceId,
       this.vendorId,
+      this.projectId,
       this.customValue1,
       this.customValue2,
       this.customValue3,
       this.customValue4,
       this.documents,
+      this.number,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -939,14 +839,14 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (bankId == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'bankId');
     }
-    if (expenseCurrencyId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseCurrencyId');
+    if (currencyId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'currencyId');
+    }
+    if (categoryId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'categoryId');
     }
     if (amount == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'amount');
-    }
-    if (expenseDate == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'expenseDate');
     }
     if (paymentDate == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'paymentDate');
@@ -987,6 +887,9 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (documents == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'documents');
     }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'number');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'createdAt');
     }
@@ -1019,10 +922,10 @@ class _$ExpenseEntity extends ExpenseEntity {
         transactionId == other.transactionId &&
         transactionReference == other.transactionReference &&
         bankId == other.bankId &&
-        expenseCurrencyId == other.expenseCurrencyId &&
+        currencyId == other.currencyId &&
         categoryId == other.categoryId &&
         amount == other.amount &&
-        expenseDate == other.expenseDate &&
+        date == other.date &&
         paymentDate == other.paymentDate &&
         exchangeRate == other.exchangeRate &&
         invoiceCurrencyId == other.invoiceCurrencyId &&
@@ -1036,11 +939,13 @@ class _$ExpenseEntity extends ExpenseEntity {
         clientId == other.clientId &&
         invoiceId == other.invoiceId &&
         vendorId == other.vendorId &&
+        projectId == other.projectId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         documents == other.documents &&
+        number == other.number &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1072,18 +977,18 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode),
-                                                                                taxRate2.hashCode),
-                                                                            taxName3.hashCode),
-                                                                        taxRate3.hashCode),
-                                                                    clientId.hashCode),
-                                                                invoiceId.hashCode),
-                                                            vendorId.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        documents.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode),
+                                                                                taxRate3.hashCode),
+                                                                            clientId.hashCode),
+                                                                        invoiceId.hashCode),
+                                                                    vendorId.hashCode),
+                                                                projectId.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            documents.hashCode),
+                                        number.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1104,10 +1009,10 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('transactionId', transactionId)
           ..add('transactionReference', transactionReference)
           ..add('bankId', bankId)
-          ..add('expenseCurrencyId', expenseCurrencyId)
+          ..add('currencyId', currencyId)
           ..add('categoryId', categoryId)
           ..add('amount', amount)
-          ..add('expenseDate', expenseDate)
+          ..add('date', date)
           ..add('paymentDate', paymentDate)
           ..add('exchangeRate', exchangeRate)
           ..add('invoiceCurrencyId', invoiceCurrencyId)
@@ -1121,11 +1026,13 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('clientId', clientId)
           ..add('invoiceId', invoiceId)
           ..add('vendorId', vendorId)
+          ..add('projectId', projectId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('documents', documents)
+          ..add('number', number)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1174,10 +1081,9 @@ class ExpenseEntityBuilder
   String get bankId => _$this._bankId;
   set bankId(String bankId) => _$this._bankId = bankId;
 
-  String _expenseCurrencyId;
-  String get expenseCurrencyId => _$this._expenseCurrencyId;
-  set expenseCurrencyId(String expenseCurrencyId) =>
-      _$this._expenseCurrencyId = expenseCurrencyId;
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   String _categoryId;
   String get categoryId => _$this._categoryId;
@@ -1187,9 +1093,9 @@ class ExpenseEntityBuilder
   double get amount => _$this._amount;
   set amount(double amount) => _$this._amount = amount;
 
-  String _expenseDate;
-  String get expenseDate => _$this._expenseDate;
-  set expenseDate(String expenseDate) => _$this._expenseDate = expenseDate;
+  String _date;
+  String get date => _$this._date;
+  set date(String date) => _$this._date = date;
 
   String _paymentDate;
   String get paymentDate => _$this._paymentDate;
@@ -1245,6 +1151,10 @@ class ExpenseEntityBuilder
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
+
   String _customValue1;
   String get customValue1 => _$this._customValue1;
   set customValue1(String customValue1) => _$this._customValue1 = customValue1;
@@ -1266,6 +1176,10 @@ class ExpenseEntityBuilder
       _$this._documents ??= new ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity> documents) =>
       _$this._documents = documents;
+
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -1312,10 +1226,10 @@ class ExpenseEntityBuilder
       _transactionId = _$v.transactionId;
       _transactionReference = _$v.transactionReference;
       _bankId = _$v.bankId;
-      _expenseCurrencyId = _$v.expenseCurrencyId;
+      _currencyId = _$v.currencyId;
       _categoryId = _$v.categoryId;
       _amount = _$v.amount;
-      _expenseDate = _$v.expenseDate;
+      _date = _$v.date;
       _paymentDate = _$v.paymentDate;
       _exchangeRate = _$v.exchangeRate;
       _invoiceCurrencyId = _$v.invoiceCurrencyId;
@@ -1329,11 +1243,13 @@ class ExpenseEntityBuilder
       _clientId = _$v.clientId;
       _invoiceId = _$v.invoiceId;
       _vendorId = _$v.vendorId;
+      _projectId = _$v.projectId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _documents = _$v.documents?.toBuilder();
+      _number = _$v.number;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1373,10 +1289,10 @@ class ExpenseEntityBuilder
               transactionId: transactionId,
               transactionReference: transactionReference,
               bankId: bankId,
-              expenseCurrencyId: expenseCurrencyId,
+              currencyId: currencyId,
               categoryId: categoryId,
               amount: amount,
-              expenseDate: expenseDate,
+              date: date,
               paymentDate: paymentDate,
               exchangeRate: exchangeRate,
               invoiceCurrencyId: invoiceCurrencyId,
@@ -1390,11 +1306,13 @@ class ExpenseEntityBuilder
               clientId: clientId,
               invoiceId: invoiceId,
               vendorId: vendorId,
+              projectId: projectId,
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,
               customValue4: customValue4,
               documents: documents.build(),
+              number: number,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1414,223 +1332,6 @@ class ExpenseEntityBuilder
       }
       rethrow;
     }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
-  @override
-  final String name;
-  @override
-  final bool isChanged;
-  @override
-  final int createdAt;
-  @override
-  final int updatedAt;
-  @override
-  final int archivedAt;
-  @override
-  final bool isDeleted;
-  @override
-  final String createdUserId;
-  @override
-  final String assignedUserId;
-  @override
-  final EntityType entityType;
-  @override
-  final String id;
-
-  factory _$ExpenseCategoryEntity(
-          [void Function(ExpenseCategoryEntityBuilder) updates]) =>
-      (new ExpenseCategoryEntityBuilder()..update(updates)).build();
-
-  _$ExpenseCategoryEntity._(
-      {this.name,
-      this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      this.entityType,
-      this.id})
-      : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'name');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'id');
-    }
-  }
-
-  @override
-  ExpenseCategoryEntity rebuild(
-          void Function(ExpenseCategoryEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  ExpenseCategoryEntityBuilder toBuilder() =>
-      new ExpenseCategoryEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is ExpenseCategoryEntity &&
-        name == other.name &&
-        isChanged == other.isChanged &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted &&
-        createdUserId == other.createdUserId &&
-        assignedUserId == other.assignedUserId &&
-        entityType == other.entityType &&
-        id == other.id;
-  }
-
-  int __hashCode;
-  @override
-  int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc($jc(0, name.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            entityType.hashCode),
-        id.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('ExpenseCategoryEntity')
-          ..add('name', name)
-          ..add('isChanged', isChanged)
-          ..add('createdAt', createdAt)
-          ..add('updatedAt', updatedAt)
-          ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted)
-          ..add('createdUserId', createdUserId)
-          ..add('assignedUserId', assignedUserId)
-          ..add('entityType', entityType)
-          ..add('id', id))
-        .toString();
-  }
-}
-
-class ExpenseCategoryEntityBuilder
-    implements Builder<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
-  _$ExpenseCategoryEntity _$v;
-
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
-
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
-
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
-
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
-
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
-
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
-
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
-      _$this._createdUserId = createdUserId;
-
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
-      _$this._assignedUserId = assignedUserId;
-
-  EntityType _entityType;
-  EntityType get entityType => _$this._entityType;
-  set entityType(EntityType entityType) => _$this._entityType = entityType;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
-
-  ExpenseCategoryEntityBuilder();
-
-  ExpenseCategoryEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _entityType = _$v.entityType;
-      _id = _$v.id;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(ExpenseCategoryEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$ExpenseCategoryEntity;
-  }
-
-  @override
-  void update(void Function(ExpenseCategoryEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$ExpenseCategoryEntity build() {
-    final _$result = _$v ??
-        new _$ExpenseCategoryEntity._(
-            name: name,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            entityType: entityType,
-            id: id);
     replace(_$result);
     return _$result;
   }

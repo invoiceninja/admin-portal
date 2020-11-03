@@ -1,3 +1,7 @@
+bool isAllDigits(String value) {
+  return value.replaceAll(RegExp('[^\\d]'), '') == value;
+}
+
 String toSnakeCase(String value) {
   if ((value ?? '').isEmpty) {
     return '';

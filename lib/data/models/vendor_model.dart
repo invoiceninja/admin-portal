@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -45,6 +46,7 @@ abstract class VendorItemResponse
 
 class VendorFields {
   static const String name = 'name';
+  static const String number = 'number';
   static const String balance = 'balance';
   static const String address1 = 'address1';
   static const String address2 = 'address2';
@@ -54,6 +56,7 @@ class VendorFields {
   static const String countryId = 'country_id';
   static const String phone = 'phone';
   static const String privateNotes = 'private_notes';
+  static const String publicNotes = 'public_notes';
   static const String website = 'website';
   static const String vatNumber = 'vat_number';
   static const String idNumber = 'id_number';
@@ -65,6 +68,7 @@ class VendorFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String documents = 'documents';
 }
 
 abstract class VendorEntity extends Object
@@ -73,6 +77,7 @@ abstract class VendorEntity extends Object
   factory VendorEntity({String id, AppState state}) {
     return _$VendorEntity._(
       id: id ?? BaseEntity.nextId,
+      number: '',
       isChanged: false,
       name: '',
       address1: '',
@@ -83,6 +88,7 @@ abstract class VendorEntity extends Object
       countryId: '',
       phone: '',
       privateNotes: '',
+      publicNotes: '',
       website: '',
       vatNumber: '',
       idNumber: '',
@@ -102,6 +108,7 @@ abstract class VendorEntity extends Object
       assignedUserId: '',
       createdAt: 0,
       createdUserId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -143,7 +150,12 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
+  @BuiltValueField(wireName: 'public_notes')
+  String get publicNotes;
+
   String get website;
+
+  String get number;
 
   @BuiltValueField(wireName: 'vat_number')
   String get vatNumber;
@@ -151,7 +163,6 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
 
-  @nullable
   @BuiltValueField(wireName: 'currency_id')
   String get currencyId;
 
@@ -167,8 +178,10 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  @BuiltValueField(wireName: 'vendor_contacts')
   BuiltList<VendorContactEntity> get contacts;
+
+  @nullable
+  BuiltList<DocumentEntity> get documents;
 
   @override
   List<EntityAction> getActions(
@@ -196,7 +209,7 @@ abstract class VendorEntity extends Object
   }
 
   int compareTo(VendorEntity vendor, String sortField, bool sortAscending,
-      BuiltMap<String, UserEntity> userMap) {
+      BuiltMap<String, UserEntity> userMap, StaticState staticState) {
     int response = 0;
     final VendorEntity vendorA = sortAscending ? this : vendor;
     final VendorEntity vendorB = sortAscending ? vendor : this;
@@ -246,6 +259,57 @@ abstract class VendorEntity extends Object
       case VendorFields.updatedAt:
         response = vendorA.updatedAt.compareTo(vendorB.updatedAt);
         break;
+      case VendorFields.documents:
+        response = vendorA.documents.length.compareTo(vendorB.documents.length);
+        break;
+      case VendorFields.number:
+        response = vendorA.number.compareTo(vendorB.number);
+        break;
+      case VendorFields.address1:
+        response = vendorA.address1.compareTo(vendorB.address1);
+        break;
+      case VendorFields.address2:
+        response = vendorA.address2.compareTo(vendorB.address2);
+        break;
+      case VendorFields.postalCode:
+        response = vendorA.postalCode.compareTo(vendorB.postalCode);
+        break;
+      case VendorFields.countryId:
+        response = vendorA.countryId.compareTo(vendorB.countryId);
+        break;
+      case VendorFields.privateNotes:
+        response = vendorA.privateNotes.compareTo(vendorB.privateNotes);
+        break;
+      case VendorFields.publicNotes:
+        response = vendorA.publicNotes.compareTo(vendorB.publicNotes);
+        break;
+      case VendorFields.website:
+        response = vendorA.website.compareTo(vendorB.website);
+        break;
+      case VendorFields.vatNumber:
+        response = vendorA.vatNumber.compareTo(vendorB.vatNumber);
+        break;
+      case VendorFields.idNumber:
+        response = vendorA.idNumber.compareTo(vendorB.idNumber);
+        break;
+      case VendorFields.currencyId:
+        final currencyMap = staticState.currencyMap;
+        response = currencyMap[vendorA.currencyId]
+            .listDisplayName
+            .compareTo(currencyMap[vendorB.currencyId].listDisplayName);
+        break;
+      case VendorFields.customValue1:
+        response = vendorA.customValue1.compareTo(vendorB.customValue1);
+        break;
+      case VendorFields.customValue2:
+        response = vendorA.customValue2.compareTo(vendorB.customValue2);
+        break;
+      case VendorFields.customValue3:
+        response = vendorA.customValue3.compareTo(vendorB.customValue3);
+        break;
+      case VendorFields.customValue4:
+        response = vendorA.customValue4.compareTo(vendorB.customValue4);
+        break;
       default:
         print('## ERROR: sort by vendor.$sortField is not implemented');
         break;
@@ -269,7 +333,9 @@ abstract class VendorEntity extends Object
         idNumber,
         phone,
         address1,
+        address2,
         city,
+        state,
         postalCode,
         customValue1,
         customValue2,
@@ -291,11 +357,14 @@ abstract class VendorEntity extends Object
 
     return matchesStringsValue(
       haystacks: [
+        name,
         vatNumber,
         idNumber,
         phone,
         address1,
+        address2,
         city,
+        state,
         postalCode,
         customValue1,
         customValue2,
@@ -318,6 +387,8 @@ abstract class VendorEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
+
+  bool get hasUser => assignedUserId != null && assignedUserId.isNotEmpty;
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 

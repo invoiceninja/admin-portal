@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -187,18 +186,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     activeColor: Theme.of(context).accentColor,
                   ),
                    */
-                  viewModel.state.company.isModuleEnabled(EntityType.task)
-                      ? SwitchListTile(
-                          title:
-                              Text(AppLocalization.of(context).autoStartTasks),
-                          value: prefState.autoStartTasks,
-                          onChanged: (value) =>
-                              viewModel.onAutoStartTasksChanged(context, value),
-                          secondary:
-                              Icon(kIsWeb ? Icons.timer : MdiIcons.clock),
-                          activeColor: Theme.of(context).accentColor,
-                        )
-                      : SizedBox(),
                 ],
               ),
               if (!Config.DEMO_MODE)

@@ -20,10 +20,10 @@ import 'package:invoiceninja_flutter/redux/app/loading_reducer.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_reducer.dart';
 import 'package:invoiceninja_flutter/redux/static/static_reducer.dart';
-
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
@@ -98,30 +98,28 @@ final lastErrorReducer = combineReducers<String>([
     return '${action.error}';
   }),
   // STARTER: errors - do not remove comment
+  TypedReducer<String, LoadTaskStatusesFailure>((state, action) {
+    return '${action.error}';
+  }),
+
   TypedReducer<String, LoadRecurringInvoicesFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadWebhooksFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadTokensFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadPaymentTermsFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadDesignsFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, LoadCreditsFailure>((state, action) {
     return '${action.error}';
   }),
-
   TypedReducer<String, RefreshDataFailure>((state, action) {
     return '${action.error}';
   }),

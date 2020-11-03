@@ -44,7 +44,8 @@ class RecurringInvoiceEditNotesVM extends EntityEditNotesVM {
     return RecurringInvoiceEditNotesVM(
       company: state.company,
       invoice: quote,
-      onChanged: (InvoiceEntity quote) => store.dispatch(UpdateRecurringInvoice(quote)),
+      onChanged: (InvoiceEntity quote) =>
+          store.dispatch(UpdateRecurringInvoice(quote)),
     );
   }
 }

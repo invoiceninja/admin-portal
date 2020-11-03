@@ -10,6 +10,7 @@ export 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 export 'package:invoiceninja_flutter/data/models/document_model.dart';
 export 'package:invoiceninja_flutter/data/models/entities.dart';
 export 'package:invoiceninja_flutter/data/models/expense_model.dart';
+export 'package:invoiceninja_flutter/data/models/expense_category_model.dart';
 export 'package:invoiceninja_flutter/data/models/token_model.dart';
 export 'package:invoiceninja_flutter/data/models/webhook_model.dart';
 export 'package:invoiceninja_flutter/data/models/invoice_model.dart';
@@ -29,6 +30,7 @@ export 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/timezone_model.dart';
 export 'package:invoiceninja_flutter/data/models/task_model.dart';
+export 'package:invoiceninja_flutter/data/models/task_status_model.dart';
 export 'package:invoiceninja_flutter/data/models/user_model.dart';
 export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 
@@ -48,6 +50,7 @@ class EntityAction extends EnumClass {
   static const EntityAction cloneToCredit = _$cloneToCredit;
   static const EntityAction cloneToInvoice = _$cloneToInvoice;
   static const EntityAction cloneToQuote = _$cloneToQuote;
+  static const EntityAction cloneToRecurring = _$cloneToRecurring;
   static const EntityAction convert = _$convert;
   static const EntityAction approve = _$approve;
   static const EntityAction apply = _$apply;
@@ -56,7 +59,6 @@ class EntityAction extends EnumClass {
   static const EntityAction emailQuote = _$emailQuote;
   static const EntityAction emailCredit = _$emailCredit;
   static const EntityAction emailPayment = _$emailPayment;
-  static const EntityAction markActive = _$markActive;
   static const EntityAction markSent = _$markSent;
   static const EntityAction markPaid = _$markPaid;
   static const EntityAction newClient = _$newClient;

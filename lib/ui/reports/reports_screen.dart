@@ -75,10 +75,10 @@ class ReportsScreen extends StatelessWidget {
           if (state.company.hasTaxes)
             kReportTaxRate,
           kReportDocument,
-          //kReportExpense,
-          //kReportProduct,
-          //kReportProfitAndLoss,
-          //kReportTask,
+          kReportExpense,
+          kReportProduct,
+          kReportProfitAndLoss,
+          kReportTask,
         ]
             .map((report) =>
             DropdownMenuItem(
@@ -91,7 +91,6 @@ class ReportsScreen extends StatelessWidget {
         DatePicker(
           labelText: localization.startDate,
           selectedDate: reportsState.customStartDate,
-          allowClearing: true,
           onSelected: (date) =>
               viewModel.onSettingsChanged(
                   customStartDate: date),
@@ -99,7 +98,6 @@ class ReportsScreen extends StatelessWidget {
         DatePicker(
           labelText: localization.endDate,
           selectedDate: reportsState.customEndDate,
-          allowClearing: true,
           onSelected: (date) =>
               viewModel.onSettingsChanged(customEndDate: date),
         ),
@@ -548,13 +546,13 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return convertCustomFieldType(company.getCustomFieldType(column));
   } else if (['updated_at', 'created_at'].contains(column)) {
     return ReportColumnType.dateTime;
-  } else if (['date', 'due_date'].contains(column)) {
+  } else if (['date', 'due_date', 'valid_until'].contains(column)) {
     return ReportColumnType.date;
   } else if (column == 'age') {
     return ReportColumnType.age;
   } else if (EntityPresenter.isFieldNumeric(column)) {
     return ReportColumnType.number;
-  } else if (['is_active'].contains(column)) {
+  } else if (column.startsWith('is_')) {
     return ReportColumnType.bool;
   } else {
     return ReportColumnType.string;
@@ -1057,7 +1055,8 @@ class ReportResult {
               ReportColumnType.dateTime ||
               columnType == ReportColumnType.date) {
             value = formatDate(group, context);
-          } else if (columnType == ReportColumnType.age) {
+          } else if (columnType == ReportColumnType.age ||
+              EntityPresenter.isFieldLocalized(column)) {
             value = localization.lookup(group);
           } else {
             value = group;
@@ -1069,6 +1068,7 @@ class ReportResult {
           value = formatNumber(
               values[column], context, formatNumberType: FormatNumberType.int);
         }
+
         cells.add(DataCell(Text(value), onTap: () {
           if (group.isEmpty) {
             return;
@@ -1286,6 +1286,8 @@ class ReportStringValue extends ReportElement {
       return formatDate(value, context,
           showTime: getReportColumnType(column, context) ==
               ReportColumnType.dateTime);
+    } else if (EntityPresenter.isFieldLocalized(column)) {
+      return AppLocalization.of(context).lookup(value);
     } else {
       return value ?? '';
     }

@@ -3,18 +3,18 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 
 class QuotePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      QuoteFields.status,
       QuoteFields.number,
       QuoteFields.client,
       QuoteFields.amount,
-      QuoteFields.status,
       QuoteFields.date,
       QuoteFields.validUntil,
     ];
@@ -46,11 +46,7 @@ class QuotePresenter extends EntityPresenter {
 
     switch (field) {
       case QuoteFields.status:
-        return Text(
-          quote.isPastDue
-              ? localization.expired
-              : localization.lookup(kQuoteStatuses[quote.statusId]),
-        );
+        return EntityStatusChip(entity: quote);
       case QuoteFields.number:
         return Text(
             (quote.number ?? '').isEmpty ? localization.pending : quote.number);

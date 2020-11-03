@@ -169,6 +169,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
               context: context,
               builder: (BuildContext context) {
                 return InvoiceItemSelector(
+                  showTasksAndExpenses: true,
                   excluded: invoice.lineItems
                       .where((item) => item.isTask || item.isExpense)
                       .map((item) => item.isTask

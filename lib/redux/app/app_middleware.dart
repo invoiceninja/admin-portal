@@ -179,6 +179,7 @@ Middleware<AppState> _createLoadState(
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as LoadStateRequest;
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final appVersion = prefs.getString(kSharedPrefAppVersion);
@@ -219,13 +220,11 @@ Middleware<AppState> _createLoadState(
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
 
-      if (appState.isStale) {
-        store.dispatch(RefreshData(
-            completer: Completer<Null>()
-              ..future.catchError(() {
-                store.dispatch(UserLogout(action.context));
-              })));
-      }
+      store.dispatch(RefreshData(
+          completer: Completer<Null>()
+            ..future.catchError(() {
+              store.dispatch(UserLogout(action.context));
+            })));
 
       if (uiState.currentRoute != LoginScreen.route &&
           uiState.currentRoute.isNotEmpty) {
@@ -284,6 +283,7 @@ Middleware<AppState> _createLoadState(
         completer.future.then((_) {
           final layout = calculateLayout(action.context);
           if (store.state.prefState.isNotMobile && layout == AppLayout.mobile) {
+            print('## View dashboard');
             store.dispatch(UpdateUserPreferences(appLayout: layout));
             AppBuilder.of(action.context).rebuild();
             WidgetsBinding.instance.addPostFrameCallback((duration) {
@@ -508,7 +508,8 @@ Middleware<AppState> _createDeleteState(
     companyRepositories.forEach((repo) => repo.delete());
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(kSharedPrefToken, '');
+    prefs.remove(kSharedPrefToken);
+    prefs.remove(kSharedPrefUrl);
 
     next(action);
   };

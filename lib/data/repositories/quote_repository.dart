@@ -75,20 +75,24 @@ class QuoteRepository {
     return quoteResponse.data;
   }
 
-  Future<Null> emailQuote(Credentials credentials, InvoiceEntity quote,
+  Future<InvoiceEntity> emailQuote(Credentials credentials, InvoiceEntity quote,
       EmailTemplate template, String subject, String body) async {
     final data = {
-      //'reminder': template == EmailTemplate.initial ? '' : template.toString(),
-      'template': {
-        'body': body,
-        'subject': subject,
-      }
+      'entity': '${quote.entityType}',
+      'entity_id': quote.id,
+      'template': 'email_template_$template',
+      'body': body,
+      'subject': subject,
     };
 
-    await webClient.post(
-        credentials.url + '/email_invoice?invoice_id=${quote.id}',
-        credentials.token,
+    final dynamic response = await webClient.post(
+        credentials.url + '/emails', credentials.token,
         data: json.encode(data));
+
+    final InvoiceItemResponse invoiceResponse =
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+
+    return invoiceResponse.data;
   }
 
   Future<InvoiceEntity> uploadDocument(

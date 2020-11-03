@@ -67,7 +67,7 @@ class ExpenseScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterExpensesByCustom4(value)),
         sortFields: [
-          ExpenseFields.publicNotes,
+          ExpenseFields.number,
           ExpenseFields.expenseDate,
           ExpenseFields.updatedAt,
         ],

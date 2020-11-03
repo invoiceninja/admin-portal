@@ -81,8 +81,7 @@ class PaymentRepository {
   }
 
   Future<PaymentEntity> refundPayment(
-    Credentials credentials,
-    PaymentEntity payment) async {
+      Credentials credentials, PaymentEntity payment) async {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 

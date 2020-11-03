@@ -52,6 +52,7 @@ class ClientScreen extends StatelessWidget {
         },
         sortFields: [
           ClientFields.name,
+          ClientFields.idNumber,
           ClientFields.balance,
           ClientFields.updatedAt,
         ],

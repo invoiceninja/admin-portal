@@ -120,9 +120,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
     final company = viewModel.company;
-    final client = viewModel.state.clientState.get(invoice.clientId);
+    final client = state.clientState.get(invoice.clientId);
 
     return ListView(
       children: <Widget>[
@@ -131,7 +132,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             invoice.isNew
                 ? ClientPicker(
                     clientId: invoice.clientId,
-                    clientState: viewModel.state.clientState,
+                    clientState: state.clientState,
                     onSelected: (client) =>
                         viewModel.onClientChanged(context, invoice, client),
                     onAddPressed: (completer) =>

@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actio
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -18,6 +19,7 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
@@ -158,6 +160,12 @@ class EntityActionListTile extends StatelessWidget {
             break;
           case EntityType.webhook:
             handleWebhookAction(mainContext, entities, action);
+            break;
+          case EntityType.expenseCategory:
+            handleExpenseCategoryAction(mainContext, entities, action);
+            break;
+          case EntityType.taskStatus:
+            handleTaskStatusAction(mainContext, entities, action);
             break;
           // TODO add to starter.sh
           default:

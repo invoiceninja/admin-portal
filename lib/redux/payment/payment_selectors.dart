@@ -10,12 +10,23 @@ var memoizedPaymentsByInvoice = memo3((String invoiceId,
 
 List<PaymentEntity> paymentsByInvoiceSelector(String invoiceId,
     BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
-  return paymentList
-      .map((paymentId) => paymentMap[paymentId])
-      .where((payment) =>
-          payment.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
-          !payment.isDeleted)
-      .toList();
+  return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
+    return payment.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
+        !payment.isDeleted;
+  }).toList();
+}
+
+var memoizedPaymentsByCredit = memo3((String invoiceId,
+        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltList<String> paymentList) =>
+    paymentsByCreditSelector(invoiceId, paymentMap, paymentList));
+
+List<PaymentEntity> paymentsByCreditSelector(String creditId,
+    BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
+  return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
+    return payment.paymentables.map((p) => p.creditId).contains(creditId) &&
+        !payment.isDeleted;
+  }).toList();
 }
 
 var memoizedDropdownPaymentList = memo5((

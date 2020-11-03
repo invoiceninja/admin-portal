@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -46,7 +47,15 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     final company = widget.viewModel.state.company;
     int tabs = 4;
 
-    [EntityType.quote, EntityType.credit].forEach((entityType) {
+    [
+      EntityType.quote,
+      EntityType.credit,
+      EntityType.recurringInvoice,
+      EntityType.task,
+      EntityType.vendor,
+      EntityType.expense,
+      EntityType.project,
+    ].forEach((entityType) {
       if (company.isModuleEnabled(entityType)) {
         tabs++;
       }
@@ -121,16 +130,36 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           Tab(
             text: localization.invoices,
           ),
+          if (company.isModuleEnabled(EntityType.recurringInvoice))
+            Tab(
+              text: localization.recurringInvoices,
+            ),
           Tab(
             text: localization.payments,
           ),
           if (company.isModuleEnabled(EntityType.quote))
             Tab(
-              text: localization.quote,
+              text: localization.quotes,
             ),
           if (company.isModuleEnabled(EntityType.credit))
             Tab(
-              text: localization.credit,
+              text: localization.credits,
+            ),
+          if (company.isModuleEnabled(EntityType.project))
+            Tab(
+              text: localization.projects,
+            ),
+          if (company.isModuleEnabled(EntityType.task))
+            Tab(
+              text: localization.tasks,
+            ),
+          if (company.isModuleEnabled(EntityType.vendor))
+            Tab(
+              text: localization.vendors,
+            ),
+          if (company.isModuleEnabled(EntityType.expense))
+            Tab(
+              text: localization.expenses,
             ),
         ],
       ),
@@ -175,20 +204,21 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                       ),
                     ],
                   ),
-                  // TODO Re-enable with quotes/recurring
+                  if (company.isModuleEnabled(EntityType.recurringInvoice))
+                    DecoratedFormField(
+                      label: localization.recurringPrefix,
+                      controller: _recurringPrefixController,
+                    ),
+                  if (company.isModuleEnabled(EntityType.quote))
+                    BoolDropdownButton(
+                      iconData: Icons.content_copy,
+                      label: localization.sharedInvoiceQuoteCounter,
+                      value: settings.sharedInvoiceQuoteCounter,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..sharedInvoiceQuoteCounter = value)),
+                    ),
                   /*
-                  BoolDropdownButton(
-                    iconData: Icons.content_copy,
-                    label: localization.sharedInvoiceQuoteCounter,
-                    value: settings.sharedInvoiceQuoteCounter,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..sharedInvoiceQuoteCounter = value)),
-                  ),
-                  SizedBox(height: 16),
-                  DecoratedFormField(
-                    label: localization.recurringPrefix,
-                    controller: _recurringPrefixController,
-                  ),
                   AppDropdownButton(
                     labelText: localization.resetCounter,
                     value: settings.resetCounterFrequencyId,
@@ -246,6 +276,17 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     ..invoiceNumberPattern = pattern)),
             ),
           ]),
+          if (company.isModuleEnabled(EntityType.recurringInvoice))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.recurringInvoiceNumberCounter,
+                patternValue: settings.recurringInvoiceNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..recurringInvoiceNumberCounter = counter
+                      ..recurringInvoiceNumberPattern = pattern)),
+              ),
+            ]),
           ListView(children: <Widget>[
             EntityNumberSettings(
               counterValue: settings.paymentNumberCounter,
@@ -276,6 +317,50 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     viewModel.onSettingsChanged(settings.rebuild((b) => b
                       ..creditNumberCounter = counter
                       ..creditNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.project))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.projectNumberCounter,
+                patternValue: settings.projectNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..projectNumberCounter = counter
+                      ..projectNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.task))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.taskNumberCounter,
+                patternValue: settings.taskNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..taskNumberCounter = counter
+                      ..taskNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.vendor))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.vendorNumberCounter,
+                patternValue: settings.vendorNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..vendorNumberCounter = counter
+                      ..vendorNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.expense))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.expenseNumberCounter,
+                patternValue: settings.expenseNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..expenseNumberCounter = counter
+                      ..expenseNumberPattern = pattern)),
               ),
             ]),
         ],

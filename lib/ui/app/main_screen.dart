@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_shortcuts.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
@@ -22,6 +23,9 @@ import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
@@ -32,8 +36,14 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
@@ -324,20 +334,22 @@ class MainScreen extends StatelessWidget {
 
           return false;
         },
-        child: SafeArea(
-          child: FocusTraversalGroup(
-            policy: WidgetOrderTraversalPolicy(),
-            child: ChangeLayoutBanner(
-              appLayout: prefState.appLayout,
-              suggestedLayout: AppLayout.desktop,
-              child: Row(children: <Widget>[
-                if (prefState.showMenu) MenuDrawerBuilder(),
-                Expanded(
-                    child: AppBorder(
-                  child: screen,
-                  isLeft: prefState.showMenu,
-                )),
-              ]),
+        child: AppShortcuts(
+          child: SafeArea(
+            child: FocusTraversalGroup(
+              policy: WidgetOrderTraversalPolicy(),
+              child: ChangeLayoutBanner(
+                appLayout: prefState.appLayout,
+                suggestedLayout: AppLayout.desktop,
+                child: Row(children: <Widget>[
+                  if (prefState.showMenu) MenuDrawerBuilder(),
+                  Expanded(
+                      child: AppBorder(
+                    child: screen,
+                    isLeft: prefState.showMenu,
+                  )),
+                ]),
+              ),
             ),
           ),
         ),
@@ -376,12 +388,15 @@ class SettingsScreens extends StatelessWidget {
         screen = LocalizationScreen();
         break;
       case kSettingsOnlinePayments:
+        screen = OnlinePaymentsScreen();
+        break;
+      case kSettingsCompanyGateways:
         screen = CompanyGatewayScreenBuilder();
         break;
-      case kSettingsOnlinePaymentsView:
+      case kSettingsCompanyGatewaysView:
         screen = CompanyGatewayViewScreen();
         break;
-      case kSettingsOnlinePaymentsEdit:
+      case kSettingsCompanyGatewaysEdit:
         screen = CompanyGatewayEditScreen();
         break;
       case kSettingsTaxSettings:
@@ -396,8 +411,23 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsTaxRatesEdit:
         screen = TaxRateEditScreen();
         break;
+      case kSettingsTaskStatuses:
+        screen = TaskStatusScreenBuilder();
+        break;
+      case kSettingsTaskStatusView:
+        screen = TaskStatusViewScreen();
+        break;
+      case kSettingsTaskStatusEdit:
+        screen = TaskStatusEditScreen();
+        break;
       case kSettingsProducts:
         screen = ProductSettingsScreen();
+        break;
+      case kSettingsTasks:
+        screen = TaskSettingsScreen();
+        break;
+      case kSettingsExpenses:
+        screen = ExpenseSettingsScreen();
         break;
       case kSettingsIntegrations:
         screen = IntegrationSettingsScreen();
@@ -485,6 +515,15 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsWebhookEdit:
         screen = WebhookEditScreen();
+        break;
+      case kSettingsExpenseCategories:
+        screen = ExpenseCategoryScreenBuilder();
+        break;
+      case kSettingsExpenseCategoryView:
+        screen = ExpenseCategoryViewScreen();
+        break;
+      case kSettingsExpenseCategoryEdit:
+        screen = ExpenseCategoryEditScreen();
         break;
     }
 
@@ -608,6 +647,24 @@ class EntityScreens extends StatelessWidget {
                 ? CompanyGatewayEditScreen()
                 : CompanyGatewayViewScreen(isFilter: true);
             break;
+          case EntityType.recurringInvoice:
+            leftFilterChild = editingFIlterEntity
+                ? RecurringInvoiceEditScreen()
+                : RecurringInvoiceViewScreen(isFilter: true);
+            break;
+          case EntityType.expenseCategory:
+            leftFilterChild = editingFIlterEntity
+                ? ExpenseCategoryEditScreen()
+                : ExpenseCategoryViewScreen(isFilter: true);
+            break;
+          case EntityType.taskStatus:
+            leftFilterChild = editingFIlterEntity
+                ? TaskStatusEditScreen()
+                : TaskStatusViewScreen(isFilter: true);
+            break;
+          default:
+            print(
+                'Error: filter view not implemented for ${uiState.filterEntityType}');
         }
       }
     }
@@ -677,7 +734,8 @@ class _EntityFilter extends StatelessWidget {
     final filterEntityType = uiState.filterEntityType;
     final routeEntityType = uiState.entityTypeRoute;
 
-    final entityMap = state.getEntityMap(filterEntityType);
+    final entityMap =
+        filterEntityType != null ? state.getEntityMap(filterEntityType) : null;
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
     final relatedTypes = filterEntityType?.relatedTypes

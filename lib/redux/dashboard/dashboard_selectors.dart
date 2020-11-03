@@ -544,7 +544,11 @@ List<ChartDataGroup> chartTasks(
           }
 
           final taskRate = taskRateSelector(
-              company: company, project: project, client: client);
+            company: company,
+            project: project,
+            client: client,
+            task: task,
+          );
           double amount = taskRate * round(duration.inSeconds / 3600, 3);
 
           // Handle "All"
@@ -648,8 +652,8 @@ List<ChartDataGroup> chartExpenses(
   final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
 
   expenseMap.forEach((int, expense) {
-    final currencyId = expense.expenseCurrencyId;
-    final date = expense.expenseDate;
+    final currencyId = expense.currencyId;
+    final date = expense.date;
     double amount = expense.amountWithTax;
 
     if (expense.isDeleted) {

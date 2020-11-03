@@ -407,6 +407,10 @@ abstract class InvoiceEntity extends Object
   String get invoiceId;
 
   @nullable
+  @BuiltValueField(wireName: 'recurring_id')
+  String get recurringId;
+
+  @nullable
   String get filename;
 
   @nullable
@@ -667,6 +671,18 @@ abstract class InvoiceEntity extends Object
         if (includeEdit && !multiselect) {
           actions.add(EntityAction.edit);
         }
+
+        if (isRecurringInvoice) {
+          if ([kRecurringInvoiceStatusDraft, kRecurringInvoiceStatusPaused]
+              .contains(statusId)) {
+            actions.add(EntityAction.start);
+          } else if ([
+            kRecurringInvoiceStatusPending,
+            kRecurringInvoiceStatusActive
+          ].contains(statusId)) {
+            actions.add(EntityAction.stop);
+          }
+        }
       }
 
       if (invitations.isNotEmpty && !multiselect) {
@@ -686,10 +702,8 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.newPayment);
         }
 
-        if (!isSent) {
-          actions.add(isRecurringInvoice
-              ? EntityAction.markActive
-              : EntityAction.markSent);
+        if (!isSent && !isRecurring) {
+          actions.add(EntityAction.markSent);
         }
 
         if (isPayable && isInvoice) {
@@ -699,36 +713,31 @@ abstract class InvoiceEntity extends Object
         if (isQuote && !isApproved && (invoiceId ?? '').isEmpty) {
           actions.add(EntityAction.convert);
         }
-
-        if (isRecurringInvoice) {
-          if ([kRecurringInvoiceStatusDraft, kRecurringInvoiceStatusPaused]
-              .contains(statusId)) {
-            actions.add(EntityAction.start);
-          } else if ([
-            kRecurringInvoiceStatusPending,
-            kRecurringInvoiceStatusActive
-          ].contains(statusId)) {
-            actions.add(EntityAction.stop);
-          }
-        }
       }
 
+      /*
       if (invitations.isNotEmpty && !multiselect) {
         actions.add(EntityAction.clientPortal);
       }
+       */
     }
 
     if (actions.isNotEmpty) {
       actions.add(null);
     }
 
-    if (userCompany.canCreate(EntityType.invoice) && !multiselect) {
-      actions.add(EntityAction.cloneToInvoice);
+    if (!multiselect) {
+      if (userCompany.canCreate(EntityType.invoice)) {
+        actions.add(EntityAction.cloneToInvoice);
+      }
       if (userCompany.canCreate(EntityType.quote)) {
         actions.add(EntityAction.cloneToQuote);
       }
       if (userCompany.canCreate(EntityType.credit)) {
         actions.add(EntityAction.cloneToCredit);
+      }
+      if (userCompany.canCreate(EntityType.recurringInvoice)) {
+        actions.add(EntityAction.cloneToRecurring);
       }
       actions.add(null);
     }
@@ -802,6 +811,9 @@ abstract class InvoiceEntity extends Object
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
+  bool get isRunning =>
+      isRecurring && statusId == kRecurringInvoiceStatusActive;
+
   bool get isSent => statusId != kInvoiceStatusDraft;
 
   bool get isUnpaid => statusId != kInvoiceStatusPaid;
@@ -825,6 +837,12 @@ abstract class InvoiceEntity extends Object
   String get calculatedStatusId {
     if (isPastDue && !isCancelledOrReversed) {
       return kInvoiceStatusPastDue;
+    }
+
+    if (isRecurring &&
+        statusId == kRecurringInvoiceStatusActive &&
+        (lastSentDate ?? '').isEmpty) {
+      return kRecurringInvoiceStatusPending;
     }
 
     /*
@@ -1056,11 +1074,11 @@ abstract class InvoiceItemEntity
   double get discount;
 
   @nullable
-  @BuiltValueField(wireName: 'task_public_id')
+  @BuiltValueField(wireName: 'task_id')
   String get taskId;
 
   @nullable
-  @BuiltValueField(wireName: 'expense_public_id')
+  @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
 
   @nullable

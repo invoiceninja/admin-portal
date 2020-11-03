@@ -10,33 +10,15 @@ class AppBuilder extends StatefulWidget {
 
   static AppBuilderState of(BuildContext context) {
     return context.findAncestorStateOfType<AppBuilderState>();
-    //return context.ancestorStateOfType(const TypeMatcher<AppBuilderState>());
   }
 }
 
 class AppBuilderState extends State<AppBuilder> {
-  FocusNode _focusNode;
-  String _command = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode = new FocusNode();
-    _focusNode.requestFocus(null);
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
   void rebuild() {
     setState(() {});
   }
 
   void runCommand(BuildContext context) {
-    print('### RUN COMMAND: $_command ###');
     /*
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.company;
@@ -120,22 +102,6 @@ class AppBuilderState extends State<AppBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return RawKeyboardListener(
-      child: widget.builder(context),
-      focusNode: _focusNode,
-      onKey: (event) {
-        if (kReleaseMode) {
-          return;
-        }
-        _command = '';
-        /*
-        _command += event.logicalKey.keyLabel;
-        print(
-            'onKey: ${event.logicalKey.keyLabel}, hasFoucs: ${_focusNode.hasFocus}, hasPrimaryFocus: ${_focusNode.hasPrimaryFocus}');
-        runCommand(context);
-        Timer(Duration(seconds: 1), () => _command = '');
-         */
-      },
-    );
+    return widget.builder(context);
   }
 }

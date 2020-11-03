@@ -55,11 +55,10 @@ class _GroupViewState extends State<GroupView> {
           ),
           ListDivider(),
           EntitiesListTile(
+            entity: group,
             isFilter: widget.isFilter,
             entityType: EntityType.client,
             title: localization.clients,
-            onTap: () => viewModel.onClientsPressed(context),
-            onLongPress: () => viewModel.onClientsPressed(context, true),
             subtitle:
                 memoizedClientStatsForGroup(state.clientState.map, group.id)
                     .present(localization.active, localization.archived),
@@ -123,7 +122,9 @@ class SettingsViewer extends StatelessWidget {
           : null,
       localization.militaryTime: settings.enableMilitaryTime == true
           ? localization.enabled
-          : settings.enableMilitaryTime == false ? localization.disabled : null,
+          : settings.enableMilitaryTime == false
+              ? localization.disabled
+              : null,
       localization.language: settings.hasLanguage
           ? staticState.languageMap[settings.languageId]?.name
           : null,
@@ -132,16 +133,24 @@ class SettingsViewer extends StatelessWidget {
           : null,
       localization.sendReminders: settings.sendReminders == true
           ? localization.enabled
-          : settings.sendReminders == false ? localization.disabled : null,
+          : settings.sendReminders == false
+              ? localization.disabled
+              : null,
       localization.clientPortal: settings.enablePortal == true
           ? localization.enabled
-          : settings.enablePortal == false ? localization.disabled : null,
+          : settings.enablePortal == false
+              ? localization.disabled
+              : null,
       localization.clientPortalTasks: settings.enablePortal == true
           ? localization.enabled
-          : settings.enablePortal == false ? localization.disabled : null,
+          : settings.enablePortal == false
+              ? localization.disabled
+              : null,
       localization.clientPortalDashboard: settings.enablePortal == true
           ? localization.enabled
-          : settings.enablePortal == false ? localization.disabled : null,
+          : settings.enablePortal == false
+              ? localization.disabled
+              : null,
       localization.paymentType: settings.hasDefaultPaymentTypeId
           ? staticState.paymentTypeMap[settings.defaultPaymentTypeId]?.name
           : null,

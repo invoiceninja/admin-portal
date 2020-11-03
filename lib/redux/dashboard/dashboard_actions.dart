@@ -43,3 +43,9 @@ class UpdateDashboardEntityType implements PersistUI {
 
   EntityType entityType;
 }
+
+class UpdateDashboardSidebar implements PersistUI {
+  UpdateDashboardSidebar({this.showSidebar});
+
+  bool showSidebar;
+}

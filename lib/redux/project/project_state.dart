@@ -25,6 +25,15 @@ abstract class ProjectState
   int get hashCode;
 
   BuiltMap<String, ProjectEntity> get map;
+
+  ProjectEntity get(String projectId) {
+    if (map.containsKey(projectId)) {
+      return map[projectId];
+    } else {
+      return ProjectEntity(id: projectId);
+    }
+  }
+
   BuiltList<String> get list;
 
   ProjectState loadProjects(BuiltList<ProjectEntity> clients) {
@@ -47,7 +56,7 @@ abstract class ProjectUIState extends Object
     implements Built<ProjectUIState, ProjectUIStateBuilder> {
   factory ProjectUIState() {
     return _$ProjectUIState._(
-      listUIState: ListUIState(ProjectFields.name),
+      listUIState: ListUIState(ProjectFields.number, sortAscending: false),
       editing: ProjectEntity(),
       selectedId: '',
     );

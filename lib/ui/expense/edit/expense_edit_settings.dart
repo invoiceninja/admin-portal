@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 
 class ExpenseEditSettings extends StatefulWidget {
   const ExpenseEditSettings({
@@ -82,24 +83,21 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _setCurrency(CurrencyEntity currency) {
-    /*
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
 
     final exchangeRate = currency == null
-        ? 0.0
-        : getExchangeRate(context,
-            fromCurrencyId: expense.expenseCurrencyId,
-            toCurrencyId: currency.id);
+        ? 1
+        : getExchangeRate(viewModel.state.staticState.currencyMap,
+            fromCurrencyId: expense.currencyId, toCurrencyId: currency.id);
 
     viewModel.onChanged(expense.rebuild((b) => b
-      ..invoiceCurrencyId = currency?.id ?? 0
+      ..invoiceCurrencyId = currency?.id ?? expense.invoiceCurrencyId
       ..exchangeRate = exchangeRate));
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       _exchangeRateController.text = formatNumber(exchangeRate, context,
           formatNumberType: FormatNumberType.inputAmount);
     });
-     */
   }
 
   @override
@@ -150,7 +148,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 ? SizedBox()
                 : SwitchListTile(
                     activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.markBillable),
+                    title: Text(localization.shouldBeInvoiced),
+                    subtitle: Text(localization.shouldBeInvoicedHelp),
                     value: expense.shouldBeInvoiced,
                     onChanged: (value) {
                       viewModel.onChanged(
@@ -161,6 +160,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.markPaid),
               value: showPaymentFields,
+              subtitle: Text(localization.markPaidHelp),
               onChanged: (value) {
                 if (value) {
                   if (expense.paymentDate.isEmpty) {
@@ -189,7 +189,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                             memoizedPaymentTypeList(staticState.paymentTypeMap),
                         labelText: localization.paymentType,
                         entityId: expense.paymentTypeId,
-                        allowClearing: true,
                         onSelected: (paymentType) => viewModel.onChanged(
                             expense.rebuild((b) =>
                                 b..paymentTypeId = paymentType?.id ?? '')),
@@ -215,6 +214,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             SwitchListTile(
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.convertCurrency),
+              subtitle: Text(localization.convertCurrencyHelp),
               value: showConvertCurrencyFields,
               onChanged: (value) {
                 setState(() => showConvertCurrencyFields = value);
@@ -223,7 +223,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                       staticState.currencyMap[expense.invoiceCurrencyId]);
                 } else {
                   viewModel
-                      .onChanged(expense.rebuild((b) => b..exchangeRate = 0));
+                      .onChanged(expense.rebuild((b) => b..exchangeRate = 1));
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _exchangeRateController.text = '';
                   });
@@ -259,11 +259,11 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.addDocumentsToInvoice),
+                subtitle: Text(localization.addDocumentsToInvoiceHelp),
                 value: expense.invoiceDocuments,
                 onChanged: (value) {
                   viewModel.onChanged(
                       expense.rebuild((b) => b..invoiceDocuments = value));
-                  viewModel.onAddDocumentsChanged(value);
                 })
           ],
         ),

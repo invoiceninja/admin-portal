@@ -148,7 +148,8 @@ class InvoiceListItem extends StatelessWidget {
                                     .textTheme
                                     .subtitle2
                                     .copyWith(
-                                      color: textColor.withOpacity(0.65),
+                                      color: textColor
+                                          .withOpacity(kLighterOpacity),
                                     ),
                               ),
                             ],
@@ -235,7 +236,8 @@ class InvoiceListItem extends StatelessWidget {
                                                 : ''))
                                         .trim(),
                                     style: TextStyle(
-                                      color: textColor.withOpacity(0.65),
+                                      color: textColor
+                                          .withOpacity(kLighterOpacity),
                                     ),
                                   )
                                 : Text(

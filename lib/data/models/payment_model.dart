@@ -50,7 +50,7 @@ class PaymentFields {
   static const String refunded = 'refunded';
   static const String transactionReference = 'transaction_reference';
   static const String date = 'date';
-  static const String paymentTypeId = 'payment_type_id';
+  static const String typeId = 'type_id';
   static const String client = 'client';
   static const String clientId = 'client_id';
   static const String invoiceId = 'invoice_id';
@@ -58,7 +58,7 @@ class PaymentFields {
   static const String privateNotes = 'private_notes';
   static const String exchangeRate = 'exchange_rate';
   static const String exchangeCurrencyId = 'exchange_currency_id';
-  static const String paymentStatus = 'payment_status';
+  static const String status = 'status';
   static const String gateway = 'gateway';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
@@ -143,7 +143,6 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'transaction_reference')
   String get transactionReference;
 
-  @BuiltValueField(wireName: 'date')
   String get date;
 
   @BuiltValueField(wireName: 'type_id')
@@ -267,7 +266,7 @@ abstract class PaymentEntity extends Object
       case EntityFields.archivedAt:
         response = paymentA.archivedAt.compareTo(paymentB.archivedAt);
         break;
-      case PaymentFields.paymentStatus:
+      case PaymentFields.status:
         response = paymentA.statusId.compareTo(paymentB.statusId);
         break;
       case PaymentFields.customValue1:

@@ -13,23 +13,33 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   final project = state.projectState.map[task.projectId];
   final client = state.clientState.map[task.clientId];
 
-  var notes = task.description + '\n';
-  task.taskTimes
-      .where((time) => time.startDate != null && time.endDate != null)
-      .forEach((time) {
-    final start =
-        formatDate(time.startDate.toIso8601String(), context, showTime: true);
-    final end = formatDate(time.endDate.toIso8601String(), context,
-        showTime: true, showDate: false, showSeconds: false);
-    notes += '\n### $start - $end';
-  });
+  var notes = task.description;
+
+  if (state.company.invoiceTaskTimelog) {
+    notes += '\n';
+    task.taskTimes
+        .where((time) => time.startDate != null && time.endDate != null)
+        .forEach((time) {
+      final start =
+          formatDate(time.startDate.toIso8601String(), context, showTime: true);
+      final end = formatDate(time.endDate.toIso8601String(), context,
+          showTime: true, showDate: false, showSeconds: false);
+      //notes += '\n### $start - $end';
+      notes += '\n$start - $end';
+    });
+  }
 
   return InvoiceItemEntity().rebuild((b) => b
     ..taskId = task.id
+    ..typeId = InvoiceItemEntity.TYPE_TASK
     ..notes = notes
     ..cost = taskRateSelector(
-        company: state.company, project: project, client: client)
-    ..quantity = round(task.duration / 3600, 3));
+      company: state.company,
+      project: project,
+      client: client,
+      task: task,
+    )
+    ..quantity = round(task.calculateDuration.inSeconds / 3600, 3));
 }
 
 var memoizedTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
@@ -140,6 +150,9 @@ List<String> filteredTasksSelector(
       } else if (filterEntityType == EntityType.project &&
           task.projectId != filterEntityId) {
         return false;
+      } else if (filterEntityType == EntityType.invoice &&
+          task.invoiceId != filterEntityId) {
+        return false;
       }
     } else if (task.clientId != null && !client.isActive) {
       return false;
@@ -180,13 +193,19 @@ List<String> filteredTasksSelector(
   return list;
 }
 
-double taskRateSelector(
-    {CompanyEntity company, ProjectEntity project, ClientEntity client}) {
-  if (project != null && project.taskRate > 0) {
+double taskRateSelector({
+  @required CompanyEntity company,
+  @required ProjectEntity project,
+  @required ClientEntity client,
+  @required TaskEntity task,
+}) {
+  if (task != null && task.rate > 0) {
+    return task.rate;
+  } else if (project != null && project.taskRate > 0) {
     return project.taskRate;
-  } else if (client != null && client.settings.defaultTaskRate > 0) {
+  } else if (client != null && (client.settings.defaultTaskRate ?? 0) > 0) {
     return client.settings.defaultTaskRate;
-  } else if (company != null && company.settings.defaultTaskRate > 0) {
+  } else if (company != null && (company.settings.defaultTaskRate ?? 0) > 0) {
     return company.settings.defaultTaskRate;
   }
 
@@ -226,6 +245,29 @@ EntityStats taskStatsForProject(
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
     if (task.projectId == projectId) {
+      if (task.isActive) {
+        countActive++;
+      } else if (task.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedTaskStatsForUser = memo2((
+  String userId,
+  BuiltMap<String, TaskEntity> taskMap,
+) =>
+    taskStatsForProject(userId, taskMap));
+
+EntityStats taskStatsForUser(
+    String userId, BuiltMap<String, TaskEntity> taskMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  taskMap.forEach((taskId, task) {
+    if (task.assignedUserId == userId) {
       if (task.isActive) {
         countActive++;
       } else if (task.isArchived) {

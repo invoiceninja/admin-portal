@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
@@ -53,7 +54,9 @@ class RecurringInvoiceScreen extends StatelessWidget {
           store.dispatch(SortRecurringInvoices(value));
         },
         sortFields: [
-          InvoiceFields.number,
+          RecurringInvoiceFields.number,
+          RecurringInvoiceFields.nextSendDate,
+          EntityFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterRecurringInvoicesByState(state));
@@ -65,17 +68,13 @@ class RecurringInvoiceScreen extends StatelessWidget {
             store.dispatch(StartRecurringInvoiceMultiselect());
           }
         },
-        customValues1: company.getCustomFieldValues(
-            CustomFieldType.invoice1,
+        customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
             excludeBlank: true),
-        customValues2: company.getCustomFieldValues(
-            CustomFieldType.invoice2,
+        customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
             excludeBlank: true),
-        customValues3: company.getCustomFieldValues(
-            CustomFieldType.invoice3,
+        customValues3: company.getCustomFieldValues(CustomFieldType.invoice3,
             excludeBlank: true),
-        customValues4: company.getCustomFieldValues(
-            CustomFieldType.invoice4,
+        customValues4: company.getCustomFieldValues(CustomFieldType.invoice4,
             excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterRecurringInvoicesByCustom1(value)),

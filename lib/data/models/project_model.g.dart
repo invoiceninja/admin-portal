@@ -132,6 +132,9 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
+      'public_notes',
+      serializers.serialize(object.publicNotes,
+          specifiedType: const FullType(String)),
       'budgeted_hours',
       serializers.serialize(object.budgetedHours,
           specifiedType: const FullType(double)),
@@ -147,6 +150,10 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -159,6 +166,12 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.number != null) {
+      result
+        ..add('number')
+        ..add(serializers.serialize(object.number,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -218,6 +231,10 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
           result.privateNotes = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'public_notes':
+          result.publicNotes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'budgeted_hours':
           result.budgetedHours = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
@@ -237,6 +254,16 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'number':
+          result.number = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -480,6 +507,8 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String privateNotes;
   @override
+  final String publicNotes;
+  @override
   final double budgetedHours;
   @override
   final String customValue1;
@@ -489,6 +518,10 @@ class _$ProjectEntity extends ProjectEntity {
   final String customValue3;
   @override
   final String customValue4;
+  @override
+  final String number;
+  @override
+  final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
   @override
@@ -515,11 +548,14 @@ class _$ProjectEntity extends ProjectEntity {
       this.taskRate,
       this.dueDate,
       this.privateNotes,
+      this.publicNotes,
       this.budgetedHours,
       this.customValue1,
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.number,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -544,6 +580,9 @@ class _$ProjectEntity extends ProjectEntity {
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'privateNotes');
     }
+    if (publicNotes == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'publicNotes');
+    }
     if (budgetedHours == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'budgetedHours');
     }
@@ -558,6 +597,9 @@ class _$ProjectEntity extends ProjectEntity {
     }
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'customValue4');
+    }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'documents');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'createdAt');
@@ -589,11 +631,14 @@ class _$ProjectEntity extends ProjectEntity {
         taskRate == other.taskRate &&
         dueDate == other.dueDate &&
         privateNotes == other.privateNotes &&
+        publicNotes == other.publicNotes &&
         budgetedHours == other.budgetedHours &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        number == other.number &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -625,22 +670,18 @@ class _$ProjectEntity extends ProjectEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            name
-                                                                                .hashCode),
-                                                                        clientId
-                                                                            .hashCode),
-                                                                    taskRate
-                                                                        .hashCode),
-                                                                dueDate
-                                                                    .hashCode),
-                                                            privateNotes
-                                                                .hashCode),
-                                                        budgetedHours.hashCode),
-                                                    customValue1.hashCode),
-                                                customValue2.hashCode),
-                                            customValue3.hashCode),
-                                        customValue4.hashCode),
+                                                                            $jc($jc($jc(0, name.hashCode), clientId.hashCode),
+                                                                                taskRate.hashCode),
+                                                                            dueDate.hashCode),
+                                                                        privateNotes.hashCode),
+                                                                    publicNotes.hashCode),
+                                                                budgetedHours.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            number.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -659,11 +700,14 @@ class _$ProjectEntity extends ProjectEntity {
           ..add('taskRate', taskRate)
           ..add('dueDate', dueDate)
           ..add('privateNotes', privateNotes)
+          ..add('publicNotes', publicNotes)
           ..add('budgetedHours', budgetedHours)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('number', number)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -700,6 +744,10 @@ class ProjectEntityBuilder
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
 
+  String _publicNotes;
+  String get publicNotes => _$this._publicNotes;
+  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
+
   double _budgetedHours;
   double get budgetedHours => _$this._budgetedHours;
   set budgetedHours(double budgetedHours) =>
@@ -720,6 +768,16 @@ class ProjectEntityBuilder
   String _customValue4;
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
+
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -764,11 +822,14 @@ class ProjectEntityBuilder
       _taskRate = _$v.taskRate;
       _dueDate = _$v.dueDate;
       _privateNotes = _$v.privateNotes;
+      _publicNotes = _$v.publicNotes;
       _budgetedHours = _$v.budgetedHours;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
+      _number = _$v.number;
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -797,26 +858,42 @@ class ProjectEntityBuilder
 
   @override
   _$ProjectEntity build() {
-    final _$result = _$v ??
-        new _$ProjectEntity._(
-            name: name,
-            clientId: clientId,
-            taskRate: taskRate,
-            dueDate: dueDate,
-            privateNotes: privateNotes,
-            budgetedHours: budgetedHours,
-            customValue1: customValue1,
-            customValue2: customValue2,
-            customValue3: customValue3,
-            customValue4: customValue4,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+    _$ProjectEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$ProjectEntity._(
+              name: name,
+              clientId: clientId,
+              taskRate: taskRate,
+              dueDate: dueDate,
+              privateNotes: privateNotes,
+              publicNotes: publicNotes,
+              budgetedHours: budgetedHours,
+              customValue1: customValue1,
+              customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
+              number: number,
+              documents: documents.build(),
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'documents';
+        documents.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ProjectEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

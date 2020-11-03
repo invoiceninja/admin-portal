@@ -58,6 +58,12 @@ class EntityType extends EnumClass {
   static const EntityType font = _$font;
 
   String get plural {
+    if (this == EntityType.expenseCategory) {
+      return 'expenseCategories';
+    } else if (this == EntityType.taskStatus) {
+      return 'taskStatuses';
+    }
+
     return toString() + 's';
   }
 
@@ -70,6 +76,8 @@ class EntityType extends EnumClass {
         EntityType.design,
         EntityType.token,
         EntityType.webhook,
+        EntityType.expenseCategory,
+        EntityType.taskStatus,
       ].contains(this);
 
   List<EntityType> get relatedTypes {
@@ -80,18 +88,27 @@ class EntityType extends EnumClass {
           EntityType.payment,
           EntityType.quote,
           EntityType.credit,
-          //EntityType.task,
-          //EntityType.project,
-          //EntityType.expense,
+          EntityType.task,
+          EntityType.project,
+          EntityType.expense,
           EntityType.recurringInvoice,
         ];
       case EntityType.invoice:
         return [
           EntityType.payment,
         ];
+      case EntityType.recurringInvoice:
+        return [
+          EntityType.invoice,
+        ];
       case EntityType.payment:
         return [
           EntityType.invoice,
+        ];
+      case EntityType.project:
+        return [
+          EntityType.task,
+          EntityType.expense,
         ];
       case EntityType.group:
         return [
@@ -102,16 +119,34 @@ class EntityType extends EnumClass {
           EntityType.invoice,
           EntityType.quote,
           EntityType.credit,
-          //EntityType.task,
-          //EntityType.project,
-          //EntityType.expense,
-          //EntityType.vendor,
+          EntityType.task,
+          EntityType.project,
+          EntityType.expense,
+          EntityType.vendor,
           EntityType.recurringInvoice,
         ];
       case EntityType.companyGateway:
         return [
           EntityType.client,
           EntityType.payment,
+        ];
+      case EntityType.vendor:
+        return [
+          EntityType.expense,
+        ];
+      case EntityType.task:
+        return [
+          EntityType.project,
+        ];
+      case EntityType.expense:
+        return [
+          EntityType.vendor,
+          EntityType.project,
+          EntityType.expenseCategory,
+        ];
+      case EntityType.expenseCategory:
+        return [
+          EntityType.expense,
         ];
       default:
         return [];
@@ -145,8 +180,9 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate invoice = _$invoice_email;
   static const EmailTemplate quote = _$quote_email;
   static const EmailTemplate payment = _$payment_email;
-  static const EmailTemplate partial_payment = _$partial_payment_email;
+  static const EmailTemplate payment_partial = _$payment_partial_email;
   static const EmailTemplate credit = _$credit_email;
+  static const EmailTemplate statement = _$statement_email;
   static const EmailTemplate reminder1 = _$reminder1_email;
   static const EmailTemplate reminder2 = _$reminder2_email;
   static const EmailTemplate reminder3 = _$reminder3_email;

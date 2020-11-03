@@ -26,6 +26,14 @@ abstract class RecurringInvoiceState
 
   BuiltMap<String, InvoiceEntity> get map;
 
+  InvoiceEntity get(String invoiceId) {
+    if (map.containsKey(invoiceId)) {
+      return map[invoiceId];
+    } else {
+      return InvoiceEntity(id: invoiceId);
+    }
+  }
+
   BuiltList<String> get list;
 
   RecurringInvoiceState loadRecurringInvoices(

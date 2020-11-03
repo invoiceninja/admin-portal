@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
     @required this.clientId,
+    @required this.showTasksAndExpenses,
     this.onItemsSelected,
     this.excluded,
   });
@@ -25,6 +26,7 @@ class InvoiceItemSelector extends StatefulWidget {
   final Function(List<InvoiceItemEntity>, [String]) onItemsSelected;
   final String clientId;
   final List<BaseEntity> excluded;
+  final bool showTasksAndExpenses;
 
   @override
   _InvoiceItemSelectorState createState() => new _InvoiceItemSelectorState();
@@ -82,7 +84,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         final expense = entity as ExpenseEntity;
         items.add(convertExpenseToInvoiceItem(
             expense: expense,
-            categoryMap: company.expenseCategoryMap,
+            categoryMap: state.expenseCategoryState.map,
             company: company));
       }
     });
@@ -126,8 +128,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
-    final showTabBar = company.isModuleEnabled(EntityType.task) ||
-        company.isModuleEnabled(EntityType.expense);
+    final showTabBar = widget.showTasksAndExpenses &&
+        (company.isModuleEnabled(EntityType.task) ||
+            company.isModuleEnabled(EntityType.expense));
 
     Widget _headerRow() {
       return Row(
@@ -240,15 +243,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         itemBuilder: (BuildContext context, int index) {
           final String entityId = matches[index];
           final task = state.taskState.map[entityId];
-          final project = state.projectState.map[task.projectId];
-          final client = state.clientState.map[task.clientId];
           return TaskListItem(
-            userCompany: state.userCompany,
+            user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(task),
             isChecked: _selected.contains(task),
-            project: project,
             task: task,
-            client: client,
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(task);
@@ -280,14 +279,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         itemBuilder: (BuildContext context, int index) {
           final String entityId = matches[index];
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
-          final vendor = state.vendorState.map[expense.vendorId];
-          final client = state.clientState.map[expense.clientId];
           return ExpenseListItem(
+            user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(expense),
             isChecked: _selected.contains(expense),
             expense: expense,
-            vendor: vendor,
-            client: client,
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(expense);
@@ -297,7 +293,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
             filter: _filter,
-            userCompany: state.userCompany,
           );
         },
       );

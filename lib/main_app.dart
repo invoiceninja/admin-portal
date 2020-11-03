@@ -36,6 +36,8 @@ import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.d
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
@@ -50,6 +52,16 @@ import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
+
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
+
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
@@ -155,7 +167,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final state = store.state;
         final hasAccentColor = state.hasAccentColor;
         final accentColor = state.accentColor;
-        final fontFamily = kIsWeb ? 'Roboto' : null;
+        const fontFamily = kIsWeb ? 'Roboto' : null;
         final pageTransitionsTheme = PageTransitionsTheme(builders: {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
         });
@@ -285,13 +297,24 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   QuoteEditScreen.route: (context) => QuoteEditScreen(),
                   QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                   // STARTER: routes - do not remove comment
+                  TaskStatusScreen.route: (context) =>
+                      TaskStatusScreenBuilder(),
+                  TaskStatusViewScreen.route: (context) =>
+                      TaskStatusViewScreen(),
+                  TaskStatusEditScreen.route: (context) =>
+                      TaskStatusEditScreen(),
+                  ExpenseCategoryScreen.route: (context) =>
+                      ExpenseCategoryScreenBuilder(),
+                  ExpenseCategoryViewScreen.route: (context) =>
+                      ExpenseCategoryViewScreen(),
+                  ExpenseCategoryEditScreen.route: (context) =>
+                      ExpenseCategoryEditScreen(),
                   RecurringInvoiceScreen.route: (context) =>
                       RecurringInvoiceScreenBuilder(),
                   RecurringInvoiceViewScreen.route: (context) =>
                       RecurringInvoiceViewScreen(),
                   RecurringInvoiceEditScreen.route: (context) =>
                       RecurringInvoiceEditScreen(),
-
                   WebhookScreen.route: (context) => WebhookScreenBuilder(),
                   WebhookViewScreen.route: (context) => WebhookViewScreen(),
                   WebhookEditScreen.route: (context) => WebhookEditScreen(),
@@ -322,6 +345,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       CompanyDetailsScreen(),
                   UserDetailsScreen.route: (context) => UserDetailsScreen(),
                   LocalizationScreen.route: (context) => LocalizationScreen(),
+                  OnlinePaymentsScreen.route: (context) =>
+                      OnlinePaymentsScreen(),
                   CompanyGatewayScreen.route: (context) =>
                       CompanyGatewayScreenBuilder(),
                   CompanyGatewayViewScreen.route: (context) =>
@@ -335,6 +360,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
                   ProductSettingsScreen.route: (context) =>
                       ProductSettingsScreen(),
+                  ExpenseSettingsScreen.route: (context) =>
+                      ExpenseSettingsScreen(),
                   IntegrationSettingsScreen.route: (context) =>
                       IntegrationSettingsScreen(),
                   ImportExportScreen.route: (context) => ImportExportScreen(),

@@ -72,4 +72,20 @@ class ProjectRepository {
 
     return projectResponse.data;
   }
+
+  Future<ProjectEntity> uploadDocument(
+      Credentials credentials, BaseEntity entity, String filePath) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/projects/${entity.id}', credentials.token,
+        data: fields, filePath: filePath, fileIndex: 'documents[]');
+
+    final ProjectItemResponse projectResponse =
+        serializers.deserializeWith(ProjectItemResponse.serializer, response);
+
+    return projectResponse.data;
+  }
 }

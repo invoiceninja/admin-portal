@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
@@ -8,8 +9,11 @@ import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:memoize/memoize.dart';
+import 'package:invoiceninja_flutter/utils/extensions.dart';
 
 enum TaskReportFields {
+  rate,
+  calculated_rate,
   start_date,
   end_date,
   description,
@@ -33,7 +37,7 @@ enum TaskReportFields {
   custom_value4,
 }
 
-var memoizedTaskReport = memo8((
+var memoizedTaskReport = memo9((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, TaskEntity> taskMap,
@@ -41,10 +45,11 @@ var memoizedTaskReport = memo8((
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) =>
     taskReport(userCompany, reportsUIState, taskMap, invoiceMap, clientMap,
-        vendorMap, userMap, staticState));
+        vendorMap, userMap, projectMap, staticState));
 
 ReportResult taskReport(
   UserCompanyEntity userCompany,
@@ -54,6 +59,7 @@ ReportResult taskReport(
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -87,6 +93,7 @@ ReportResult taskReport(
     final client = clientMap[task.clientId];
     final vendor = vendorMap[task.vendorId];
     final invoice = invoiceMap[task.invoiceId];
+    final project = projectMap[task.projectId];
 
     if (task.isDeleted) {
       continue;
@@ -99,13 +106,22 @@ ReportResult taskReport(
       dynamic value = '';
 
       switch (column) {
+        case TaskReportFields.calculated_rate:
+          value = task.rate;
+          break;
+        case TaskReportFields.rate:
+          value = taskRateSelector(
+            company: userCompany.company,
+            project: project,
+            client: client,
+            task: task,
+          );
+          break;
         case TaskReportFields.start_date:
-          // TODO: Check
-          value = task.taskTimes[0]?.startDate;
+          value = task.taskTimes.firstOrNull?.startDate;
           break;
         case TaskReportFields.end_date:
-          // TODO: Check
-          value = task.taskTimes[0]?.endDate;
+          value = task.taskTimes.firstOrNull?.endDate;
           break;
         case TaskReportFields.description:
           value = task.description;

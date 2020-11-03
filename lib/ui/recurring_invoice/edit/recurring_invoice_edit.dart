@@ -159,6 +159,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
               context: context,
               builder: (BuildContext context) {
                 return InvoiceItemSelector(
+                  showTasksAndExpenses: false,
                   excluded: invoice.lineItems
                       .where((item) => item.isTask || item.isExpense)
                       .map((item) => item.isTask

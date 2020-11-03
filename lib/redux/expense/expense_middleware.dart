@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreExpensesMiddleware([
   final archiveExpense = _archiveExpense(repository);
   final deleteExpense = _deleteExpense(repository);
   final restoreExpense = _restoreExpense(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewExpenseList>(viewExpenseList),
@@ -36,6 +37,7 @@ List<Middleware<AppState>> createStoreExpensesMiddleware([
     TypedMiddleware<AppState, ArchiveExpenseRequest>(archiveExpense),
     TypedMiddleware<AppState, DeleteExpenseRequest>(deleteExpense),
     TypedMiddleware<AppState, RestoreExpenseRequest>(restoreExpense),
+    TypedMiddleware<AppState, SaveExpenseDocumentRequest>(saveDocument),
   ];
 }
 
@@ -234,6 +236,31 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(ExpenseRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveExpenseDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+              store.state.credentials, action.expense, action.filePath)
+          .then((expense) {
+        store.dispatch(SaveExpenseSuccess(expense));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveExpenseDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveExpenseDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

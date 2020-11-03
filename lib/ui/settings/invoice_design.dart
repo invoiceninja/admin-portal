@@ -112,8 +112,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   onPressed: () => state.designState.customDesigns.isEmpty
                       ? createEntity(
                           context: context,
-                          entity: DesignEntity(
-                              design: state.designState.cleanDesign.design),
+                          entity: DesignEntity(state: state),
                         )
                       : store.dispatch(ViewSettings(
                           navigator: Navigator.of(context),

@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskEdit extends StatefulWidget {
@@ -37,11 +41,8 @@ class _TaskEditState extends State<TaskEdit>
     _timer = Timer.periodic(Duration(seconds: 1),
         (Timer t) => mounted ? setState(() => false) : false);
 
-    final task = widget.viewModel.task;
-    final taskTime = widget.viewModel.taskTime;
-
     final index =
-        task.taskTimes.contains(taskTime) ? kTimesScreen : kDetailsScreen;
+        widget.viewModel.taskTimeIndex != null ? kTimesScreen : kDetailsScreen;
 
     _controller = TabController(vsync: this, length: 2, initialIndex: index);
   }
@@ -50,7 +51,7 @@ class _TaskEditState extends State<TaskEdit>
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.viewModel.taskTime != null) {
+    if (widget.viewModel.taskTimeIndex != null) {
       _controller.animateTo(kTimesScreen);
     }
   }
@@ -109,6 +110,34 @@ class _TaskEditState extends State<TaskEdit>
             TaskEditDetailsScreen(),
             TaskEditTimesScreen(),
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).cardColor,
+        shape: CircularNotchedRectangle(),
+        child: SizedBox(
+          height: kTopBottomBarHeight,
+          child: AppBorder(
+            isTop: true,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: LiveText(() {
+                  return localization.duration +
+                      ' ' +
+                      formatNumber(task.listDisplayAmount, context,
+                          formatNumberType: FormatNumberType.duration);
+                },
+                    style: TextStyle(
+                      color: viewModel.state.prefState.enableDarkMode
+                          ? Colors.white
+                          : Colors.black,
+                      fontSize: 20.0,
+                    )),
+              ),
+            ),
+          ),
         ),
       ),
       floatingActionButton: task.isInvoiced || task.isDeleted

@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreProjectsMiddleware([
   final archiveProject = _archiveProject(repository);
   final deleteProject = _deleteProject(repository);
   final restoreProject = _restoreProject(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewProjectList>(viewProjectList),
@@ -36,6 +37,7 @@ List<Middleware<AppState>> createStoreProjectsMiddleware([
     TypedMiddleware<AppState, ArchiveProjectRequest>(archiveProject),
     TypedMiddleware<AppState, DeleteProjectRequest>(deleteProject),
     TypedMiddleware<AppState, RestoreProjectRequest>(restoreProject),
+    TypedMiddleware<AppState, SaveProjectDocumentRequest>(saveDocument),
   ];
 }
 
@@ -241,6 +243,31 @@ Middleware<AppState> _loadProjects(ProjectRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(ProjectRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveProjectDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+              store.state.credentials, action.project, action.filePath)
+          .then((project) {
+        store.dispatch(SaveProjectSuccess(project));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveProjectDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveProjectDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

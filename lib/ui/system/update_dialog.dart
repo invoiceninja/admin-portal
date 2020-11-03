@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -10,6 +11,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UpdateDialog extends StatefulWidget {
   @override
@@ -34,7 +36,9 @@ class _UpdateDialogState extends State<UpdateDialog> {
     final account = state.userCompany.account;
 
     return AlertDialog(
-      title: Text(localization.updateAvailable),
+      title: Text(account.isUpdateAvailable
+          ? localization.updateAvailable
+          : localization.forceUpdate),
       content: updateState == UpdateState.done
           ? Text('${localization.appUpdated}\n\n$updateResponse')
           : updateState == UpdateState.loading
@@ -46,7 +50,15 @@ class _UpdateDialogState extends State<UpdateDialog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(localization.aNewVersionIsAvailable),
+                    SizedBox(
+                      width: 400,
+                      child: Text(
+                        account.isUpdateAvailable
+                            ? localization.aNewVersionIsAvailable
+                            : localization.forceUpdateHelp,
+                        maxLines: 2,
+                      ),
+                    ),
                     SizedBox(height: 20),
                     Text(
                         '• ${localization.currentVersion}: v${account.currentVersion}'),
@@ -58,11 +70,17 @@ class _UpdateDialogState extends State<UpdateDialog> {
       actions: <Widget>[
         if (updateState == UpdateState.initial) ...[
           FlatButton(
-            child: Text(localization.cancel.toUpperCase()),
+            child: Text(localization.close.toUpperCase()),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
+          if (!account.isUpdateAvailable)
+            FlatButton(
+              child: Text(localization.viewChanges.toUpperCase()),
+              onPressed: () => launch(kGitHubDiffUrl.replaceFirst(
+                  'VERSION', account.currentVersion)),
+            ),
           FlatButton(
             child: Text(localization.updateNow.toUpperCase()),
             onPressed: () {
@@ -82,7 +100,8 @@ class _UpdateDialogState extends State<UpdateDialog> {
   }
 
   void updateApp(BuildContext context) async {
-    final state = StoreProvider.of<AppState>(context).state;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     passwordCallback(
         alwaysRequire: true,
         context: context,
@@ -101,6 +120,11 @@ class _UpdateDialogState extends State<UpdateDialog> {
             });
             if (kIsWeb) {
               WebUtils.reloadBrowser();
+            } else {
+              store.dispatch(RefreshData(
+                clearData: true,
+                includeStatic: true,
+              ));
             }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');

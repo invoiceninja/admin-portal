@@ -313,7 +313,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           viewModel.onCompanyChanged(
                         company.rebuild((b) => b..industryId = industry?.id),
                       ),
-                      allowClearing: true,
                       showUseDefault: state.settingsUIState.isFiltered,
                     ),
                   ],
@@ -430,7 +429,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       autofillHints: [AutofillHints.postalCode],
                     ),
                     EntityDropdown(
-                      allowClearing: state.settingsUIState.isFiltered,
                       key: ValueKey('__country_${settings.countryId}__'),
                       entityType: EntityType.country,
                       entityList:
@@ -479,7 +477,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     onSelected: (paymentType) => viewModel.onSettingsChanged(
                         settings.rebuild(
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),
-                    allowClearing: true,
                     showUseDefault: state.settingsUIState.isFiltered,
                   ),
                   AppDropdownButton<String>(

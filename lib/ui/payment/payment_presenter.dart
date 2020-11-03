@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      PaymentFields.status,
       PaymentFields.number,
       PaymentFields.client,
       PaymentFields.amount,
       PaymentFields.invoiceNumber,
       PaymentFields.date,
       PaymentFields.transactionReference,
-      PaymentFields.paymentStatus,
     ];
   }
 
@@ -62,9 +62,8 @@ class PaymentPresenter extends EntityPresenter {
             alignment: Alignment.centerRight,
             child: Text(formatNumber(payment.amount, context,
                 clientId: payment.clientId)));
-      case PaymentFields.paymentStatus:
-        return Text(AppLocalization.of(context)
-            .lookup('payment_status_${payment.statusId}'));
+      case PaymentFields.status:
+        return EntityStatusChip(entity: payment);
       case PaymentFields.customValue1:
         return Text(payment.customValue1);
       case PaymentFields.customValue2:

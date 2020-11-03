@@ -1,15 +1,19 @@
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownVendorList = memo3(
+var memoizedDropdownVendorList = memo4(
     (BuiltMap<String, VendorEntity> vendorMap, BuiltList<String> vendorList,
-            BuiltMap<String, UserEntity> userMap) =>
-        dropdownVendorsSelector(vendorMap, vendorList, userMap));
+            BuiltMap<String, UserEntity> userMap, StaticState staticState) =>
+        dropdownVendorsSelector(vendorMap, vendorList, userMap, staticState));
 
-List<String> dropdownVendorsSelector(BuiltMap<String, VendorEntity> vendorMap,
-    BuiltList<String> vendorList, BuiltMap<String, UserEntity> userMap) {
+List<String> dropdownVendorsSelector(
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltList<String> vendorList,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
     return vendor.isActive;
@@ -18,24 +22,28 @@ List<String> dropdownVendorsSelector(BuiltMap<String, VendorEntity> vendorMap,
   list.sort((vendorAId, vendorBId) {
     final vendorA = vendorMap[vendorAId];
     final vendorB = vendorMap[vendorBId];
-    return vendorA.compareTo(vendorB, VendorFields.name, true, userMap);
+    return vendorA.compareTo(
+        vendorB, VendorFields.name, true, userMap, staticState);
   });
 
   return list;
 }
 
-var memoizedFilteredVendorList = memo4((BuiltMap<String, VendorEntity>
-            vendorMap,
-        BuiltList<String> vendorList,
-        ListUIState vendorListState,
-        BuiltMap<String, UserEntity> userMap) =>
-    filteredVendorsSelector(vendorMap, vendorList, vendorListState, userMap));
+var memoizedFilteredVendorList = memo5(
+    (BuiltMap<String, VendorEntity> vendorMap,
+            BuiltList<String> vendorList,
+            ListUIState vendorListState,
+            BuiltMap<String, UserEntity> userMap,
+            StaticState staticState) =>
+        filteredVendorsSelector(
+            vendorMap, vendorList, vendorListState, userMap, staticState));
 
 List<String> filteredVendorsSelector(
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltList<String> vendorList,
     ListUIState vendorListState,
-    BuiltMap<String, UserEntity> userMap) {
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
 
@@ -60,10 +68,31 @@ List<String> filteredVendorsSelector(
     final vendorA = vendorMap[vendorAId];
     final vendorB = vendorMap[vendorBId];
     return vendorA.compareTo(vendorB, vendorListState.sortField,
-        vendorListState.sortAscending, userMap);
+        vendorListState.sortAscending, userMap, staticState);
   });
 
   return list;
+}
+
+var memoizedVendorStatsForUser = memo2(
+    (String userId, BuiltMap<String, VendorEntity> vendorMap) =>
+        vendorStatsForUser(userId, vendorMap));
+
+EntityStats vendorStatsForUser(
+    String userId, BuiltMap<String, VendorEntity> vendorMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  vendorMap.forEach((vendorId, vendor) {
+    if (vendor.assignedUserId == userId) {
+      if (vendor.isActive) {
+        countActive++;
+      } else if (vendor.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
 var memoizedCalculateVendorBalance = memo4((String vendorId,
@@ -80,7 +109,7 @@ double calculateVendorBalance(String vendorId, String currencyId,
     final expense = expenseMap[expenseId] ?? ExpenseEntity();
     if (expense.vendorId == vendorId &&
         expense.isActive &&
-        (currencyId == null || expense.expenseCurrencyId == currencyId)) {
+        (currencyId == null || expense.currencyId == currencyId)) {
       total += expense.amountWithTax;
     }
   });

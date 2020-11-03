@@ -104,6 +104,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 children: <Widget>[
                   if (companyGateway.isNew)
                     EntityDropdown(
+                      allowClearing: false,
                       key: ValueKey('__gateway_${companyGateway.gatewayId}__'),
                       entityType: EntityType.gateway,
                       entityList:
@@ -144,7 +145,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         ?.supportsTokenBilling ==
                     true)
                   AppDropdownButton<String>(
-                      labelText: localization.storeCard,
+                      labelText: localization.captureCard,
                       value: companyGateway.tokenBilling,
                       onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway
@@ -200,7 +201,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           const EdgeInsets.only(left: 16, top: 16, bottom: 16),
                       child: Text(
                         localization.acceptedCardLogos,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                     CardListTile(
@@ -234,22 +235,19 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ),
           ListView(
             children: <Widget>[
-              if (companyGateway.gatewayId == kGatewayStripe)
+              if (gateway?.options != null && gateway.options.length > 1)
                 FormCard(
                   children: <Widget>[
                     AppDropdownButton(
                       labelText: localization.paymentType,
                       value: _gatewayTypeId,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(localization.creditCard),
-                          value: kGatewayTypeCreditCard,
-                        ),
-                        DropdownMenuItem(
-                          child: Text(localization.bankTransfer),
-                          value: kGatewayTypeBankTransfer,
-                        ),
-                      ],
+                      items: gateway.options.keys
+                          .map((gatewayTypeId) => DropdownMenuItem(
+                                child: Text(localization.lookup(
+                                    kGatewayTypes[gatewayTypeId] ?? '')),
+                                value: gatewayTypeId,
+                              ))
+                          .toList(),
                       onChanged: (dynamic value) {
                         setState(() {
                           _gatewayTypeId = value;

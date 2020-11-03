@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
@@ -25,6 +26,7 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditDesktop extends StatefulWidget {
@@ -42,9 +44,11 @@ class InvoiceEditDesktop extends StatefulWidget {
 }
 
 class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
-    with SingleTickerProviderStateMixin {
-  TabController _tabController;
+    with TickerProviderStateMixin {
+  TabController _optionTabController;
+  TabController _tableTabController;
 
+  bool _showTasksTable = false;
   FocusNode _focusNode;
 
   final _invoiceNumberController = TextEditingController();
@@ -71,8 +75,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   void initState() {
     super.initState();
 
+    final invoice = widget.viewModel.invoice;
+    _showTasksTable = invoice.hasTasks;
+
     _focusNode = FocusScopeNode();
-    _tabController = TabController(vsync: this, length: 5);
+    _optionTabController = TabController(vsync: this, length: 5);
+    _tableTabController = TabController(
+        vsync: this, length: 2, initialIndex: _showTasksTable ? 1 : 0);
   }
 
   @override
@@ -132,7 +141,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   @override
   void dispose() {
     _focusNode.dispose();
-    _tabController.dispose();
+    _optionTabController.dispose();
+    _tableTabController.dispose();
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -170,12 +180,22 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
     final company = viewModel.company;
-    final client = viewModel.state.clientState.get(invoice.clientId);
+    final client = state.clientState.get(invoice.clientId);
     final invoiceTotal =
         invoice.partial != 0 ? invoice.partial : invoice.calculateTotal;
     final entityType = invoice.entityType;
+
+    final countProducts = invoice.lineItems
+        .where((item) =>
+            !item.isEmpty && item.typeId != InvoiceItemEntity.TYPE_TASK)
+        .length;
+    final countTasks = invoice.lineItems
+        .where((item) =>
+            !item.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
+        .length;
 
     return ListView(
       key: ValueKey('__invoice_${invoice.id}__'),
@@ -197,7 +217,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ClientPicker(
                       //autofocus: kIsWeb,
                       clientId: invoice.clientId,
-                      clientState: viewModel.state.clientState,
+                      clientState: state.clientState,
                       onSelected: (client) =>
                           viewModel.onClientChanged(context, invoice, client),
                       onAddPressed: (completer) =>
@@ -315,7 +335,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                     if (entityType != EntityType.credit)
                       DatePicker(
-                        allowClearing: true,
                         labelText: entityType == EntityType.quote
                             ? localization.validUntil
                             : localization.dueDate,
@@ -420,9 +439,45 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
+        if (invoice.isInvoice &&
+            (invoice.hasTasks || (company.showTasksTable ?? false)))
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            child: AppTabBar(
+              onTap: (index) {
+                setState(() => _showTasksTable = index == 1);
+              },
+              controller: _tableTabController,
+              tabs: [
+                Tab(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(getEntityIcon(EntityType.product)),
+                      SizedBox(width: 8),
+                      Text(localization.products +
+                          (countProducts > 0 ? ' ($countProducts)' : '')),
+                    ],
+                  ),
+                ),
+                Tab(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(getEntityIcon(EntityType.task)),
+                      SizedBox(width: 8),
+                      Text(localization.tasks +
+                          (countTasks > 0 ? ' ($countTasks)' : '')),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         if (entityType == EntityType.credit)
           CreditEditItemsScreen(
             viewModel: widget.entityViewModel,
+            isTasks: _showTasksTable,
           )
         else if (entityType == EntityType.quote)
           QuoteEditItemsScreen(
@@ -431,11 +486,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         else if (entityType == EntityType.invoice)
           InvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
+            isTasks: _showTasksTable,
           )
         else if (entityType == EntityType.recurringInvoice)
           RecurringInvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
-          ),
+            isTasks: _showTasksTable,
+          )
+        else
+          SizedBox(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -450,7 +509,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 children: <Widget>[
                   AppTabBar(
                     isScrollable: true,
-                    controller: _tabController,
+                    controller: _optionTabController,
                     tabs: [
                       Tab(text: localization.publicNotes),
                       Tab(text: localization.privateNotes),
@@ -475,7 +534,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         ? 140
                         : 100,
                     child: TabBarView(
-                      controller: _tabController,
+                      controller: _optionTabController,
                       children: <Widget>[
                         DecoratedFormField(
                           maxLines: 6,
@@ -526,10 +585,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 ),
                               ],
                             ),
-                            if (client.isOld &&
-                                client.currencyId != company.currencyId)
-                              Row(
-                                children: [
+                            Row(
+                              children: [
+                                if (client.isOld &&
+                                    client.currencyId != company.currencyId)
                                   Expanded(
                                     child: DecoratedFormField(
                                       key: ValueKey(
@@ -549,15 +608,19 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       onSavePressed:
                                           widget.entityViewModel.onSavePressed,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 38,
-                                  ),
+                                  )
+                                else
                                   Expanded(
                                     child: SizedBox(),
-                                  )
-                                ],
-                              )
+                                  ),
+                                SizedBox(
+                                  width: 38,
+                                ),
+                                Expanded(
+                                  child: SizedBox(),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ],

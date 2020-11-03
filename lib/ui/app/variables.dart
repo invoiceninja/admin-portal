@@ -62,6 +62,7 @@ class _VariablesHelpState extends State<VariablesHelp>
               _VariableGrid(
                 fields: [
                   'view_link', // TODO change to email variables
+                  'view_url',
                   InvoiceFields.amount,
                   InvoiceFields.discount,
                   InvoiceFields.balance,

@@ -8,6 +8,10 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
+
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
+
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
@@ -46,8 +50,11 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
-      recurringInvoiceState: RecurringInvoiceState(),
+      taskStatusState: TaskStatusState(),
 
+      expenseCategoryState: ExpenseCategoryState(),
+
+      recurringInvoiceState: RecurringInvoiceState(),
       webhookState: WebhookState(),
       tokenState: TokenState(),
       paymentTermState: PaymentTermState(),
@@ -92,6 +99,10 @@ abstract class UserCompanyState
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
+  TaskStatusState get taskStatusState;
+
+  ExpenseCategoryState get expenseCategoryState;
+
   RecurringInvoiceState get recurringInvoiceState;
 
   WebhookState get webhookState;
@@ -152,7 +163,9 @@ abstract class SettingsUIState extends Object
       user: user ?? UserEntity(),
       entityType: client != null
           ? EntityType.client
-          : group != null ? EntityType.group : EntityType.company,
+          : group != null
+              ? EntityType.group
+              : EntityType.company,
       origClient: origClient ?? ClientEntity(),
       origGroup: origGroup ?? GroupEntity(),
       origCompany: origCompany ?? CompanyEntity(),

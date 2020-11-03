@@ -144,12 +144,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'requireAuthentication',
       serializers.serialize(object.requireAuthentication,
           specifiedType: const FullType(bool)),
-      'autoStartTasks',
-      serializers.serialize(object.autoStartTasks,
-          specifiedType: const FullType(bool)),
-      'addDocumentsToInvoice',
-      serializers.serialize(object.addDocumentsToInvoice,
-          specifiedType: const FullType(bool)),
       'rowsPerPage',
       serializers.serialize(object.rowsPerPage,
           specifiedType: const FullType(int)),
@@ -217,14 +211,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'requireAuthentication':
           result.requireAuthentication = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'autoStartTasks':
-          result.autoStartTasks = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'addDocumentsToInvoice':
-          result.addDocumentsToInvoice = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'rowsPerPage':
@@ -440,10 +426,6 @@ class _$PrefState extends PrefState {
   @override
   final bool requireAuthentication;
   @override
-  final bool autoStartTasks;
-  @override
-  final bool addDocumentsToInvoice;
-  @override
   final int rowsPerPage;
   @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
@@ -463,8 +445,6 @@ class _$PrefState extends PrefState {
       this.showFilterSidebar,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
-      this.autoStartTasks,
-      this.addDocumentsToInvoice,
       this.rowsPerPage,
       this.companyPrefs})
       : super._() {
@@ -502,12 +482,6 @@ class _$PrefState extends PrefState {
     if (requireAuthentication == null) {
       throw new BuiltValueNullFieldError('PrefState', 'requireAuthentication');
     }
-    if (autoStartTasks == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'autoStartTasks');
-    }
-    if (addDocumentsToInvoice == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'addDocumentsToInvoice');
-    }
     if (rowsPerPage == null) {
       throw new BuiltValueNullFieldError('PrefState', 'rowsPerPage');
     }
@@ -538,8 +512,6 @@ class _$PrefState extends PrefState {
         showFilterSidebar == other.showFilterSidebar &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
-        autoStartTasks == other.autoStartTasks &&
-        addDocumentsToInvoice == other.addDocumentsToInvoice &&
         rowsPerPage == other.rowsPerPage &&
         companyPrefs == other.companyPrefs;
   }
@@ -558,28 +530,17 @@ class _$PrefState extends PrefState {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                0,
-                                                                appLayout
-                                                                    .hashCode),
-                                                            moduleLayout
-                                                                .hashCode),
-                                                        menuSidebarMode
-                                                            .hashCode),
-                                                    historySidebarMode
-                                                        .hashCode),
-                                                isPreviewVisible.hashCode),
-                                            isMenuVisible.hashCode),
-                                        isHistoryVisible.hashCode),
-                                    enableDarkMode.hashCode),
-                                showFilterSidebar.hashCode),
-                            longPressSelectionIsDefault.hashCode),
-                        requireAuthentication.hashCode),
-                    autoStartTasks.hashCode),
-                addDocumentsToInvoice.hashCode),
+                                                $jc($jc(0, appLayout.hashCode),
+                                                    moduleLayout.hashCode),
+                                                menuSidebarMode.hashCode),
+                                            historySidebarMode.hashCode),
+                                        isPreviewVisible.hashCode),
+                                    isMenuVisible.hashCode),
+                                isHistoryVisible.hashCode),
+                            enableDarkMode.hashCode),
+                        showFilterSidebar.hashCode),
+                    longPressSelectionIsDefault.hashCode),
+                requireAuthentication.hashCode),
             rowsPerPage.hashCode),
         companyPrefs.hashCode));
   }
@@ -598,8 +559,6 @@ class _$PrefState extends PrefState {
           ..add('showFilterSidebar', showFilterSidebar)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
-          ..add('autoStartTasks', autoStartTasks)
-          ..add('addDocumentsToInvoice', addDocumentsToInvoice)
           ..add('rowsPerPage', rowsPerPage)
           ..add('companyPrefs', companyPrefs))
         .toString();
@@ -663,16 +622,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set requireAuthentication(bool requireAuthentication) =>
       _$this._requireAuthentication = requireAuthentication;
 
-  bool _autoStartTasks;
-  bool get autoStartTasks => _$this._autoStartTasks;
-  set autoStartTasks(bool autoStartTasks) =>
-      _$this._autoStartTasks = autoStartTasks;
-
-  bool _addDocumentsToInvoice;
-  bool get addDocumentsToInvoice => _$this._addDocumentsToInvoice;
-  set addDocumentsToInvoice(bool addDocumentsToInvoice) =>
-      _$this._addDocumentsToInvoice = addDocumentsToInvoice;
-
   int _rowsPerPage;
   int get rowsPerPage => _$this._rowsPerPage;
   set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
@@ -698,8 +647,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _showFilterSidebar = _$v.showFilterSidebar;
       _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
       _requireAuthentication = _$v.requireAuthentication;
-      _autoStartTasks = _$v.autoStartTasks;
-      _addDocumentsToInvoice = _$v.addDocumentsToInvoice;
       _rowsPerPage = _$v.rowsPerPage;
       _companyPrefs = _$v.companyPrefs?.toBuilder();
       _$v = null;
@@ -737,8 +684,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               showFilterSidebar: showFilterSidebar,
               longPressSelectionIsDefault: longPressSelectionIsDefault,
               requireAuthentication: requireAuthentication,
-              autoStartTasks: autoStartTasks,
-              addDocumentsToInvoice: addDocumentsToInvoice,
               rowsPerPage: rowsPerPage,
               companyPrefs: companyPrefs.build());
     } catch (_) {

@@ -195,5 +195,7 @@ class AuthRepository {
 
   String get _tokenName => kIsWeb
       ? 'web_client'
-      : Platform.isAndroid ? 'android_client' : 'ios_client';
+      : Platform.isAndroid
+          ? 'android_client'
+          : 'ios_client';
 }

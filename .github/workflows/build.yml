@@ -11,18 +11,20 @@ jobs:
       commit_email: ${{secrets.commit_email}}
       commit_name: ${{secrets.commit_name}}
       app_sentry: ${{secrets.app_sentry}}
+      api_secret: ${{secrets.api_secret}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'dev' # TODO change to beta/stable
-          #flutter-version: '1.19.0-5.0.pre'
+          channel: 'beta' # TODO change to beta/stable
+          #flutter-version: '1.22.0-12.0.pre'
+          #channel: 'dev'
       - run: flutter pub get
       - run: |
           cp lib/.env.dart.example lib/.env.dart
           cp android/app/build.gradle.prod android/app/build.gradle
-          sed -i 's/secret/password/g' lib/.env.dart
+          sed -i 's/secret/${{secrets.api_secret}}/g' lib/.env.dart
           sed -i 's/dns/${{secrets.app_sentry}}/g' lib/.env.dart
           sed -i -e '/OTHER_LANGUAGES/{r lib/utils/i18n' -e 'd}' lib/utils/i18n.dart
       - run: flutter upgrade
@@ -36,9 +38,10 @@ jobs:
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
           cd invoiceninja
-          git checkout v2
+          git checkout v5-develop
 
           cp -r ../build/web/* ./public/
+          rm ./public/index.html
           git add .
           git commit -m 'New admin portal build'
           git push

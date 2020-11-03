@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
@@ -36,14 +37,26 @@ class InvoiceOverview extends StatelessWidget {
     final company = viewModel.company;
 
     final state = StoreProvider.of<AppState>(context).state;
+    final creditMap = <PaymentableEntity, PaymentEntity>{};
+    final paymentMap = <PaymentableEntity, PaymentEntity>{};
     final payments = invoice.isInvoice
         ? memoizedPaymentsByInvoice(
             invoice.id, state.paymentState.map, state.paymentState.list)
-        : <PaymentEntity>[];
-    final credits = <InvoiceEntity>[];
+        : invoice.isCredit
+            ? memoizedPaymentsByCredit(
+                invoice.id, state.paymentState.map, state.paymentState.list)
+            : <PaymentEntity>[];
+
     payments.forEach((payment) {
+      payment.invoicePaymentables.forEach((paymentable) {
+        if (paymentable.invoiceId == invoice.id) {
+          paymentMap[paymentable] = payment;
+        }
+      });
       payment.creditPaymentables.forEach((paymentable) {
-        credits.add(state.creditState.get(paymentable.creditId));
+        if (paymentable.creditId == invoice.id) {
+          creditMap[paymentable] = payment;
+        }
       });
     });
 
@@ -90,6 +103,16 @@ class InvoiceOverview extends StatelessWidget {
       ),
       ListDivider(),
     ];
+
+    if ((invoice.privateNotes ?? '').isNotEmpty) {
+      widgets.addAll([
+        IconMessage(
+          invoice.privateNotes,
+          iconData: Icons.lock,
+        ),
+        ListDivider(),
+      ]);
+    }
 
     String dueDateField = InvoiceFields.dueDate;
     if (invoice.isQuote) {
@@ -187,6 +210,23 @@ class InvoiceOverview extends StatelessWidget {
       ));
     }
 
+    if ((invoice.recurringId ?? '').isNotEmpty) {
+      final recurringInvoice =
+          state.recurringInvoiceState.get(invoice.recurringId);
+      widgets.add(EntityListTile(entity: recurringInvoice, isFilter: isFilter));
+    } else if (invoice.isRecurring) {
+      widgets.add(EntitiesListTile(
+        entity: invoice,
+        isFilter: isFilter,
+        hideNew: true,
+        entityType: EntityType.invoice,
+        title: localization.invoices,
+        subtitle: memoizedRecurringInvoiceStatsForInvoice(
+                invoice.id, state.invoiceState.map)
+            .present(localization.active, localization.archived),
+      ));
+    }
+
     if (invoice.isQuote || invoice.isCredit) {
       final relatedInvoice = state.invoiceState.map[invoice.invoiceId] ??
           InvoiceEntity(id: invoice.invoiceId);
@@ -198,16 +238,22 @@ class InvoiceOverview extends StatelessWidget {
       }
     }
 
-    if (payments.isNotEmpty) {
-      payments.forEach((payment) {
+    if (paymentMap.isNotEmpty) {
+      paymentMap.entries.forEach((entry) {
+        final payment = entry.value;
+        final paymentable = entry.key;
+        String amount =
+            formatNumber(paymentable.amount, context, clientId: client.id);
+        if (paymentable.amount != payment.amount) {
+          amount +=
+              '/' + formatNumber(payment.amount, context, clientId: client.id);
+        }
+
         widgets.add(
           EntityListTile(
             isFilter: isFilter,
             entity: payment,
-            subtitle:
-                formatNumber(payment.amount, context, clientId: client.id) +
-                    ' • ' +
-                    formatDate(payment.date, context),
+            subtitle: amount + ' • ' + formatDate(payment.date, context),
           ),
         );
       });
@@ -217,16 +263,22 @@ class InvoiceOverview extends StatelessWidget {
       ]);
     }
 
-    if (credits.isNotEmpty) {
-      credits.forEach((credit) {
+    if (creditMap.isNotEmpty) {
+      creditMap.entries.forEach((entry) {
+        final credit = entry.value;
+        final paymentable = entry.key;
+        String amount =
+            formatNumber(paymentable.amount, context, clientId: client.id);
+        if (paymentable.amount != credit.amount) {
+          amount +=
+              '/' + formatNumber(credit.amount, context, clientId: client.id);
+        }
+
         widgets.add(
           EntityListTile(
             isFilter: isFilter,
             entity: credit,
-            subtitle:
-                formatNumber(credit.amount, context, clientId: client.id) +
-                    ' • ' +
-                    formatDate(credit.date, context),
+            subtitle: amount + ' • ' + formatDate(credit.date, context),
           ),
         );
       });
@@ -239,13 +291,6 @@ class InvoiceOverview extends StatelessWidget {
     widgets.addAll([
       FieldGrid(fields),
     ]);
-
-    if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
-      widgets.addAll([
-        IconMessage(invoice.privateNotes),
-        ListDivider(),
-      ]);
-    }
 
     if (invoice.lineItems.isNotEmpty) {
       invoice.lineItems.forEach((invoiceItem) {
@@ -342,6 +387,13 @@ class InvoiceOverview extends StatelessWidget {
 
     widgets.add(surchargeRow(localization.total,
         invoice.partial != 0 ? invoice.partial : invoice.calculateTotal));
+
+    if ((invoice.publicNotes ?? '').isNotEmpty) {
+      widgets.addAll([
+        ListDivider(),
+        IconMessage(invoice.publicNotes),
+      ]);
+    }
 
     return ListView(
       children: widgets,

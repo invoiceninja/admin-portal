@@ -44,12 +44,14 @@ abstract class ProjectItemResponse
 }
 
 class ProjectFields {
+  static const String number = 'number';
   static const String name = 'name';
   static const String clientId = 'client_id';
   static const String client = 'client';
   static const String taskRate = 'task_rate';
   static const String dueDate = 'due_date';
   static const String privateNotes = 'private_notes';
+  static const String publicNotes = 'public_notes';
   static const String budgetedHours = 'budgeted_hours';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
@@ -58,6 +60,7 @@ class ProjectFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String documents = 'documents';
 }
 
 abstract class ProjectEntity extends Object
@@ -66,12 +69,14 @@ abstract class ProjectEntity extends Object
   factory ProjectEntity({String id, AppState state}) {
     return _$ProjectEntity._(
       id: id ?? BaseEntity.nextId,
+      number: '',
       isChanged: false,
       name: '',
       clientId: '',
       taskRate: 0.0,
       dueDate: '',
       privateNotes: '',
+      publicNotes: '',
       budgetedHours: 0.0,
       customValue1: '',
       customValue2: '',
@@ -83,6 +88,7 @@ abstract class ProjectEntity extends Object
       createdUserId: '',
       createdAt: 0,
       assignedUserId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -117,6 +123,9 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
+  @BuiltValueField(wireName: 'public_notes')
+  String get publicNotes;
+
   @BuiltValueField(wireName: 'budgeted_hours')
   double get budgetedHours;
 
@@ -132,6 +141,11 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
+  @nullable // TODO remove this
+  String get number;
+
+  BuiltList<DocumentEntity> get documents;
+
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
@@ -140,22 +154,37 @@ abstract class ProjectEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.edit);
+    if (!multiselect) {
+      if (!isDeleted) {
+        if (includeEdit && userCompany.canEditEntity(this)) {
+          actions.add(EntityAction.edit);
+        }
+
+        if (isActive && client?.isActive == true) {
+          if (userCompany.canCreate(EntityType.invoice)) {
+            actions.add(EntityAction.newInvoice);
+          }
+          if (userCompany.canCreate(EntityType.recurringInvoice)) {
+            actions.add(EntityAction.newRecurringInvoice);
+          }
+          if (userCompany.canCreate(EntityType.quote)) {
+            actions.add(EntityAction.newQuote);
+          }
+          if (userCompany.canCreate(EntityType.credit)) {
+            actions.add(EntityAction.newCredit);
+          }
+          if (userCompany.canCreate(EntityType.task)) {
+            actions.add(EntityAction.newTask);
+          }
+          if (userCompany.canCreate(EntityType.expense)) {
+            actions.add(EntityAction.newExpense);
+          }
+        }
       }
 
-      if (userCompany.canCreate(EntityType.task) && isActive) {
-        actions.add(EntityAction.newTask);
+      if (userCompany.canCreate(EntityType.project)) {
+        actions.add(EntityAction.clone);
       }
-
-      if (userCompany.canCreate(EntityType.invoice) && isActive) {
-        actions.add(EntityAction.newInvoice);
-      }
-    }
-
-    if (userCompany.canCreate(EntityType.project)) {
-      actions.add(EntityAction.clone);
     }
 
     if (actions.isNotEmpty) {
@@ -183,6 +212,7 @@ abstract class ProjectEntity extends Object
       case ProjectFields.taskRate:
         response = projectA.taskRate.compareTo(projectB.taskRate);
         break;
+      case ProjectFields.clientId:
       case ProjectFields.client:
         final clientA = clientMap[projectA.clientId] ?? ClientEntity();
         final clientB = clientMap[projectB.clientId] ?? ClientEntity();
@@ -195,6 +225,9 @@ abstract class ProjectEntity extends Object
         break;
       case ProjectFields.privateNotes:
         response = projectA.privateNotes.compareTo(projectB.privateNotes);
+        break;
+      case ProjectFields.publicNotes:
+        response = projectA.publicNotes.compareTo(projectB.publicNotes);
         break;
       case ProjectFields.budgetedHours:
         response = projectA.budgetedHours.compareTo(projectB.budgetedHours);
@@ -230,6 +263,25 @@ abstract class ProjectEntity extends Object
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
+      case ProjectFields.documents:
+        response =
+            projectA.documents.length.compareTo(projectB.documents.length);
+        break;
+      case ProjectFields.number:
+        response = projectA.number.compareTo(projectB.number);
+        break;
+      case ProjectFields.customValue1:
+        response = projectA.customValue1.compareTo(projectB.customValue1);
+        break;
+      case ProjectFields.customValue2:
+        response = projectA.customValue2.compareTo(projectB.customValue2);
+        break;
+      case ProjectFields.customValue3:
+        response = projectA.customValue3.compareTo(projectB.customValue3);
+        break;
+      case ProjectFields.customValue4:
+        response = projectA.customValue4.compareTo(projectB.customValue4);
+        break;
       default:
         print('## ERROR: sort by project.$sortField is not implemented');
         break;
@@ -243,6 +295,7 @@ abstract class ProjectEntity extends Object
     return matchesStrings(
       haystacks: [
         name,
+        number,
         customValue1,
         customValue2,
         customValue3,
@@ -256,6 +309,8 @@ abstract class ProjectEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
+        name,
+        number,
         customValue1,
         customValue2,
         customValue3,

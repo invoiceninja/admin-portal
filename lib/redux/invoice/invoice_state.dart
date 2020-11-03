@@ -56,8 +56,7 @@ abstract class InvoiceUIState extends Object
     implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
-      listUIState:
-          ListUIState(InvoiceFields.number, sortAscending: false),
+      listUIState: ListUIState(InvoiceFields.number, sortAscending: false),
       editing: InvoiceEntity(),
       selectedId: '',
     );

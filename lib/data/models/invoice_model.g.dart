@@ -347,6 +347,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.invoiceId,
             specifiedType: const FullType(String)));
     }
+    if (object.recurringId != null) {
+      result
+        ..add('recurring_id')
+        ..add(serializers.serialize(object.recurringId,
+            specifiedType: const FullType(String)));
+    }
     if (object.filename != null) {
       result
         ..add('filename')
@@ -626,6 +632,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.invoiceId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'recurring_id':
+          result.recurringId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'filename':
           result.filename = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -771,13 +781,13 @@ class _$InvoiceItemEntitySerializer
     }
     if (object.taskId != null) {
       result
-        ..add('task_public_id')
+        ..add('task_id')
         ..add(serializers.serialize(object.taskId,
             specifiedType: const FullType(String)));
     }
     if (object.expenseId != null) {
       result
-        ..add('expense_public_id')
+        ..add('expense_id')
         ..add(serializers.serialize(object.expenseId,
             specifiedType: const FullType(String)));
     }
@@ -866,11 +876,11 @@ class _$InvoiceItemEntitySerializer
           result.discount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'task_public_id':
+        case 'task_id':
           result.taskId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'expense_public_id':
+        case 'expense_id':
           result.expenseId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
@@ -1466,6 +1476,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String invoiceId;
   @override
+  final String recurringId;
+  @override
   final String filename;
   @override
   final BuiltList<InvoiceScheduleEntity> recurringDates;
@@ -1554,6 +1566,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.remainingCycles,
       this.dueDateDays,
       this.invoiceId,
+      this.recurringId,
       this.filename,
       this.recurringDates,
       this.lineItems,
@@ -1771,6 +1784,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         remainingCycles == other.remainingCycles &&
         dueDateDays == other.dueDateDays &&
         invoiceId == other.invoiceId &&
+        recurringId == other.recurringId &&
         filename == other.filename &&
         recurringDates == other.recurringDates &&
         lineItems == other.lineItems &&
@@ -1810,10 +1824,10 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), autoBillEnabled.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode),
-                                                                                remainingCycles.hashCode),
-                                                                            dueDateDays.hashCode),
-                                                                        invoiceId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), autoBillEnabled.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode),
+                                                                                dueDateDays.hashCode),
+                                                                            invoiceId.hashCode),
+                                                                        recurringId.hashCode),
                                                                     filename.hashCode),
                                                                 recurringDates.hashCode),
                                                             lineItems.hashCode),
@@ -1887,6 +1901,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('remainingCycles', remainingCycles)
           ..add('dueDateDays', dueDateDays)
           ..add('invoiceId', invoiceId)
+          ..add('recurringId', recurringId)
           ..add('filename', filename)
           ..add('recurringDates', recurringDates)
           ..add('lineItems', lineItems)
@@ -2132,6 +2147,10 @@ class InvoiceEntityBuilder
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
+  String _recurringId;
+  String get recurringId => _$this._recurringId;
+  set recurringId(String recurringId) => _$this._recurringId = recurringId;
+
   String _filename;
   String get filename => _$this._filename;
   set filename(String filename) => _$this._filename = filename;
@@ -2264,6 +2283,7 @@ class InvoiceEntityBuilder
       _remainingCycles = _$v.remainingCycles;
       _dueDateDays = _$v.dueDateDays;
       _invoiceId = _$v.invoiceId;
+      _recurringId = _$v.recurringId;
       _filename = _$v.filename;
       _recurringDates = _$v.recurringDates?.toBuilder();
       _lineItems = _$v.lineItems?.toBuilder();
@@ -2356,6 +2376,7 @@ class InvoiceEntityBuilder
               remainingCycles: remainingCycles,
               dueDateDays: dueDateDays,
               invoiceId: invoiceId,
+              recurringId: recurringId,
               filename: filename,
               recurringDates: _recurringDates?.build(),
               lineItems: lineItems.build(),

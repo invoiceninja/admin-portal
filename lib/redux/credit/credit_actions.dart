@@ -483,6 +483,12 @@ Future handleCreditAction(
     case EntityAction.cloneToCredit:
       createEntity(context: context, entity: credit.clone);
       break;
+    case EntityAction.cloneToRecurring:
+      createEntity(
+          context: context,
+          entity: credit.clone
+              .rebuild((b) => b..entityType = EntityType.recurringInvoice));
+      break;
     case EntityAction.newPayment:
       createEntity(
         context: context,

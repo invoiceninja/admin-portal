@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
@@ -91,6 +92,13 @@ class _PaymentRefundState extends State<PaymentRefund> {
       paymentables.add(PaymentableEntity());
     }
 
+    final state = viewModel.state;
+    final companyGateway =
+        state.companyGatewayState.get(payment.companyGatewayId);
+    final GatewayEntity gateway =
+        state.staticState.gatewayMap[companyGateway.gatewayId] ??
+            GatewayEntity();
+
     final body = Form(
       key: _formKey,
       child: Column(
@@ -138,7 +146,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
                 onChanged: (value) => viewModel
                     .onChanged(payment.rebuild((b) => b..sendEmail = value)),
               ),
-              if (payment.isOnline)
+              if (gateway.supportsRefunds)
                 SwitchListTile(
                   activeColor: Theme.of(context).accentColor,
                   title: Text(localization.gatewayRefund),
@@ -308,6 +316,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         Expanded(
           child: EntityDropdown(
             key: Key('__invoice_${payment.clientId}__'),
+            allowClearing: false,
             entityType: EntityType.invoice,
             labelText: AppLocalization.of(context).invoice,
             entityId: paymentable.invoiceId,

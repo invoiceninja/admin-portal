@@ -8,7 +8,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.17';
+const String kClientVersion = '5.0.24';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -31,6 +31,8 @@ const String kGoogleStoreUrl =
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
+const String kGitHubDiffUrl =
+    'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 
 enum AppEnvironment {
   hosted,
@@ -42,13 +44,8 @@ enum AppEnvironment {
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
-const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefToken = 'checksum';
-
-// TODO remove these
-const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
-const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 
 const String kProductPlanPro = 'v1_pro_yearly';
 const String kProductPlanEnterprise2 = 'v1_enterprise_2_yearly';
@@ -70,7 +67,7 @@ const double kDrawerWidth = 300;
 const double kTableColumnGap = 20;
 const double kTopBottomBarHeight = 50;
 const double kDialogWidth = 400;
-const double kDashboardPanelHeight = 509; // TODO remove this
+const double kDashboardPanelHeight = 525; // TODO remove this
 
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
@@ -99,6 +96,7 @@ const String kPlanEnterprise = 'enterprise';
 const String kPlanWhiteLabel = 'white_label';
 
 const double kGutterWidth = 16;
+const double kLighterOpacity = .6;
 
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
@@ -180,23 +178,22 @@ const kCreditStatuses = {
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
 const String kGatewayTypePayPal = '3';
-const String kGatewayTypeBitcoin = '4';
-//const String kGatewayTypeDwolla = '5';
-const String kGatewayTypeCustom = '6';
-const String kGatewayTypeAlipay = '7';
-const String kGatewayTypeSofort = '8';
-const String kGatewayTypeGoCardless = '9';
-const String kGatewayTypeApplePay = '10';
+const String kGatewayTypeCrypto = '4';
+const String kGatewayTypeCustom = '5';
+const String kGatewayTypeAlipay = '6';
+const String kGatewayTypeSofort = '7';
+const String kGatewayTypeApplePay = '8';
+const String kGatewayTypeSEPA = '9';
+const String kGatewayTypeCredit = '10';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
   kGatewayTypeBankTransfer: 'bank_transfer',
   kGatewayTypePayPal: 'paypal',
-  kGatewayTypeBitcoin: 'bitcoin',
+  kGatewayTypeCrypto: 'crypto',
   kGatewayTypeCustom: 'custom',
   kGatewayTypeAlipay: 'alipay',
   kGatewayTypeSofort: 'sofort',
-  kGatewayTypeGoCardless: 'gocardless',
   kGatewayTypeApplePay: 'apple_pay',
 };
 
@@ -289,19 +286,6 @@ const kAgeGroups = {
   kAgeGroup120: 120,
 };
 
-/*
-const String kEmailTemplateInvoice = 'invoice_email';
-const String kEmailTemplateQuote = 'quote_email';
-const String kEmailTemplatePayment = 'payment_email';
-const String kEmailTemplateReminder1 = 'first_reminder';
-const String kEmailTemplateReminder2 = 'second_reminder';
-const String kEmailTemplateReminder3 = 'third_reminder';
-const String kEmailTemplateReminder4 = 'endless_reminder';
-const String kEmailTemplateCustom1 = 'first_custom';
-const String kEmailTemplateCustom2 = 'second_custom';
-const String kEmailTemplateCustom3 = 'third_custom';
-*/
-
 const String kReminderScheduleAfterInvoiceDate = 'after_invoice_date';
 const String kReminderScheduleBeforeDueDate = 'before_due_date';
 const String kReminderScheduleAfterDueDate = 'after_due_date';
@@ -313,14 +297,17 @@ const String kSettingsPaymentTermEdit = 'payment_term_edit';
 const String kSettingsUserDetails = 'user_details';
 const String kSettingsLocalization = 'localization';
 const String kSettingsOnlinePayments = 'online_payments';
-const String kSettingsOnlinePaymentsView = 'online_payments_view';
-const String kSettingsOnlinePaymentsEdit = 'online_payments_edit';
+const String kSettingsCompanyGateways = 'company_gateways';
+const String kSettingsCompanyGatewaysView = 'company_gateways_view';
+const String kSettingsCompanyGatewaysEdit = 'company_gateways_edit';
 const String kSettingsTaxSettings = 'tax_settings';
 const String kSettingsTaxRates = 'tax_settings_rates';
 const String kSettingsTaxRatesView = 'tax_settings_rates_view';
 const String kSettingsTaxRatesEdit = 'tax_settings_rates_edit';
 const String kSettingsIntegrations = 'integrations';
 const String kSettingsProducts = 'product_settings';
+const String kSettingsTasks = 'task_settings';
+const String kSettingsExpenses = 'expense_settings';
 const String kSettingsImportExport = 'import_export';
 const String kSettingsDeviceSettings = 'device_settings';
 const String kSettingsGroupSettings = 'group_settings';
@@ -350,6 +337,12 @@ const String kSettingsTokenEdit = 'token_edit';
 const String kSettingsWebhooks = 'webhook';
 const String kSettingsWebhookView = 'webhook_view';
 const String kSettingsWebhookEdit = 'webhook_edit';
+const String kSettingsExpenseCategories = 'expense_category';
+const String kSettingsExpenseCategoryView = 'expense_category_view';
+const String kSettingsExpenseCategoryEdit = 'expense_category_edit';
+const String kSettingsTaskStatuses = 'task_status';
+const String kSettingsTaskStatusView = 'task_status_view';
+const String kSettingsTaskStatusEdit = 'task_status_edit';
 
 const String kReportClient = 'client';
 const String kReportCredit = 'credit';
@@ -401,6 +394,12 @@ const String kExpenseStatusLogged = '1';
 const String kExpenseStatusPending = '2';
 const String kExpenseStatusInvoiced = '3';
 
+const kExpenseStatuses = {
+  kExpenseStatusLogged: 'logged',
+  kExpenseStatusPending: 'pending',
+  kExpenseStatusInvoiced: 'invoiced',
+};
+
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultAccentColor = '#0091EA';
@@ -435,19 +434,19 @@ Color kColorRed = convertHexStringToColor('#8D3E3F');
 Color kColorGreen = convertHexStringToColor('#407535');
 
 const Map<int, String> kModules = {
+  kModuleInvoices: 'invoices',
+  kModuleRecurringInvoices: 'recurring_invoices',
   kModuleQuotes: 'quotes',
   kModuleCredits: 'credits',
   kModuleProjects: 'projects',
   kModuleTasks: 'tasks',
   kModuleVendors: 'vendors',
   kModuleExpenses: 'expenses',
-  kModuleProposals: 'proposals',
-  kModuleTickets: 'tickets',
-  kModuleRecurringInvoices: 'recurring_invoices',
-  kModuleRecurringTasks: 'recurring_tasks',
-  kModuleRecurringExpenses: 'recurring_expenses',
-  kModuleRecurringQuotes: 'recurring_quotes',
-  kModuleInvoices: 'invoices',
+  //kModuleProposals: 'proposals',
+  //kModuleTickets: 'tickets',
+  //kModuleRecurringTasks: 'recurring_tasks',
+  //kModuleRecurringExpenses: 'recurring_expenses',
+  //kModuleRecurringQuotes: 'recurring_quotes',
 };
 
 class InvoiceStatusColors {
@@ -512,6 +511,14 @@ class ExpenseStatusColors {
     kExpenseStatusLogged: convertHexStringToColor('#505F73'),
     kExpenseStatusPending: Colors.orange,
     kExpenseStatusInvoiced: kColorGreen,
+  };
+}
+
+class TaskStatusColors {
+  static var colors = {
+    kTaskStatusLogged: convertHexStringToColor('#444444'),
+    kTaskStatusRunning: Colors.blue,
+    kTaskStatusInvoiced: kColorGreen,
   };
 }
 

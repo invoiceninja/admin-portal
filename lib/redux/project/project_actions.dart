@@ -266,6 +266,7 @@ void handleProjectAction(
   final state = store.state;
   final project = projects.first as ProjectEntity;
   final projectIds = projects.map((project) => project.id).toList();
+  final client = state.clientState.get(project.clientId);
 
   switch (action) {
     case EntityAction.edit:
@@ -283,10 +284,15 @@ void handleProjectAction(
           convertProjectToInvoiceItem(project: project, context: context);
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state).rebuild((b) => b
+          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
             ..hasTasks = true
-            ..clientId = project.clientId
             ..lineItems.addAll(items)));
+      break;
+    case EntityAction.newExpense:
+      createEntity(
+          context: context,
+          entity: ExpenseEntity(state: state, client: client)
+              .rebuild((b) => b..projectId = project.id));
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: project.clone);
@@ -350,3 +356,27 @@ class RemoveFromProjectMultiselect {
 }
 
 class ClearProjectMultiselect {}
+
+class SaveProjectDocumentRequest implements StartSaving {
+  SaveProjectDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.project,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final ProjectEntity project;
+}
+
+class SaveProjectDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveProjectDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveProjectDocumentFailure implements StopSaving {
+  SaveProjectDocumentFailure(this.error);
+
+  final Object error;
+}
