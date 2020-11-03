@@ -82,19 +82,19 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.client:
-          value = client.displayName;
+          value = client?.displayName;
           break;
         case ProfitAndLossReportFields.client_address1:
-          value = client.address1;
+          value = client?.address1;
           break;
         case ProfitAndLossReportFields.client_address2:
-          value = client.address2;
+          value = client?.address2;
           break;
         case ProfitAndLossReportFields.client_shipping_address1:
-          value = client.shippingAddress1;
+          value = client?.shippingAddress1;
           break;
         case ProfitAndLossReportFields.client_shipping_address2:
-          value = client.shippingAddress2;
+          value = client?.shippingAddress2;
           break;
         case ProfitAndLossReportFields.vendor:
           value = vendor?.listDisplayName;
@@ -109,10 +109,10 @@ ReportResult profitAndLossReport(
           value = staticState.countryMap[vendor?.countryId];
           break;
         case ProfitAndLossReportFields.amount:
-          value = payment.amount;
+          value = payment?.amount;
           break;
         case ProfitAndLossReportFields.date:
-          value = payment.date;
+          value = payment?.date;
           break;
       }
 
@@ -153,22 +153,22 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.client:
-          value = client.displayName;
+          value = client?.displayName;
           break;
         case ProfitAndLossReportFields.client_address1:
-          value = client.address1;
+          value = client?.address1;
           break;
         case ProfitAndLossReportFields.client_address2:
-          value = client.address2;
+          value = client?.address2;
           break;
         case ProfitAndLossReportFields.client_shipping_address1:
-          value = client.shippingAddress1;
+          value = client?.shippingAddress1;
           break;
         case ProfitAndLossReportFields.client_shipping_address2:
-          value = client.shippingAddress2;
+          value = client?.shippingAddress2;
           break;
         case ProfitAndLossReportFields.vendor:
-          value = vendor.listDisplayName;
+          value = vendor?.listDisplayName;
           break;
         case ProfitAndLossReportFields.vendor_city:
           value = vendor?.city;
