@@ -11,6 +11,8 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class ClientEditDetails extends StatefulWidget {
   const ClientEditDetails({
@@ -37,6 +39,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers;
+  Contact _contact;
 
   @override
   void didChangeDependencies() {
@@ -101,6 +104,25 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     });
   }
 
+  //Check contacts permission
+  Future<PermissionStatus> _getPermission() async {
+    final PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.denied) {
+      final Map<Permission, PermissionStatus> permissionStatus =
+          await [Permission.contacts].request();
+      return permissionStatus[Permission.contacts] ??
+          PermissionStatus.undetermined;
+    } else {
+      return permission;
+    }
+  }
+
+  void _setContactControllers(){
+    _nameController.text = _contact.displayName;
+    _phoneController.text = _contact.phones.first.value;
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -114,13 +136,36 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
         FormCard(
           children: <Widget>[
             DecoratedFormField(
-              autofocus: true,
-              label: localization.name,
+              autofocus: true,      
               controller: _nameController,
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
               onSavePressed: viewModel.onSavePressed,
+              decoration: InputDecoration(
+                labelText: localization.name,
+                suffixIcon: IconButton(
+                  alignment: Alignment.bottomCenter,
+                  color: Theme.of(context).cardColor,
+                  icon: Icon(
+                    Icons.person,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () async {
+                    final PermissionStatus permissionStatus = await _getPermission();
+                    if (permissionStatus == PermissionStatus.granted) {
+                      try {
+                        _contact = await ContactsService.openDeviceContactPicker();
+                        setState(() {
+                          _setContactControllers();
+                        });
+                      } catch (e) {
+                        print(e.toString());
+                      }
+                    }
+                  }
+                ),
+              ),
             ),
             DynamicSelector(
               entityType: EntityType.group,

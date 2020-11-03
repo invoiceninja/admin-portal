@@ -8,6 +8,8 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class VendorEditContacts extends StatefulWidget {
   const VendorEditContacts({
@@ -159,6 +161,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
+  Contact _contact;
 
   @override
   void didChangeDependencies() {
@@ -211,6 +214,27 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     });
   }
 
+  void _setContactControllers(){
+    _firstNameController.text = _contact.givenName != null ? _contact.givenName: '';
+    _lastNameController.text = _contact.familyName != null ? _contact.familyName: '';
+    _emailController.text = _contact.emails.isNotEmpty ? _contact.emails.first.value : '';
+    _phoneController.text = _contact.phones.isNotEmpty ? _contact.phones.first.value : '';
+  }
+
+  // Check contacts permission
+  Future<PermissionStatus> _getPermission() async {
+    final PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.denied) {
+      final Map<Permission, PermissionStatus> permissionStatus =
+          await [Permission.contacts].request();
+      return permissionStatus[Permission.contacts] ??
+          PermissionStatus.undetermined;
+    } else {
+      return permission;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -261,7 +285,30 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
                 : Container(),
             DecoratedFormField(
               controller: _firstNameController,
-              label: localization.firstName,
+              decoration: InputDecoration(
+                labelText: localization.firstName,
+                suffixIcon: IconButton(
+                  alignment: Alignment.bottomCenter,
+                  color: Theme.of(context).cardColor,
+                  icon: Icon(
+                    Icons.person,
+                      color: Colors.grey,
+                    ),
+                  onPressed: () async {
+                    final PermissionStatus permissionStatus = await _getPermission();
+                    if (permissionStatus == PermissionStatus.granted) {
+                      try {
+                        _contact = await ContactsService.openDeviceContactPicker();
+                        setState(() {
+                          _setContactControllers();
+                        });
+                      } catch (e) {
+                        print(e.toString());
+                      }
+                    }
+                  }
+                ),
+              ),
             ),
             DecoratedFormField(
               controller: _lastNameController,
