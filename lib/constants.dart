@@ -750,3 +750,7 @@ const String kActivityPaidInvoice = '54';
 const String kActivityEmailInvoiceFailed = '57';
 const String kActivityReversedInvoice = '58';
 const String kActivityCancelledInvoice = '59';
+const String kActivityViewCredit = '60';
+const String kActivityUpdateClient = '61';
+const String kActivityUpdateVendor = '62';
+

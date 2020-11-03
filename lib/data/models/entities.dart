@@ -586,6 +586,7 @@ abstract class ActivityEntity
   EntityType get entityType {
     if ([
       kActivityCreateClient,
+      kActivityUpdateClient,
       kActivityArchiveClient,
       kActivityDeleteClient,
       kActivityRestoreClient
@@ -601,7 +602,7 @@ abstract class ActivityEntity
       kActivityRestoreInvoice,
       kActivityMarkSentInvoice,
       kActivityReversedInvoice,
-      kActivityCancelledInvoice
+      kActivityCancelledInvoice,
     ].contains(activityTypeId)) {
       return EntityType.invoice;
     } else if ([
@@ -609,7 +610,8 @@ abstract class ActivityEntity
       kActivityUpdatePayment,
       kActivityArchivePayment,
       kActivityDeletePayment,
-      kActivityRestorePayment
+      kActivityRestorePayment,
+      kActivityFailedPayment,
     ].contains(activityTypeId)) {
       return EntityType.payment;
     } else if ([
@@ -620,7 +622,7 @@ abstract class ActivityEntity
       kActivityRestoreCredit,
       kActivityVoidedPayment,
       kActivityRefundedPayment,
-      kActivityFailedPayment
+      kActivityViewCredit,
     ].contains(activityTypeId)) {
       return EntityType.credit;
     } else if ([
@@ -631,14 +633,15 @@ abstract class ActivityEntity
       kActivityArchiveQuote,
       kActivityDeleteQuote,
       kActivityRestoreQuote,
-      kActivityApproveQuote
+      kActivityApproveQuote,
     ].contains(activityTypeId)) {
       return EntityType.quote;
     } else if ([
       kActivityCreateVendor,
       kActivityArchiveVendor,
+      kActivityUpdateVendor,
       kActivityDeleteVendor,
-      kActivityRestoreVendor
+      kActivityRestoreVendor,
     ].contains(activityTypeId)) {
       return EntityType.vendor;
     } else if ([
@@ -646,7 +649,7 @@ abstract class ActivityEntity
       kActivityArchiveExpense,
       kActivityDeleteExpense,
       kActivityRestoreExpense,
-      kActivityUpdateExpense
+      kActivityUpdateExpense,
     ].contains(activityTypeId)) {
       return EntityType.expense;
     } else if ([
@@ -654,7 +657,7 @@ abstract class ActivityEntity
       kActivityUpdateTask,
       kActivityArchiveTask,
       kActivityDeleteTask,
-      kActivityRestoreTask
+      kActivityRestoreTask,
     ].contains(activityTypeId)) {
       return EntityType.task;
     } else {
