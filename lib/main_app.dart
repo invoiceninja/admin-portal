@@ -39,6 +39,7 @@ import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
@@ -362,6 +363,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       ProductSettingsScreen(),
                   ExpenseSettingsScreen.route: (context) =>
                       ExpenseSettingsScreen(),
+                  TaskSettingsScreen.route: (context) => TaskSettingsScreen(),
                   IntegrationSettingsScreen.route: (context) =>
                       IntegrationSettingsScreen(),
                   ImportExportScreen.route: (context) => ImportExportScreen(),

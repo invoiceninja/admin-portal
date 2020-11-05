@@ -679,11 +679,6 @@ abstract class ActivityEntity
     ExpenseEntity expense,
     VendorEntity vendor,
   }) {
-    // TODO remove this in v2
-    if (activityTypeId == '10' && contactId == null) {
-      activity = activity.replaceFirst(':contact', ':user');
-    }
-
     ContactEntity contact;
     if (client != null && contactId != null && contactId.isNotEmpty) {
       contact = client.contacts
