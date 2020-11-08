@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -293,7 +294,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
               controller: _firstNameController,
               decoration: InputDecoration(
                 labelText: localization.firstName,
-                suffixIcon: Platform.isIOS || Platform.isAndroid
+                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
                     ? IconButton(
                         alignment: Alignment.bottomCenter,
                         color: Theme.of(context).cardColor,

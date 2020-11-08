@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -101,9 +104,11 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     });
   }
 
-  void _setContactControllers(){
-    _nameController.text = _contact.displayName != null ? _contact.displayName : '';
-    _phoneController.text = _contact.phones.isNotEmpty ? _contact.phones.first.value : '';
+  void _setContactControllers() {
+    _nameController.text =
+        _contact.displayName != null ? _contact.displayName : '';
+    _phoneController.text =
+        _contact.phones.isNotEmpty ? _contact.phones.first.value : '';
   }
 
   // Check contacts permission
@@ -139,27 +144,30 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
                   : null,
               decoration: InputDecoration(
                 labelText: localization.firstName,
-                suffixIcon: IconButton(
-                  alignment: Alignment.bottomCenter,
-                  color: Theme.of(context).cardColor,
-                  icon: Icon(
-                    Icons.person,
-                      color: Colors.grey,
-                    ),
-                  onPressed: () async {
-                    final PermissionStatus permissionStatus = await _getPermission();
-                    if (permissionStatus == PermissionStatus.granted) {
-                      try {
-                        _contact = await ContactsService.openDeviceContactPicker();
-                        setState(() {
-                          _setContactControllers();
-                        });
-                      } catch (e) {
-                        print(e.toString());
-                      }
-                    }
-                  }
-                ),
+                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                    ? IconButton(
+                        alignment: Alignment.bottomCenter,
+                        color: Theme.of(context).cardColor,
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () async {
+                          final PermissionStatus permissionStatus =
+                              await _getPermission();
+                          if (permissionStatus == PermissionStatus.granted) {
+                            try {
+                              _contact = await ContactsService
+                                  .openDeviceContactPicker();
+                              setState(() {
+                                _setContactControllers();
+                              });
+                            } catch (e) {
+                              print(e.toString());
+                            }
+                          }
+                        })
+                    : null,
               ),
             ),
             UserPicker(

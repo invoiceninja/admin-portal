@@ -146,7 +146,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               onSavePressed: viewModel.onSavePressed,
               decoration: InputDecoration(
                 labelText: localization.name,
-                suffixIcon: Platform.isIOS || Platform.isAndroid
+                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
                     ? IconButton(
                         alignment: Alignment.bottomCenter,
                         color: Theme.of(context).cardColor,

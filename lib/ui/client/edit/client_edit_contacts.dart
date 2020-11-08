@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -331,7 +334,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               onSavePressed: (_) => _onDoneContactPressed(),
               decoration: InputDecoration(
                 labelText: localization.firstName,
-                suffixIcon: IconButton(
+                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                    ? IconButton(
                   alignment: Alignment.bottomCenter,
                   color: Theme.of(context).cardColor,
                   icon: Icon(
@@ -351,7 +355,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                       }
                     }
                   }
-                ),
+                ) : null,
               ),
             ),
             DecoratedFormField(
