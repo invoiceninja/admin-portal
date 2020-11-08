@@ -138,6 +138,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   Widget _buildTemplateDropdown(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final invoice = widget.viewModel.invoice;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -155,20 +156,22 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           items: [
             DropdownMenuItem<EmailTemplate>(
               child: Text(localization.initialEmail),
-              value: widget.viewModel.invoice.emailTemplate,
+              value: invoice.emailTemplate,
             ),
-            DropdownMenuItem<EmailTemplate>(
-              child: Text(localization.firstReminder),
-              value: EmailTemplate.reminder1,
-            ),
-            DropdownMenuItem<EmailTemplate>(
-              child: Text(localization.secondReminder),
-              value: EmailTemplate.reminder2,
-            ),
-            DropdownMenuItem<EmailTemplate>(
-              child: Text(localization.thirdReminder),
-              value: EmailTemplate.reminder3,
-            ),
+            if (invoice.isInvoice) ...[
+              DropdownMenuItem<EmailTemplate>(
+                child: Text(localization.firstReminder),
+                value: EmailTemplate.reminder1,
+              ),
+              DropdownMenuItem<EmailTemplate>(
+                child: Text(localization.secondReminder),
+                value: EmailTemplate.reminder2,
+              ),
+              DropdownMenuItem<EmailTemplate>(
+                child: Text(localization.thirdReminder),
+                value: EmailTemplate.reminder3,
+              ),
+            ],
             DropdownMenuItem<EmailTemplate>(
               child: Text(localization.firstCustom),
               value: EmailTemplate.custom1,
