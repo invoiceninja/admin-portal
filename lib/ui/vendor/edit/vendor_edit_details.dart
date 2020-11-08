@@ -8,6 +8,8 @@ import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class VendorEditDetails extends StatefulWidget {
   const VendorEditDetails({
@@ -34,6 +36,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers;
+  Contact _contact;
 
   @override
   void didChangeDependencies() {
@@ -98,6 +101,25 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     });
   }
 
+  void _setContactControllers(){
+    _nameController.text = _contact.displayName != null ? _contact.displayName : '';
+    _phoneController.text = _contact.phones.isNotEmpty ? _contact.phones.first.value : '';
+  }
+
+  // Check contacts permission
+  Future<PermissionStatus> _getPermission() async {
+    final PermissionStatus permission = await Permission.contacts.status;
+    if (permission != PermissionStatus.granted &&
+        permission != PermissionStatus.denied) {
+      final Map<Permission, PermissionStatus> permissionStatus =
+          await [Permission.contacts].request();
+      return permissionStatus[Permission.contacts] ??
+          PermissionStatus.undetermined;
+    } else {
+      return permission;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -112,10 +134,33 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             DecoratedFormField(
               autofocus: true,
               controller: _nameController,
-              label: localization.name,
               validator: (String val) => val == null || val.isEmpty
                   ? AppLocalization.of(context).pleaseEnterAName
                   : null,
+              decoration: InputDecoration(
+                labelText: localization.firstName,
+                suffixIcon: IconButton(
+                  alignment: Alignment.bottomCenter,
+                  color: Theme.of(context).cardColor,
+                  icon: Icon(
+                    Icons.person,
+                      color: Colors.grey,
+                    ),
+                  onPressed: () async {
+                    final PermissionStatus permissionStatus = await _getPermission();
+                    if (permissionStatus == PermissionStatus.granted) {
+                      try {
+                        _contact = await ContactsService.openDeviceContactPicker();
+                        setState(() {
+                          _setContactControllers();
+                        });
+                      } catch (e) {
+                        print(e.toString());
+                      }
+                    }
+                  }
+                ),
+              ),
             ),
             UserPicker(
               userId: vendor.assignedUserId,
