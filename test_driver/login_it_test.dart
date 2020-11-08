@@ -18,6 +18,7 @@ void main() {
       driver = await FlutterDriver.connect(printCommunication: false);
 
       // https://github.com/flutter/flutter/issues/24703#issuecomment-526382318
+      /*
       streamSubscription = driver.serviceClient.onIsolateRunnable
           .asBroadcastStream()
           .listen((isolateRef) {
@@ -25,6 +26,7 @@ void main() {
             'Resuming isolate: ${isolateRef.numberAsString}:${isolateRef.name}');
         isolateRef.resume();
       });
+       */
     });
 
     tearDownAll(() async {
