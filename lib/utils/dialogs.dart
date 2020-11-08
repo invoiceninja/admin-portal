@@ -115,8 +115,10 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
         decoration: InputDecoration(
           labelText: localization.password,
           suffixIcon: IconButton(
+            alignment: Alignment.bottomCenter,
             icon: Icon(
               _isPasswordObscured ? Icons.visibility : Icons.visibility_off,
+              color: Colors.grey,
             ),
             onPressed: () {
               setState(() {

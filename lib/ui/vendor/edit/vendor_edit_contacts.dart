@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -214,11 +216,15 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     });
   }
 
-  void _setContactControllers(){
-    _firstNameController.text = _contact.givenName != null ? _contact.givenName: '';
-    _lastNameController.text = _contact.familyName != null ? _contact.familyName: '';
-    _emailController.text = _contact.emails.isNotEmpty ? _contact.emails.first.value : '';
-    _phoneController.text = _contact.phones.isNotEmpty ? _contact.phones.first.value : '';
+  void _setContactControllers() {
+    _firstNameController.text =
+        _contact.givenName != null ? _contact.givenName : '';
+    _lastNameController.text =
+        _contact.familyName != null ? _contact.familyName : '';
+    _emailController.text =
+        _contact.emails.isNotEmpty ? _contact.emails.first.value : '';
+    _phoneController.text =
+        _contact.phones.isNotEmpty ? _contact.phones.first.value : '';
   }
 
   // Check contacts permission
@@ -287,27 +293,30 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
               controller: _firstNameController,
               decoration: InputDecoration(
                 labelText: localization.firstName,
-                suffixIcon: IconButton(
-                  alignment: Alignment.bottomCenter,
-                  color: Theme.of(context).cardColor,
-                  icon: Icon(
-                    Icons.person,
-                      color: Colors.grey,
-                    ),
-                  onPressed: () async {
-                    final PermissionStatus permissionStatus = await _getPermission();
-                    if (permissionStatus == PermissionStatus.granted) {
-                      try {
-                        _contact = await ContactsService.openDeviceContactPicker();
-                        setState(() {
-                          _setContactControllers();
-                        });
-                      } catch (e) {
-                        print(e.toString());
-                      }
-                    }
-                  }
-                ),
+                suffixIcon: Platform.isIOS || Platform.isAndroid
+                    ? IconButton(
+                        alignment: Alignment.bottomCenter,
+                        color: Theme.of(context).cardColor,
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () async {
+                          final PermissionStatus permissionStatus =
+                              await _getPermission();
+                          if (permissionStatus == PermissionStatus.granted) {
+                            try {
+                              _contact = await ContactsService
+                                  .openDeviceContactPicker();
+                              setState(() {
+                                _setContactControllers();
+                              });
+                            } catch (e) {
+                              print(e.toString());
+                            }
+                          }
+                        })
+                    : null,
               ),
             ),
             DecoratedFormField(

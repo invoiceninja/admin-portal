@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -118,7 +120,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     }
   }
 
-  void _setContactControllers(){
+  void _setContactControllers() {
     _nameController.text = _contact.displayName;
     _phoneController.text = _contact.phones.first.value;
   }
@@ -136,7 +138,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
         FormCard(
           children: <Widget>[
             DecoratedFormField(
-              autofocus: true,      
+              autofocus: true,
               controller: _nameController,
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
@@ -144,27 +146,30 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               onSavePressed: viewModel.onSavePressed,
               decoration: InputDecoration(
                 labelText: localization.name,
-                suffixIcon: IconButton(
-                  alignment: Alignment.bottomCenter,
-                  color: Theme.of(context).cardColor,
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () async {
-                    final PermissionStatus permissionStatus = await _getPermission();
-                    if (permissionStatus == PermissionStatus.granted) {
-                      try {
-                        _contact = await ContactsService.openDeviceContactPicker();
-                        setState(() {
-                          _setContactControllers();
-                        });
-                      } catch (e) {
-                        print(e.toString());
-                      }
-                    }
-                  }
-                ),
+                suffixIcon: Platform.isIOS || Platform.isAndroid
+                    ? IconButton(
+                        alignment: Alignment.bottomCenter,
+                        color: Theme.of(context).cardColor,
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () async {
+                          final PermissionStatus permissionStatus =
+                              await _getPermission();
+                          if (permissionStatus == PermissionStatus.granted) {
+                            try {
+                              _contact = await ContactsService
+                                  .openDeviceContactPicker();
+                              setState(() {
+                                _setContactControllers();
+                              });
+                            } catch (e) {
+                              print(e.toString());
+                            }
+                          }
+                        })
+                    : null,
               ),
             ),
             DynamicSelector(

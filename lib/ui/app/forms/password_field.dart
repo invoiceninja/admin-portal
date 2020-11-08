@@ -40,11 +40,13 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       decoration: InputDecoration(
         labelText: localization.password,
         suffixIcon: IconButton(
+          alignment: Alignment.bottomCenter,
           tooltip: _isPasswordObscured
               ? localization.showPassword
               : localization.hidePassword,
           icon: Icon(
             _isPasswordObscured ? Icons.visibility : Icons.visibility_off,
+            color: Colors.grey,
           ),
           onPressed: () {
             setState(() {
