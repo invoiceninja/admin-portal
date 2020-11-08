@@ -66,8 +66,14 @@ abstract class CompanyGatewayEntity extends Object
       isDeleted: false,
       gatewayId: '',
       acceptedCreditCards: 0,
-      showBillingAddress: true,
-      showShippingAddress: false,
+      requireCvv: false,
+      requireShippingAddress: false,
+      requireBillingAddress: false,
+      requireClientName: false,
+      requireClientPhone: false,
+      requireContactEmail: false,
+      requireContactName: false,
+      requirePostalCode: false,
       updateDetails: true,
       config: '',
       feesAndLimitsMap: BuiltMap<String, FeesAndLimitsSettings>(),
@@ -108,11 +114,29 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'accepted_credit_cards')
   int get acceptedCreditCards;
 
-  @BuiltValueField(wireName: 'show_billing_address')
-  bool get showBillingAddress;
+  @BuiltValueField(wireName: 'require_shipping_address')
+  bool get requireShippingAddress;
 
-  @BuiltValueField(wireName: 'show_shipping_address')
-  bool get showShippingAddress;
+  @BuiltValueField(wireName: 'require_billing_address')
+  bool get requireBillingAddress;
+
+  @BuiltValueField(wireName: 'require_client_name')
+  bool get requireClientName;
+
+  @BuiltValueField(wireName: 'require_zip')
+  bool get requirePostalCode;
+
+  @BuiltValueField(wireName: 'require_client_phone')
+  bool get requireClientPhone;
+
+  @BuiltValueField(wireName: 'require_contact_name')
+  bool get requireContactName;
+
+  @BuiltValueField(wireName: 'require_contact_email')
+  bool get requireContactEmail;
+
+  @BuiltValueField(wireName: 'require_cvv')
+  bool get requireCvv;
 
   @BuiltValueField(wireName: 'update_details')
   bool get updateDetails;

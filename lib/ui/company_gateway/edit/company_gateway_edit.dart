@@ -163,7 +163,81 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           .toList())
               ]),
               FormCard(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16, top: 16, bottom: 16),
+                    child: Text(
+                      localization.requiredFields,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                  CheckboxListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.clientName),
+                    value: companyGateway.requireClientName,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..requireClientName = value)),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.clientPhone),
+                    value: companyGateway.requireClientPhone,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..requireClientPhone = value)),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.contactName),
+                    value: companyGateway.requireContactName,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..requireContactName = value)),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.contactEmail),
+                    value: companyGateway.requireContactEmail,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..requireContactEmail = value)),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.postalCode),
+                    value: companyGateway.requirePostalCode,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..requirePostalCode = value)),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.cvv),
+                    value: companyGateway.requireCvv,
+                    onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild((b) => b..requireCvv = value)),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.billingAddress),
+                    value: companyGateway.requireBillingAddress,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..requireBillingAddress = value)),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.shippingAddress),
+                    value: companyGateway.requireShippingAddress,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..requireShippingAddress = value)),
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  SizedBox(height: 16),
                   SwitchListTile(
                     activeColor: Theme.of(context).accentColor,
                     title: Text(localization.updateAddress),
@@ -172,24 +246,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     onChanged: (value) => viewModel.onChanged(companyGateway
                         .rebuild((b) => b..updateDetails = value)),
                   ),
-                  if (gateway?.isOffsite != true) ...[
-                    SwitchListTile(
-                      activeColor: Theme.of(context).accentColor,
-                      title: Text(localization.billingAddress),
-                      subtitle: Text(localization.requireBillingAddressHelp),
-                      value: companyGateway.showBillingAddress,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..showBillingAddress = value)),
-                    ),
-                    SwitchListTile(
-                      activeColor: Theme.of(context).accentColor,
-                      title: Text(localization.shippingAddress),
-                      subtitle: Text(localization.requireShippingAddressHelp),
-                      value: companyGateway.showShippingAddress,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..showShippingAddress = value)),
-                    ),
-                  ],
                 ],
               ),
               if (gateway?.isOffsite != true)

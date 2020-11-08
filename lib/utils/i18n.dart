@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'cvv': 'CVV',
+      'client_name': 'Client Name',
+      'client_phone': 'Client Phone',
+      'required_fields': 'Required Fields',
       'calculated_rate': 'Calculated Rate',
       'default_task_rate': 'Default Task Rate',
       'clear_cache': 'Clear Cache',
@@ -781,10 +785,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'max': 'Max',
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
-      'require_billing_address_help':
-          'Require client to provide their billing address',
-      'require_shipping_address_help':
-          'Require client to provide their shipping address',
       'update_address': 'Update Address',
       'update_address_help': 'Update client\'s address with provided details',
       'rate': 'Rate',
@@ -2749,12 +2749,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get taxRate => _localizedValues[localeCode]['tax_rate'] ?? '';
 
   String get rate => _localizedValues[localeCode]['rate'] ?? '';
-
-  String get requireBillingAddressHelp =>
-      _localizedValues[localeCode]['require_billing_address_help'] ?? '';
-
-  String get requireShippingAddressHelp =>
-      _localizedValues[localeCode]['require_shipping_address_help'] ?? '';
 
   String get updateAddress =>
       _localizedValues[localeCode]['update_address'] ?? '';
@@ -4840,7 +4834,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clearCache => _localizedValues[localeCode]['clear_cache'] ?? '';
 
   String get calculatedRate =>
-      _localizedValues[localeCode]['calculatedRate'] ?? '';
+      _localizedValues[localeCode]['calculated_rate'] ?? '';
+
+  String get requiredFields =>
+      _localizedValues[localeCode]['required_fields'] ?? '';
+
+  String get clientName => _localizedValues[localeCode]['client_name'] ?? '';
+
+  String get clientPhone => _localizedValues[localeCode]['client_phone'] ?? '';
+
+  String get cvv => _localizedValues[localeCode]['cvv'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
