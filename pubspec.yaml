@@ -28,7 +28,7 @@ dependencies:
   built_value: ^7.0.9
   built_collection: ^4.3.2
   memoize: ^2.0.0
-  cached_network_image: ^2.0.0
+  cached_network_image: 2.3.0-beta.1 #https://github.com/Baseflow/flutter_cached_network_image/issues/395#issuecomment-635413976
   url_launcher: ^5.4.2
   share: ^0.6.3+6
   intl: ^0.16.1
