@@ -80,7 +80,9 @@ class _EntityListTileState extends State<EntityListTile> {
     final trailing = IgnorePointer(
       ignoring: !isHovered,
       child: IconButton(
-        icon: Icon(isHovered ? Icons.chevron_right : Icons.filter_list),
+        icon: Icon(isHovered || isMobile(context)
+            ? Icons.chevron_right
+            : Icons.filter_list),
         onPressed: isHovered
             ? () => viewEntity(entity: widget.entity, context: context)
             : () => null,
