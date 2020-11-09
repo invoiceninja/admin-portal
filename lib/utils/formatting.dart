@@ -366,7 +366,15 @@ String formatDate(String value, BuildContext context,
   }
 }
 
-String formatApiUrl(String url) => cleanApiUrl(url) + '/api/v1';
+String formatApiUrl(String url) {
+  url = cleanApiUrl(url);
+
+  if (url.isEmpty) {
+    return '';
+  }
+
+  return url + '/api/v1';
+}
 
 String cleanApiUrl(String url) => (url ?? '')
     .trim()
