@@ -753,4 +753,8 @@ const String kActivityCancelledInvoice = '59';
 const String kActivityViewCredit = '60';
 const String kActivityUpdateClient = '61';
 const String kActivityUpdateVendor = '62';
+const String kActivityEmailReminder1 = '63';
+const String kActivityEmailReminder2 = '64';
+const String kActivityEmailReminder3 = '65';
+const String kActivityEmailReminderEndless = '66';
 

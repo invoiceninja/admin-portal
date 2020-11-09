@@ -603,6 +603,10 @@ abstract class ActivityEntity
       kActivityMarkSentInvoice,
       kActivityReversedInvoice,
       kActivityCancelledInvoice,
+      kActivityEmailReminder1,
+      kActivityEmailReminder2,
+      kActivityEmailReminder3,
+      kActivityEmailReminderEndless,
     ].contains(activityTypeId)) {
       return EntityType.invoice;
     } else if ([
