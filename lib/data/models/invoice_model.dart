@@ -194,6 +194,10 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity._();
 
+  // ignore: unused_element
+  static void _initializeBuilder(InvoiceEntityBuilder builder) =>
+      builder..hasTasks = false;
+
   @override
   @memoized
   int get hashCode;
