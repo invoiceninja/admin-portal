@@ -1336,10 +1336,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_60': ':contact viewed quote :quote',
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
-      'activity_63': ':user emailed first reminder for invoice :invoice to :contact',
-      'activity_64': ':user emailed second reminder for invoice :invoice to :contact',
-      'activity_65': ':user emailed third reminder for invoice :invoice to :contact',
-      'activity_66': ':user emailed endless reminder for invoice :invoice to :contact',
+      'activity_63':
+          ':user emailed first reminder for invoice :invoice to :contact',
+      'activity_64':
+          ':user emailed second reminder for invoice :invoice to :contact',
+      'activity_65':
+          ':user emailed third reminder for invoice :invoice to :contact',
+      'activity_66':
+          ':user emailed endless reminder for invoice :invoice to :contact',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
       'emailed_credit': 'Successfully emailed credit',
@@ -4855,12 +4859,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 
+    if (key.isEmpty) {
+      return '';
+    }
+
     if (lookupKey.startsWith('_')) {
       return key;
     }
 
     if (!_localizedValues[localeCode].containsKey(lookupKey)) {
-      print('ERROR: localization key not found - $key');
+      print('ERROR: localization key not found - |$key|');
     }
 
     return _localizedValues[localeCode][lookupKey] ??
