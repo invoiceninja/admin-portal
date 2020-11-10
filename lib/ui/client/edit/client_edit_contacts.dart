@@ -387,7 +387,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
     return widget.isDialog
         ? AlertDialog(
-            content: column,
+            content: SingleChildScrollView(child: column),
             actions: widget.isDialog
                 ? [
                     FlatButton(

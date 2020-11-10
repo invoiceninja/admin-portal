@@ -34,14 +34,12 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
           final viewModel = widget.viewModel;
           final task = viewModel.task;
           final taskTimes = task.taskTimes;
-          return ResponsivePadding(
-            child: TimeEditDetails(
-              viewModel: viewModel,
-              //key: Key(taskTime.entityKey),
-              taskTime: taskTime,
-              index: taskTimes.indexOf(
-                  taskTimes.firstWhere((time) => time.equalTo(taskTime))),
-            ),
+          return TimeEditDetails(
+            viewModel: viewModel,
+            //key: Key(taskTime.entityKey),
+            taskTime: taskTime,
+            index: taskTimes.indexOf(
+                taskTimes.firstWhere((time) => time.equalTo(taskTime))),
           );
         });
   }
@@ -126,74 +124,11 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context)
-            .viewInsets
-            .bottom, // stay clear of the keyboard
-      ),
-      child: SingleChildScrollView(
-        child: FormCard(
+    return AlertDialog(
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                AppButton(
-                  color: Colors.red,
-                  iconData: Icons.delete,
-                  label: localization.remove,
-                  onPressed: () {
-                    widget.viewModel.onRemoveTaskTimePressed(widget.index);
-                    Navigator.of(context).pop();
-                  },
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                AppButton(
-                  iconData: Icons.check_circle,
-                  label: localization.done,
-                  onPressed: () {
-                    final startDate = DateTime.parse(_date);
-                    DateTime endDate = startDate;
-                    if (_startDate.isAfter(DateTime(
-                        _startDate.year,
-                        _startDate.month,
-                        _startDate.day,
-                        _endDate?.hour ?? _startDate.hour,
-                        _endDate?.minute ?? _startDate.minute,
-                        _endDate?.second ?? _startDate.second))) {
-                      endDate = endDate.add(Duration(days: 1));
-                    }
-
-                    final taskTime = TaskTime(
-                      startDate: DateTime(
-                              startDate.year,
-                              startDate.month,
-                              startDate.day,
-                              _startDate.hour,
-                              _startDate.minute,
-                              _startDate.second)
-                          .toUtc(),
-                      endDate: _endDate != null
-                          ? DateTime(
-                                  endDate.year,
-                                  endDate.month,
-                                  endDate.day,
-                                  _endDate.hour,
-                                  _endDate.minute,
-                                  _endDate.second)
-                              .toUtc()
-                          : null,
-                    );
-                    widget.viewModel
-                        .onDoneTaskTimePressed(taskTime, widget.index);
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
             DatePicker(
               labelText: localization.date,
               selectedDate: _date,
@@ -242,6 +177,49 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
           ],
         ),
       ),
+      actions: [
+        FlatButton(
+          child: Text(localization.remove.toUpperCase()),
+          onPressed: () {
+            widget.viewModel.onRemoveTaskTimePressed(widget.index);
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(
+          child: Text(localization.done.toUpperCase()),
+          onPressed: () {
+            final startDate = DateTime.parse(_date);
+            DateTime endDate = startDate;
+            if (_startDate.isAfter(DateTime(
+                _startDate.year,
+                _startDate.month,
+                _startDate.day,
+                _endDate?.hour ?? _startDate.hour,
+                _endDate?.minute ?? _startDate.minute,
+                _endDate?.second ?? _startDate.second))) {
+              endDate = endDate.add(Duration(days: 1));
+            }
+
+            final taskTime = TaskTime(
+              startDate: DateTime(
+                      startDate.year,
+                      startDate.month,
+                      startDate.day,
+                      _startDate.hour,
+                      _startDate.minute,
+                      _startDate.second)
+                  .toUtc(),
+              endDate: _endDate != null
+                  ? DateTime(endDate.year, endDate.month, endDate.day,
+                          _endDate.hour, _endDate.minute, _endDate.second)
+                      .toUtc()
+                  : null,
+            );
+            widget.viewModel.onDoneTaskTimePressed(taskTime, widget.index);
+            Navigator.of(context).pop();
+          },
+        )
+      ],
     );
   }
 }
