@@ -18,7 +18,7 @@ class DynamicSelector extends StatelessWidget {
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
     this.onAddPressed,
-    this.allowClearing,
+    this.allowClearing = true,
     this.labelText,
   }) : super(key: key);
 
