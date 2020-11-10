@@ -41,16 +41,14 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
           final viewModel = widget.viewModel;
           final client = viewModel.client;
 
-          return ResponsivePadding(
-            child: ContactEditDetails(
-              viewModel: viewModel,
-              clientViewModel: widget.clientViewModel,
-              key: Key(contact.entityKey),
-              contact: contact,
-              areButtonsVisible: client.contacts.length > 1,
-              index: client.contacts.indexOf(
-                  client.contacts.firstWhere((c) => c.id == contact.id)),
-            ),
+          return ContactEditDetails(
+            viewModel: viewModel,
+            clientViewModel: widget.clientViewModel,
+            key: Key(contact.entityKey),
+            contact: contact,
+            areButtonsVisible: client.contacts.length > 1,
+            index: client.contacts
+                .indexOf(client.contacts.firstWhere((c) => c.id == contact.id)),
           );
         });
   }
@@ -98,7 +96,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
       children: []
         ..addAll(contacts)
         ..add(Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: AppButton(
             label: localization.addContact.toUpperCase(),
             onPressed: () => viewModel.onAddContactPressed(),
@@ -270,11 +268,15 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     }
   }
 
-  void _setContactControllers(){
-    _firstNameController.text = _contact.givenName != null ? _contact.givenName: '';
-    _lastNameController.text = _contact.familyName != null ? _contact.familyName: '';
-    _emailController.text = _contact.emails.isNotEmpty ? _contact.emails.first.value : '';
-    _phoneController.text = _contact.phones.isNotEmpty ? _contact.phones.first.value : '';
+  void _setContactControllers() {
+    _firstNameController.text =
+        _contact.givenName != null ? _contact.givenName : '';
+    _lastNameController.text =
+        _contact.familyName != null ? _contact.familyName : '';
+    _emailController.text =
+        _contact.emails.isNotEmpty ? _contact.emails.first.value : '';
+    _phoneController.text =
+        _contact.phones.isNotEmpty ? _contact.phones.first.value : '';
   }
 
   @override
@@ -283,144 +285,123 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     final viewModel = widget.viewModel;
     final company = viewModel.company;
 
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context)
-            .viewInsets
-            .bottom, // stay clear of the keyboard
-      ),
-      child: SingleChildScrollView(
-        child: FormCard(
-          children: <Widget>[
-            widget.areButtonsVisible
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          DecoratedFormField(
+            controller: _firstNameController,
+            validator: (String val) => !viewModel.client.hasNameSet
+                ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                : null,
+            onSavePressed: (_) => _onDoneContactPressed(),
+            decoration: InputDecoration(
+              labelText: localization.firstName,
+              suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                  ? IconButton(
+                      alignment: Alignment.bottomCenter,
+                      color: Theme.of(context).cardColor,
+                      icon: Icon(
+                        Icons.person,
+                        color: Colors.grey,
                       ),
-                      AppButton(
-                        color: Colors.red,
-                        iconData: Icons.delete,
-                        label: localization.remove,
-                        onPressed: () => confirmCallback(
-                            context: context,
-                            callback: () {
-                              widget.viewModel
-                                  .onRemoveContactPressed(widget.index);
-                              Navigator.pop(context);
-                            }),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      AppButton(
-                        iconData: Icons.check_circle,
-                        label: localization.done,
-                        onPressed: () {
-                          _onDoneContactPressed();
-                        },
-                      ),
-                    ],
-                  )
-                : Container(),
-            DecoratedFormField(
-              controller: _firstNameController,
-              
-              validator: (String val) => !viewModel.client.hasNameSet
-                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                      onPressed: () async {
+                        final PermissionStatus permissionStatus =
+                            await _getPermission();
+                        if (permissionStatus == PermissionStatus.granted) {
+                          try {
+                            _contact =
+                                await ContactsService.openDeviceContactPicker();
+                            setState(() {
+                              _setContactControllers();
+                            });
+                          } catch (e) {
+                            print(e.toString());
+                          }
+                        }
+                      })
                   : null,
-              onSavePressed: (_) => _onDoneContactPressed(),
-              decoration: InputDecoration(
-                labelText: localization.firstName,
-                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
-                    ? IconButton(
-                  alignment: Alignment.bottomCenter,
-                  color: Theme.of(context).cardColor,
-                  icon: Icon(
-                    Icons.person,
-                      color: Colors.grey,
-                    ),
-                  onPressed: () async {
-                    final PermissionStatus permissionStatus = await _getPermission();
-                    if (permissionStatus == PermissionStatus.granted) {
-                      try {
-                        _contact = await ContactsService.openDeviceContactPicker();
-                        setState(() {
-                          _setContactControllers();
-                        });
-                      } catch (e) {
-                        print(e.toString());
-                      }
-                    }
-                  }
-                ) : null,
+            ),
+          ),
+          DecoratedFormField(
+            controller: _lastNameController,
+            label: localization.lastName,
+            validator: (String val) => !viewModel.client.hasNameSet
+                ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                : null,
+            onSavePressed: (_) => _onDoneContactPressed(),
+          ),
+          DecoratedFormField(
+            controller: _emailController,
+            label: localization.email,
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) => value.isNotEmpty && !value.contains('@')
+                ? localization.emailIsInvalid
+                : null,
+            onSavePressed: (_) => _onDoneContactPressed(),
+          ),
+          company.settings.enablePortalPassword ?? false
+              ? DecoratedFormField(
+                  autocorrect: false,
+                  controller: _passwordController,
+                  label: localization.password,
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
+                  validator: (value) => value.isNotEmpty && value.length < 8
+                      ? localization.passwordIsTooShort
+                      : null,
+                  onSavePressed: (_) => _onDoneContactPressed(),
+                )
+              : SizedBox(),
+          DecoratedFormField(
+            controller: _phoneController,
+            label: localization.phone,
+            keyboardType: TextInputType.phone,
+            onSavePressed: (_) => _onDoneContactPressed(),
+          ),
+          CustomField(
+            controller: _custom1Controller,
+            field: CustomFieldType.contact1,
+            value: widget.contact.customValue1,
+            onSavePressed: (_) => _onDoneContactPressed(),
+          ),
+          CustomField(
+            controller: _custom2Controller,
+            field: CustomFieldType.contact2,
+            value: widget.contact.customValue2,
+            onSavePressed: (_) => _onDoneContactPressed(),
+          ),
+          CustomField(
+            controller: _custom3Controller,
+            field: CustomFieldType.contact3,
+            value: widget.contact.customValue3,
+            onSavePressed: (_) => _onDoneContactPressed(),
+          ),
+          CustomField(
+            controller: _custom4Controller,
+            field: CustomFieldType.contact4,
+            value: widget.contact.customValue4,
+            onSavePressed: (_) => _onDoneContactPressed(),
+          ),
+        ],
+      ),
+      actions: widget.areButtonsVisible
+          ? [
+              FlatButton(
+                child: Text(localization.remove.toUpperCase()),
+                onPressed: () => confirmCallback(
+                    context: context,
+                    callback: () {
+                      widget.viewModel.onRemoveContactPressed(widget.index);
+                      Navigator.pop(context);
+                    }),
               ),
-            ),
-            DecoratedFormField(
-              controller: _lastNameController,
-              label: localization.lastName,
-              validator: (String val) => !viewModel.client.hasNameSet
-                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-                  : null,
-              onSavePressed: (_) => _onDoneContactPressed(),
-            ),
-            DecoratedFormField(
-              controller: _emailController,
-              label: localization.email,
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) => value.isNotEmpty && !value.contains('@')
-                  ? localization.emailIsInvalid
-                  : null,
-              onSavePressed: (_) => _onDoneContactPressed(),
-            ),
-            company.settings.enablePortalPassword ?? false
-                ? DecoratedFormField(
-                    autocorrect: false,
-                    controller: _passwordController,
-                    label: localization.password,
-                    obscureText: true,
-                    keyboardType: TextInputType.visiblePassword,
-                    validator: (value) => value.isNotEmpty && value.length < 8
-                        ? localization.passwordIsTooShort
-                        : null,
-                    onSavePressed: (_) => _onDoneContactPressed(),
-                  )
-                : SizedBox(),
-            DecoratedFormField(
-              controller: _phoneController,
-              label: localization.phone,
-              keyboardType: TextInputType.phone,
-              onSavePressed: (_) => _onDoneContactPressed(),
-            ),
-            CustomField(
-              controller: _custom1Controller,
-              field: CustomFieldType.contact1,
-              value: widget.contact.customValue1,
-              onSavePressed: (_) => _onDoneContactPressed(),
-            ),
-            CustomField(
-              controller: _custom2Controller,
-              field: CustomFieldType.contact2,
-              value: widget.contact.customValue2,
-              onSavePressed: (_) => _onDoneContactPressed(),
-            ),
-            CustomField(
-              controller: _custom3Controller,
-              field: CustomFieldType.contact3,
-              value: widget.contact.customValue3,
-              onSavePressed: (_) => _onDoneContactPressed(),
-            ),
-            CustomField(
-              controller: _custom4Controller,
-              field: CustomFieldType.contact4,
-              value: widget.contact.customValue4,
-              onSavePressed: (_) => _onDoneContactPressed(),
-            ),
-          ],
-        ),
-      ),
+              FlatButton(
+                child: Text(localization.done.toUpperCase()),
+                onPressed: () => _onDoneContactPressed(),
+              )
+            ]
+          : [],
     );
   }
 }

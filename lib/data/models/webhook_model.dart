@@ -91,6 +91,9 @@ abstract class WebhookEntity extends Object
   static const EVENT_UPDATE_TASK = '19';
   static const EVENT_DELETE_TASK = '20';
   static const EVENT_APPROVE_QUOTE = '21';
+  static const EVENT_LATE_INVOICE = '22';
+  static const EVENT_EXPIRED_QUOTE = '23';
+  static const EVENT_REMIND_INVOICE = '24';
 
   static const EVENT_MAP = {
     EVENT_CREATE_CLIENT: 'create_client',
@@ -114,6 +117,9 @@ abstract class WebhookEntity extends Object
     EVENT_CREATE_TASK: 'create_task',
     EVENT_UPDATE_TASK: 'update_task',
     EVENT_DELETE_TASK: 'delete_task',
+    EVENT_LATE_INVOICE: 'late_invoice',
+    EVENT_EXPIRED_QUOTE: 'expried_quote',
+    EVENT_REMIND_INVOICE: 'remind_invoice',
   };
 
   static const EVENTS = [
@@ -122,14 +128,16 @@ abstract class WebhookEntity extends Object
     EVENT_DELETE_CLIENT,
     EVENT_CREATE_INVOICE,
     EVENT_UPDATE_INVOICE,
+    EVENT_LATE_INVOICE,
+    EVENT_REMIND_INVOICE,
     EVENT_DELETE_INVOICE,
-    EVENT_CREATE_PAYMENT,
-    EVENT_DELETE_PAYMENT,
     EVENT_CREATE_QUOTE,
     EVENT_UPDATE_QUOTE,
     EVENT_APPROVE_QUOTE,
+    EVENT_EXPIRED_QUOTE,
     EVENT_DELETE_QUOTE,
-    /*
+    EVENT_CREATE_PAYMENT,
+    EVENT_DELETE_PAYMENT,
     EVENT_CREATE_VENDOR,
     EVENT_UPDATE_VENDOR,
     EVENT_DELETE_VENDOR,
@@ -139,7 +147,6 @@ abstract class WebhookEntity extends Object
     EVENT_CREATE_TASK,
     EVENT_UPDATE_TASK,
     EVENT_DELETE_TASK,
-     */
   ];
 
   @override
