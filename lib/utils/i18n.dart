@@ -4859,7 +4859,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 
-    if (key.isEmpty) {
+    if ((key ?? '').isEmpty) {
       return '';
     }
 

@@ -108,7 +108,7 @@ class ProjectListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              project.number,
+                              project.number ?? '',
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
