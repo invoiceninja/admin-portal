@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -214,36 +215,28 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final viewModel = widget.viewModel;
     final company = viewModel.company;
 
-    return ResponsivePadding(
-      child: SingleChildScrollView(
-        child: FormCard(
+    return AlertDialog(
+      actions: [
+        FlatButton(
+          child: Text(localization.remove.toUpperCase()),
+          onPressed: () => confirmCallback(
+              context: context,
+              callback: () {
+                widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
+                Navigator.of(context).pop();
+              }),
+        ),
+        FlatButton(
+          child: Text(localization.done.toUpperCase()),
+          onPressed: () {
+            viewModel.onDoneInvoiceItemPressed();
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+      content: SingleChildScrollView(
+        child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                AppButton(
-                  color: Colors.red,
-                  iconData: Icons.delete,
-                  label: localization.remove,
-                  onPressed: () {
-                    widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
-                    Navigator.of(context).pop();
-                  },
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                AppButton(
-                  iconData: Icons.check_circle,
-                  label: localization.done,
-                  onPressed: () {
-                    viewModel.onDoneInvoiceItemPressed();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
             DecoratedFormField(
               label: localization.product,
               controller: _productKeyController,
