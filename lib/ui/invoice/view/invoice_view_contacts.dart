@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
@@ -101,9 +102,8 @@ class _InvitationListTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5)),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: invitation.link));
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(localization.copiedToClipboard
-                          .replaceFirst(':value ', ''))));
+                  showToast(localization.copiedToClipboard
+                      .replaceFirst(':value ', ''));
                 },
               )),
             ],

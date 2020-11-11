@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -287,10 +288,8 @@ class _ClientPortalState extends State<ClientPortal>
                         onTap: () {
                           Clipboard.setData(
                               ClipboardData(text: company.companyKey));
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(localization.copiedToClipboard
-                                  .replaceFirst(
-                                      ':value ', company.companyKey))));
+                          showToast(localization.copiedToClipboard
+                              .replaceFirst(':value ', company.companyKey));
                         },
                       );
                     }),

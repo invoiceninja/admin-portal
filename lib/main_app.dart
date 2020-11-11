@@ -207,7 +207,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     brightness: Brightness.dark,
                     accentColor: accentColor,
                     indicatorColor: accentColor,
-                    textSelectionHandleColor: accentColor,
+                    textSelectionTheme: TextSelectionThemeData(
+                      selectionHandleColor: accentColor,
+                    ),
                     fontFamily: fontFamily,
                     backgroundColor: Colors.black,
                     canvasColor: Colors.black,
@@ -221,7 +223,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     primaryColor: accentColor,
                     accentColor: accentColor,
                     indicatorColor: accentColor,
-                    textSelectionColor: accentColor,
+                    textSelectionTheme: TextSelectionThemeData(
+                      selectionColor: accentColor,
+                    ),
                     fontFamily: fontFamily,
                     backgroundColor: Colors.white,
                     canvasColor: Colors.white,

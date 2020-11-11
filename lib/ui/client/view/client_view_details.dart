@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
@@ -70,9 +71,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
                   borderRadius: BorderRadius.circular(5)),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: contact.link));
-                Scaffold.of(context).showSnackBar(SnackBar(
-                    content: Text(localization.copiedToClipboard
-                        .replaceFirst(':value ', ''))));
+                showToast(
+                    localization.copiedToClipboard.replaceFirst(':value ', ''));
               },
             )),
           ],

@@ -4,13 +4,13 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -306,14 +306,11 @@ void handleTaskAction(
       store
           .dispatch(SaveTaskRequest(completer: completer, task: task.toggle()));
       completer.future.then((savedTask) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-            content: SnackBarRow(
-          message: savedTask.isRunning
-              ? (savedTask.duration > 0
-                  ? localization.resumedTask
-                  : localization.startedTask)
-              : localization.stoppedTask,
-        )));
+        showToast(savedTask.isRunning
+            ? (savedTask.duration > 0
+                ? localization.resumedTask
+                : localization.startedTask)
+            : localization.stoppedTask);
       }).catchError((Object error) {
         showDialog<ErrorDialog>(
             context: context,
