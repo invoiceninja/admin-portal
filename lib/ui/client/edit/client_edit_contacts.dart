@@ -371,24 +371,21 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     return widget.isDialog
         ? AlertDialog(
             content: SingleChildScrollView(child: column),
-            actions: widget.isDialog
-                ? [
-                    FlatButton(
-                      child: Text(localization.remove.toUpperCase()),
-                      onPressed: () => confirmCallback(
-                          context: context,
-                          callback: () {
-                            widget.viewModel
-                                .onRemoveContactPressed(widget.index);
-                            Navigator.pop(context);
-                          }),
-                    ),
-                    FlatButton(
-                      child: Text(localization.done.toUpperCase()),
-                      onPressed: () => _onDoneContactPressed(),
-                    )
-                  ]
-                : [],
+            actions: [
+              FlatButton(
+                child: Text(localization.remove.toUpperCase()),
+                onPressed: () => confirmCallback(
+                    context: context,
+                    callback: () {
+                      widget.viewModel.onRemoveContactPressed(widget.index);
+                      Navigator.pop(context);
+                    }),
+              ),
+              FlatButton(
+                child: Text(localization.done.toUpperCase()),
+                onPressed: () => _onDoneContactPressed(),
+              )
+            ],
           )
         : FormCard(child: column);
   }
