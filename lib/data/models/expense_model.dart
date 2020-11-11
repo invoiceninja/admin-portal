@@ -70,6 +70,7 @@ class ExpenseFields {
   static const String invoiceId = 'invoice_id';
   static const String vendorId = 'vendor_id';
   static const String vendor = 'vendor';
+  static const String status = 'status';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';

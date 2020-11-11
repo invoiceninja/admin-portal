@@ -268,7 +268,7 @@ abstract class ProjectEntity extends Object
             projectA.documents.length.compareTo(projectB.documents.length);
         break;
       case ProjectFields.number:
-        response = projectA.number.compareTo(projectB.number);
+        response = (projectA.number ?? '').compareTo(projectB.number ?? '');
         break;
       case ProjectFields.customValue1:
         response = projectA.customValue1.compareTo(projectB.customValue1);
