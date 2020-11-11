@@ -122,7 +122,9 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                 ),
                 title: Row(
                   children: [
-                    Text(localization.invoice + ' ' + (invoice.number ?? '')),
+                    Text(localization.lookup('${invoice.entityType}') +
+                        ' ' +
+                        (invoice.number ?? '')),
                     if (_activityId != null && isDesktop(context)) ...[
                       Spacer(),
                       Flexible(
