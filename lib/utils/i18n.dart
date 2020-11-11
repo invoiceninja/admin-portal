@@ -4904,12 +4904,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
       return key;
     }
 
-    if (!_localizedValues[localeCode].containsKey(lookupKey)) {
-      print('ERROR: localization key not found - |$key|');
-    }
-
-    return _localizedValues[localeCode][lookupKey] ??
+    final value = _localizedValues[localeCode][lookupKey] ??
         _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
         key;
+
+    if (value.isEmpty) {
+      print('ERROR: localization key not found - $key');
+
+      final englishValue = _localizedValues['en'][lookupKey];
+
+      return englishValue.isEmpty ? key : englishValue;
+    }
+
+    return value;
   }
 }

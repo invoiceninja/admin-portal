@@ -205,11 +205,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
             prefState.moduleLayout == ModuleLayout.table) ||
         uiState.isEditing ||
         entityType.isSetting ||
-        entityList.isEmpty) {
+        (entityList.isEmpty && (entityUIState.selectedId ?? '').isEmpty)) {
       return false;
     }
 
-    if ((entityUIState.selectedId ?? '').isEmpty) {
+    if ((entityUIState.selectedId ?? '').isEmpty ||
+        !entityList.contains(entityUIState.selectedId)) {
       return true;
     } else if (unfilteredHistoryList.isNotEmpty &&
         uiState.isViewing &&
@@ -424,13 +425,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   TaskStatusState get taskStatusState => userCompanyState.taskStatusState;
+
   ListUIState get taskStatusListState => uiState.taskStatusUIState.listUIState;
+
   TaskStatusUIState get taskStatusUIState => uiState.taskStatusUIState;
 
   ExpenseCategoryState get expenseCategoryState =>
       userCompanyState.expenseCategoryState;
+
   ListUIState get expenseCategoryListState =>
       uiState.expenseCategoryUIState.listUIState;
+
   ExpenseCategoryUIState get expenseCategoryUIState =>
       uiState.expenseCategoryUIState;
 
