@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -41,7 +42,6 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers;
-  Contact _contact;
 
   @override
   void didChangeDependencies() {
@@ -106,23 +106,13 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     });
   }
 
-  //Check contacts permission
-  Future<PermissionStatus> _getPermission() async {
-    final PermissionStatus permission = await Permission.contacts.status;
-    if (permission != PermissionStatus.granted &&
-        permission != PermissionStatus.denied) {
-      final Map<Permission, PermissionStatus> permissionStatus =
-          await [Permission.contacts].request();
-      return permissionStatus[Permission.contacts] ??
-          PermissionStatus.undetermined;
-    } else {
-      return permission;
+  void _setContactControllers(Contact contact) {
+    if (_nameController.text.isEmpty) {
+      _nameController.text = contact.displayName ?? '';
     }
-  }
-
-  void _setContactControllers() {
-    _nameController.text = _contact.displayName;
-    _phoneController.text = _contact.phones.first.value;
+    if (contact.phones.isNotEmpty) {
+      _phoneController.text = contact.phones.first.value;
+    }
   }
 
   @override
@@ -155,18 +145,11 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                           color: Colors.grey,
                         ),
                         onPressed: () async {
-                          final PermissionStatus permissionStatus =
-                              await _getPermission();
-                          if (permissionStatus == PermissionStatus.granted) {
-                            try {
-                              _contact = await ContactsService
-                                  .openDeviceContactPicker();
-                              setState(() {
-                                _setContactControllers();
-                              });
-                            } catch (e) {
-                              print(e.toString());
-                            }
+                          final contact = await getDeviceContact();
+                          if (contact != null) {
+                            setState(() {
+                              _setContactControllers(contact);
+                            });
                           }
                         })
                     : null,
