@@ -27,6 +27,7 @@ class TaskEditDetails extends StatefulWidget {
 }
 
 class _TaskEditDetailsState extends State<TaskEditDetails> {
+  final _numberController = TextEditingController();
   final _rateController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _custom1Controller = TextEditingController();
@@ -40,6 +41,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   @override
   void didChangeDependencies() {
     _controllers = [
+      _numberController,
       _rateController,
       _descriptionController,
       _custom1Controller,
@@ -51,6 +53,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final task = widget.viewModel.task;
+    _numberController.text = task.number;
     _rateController.text = formatNumber(task.rate, context,
         formatNumberType: FormatNumberType.inputMoney);
     _descriptionController.text = task.description;
@@ -77,6 +80,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   void _onChanged() {
     _debouncer.run(() {
       final task = widget.viewModel.task.rebuild((b) => b
+        ..number = _numberController.text.trim()
         ..rate = parseDouble(_rateController.text.trim())
         ..description = _descriptionController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
@@ -100,6 +104,12 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
+            if (task.isOld)
+              DecoratedFormField(
+                controller: _numberController,
+                label: localization.taskNumber,
+                autocorrect: false,
+              ),
             if (!task.isInvoiced) ...[
               EntityDropdown(
                 key: Key('__client_${task.clientId}__'),
