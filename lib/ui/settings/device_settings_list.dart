@@ -201,9 +201,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       );
                     }),
                     ListTile(
-                      leading: Icon(kIsWeb
-                          ? Icons.power_settings_new
-                          : MdiIcons.powerOff),
+                      leading: Icon(Icons.logout),
                       title: Text(AppLocalization.of(context).logout),
                       onTap: () {
                         viewModel.onLogoutTap(context);
