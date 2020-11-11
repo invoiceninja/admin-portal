@@ -137,7 +137,7 @@ class _AccountOverview extends StatelessWidget {
           secondLabel: localization.expiresOn,
           secondValue: formatDate(account.planExpires, context),
         ),
-        if (company.isDisabled)
+        if (state.company.isDisabled)
           FormCard(
             children: [
               SwitchListTile(
