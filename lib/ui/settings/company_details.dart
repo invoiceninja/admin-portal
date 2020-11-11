@@ -202,10 +202,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
             text: localization.details,
           ),
           Tab(
-            text: localization.logo,
+            text: localization.address,
           ),
           Tab(
-            text: localization.address,
+            text: localization.logo,
           ),
           Tab(
             text: localization.defaults,
@@ -321,6 +321,68 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 ),
             ],
           ),
+          AutofillGroup(
+            child: ListView(
+              children: <Widget>[
+                FormCard(
+                  children: <Widget>[
+                    DecoratedFormField(
+                      label: localization.address1,
+                      controller: _address1Controller,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
+                      autofillHints: [AutofillHints.streetAddressLine1],
+                    ),
+                    DecoratedFormField(
+                      label: localization.address2,
+                      controller: _address2Controller,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
+                      autofillHints: [AutofillHints.streetAddressLine2],
+                    ),
+                    DecoratedFormField(
+                      label: localization.city,
+                      controller: _cityController,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
+                      autofillHints: [AutofillHints.addressCity],
+                    ),
+                    DecoratedFormField(
+                      label: localization.state,
+                      controller: _stateController,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
+                      autofillHints: [AutofillHints.addressState],
+                    ),
+                    DecoratedFormField(
+                      label: localization.postalCode,
+                      controller: _postalCodeController,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
+                      autofillHints: [AutofillHints.postalCode],
+                    ),
+                    EntityDropdown(
+                      key: ValueKey('__country_${settings.countryId}__'),
+                      entityType: EntityType.country,
+                      entityList:
+                          memoizedCountryList(state.staticState.countryMap),
+                      labelText: localization.country,
+                      entityId: settings.countryId,
+                      onSelected: (SelectableEntity country) =>
+                          viewModel.onSettingsChanged(settings
+                              .rebuild((b) => b..countryId = country?.id)),
+                      showUseDefault: state.settingsUIState.isFiltered,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(30),
             child: Column(
@@ -382,68 +444,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         url: settings.companyLogo,
                         //url: '${settings.logoUrl}?clear_cache=${state.selectedCompany.updatedAt}',
                       )),
-              ],
-            ),
-          ),
-          AutofillGroup(
-            child: ListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    DecoratedFormField(
-                      label: localization.address1,
-                      controller: _address1Controller,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
-                      autofillHints: [AutofillHints.streetAddressLine1],
-                    ),
-                    DecoratedFormField(
-                      label: localization.address2,
-                      controller: _address2Controller,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
-                      autofillHints: [AutofillHints.streetAddressLine2],
-                    ),
-                    DecoratedFormField(
-                      label: localization.city,
-                      controller: _cityController,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
-                      autofillHints: [AutofillHints.addressCity],
-                    ),
-                    DecoratedFormField(
-                      label: localization.state,
-                      controller: _stateController,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
-                      autofillHints: [AutofillHints.addressState],
-                    ),
-                    DecoratedFormField(
-                      label: localization.postalCode,
-                      controller: _postalCodeController,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
-                      autofillHints: [AutofillHints.postalCode],
-                    ),
-                    EntityDropdown(
-                      key: ValueKey('__country_${settings.countryId}__'),
-                      entityType: EntityType.country,
-                      entityList:
-                          memoizedCountryList(state.staticState.countryMap),
-                      labelText: localization.country,
-                      entityId: settings.countryId,
-                      onSelected: (SelectableEntity country) =>
-                          viewModel.onSettingsChanged(settings
-                              .rebuild((b) => b..countryId = country?.id)),
-                      showUseDefault: state.settingsUIState.isFiltered,
-                    ),
-                  ],
-                )
               ],
             ),
           ),
