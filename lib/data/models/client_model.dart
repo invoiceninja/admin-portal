@@ -773,7 +773,7 @@ abstract class ContactEntity extends Object
       if (name.isEmpty) {
         name += email;
       } else {
-        name += ' <$email>';
+        name += ' • $email';
       }
     }
 
