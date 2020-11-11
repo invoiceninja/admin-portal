@@ -522,6 +522,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           Expanded(
             child: DecoratedFormField(
               controller: _amountController,
+              autocorrect: false,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               label: payment.isForInvoice == true
                   ? localization.amount
                   : localization.applied,

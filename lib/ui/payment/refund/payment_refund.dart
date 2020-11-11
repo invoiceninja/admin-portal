@@ -349,6 +349,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             child: DecoratedFormField(
               enabled: (_invoiceId ?? '').isNotEmpty,
               controller: _amountController,
+              autocorrect: false,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               label: localization.amount,
               autofocus: !hasMultipleInvoices,
               validator: (value) => !hasMultipleInvoices &&

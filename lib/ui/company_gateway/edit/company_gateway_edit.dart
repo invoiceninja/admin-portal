@@ -777,14 +777,20 @@ class _FeesEditorState extends State<FeesEditor> {
         DecoratedFormField(
           label: localization.feeAmount,
           controller: _amountController,
+          autocorrect: false,
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
         ),
         DecoratedFormField(
           label: localization.feePercent,
           controller: _percentController,
+          autocorrect: false,
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
         ),
         DecoratedFormField(
           label: localization.feeCap,
           controller: _capController,
+          autocorrect: false,
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
         ),
         if (company.enableFirstItemTaxRate)
           TaxRateDropdown(
