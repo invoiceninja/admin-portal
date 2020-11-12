@@ -147,8 +147,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.client,
               listWidget: ClientScreenBuilder(),
-              viewWidget: ClientViewScreen(),
-              editWidget: ClientEditScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -156,8 +154,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.product,
               listWidget: ProductScreenBuilder(),
-              viewWidget: ProductViewScreen(),
-              editWidget: ProductEditScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -165,9 +161,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.invoice,
               listWidget: InvoiceScreenBuilder(),
-              viewWidget: InvoiceViewScreen(),
-              editWidget: InvoiceEditScreen(),
-              emailWidget: InvoiceEmailScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -175,8 +168,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.recurringInvoice,
               listWidget: RecurringInvoiceScreenBuilder(),
-              viewWidget: RecurringInvoiceViewScreen(),
-              editWidget: RecurringInvoiceEditScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -184,8 +175,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.payment,
               listWidget: PaymentScreenBuilder(),
-              viewWidget: PaymentViewScreen(),
-              editWidget: PaymentEditScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -193,9 +182,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.quote,
               listWidget: QuoteScreenBuilder(),
-              viewWidget: QuoteViewScreen(),
-              editWidget: QuoteEditScreen(),
-              emailWidget: QuoteEmailScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -203,9 +189,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.credit,
               listWidget: CreditScreenBuilder(),
-              viewWidget: CreditViewScreen(),
-              editWidget: CreditEditScreen(),
-              emailWidget: CreditEmailScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -213,8 +196,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.project,
               listWidget: ProjectScreenBuilder(),
-              viewWidget: ProjectViewScreen(),
-              editWidget: ProjectEditScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -222,8 +203,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.task,
               listWidget: TaskScreenBuilder(),
-              viewWidget: TaskViewScreen(),
-              editWidget: TaskEditScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -231,8 +210,6 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.vendor,
               listWidget: VendorScreenBuilder(),
-              viewWidget: VendorViewScreen(),
-              editWidget: VendorEditScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -240,12 +217,9 @@ class MainScreen extends StatelessWidget {
             screen = EntityScreens(
               entityType: EntityType.expense,
               listWidget: ExpenseScreenBuilder(),
-              viewWidget: ExpenseViewScreen(),
-              editWidget: ExpenseEditScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
-
           case SettingsScreen.route:
             screen = SettingsScreens();
             break;
@@ -551,17 +525,11 @@ class SettingsScreens extends StatelessWidget {
 class EntityScreens extends StatelessWidget {
   const EntityScreens({
     @required this.listWidget,
-    @required this.editWidget,
-    @required this.viewWidget,
     @required this.entityType,
-    this.emailWidget,
     this.editingFIlterEntity,
   });
 
   final Widget listWidget;
-  final Widget viewWidget;
-  final Widget editWidget;
-  final Widget emailWidget;
   final EntityType entityType;
   final bool editingFIlterEntity;
 
@@ -591,12 +559,90 @@ class EntityScreens extends StatelessWidget {
 
     Widget child;
     if (subRoute == 'email') {
-      child = emailWidget;
+      switch (entityType) {
+        case EntityType.invoice:
+          child = InvoiceEmailScreen();
+          break;
+        case EntityType.credit:
+          child = CreditEmailScreen();
+          break;
+        case EntityType.quote:
+          child = QuoteEmailScreen();
+          break;
+      }
     } else if (subRoute == 'edit' && !editingFIlterEntity) {
-      child = editWidget;
+      switch (entityType) {
+        case EntityType.client:
+          child = ClientEditScreen();
+          break;
+        case EntityType.product:
+          child = ProductEditScreen();
+          break;
+        case EntityType.invoice:
+          child = InvoiceEditScreen();
+          break;
+        case EntityType.recurringInvoice:
+          child = RecurringInvoiceEditScreen();
+          break;
+        case EntityType.payment:
+          child = PaymentEditScreen();
+          break;
+        case EntityType.quote:
+          child = QuoteEditScreen();
+          break;
+        case EntityType.credit:
+          child = CreditEditScreen();
+          break;
+        case EntityType.project:
+          child = ProjectEditScreen();
+          break;
+        case EntityType.task:
+          child = TaskEditScreen();
+          break;
+        case EntityType.vendor:
+          child = VendorEditScreen();
+          break;
+        case EntityType.expense:
+          child = ExpenseEditScreen();
+          break;
+      }
     } else if ((entityUIState.selectedId ?? '').isNotEmpty &&
         state.getEntityMap(entityType).containsKey(entityUIState.selectedId)) {
-      child = viewWidget;
+      switch (entityType) {
+        case EntityType.client:
+          child = ClientViewScreen();
+          break;
+        case EntityType.product:
+          child = ProductViewScreen();
+          break;
+        case EntityType.invoice:
+          child = InvoiceViewScreen();
+          break;
+        case EntityType.recurringInvoice:
+          child = RecurringInvoiceViewScreen();
+          break;
+        case EntityType.payment:
+          child = PaymentViewScreen();
+          break;
+        case EntityType.quote:
+          child = QuoteViewScreen();
+          break;
+        case EntityType.credit:
+          child = CreditViewScreen();
+          break;
+        case EntityType.project:
+          child = ProjectViewScreen();
+          break;
+        case EntityType.task:
+          child = TaskViewScreen();
+          break;
+        case EntityType.vendor:
+          child = VendorViewScreen();
+          break;
+        case EntityType.expense:
+          child = ExpenseViewScreen();
+          break;
+      }
     } else {
       child = BlankScreen(AppLocalization.of(context).noRecordSelected);
     }
