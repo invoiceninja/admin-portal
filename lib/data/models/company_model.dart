@@ -484,7 +484,7 @@ abstract class GatewayEntity extends Object
       fields: '',
       defaultGatewayTypeId: kGatewayTypeCreditCard,
       isOffsite: false,
-      //isVisible: false,
+      isVisible: false,
       options: BuiltMap<String, GatewayOptionsEntity>(),
     );
   }
@@ -507,8 +507,8 @@ abstract class GatewayEntity extends Object
   @BuiltValueField(wireName: 'is_offsite')
   bool get isOffsite;
 
-  //@BuiltValueField(wireName: 'visible')
-  //bool get isVisible;
+  @BuiltValueField(wireName: 'visible')
+  bool get isVisible;
 
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;

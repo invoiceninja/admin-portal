@@ -123,6 +123,7 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'require_client_name')
   bool get requireClientName;
 
+  @nullable // TODO remove nullable
   @BuiltValueField(wireName: 'require_postal_code')
   bool get requirePostalCode;
 

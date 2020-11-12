@@ -141,9 +141,6 @@ class _$CompanyGatewayEntitySerializer
       'require_client_name',
       serializers.serialize(object.requireClientName,
           specifiedType: const FullType(bool)),
-      'require_zip',
-      serializers.serialize(object.requirePostalCode,
-          specifiedType: const FullType(bool)),
       'require_client_phone',
       serializers.serialize(object.requireClientPhone,
           specifiedType: const FullType(bool)),
@@ -201,6 +198,12 @@ class _$CompanyGatewayEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.requirePostalCode != null) {
+      result
+        ..add('require_postal_code')
+        ..add(serializers.serialize(object.requirePostalCode,
+            specifiedType: const FullType(bool)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -260,7 +263,7 @@ class _$CompanyGatewayEntitySerializer
           result.requireClientName = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'require_zip':
+        case 'require_postal_code':
           result.requirePostalCode = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
@@ -789,10 +792,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     if (requireClientName == null) {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'requireClientName');
-    }
-    if (requirePostalCode == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'requirePostalCode');
     }
     if (requireClientPhone == null) {
       throw new BuiltValueNullFieldError(
