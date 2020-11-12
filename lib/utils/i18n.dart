@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_late': 'Invoice Late',
+      'quote_expired': 'Quote Expired',
       'partial_due': 'Partial Due',
       'invoice_total': 'Invoice Total',
       'quote_total': 'Quote Total',
@@ -3326,9 +3328,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get sharedInvoiceQuoteCounter =>
       _localizedValues[localeCode]['shared_invoice_quote_counter'] ?? '';
 
-  String get invoiceLabels =>
-      _localizedValues[localeCode]['invoice_labels'] ?? '';
-
   String get defaultTaxName1 =>
       _localizedValues[localeCode]['default_tax_name_1'] ?? '';
 
@@ -4909,6 +4908,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['recurring_invoice_total'] ?? '';
 
   String get partialDue => _localizedValues[localeCode]['partial_due'] ?? '';
+
+  String get invoiceLate => _localizedValues[localeCode]['invoice_late'] ?? '';
+
+  String get quoteExpired =>
+      _localizedValues[localeCode]['quote_expired'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -952,7 +952,6 @@ abstract class SettingsEntity
         defaultQuoteDesignId: clientSettings?.defaultQuoteDesignId ?? groupSettings?.defaultQuoteDesignId ?? companySettings?.defaultQuoteDesignId,
         defaultCreditDesignId: clientSettings?.defaultCreditDesignId ?? groupSettings?.defaultCreditDesignId ?? companySettings?.defaultCreditDesignId,
         defaultInvoiceFooter: clientSettings?.defaultInvoiceFooter ?? groupSettings?.defaultInvoiceFooter ?? companySettings?.defaultInvoiceFooter,
-        invoiceLabels: clientSettings?.invoiceLabels ?? groupSettings?.invoiceLabels ?? companySettings?.invoiceLabels,
         defaultTaxName1: clientSettings?.defaultTaxName1 ?? groupSettings?.defaultTaxName1 ?? companySettings?.defaultTaxName1,
         defaultTaxRate1: clientSettings?.defaultTaxRate1 ?? groupSettings?.defaultTaxRate1 ?? companySettings?.defaultTaxRate1,
         defaultTaxName2: clientSettings?.defaultTaxName2 ?? groupSettings?.defaultTaxName2 ?? companySettings?.defaultTaxName2,
@@ -1336,10 +1335,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'invoice_footer')
   String get defaultInvoiceFooter;
-
-  @nullable
-  @BuiltValueField(wireName: 'invoice_labels')
-  String get invoiceLabels;
 
   @nullable
   @BuiltValueField(wireName: 'tax_name1')

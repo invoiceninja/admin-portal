@@ -71,9 +71,9 @@ abstract class CompanyGatewayEntity extends Object
       requireBillingAddress: false,
       requireClientName: false,
       requireClientPhone: false,
-      requireContactEmail: false,
+      requireContactEmail: true,
       requireContactName: false,
-      requirePostalCode: false,
+      requirePostalCode: true,
       updateDetails: true,
       config: '',
       feesAndLimitsMap: BuiltMap<String, FeesAndLimitsSettings>(),
@@ -123,7 +123,7 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'require_client_name')
   bool get requireClientName;
 
-  @BuiltValueField(wireName: 'require_zip')
+  @BuiltValueField(wireName: 'require_postal_code')
   bool get requirePostalCode;
 
   @BuiltValueField(wireName: 'require_client_phone')

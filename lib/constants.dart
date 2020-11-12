@@ -205,9 +205,11 @@ const String kNotificationsAllUser = 'all_user_notifications';
 const String kNotificationsPaymentSuccess = 'payment_success';
 const String kNotificationsPaymentFailure = 'payment_failure';
 const String kNotificationsInvoiceSent = 'invoice_sent';
+const String kNotificationsInvoiceLate = 'invoice_late';
 const String kNotificationsQuoteSent = 'quote_sent';
 const String kNotificationsCreditSent = 'credit_sent';
 const String kNotificationsQuoteViewed = 'quote_viewed';
+const String kNotificationsQuoteExpired = 'quote_expired';
 const String kNotificationsInvoiceViewed = 'invoice_viewed';
 const String kNotificationsCreditViewed = 'credit_viewed';
 const String kNotificationsQuoteApproved = 'quote_approved';
@@ -215,11 +217,13 @@ const String kNotificationsQuoteApproved = 'quote_approved';
 const kNotificationEvents = [
   kNotificationsInvoiceSent,
   kNotificationsInvoiceViewed,
+  kNotificationsInvoiceLate,
   kNotificationsPaymentSuccess,
   kNotificationsPaymentFailure,
   kNotificationsQuoteSent,
   kNotificationsQuoteViewed,
   kNotificationsQuoteApproved,
+  kNotificationsQuoteExpired,
   kNotificationsCreditSent,
   kNotificationsCreditViewed,
 ];

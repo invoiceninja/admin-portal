@@ -460,10 +460,7 @@ class SettingsSearch extends StatelessWidget {
                     child: Icon(getSettingIcon(section), size: 22),
                   ),
                   subtitle: Text(localization.lookup(section)),
-                  onTap: () {
-                    print('## section: $i');
-                    viewModel.loadSection(context, section, i);
-                  },
+                  onTap: () => viewModel.loadSection(context, section, i),
                 ),
       ],
     );
