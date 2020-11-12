@@ -56,6 +56,7 @@ class ViewScaffold extends StatelessWidget {
       if ((isFilter ?? false) &&
           entity.entityType == state.uiState.filterEntityType) {
         leading = IconButton(
+          tooltip: localization.hideSidebar,
           icon: Icon(Icons.clear),
           onPressed: () {
             store.dispatch(UpdateUserPreferences(showFilterSidebar: false));
@@ -63,10 +64,12 @@ class ViewScaffold extends StatelessWidget {
         );
       } else if (state.uiState.previewStack.isNotEmpty) {
         leading = IconButton(
+            tooltip: localization.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
       } else if (isSettings) {
         leading = IconButton(
+          tooltip: localization.back,
           icon: Icon(Icons.arrow_back),
           onPressed: () => onBackPressed != null
               ? onBackPressed()
