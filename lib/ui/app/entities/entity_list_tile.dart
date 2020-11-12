@@ -87,7 +87,7 @@ class _EntityListTileState extends State<EntityListTile> {
         onPressed: () => viewEntity(
           entity: widget.entity,
           context: context,
-          addToStack: isDesktop(context),
+          addToStack: isDesktop(context) && !widget.isFilter,
         ),
         color: isFilteredBy
             ? (state.prefState.enableDarkMode
