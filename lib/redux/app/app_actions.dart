@@ -1422,6 +1422,7 @@ void selectEntity({
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
+  final uiState = state.uiState;
   final isInMultiselect =
       state.getListState(entity.entityType).isInMultiselect();
 
@@ -1438,11 +1439,12 @@ void selectEntity({
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(context, entity, EntityAction.toggleMultiselect);
-  } else if (isDesktop(context) && state.uiState.isEditing) {
+  } else if (isDesktop(context) &&
+      (uiState.isEditing || uiState.previewStack.isNotEmpty)) {
     viewEntity(context: context, entity: entity);
   } else if (isDesktop(context) &&
       !forceView &&
-      state.uiState.isViewing &&
+      uiState.isViewing &&
       !entity.entityType.isSetting &&
       (state.getUIState(entity.entityType).selectedId == entity.id &&
           state.prefState.isPreviewVisible)) {
