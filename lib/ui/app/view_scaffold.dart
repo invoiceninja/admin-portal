@@ -52,17 +52,24 @@ class ViewScaffold extends StatelessWidget {
     }
 
     Widget leading;
-    if (!isMobile(context)) {
+    if (isDesktop(context)) {
       if ((isFilter ?? false) &&
           entity.entityType == state.uiState.filterEntityType) {
         leading = IconButton(
+          tooltip: localization.hideSidebar,
           icon: Icon(Icons.clear),
           onPressed: () {
             store.dispatch(UpdateUserPreferences(showFilterSidebar: false));
           },
         );
+      } else if (state.uiState.previewStack.isNotEmpty) {
+        leading = IconButton(
+            tooltip: localization.back,
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => store.dispatch(PopPreviewStack()));
       } else if (isSettings) {
         leading = IconButton(
+          tooltip: localization.back,
           icon: Icon(Icons.arrow_back),
           onPressed: () => onBackPressed != null
               ? onBackPressed()

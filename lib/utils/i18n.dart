@@ -15,6 +15,28 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_late': 'Invoice Late',
+      'quote_expired': 'Quote Expired',
+      'partial_due': 'Partial Due',
+      'invoice_total': 'Invoice Total',
+      'quote_total': 'Quote Total',
+      'credit_total': 'Credit Total',
+      'recurring_invoice_total': 'Invoice Total',
+      'actions': 'Actions',
+      'expense_number': 'Expense Number',
+      'task_number': 'Task Number',
+      'project_number': 'Project Number',
+      'warning': 'Warning',
+      'view_settings': 'View Settings',
+      'company_disabled_warning':
+          'Warning: this company has not yet been activated',
+      'late_invoice': 'Late Invoice',
+      'expired_quote': 'Expired Quote',
+      'remind_invoice': 'Remind Invoice',
+      'cvv': 'CVV',
+      'client_name': 'Client Name',
+      'client_phone': 'Client Phone',
+      'required_fields': 'Required Fields',
       'calculated_rate': 'Calculated Rate',
       'default_task_rate': 'Default Task Rate',
       'clear_cache': 'Clear Cache',
@@ -385,7 +407,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'delete_company': 'Delete Company',
       'delete_company_message':
           'Warning: This will permanently delete your company [:company], there is no undo',
-      'enable_modules': 'Enable Modules',
+      'enabled_modules': 'Enabled Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
       'includes': 'Includes',
@@ -781,10 +803,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'max': 'Max',
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
-      'require_billing_address_help':
-          'Require client to provide their billing address',
-      'require_shipping_address_help':
-          'Require client to provide their shipping address',
       'update_address': 'Update Address',
       'update_address_help': 'Update client\'s address with provided details',
       'rate': 'Rate',
@@ -1333,6 +1351,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'activity_58': ':user reversed invoice :invoice',
       'activity_59': ':user cancelled invoice :invoice',
+      'activity_60': ':contact viewed quote :quote',
+      'activity_61': ':user updated client :client',
+      'activity_62': ':user updated vendor :vendor',
+      'activity_63':
+          ':user emailed first reminder for invoice :invoice to :contact',
+      'activity_64':
+          ':user emailed second reminder for invoice :invoice to :contact',
+      'activity_65':
+          ':user emailed third reminder for invoice :invoice to :contact',
+      'activity_66':
+          ':user emailed endless reminder for invoice :invoice to :contact',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
       'emailed_credit': 'Successfully emailed credit',
@@ -2750,12 +2779,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get rate => _localizedValues[localeCode]['rate'] ?? '';
 
-  String get requireBillingAddressHelp =>
-      _localizedValues[localeCode]['require_billing_address_help'] ?? '';
-
-  String get requireShippingAddressHelp =>
-      _localizedValues[localeCode]['require_shipping_address_help'] ?? '';
-
   String get updateAddress =>
       _localizedValues[localeCode]['update_address'] ?? '';
 
@@ -3304,9 +3327,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get sharedInvoiceQuoteCounter =>
       _localizedValues[localeCode]['shared_invoice_quote_counter'] ?? '';
-
-  String get invoiceLabels =>
-      _localizedValues[localeCode]['invoice_labels'] ?? '';
 
   String get defaultTaxName1 =>
       _localizedValues[localeCode]['default_tax_name_1'] ?? '';
@@ -3975,8 +3995,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get convertedQuote =>
       _localizedValues[localeCode]['converted_quote'] ?? '';
 
-  String get enableModules =>
-      _localizedValues[localeCode]['enable_modules'] ?? '';
+  String get enabledModules =>
+      _localizedValues[localeCode]['enabled_modules'] ?? '';
 
   String get cancelAccount =>
       _localizedValues[localeCode]['cancel_account'] ?? '';
@@ -4840,21 +4860,83 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clearCache => _localizedValues[localeCode]['clear_cache'] ?? '';
 
   String get calculatedRate =>
-      _localizedValues[localeCode]['calculatedRate'] ?? '';
+      _localizedValues[localeCode]['calculated_rate'] ?? '';
+
+  String get requiredFields =>
+      _localizedValues[localeCode]['required_fields'] ?? '';
+
+  String get clientName => _localizedValues[localeCode]['client_name'] ?? '';
+
+  String get clientPhone => _localizedValues[localeCode]['client_phone'] ?? '';
+
+  String get cvv => _localizedValues[localeCode]['cvv'] ?? '';
+
+  String get lateInvoice => _localizedValues[localeCode]['late_invoice'] ?? '';
+
+  String get expiredQuote =>
+      _localizedValues[localeCode]['expired_quote'] ?? '';
+
+  String get remindInvoice =>
+      _localizedValues[localeCode]['remind_invoice'] ?? '';
+
+  String get companyDisabledWarning =>
+      _localizedValues[localeCode]['company_disabled_warning'] ?? '';
+
+  String get viewSettings =>
+      _localizedValues[localeCode]['view_settings'] ?? '';
+
+  String get warning => _localizedValues[localeCode]['warning'] ?? '';
+
+  String get projectNumber =>
+      _localizedValues[localeCode]['project_number'] ?? '';
+
+  String get taskNumber => _localizedValues[localeCode]['task_number'] ?? '';
+
+  String get expenseNumber =>
+      _localizedValues[localeCode]['expense_number'] ?? '';
+
+  String get actions => _localizedValues[localeCode]['actions'] ?? '';
+
+  String get invoiceTotal =>
+      _localizedValues[localeCode]['invoice_total'] ?? '';
+
+  String get quoteTotal => _localizedValues[localeCode]['quote_total'] ?? '';
+
+  String get creditTotal => _localizedValues[localeCode]['credit_total'] ?? '';
+
+  String get recurringInvoiceTotal =>
+      _localizedValues[localeCode]['recurring_invoice_total'] ?? '';
+
+  String get partialDue => _localizedValues[localeCode]['partial_due'] ?? '';
+
+  String get invoiceLate => _localizedValues[localeCode]['invoice_late'] ?? '';
+
+  String get quoteExpired =>
+      _localizedValues[localeCode]['quote_expired'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
+
+    if ((key ?? '').isEmpty) {
+      return '';
+    }
 
     if (lookupKey.startsWith('_')) {
       return key;
     }
 
-    if (!_localizedValues[localeCode].containsKey(lookupKey)) {
-      print('ERROR: localization key not found - $key');
-    }
-
-    return _localizedValues[localeCode][lookupKey] ??
+    final value = _localizedValues[localeCode][lookupKey] ??
         _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
         key;
+
+    if (value.isEmpty) {
+      print('ERROR: localization key not found - $key');
+
+      final englishValue = _localizedValues['en'][lookupKey];
+
+      return englishValue.isEmpty ? key : englishValue;
+    }
+
+    return value;
   }
 }

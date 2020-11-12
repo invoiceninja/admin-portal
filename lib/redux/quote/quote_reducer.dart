@@ -33,6 +33,8 @@ String filterquoteDropdownReducer(
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.quote ? action.entityId : selectedId),
   TypedReducer<String, ViewQuote>((selectedId, action) => action.quoteId),
   TypedReducer<String, AddQuoteSuccess>(
       (selectedId, action) => action.quote.id),

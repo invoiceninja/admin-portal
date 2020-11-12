@@ -16,6 +16,10 @@ EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.document
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewDocument>((selectedId, action) => action.documentId),
   //TypedReducer<String, AddDocumentSuccess>((selectedId, action) => action.document.id),
   TypedReducer<String, SelectCompany>(

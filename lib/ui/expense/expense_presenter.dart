@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class ExpensePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      ExpenseFields.status,
       ExpenseFields.vendor,
       ExpenseFields.client,
       ExpenseFields.expenseDate,
@@ -57,6 +59,8 @@ class ExpensePresenter extends EntityPresenter {
     final expense = entity as ExpenseEntity;
 
     switch (field) {
+      case ExpenseFields.status:
+        return EntityStatusChip(entity: expense);
       case ExpenseFields.vendor:
       case ExpenseFields.vendorId:
         return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())

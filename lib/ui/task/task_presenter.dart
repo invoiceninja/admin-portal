@@ -4,17 +4,18 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class TaskPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      TaskFields.status,
       TaskFields.client,
       TaskFields.project,
       TaskFields.description,
       TaskFields.duration,
-      TaskFields.status,
       EntityFields.state,
     ];
   }
@@ -49,6 +50,8 @@ class TaskPresenter extends EntityPresenter {
     final state = store.state;
 
     switch (field) {
+      case TaskFields.status:
+        return EntityStatusChip(entity: task);
       case TaskFields.client:
         return Text(state.clientState.map[task.clientId]?.displayName ?? '');
       case TaskFields.rate:
@@ -99,8 +102,6 @@ class TaskPresenter extends EntityPresenter {
             formatDate(convertTimestampToDateString(task.archivedAt), context));
       case TaskFields.isDeleted:
         return Text(task.isDeleted.toString());
-      case TaskFields.status:
-        return Text(state.taskStatusState.get(task.statusId).name);
     }
 
     return super.getField(field: field, context: context);

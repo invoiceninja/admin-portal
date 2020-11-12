@@ -33,6 +33,7 @@ class ExpenseEditDetails extends StatefulWidget {
 }
 
 class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
+  final _numberController = TextEditingController();
   final _amountController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -43,6 +44,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   @override
   void didChangeDependencies() {
     _controllers = [
+      _numberController,
       _amountController,
       _custom1Controller,
       _custom2Controller,
@@ -52,6 +54,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final expense = widget.viewModel.expense;
+    _numberController.text = expense.number;
     _amountController.text = formatNumber(expense.amount, context,
         formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = expense.customValue1;
@@ -77,6 +80,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
     _debouncer.run(() {
       final viewModel = widget.viewModel;
       final expense = viewModel.expense.rebuild((b) => b
+        ..number = _numberController.text.trim()
         ..amount = parseDouble(_amountController.text)
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim());
@@ -103,6 +107,12 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
+            if (expense.isOld)
+              DecoratedFormField(
+                controller: _numberController,
+                label: localization.projectNumber,
+                autocorrect: false,
+              ),
             EntityDropdown(
               key: ValueKey('__vendor_${expense.vendorId}__'),
               entityType: EntityType.vendor,

@@ -115,7 +115,7 @@ var memoizedGatewayList = memo1(
 
 List<String> gatewayList(BuiltMap<String, GatewayEntity> gatewayMap) {
   final list = gatewayMap.keys
-      //.where((gatewayId) => gatewayMap[gatewayId].isVisible)
+      .where((gatewayId) => gatewayMap[gatewayId].isVisible)
       .toList();
 
   list.sort((idA, idB) =>

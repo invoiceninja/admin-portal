@@ -132,11 +132,26 @@ class _$CompanyGatewayEntitySerializer
       'accepted_credit_cards',
       serializers.serialize(object.acceptedCreditCards,
           specifiedType: const FullType(int)),
-      'show_billing_address',
-      serializers.serialize(object.showBillingAddress,
+      'require_shipping_address',
+      serializers.serialize(object.requireShippingAddress,
           specifiedType: const FullType(bool)),
-      'show_shipping_address',
-      serializers.serialize(object.showShippingAddress,
+      'require_billing_address',
+      serializers.serialize(object.requireBillingAddress,
+          specifiedType: const FullType(bool)),
+      'require_client_name',
+      serializers.serialize(object.requireClientName,
+          specifiedType: const FullType(bool)),
+      'require_client_phone',
+      serializers.serialize(object.requireClientPhone,
+          specifiedType: const FullType(bool)),
+      'require_contact_name',
+      serializers.serialize(object.requireContactName,
+          specifiedType: const FullType(bool)),
+      'require_contact_email',
+      serializers.serialize(object.requireContactEmail,
+          specifiedType: const FullType(bool)),
+      'require_cvv',
+      serializers.serialize(object.requireCvv,
           specifiedType: const FullType(bool)),
       'update_details',
       serializers.serialize(object.updateDetails,
@@ -183,6 +198,12 @@ class _$CompanyGatewayEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.requirePostalCode != null) {
+      result
+        ..add('require_postal_code')
+        ..add(serializers.serialize(object.requirePostalCode,
+            specifiedType: const FullType(bool)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -230,12 +251,36 @@ class _$CompanyGatewayEntitySerializer
           result.acceptedCreditCards = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'show_billing_address':
-          result.showBillingAddress = serializers.deserialize(value,
+        case 'require_shipping_address':
+          result.requireShippingAddress = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'show_shipping_address':
-          result.showShippingAddress = serializers.deserialize(value,
+        case 'require_billing_address':
+          result.requireBillingAddress = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_client_name':
+          result.requireClientName = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_postal_code':
+          result.requirePostalCode = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_client_phone':
+          result.requireClientPhone = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_contact_name':
+          result.requireContactName = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_contact_email':
+          result.requireContactEmail = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_cvv':
+          result.requireCvv = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'update_details':
@@ -643,9 +688,21 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final int acceptedCreditCards;
   @override
-  final bool showBillingAddress;
+  final bool requireShippingAddress;
   @override
-  final bool showShippingAddress;
+  final bool requireBillingAddress;
+  @override
+  final bool requireClientName;
+  @override
+  final bool requirePostalCode;
+  @override
+  final bool requireClientPhone;
+  @override
+  final bool requireContactName;
+  @override
+  final bool requireContactEmail;
+  @override
+  final bool requireCvv;
   @override
   final bool updateDetails;
   @override
@@ -690,8 +747,14 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   _$CompanyGatewayEntity._(
       {this.gatewayId,
       this.acceptedCreditCards,
-      this.showBillingAddress,
-      this.showShippingAddress,
+      this.requireShippingAddress,
+      this.requireBillingAddress,
+      this.requireClientName,
+      this.requirePostalCode,
+      this.requireClientPhone,
+      this.requireContactName,
+      this.requireContactEmail,
+      this.requireCvv,
       this.updateDetails,
       this.feesAndLimitsMap,
       this.customValue1,
@@ -718,13 +781,32 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'acceptedCreditCards');
     }
-    if (showBillingAddress == null) {
+    if (requireShippingAddress == null) {
       throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'showBillingAddress');
+          'CompanyGatewayEntity', 'requireShippingAddress');
     }
-    if (showShippingAddress == null) {
+    if (requireBillingAddress == null) {
       throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'showShippingAddress');
+          'CompanyGatewayEntity', 'requireBillingAddress');
+    }
+    if (requireClientName == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'requireClientName');
+    }
+    if (requireClientPhone == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'requireClientPhone');
+    }
+    if (requireContactName == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'requireContactName');
+    }
+    if (requireContactEmail == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'requireContactEmail');
+    }
+    if (requireCvv == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'requireCvv');
     }
     if (updateDetails == null) {
       throw new BuiltValueNullFieldError(
@@ -792,8 +874,14 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     return other is CompanyGatewayEntity &&
         gatewayId == other.gatewayId &&
         acceptedCreditCards == other.acceptedCreditCards &&
-        showBillingAddress == other.showBillingAddress &&
-        showShippingAddress == other.showShippingAddress &&
+        requireShippingAddress == other.requireShippingAddress &&
+        requireBillingAddress == other.requireBillingAddress &&
+        requireClientName == other.requireClientName &&
+        requirePostalCode == other.requirePostalCode &&
+        requireClientPhone == other.requireClientPhone &&
+        requireContactName == other.requireContactName &&
+        requireContactEmail == other.requireContactEmail &&
+        requireCvv == other.requireCvv &&
         updateDetails == other.updateDetails &&
         feesAndLimitsMap == other.feesAndLimitsMap &&
         customValue1 == other.customValue1 &&
@@ -835,8 +923,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode), showBillingAddress.hashCode),
-                                                                                showShippingAddress.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode),
+                                                                                requireCvv.hashCode),
                                                                             updateDetails.hashCode),
                                                                         feesAndLimitsMap.hashCode),
                                                                     customValue1.hashCode),
@@ -862,8 +950,14 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     return (newBuiltValueToStringHelper('CompanyGatewayEntity')
           ..add('gatewayId', gatewayId)
           ..add('acceptedCreditCards', acceptedCreditCards)
-          ..add('showBillingAddress', showBillingAddress)
-          ..add('showShippingAddress', showShippingAddress)
+          ..add('requireShippingAddress', requireShippingAddress)
+          ..add('requireBillingAddress', requireBillingAddress)
+          ..add('requireClientName', requireClientName)
+          ..add('requirePostalCode', requirePostalCode)
+          ..add('requireClientPhone', requireClientPhone)
+          ..add('requireContactName', requireContactName)
+          ..add('requireContactEmail', requireContactEmail)
+          ..add('requireCvv', requireCvv)
           ..add('updateDetails', updateDetails)
           ..add('feesAndLimitsMap', feesAndLimitsMap)
           ..add('customValue1', customValue1)
@@ -899,15 +993,44 @@ class CompanyGatewayEntityBuilder
   set acceptedCreditCards(int acceptedCreditCards) =>
       _$this._acceptedCreditCards = acceptedCreditCards;
 
-  bool _showBillingAddress;
-  bool get showBillingAddress => _$this._showBillingAddress;
-  set showBillingAddress(bool showBillingAddress) =>
-      _$this._showBillingAddress = showBillingAddress;
+  bool _requireShippingAddress;
+  bool get requireShippingAddress => _$this._requireShippingAddress;
+  set requireShippingAddress(bool requireShippingAddress) =>
+      _$this._requireShippingAddress = requireShippingAddress;
 
-  bool _showShippingAddress;
-  bool get showShippingAddress => _$this._showShippingAddress;
-  set showShippingAddress(bool showShippingAddress) =>
-      _$this._showShippingAddress = showShippingAddress;
+  bool _requireBillingAddress;
+  bool get requireBillingAddress => _$this._requireBillingAddress;
+  set requireBillingAddress(bool requireBillingAddress) =>
+      _$this._requireBillingAddress = requireBillingAddress;
+
+  bool _requireClientName;
+  bool get requireClientName => _$this._requireClientName;
+  set requireClientName(bool requireClientName) =>
+      _$this._requireClientName = requireClientName;
+
+  bool _requirePostalCode;
+  bool get requirePostalCode => _$this._requirePostalCode;
+  set requirePostalCode(bool requirePostalCode) =>
+      _$this._requirePostalCode = requirePostalCode;
+
+  bool _requireClientPhone;
+  bool get requireClientPhone => _$this._requireClientPhone;
+  set requireClientPhone(bool requireClientPhone) =>
+      _$this._requireClientPhone = requireClientPhone;
+
+  bool _requireContactName;
+  bool get requireContactName => _$this._requireContactName;
+  set requireContactName(bool requireContactName) =>
+      _$this._requireContactName = requireContactName;
+
+  bool _requireContactEmail;
+  bool get requireContactEmail => _$this._requireContactEmail;
+  set requireContactEmail(bool requireContactEmail) =>
+      _$this._requireContactEmail = requireContactEmail;
+
+  bool _requireCvv;
+  bool get requireCvv => _$this._requireCvv;
+  set requireCvv(bool requireCvv) => _$this._requireCvv = requireCvv;
 
   bool _updateDetails;
   bool get updateDetails => _$this._updateDetails;
@@ -994,8 +1117,14 @@ class CompanyGatewayEntityBuilder
     if (_$v != null) {
       _gatewayId = _$v.gatewayId;
       _acceptedCreditCards = _$v.acceptedCreditCards;
-      _showBillingAddress = _$v.showBillingAddress;
-      _showShippingAddress = _$v.showShippingAddress;
+      _requireShippingAddress = _$v.requireShippingAddress;
+      _requireBillingAddress = _$v.requireBillingAddress;
+      _requireClientName = _$v.requireClientName;
+      _requirePostalCode = _$v.requirePostalCode;
+      _requireClientPhone = _$v.requireClientPhone;
+      _requireContactName = _$v.requireContactName;
+      _requireContactEmail = _$v.requireContactEmail;
+      _requireCvv = _$v.requireCvv;
       _updateDetails = _$v.updateDetails;
       _feesAndLimitsMap = _$v.feesAndLimitsMap?.toBuilder();
       _customValue1 = _$v.customValue1;
@@ -1040,8 +1169,14 @@ class CompanyGatewayEntityBuilder
           new _$CompanyGatewayEntity._(
               gatewayId: gatewayId,
               acceptedCreditCards: acceptedCreditCards,
-              showBillingAddress: showBillingAddress,
-              showShippingAddress: showShippingAddress,
+              requireShippingAddress: requireShippingAddress,
+              requireBillingAddress: requireBillingAddress,
+              requireClientName: requireClientName,
+              requirePostalCode: requirePostalCode,
+              requireClientPhone: requireClientPhone,
+              requireContactName: requireContactName,
+              requireContactEmail: requireContactEmail,
+              requireCvv: requireCvv,
               updateDetails: updateDetails,
               feesAndLimitsMap: feesAndLimitsMap.build(),
               customValue1: customValue1,

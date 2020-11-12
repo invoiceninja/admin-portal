@@ -43,12 +43,23 @@ class _AccountManagementState extends State<AccountManagement>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 2);
+
+    final settingsUIState = widget.viewModel.state.settingsUIState;
+    _controller = TabController(
+        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+    _controller.addListener(_onTabChanged);
+
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     super.dispose();
   }
@@ -71,7 +82,7 @@ class _AccountManagementState extends State<AccountManagement>
             text: localization.overview,
           ),
           Tab(
-            text: localization.enableModules,
+            text: localization.enabledModules,
           ),
         ],
       ),
@@ -137,7 +148,7 @@ class _AccountOverview extends StatelessWidget {
           secondLabel: localization.expiresOn,
           secondValue: formatDate(account.planExpires, context),
         ),
-        if (company.isDisabled)
+        if (state.company.isDisabled)
           FormCard(
             children: [
               SwitchListTile(

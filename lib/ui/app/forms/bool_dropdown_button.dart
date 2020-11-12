@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class BoolDropdownButton extends StatelessWidget {
   const BoolDropdownButton({
@@ -40,7 +41,8 @@ class BoolDropdownButton extends StatelessWidget {
         child: SwitchListTile(
           title: Text(label),
           value: value ?? false,
-          secondary: iconData != null ? Icon(iconData) : null,
+          secondary:
+              iconData != null && isDesktop(context) ? Icon(iconData) : null,
           onChanged: (value) => onChanged(value),
           activeColor: Theme.of(context).accentColor,
           subtitle: helpLabel != null ? Text(helpLabel) : null,

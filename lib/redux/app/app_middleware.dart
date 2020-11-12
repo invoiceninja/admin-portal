@@ -222,7 +222,7 @@ Middleware<AppState> _createLoadState(
 
       store.dispatch(RefreshData(
           completer: Completer<Null>()
-            ..future.catchError(() {
+            ..future.catchError((Object error) {
               store.dispatch(UserLogout(action.context));
             })));
 

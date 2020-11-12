@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,8 +11,10 @@ import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class ClientEditDetails extends StatefulWidget {
   const ClientEditDetails({
@@ -101,6 +105,15 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     });
   }
 
+  void _setContactControllers(Contact contact) {
+    if (_nameController.text.isEmpty) {
+      _nameController.text = contact.displayName ?? '';
+    }
+    if (contact.phones.isNotEmpty) {
+      _phoneController.text = contact.phones.first.value;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -115,12 +128,31 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
           children: <Widget>[
             DecoratedFormField(
               autofocus: true,
-              label: localization.name,
               controller: _nameController,
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
               onSavePressed: viewModel.onSavePressed,
+              decoration: InputDecoration(
+                labelText: localization.name,
+                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                    ? IconButton(
+                        alignment: Alignment.bottomCenter,
+                        color: Theme.of(context).cardColor,
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () async {
+                          final contact = await getDeviceContact();
+                          if (contact != null) {
+                            setState(() {
+                              _setContactControllers(contact);
+                            });
+                          }
+                        })
+                    : null,
+              ),
             ),
             DynamicSelector(
               entityType: EntityType.group,

@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -43,15 +44,14 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       filterClearedAt: 0,
       currentRoute: currentRoute ?? LoginScreen.route,
       previousRoute: '',
+      previewStack: BuiltList<EntityType>(),
       dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       taskStatusUIState: TaskStatusUIState(),
-
       expenseCategoryUIState: ExpenseCategoryUIState(),
-
       recurringInvoiceUIState: RecurringInvoiceUIState(),
       webhookUIState: WebhookUIState(),
       tokenUIState: TokenUIState(),
@@ -85,6 +85,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   String get currentRoute;
 
   String get previousRoute;
+
+  BuiltList<EntityType> get previewStack;
 
   @nullable
   String get filterEntityId;

@@ -1,6 +1,9 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
@@ -44,12 +47,22 @@ class _UserDetailsState extends State<UserDetails>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+
+    final settingsUIState = widget.viewModel.state.settingsUIState;
+    _controller = TabController(
+        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);

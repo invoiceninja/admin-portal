@@ -260,7 +260,6 @@ class SettingsViewer extends StatelessWidget {
       //localization.defaultQuoteDesignId: settings.defaultQuoteDesignId,
       //localization.defaultCreditDesignId: settings.defaultCreditDesignId,
       localization.invoiceFooter: settings.defaultInvoiceFooter?.toString(),
-      localization.invoiceLabels: settings.invoiceLabels?.toString(),
       localization.defaultTaxName1: settings.defaultTaxName1?.toString(),
       localization.defaultTaxRate1: settings.defaultTaxRate1?.toString(),
       localization.defaultTaxName2: settings.defaultTaxName2?.toString(),

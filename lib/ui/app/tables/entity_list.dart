@@ -285,7 +285,7 @@ class _EntityListState extends State<EntityList> {
                             .replaceFirst(':count', '$countSelected')),
                       ),
                       SaveCancelButtons(
-                        saveLabel: localization.done,
+                        saveLabel: localization.actions,
                         onSavePressed: (context) async {
                           final entities = listUIState.selectedIds
                               .map<BaseEntity>(

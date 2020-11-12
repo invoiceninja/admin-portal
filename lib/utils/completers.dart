@@ -1,51 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-
-/*
-Completer<Null> refreshCompleter(BuildContext context) {
-  final Completer<Null> completer = Completer<Null>();
-
-  completer.future.then((_) {
-    Scaffold.of(context).showSnackBar(SnackBar(
-        content: SnackBarRow(
-          message: AppLocalization.of(context).refreshComplete,
-        )));
-  }).catchError((Object error) {
-    showDialog<ErrorDialog>(
-        context: context,
-        builder: (BuildContext context) {
-          return ErrorDialog(error);
-        });
-  });
-
-  return completer;
-}
-*/
 
 Completer<T> snackBarCompleter<T>(BuildContext context, String message,
     {bool shouldPop = false}) {
   final Completer<T> completer = Completer<T>();
-  ScaffoldState scaffold;
-
-  try {
-    scaffold = Scaffold.of(context);
-  } catch (e) {
-    //
-  }
 
   completer.future.then((_) {
     if (shouldPop && Navigator.of(context).canPop()) {
       Navigator.of(context).pop();
     }
-    if (scaffold != null) {
-      scaffold.showSnackBar(SnackBar(
-          content: SnackBarRow(
-        message: message,
-      )));
-    }
+    showToast(message);
   }).catchError((Object error) {
     if (shouldPop && Navigator.of(context).canPop()) {
       Navigator.of(context).pop();

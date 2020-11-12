@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class UserEdit extends StatefulWidget {
@@ -146,6 +147,7 @@ class _UserEditState extends State<UserEdit>
           viewModel.user.isNew ? localization.newUser : localization.editUser,
       appBarBottom: TabBar(
         controller: _controller,
+        isScrollable: isMobile(context),
         tabs: [
           Tab(
             text: localization.details,

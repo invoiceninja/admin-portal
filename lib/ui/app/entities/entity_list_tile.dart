@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EntityListTile extends StatefulWidget {
   const EntityListTile({
@@ -80,10 +81,14 @@ class _EntityListTileState extends State<EntityListTile> {
     final trailing = IgnorePointer(
       ignoring: !isHovered,
       child: IconButton(
-        icon: Icon(isHovered ? Icons.chevron_right : Icons.filter_list),
-        onPressed: isHovered
-            ? () => viewEntity(entity: widget.entity, context: context)
-            : () => null,
+        icon: Icon(isHovered || isMobile(context)
+            ? Icons.chevron_right
+            : Icons.filter_list),
+        onPressed: () => viewEntity(
+          entity: widget.entity,
+          context: context,
+          addToStack: isDesktop(context) && !widget.isFilter,
+        ),
         color: isFilteredBy
             ? (state.prefState.enableDarkMode
                 ? Colors.white
@@ -210,7 +215,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
                   ? SizedBox()
                   : IgnorePointer(
                       child: IconButton(
-                        icon: Icon(Icons.navigate_next),
+                        icon: Icon(MdiIcons.chevronDoubleRight),
                         onPressed: () => null,
                       ),
                     ),

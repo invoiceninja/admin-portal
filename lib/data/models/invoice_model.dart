@@ -194,6 +194,10 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity._();
 
+  // ignore: unused_element
+  static void _initializeBuilder(InvoiceEntityBuilder builder) =>
+      builder..hasTasks = false;
+
   @override
   @memoized
   int get hashCode;
@@ -437,6 +441,8 @@ abstract class InvoiceEntity extends Object
   double get netAmount => amount - taxAmount;
 
   double get netBalance => balance - (taxAmount * balance / amount);
+
+  double get paidToDate => amount - balance;
 
   @nullable
   int get loadedAt;
@@ -715,11 +721,9 @@ abstract class InvoiceEntity extends Object
         }
       }
 
-      /*
       if (invitations.isNotEmpty && !multiselect) {
         actions.add(EntityAction.clientPortal);
       }
-       */
     }
 
     if (actions.isNotEmpty) {

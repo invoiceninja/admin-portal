@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -261,9 +262,7 @@ void handleWebhookAction(
   switch (action) {
     case EntityAction.copy:
       Clipboard.setData(ClipboardData(text: webhook.targetUrl));
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(
-              localization.copiedToClipboard.replaceFirst(':value ', ''))));
+      showToast(localization.copiedToClipboard.replaceFirst(':value ', ''));
       break;
     case EntityAction.edit:
       editEntity(context: context, entity: webhook);

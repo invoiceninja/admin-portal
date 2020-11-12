@@ -353,7 +353,7 @@ class _LoginState extends State<LoginView> {
                         Column(
                           children: <Widget>[
                             SizedBox(height: 10),
-                            if (!kIsWeb)
+                            if (!kIsWeb && !kReleaseMode)
                               AppToggleButtons(
                                 tabLabels: [
                                   localization.hosted,

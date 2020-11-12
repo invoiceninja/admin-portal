@@ -159,6 +159,20 @@ class RefreshData implements StartLoading {
   final bool includeStatic;
 }
 
+class PreviewEntity {
+  const PreviewEntity({
+    this.entityType,
+    this.entityId,
+  });
+
+  final String entityId;
+  final EntityType entityType;
+}
+
+class ClearPreviewStack {}
+
+class PopPreviewStack {}
+
 class ClearData {}
 
 class RefreshDataFailure implements StopLoading {
@@ -247,6 +261,10 @@ void viewEntitiesByType({
           store.dispatch(ClearEntityFilter());
         }
 
+        if (uiState.previewStack.isNotEmpty) {
+          store.dispatch(ClearPreviewStack());
+        }
+
         switch (entityType) {
           case EntityType.dashboard:
             action = ViewDashboard(navigator: navigator);
@@ -332,12 +350,28 @@ void viewEntitiesByType({
       });
 }
 
+void viewEntity(
+        {BuildContext context,
+        BaseEntity entity,
+        bool force = false,
+        bool addToStack = false,
+        BaseEntity filterEntity}) =>
+    viewEntityById(
+      context: context,
+      entityId: entity.id,
+      entityType: entity.entityType,
+      force: force,
+      addToStack: addToStack,
+      filterEntity: filterEntity,
+    );
+
 void viewEntityById({
   BuildContext context,
   String entityId,
   EntityType entityType,
   bool force = false,
   bool showError = true,
+  bool addToStack = false,
   BaseEntity filterEntity,
 }) {
   final store = StoreProvider.of<AppState>(context);
@@ -350,6 +384,16 @@ void viewEntityById({
       context: context,
       force: force,
       callback: () {
+        if (addToStack) {
+          store.dispatch(PreviewEntity(
+            entityId: entityId,
+            entityType: entityType,
+          ));
+          return;
+        } else if (state.uiState.previewStack.isNotEmpty) {
+          store.dispatch(ClearPreviewStack());
+        }
+
         if (filterEntity != null &&
             (uiState.filterEntityType != filterEntity.entityType ||
                 uiState.filterEntityId != filterEntity.id)) {
@@ -549,19 +593,6 @@ void viewEntityById({
       });
 }
 
-void viewEntity(
-        {BuildContext context,
-        BaseEntity entity,
-        bool force = false,
-        BaseEntity filterEntity}) =>
-    viewEntityById(
-      context: context,
-      entityId: entity.id,
-      entityType: entity.entityType,
-      force: force,
-      filterEntity: filterEntity,
-    );
-
 void createEntityByType(
     {BuildContext context, EntityType entityType, bool force = false}) {
   final store = StoreProvider.of<AppState>(context);
@@ -577,6 +608,10 @@ void createEntityByType(
       context: context,
       force: force,
       callback: () {
+        if (state.uiState.previewStack.isNotEmpty) {
+          store.dispatch(ClearPreviewStack());
+        }
+
         switch (entityType) {
           case EntityType.client:
             store.dispatch(EditClient(
@@ -774,6 +809,10 @@ void createEntity({
             context: context,
             entity: filterEntity,
           );
+        }
+
+        if (uiState.previewStack.isNotEmpty) {
+          store.dispatch(ClearPreviewStack());
         }
 
         switch (entity.entityType) {
@@ -1383,6 +1422,7 @@ void selectEntity({
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
+  final uiState = state.uiState;
   final isInMultiselect =
       state.getListState(entity.entityType).isInMultiselect();
 
@@ -1399,11 +1439,12 @@ void selectEntity({
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(context, entity, EntityAction.toggleMultiselect);
-  } else if (isDesktop(context) && state.uiState.isEditing) {
+  } else if (isDesktop(context) &&
+      (uiState.isEditing || uiState.previewStack.isNotEmpty)) {
     viewEntity(context: context, entity: entity);
   } else if (isDesktop(context) &&
       !forceView &&
-      state.uiState.isViewing &&
+      uiState.isViewing &&
       !entity.entityType.isSetting &&
       (state.getUIState(entity.entityType).selectedId == entity.id &&
           state.prefState.isPreviewVisible)) {

@@ -173,6 +173,7 @@ abstract class SettingsUIState extends Object
       isChanged: false,
       updatedAt: 0,
       filterClearedAt: 0,
+      tabIndex: 0,
       section: section ?? kSettingsCompanyDetails,
     );
   }
@@ -206,6 +207,8 @@ abstract class SettingsUIState extends Object
   int get updatedAt;
 
   String get section;
+
+  int get tabIndex;
 
   @nullable
   String get filter;

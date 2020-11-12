@@ -17,6 +17,10 @@ EntityUIState stubUIReducer(StubUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.stub
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewStub>(
       (String selectedId, dynamic action) => action.stubId),
   TypedReducer<String, AddStubSuccess>(

@@ -17,6 +17,10 @@ EntityUIState webhookUIReducer(WebhookUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.webhook
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewWebhook>(
       (String selectedId, dynamic action) => action.webhookId),
   TypedReducer<String, AddWebhookSuccess>(

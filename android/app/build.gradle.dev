@@ -63,5 +63,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.guava:guava:27.0.1-android' // https://stackoverflow.com/a/56639924/497368
-
 }

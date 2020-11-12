@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DecoratedFormField extends StatelessWidget {
   const DecoratedFormField({
@@ -85,16 +86,13 @@ class DecoratedFormField extends StatelessWidget {
               : TextInputAction.next),
       onChanged: onChanged,
       onFieldSubmitted: (value) {
-        print('## onFieldSubmitted');
         if (onFieldSubmitted != null) {
           return onFieldSubmitted(value);
         } else if (keyboardType == TextInputType.multiline) {
           return null;
-        } else if (kIsWeb && onSavePressed != null) {
-          print('## WEB');
+        } else if (kIsWeb && isDesktop(context) && onSavePressed != null) {
           onSavePressed(context);
         } else {
-          print('## FOUCY');
           FocusScope.of(context).nextFocus();
         }
       },

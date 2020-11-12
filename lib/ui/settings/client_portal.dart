@@ -1,7 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -55,11 +59,21 @@ class _ClientPortalState extends State<ClientPortal>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+
+    final settingsUIState = widget.viewModel.state.settingsUIState;
+    _controller = TabController(
+        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
@@ -287,10 +301,8 @@ class _ClientPortalState extends State<ClientPortal>
                         onTap: () {
                           Clipboard.setData(
                               ClipboardData(text: company.companyKey));
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text(localization.copiedToClipboard
-                                  .replaceFirst(
-                                      ':value ', company.companyKey))));
+                          showToast(localization.copiedToClipboard
+                              .replaceFirst(':value ', company.companyKey));
                         },
                       );
                     }),

@@ -16,19 +16,13 @@ void multiselectDialog(
     barrierDismissible: false,
     builder: (BuildContext context) {
       final localization = AppLocalization.of(context);
-      return AlertDialog(
-        semanticLabel: localization.editColumns,
-        title: Text(localization.editColumns),
-        content: MultiSelectList(
-          options: options,
-          selected: selected,
-          addTitle: localization.addColumn,
-          defaultSelected: defaultSelected,
-          onSelected: (values) {
-            // selected = values
-            onSelected(values);
-          },
-        ),
+      return MultiSelectList(
+        options: options,
+        selected: selected,
+        addTitle: localization.addColumn,
+        defaultSelected: defaultSelected,
+        onSelected: (values) => onSelected(values),
+        isDialog: true,
       );
     },
   );
@@ -44,6 +38,7 @@ class MultiSelectList extends StatefulWidget {
     this.liveChanges = false,
     this.allowDuplicates = const <String>[],
     this.prefix,
+    this.isDialog = false,
   });
 
   final List<String> options;
@@ -54,6 +49,7 @@ class MultiSelectList extends StatefulWidget {
   final bool liveChanges;
   final String prefix;
   final List<String> allowDuplicates;
+  final bool isDialog;
 
   @override
   MultiSelectListState createState() => MultiSelectListState();
@@ -102,7 +98,7 @@ class MultiSelectListState extends State<MultiSelectList> {
     keys.sort((a, b) =>
         lookupOption(a).toLowerCase().compareTo(lookupOption(b).toLowerCase()));
 
-    return Container(
+    final column = Container(
       width: isMobile(context) ? double.maxFinite : 400,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,38 +190,55 @@ class MultiSelectListState extends State<MultiSelectList> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Row(
-              children: <Widget>[
-                FlatButton(
-                    child: Text(localization.reset.toUpperCase()),
-                    onPressed: () {
-                      setState(
-                          () => selected = widget.defaultSelected.toList());
-                      if (widget.liveChanges) {
-                        widget.onSelected(selected);
-                      }
-                    }),
-                Spacer(),
-                if (!widget.liveChanges)
+          if (!widget.isDialog)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
                   FlatButton(
-                      child: Text(localization.cancel.toUpperCase()),
+                      child: Text(localization.reset.toUpperCase()),
                       onPressed: () {
-                        Navigator.pop(context);
+                        setState(
+                            () => selected = widget.defaultSelected.toList());
+                        if (widget.liveChanges) {
+                          widget.onSelected(selected);
+                        }
                       }),
-                if (!widget.liveChanges)
-                  FlatButton(
-                      child: Text(localization.save.toUpperCase()),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        widget.onSelected(selected);
-                      })
-              ],
-            ),
-          )
+                ],
+              ),
+            )
         ],
       ),
     );
+
+    return widget.isDialog
+        ? AlertDialog(
+            semanticLabel: localization.editColumns,
+            title: Text(localization.editColumns),
+            content: column,
+            actions: [
+              FlatButton(
+                  child: Text(localization.reset.toUpperCase()),
+                  onPressed: () {
+                    setState(() => selected = widget.defaultSelected.toList());
+                    if (widget.liveChanges) {
+                      widget.onSelected(selected);
+                    }
+                  }),
+              FlatButton(
+                  child: Text(localization.cancel.toUpperCase()),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              FlatButton(
+                  child: Text(localization.save.toUpperCase()),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    widget.onSelected(selected);
+                  })
+            ],
+          )
+        : column;
   }
 }

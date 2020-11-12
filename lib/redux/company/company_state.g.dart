@@ -269,6 +269,9 @@ class _$SettingsUIStateSerializer
       'section',
       serializers.serialize(object.section,
           specifiedType: const FullType(String)),
+      'tabIndex',
+      serializers.serialize(object.tabIndex,
+          specifiedType: const FullType(int)),
       'filterClearedAt',
       serializers.serialize(object.filterClearedAt,
           specifiedType: const FullType(int)),
@@ -341,6 +344,10 @@ class _$SettingsUIStateSerializer
         case 'section':
           result.section = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'tabIndex':
+          result.tabIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'filter':
           result.filter = serializers.deserialize(value,
@@ -931,6 +938,8 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   final String section;
   @override
+  final int tabIndex;
+  @override
   final String filter;
   @override
   final int filterClearedAt;
@@ -951,6 +960,7 @@ class _$SettingsUIState extends SettingsUIState {
       this.isChanged,
       this.updatedAt,
       this.section,
+      this.tabIndex,
       this.filter,
       this.filterClearedAt})
       : super._() {
@@ -990,6 +1000,9 @@ class _$SettingsUIState extends SettingsUIState {
     if (section == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'section');
     }
+    if (tabIndex == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'tabIndex');
+    }
     if (filterClearedAt == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'filterClearedAt');
     }
@@ -1019,6 +1032,7 @@ class _$SettingsUIState extends SettingsUIState {
         isChanged == other.isChanged &&
         updatedAt == other.updatedAt &&
         section == other.section &&
+        tabIndex == other.tabIndex &&
         filter == other.filter &&
         filterClearedAt == other.filterClearedAt;
   }
@@ -1039,19 +1053,24 @@ class _$SettingsUIState extends SettingsUIState {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc(0,
-                                                            company.hashCode),
-                                                        origCompany.hashCode),
-                                                    client.hashCode),
-                                                origClient.hashCode),
-                                            group.hashCode),
-                                        origGroup.hashCode),
-                                    user.hashCode),
-                                origUser.hashCode),
-                            entityType.hashCode),
-                        isChanged.hashCode),
-                    updatedAt.hashCode),
-                section.hashCode),
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                company
+                                                                    .hashCode),
+                                                            origCompany
+                                                                .hashCode),
+                                                        client.hashCode),
+                                                    origClient.hashCode),
+                                                group.hashCode),
+                                            origGroup.hashCode),
+                                        user.hashCode),
+                                    origUser.hashCode),
+                                entityType.hashCode),
+                            isChanged.hashCode),
+                        updatedAt.hashCode),
+                    section.hashCode),
+                tabIndex.hashCode),
             filter.hashCode),
         filterClearedAt.hashCode));
   }
@@ -1071,6 +1090,7 @@ class _$SettingsUIState extends SettingsUIState {
           ..add('isChanged', isChanged)
           ..add('updatedAt', updatedAt)
           ..add('section', section)
+          ..add('tabIndex', tabIndex)
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt))
         .toString();
@@ -1137,6 +1157,10 @@ class SettingsUIStateBuilder
   String get section => _$this._section;
   set section(String section) => _$this._section = section;
 
+  int _tabIndex;
+  int get tabIndex => _$this._tabIndex;
+  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+
   String _filter;
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
@@ -1162,6 +1186,7 @@ class SettingsUIStateBuilder
       _isChanged = _$v.isChanged;
       _updatedAt = _$v.updatedAt;
       _section = _$v.section;
+      _tabIndex = _$v.tabIndex;
       _filter = _$v.filter;
       _filterClearedAt = _$v.filterClearedAt;
       _$v = null;
@@ -1200,6 +1225,7 @@ class SettingsUIStateBuilder
               isChanged: isChanged,
               updatedAt: updatedAt,
               section: section,
+              tabIndex: tabIndex,
               filter: filter,
               filterClearedAt: filterClearedAt);
     } catch (_) {

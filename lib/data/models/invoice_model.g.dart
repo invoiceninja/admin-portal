@@ -2227,7 +2227,9 @@ class InvoiceEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  InvoiceEntityBuilder();
+  InvoiceEntityBuilder() {
+    InvoiceEntity._initializeBuilder(this);
+  }
 
   InvoiceEntityBuilder get _$this {
     if (_$v != null) {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
@@ -512,6 +513,7 @@ class SidebarFooter extends StatelessWidget {
             if (!Config.DEMO_MODE && !state.isDemo)
               if (!account.isCronEnabled)
                 IconButton(
+                  tooltip: localization.error,
                   icon: Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -536,8 +538,31 @@ class SidebarFooter extends StatelessWidget {
                         ),
                       ]),
                 )
+              else if (state.company.isDisabled)
+                IconButton(
+                  tooltip: localization.warning,
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.orange,
+                  ),
+                  onPressed: () => showMessageDialog(
+                      context: context,
+                      message: localization.companyDisabledWarning,
+                      secondaryActions: [
+                        FlatButton(
+                          child: Text(localization.viewSettings.toUpperCase()),
+                          onPressed: () {
+                            store.dispatch(ViewSettings(
+                                navigator: Navigator.of(context),
+                                section: kSettingsAccountManagement));
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ]),
+                )
               else if (state.credentials.token.isEmpty)
                 IconButton(
+                  tooltip: localization.error,
                   icon: Icon(
                     Icons.warning,
                     color: Colors.red,

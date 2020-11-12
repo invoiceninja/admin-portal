@@ -320,7 +320,7 @@ class InvoiceOverview extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: Padding(
           padding:
-              const EdgeInsets.only(left: 20, top: 12, right: 20, bottom: 12),
+              const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -340,7 +340,8 @@ class InvoiceOverview extends StatelessWidget {
 
     widgets.addAll([
       SizedBox(height: 8),
-      surchargeRow(localization.calculateSubtotal, invoice.calculateTotal)
+      surchargeRow(localization.subtotal, invoice.calculateTotal),
+      surchargeRow(localization.paidToDate, invoice.paidToDate),
     ]);
 
     if (invoice.customSurcharge1 != 0 && company.enableCustomSurchargeTaxes1) {
@@ -385,8 +386,11 @@ class InvoiceOverview extends StatelessWidget {
           invoice.customSurcharge4));
     }
 
-    widgets.add(surchargeRow(localization.total,
-        invoice.partial != 0 ? invoice.partial : invoice.calculateTotal));
+    widgets.add(surchargeRow(localization.balanceDue, invoice.balance));
+
+    if (invoice.partial != 0) {
+      widgets.add(surchargeRow(localization.partialDue, invoice.partial));
+    }
 
     if ((invoice.publicNotes ?? '').isNotEmpty) {
       widgets.addAll([

@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -77,6 +78,7 @@ UIState uiReducer(UIState state, dynamic action) {
             ? state.previousRoute
             : state.currentRoute
     ..currentRoute = currentRoute
+    ..previewStack.replace(previewStackReducer(state.previewStack, action))
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
@@ -196,6 +198,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origUser.replace(action.user ?? state.origUser)
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..section = action.section ?? state.section
+      ..tabIndex = action.tabIndex ?? 0
       ..isChanged = false
       ..entityType = action.client != null
           ? EntityType.client
@@ -278,5 +281,29 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..company.replace(state.origCompany)
       ..entityType = EntityType.company
       ..isChanged = false);
+  }),
+  TypedReducer<SettingsUIState, UpdateSettingsTab>((state, action) {
+    return state.rebuild((b) => b..tabIndex = action.tabIndex);
+  }),
+]);
+
+Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
+  TypedReducer<BuiltList<EntityType>, PreviewEntity>((previewStack, action) {
+    if (previewStack.isNotEmpty && previewStack.last == action.entityType) {
+      return BuiltList(<EntityType>[]);
+    }
+
+    return BuiltList(<EntityType>[
+      ...previewStack.where((entityType) => entityType != action.entityType),
+      action.entityType
+    ]);
+  }),
+  TypedReducer<BuiltList<EntityType>, ClearPreviewStack>(
+      (previewStack, action) {
+    return BuiltList(<EntityType>[]);
+  }),
+  TypedReducer<BuiltList<EntityType>, PopPreviewStack>((previewStack, action) {
+    return BuiltList(
+        <EntityType>[...previewStack.sublist(0, previewStack.length - 1)]);
   }),
 ]);

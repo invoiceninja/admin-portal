@@ -16,6 +16,8 @@ EntityUIState paymentUIReducer(PaymentUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.payment ? action.entityId : selectedId),
   TypedReducer<String, ViewPayment>((selectedId, action) => action.paymentId),
   TypedReducer<String, AddPaymentSuccess>(
       (selectedId, action) => action.payment.id),

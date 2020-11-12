@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -7,7 +10,9 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class VendorEditDetails extends StatefulWidget {
   const VendorEditDetails({
@@ -98,6 +103,15 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     });
   }
 
+  void _setContactControllers(Contact contact) {
+    if (_nameController.text.isEmpty) {
+      _nameController.text = contact.displayName ?? '';
+    }
+    if (contact.phones.isNotEmpty) {
+      _phoneController.text = contact.phones.first.value;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -112,10 +126,29 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             DecoratedFormField(
               autofocus: true,
               controller: _nameController,
-              label: localization.name,
               validator: (String val) => val == null || val.isEmpty
                   ? AppLocalization.of(context).pleaseEnterAName
                   : null,
+              decoration: InputDecoration(
+                labelText: localization.firstName,
+                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                    ? IconButton(
+                        alignment: Alignment.bottomCenter,
+                        color: Theme.of(context).cardColor,
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () async {
+                          final contact = await getDeviceContact();
+                          if (contact != null) {
+                            setState(() {
+                              _setContactControllers(contact);
+                            });
+                          }
+                        })
+                    : null,
+              ),
             ),
             UserPicker(
               userId: vendor.assignedUserId,

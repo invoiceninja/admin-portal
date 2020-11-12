@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -10,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -77,14 +77,11 @@ class TaskViewVM {
       store
           .dispatch(SaveTaskRequest(completer: completer, task: task.toggle()));
       completer.future.then((savedTask) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-            content: SnackBarRow(
-          message: savedTask.isRunning
-              ? (savedTask.duration > 0
-                  ? localization.resumedTask
-                  : localization.startedTask)
-              : localization.stoppedTask,
-        )));
+        showToast(savedTask.isRunning
+            ? (savedTask.duration > 0
+                ? localization.resumedTask
+                : localization.startedTask)
+            : localization.stoppedTask);
       }).catchError((Object error) {
         showDialog<ErrorDialog>(
             context: context,
@@ -120,10 +117,7 @@ class TaskViewVM {
         store.dispatch(SaveTaskDocumentRequest(
             filePath: filePath, task: task, completer: completer));
         completer.future.then((client) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).uploadedDocument,
-          )));
+          showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

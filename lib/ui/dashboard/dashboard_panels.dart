@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -52,118 +53,181 @@ class DashboardPanels extends StatelessWidget {
     final hasMultipleCurrencies =
         memoizedHasMultipleCurrencies(company, clientMap, groupMap);
 
-    return Material(
-      color: Theme.of(context).cardColor,
-      elevation: 6.0,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-        child: Row(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.navigate_before),
-              onPressed: () => viewModel.onOffsetChanged(1),
-              visualDensity: VisualDensity.compact,
-            ),
-            SizedBox(width: 8),
-            IconButton(
-              icon: Icon(Icons.navigate_next),
-              onPressed: viewModel.isNextEnabled
-                  ? () => viewModel.onOffsetChanged(-1)
-                  : null,
-              visualDensity: VisualDensity.compact,
-            ),
-            SizedBox(width: 16),
-            PopupMenuButton<DateRange>(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Flexible(
-                      child: Text(
-                        formatDateRange(settings.startDate(company),
-                            settings.endDate(company), context),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            .copyWith(fontSize: 18),
-                      ),
-                    ),
-                    SizedBox(width: 6.0),
-                    Icon(Icons.arrow_drop_down),
-                  ],
-                ),
-              ),
-              itemBuilder: (context) => DateRange.values
-                  .map((dateRange) => PopupMenuItem(
-                        child: Text(dateRange == DateRange.custom
-                            ? '${localization.more}...'
-                            : localization.lookup(dateRange.toString())),
-                        value: dateRange,
-                      ))
-                  .toList(),
-              onSelected: (dateRange) {
-                final settings =
-                    DashboardSettings.fromState(state.dashboardUIState);
-                settings.dateRange = dateRange;
-                viewModel.onSettingsChanged(settings);
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      final isWide = constraints.maxWidth > 500;
 
-                if (dateRange == DateRange.custom) {
-                  WidgetsBinding.instance.addPostFrameCallback((duration) {
-                    _showDateOptions(context);
-                  });
-                }
-              },
-            ),
-            Spacer(),
-            if (company.hasTaxes)
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<bool>(
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(localization.gross),
-                        value: true,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.net),
-                        value: false,
-                      ),
-                    ],
-                    onChanged: (value) => viewModel.onTaxesChanged(value),
-                    value: settings.includeTaxes,
-                  ),
-                ),
+      final taxSettings = Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<bool>(
+            items: [
+              DropdownMenuItem(
+                child: Text(localization.gross),
+                value: true,
               ),
-            if (hasMultipleCurrencies)
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                        .map((currencyId) => DropdownMenuItem<String>(
-                              child: Text(currencyId == kCurrencyAll
-                                  ? localization.all
-                                  : viewModel.currencyMap[currencyId]?.code),
-                              value: currencyId,
-                            ))
-                        .toList(),
-                    onChanged: (currencyId) =>
-                        viewModel.onCurrencyChanged(currencyId),
-                    value: settings.currencyId,
-                  ),
-                ),
+              DropdownMenuItem(
+                child: Text(localization.net),
+                value: false,
               ),
-            if (isDesktop(context) && !state.dashboardUIState.showSidebar)
-              IconButton(
-                  tooltip: localization.showSidebar,
-                  icon: Icon(Icons.view_sidebar),
-                  onPressed: () => viewModel.onShowSidebar())
-          ],
+            ],
+            onChanged: (value) {
+              viewModel.onTaxesChanged(value);
+              if (!isWide && Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+            },
+            value: settings.includeTaxes,
+          ),
         ),
-      ),
-    );
+      );
+
+      final currencySettings = Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                .map((currencyId) => DropdownMenuItem<String>(
+                      child: Text(currencyId == kCurrencyAll
+                          ? localization.all
+                          : viewModel.currencyMap[currencyId]?.code),
+                      value: currencyId,
+                    ))
+                .toList(),
+            onChanged: (currencyId) {
+              viewModel.onCurrencyChanged(currencyId);
+              if (!isWide && Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+            },
+            value: settings.currencyId,
+          ),
+        ),
+      );
+
+      return Material(
+        color: Theme.of(context).cardColor,
+        elevation: 6.0,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+          child: Row(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.navigate_before),
+                onPressed: () => viewModel.onOffsetChanged(1),
+                visualDensity: VisualDensity.compact,
+              ),
+              SizedBox(width: 8),
+              IconButton(
+                icon: Icon(Icons.navigate_next),
+                onPressed: viewModel.isNextEnabled
+                    ? () => viewModel.onOffsetChanged(-1)
+                    : null,
+                visualDensity: VisualDensity.compact,
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: PopupMenuButton<DateRange>(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Flexible(
+                          child: Text(
+                            formatDateRange(settings.startDate(company),
+                                settings.endDate(company), context),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .copyWith(fontSize: 18),
+                          ),
+                        ),
+                        SizedBox(width: 6.0),
+                        Icon(Icons.arrow_drop_down),
+                      ],
+                    ),
+                  ),
+                  itemBuilder: (context) => DateRange.values
+                      .map((dateRange) => PopupMenuItem(
+                            child: Text(dateRange == DateRange.custom
+                                ? '${localization.more}...'
+                                : localization.lookup(dateRange.toString())),
+                            value: dateRange,
+                          ))
+                      .toList(),
+                  onSelected: (dateRange) {
+                    final settings =
+                        DashboardSettings.fromState(state.dashboardUIState);
+                    settings.dateRange = dateRange;
+                    viewModel.onSettingsChanged(settings);
+
+                    if (dateRange == DateRange.custom) {
+                      WidgetsBinding.instance.addPostFrameCallback((duration) {
+                        _showDateOptions(context);
+                      });
+                    }
+                  },
+                ),
+              ),
+              SizedBox(width: 8),
+              if (!isWide && (company.hasTaxes || hasMultipleCurrencies))
+                IconButton(
+                  icon: Icon(Icons.settings),
+                  visualDensity: VisualDensity.compact,
+                  onPressed: () {
+                    showDialog<AlertDialog>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(localization.settings),
+                            key: ValueKey(
+                                '__${settings.includeTaxes}_${settings.currencyId}__'),
+                            actions: [
+                              FlatButton(
+                                child: Text(localization.close.toUpperCase()),
+                                onPressed: () => Navigator.of(context).pop(),
+                              )
+                            ],
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (hasMultipleCurrencies)
+                                  Row(
+                                    children: [
+                                      Text(localization.currency),
+                                      Spacer(),
+                                      currencySettings,
+                                    ],
+                                  ),
+                                if (company.hasTaxes)
+                                  Row(
+                                    children: [
+                                      Text(localization.taxes),
+                                      Spacer(),
+                                      taxSettings,
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                )
+              else ...[
+                if (company.hasTaxes) taxSettings,
+                if (hasMultipleCurrencies) currencySettings,
+              ],
+              if (isDesktop(context) && !state.dashboardUIState.showSidebar)
+                IconButton(
+                    tooltip: localization.showSidebar,
+                    icon: Icon(Icons.view_sidebar),
+                    onPressed: () => viewModel.onShowSidebar())
+            ],
+          ),
+        ),
+      );
+    });
   }
 
   Widget _paymentChart({

@@ -17,6 +17,10 @@ EntityUIState groupUIReducer(GroupUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.group
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewGroup>(
       (String selectedId, action) => action.groupId),
   TypedReducer<String, AddGroupSuccess>(

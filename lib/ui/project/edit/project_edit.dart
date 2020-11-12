@@ -34,6 +34,7 @@ class _ProjectEditState extends State<ProjectEdit> {
 
   bool _autoValidate = false;
 
+  final _numberController = TextEditingController();
   final _nameController = TextEditingController();
   final _dueDateController = TextEditingController();
   final _hoursController = TextEditingController();
@@ -50,6 +51,7 @@ class _ProjectEditState extends State<ProjectEdit> {
   @override
   void didChangeDependencies() {
     _controllers = [
+      _numberController,
       _nameController,
       _dueDateController,
       _hoursController,
@@ -65,6 +67,7 @@ class _ProjectEditState extends State<ProjectEdit> {
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final project = widget.viewModel.project;
+    _numberController.text = project.number;
     _nameController.text = project.name;
     _dueDateController.text = project.dueDate;
     _hoursController.text = formatNumber(project.budgetedHours, context,
@@ -96,6 +99,7 @@ class _ProjectEditState extends State<ProjectEdit> {
   void _onChanged() {
     _debouncer.run(() {
       final project = widget.viewModel.project.rebuild((b) => b
+        ..number = _numberController.text.trim()
         ..name = _nameController.text.trim()
         ..budgetedHours = parseDouble(_hoursController.text)
         ..taskRate = parseDouble(_taskRateController.text)
@@ -143,14 +147,6 @@ class _ProjectEditState extends State<ProjectEdit> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
-                  DecoratedFormField(
-                    controller: _nameController,
-                    validator: (String val) => val.trim().isEmpty
-                        ? localization.pleaseEnterAName
-                        : null,
-                    autovalidate: _autoValidate,
-                    label: localization.name,
-                  ),
                   project.isNew
                       ? EntityDropdown(
                           key: ValueKey('__client_${project.clientId}__'),
@@ -174,7 +170,19 @@ class _ProjectEditState extends State<ProjectEdit> {
                             viewModel.onAddClientPressed(context, completer);
                           },
                         )
-                      : SizedBox(),
+                      : DecoratedFormField(
+                          controller: _numberController,
+                          label: localization.projectNumber,
+                          autocorrect: false,
+                        ),
+                  DecoratedFormField(
+                    controller: _nameController,
+                    validator: (String val) => val.trim().isEmpty
+                        ? localization.pleaseEnterAName
+                        : null,
+                    autovalidate: _autoValidate,
+                    label: localization.name,
+                  ),
                   UserPicker(
                     userId: project.assignedUserId,
                     onChanged: (userId) => viewModel.onChanged(

@@ -13,26 +13,10 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   final project = state.projectState.map[task.projectId];
   final client = state.clientState.map[task.clientId];
 
-  var notes = task.description;
-
-  if (state.company.invoiceTaskTimelog) {
-    notes += '\n';
-    task.taskTimes
-        .where((time) => time.startDate != null && time.endDate != null)
-        .forEach((time) {
-      final start =
-          formatDate(time.startDate.toIso8601String(), context, showTime: true);
-      final end = formatDate(time.endDate.toIso8601String(), context,
-          showTime: true, showDate: false, showSeconds: false);
-      //notes += '\n### $start - $end';
-      notes += '\n$start - $end';
-    });
-  }
-
   return InvoiceItemEntity().rebuild((b) => b
     ..taskId = task.id
     ..typeId = InvoiceItemEntity.TYPE_TASK
-    ..notes = notes
+    ..notes = task.description
     ..cost = taskRateSelector(
       company: state.company,
       project: project,
@@ -152,6 +136,9 @@ List<String> filteredTasksSelector(
         return false;
       } else if (filterEntityType == EntityType.invoice &&
           task.invoiceId != filterEntityId) {
+        return false;
+      } else if (filterEntityType == EntityType.user &&
+          task.assignedUserId != filterEntityId) {
         return false;
       }
     } else if (task.clientId != null && !client.isActive) {

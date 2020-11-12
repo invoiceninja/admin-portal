@@ -190,6 +190,7 @@ abstract class TaskEntity extends Object
 
   TaskEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..number = ''
     ..isChanged = false
     ..isDeleted = false
     ..invoiceId = null
@@ -452,7 +453,9 @@ abstract class TaskEntity extends Object
       }
     }
 
-    actions.add(null);
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
 
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
@@ -609,8 +612,8 @@ abstract class TaskEntity extends Object
   String get calculateStatusId {
     if (isInvoiced) {
       return kTaskStatusInvoiced;
-    //} else if (isRunning) {
-    //  return kTaskStatusRunning;
+      //} else if (isRunning) {
+      //  return kTaskStatusRunning;
     } else {
       return statusId;
     }

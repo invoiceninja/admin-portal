@@ -17,6 +17,10 @@ EntityUIState tokenUIReducer(TokenUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.token
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewToken>(
       (String selectedId, dynamic action) => action.tokenId),
   TypedReducer<String, AddTokenSuccess>(

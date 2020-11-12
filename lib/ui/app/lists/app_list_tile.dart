@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class AppListTile extends StatelessWidget {
@@ -45,10 +46,9 @@ class AppListTile extends StatelessWidget {
           }
 
           Clipboard.setData(ClipboardData(text: copyValue ?? title));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalization.of(context)
-                  .copiedToClipboard
-                  .replaceFirst(':value', copyValue ?? title))));
+          showToast(AppLocalization.of(context)
+              .copiedToClipboard
+              .replaceFirst(':value', copyValue ?? title));
         },
       ),
     );
