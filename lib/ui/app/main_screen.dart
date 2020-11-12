@@ -461,6 +461,21 @@ class EntityScreens extends StatelessWidget {
           case EntityType.expense:
             child = ExpenseViewScreen();
             break;
+          case EntityType.user:
+            child = UserViewScreen();
+            break;
+          case EntityType.group:
+            child = GroupViewScreen();
+            break;
+          case EntityType.companyGateway:
+            child = CompanyGatewayViewScreen();
+            break;
+          case EntityType.expenseCategory:
+            child = ExpenseCategoryViewScreen();
+            break;
+          case EntityType.taskStatus:
+            child = TaskStatusViewScreen();
+            break;
         }
       }
     }
