@@ -103,7 +103,7 @@ class EntityAction extends EnumClass {
   static EntityAction newEntityType(EntityType entityType) {
     switch (entityType) {
       case EntityType.client:
-        return EntityAction.newCredit;
+        return EntityAction.newClient;
       case EntityType.invoice:
         return EntityAction.newInvoice;
       case EntityType.recurringInvoice:

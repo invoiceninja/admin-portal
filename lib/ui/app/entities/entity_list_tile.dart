@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EntityListTile extends StatefulWidget {
   const EntityListTile({
@@ -214,7 +215,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
                   ? SizedBox()
                   : IgnorePointer(
                       child: IconButton(
-                        icon: Icon(Icons.navigate_next),
+                        icon: Icon(MdiIcons.chevronDoubleRight),
                         onPressed: () => null,
                       ),
                     ),
