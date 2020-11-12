@@ -350,7 +350,6 @@ class EntityScreens extends StatelessWidget {
     final uiState = state.uiState;
     final prefState = state.prefState;
     final subRoute = uiState.subRoute;
-    final entityUIState = state.getUIState(entityType);
     final isPreviewVisible = prefState.isPreviewVisible;
     final isPreviewShown =
         isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
@@ -416,45 +415,54 @@ class EntityScreens extends StatelessWidget {
           child = ExpenseEditScreen();
           break;
       }
-    } else if ((entityUIState.selectedId ?? '').isNotEmpty &&
-        state.getEntityMap(entityType).containsKey(entityUIState.selectedId)) {
-      switch (entityType) {
-        case EntityType.client:
-          child = ClientViewScreen();
-          break;
-        case EntityType.product:
-          child = ProductViewScreen();
-          break;
-        case EntityType.invoice:
-          child = InvoiceViewScreen();
-          break;
-        case EntityType.recurringInvoice:
-          child = RecurringInvoiceViewScreen();
-          break;
-        case EntityType.payment:
-          child = PaymentViewScreen();
-          break;
-        case EntityType.quote:
-          child = QuoteViewScreen();
-          break;
-        case EntityType.credit:
-          child = CreditViewScreen();
-          break;
-        case EntityType.project:
-          child = ProjectViewScreen();
-          break;
-        case EntityType.task:
-          child = TaskViewScreen();
-          break;
-        case EntityType.vendor:
-          child = VendorViewScreen();
-          break;
-        case EntityType.expense:
-          child = ExpenseViewScreen();
-          break;
-      }
     } else {
-      child = BlankScreen(AppLocalization.of(context).noRecordSelected);
+      final previewStack = uiState.previewStack;
+      final previewEntityType =
+          previewStack.isEmpty ? entityType : previewStack.last;
+      final entityUIState = state.getUIState(previewEntityType);
+
+      if ((entityUIState.selectedId ?? '').isEmpty ||
+          !state
+              .getEntityMap(previewEntityType)
+              .containsKey(entityUIState.selectedId)) {
+        child = BlankScreen(AppLocalization.of(context).noRecordSelected);
+      } else {
+        switch (previewEntityType) {
+          case EntityType.client:
+            child = ClientViewScreen();
+            break;
+          case EntityType.product:
+            child = ProductViewScreen();
+            break;
+          case EntityType.invoice:
+            child = InvoiceViewScreen();
+            break;
+          case EntityType.recurringInvoice:
+            child = RecurringInvoiceViewScreen();
+            break;
+          case EntityType.payment:
+            child = PaymentViewScreen();
+            break;
+          case EntityType.quote:
+            child = QuoteViewScreen();
+            break;
+          case EntityType.credit:
+            child = CreditViewScreen();
+            break;
+          case EntityType.project:
+            child = ProjectViewScreen();
+            break;
+          case EntityType.task:
+            child = TaskViewScreen();
+            break;
+          case EntityType.vendor:
+            child = VendorViewScreen();
+            break;
+          case EntityType.expense:
+            child = ExpenseViewScreen();
+            break;
+        }
+      }
     }
 
     Widget leftFilterChild;
