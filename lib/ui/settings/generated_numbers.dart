@@ -12,6 +12,9 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
 class GeneratedNumbers extends StatefulWidget {
   const GeneratedNumbers({
@@ -62,12 +65,22 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     });
 
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: tabs);
+
+    final settingsUIState = widget.viewModel.state.settingsUIState;
+    _controller = TabController(
+        vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);

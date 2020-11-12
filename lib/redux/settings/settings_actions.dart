@@ -17,6 +17,7 @@ class ViewSettings extends AbstractNavigatorAction implements PersistUI {
     this.user,
     this.force = false,
     this.section,
+    this.tabIndex,
   }) : super(navigator: navigator);
 
   final CompanyEntity company;
@@ -25,6 +26,7 @@ class ViewSettings extends AbstractNavigatorAction implements PersistUI {
   final UserEntity user;
   final bool force;
   final String section;
+  final int tabIndex;
 }
 
 class ClearSettingsFilter implements PersistUI {}
@@ -35,6 +37,12 @@ class UpdateSettings implements PersistUI {
   UpdateSettings({@required this.settings});
 
   final SettingsEntity settings;
+}
+
+class UpdateSettingsTab implements PersistUI {
+  UpdateSettingsTab({@required this.tabIndex});
+
+  final int tabIndex;
 }
 
 class UpdateUserSettings implements PersistUI {
