@@ -294,4 +294,8 @@ Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
       action.entityType
     ]);
   }),
+  TypedReducer<BuiltList<EntityType>, ClearPreviewStack>(
+      (previewStack, action) {
+    return BuiltList(<EntityType>[]);
+  }),
 ]);

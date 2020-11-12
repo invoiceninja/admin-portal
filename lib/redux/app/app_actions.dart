@@ -169,6 +169,8 @@ class PreviewEntity {
   final EntityType entityType;
 }
 
+class ClearPreviewStack {}
+
 class ClearData {}
 
 class RefreshDataFailure implements StopLoading {
@@ -255,6 +257,10 @@ void viewEntitiesByType({
           }
         } else if (uiState.filterEntityType != null) {
           store.dispatch(ClearEntityFilter());
+        }
+
+        if (uiState.previewStack.isNotEmpty) {
+          store.dispatch(ClearPreviewStack());
         }
 
         switch (entityType) {
@@ -382,6 +388,8 @@ void viewEntityById({
             entityType: entityType,
           ));
           return;
+        } else if (state.uiState.previewStack.isNotEmpty) {
+          store.dispatch(ClearPreviewStack());
         }
 
         if (filterEntity != null &&
@@ -598,6 +606,10 @@ void createEntityByType(
       context: context,
       force: force,
       callback: () {
+        if (state.uiState.previewStack.isNotEmpty) {
+          store.dispatch(ClearPreviewStack());
+        }
+
         switch (entityType) {
           case EntityType.client:
             store.dispatch(EditClient(
@@ -795,6 +807,10 @@ void createEntity({
             context: context,
             entity: filterEntity,
           );
+        }
+
+        if (uiState.previewStack.isNotEmpty) {
+          store.dispatch(ClearPreviewStack());
         }
 
         switch (entity.entityType) {
