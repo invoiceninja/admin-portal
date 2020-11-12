@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EntityListTile extends StatefulWidget {
@@ -188,7 +189,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
     final state = store.state;
     final mainRoute = state.uiState.mainRoute;
     final isFilterMatch =
-        widget.isFilter && '${widget.entityType}' == mainRoute;
+        widget.isFilter && '${widget.entityType}' == toCamelCase(mainRoute);
 
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),
