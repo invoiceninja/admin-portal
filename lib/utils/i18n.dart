@@ -405,7 +405,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'delete_company': 'Delete Company',
       'delete_company_message':
           'Warning: This will permanently delete your company [:company], there is no undo',
-      'enable_modules': 'Enable Modules',
+      'enabled_modules': 'Enabled Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
       'includes': 'Includes',
@@ -3996,8 +3996,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get convertedQuote =>
       _localizedValues[localeCode]['converted_quote'] ?? '';
 
-  String get enableModules =>
-      _localizedValues[localeCode]['enable_modules'] ?? '';
+  String get enabledModules =>
+      _localizedValues[localeCode]['enabled_modules'] ?? '';
 
   String get cancelAccount =>
       _localizedValues[localeCode]['cancel_account'] ?? '';

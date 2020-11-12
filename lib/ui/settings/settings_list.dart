@@ -234,7 +234,7 @@ class SettingsListTile extends StatelessWidget {
             child: Icon(icon ?? icon, size: 22),
           ),
           title: Text(localization.lookup(section)),
-          onTap: () => viewModel.loadSection(context, section),
+          onTap: () => viewModel.loadSection(context, section, 0),
         ),
       ),
     );
@@ -249,142 +249,195 @@ class SettingsSearch extends StatelessWidget {
 
   static const map = {
     kSettingsCompanyDetails: [
-      'name',
-      'id_number',
-      'vat_number',
-      'website',
-      'email',
-      'phone',
-      'logo',
-      'address',
-      'postal_code',
-      'country',
-      'defaults',
-      'payment_type',
-      'payment_terms',
-      'task_rate',
-      'online_payment_email',
-      'manual_payment_email',
-      'invoice_terms',
-      'invoice_footer',
-      'quote_terms',
-      'quote_footer',
-      'credit_terms',
-      'credit_footer',
+      [
+        'name',
+        'id_number',
+        'vat_number',
+        'website',
+        'email',
+        'phone',
+      ],
+      [
+        'address',
+        'postal_code',
+        'country',
+      ],
+      [
+        'logo',
+      ],
+      [
+        'defaults',
+        'payment_type',
+        'payment_terms',
+        'task_rate',
+        'online_payment_email',
+        'manual_payment_email',
+        'invoice_terms',
+        'invoice_footer',
+        'quote_terms',
+        'quote_footer',
+        'credit_terms',
+        'credit_footer',
+      ],
     ],
     kSettingsUserDetails: [
-      'first_name',
-      'last_name',
-      'email',
-      'phone',
-      'accent_color',
+      [
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+        'accent_color',
+      ]
     ],
     kSettingsLocalization: [
-      'currency',
-      'language',
-      'timezone',
-      'date_format',
-      'military_time',
-      'first_day_of_the_week',
-      'first_month_of_the_year',
-      'custom_labels',
+      [
+        'currency',
+        'language',
+        'timezone',
+        'date_format',
+        'military_time',
+        'first_month_of_the_year',
+      ],
+      [
+        'custom_labels',
+      ],
     ],
-    kSettingsCompanyGateways: [
-      'accepted_card_logos',
-      'limits_and_fees',
+    kSettingsOnlinePayments: [
+      [
+        'custom_labels',
+      ]
     ],
     kSettingsTaxSettings: [
-      'tax_settings',
+      [
+        'tax_settings',
+      ],
     ],
     kSettingsTaxRates: [
-      'tax_rates',
+      [
+        'tax_rates',
+      ],
     ],
     kSettingsProducts: [
-      'fill_products',
-      'update_products',
-      'convert_products',
+      [
+        'fill_products',
+        'update_products',
+        'convert_products',
+      ],
     ],
     kSettingsAccountManagement: [
-      'api_tokens',
-      'api_webhooks',
-      'purge_data',
-      'delete_company',
+      [
+        'api_tokens',
+        'api_webhooks',
+        'purge_data',
+        'delete_company',
+      ],
+      [
+        'enabeled_modules',
+      ],
     ],
     kSettingsDeviceSettings: [
-      'rows_per_page',
-      'dark_mode',
-      'long_press_multiselect',
-      'biometric_authentication',
-      'refresh_data',
-      'logout',
+      [
+        'rows_per_page',
+        'dark_mode',
+        'long_press_multiselect',
+        'biometric_authentication',
+        'refresh_data',
+        'logout',
+      ],
     ],
     kSettingsGroupSettings: [
-      'groups',
+      [
+        'groups',
+      ],
     ],
     kSettingsGeneratedNumbers: [
-      'number_padding',
-      'number_counter',
-      'recurring_prefix',
-      'reset_counter',
-      'invoice_number',
-      'client_number',
-      'credit_number',
-      'payment_number',
+      [
+        'number_padding',
+        'number_counter',
+        'recurring_prefix',
+        'reset_counter',
+        'invoice_number',
+        'client_number',
+        'credit_number',
+        'payment_number',
+      ],
     ],
     kSettingsCustomFields: [
-      'custom_fields',
+      [
+        'custom_fields',
+      ],
     ],
     kSettingsInvoiceDesign: [
-      'invoice_design',
-      'quote_design',
-      'page_size',
-      'font_size',
-      'primary_font',
-      'secondary_font',
-      'primary_color',
-      'secondary_color',
-      'all_pages_header',
-      'all_pages_footer',
-      'hide_paid_to_date',
-      'invoice_embed_documents',
+      [
+        'invoice_design',
+        'quote_design',
+        'page_size',
+        'font_size',
+        'primary_font',
+        'secondary_font',
+        'primary_color',
+        'secondary_color',
+      ],
+      [
+        'all_pages_header',
+        'all_pages_footer',
+        'hide_paid_to_date',
+        'invoice_embed_documents',
+      ],
     ],
     kSettingsCustomDesigns: [
-      'custom_designs',
+      [
+        'custom_designs',
+      ],
     ],
     kSettingsWorkflowSettings: [
-      'auto_email_invoice',
-      'auto_archive_invoice',
-      'auto_convert',
-      'lock_invoices',
+      [
+        'auto_email_invoice',
+        'auto_archive_invoice',
+        'lock_invoices',
+      ],
+      [
+        'auto_convert',
+      ],
     ],
     kSettingsClientPortal: [
-      'portal_mode',
-      'subdomain',
-      'domain',
-      'client_registration',
-      'enable_portal_password',
-      'show_accept_invoice_terms',
-      'show_accept_quote_terms',
-      'require_invoice_signature',
-      'require_quote_signature',
-      'custom_css',
+      [
+        'portal_mode',
+        'subdomain',
+        'domain',
+        'client_registration',
+        'custom_css',
+      ],
+      [
+        'enable_portal_password',
+        'show_accept_invoice_terms',
+        'show_accept_quote_terms',
+        'require_invoice_signature',
+        'require_quote_signature',
+      ],
     ],
     kSettingsEmailSettings: [
-      'email_design',
-      'reply_to_email',
-      'bcc_email',
-      'attach_pdf',
-      'attach_documents',
-      'attach_ubl',
-      'email_signature',
+      [
+        'email_design',
+        'reply_to_email',
+        'bcc_email',
+        'attach_pdf',
+        'attach_documents',
+        'attach_ubl',
+        'email_signature',
+      ],
     ],
     kSettingsTemplatesAndReminders: [
-      'template',
-      'send_reminders',
-      'late_fees',
+      [
+        'template',
+        'send_reminders',
+        'late_fees',
+      ]
     ],
     kSettingsUserManagement: [
-      'users',
+      [
+        'users',
+      ],
     ]
   };
 
@@ -394,20 +447,24 @@ class SettingsSearch extends StatelessWidget {
     return ListView(
       children: <Widget>[
         for (var section in map.keys)
-          for (var field in map[section])
-            if (localization
-                .lookup(field)
-                .toLowerCase()
-                .contains(filter.toLowerCase()))
-              ListTile(
-                title: Text(localization.lookup(field)),
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 6, top: 10),
-                  child: Icon(getSettingIcon(section), size: 22),
+          for (int i = 0; i < map[section].length; i++)
+            for (var field in map[section][i])
+              if (localization
+                  .lookup(field)
+                  .toLowerCase()
+                  .contains(filter.toLowerCase()))
+                ListTile(
+                  title: Text(localization.lookup(field)),
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 6, top: 10),
+                    child: Icon(getSettingIcon(section), size: 22),
+                  ),
+                  subtitle: Text(localization.lookup(section)),
+                  onTap: () {
+                    print('## section: $i');
+                    viewModel.loadSection(context, section, i);
+                  },
                 ),
-                subtitle: Text(localization.lookup(section)),
-                onTap: () => viewModel.loadSection(context, section),
-              ),
       ],
     );
   }

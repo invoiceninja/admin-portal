@@ -82,7 +82,7 @@ class _AccountManagementState extends State<AccountManagement>
             text: localization.overview,
           ),
           Tab(
-            text: localization.enableModules,
+            text: localization.enabledModules,
           ),
         ],
       ),

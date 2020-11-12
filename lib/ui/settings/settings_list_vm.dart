@@ -36,12 +36,13 @@ class SettingsListVM {
 
     return SettingsListVM(
         state: state,
-        loadSection: (context, section) {
+        loadSection: (context, section, tabIndex) {
           store.dispatch(ViewSettings(
             navigator: Navigator.of(context),
             section: section,
             company: state.company,
             user: state.user,
+            tabIndex: tabIndex,
           ));
         },
         onClearSettingsFilterPressed: () =>
@@ -55,7 +56,7 @@ class SettingsListVM {
   }
 
   final AppState state;
-  final Function(BuildContext, String) loadSection;
+  final Function(BuildContext, String, int) loadSection;
   final Function(BuildContext) onViewGroupPressed;
   final Function(BuildContext) onViewClientPressed;
   final Function() onClearSettingsFilterPressed;
