@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EntityListTile extends StatefulWidget {
@@ -78,24 +79,28 @@ class _EntityListTileState extends State<EntityListTile> {
           : handleEntityAction(context, widget.entity, action),
     );
 
-    final trailing = IgnorePointer(
-      ignoring: !isHovered,
-      child: IconButton(
-        icon: Icon(isHovered || isMobile(context)
-            ? Icons.chevron_right
-            : Icons.filter_list),
-        onPressed: () => viewEntity(
-          entity: widget.entity,
-          context: context,
-          addToStack: isDesktop(context) && !widget.isFilter,
-        ),
-        color: isFilteredBy
-            ? (state.prefState.enableDarkMode
-                ? Colors.white
-                : Theme.of(context).accentColor)
-            : null,
-      ),
-    );
+    final trailing = widget.isFilter
+        ? SizedBox()
+        : IgnorePointer(
+            ignoring: !isHovered,
+            child: IconButton(
+              icon: Icon(isHovered ||
+                      isMobile(context) ||
+                      state.uiState.previewStack.isNotEmpty
+                  ? Icons.chevron_right
+                  : Icons.filter_list),
+              onPressed: () => viewEntity(
+                entity: widget.entity,
+                context: context,
+                addToStack: isDesktop(context) && !widget.isFilter,
+              ),
+              color: isFilteredBy
+                  ? (state.prefState.enableDarkMode
+                      ? Colors.white
+                      : Theme.of(context).accentColor)
+                  : null,
+            ),
+          );
 
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),
@@ -108,8 +113,10 @@ class _EntityListTileState extends State<EntityListTile> {
             isMenu: true,
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              onTap: () =>
-                  inspectEntity(context: context, entity: widget.entity),
+              onTap: isDesktop(context) && widget.isFilter
+                  ? null
+                  : () =>
+                      inspectEntity(context: context, entity: widget.entity),
               onLongPress: () => inspectEntity(
                   context: context, entity: widget.entity, longPress: true),
               title: Text(
@@ -182,7 +189,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
     final state = store.state;
     final mainRoute = state.uiState.mainRoute;
     final isFilterMatch =
-        widget.isFilter && '${widget.entityType}' == mainRoute;
+        widget.isFilter && '${widget.entityType}' == toCamelCase(mainRoute);
 
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),

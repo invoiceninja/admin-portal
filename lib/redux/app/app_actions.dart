@@ -1465,9 +1465,13 @@ void inspectEntity({
   bool longPress = false,
 }) {
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+
   if (isDesktop(context)) {
     if (longPress) {
       viewEntity(context: context, entity: entity);
+    } else if (state.uiState.previewStack.isNotEmpty) {
+      viewEntity(context: context, entity: entity, addToStack: true);
     } else {
       store.dispatch(
           FilterByEntity(entityType: entity.entityType, entityId: entity.id));
