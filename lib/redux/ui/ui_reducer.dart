@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -77,6 +78,7 @@ UIState uiReducer(UIState state, dynamic action) {
             ? state.previousRoute
             : state.currentRoute
     ..currentRoute = currentRoute
+    ..previewStack.replace(previewStackReducer(state.previewStack, action))
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
@@ -282,5 +284,14 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   }),
   TypedReducer<SettingsUIState, UpdateSettingsTab>((state, action) {
     return state.rebuild((b) => b..tabIndex = action.tabIndex);
+  }),
+]);
+
+Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
+  TypedReducer<BuiltList<EntityType>, PreviewEntity>((previewStack, action) {
+    return BuiltList(<EntityType>[
+      ...previewStack.where((entityType) => entityType != action.entityType),
+      action.entityType
+    ]);
   }),
 ]);

@@ -137,6 +137,9 @@ List<String> filteredTasksSelector(
       } else if (filterEntityType == EntityType.invoice &&
           task.invoiceId != filterEntityId) {
         return false;
+      } else if (filterEntityType == EntityType.user &&
+          task.assignedUserId != filterEntityId) {
+        return false;
       }
     } else if (task.clientId != null && !client.isActive) {
       return false;

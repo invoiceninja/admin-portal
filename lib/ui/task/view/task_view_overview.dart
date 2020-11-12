@@ -55,6 +55,7 @@ class _TaskOverviewState extends State<TaskOverview> {
     final client = viewModel.client;
     final company = viewModel.company;
     final invoice = viewModel.state.invoiceState.map[task.invoiceId];
+    final user = viewModel.state.userState.map[task.assignedUserId];
 
     final Map<String, String> fields = {
       TaskFields.rate: formatNumber(task.rate, context, zeroIsNull: true),
@@ -121,6 +122,15 @@ class _TaskOverviewState extends State<TaskOverview> {
         widgets.addAll([
           EntityListTile(
             entity: project,
+            isFilter: widget.isFilter,
+          ),
+        ]);
+      }
+
+      if (user != null) {
+        widgets.addAll([
+          EntityListTile(
+            entity: user,
             isFilter: widget.isFilter,
           ),
         ]);

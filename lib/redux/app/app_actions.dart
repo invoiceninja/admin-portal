@@ -159,6 +159,16 @@ class RefreshData implements StartLoading {
   final bool includeStatic;
 }
 
+class PreviewEntity {
+  const PreviewEntity({
+    this.entityType,
+    this.entityId,
+  });
+
+  final String entityId;
+  final EntityType entityType;
+}
+
 class ClearData {}
 
 class RefreshDataFailure implements StopLoading {
@@ -332,12 +342,28 @@ void viewEntitiesByType({
       });
 }
 
+void viewEntity(
+        {BuildContext context,
+        BaseEntity entity,
+        bool force = false,
+        bool addToStack = false,
+        BaseEntity filterEntity}) =>
+    viewEntityById(
+      context: context,
+      entityId: entity.id,
+      entityType: entity.entityType,
+      force: force,
+      addToStack: addToStack,
+      filterEntity: filterEntity,
+    );
+
 void viewEntityById({
   BuildContext context,
   String entityId,
   EntityType entityType,
   bool force = false,
   bool showError = true,
+  bool addToStack = false,
   BaseEntity filterEntity,
 }) {
   final store = StoreProvider.of<AppState>(context);
@@ -350,6 +376,14 @@ void viewEntityById({
       context: context,
       force: force,
       callback: () {
+        if (addToStack) {
+          store.dispatch(PreviewEntity(
+            entityId: entityId,
+            entityType: entityType,
+          ));
+          return;
+        }
+
         if (filterEntity != null &&
             (uiState.filterEntityType != filterEntity.entityType ||
                 uiState.filterEntityId != filterEntity.id)) {
@@ -548,19 +582,6 @@ void viewEntityById({
         }
       });
 }
-
-void viewEntity(
-        {BuildContext context,
-        BaseEntity entity,
-        bool force = false,
-        BaseEntity filterEntity}) =>
-    viewEntityById(
-      context: context,
-      entityId: entity.id,
-      entityType: entity.entityType,
-      force: force,
-      filterEntity: filterEntity,
-    );
 
 void createEntityByType(
     {BuildContext context, EntityType entityType, bool force = false}) {

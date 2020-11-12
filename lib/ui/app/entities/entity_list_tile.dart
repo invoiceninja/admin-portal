@@ -83,9 +83,11 @@ class _EntityListTileState extends State<EntityListTile> {
         icon: Icon(isHovered || isMobile(context)
             ? Icons.chevron_right
             : Icons.filter_list),
-        onPressed: isHovered
-            ? () => viewEntity(entity: widget.entity, context: context)
-            : () => null,
+        onPressed: () => viewEntity(
+          entity: widget.entity,
+          context: context,
+          addToStack: isDesktop(context),
+        ),
         color: isFilteredBy
             ? (state.prefState.enableDarkMode
                 ? Colors.white

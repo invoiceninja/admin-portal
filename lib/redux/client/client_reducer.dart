@@ -43,6 +43,9 @@ final editingContactReducer = combineReducers<ContactEntity>([
 ]);
 
 final selectedIdReducer = combineReducers<String>([
+  TypedReducer<String, PreviewEntity>((selectedId, action) {
+    return action.entityId;
+  }),
   TypedReducer<String, ViewClient>((selectedId, action) {
     return action.clientId;
   }),

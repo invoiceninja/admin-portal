@@ -714,7 +714,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
     return '\n\nURL: ${authState.url}'
         '\nRoute: ${uiState.currentRoute}'
-        '\nPrev: ${uiState.previousRoute}'
+        '\nPrevious: ${uiState.previousRoute}'
+        '\nPreview: ${uiState.previewStack}'
         '\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}'
         '\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}'
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
