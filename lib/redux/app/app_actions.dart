@@ -171,6 +171,8 @@ class PreviewEntity {
 
 class ClearPreviewStack {}
 
+class PopPreviewStack {}
+
 class ClearData {}
 
 class RefreshDataFailure implements StopLoading {

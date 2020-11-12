@@ -298,4 +298,8 @@ Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
       (previewStack, action) {
     return BuiltList(<EntityType>[]);
   }),
+  TypedReducer<BuiltList<EntityType>, PopPreviewStack>((previewStack, action) {
+    return BuiltList(
+        <EntityType>[...previewStack.sublist(0, previewStack.length - 1)]);
+  }),
 ]);

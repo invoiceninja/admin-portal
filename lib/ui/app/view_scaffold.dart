@@ -52,7 +52,7 @@ class ViewScaffold extends StatelessWidget {
     }
 
     Widget leading;
-    if (!isMobile(context)) {
+    if (isDesktop(context)) {
       if ((isFilter ?? false) &&
           entity.entityType == state.uiState.filterEntityType) {
         leading = IconButton(
@@ -61,6 +61,10 @@ class ViewScaffold extends StatelessWidget {
             store.dispatch(UpdateUserPreferences(showFilterSidebar: false));
           },
         );
+      } else if (state.uiState.previewStack.isNotEmpty) {
+        leading = IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => store.dispatch(PopPreviewStack()));
       } else if (isSettings) {
         leading = IconButton(
           icon: Icon(Icons.arrow_back),
