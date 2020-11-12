@@ -78,24 +78,28 @@ class _EntityListTileState extends State<EntityListTile> {
           : handleEntityAction(context, widget.entity, action),
     );
 
-    final trailing = IgnorePointer(
-      ignoring: !isHovered,
-      child: IconButton(
-        icon: Icon(isHovered || isMobile(context)
-            ? Icons.chevron_right
-            : Icons.filter_list),
-        onPressed: () => viewEntity(
-          entity: widget.entity,
-          context: context,
-          addToStack: isDesktop(context) && !widget.isFilter,
-        ),
-        color: isFilteredBy
-            ? (state.prefState.enableDarkMode
-                ? Colors.white
-                : Theme.of(context).accentColor)
-            : null,
-      ),
-    );
+    final trailing = widget.isFilter
+        ? SizedBox()
+        : IgnorePointer(
+            ignoring: !isHovered,
+            child: IconButton(
+              icon: Icon(isHovered ||
+                      isMobile(context) ||
+                      state.uiState.previewStack.isNotEmpty
+                  ? Icons.chevron_right
+                  : Icons.filter_list),
+              onPressed: () => viewEntity(
+                entity: widget.entity,
+                context: context,
+                addToStack: isDesktop(context) && !widget.isFilter,
+              ),
+              color: isFilteredBy
+                  ? (state.prefState.enableDarkMode
+                      ? Colors.white
+                      : Theme.of(context).accentColor)
+                  : null,
+            ),
+          );
 
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),
@@ -108,8 +112,10 @@ class _EntityListTileState extends State<EntityListTile> {
             isMenu: true,
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              onTap: () =>
-                  inspectEntity(context: context, entity: widget.entity),
+              onTap: isDesktop(context) && widget.isFilter
+                  ? null
+                  : () =>
+                      inspectEntity(context: context, entity: widget.entity),
               onLongPress: () => inspectEntity(
                   context: context, entity: widget.entity, longPress: true),
               title: Text(
