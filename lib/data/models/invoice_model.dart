@@ -442,6 +442,8 @@ abstract class InvoiceEntity extends Object
 
   double get netBalance => balance - (taxAmount * balance / amount);
 
+  double get paidToDate => amount - balance;
+
   @nullable
   int get loadedAt;
 

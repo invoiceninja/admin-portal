@@ -147,7 +147,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '${localization.total}: ${formatNumber(invoice.calculateTotal, context, clientId: viewModel.invoice.clientId)}',
+                  '${localization.lookup('${invoice.entityType}_total')}: ${formatNumber(invoice.calculateTotal, context, clientId: viewModel.invoice.clientId)}',
                   style: TextStyle(
                     //color: Theme.of(context).selectedRowColor,
                     color: state.prefState.enableDarkMode

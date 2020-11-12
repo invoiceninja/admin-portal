@@ -184,8 +184,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final invoice = viewModel.invoice;
     final company = viewModel.company;
     final client = state.clientState.get(invoice.clientId);
-    final invoiceTotal =
-        invoice.partial != 0 ? invoice.partial : invoice.calculateTotal;
     final entityType = invoice.entityType;
 
     final countProducts = invoice.lineItems
@@ -641,17 +639,28 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         right: kMobileDialogPadding,
                         left: kMobileDialogPadding / 2),
                     children: <Widget>[
-                      if (company.hasCustomSurcharge ||
-                          company.hasInvoiceTaxes ||
-                          invoice.partial != 0)
+                      TextFormField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          labelText: localization.subtotal,
+                        ),
+                        textAlign: TextAlign.end,
+                        key: ValueKey(
+                            '__invoice_subtotal_${invoice.subtotal}_${invoice.clientId}__'),
+                        initialValue: formatNumber(invoice.subtotal, context,
+                            clientId: invoice.clientId),
+                      ),
+                      if (invoice.isOld)
                         TextFormField(
                           enabled: false,
                           decoration: InputDecoration(
-                            labelText: localization.subtotal,
+                            labelText: localization.paidToDate,
                           ),
+                          textAlign: TextAlign.end,
                           key: ValueKey(
-                              '__invoice_subtotal_${invoice.subtotal}_${invoice.clientId}__'),
-                          initialValue: formatNumber(invoice.subtotal, context,
+                              '__invoice_paid_to_date_${invoice.paidToDate}_${invoice.clientId}__'),
+                          initialValue: formatNumber(
+                              invoice.paidToDate, context,
                               clientId: invoice.clientId),
                         ),
                       if (company.hasCustomSurcharge)
@@ -697,14 +706,27 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       TextFormField(
                         enabled: false,
                         decoration: InputDecoration(
-                          labelText: localization.total,
+                          labelText: localization.balanceDue,
                         ),
                         textAlign: TextAlign.end,
                         key: ValueKey(
-                            '__invoice_total_${invoiceTotal}_${invoice.clientId}__'),
-                        initialValue: formatNumber(invoiceTotal, context,
+                            '__invoice_total_${invoice.calculateTotal}_${invoice.clientId}__'),
+                        initialValue: formatNumber(
+                            invoice.calculateTotal - invoice.paidToDate, context,
                             clientId: invoice.clientId),
                       ),
+                      if (invoice.partial != 0)
+                        TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            labelText: localization.partialDue,
+                          ),
+                          textAlign: TextAlign.end,
+                          key: ValueKey(
+                              '__invoice_total_${invoice.partial}_${invoice.clientId}__'),
+                          initialValue: formatNumber(invoice.partial, context,
+                              clientId: invoice.clientId),
+                        ),
                     ],
                   ),
                 ],
