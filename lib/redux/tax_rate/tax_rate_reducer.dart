@@ -16,6 +16,10 @@ EntityUIState taxRateUIReducer(TaxRateUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.taxRate
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewTaxRate>(
       (String selectedId, action) => action.taxRateId),
   TypedReducer<String, AddTaxRateSuccess>(

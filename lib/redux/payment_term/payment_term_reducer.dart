@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:redux/redux.dart';
 import 'package:built_collection/built_collection.dart';
@@ -16,6 +17,10 @@ EntityUIState paymentTermUIReducer(PaymentTermUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.paymentTerm
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewPaymentTerm>(
       (String selectedId, dynamic action) => action.paymentTermId),
   TypedReducer<String, AddPaymentTermSuccess>(

@@ -36,6 +36,10 @@ String filterRecurringInvoiceDropdownReducer(
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.recurringInvoice
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewRecurringInvoice>(
       (selectedId, action) => action.recurringInvoiceId),
   TypedReducer<String, AddRecurringInvoiceSuccess>(

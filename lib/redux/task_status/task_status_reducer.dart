@@ -17,6 +17,10 @@ EntityUIState taskStatusUIReducer(TaskStatusUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.taskStatus
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewTaskStatus>(
       (String selectedId, dynamic action) => action.taskStatusId),
   TypedReducer<String, AddTaskStatusSuccess>(

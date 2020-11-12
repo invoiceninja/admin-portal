@@ -16,6 +16,10 @@ EntityUIState designUIReducer(DesignUIState state, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.design
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewDesign>(
       (String selectedId, dynamic action) => action.designId),
   TypedReducer<String, AddDesignSuccess>(

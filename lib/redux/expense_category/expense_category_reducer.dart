@@ -18,6 +18,10 @@ EntityUIState expenseCategoryUIReducer(
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.expenseCategory
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewExpenseCategory>(
       (String selectedId, dynamic action) => action.expenseCategoryId),
   TypedReducer<String, AddExpenseCategorySuccess>(

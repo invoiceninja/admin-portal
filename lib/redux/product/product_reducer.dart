@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/product_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -52,6 +53,8 @@ ProductEntity _updateEditing(ProductEntity product, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.product ? action.entityId : selectedId),
   TypedReducer<String, ViewProduct>((selectedId, action) => action.productId),
   TypedReducer<String, AddProductSuccess>(
       (selectedId, action) => action.product.id),

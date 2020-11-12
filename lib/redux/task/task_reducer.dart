@@ -35,6 +35,10 @@ TaskTime editTaskTime(TaskTime taskTime, dynamic action) {
  */
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.task
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewTask>((selectedId, action) => action.taskId),
   TypedReducer<String, AddTaskSuccess>((selectedId, action) => action.task.id),
   TypedReducer<String, SelectCompany>(

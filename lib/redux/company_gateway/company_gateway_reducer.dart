@@ -18,6 +18,10 @@ EntityUIState companyGatewayUIReducer(
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+      action.entityType == EntityType.companyGateway
+          ? action.entityId
+          : selectedId),
   TypedReducer<String, ViewCompanyGateway>(
       (String selectedId, action) => action.companyGatewayId),
   TypedReducer<String, AddCompanyGatewaySuccess>(
