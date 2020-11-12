@@ -837,7 +837,10 @@ class _EntityFilter extends StatelessWidget {
                     if (!state.prefState.showFilterSidebar)
                       IconButton(
                         tooltip: localization.showSidebar,
-                        icon: Icon(Icons.chrome_reader_mode),
+                        icon: Icon(
+                          Icons.chrome_reader_mode,
+                          color: state.headerTextColor,
+                        ),
                         onPressed: () => store.dispatch(
                             UpdateUserPreferences(showFilterSidebar: true)),
                       ),
@@ -869,8 +872,13 @@ class _EntityFilter extends StatelessWidget {
                                 child: FlatButton(
                                   minWidth: 0,
                                   visualDensity: VisualDensity.compact,
-                                  child: Text(localization
-                                      .lookup('${relatedTypes[i].plural}')),
+                                  child: Text(
+                                    localization
+                                        .lookup('${relatedTypes[i].plural}'),
+                                    style: TextStyle(
+                                      color: state.headerTextColor,
+                                    ),
+                                  ),
                                   onPressed: () {
                                     viewEntitiesByType(
                                       context: context,
@@ -905,9 +913,14 @@ class _EntityFilter extends StatelessWidget {
                                     const EdgeInsets.symmetric(horizontal: 8),
                                 child: Row(
                                   children: [
-                                    Text(localization.more),
+                                    Text(
+                                      localization.more,
+                                      style: TextStyle(
+                                          color: state.headerTextColor),
+                                    ),
                                     SizedBox(width: 4),
-                                    Icon(Icons.arrow_drop_down),
+                                    Icon(Icons.arrow_drop_down,
+                                        color: state.headerTextColor),
                                   ],
                                 ),
                               ),
@@ -951,7 +964,10 @@ class _EntityFilter extends StatelessWidget {
                     ),
                     SizedBox(width: 4),
                     IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        color: state.headerTextColor,
+                      ),
                       onPressed: () => store.dispatch(FilterByEntity(
                         entityId: uiState.filterEntityId,
                         entityType: uiState.filterEntityType,
