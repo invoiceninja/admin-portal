@@ -332,196 +332,6 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-class SettingsScreens extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final state = store.state;
-    final uiState = state.uiState;
-    final prefState = state.prefState;
-
-    Widget screen = BlankScreen();
-
-    switch (uiState.subRoute) {
-      case kSettingsCompanyDetails:
-        screen = CompanyDetailsScreen();
-        break;
-      case kSettingsPaymentTerms:
-        screen = PaymentTermScreenBuilder();
-        break;
-      case kSettingsPaymentTermEdit:
-        screen = PaymentTermEditScreen();
-        break;
-      case kSettingsPaymentTermView:
-        screen = PaymentTermViewScreen();
-        break;
-      case kSettingsUserDetails:
-        screen = UserDetailsScreen();
-        break;
-      case kSettingsLocalization:
-        screen = LocalizationScreen();
-        break;
-      case kSettingsOnlinePayments:
-        screen = OnlinePaymentsScreen();
-        break;
-      case kSettingsCompanyGateways:
-        screen = CompanyGatewayScreenBuilder();
-        break;
-      case kSettingsCompanyGatewaysView:
-        screen = CompanyGatewayViewScreen();
-        break;
-      case kSettingsCompanyGatewaysEdit:
-        screen = CompanyGatewayEditScreen();
-        break;
-      case kSettingsTaxSettings:
-        screen = TaxSettingsScreen();
-        break;
-      case kSettingsTaxRates:
-        screen = TaxRateScreenBuilder();
-        break;
-      case kSettingsTaxRatesView:
-        screen = TaxRateViewScreen();
-        break;
-      case kSettingsTaxRatesEdit:
-        screen = TaxRateEditScreen();
-        break;
-      case kSettingsTaskStatuses:
-        screen = TaskStatusScreenBuilder();
-        break;
-      case kSettingsTaskStatusView:
-        screen = TaskStatusViewScreen();
-        break;
-      case kSettingsTaskStatusEdit:
-        screen = TaskStatusEditScreen();
-        break;
-      case kSettingsProducts:
-        screen = ProductSettingsScreen();
-        break;
-      case kSettingsTasks:
-        screen = TaskSettingsScreen();
-        break;
-      case kSettingsExpenses:
-        screen = ExpenseSettingsScreen();
-        break;
-      case kSettingsIntegrations:
-        screen = IntegrationSettingsScreen();
-        break;
-      case kSettingsImportExport:
-        screen = ImportExportScreen();
-        break;
-      case kSettingsDeviceSettings:
-        screen = DeviceSettingsScreen();
-        break;
-      case kSettingsGroupSettings:
-        screen = GroupScreenBuilder();
-        break;
-      case kSettingsGroupSettingsView:
-        screen = GroupViewScreen();
-        break;
-      case kSettingsGroupSettingsEdit:
-        screen = GroupEditScreen();
-        break;
-      case kSettingsGeneratedNumbers:
-        screen = GeneratedNumbersScreen();
-        break;
-      case kSettingsCustomFields:
-        screen = CustomFieldsScreen();
-        break;
-      case kSettingsWorkflowSettings:
-        screen = WorkflowSettingsScreen();
-        break;
-      case kSettingsInvoiceDesign:
-        screen = InvoiceDesignScreen();
-        break;
-      case kSettingsClientPortal:
-        screen = ClientPortalScreen();
-        break;
-      case kSettingsBuyNowButtons:
-        screen = BuyNowButtonsScreen();
-        break;
-      case kSettingsEmailSettings:
-        screen = EmailSettingsScreen();
-        break;
-      case kSettingsTemplatesAndReminders:
-        screen = TemplatesAndRemindersScreen();
-        break;
-      case kSettingsCreditCardsAndBanks:
-        screen = CreditCardsAndBanksScreen();
-        break;
-      case kSettingsDataVisualizations:
-        screen = DataVisualizationsScreen();
-        break;
-      case kSettingsUserManagement:
-        screen = UserScreenBuilder();
-        break;
-      case kSettingsUserManagementView:
-        screen = UserViewScreen();
-        break;
-      case kSettingsUserManagementEdit:
-        screen = UserEditScreen();
-        break;
-      case kSettingsCustomDesigns:
-        screen = DesignScreenBuilder();
-        break;
-      case kSettingsCustomDesignsView:
-        screen = DesignViewScreen();
-        break;
-      case kSettingsCustomDesignsEdit:
-        screen = DesignEditScreen();
-        break;
-      case kSettingsAccountManagement:
-        screen = AccountManagementScreen();
-        break;
-      case kSettingsTokens:
-        screen = TokenScreenBuilder();
-        break;
-      case kSettingsTokenView:
-        screen = TokenViewScreen();
-        break;
-      case kSettingsTokenEdit:
-        screen = TokenEditScreen();
-        break;
-      case kSettingsWebhooks:
-        screen = WebhookScreenBuilder();
-        break;
-      case kSettingsWebhookView:
-        screen = WebhookViewScreen();
-        break;
-      case kSettingsWebhookEdit:
-        screen = WebhookEditScreen();
-        break;
-      case kSettingsExpenseCategories:
-        screen = ExpenseCategoryScreenBuilder();
-        break;
-      case kSettingsExpenseCategoryView:
-        screen = ExpenseCategoryViewScreen();
-        break;
-      case kSettingsExpenseCategoryEdit:
-        screen = ExpenseCategoryEditScreen();
-        break;
-    }
-
-    return Row(children: <Widget>[
-      Expanded(
-        child: SettingsScreenBuilder(),
-        flex: 2,
-      ),
-      Expanded(
-        flex: 3,
-        child: AppBorder(
-          child: screen,
-          isLeft: true,
-        ),
-      ),
-      if (prefState.showHistory)
-        AppBorder(
-          child: HistoryDrawerBuilder(),
-          isLeft: true,
-        ),
-    ]);
-  }
-}
-
 class EntityScreens extends StatelessWidget {
   const EntityScreens({
     @required this.listWidget,
@@ -762,6 +572,196 @@ class EntityScreens extends StatelessWidget {
           ),
       ],
     );
+  }
+}
+
+class SettingsScreens extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final uiState = state.uiState;
+    final prefState = state.prefState;
+
+    Widget screen = BlankScreen();
+
+    switch (uiState.subRoute) {
+      case kSettingsCompanyDetails:
+        screen = CompanyDetailsScreen();
+        break;
+      case kSettingsPaymentTerms:
+        screen = PaymentTermScreenBuilder();
+        break;
+      case kSettingsPaymentTermEdit:
+        screen = PaymentTermEditScreen();
+        break;
+      case kSettingsPaymentTermView:
+        screen = PaymentTermViewScreen();
+        break;
+      case kSettingsUserDetails:
+        screen = UserDetailsScreen();
+        break;
+      case kSettingsLocalization:
+        screen = LocalizationScreen();
+        break;
+      case kSettingsOnlinePayments:
+        screen = OnlinePaymentsScreen();
+        break;
+      case kSettingsCompanyGateways:
+        screen = CompanyGatewayScreenBuilder();
+        break;
+      case kSettingsCompanyGatewaysView:
+        screen = CompanyGatewayViewScreen();
+        break;
+      case kSettingsCompanyGatewaysEdit:
+        screen = CompanyGatewayEditScreen();
+        break;
+      case kSettingsTaxSettings:
+        screen = TaxSettingsScreen();
+        break;
+      case kSettingsTaxRates:
+        screen = TaxRateScreenBuilder();
+        break;
+      case kSettingsTaxRatesView:
+        screen = TaxRateViewScreen();
+        break;
+      case kSettingsTaxRatesEdit:
+        screen = TaxRateEditScreen();
+        break;
+      case kSettingsTaskStatuses:
+        screen = TaskStatusScreenBuilder();
+        break;
+      case kSettingsTaskStatusView:
+        screen = TaskStatusViewScreen();
+        break;
+      case kSettingsTaskStatusEdit:
+        screen = TaskStatusEditScreen();
+        break;
+      case kSettingsProducts:
+        screen = ProductSettingsScreen();
+        break;
+      case kSettingsTasks:
+        screen = TaskSettingsScreen();
+        break;
+      case kSettingsExpenses:
+        screen = ExpenseSettingsScreen();
+        break;
+      case kSettingsIntegrations:
+        screen = IntegrationSettingsScreen();
+        break;
+      case kSettingsImportExport:
+        screen = ImportExportScreen();
+        break;
+      case kSettingsDeviceSettings:
+        screen = DeviceSettingsScreen();
+        break;
+      case kSettingsGroupSettings:
+        screen = GroupScreenBuilder();
+        break;
+      case kSettingsGroupSettingsView:
+        screen = GroupViewScreen();
+        break;
+      case kSettingsGroupSettingsEdit:
+        screen = GroupEditScreen();
+        break;
+      case kSettingsGeneratedNumbers:
+        screen = GeneratedNumbersScreen();
+        break;
+      case kSettingsCustomFields:
+        screen = CustomFieldsScreen();
+        break;
+      case kSettingsWorkflowSettings:
+        screen = WorkflowSettingsScreen();
+        break;
+      case kSettingsInvoiceDesign:
+        screen = InvoiceDesignScreen();
+        break;
+      case kSettingsClientPortal:
+        screen = ClientPortalScreen();
+        break;
+      case kSettingsBuyNowButtons:
+        screen = BuyNowButtonsScreen();
+        break;
+      case kSettingsEmailSettings:
+        screen = EmailSettingsScreen();
+        break;
+      case kSettingsTemplatesAndReminders:
+        screen = TemplatesAndRemindersScreen();
+        break;
+      case kSettingsCreditCardsAndBanks:
+        screen = CreditCardsAndBanksScreen();
+        break;
+      case kSettingsDataVisualizations:
+        screen = DataVisualizationsScreen();
+        break;
+      case kSettingsUserManagement:
+        screen = UserScreenBuilder();
+        break;
+      case kSettingsUserManagementView:
+        screen = UserViewScreen();
+        break;
+      case kSettingsUserManagementEdit:
+        screen = UserEditScreen();
+        break;
+      case kSettingsCustomDesigns:
+        screen = DesignScreenBuilder();
+        break;
+      case kSettingsCustomDesignsView:
+        screen = DesignViewScreen();
+        break;
+      case kSettingsCustomDesignsEdit:
+        screen = DesignEditScreen();
+        break;
+      case kSettingsAccountManagement:
+        screen = AccountManagementScreen();
+        break;
+      case kSettingsTokens:
+        screen = TokenScreenBuilder();
+        break;
+      case kSettingsTokenView:
+        screen = TokenViewScreen();
+        break;
+      case kSettingsTokenEdit:
+        screen = TokenEditScreen();
+        break;
+      case kSettingsWebhooks:
+        screen = WebhookScreenBuilder();
+        break;
+      case kSettingsWebhookView:
+        screen = WebhookViewScreen();
+        break;
+      case kSettingsWebhookEdit:
+        screen = WebhookEditScreen();
+        break;
+      case kSettingsExpenseCategories:
+        screen = ExpenseCategoryScreenBuilder();
+        break;
+      case kSettingsExpenseCategoryView:
+        screen = ExpenseCategoryViewScreen();
+        break;
+      case kSettingsExpenseCategoryEdit:
+        screen = ExpenseCategoryEditScreen();
+        break;
+    }
+
+    return Row(children: <Widget>[
+      Expanded(
+        child: SettingsScreenBuilder(),
+        flex: 2,
+      ),
+      Expanded(
+        flex: 3,
+        child: AppBorder(
+          child: screen,
+          isLeft: true,
+        ),
+      ),
+      if (prefState.showHistory)
+        AppBorder(
+          child: HistoryDrawerBuilder(),
+          isLeft: true,
+        ),
+    ]);
   }
 }
 
