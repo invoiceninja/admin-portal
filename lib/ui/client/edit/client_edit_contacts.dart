@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class ClientEditContacts extends StatefulWidget {
   const ClientEditContacts({
@@ -252,7 +253,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     });
   }
 
-  /*
   void _setContactControllers(Contact contact) {
     if (_firstNameController.text.isEmpty) {
       _firstNameController.text = contact.givenName ?? '';
@@ -267,7 +267,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _phoneController.text = contact.phones.first.value;
     }
   }
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -286,7 +285,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           onSavePressed: (_) => _onDoneContactPressed(),
           decoration: InputDecoration(
             labelText: localization.firstName,
-            /*
             suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
                 ? IconButton(
                     alignment: Alignment.bottomCenter,
@@ -304,8 +302,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                       }
                     })
                 : null,
-
-             */
           ),
         ),
         DecoratedFormField(

@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 class VendorEditContacts extends StatefulWidget {
   const VendorEditContacts({
@@ -215,7 +216,6 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     });
   }
 
-  /*
   void _setContactControllers(Contact contact) {
     if (_firstNameController.text.isEmpty) {
       _firstNameController.text = contact.givenName ?? '';
@@ -230,8 +230,6 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
       _phoneController.text = contact.phones.first.value;
     }
   }
-
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -285,7 +283,6 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
               controller: _firstNameController,
               decoration: InputDecoration(
                 labelText: localization.firstName,
-                /*
                 suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
                     ? IconButton(
                         alignment: Alignment.bottomCenter,
@@ -303,8 +300,6 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
                           }
                         })
                     : null,
-
-                 */
               ),
             ),
             DecoratedFormField(
