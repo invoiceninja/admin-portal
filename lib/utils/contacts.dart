@@ -1,3 +1,4 @@
+/*
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -26,3 +27,5 @@ Future<PermissionStatus> _getPermission() async {
     return permission;
   }
 }
+
+ */

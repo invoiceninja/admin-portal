@@ -176,13 +176,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0-nullsafety.4"
-  contacts_service:
-    dependency: "direct main"
-    description:
-      name: contacts_service
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.6"
   convert:
     dependency: transitive
     description:
@@ -196,7 +189,7 @@ packages:
       name: coverage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.1"
+    version: "0.14.2"
   crypto:
     dependency: transitive
     description:
@@ -529,14 +522,14 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.18"
+    version: "2.1.19"
   image_picker:
     dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.7+12"
+    version: "0.6.7+14"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -747,20 +740,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0-nullsafety.2"
-  permission_handler:
-    dependency: "direct main"
-    description:
-      name: permission_handler
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.1+1"
-  permission_handler_platform_interface:
-    dependency: transitive
-    description:
-      name: permission_handler_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   petitparser:
     dependency: transitive
     description:

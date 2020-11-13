@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:contacts_service/contacts_service.dart';
 
 class VendorEditDetails extends StatefulWidget {
   const VendorEditDetails({
@@ -103,6 +102,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     });
   }
 
+  /*
   void _setContactControllers(Contact contact) {
     if (_nameController.text.isEmpty) {
       _nameController.text = contact.displayName ?? '';
@@ -111,6 +111,8 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
       _phoneController.text = contact.phones.first.value;
     }
   }
+
+   */
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +133,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
                   : null,
               decoration: InputDecoration(
                 labelText: localization.firstName,
+                /*
                 suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
                     ? IconButton(
                         alignment: Alignment.bottomCenter,
@@ -148,6 +151,8 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
                           }
                         })
                     : null,
+
+                 */
               ),
             ),
             UserPicker(
