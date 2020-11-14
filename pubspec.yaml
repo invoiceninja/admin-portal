@@ -32,8 +32,9 @@ dependencies:
   url_launcher: ^5.4.2
   share: ^0.6.3+6
   intl: ^0.16.1
+  #intl: 0.17.0-nullsafety.2 # TODO remove this
   flutter_slidable: ^0.5.4
-  charts_flutter: ^0.8.1
+  charts_flutter: ^0.9.0
   firebase_auth: ^0.15.4
   google_sign_in: ^4.5.1
   local_auth: ^0.6.1+3

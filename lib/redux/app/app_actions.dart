@@ -366,7 +366,7 @@ void viewEntity(
     );
 
 void viewEntityById({
-  BuildContext context,
+  @required BuildContext context,
   String entityId,
   EntityType entityType,
   bool force = false,
@@ -1466,12 +1466,19 @@ void inspectEntity({
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
+  final previewStack = state.uiState.previewStack;
 
   if (isDesktop(context)) {
     if (longPress) {
       viewEntity(context: context, entity: entity);
-    } else if (state.uiState.previewStack.isNotEmpty) {
-      viewEntity(context: context, entity: entity, addToStack: true);
+    } else if (previewStack.isNotEmpty) {
+      final entityType = previewStack.last;
+      viewEntityById(
+        context: context,
+        filterEntity: entity,
+        entityType: entityType,
+        entityId: state.getUIState(entityType).selectedId,
+      );
     } else {
       store.dispatch(
           FilterByEntity(entityType: entity.entityType, entityId: entity.id));
