@@ -137,11 +137,9 @@ packages:
   charts_flutter:
     dependency: "direct main"
     description:
-      path: charts_flutter
-      ref: HEAD
-      resolved-ref: "8971a7535dc144101e47a503b735056d18a7e6f7"
-      url: "git://github.com/hillelcoren/charts.git"
-    source: git
+      name: charts_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.9.0"
   checked_yaml:
     dependency: transitive
@@ -235,12 +233,12 @@ packages:
     source: hosted
     version: "1.0.1"
   extended_image:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: extended_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.1-dev"
+    version: "1.3.0"
   extended_image_library:
     dependency: transitive
     description:
@@ -559,7 +557,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.17.0-nullsafety.2"
+    version: "0.16.1"
   io:
     dependency: transitive
     description:

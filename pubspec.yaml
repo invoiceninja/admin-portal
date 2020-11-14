@@ -32,13 +32,8 @@ dependencies:
   url_launcher: ^5.4.2
   share: ^0.6.3+6
   intl: ^0.16.1
-  #intl: 0.17.0-nullsafety.2 # TODO remove this
   flutter_slidable: ^0.5.4
-  #charts_flutter: ^0.9.0
-  charts_flutter:
-    git:
-      url: git://github.com/hillelcoren/charts.git
-      path: charts_flutter
+  charts_flutter: ^0.9.0
   firebase_auth: ^0.15.4
   google_sign_in: ^4.5.1
   local_auth: ^0.6.1+3
@@ -65,10 +60,7 @@ dependencies:
   flutter_styled_toast: ^1.4.0+1
   permission_handler: ^5.0.1+1
   contacts_service: ^0.4.6
-  extended_image: 1.3.1-dev #TODO remove
-
-dependency_overrides:
-  intl: ^0.17.0-nullsafety.2 #TODO remove
+  #extended_image: 1.3.1-dev #TODO remove
 
 dev_dependencies:
   flutter_driver:
