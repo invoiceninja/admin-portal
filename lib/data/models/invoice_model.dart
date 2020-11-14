@@ -207,6 +207,8 @@ abstract class InvoiceEntity extends Object
     ..isChanged = false
     ..isDeleted = false
     ..statusId = kInvoiceStatusDraft
+    ..balance = 0
+    ..amount = 0
     ..invoiceId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
