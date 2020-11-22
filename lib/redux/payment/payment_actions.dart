@@ -359,29 +359,26 @@ void handlePaymentAction(
     case EntityAction.restore:
       final message = paymentIds.length > 1
           ? localization.restoredPayments
-          .replaceFirst(':value', paymentIds.length.toString())
+              .replaceFirst(':value', paymentIds.length.toString())
           : localization.restoredPayment;
       store.dispatch(RestorePaymentsRequest(
-          snackBarCompleter<Null>(context, message),
-          paymentIds));
+          snackBarCompleter<Null>(context, message), paymentIds));
       break;
     case EntityAction.archive:
       final message = paymentIds.length > 1
           ? localization.archivedPayments
-          .replaceFirst(':value', paymentIds.length.toString())
+              .replaceFirst(':value', paymentIds.length.toString())
           : localization.archivedPayment;
       store.dispatch(ArchivePaymentsRequest(
-          snackBarCompleter<Null>(context, message),
-          paymentIds));
+          snackBarCompleter<Null>(context, message), paymentIds));
       break;
     case EntityAction.delete:
       final message = paymentIds.length > 1
           ? localization.deletedPayments
-          .replaceFirst(':value', paymentIds.length.toString())
+              .replaceFirst(':value', paymentIds.length.toString())
           : localization.deletedPayment;
       store.dispatch(DeletePaymentsRequest(
-          snackBarCompleter<Null>(context, message),
-          paymentIds));
+          snackBarCompleter<Null>(context, message), paymentIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentListState.isInMultiselect()) {

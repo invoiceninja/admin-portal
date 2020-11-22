@@ -263,29 +263,26 @@ void handleGroupAction(
     case EntityAction.restore:
       final message = groupIds.length > 1
           ? localization.restoredGroups
-          .replaceFirst(':value', groupIds.length.toString())
+              .replaceFirst(':value', groupIds.length.toString())
           : localization.restoredGroup;
       store.dispatch(RestoreGroupRequest(
-          snackBarCompleter<Null>(context, message),
-          groupIds));
+          snackBarCompleter<Null>(context, message), groupIds));
       break;
     case EntityAction.archive:
       final message = groupIds.length > 1
           ? localization.archivedGroups
-          .replaceFirst(':value', groupIds.length.toString())
+              .replaceFirst(':value', groupIds.length.toString())
           : localization.archivedGroup;
       store.dispatch(ArchiveGroupRequest(
-          snackBarCompleter<Null>(context, message),
-          groupIds));
+          snackBarCompleter<Null>(context, message), groupIds));
       break;
     case EntityAction.delete:
       final message = groupIds.length > 1
           ? localization.deletedGroups
-          .replaceFirst(':value', groupIds.length.toString())
+              .replaceFirst(':value', groupIds.length.toString())
           : localization.deletedGroup;
       store.dispatch(DeleteGroupRequest(
-          snackBarCompleter<Null>(context, message),
-          groupIds));
+          snackBarCompleter<Null>(context, message), groupIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.groupListState.isInMultiselect()) {
