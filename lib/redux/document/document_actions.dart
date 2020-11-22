@@ -266,14 +266,31 @@ void handleDocumentAction(
       editEntity(context: context, entity: document);
       break;
     case EntityAction.restore:
+      final message = documentIds.length > 1
+          ? localization.restoredDocuments
+          .replaceFirst(':value', documentIds.length.toString())
+          : localization.restoredDocument;
       store.dispatch(RestoreDocumentRequest(
-          snackBarCompleter<Null>(context, localization.restoredDocument),
+          snackBarCompleter<Null>(context, message),
           documentIds));
       break;
     case EntityAction.archive:
+      final message = documentIds.length > 1
+          ? localization.archivedDocuments
+          .replaceFirst(':value', documentIds.length.toString())
+          : localization.archivedDocument;
       store.dispatch(ArchiveDocumentRequest(
-          snackBarCompleter<Null>(context, localization.archivedDocument),
+          snackBarCompleter<Null>(context, message),
           documentIds));
+      break;
+    case EntityAction.delete:
+      final message = documentIds.length > 1
+          ? localization.deletedDocuments
+          .replaceFirst(':value', documentIds.length.toString())
+          : localization.deletedDocument;
+      store.dispatch(DeleteDocumentRequest(
+          completer: snackBarCompleter<Null>(context, message),
+          documentIds: documentIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.documentListState.isInMultiselect()) {

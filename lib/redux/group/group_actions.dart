@@ -261,18 +261,30 @@ void handleGroupAction(
           entity: ClientEntity().rebuild((b) => b..groupId = group.id));
       break;
     case EntityAction.restore:
+      final message = groupIds.length > 1
+          ? localization.restoredGroups
+          .replaceFirst(':value', groupIds.length.toString())
+          : localization.restoredGroup;
       store.dispatch(RestoreGroupRequest(
-          snackBarCompleter<Null>(context, localization.restoredGroup),
+          snackBarCompleter<Null>(context, message),
           groupIds));
       break;
     case EntityAction.archive:
+      final message = groupIds.length > 1
+          ? localization.archivedGroups
+          .replaceFirst(':value', groupIds.length.toString())
+          : localization.archivedGroup;
       store.dispatch(ArchiveGroupRequest(
-          snackBarCompleter<Null>(context, localization.archivedGroup),
+          snackBarCompleter<Null>(context, message),
           groupIds));
       break;
     case EntityAction.delete:
+      final message = groupIds.length > 1
+          ? localization.deletedGroups
+          .replaceFirst(':value', groupIds.length.toString())
+          : localization.deletedGroup;
       store.dispatch(DeleteGroupRequest(
-          snackBarCompleter<Null>(context, localization.deletedGroup),
+          snackBarCompleter<Null>(context, message),
           groupIds));
       break;
     case EntityAction.toggleMultiselect:

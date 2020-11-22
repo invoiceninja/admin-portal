@@ -51,6 +51,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_task_status': 'Successfully deleted task status',
       'removed_task_status': 'Successfully removed task status',
       'restored_task_status': 'Successfully restored task status',
+      'archived_task_statuses': 'Successfully archived :value task statuses',
+      'deleted_task_statuses': 'Successfully deleted :value task statuses',
+      'restored_task_statuses': 'Successfully restored :value task statuses',
       'search_task_status': 'Search 1 Task Status',
       'search_task_statuses': 'Search :count Task Statuses',
       'show_tasks_table': 'Show Tasks Table',
@@ -71,6 +74,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_expense_category': 'Successfully deleted expense category',
       'removed_expense_category': 'Successfully removed expense category',
       'restored_expense_category': 'Successfully restored expense category',
+      'archived_expense_categories':
+          'Successfully archived expense :value categories',
+      'deleted_expense_categories':
+          'Successfully deleted expense :value categories',
+      'restored_expense_categories':
+          'Successfully restored expense :value categories',
       'search_expense_category': 'Search 1 Expense Category',
       'search_expense_categories': 'Search :count Expense Categories',
       'use_available_credits': 'Use Available Credits',
@@ -128,6 +137,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_recurring_invoice': 'Successfully deleted recurring invoice',
       'removed_recurring_invoice': 'Successfully removed recurring invoice',
       'restored_recurring_invoice': 'Successfully restored recurring invoice',
+      'archived_recurring_invoices':
+          'Successfully archived recurring :value invoices',
+      'deleted_recurring_invoices':
+          'Successfully deleted recurring :value invoices',
+      'restored_recurring_invoices':
+          'Successfully restored recurring :value invoices',
       'search_recurring_invoice': 'Search 1 Recurring Invoice',
       'search_recurring_invoices': 'Search :count Recurring Invoices',
       'send_date': 'Send Date',
@@ -261,6 +276,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_webhook': 'Successfully deleted webhook',
       'removed_webhook': 'Successfully removed webhook',
       'restored_webhook': 'Successfully restored webhook',
+      'archived_webhooks': 'Successfully archived :value webhooks',
+      'deleted_webhooks': 'Successfully deleted :value webhooks',
+      'removed_webhooks': 'Successfully removed :value webhooks',
+      'restored_webhooks': 'Successfully restored :value webhooks',
       'api_tokens': 'API Tokens',
       'search_tokens': 'Search :count Tokens',
       'search_token': 'Search 1 Token',
@@ -274,6 +293,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_token': 'Successfully deleted token',
       'removed_token': 'Successfully removed token',
       'restored_token': 'Successfully restored token',
+      'archived_tokens': 'Successfully archived :value tokens',
+      'deleted_tokens': 'Successfully deleted :value tokens',
+      'restored_tokens': 'Successfully restored :value tokens',
       'client_registration': 'Client Registration',
       'client_registration_help':
           'Enable clients to self register in the portal',
@@ -302,6 +324,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_payment_term': 'Successfully deleted payment term',
       'removed_payment_term': 'Successfully removed payment term',
       'restored_payment_term': 'Successfully restored payment term',
+      'archived_payment_terms': 'Successfully archived :value payment terms',
+      'deleted_payment_terms': 'Successfully deleted :value payment terms',
+      'restored_payment_terms': 'Successfully restored :value payment terms',
       'email_sign_in': 'Sign in with email',
       'change': 'Change',
       'change_to_mobile_layout': 'Change to the mobile layout?',
@@ -424,6 +449,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_design': 'Successfully deleted design',
       'removed_design': 'Successfully removed design',
       'restored_design': 'Successfully restored design',
+      'archived_designs': 'Successfully archived :value designs',
+      'deleted_designs': 'Successfully deleted :value designs',
+      'restored_designs': 'Successfully restored :value designs',
       'proposals': 'Proposals',
       'tickets': 'Tickets',
       'recurring_quotes': 'Recurring Quotes',
@@ -441,6 +469,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_credit': 'Successfully deleted credit',
       'removed_credit': 'Successfully removed credit',
       'restored_credit': 'Successfully restored credit',
+      'archived_credits': 'Successfully archived :value credits',
+      'deleted_credits': 'Successfully deleted :value credits',
+      'restored_credits': 'Successfully restored :value credits',
       'current_version': 'Current Version',
       'latest_version': 'Latest Version',
       'update_now': 'Update Now',
@@ -673,6 +704,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_user': 'Successfully deleted user',
       'removed_user': 'Successfully removed user',
       'restored_user': 'Successfully restored user',
+      'archived_users': 'Successfully archived :value users',
+      'deleted_users': 'Successfully deleted :value users',
+      'removed_users': 'Successfully removed :value users',
+      'restored_users': 'Successfully restored :value users',
       'general_settings': 'General Settings',
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
@@ -814,6 +849,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_tax_rate': 'Successfully archived tax rate',
       'deleted_tax_rate': 'Successfully deleted tax rate',
       'restored_tax_rate': 'Successfully restored tax rate',
+      'archived_tax_rates': 'Successfully archived :value tax rates',
+      'deleted_tax_rates': 'Successfully deleted :value tax rates',
+      'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Fill Products',
       'fill_products_help':
           'Selecting a product will automatically fill in the description and cost',
@@ -835,6 +873,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_company_gateway': 'Successfully archived gateway',
       'deleted_company_gateway': 'Successfully deleted gateway',
       'restored_company_gateway': 'Successfully restored gateway',
+      'archived_company_gateways': 'Successfully archived :value gateways',
+      'deleted_company_gateways': 'Successfully deleted :value gateways',
+      'restored_company_gateways': 'Successfully restored :value gateways',
       'continue_editing': 'Continue Editing',
       'discard_changes': 'Discard Changes',
       'default_value': 'Default value',
@@ -881,9 +922,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_group': 'Edit Group',
       'created_group': 'Successfully created group',
       'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
+      'archived_groups': 'Successfully archived :value groups',
+      'deleted_groups': 'Successfully deleted :value groups',
+      'restored_groups': 'Successfully restored :value groups',
       'upload_logo': 'Upload Logo',
       'uploaded_logo': 'Successfully uploaded logo',
       'logo': 'Logo',
@@ -949,6 +990,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_document': 'Successfully archived document',
       'deleted_document': 'Successfully deleted document',
       'restored_document': 'Successfully restored document',
+      'archived_documents': 'Successfully archived :value documents',
+      'deleted_documents': 'Successfully deleted :value documents',
+      'restored_documents': 'Successfully restored :value documents',
       'no_history': 'No History',
       'expense_date': 'Expense Date',
       'pending': 'Pending',
@@ -968,12 +1012,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_vendor': 'Successfully archived vendor',
       'deleted_vendor': 'Successfully deleted vendor',
       'restored_vendor': 'Successfully restored vendor',
+      'archived_vendors': 'Successfully archived :value vendors',
+      'deleted_vendors': 'Successfully deleted :value vendors',
+      'restored_vendors': 'Successfully restored :value vendors',
       'new_expense': 'New Expense',
       'created_expense': 'Successfully created expense',
       'updated_expense': 'Successfully updated expense',
       'archived_expense': 'Successfully archived expense',
       'deleted_expense': 'Successfully deleted expense',
       'restored_expense': 'Successfully restored expense',
+      'archived_expenses': 'Successfully archived :value expenses',
+      'deleted_expenses': 'Successfully deleted :value expenses',
+      'restored_expenses': 'Successfully restored :value expenses',
       'copy_shipping': 'Copy Shipping',
       'copy_billing': 'Copy Billing',
       'design': 'Design',
@@ -1004,6 +1054,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_task': 'Successfully archived task',
       'deleted_task': 'Successfully deleted task',
       'restored_task': 'Successfully restored task',
+      'archived_tasks': 'Successfully archived :value tasks',
+      'deleted_tasks': 'Successfully deleted :value tasks',
+      'restored_tasks': 'Successfully restored :value tasks',
       'please_enter_a_name': 'Please enter a name',
       'budgeted_hours': 'Budgeted Hours',
       'created_project': 'Successfully created project',
@@ -1011,6 +1064,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_project': 'Successfully archived project',
       'deleted_project': 'Successfully deleted project',
       'restored_project': 'Successfully restored project',
+      'archived_projects': 'Successfully archived :value projects',
+      'deleted_projects': 'Successfully deleted :value projects',
+      'restored_projects': 'Successfully restored :value projects',
       'new_project': 'New Project',
       'thank_you_for_using_our_app': 'Thank you for using our app!',
       'if_you_like_it': 'If you like it please',
@@ -1130,6 +1186,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_product': 'Successfully archived product',
       'deleted_product': 'Successfully deleted product',
       'restored_product': 'Successfully restored product',
+      'archived_products': 'Successfully archived :value products',
+      'deleted_products': 'Successfully deleted :value products',
+      'restored_products': 'Successfully restored :value products',
       'product_key': 'Product',
       'notes': 'Notes',
       'cost': 'Cost',
@@ -1139,8 +1198,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_client': 'Successfully created client',
       'updated_client': 'Successfully updated client',
       'archived_client': 'Successfully archived client',
+      'archived_clients': 'Successfully archived :value clients',
       'deleted_client': 'Successfully deleted client',
+      'deleted_clients': 'Successfully deleted :value clients',
       'restored_client': 'Successfully restored client',
+      'restored_clients': 'Successfully restored :value clients',
       'address1': 'Street',
       'address2': 'Apt/Suite',
       'city': 'City',
@@ -1155,6 +1217,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_invoice': 'Successfully archived invoice',
       'deleted_invoice': 'Successfully deleted invoice',
       'restored_invoice': 'Successfully restored invoice',
+      'archived_invoices': 'Successfully archived :value invoices',
+      'deleted_invoices': 'Successfully deleted :value invoices',
+      'restored_invoices': 'Successfully restored :value invoices',
       'emailed_invoice': 'Successfully emailed invoice',
       'emailed_payment': 'Successfully emailed payment',
       'amount': 'Amount',
@@ -1277,6 +1342,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_payment': 'Successfully archived payment',
       'deleted_payment': 'Successfully deleted payment',
       'restored_payment': 'Successfully restored payment',
+      'archived_payments': 'Successfully archived :value payments',
+      'deleted_payments': 'Successfully deleted :value payments',
+      'restored_payments': 'Successfully restored :value payments',
       'quote': 'Quote',
       'quotes': 'Quotes',
       'new_quote': 'New Quote',
@@ -1285,6 +1353,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_quote': 'Successfully archived quote',
       'deleted_quote': 'Successfully deleted quote',
       'restored_quote': 'Successfully restored quote',
+      'archived_quotes': 'Successfully archived :value quotes',
+      'deleted_quotes': 'Successfully deleted :value quotes',
+      'restored_quotes': 'Successfully restored :value quotes',
       'expense': 'Expense',
       'expenses': 'Expenses',
       'vendor': 'Vendor',
@@ -1478,6 +1549,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredProject =>
       _localizedValues[localeCode]['restored_project'] ?? '';
+
+  String get archivedProjects =>
+      _localizedValues[localeCode]['archived_projects'] ?? '';
+
+  String get deletedProjects =>
+      _localizedValues[localeCode]['deleted_projects'] ?? '';
+
+  String get restoredProjects =>
+      _localizedValues[localeCode]['restored_projects'] ?? '';
 
   String get newProject => _localizedValues[localeCode]['new_project'] ?? '';
 
@@ -1760,6 +1840,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredProduct =>
       _localizedValues[localeCode]['restored_product'] ?? '';
 
+  String get archivedProducts =>
+      _localizedValues[localeCode]['archived_products'] ?? '';
+
+  String get deletedProducts =>
+      _localizedValues[localeCode]['deleted_products'] ?? '';
+
+  String get restoredProducts =>
+      _localizedValues[localeCode]['restored_products'] ?? '';
+
   String get newVendor => _localizedValues[localeCode]['new_vendor'] ?? '';
 
   String get createdVendor =>
@@ -1776,6 +1865,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredVendor =>
       _localizedValues[localeCode]['restored_vendor'] ?? '';
+
+  String get archivedVendors =>
+      _localizedValues[localeCode]['archived_vendors'] ?? '';
+
+  String get deletedVendors =>
+      _localizedValues[localeCode]['deleted_vendors'] ?? '';
+
+  String get restoredVendors =>
+      _localizedValues[localeCode]['restored_vendors'] ?? '';
 
   String get document => _localizedValues[localeCode]['document'] ?? '';
 
@@ -1801,6 +1899,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredDocument =>
       _localizedValues[localeCode]['restored_document'] ?? '';
 
+  String get archivedDocuments =>
+      _localizedValues[localeCode]['archived_documents'] ?? '';
+
+  String get deletedDocuments =>
+      _localizedValues[localeCode]['deleted_documents'] ?? '';
+
+  String get restoredDocuments =>
+      _localizedValues[localeCode]['restored_documents'] ?? '';
+
   String get newExpense => _localizedValues[localeCode]['new_expense'] ?? '';
 
   String get createdExpense =>
@@ -1817,6 +1924,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredExpense =>
       _localizedValues[localeCode]['restored_expense'] ?? '';
+
+  String get archivedExpenses =>
+      _localizedValues[localeCode]['archived_expenses'] ?? '';
+
+  String get deletedExpenses =>
+      _localizedValues[localeCode]['deleted_expenses'] ?? '';
+
+  String get restoredExpenses =>
+      _localizedValues[localeCode]['restored_expenses'] ?? '';
 
   String get productKey => _localizedValues[localeCode]['product_key'] ?? '';
 
@@ -1844,6 +1960,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredClient =>
       _localizedValues[localeCode]['restored_client'] ?? '';
+
+  String get archivedClients =>
+      _localizedValues[localeCode]['archived_clients'] ?? '';
+
+  String get deletedClients =>
+      _localizedValues[localeCode]['deleted_clients'] ?? '';
+
+  String get restoredClients =>
+      _localizedValues[localeCode]['restored_clients'] ?? '';
 
   String get address1 => _localizedValues[localeCode]['address1'] ?? '';
 
@@ -1877,6 +2002,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredInvoice =>
       _localizedValues[localeCode]['restored_invoice'] ?? '';
+
+  String get archivedInvoices =>
+      _localizedValues[localeCode]['archived_invoices'] ?? '';
+
+  String get deletedInvoices =>
+      _localizedValues[localeCode]['deleted_invoices'] ?? '';
+
+  String get restoredInvoices =>
+      _localizedValues[localeCode]['restored_invoices'] ?? '';
 
   String get emailedInvoice =>
       _localizedValues[localeCode]['emailed_invoice'] ?? '';
@@ -2159,6 +2293,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredPayment =>
       _localizedValues[localeCode]['restored_payment'] ?? '';
 
+  String get archivedPayments =>
+      _localizedValues[localeCode]['archived_payments'] ?? '';
+
+  String get deletedPayments =>
+      _localizedValues[localeCode]['deleted_payments'] ?? '';
+
+  String get restoredPayments =>
+      _localizedValues[localeCode]['restored_payments'] ?? '';
+
   String get quote => _localizedValues[localeCode]['quote'] ?? '';
 
   String get quotes => _localizedValues[localeCode]['quotes'] ?? '';
@@ -2179,6 +2322,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredQuote =>
       _localizedValues[localeCode]['restored_quote'] ?? '';
+
+  String get archivedQuotes =>
+      _localizedValues[localeCode]['archived_quotes'] ?? '';
+
+  String get deletedQuotes =>
+      _localizedValues[localeCode]['deleted_quotes'] ?? '';
+
+  String get restoredQuotes =>
+      _localizedValues[localeCode]['restored_quotes'] ?? '';
 
   String get expense => _localizedValues[localeCode]['expense'] ?? '';
 
@@ -2348,6 +2500,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredTask =>
       _localizedValues[localeCode]['restored_task'] ?? '';
+
+  String get archivedTasks =>
+      _localizedValues[localeCode]['archived_tasks'] ?? '';
+
+  String get deletedTasks =>
+      _localizedValues[localeCode]['deleted_tasks'] ?? '';
+
+  String get restoredTasks =>
+      _localizedValues[localeCode]['restored_tasks'] ?? '';
 
   String get newTask => _localizedValues[localeCode]['new_task'] ?? '';
 
@@ -2603,6 +2764,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredGroup =>
       _localizedValues[localeCode]['restored_group'] ?? '';
 
+  String get archivedGroups =>
+      _localizedValues[localeCode]['archived_groups'] ?? '';
+
+  String get deletedGroups =>
+      _localizedValues[localeCode]['deleted_groups'] ?? '';
+
+  String get restoredGroups =>
+      _localizedValues[localeCode]['restored_groups'] ?? '';
+
   String get editGroup => _localizedValues[localeCode]['edit_group'] ?? '';
 
   String get groups => _localizedValues[localeCode]['groups'] ?? '';
@@ -2726,6 +2896,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredCompanyGateway =>
       _localizedValues[localeCode]['restored_company_gateway'] ?? '';
 
+  String get archivedCompanyGateways =>
+      _localizedValues[localeCode]['archived_company_gateways'] ?? '';
+
+  String get deletedCompanyGateways =>
+      _localizedValues[localeCode]['deleted_company_gateways'] ?? '';
+
+  String get restoredCompanyGateways =>
+      _localizedValues[localeCode]['restored_company_gateways'] ?? '';
+
   String get companyGateways =>
       _localizedValues[localeCode]['company_gateways'] ?? '';
 
@@ -2772,6 +2951,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredTaxRate =>
       _localizedValues[localeCode]['restored_tax_rate'] ?? '';
+
+  String get archivedTaxRates =>
+      _localizedValues[localeCode]['archived_tax_rates'] ?? '';
+
+  String get deletedTaxRates =>
+      _localizedValues[localeCode]['deleted_tax_rates'] ?? '';
+
+  String get restoredTaxRates =>
+      _localizedValues[localeCode]['restored_tax_rates'] ?? '';
 
   String get editTaxRate => _localizedValues[localeCode]['edit_tax_rate'] ?? '';
 
@@ -3112,6 +3300,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredUser =>
       _localizedValues[localeCode]['restored_user'] ?? '';
+
+  String get archivedUsers =>
+      _localizedValues[localeCode]['archived_users'] ?? '';
+
+  String get deletedUsers =>
+      _localizedValues[localeCode]['deleted_users'] ?? '';
+
+  String get removedUsers =>
+      _localizedValues[localeCode]['removed_users'] ?? '';
+
+  String get restoredUsers =>
+      _localizedValues[localeCode]['restored_users'] ?? '';
 
   String get editUser => _localizedValues[localeCode]['edit_user'] ?? '';
 
@@ -3775,6 +3975,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredTaskStatus =>
       _localizedValues[localeCode]['restored_task_status'];
 
+  String get archivedTaskStatuses =>
+      _localizedValues[localeCode]['archived_task_statuses'];
+
+  String get deletedTaskStatuses =>
+      _localizedValues[localeCode]['deleted_task_statuses'];
+
+  String get restoredTaskStatuses =>
+      _localizedValues[localeCode]['restored_task_statuses'];
+
   String get editTaskStatus => _localizedValues[localeCode]['edit_task_status'];
 
   String get searchTaskStatus =>
@@ -3803,6 +4012,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredExpenseCategory =>
       _localizedValues[localeCode]['restored_expense_category'];
+
+  String get archivedExpenseCategories =>
+      _localizedValues[localeCode]['archived_expense_categories'];
+
+  String get deletedExpenseCategories =>
+      _localizedValues[localeCode]['deleted_expense_categories'];
+
+  String get restoredExpenseCategories =>
+      _localizedValues[localeCode]['restored_expense_categories'];
 
   String get editExpenseCategory =>
       _localizedValues[localeCode]['edit_expense_category'];
@@ -3833,6 +4051,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredRecurringInvoice =>
       _localizedValues[localeCode]['restored_recurring_invoice'];
+
+  String get archivedRecurringInvoices =>
+      _localizedValues[localeCode]['archived_recurring_invoices'];
+
+  String get deletedRecurringInvoices =>
+      _localizedValues[localeCode]['deleted_recurring_invoices'];
+
+  String get restoredRecurringInvoices =>
+      _localizedValues[localeCode]['restored_recurring_invoices'];
 
   String get stoppedRecurringInvoice =>
       _localizedValues[localeCode]['stopped_recurring_invoice'];
@@ -3867,6 +4094,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredWebhook =>
       _localizedValues[localeCode]['restored_webhook'] ?? '';
 
+  String get archivedWebhooks =>
+      _localizedValues[localeCode]['archived_webhooks'] ?? '';
+
+  String get deletedWebhooks =>
+      _localizedValues[localeCode]['deleted_webhooks'] ?? '';
+
+  String get restoredWebhooks =>
+      _localizedValues[localeCode]['restored_webhooks'] ?? '';
+
   String get editWebhook => _localizedValues[localeCode]['edit_webhook'] ?? '';
 
   String get token => _localizedValues[localeCode]['token'] ?? '';
@@ -3890,6 +4126,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredToken =>
       _localizedValues[localeCode]['restored_token'] ?? '';
 
+  String get archivedTokens =>
+      _localizedValues[localeCode]['archived_tokens'] ?? '';
+
+  String get deletedTokens =>
+      _localizedValues[localeCode]['deleted_tokens'] ?? '';
+
+  String get restoredTokens =>
+      _localizedValues[localeCode]['restored_tokens'] ?? '';
+
   String get editToken => _localizedValues[localeCode]['edit_token'] ?? '';
 
   String get paymentTerm => _localizedValues[localeCode]['payment_term'] ?? '';
@@ -3911,6 +4156,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredPaymentTerm =>
       _localizedValues[localeCode]['restored_payment_term'] ?? '';
+
+  String get archivedPaymentTerms =>
+      _localizedValues[localeCode]['archived_payment_terms'] ?? '';
+
+  String get deletedPaymentTerms =>
+      _localizedValues[localeCode]['deleted_payment_terms'] ?? '';
+
+  String get restoredPaymentTerms =>
+      _localizedValues[localeCode]['restored_payment_terms'] ?? '';
 
   String get editPaymentTerm =>
       _localizedValues[localeCode]['edit_payment_term'] ?? '';
@@ -3934,6 +4188,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredDesign =>
       _localizedValues[localeCode]['restored_design'] ?? '';
 
+  String get archivedDesigns =>
+      _localizedValues[localeCode]['archived_designs'] ?? '';
+
+  String get deletedDesigns =>
+      _localizedValues[localeCode]['deleted_designs'] ?? '';
+
+  String get restoredDesigns =>
+      _localizedValues[localeCode]['restored_designs'] ?? '';
+
   String get editDesign => _localizedValues[localeCode]['edit_design'] ?? '';
 
   String get newCredit => _localizedValues[localeCode]['new_credit'] ?? '';
@@ -3952,6 +4215,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredCredit =>
       _localizedValues[localeCode]['restored_credit'] ?? '';
+
+  String get archivedCredits =>
+      _localizedValues[localeCode]['archived_credits'] ?? '';
+
+  String get deletedCredits =>
+      _localizedValues[localeCode]['deleted_credits'] ?? '';
+
+  String get restoredCredits =>
+      _localizedValues[localeCode]['restored_credits'] ?? '';
 
   String get creditDate => _localizedValues[localeCode]['credit_date'] ?? '';
 

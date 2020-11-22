@@ -472,22 +472,28 @@ void handleRecurringInvoiceAction(BuildContext context,
       ));
       break;
     case EntityAction.restore:
+      final message = recurringInvoiceIds.length > 1
+          ? localization.restoredRecurringInvoices
+              .replaceFirst(':value', recurringInvoiceIds.length.toString())
+          : localization.restoredRecurringInvoice;
       store.dispatch(RestoreRecurringInvoicesRequest(
-          snackBarCompleter<Null>(
-              context, localization.restoredRecurringInvoice),
-          recurringInvoiceIds));
+          snackBarCompleter<Null>(context, message), recurringInvoiceIds));
       break;
     case EntityAction.archive:
+      final message = recurringInvoiceIds.length > 1
+          ? localization.archivedRecurringInvoices
+              .replaceFirst(':value', recurringInvoiceIds.length.toString())
+          : localization.archivedRecurringInvoice;
       store.dispatch(ArchiveRecurringInvoicesRequest(
-          snackBarCompleter<Null>(
-              context, localization.archivedRecurringInvoice),
-          recurringInvoiceIds));
+          snackBarCompleter<Null>(context, message), recurringInvoiceIds));
       break;
     case EntityAction.delete:
+      final message = recurringInvoiceIds.length > 1
+          ? localization.deletedRecurringInvoices
+              .replaceFirst(':value', recurringInvoiceIds.length.toString())
+          : localization.deletedRecurringInvoice;
       store.dispatch(DeleteRecurringInvoicesRequest(
-          snackBarCompleter<Null>(
-              context, localization.deletedRecurringInvoice),
-          recurringInvoiceIds));
+          snackBarCompleter<Null>(context, message), recurringInvoiceIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.recurringInvoiceListState.isInMultiselect()) {

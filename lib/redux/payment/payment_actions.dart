@@ -357,18 +357,30 @@ void handlePaymentAction(
           payment));
       break;
     case EntityAction.restore:
+      final message = paymentIds.length > 1
+          ? localization.restoredPayments
+          .replaceFirst(':value', paymentIds.length.toString())
+          : localization.restoredPayment;
       store.dispatch(RestorePaymentsRequest(
-          snackBarCompleter<Null>(context, localization.restoredPayment),
+          snackBarCompleter<Null>(context, message),
           paymentIds));
       break;
     case EntityAction.archive:
+      final message = paymentIds.length > 1
+          ? localization.archivedPayments
+          .replaceFirst(':value', paymentIds.length.toString())
+          : localization.archivedPayment;
       store.dispatch(ArchivePaymentsRequest(
-          snackBarCompleter<Null>(context, localization.archivedPayment),
+          snackBarCompleter<Null>(context, message),
           paymentIds));
       break;
     case EntityAction.delete:
+      final message = paymentIds.length > 1
+          ? localization.deletedPayments
+          .replaceFirst(':value', paymentIds.length.toString())
+          : localization.deletedPayment;
       store.dispatch(DeletePaymentsRequest(
-          snackBarCompleter<Null>(context, localization.deletedPayment),
+          snackBarCompleter<Null>(context, message),
           paymentIds));
       break;
     case EntityAction.toggleMultiselect:

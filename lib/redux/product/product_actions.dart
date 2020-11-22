@@ -281,19 +281,28 @@ void handleProductAction(
       createEntity(context: context, entity: (product as ProductEntity).clone);
       break;
     case EntityAction.restore:
+      final message = productIds.length > 1
+          ? localization.restoredProducts
+              .replaceFirst(':value', productIds.length.toString())
+          : localization.restoredProduct;
       store.dispatch(RestoreProductsRequest(
-          snackBarCompleter<Null>(context, localization.restoredProduct),
-          productIds));
+          snackBarCompleter<Null>(context, message), productIds));
       break;
     case EntityAction.archive:
+      final message = productIds.length > 1
+          ? localization.archivedProducts
+              .replaceFirst(':value', productIds.length.toString())
+          : localization.archivedProduct;
       store.dispatch(ArchiveProductsRequest(
-          snackBarCompleter<Null>(context, localization.archivedProduct),
-          productIds));
+          snackBarCompleter<Null>(context, message), productIds));
       break;
     case EntityAction.delete:
+      final message = productIds.length > 1
+          ? localization.deletedProducts
+              .replaceFirst(':value', productIds.length.toString())
+          : localization.deletedProduct;
       store.dispatch(DeleteProductsRequest(
-          snackBarCompleter<Null>(context, localization.deletedProduct),
-          productIds));
+          snackBarCompleter<Null>(context, message), productIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {

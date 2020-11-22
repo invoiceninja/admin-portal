@@ -342,9 +342,12 @@ void handleUserAction(
       );
       break;
     case EntityAction.restore:
+      final message = userIds.length > 1
+          ? localization.restoredUsers
+              .replaceFirst(':value', userIds.length.toString())
+          : localization.restoredUser;
       final dispatch = ([String password]) => store.dispatch(RestoreUserRequest(
-          completer:
-              snackBarCompleter<Null>(context, localization.restoredUser),
+          completer: snackBarCompleter<Null>(context, message),
           userIds: userIds,
           password: password));
       passwordCallback(
@@ -354,9 +357,12 @@ void handleUserAction(
           });
       break;
     case EntityAction.archive:
+      final message = userIds.length > 1
+          ? localization.archivedUsers
+              .replaceFirst(':value', userIds.length.toString())
+          : localization.archivedUser;
       final dispatch = ([String password]) => store.dispatch(ArchiveUserRequest(
-          completer:
-              snackBarCompleter<Null>(context, localization.archivedUser),
+          completer: snackBarCompleter<Null>(context, message),
           userIds: userIds,
           password: password));
       passwordCallback(
@@ -366,8 +372,12 @@ void handleUserAction(
           });
       break;
     case EntityAction.delete:
+      final message = userIds.length > 1
+          ? localization.deletedUsers
+              .replaceFirst(':value', userIds.length.toString())
+          : localization.deletedUser;
       final dispatch = ([String password]) => store.dispatch(DeleteUserRequest(
-          completer: snackBarCompleter<Null>(context, localization.deletedUser),
+          completer: snackBarCompleter<Null>(context, message),
           userIds: userIds,
           password: password));
       passwordCallback(
@@ -377,8 +387,12 @@ void handleUserAction(
           });
       break;
     case EntityAction.remove:
+      final message = userIds.length > 1
+          ? localization.removedUsers
+              .replaceFirst(':value', userIds.length.toString())
+          : localization.removedUser;
       final dispatch = ([String password]) => store.dispatch(RemoveUserRequest(
-          completer: snackBarCompleter<Null>(context, localization.removedUser),
+          completer: snackBarCompleter<Null>(context, message),
           userId: user.id,
           password: password));
       confirmCallback(

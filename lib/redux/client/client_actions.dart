@@ -366,19 +366,28 @@ void handleClientAction(
       );
       break;
     case EntityAction.restore:
+      final message = clientIds.length > 1
+          ? localization.restoredClients
+              .replaceFirst(':value', clientIds.length.toString())
+          : localization.restoredClient;
       store.dispatch(RestoreClientsRequest(
-          snackBarCompleter<Null>(context, localization.restoredClient),
-          clientIds));
+          snackBarCompleter<Null>(context, message), clientIds));
       break;
     case EntityAction.archive:
+      final message = clientIds.length > 1
+          ? localization.archivedClients
+              .replaceFirst(':value', clientIds.length.toString())
+          : localization.archivedClient;
       store.dispatch(ArchiveClientsRequest(
-          snackBarCompleter<Null>(context, localization.archivedClient),
-          clientIds));
+          snackBarCompleter<Null>(context, message), clientIds));
       break;
     case EntityAction.delete:
+      final message = clientIds.length > 1
+          ? localization.deletedClients
+              .replaceFirst(':value', clientIds.length.toString())
+          : localization.deletedClient;
       store.dispatch(DeleteClientsRequest(
-          snackBarCompleter<Null>(context, localization.deletedClient),
-          clientIds));
+          snackBarCompleter<Null>(context, message), clientIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.clientListState.isInMultiselect()) {

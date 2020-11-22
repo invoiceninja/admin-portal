@@ -346,18 +346,28 @@ void handleTaskAction(
       createEntity(context: context, entity: task.clone);
       break;
     case EntityAction.restore:
+      final message = taskIds.length > 1
+          ? localization.restoredTasks
+              .replaceFirst(':value', taskIds.length.toString())
+          : localization.restoredTask;
       store.dispatch(RestoreTaskRequest(
-          snackBarCompleter<Null>(context, localization.restoredTask),
-          taskIds));
+          snackBarCompleter<Null>(context, message), taskIds));
       break;
     case EntityAction.archive:
+      final message = taskIds.length > 1
+          ? localization.archivedTasks
+              .replaceFirst(':value', taskIds.length.toString())
+          : localization.archivedTask;
       store.dispatch(ArchiveTaskRequest(
-          snackBarCompleter<Null>(context, localization.archivedTask),
-          taskIds));
+          snackBarCompleter<Null>(context, message), taskIds));
       break;
     case EntityAction.delete:
+      final message = taskIds.length > 1
+          ? localization.deletedTasks
+              .replaceFirst(':value', taskIds.length.toString())
+          : localization.deletedTask;
       store.dispatch(DeleteTaskRequest(
-          snackBarCompleter<Null>(context, localization.deletedTask), taskIds));
+          snackBarCompleter<Null>(context, message), taskIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskListState.isInMultiselect()) {

@@ -501,18 +501,30 @@ Future handleCreditAction(
       );
       break;
     case EntityAction.restore:
+      final message = creditIds.length > 1
+          ? localization.restoredCredits
+          .replaceFirst(':value', creditIds.length.toString())
+          : localization.restoredCredit;
       store.dispatch(RestoreCreditsRequest(
-          snackBarCompleter<Null>(context, localization.restoredCredit),
+          snackBarCompleter<Null>(context, message),
           creditIds));
       break;
     case EntityAction.archive:
+      final message = creditIds.length > 1
+          ? localization.archivedCredits
+          .replaceFirst(':value', creditIds.length.toString())
+          : localization.archivedCredit;
       store.dispatch(ArchiveCreditsRequest(
-          snackBarCompleter<Null>(context, localization.archivedCredit),
+          snackBarCompleter<Null>(context, message),
           creditIds));
       break;
     case EntityAction.delete:
+      final message = creditIds.length > 1
+          ? localization.deletedCredits
+          .replaceFirst(':value', creditIds.length.toString())
+          : localization.deletedCredit;
       store.dispatch(DeleteCreditsRequest(
-          snackBarCompleter<Null>(context, localization.deletedCredit),
+          snackBarCompleter<Null>(context, message),
           creditIds));
       break;
     case EntityAction.toggleMultiselect:
