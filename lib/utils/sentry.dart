@@ -45,10 +45,15 @@ Future<Event> getSentryEvent(
     }
   }
 
+  String environment = 'Unknown';
+  if (state != null) {
+    environment = '${state.environment}'.split('.').last;
+  }
+
   return Event(
     release: state?.appVersion ?? kClientVersion,
     //release: packageInfo.version,
-    environment: state?.environment ?? 'Unknown',
+    environment: environment,
     stackTrace: stackTrace,
     exception: exception,
     extra: <String, dynamic>{

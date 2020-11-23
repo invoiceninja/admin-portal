@@ -60,7 +60,7 @@ dependencies:
   flutter_styled_toast: ^1.4.0+1
   permission_handler: ^5.0.1+1
   contacts_service: ^0.4.6
-  #extended_image: 1.3.1-dev #TODO remove
+  extended_image: 1.3.1-dev #TODO remove
 
 dev_dependencies:
   flutter_driver:
