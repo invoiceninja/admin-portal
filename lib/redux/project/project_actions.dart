@@ -267,6 +267,7 @@ void handleProjectAction(
   final project = projects.first as ProjectEntity;
   final projectIds = projects.map((project) => project.id).toList();
   final client = state.clientState.get(project.clientId);
+  final localization = AppLocalization.of(context);
 
   switch (action) {
     case EntityAction.edit:
@@ -298,22 +299,28 @@ void handleProjectAction(
       createEntity(context: context, entity: project.clone);
       break;
     case EntityAction.restore:
+      final message = projectIds.length > 1
+          ? localization.restoredProjects
+              .replaceFirst(':value', projectIds.length.toString())
+          : localization.restoredProject;
       store.dispatch(RestoreProjectRequest(
-          snackBarCompleter<Null>(
-              context, AppLocalization.of(context).restoredProject),
-          projectIds));
+          snackBarCompleter<Null>(context, message), projectIds));
       break;
     case EntityAction.archive:
+      final message = projectIds.length > 1
+          ? localization.archivedProjects
+              .replaceFirst(':value', projectIds.length.toString())
+          : localization.archivedProject;
       store.dispatch(ArchiveProjectRequest(
-          snackBarCompleter<Null>(
-              context, AppLocalization.of(context).archivedProject),
-          projectIds));
+          snackBarCompleter<Null>(context, message), projectIds));
       break;
     case EntityAction.delete:
+      final message = projectIds.length > 1
+          ? localization.deletedProjects
+              .replaceFirst(':value', projectIds.length.toString())
+          : localization.deletedProject;
       store.dispatch(DeleteProjectRequest(
-          snackBarCompleter<Null>(
-              context, AppLocalization.of(context).deletedProject),
-          projectIds));
+          snackBarCompleter<Null>(context, message), projectIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.projectListState.isInMultiselect()) {

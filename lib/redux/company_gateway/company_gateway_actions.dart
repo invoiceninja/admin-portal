@@ -261,19 +261,28 @@ void handleCompanyGatewayAction(BuildContext context,
       editEntity(context: context, entity: companyGateway);
       break;
     case EntityAction.restore:
+      final message = companyGatewayIds.length > 1
+          ? localization.restoredCompanyGateways
+              .replaceFirst(':value', companyGatewayIds.length.toString())
+          : localization.restoredCompanyGateway;
       store.dispatch(RestoreCompanyGatewayRequest(
-          snackBarCompleter<Null>(context, localization.restoredCompanyGateway),
-          companyGatewayIds));
+          snackBarCompleter<Null>(context, message), companyGatewayIds));
       break;
     case EntityAction.archive:
+      final message = companyGatewayIds.length > 1
+          ? localization.archivedCompanyGateways
+              .replaceFirst(':value', companyGatewayIds.length.toString())
+          : localization.archivedCompanyGateway;
       store.dispatch(ArchiveCompanyGatewayRequest(
-          snackBarCompleter<Null>(context, localization.archivedCompanyGateway),
-          companyGatewayIds));
+          snackBarCompleter<Null>(context, message), companyGatewayIds));
       break;
     case EntityAction.delete:
+      final message = companyGatewayIds.length > 1
+          ? localization.deletedCompanyGateways
+              .replaceFirst(':value', companyGatewayIds.length.toString())
+          : localization.deletedCompanyGateway;
       store.dispatch(DeleteCompanyGatewayRequest(
-          snackBarCompleter<Null>(context, localization.deletedCompanyGateway),
-          companyGatewayIds));
+          snackBarCompleter<Null>(context, message), companyGatewayIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.companyGatewayListState.isInMultiselect()) {

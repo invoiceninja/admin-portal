@@ -513,19 +513,28 @@ Future handleQuoteAction(
               .rebuild((b) => b..entityType = EntityType.recurringInvoice));
       break;
     case EntityAction.restore:
+      final message = quoteIds.length > 1
+          ? localization.restoredQuotes
+              .replaceFirst(':value', quoteIds.length.toString())
+          : localization.restoredQuote;
       store.dispatch(RestoreQuotesRequest(
-          snackBarCompleter<Null>(context, localization.restoredQuote),
-          quoteIds));
+          snackBarCompleter<Null>(context, message), quoteIds));
       break;
     case EntityAction.archive:
+      final message = quoteIds.length > 1
+          ? localization.archivedQuotes
+              .replaceFirst(':value', quoteIds.length.toString())
+          : localization.archivedQuote;
       store.dispatch(ArchiveQuotesRequest(
-          snackBarCompleter<Null>(context, localization.archivedQuote),
-          quoteIds));
+          snackBarCompleter<Null>(context, message), quoteIds));
       break;
     case EntityAction.delete:
+      final message = quoteIds.length > 1
+          ? localization.deletedQuotes
+              .replaceFirst(':value', quoteIds.length.toString())
+          : localization.deletedQuote;
       store.dispatch(DeleteQuotesRequest(
-          snackBarCompleter<Null>(context, localization.deletedQuote),
-          quoteIds));
+          snackBarCompleter<Null>(context, message), quoteIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.quoteListState.isInMultiselect()) {

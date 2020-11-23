@@ -283,21 +283,28 @@ void handleExpenseCategoryAction(BuildContext context,
       editEntity(context: context, entity: expenseCategory);
       break;
     case EntityAction.restore:
+      final message = expenseCategoryIds.length > 1
+          ? localization.restoredExpenseCategories
+              .replaceFirst(':value', expenseCategoryIds.length.toString())
+          : localization.restoredExpenseCategory;
       store.dispatch(RestoreExpenseCategoriesRequest(
-          snackBarCompleter<Null>(
-              context, localization.restoredExpenseCategory),
-          expenseCategoryIds));
+          snackBarCompleter<Null>(context, message), expenseCategoryIds));
       break;
     case EntityAction.archive:
+      final message = expenseCategoryIds.length > 1
+          ? localization.archivedExpenseCategories
+              .replaceFirst(':value', expenseCategoryIds.length.toString())
+          : localization.archivedExpenseCategory;
       store.dispatch(ArchiveExpenseCategoriesRequest(
-          snackBarCompleter<Null>(
-              context, localization.archivedExpenseCategory),
-          expenseCategoryIds));
+          snackBarCompleter<Null>(context, message), expenseCategoryIds));
       break;
     case EntityAction.delete:
+      final message = expenseCategoryIds.length > 1
+          ? localization.deletedExpenseCategories
+              .replaceFirst(':value', expenseCategoryIds.length.toString())
+          : localization.deletedExpenseCategory;
       store.dispatch(DeleteExpenseCategoriesRequest(
-          snackBarCompleter<Null>(context, localization.deletedExpenseCategory),
-          expenseCategoryIds));
+          snackBarCompleter<Null>(context, message), expenseCategoryIds));
       break;
     case EntityAction.newExpense:
       createEntity(
