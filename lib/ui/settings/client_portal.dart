@@ -253,7 +253,6 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalDashboard = value)),
                   ),
-                  /* Re-enable with tasks
                   BoolDropdownButton(
                     label: localization.tasks,
                     value: settings.enablePortalTasks,
@@ -261,7 +260,6 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enablePortalTasks = value)),
                   ),
-                   */
                 ],
               ),
               FormCard(
