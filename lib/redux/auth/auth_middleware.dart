@@ -193,7 +193,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final action = dynamicAction as RefreshData;
     final state = store.state;
 
-    if (state.isSaving || state.isLoading) {
+    if (state.isSaving ||
+        state.isLoading ||
+        (state.company.isLarge && !state.isLoaded)) {
       next(action);
       return;
     }
