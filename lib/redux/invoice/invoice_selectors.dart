@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -214,6 +215,12 @@ EntityStats invoiceStatsForUser(
   });
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+int precisionForInvoice(AppState state, InvoiceEntity invoice) {
+  final client = state.clientState.get(invoice.clientId);
+  final currency = state.staticState.currencyMap[client.currencyId];
+  return currency.precision;
 }
 
 bool hasInvoiceChanges(

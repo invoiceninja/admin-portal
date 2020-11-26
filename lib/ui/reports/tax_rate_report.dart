@@ -76,7 +76,8 @@ ReportResult taxRateReport(
     //final invoiceTaxAmount = invoice.calculateTaxes(invoice.usesInclusiveTaxes);
     final invoicePaidAmount = invoice.amount - invoice.balance;
 
-    final taxes = invoice.getTaxes();
+    final precision = staticState.currencyMap[client.currencyId].precision;
+    final taxes = invoice.getTaxes(precision);
     for (final key in taxes.keys) {
       bool skip = false;
       final List<ReportElement> row = [];

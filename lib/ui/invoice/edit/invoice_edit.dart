@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
@@ -147,7 +148,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '${localization.lookup('${invoice.entityType}_total')}: ${formatNumber(invoice.calculateTotal, context, clientId: viewModel.invoice.clientId)}',
+                  '${localization.lookup('${invoice.entityType}_total')}: ${formatNumber(invoice.calculateTotal(precision: precisionForInvoice(state, invoice)), context, clientId: viewModel.invoice.clientId)}',
                   style: TextStyle(
                     //color: Theme.of(context).selectedRowColor,
                     color: state.prefState.enableDarkMode

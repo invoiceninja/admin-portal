@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
@@ -646,8 +647,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         ),
                         textAlign: TextAlign.end,
                         key: ValueKey(
-                            '__invoice_subtotal_${invoice.subtotal}_${invoice.clientId}__'),
-                        initialValue: formatNumber(invoice.subtotal, context,
+                            '__invoice_subtotal_${invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
+                        initialValue: formatNumber(invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice)), context,
                             clientId: invoice.clientId),
                       ),
                       if (invoice.isOld)
@@ -710,9 +711,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         ),
                         textAlign: TextAlign.end,
                         key: ValueKey(
-                            '__invoice_total_${invoice.calculateTotal}_${invoice.clientId}__'),
+                            '__invoice_total_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
                         initialValue: formatNumber(
-                            invoice.calculateTotal - invoice.paidToDate, context,
+                            invoice.calculateTotal(precision: precisionForInvoice(state, invoice)) - invoice.paidToDate, context,
                             clientId: invoice.clientId),
                       ),
                       if (invoice.partial != 0)
