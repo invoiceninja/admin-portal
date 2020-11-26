@@ -818,12 +818,81 @@ void _showAbout(BuildContext context) async {
           ),
         ),
       ),
-      //if (!state.isProduction) // TODO enable this check
       Padding(
         padding: const EdgeInsets.only(top: 30),
         child: AppButton(
+          label: localization.appPlatforms.toUpperCase(),
+          iconData: MdiIcons.desktopMac,
+          onPressed: () {
+            showDialog<AlertDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    actions: [
+                      FlatButton(
+                        child: Text(localization.close.toUpperCase()),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text('Mobile'),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: AppButton(
+                            label: 'Apple',
+                            iconData: MdiIcons.appleIos,
+                            onPressed: () => launch(kAppleStoreUrl),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: AppButton(
+                            label: 'Android',
+                            iconData: MdiIcons.android,
+                            onPressed: () => launch(kGoogleStoreUrl),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: Text('Desktop'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: AppButton(
+                            label: 'Apple',
+                            iconData: MdiIcons.apple,
+                            onPressed: () => launch(kMacOSUrl),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: AppButton(
+                            label: 'Linux',
+                            iconData: MdiIcons.linux,
+                            onPressed: () => launch(kLinuxUrl),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Text('Windows coming soon...'),
+                        ),
+                      ],
+                    ),
+                  );
+                });
+          },
+        ),
+      ),
+      //if (!state.isProduction) // TODO enable this check
+      Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: AppButton(
           label: localization.healthCheck.toUpperCase(),
           iconData: MdiIcons.shield,
+          color: Colors.green,
           onPressed: () {
             showDialog<HealthCheckDialog>(
                 context: context,
@@ -838,7 +907,7 @@ void _showAbout(BuildContext context) async {
         child: AppButton(
           label: localization.forceUpdate.toUpperCase(),
           iconData: MdiIcons.update,
-          color: Colors.grey,
+          color: Colors.orange,
           onPressed: () => _showUpdate(context),
         ),
       ),
