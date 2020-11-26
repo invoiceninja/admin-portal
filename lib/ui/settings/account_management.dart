@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AccountManagement extends StatefulWidget {
@@ -257,6 +258,25 @@ class _AccountOverview extends StatelessWidget {
                       section: kSettingsWebhooks,
                     ));
                   },
+                ),
+              ),
+            ])),
+        Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(children: [
+              Expanded(
+                child: AppButton(
+                  label: localization.apiDocs.toUpperCase(),
+                  iconData: MdiIcons.bookshelf,
+                  onPressed: () => launch(kApiDocsURL),
+                ),
+              ),
+              SizedBox(width: kGutterWidth),
+              Expanded(
+                child: AppButton(
+                  label: 'Zapier',
+                  iconData: MdiIcons.cloud,
+                  onPressed: () => launch(kZapierURL),
                 ),
               ),
             ])),

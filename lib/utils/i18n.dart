@@ -283,6 +283,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'removed_webhooks': 'Successfully removed :value webhooks',
       'restored_webhooks': 'Successfully restored :value webhooks',
       'api_tokens': 'API Tokens',
+      'api_docs': 'API Docs',
       'search_tokens': 'Search :count Tokens',
       'search_token': 'Search 1 Token',
       'token': 'Token',
@@ -4689,6 +4690,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['search_webhooks'] ?? '';
 
   String get apiTokens => _localizedValues[localeCode]['api_tokens'] ?? '';
+
+  String get apiDocs => _localizedValues[localeCode]['api_docs'] ?? '';
 
   String get apiWebhooks => _localizedValues[localeCode]['api_webhooks'] ?? '';
 

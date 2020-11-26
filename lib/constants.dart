@@ -36,6 +36,9 @@ const String kGoogleStoreUrl = 'https://play.google.com/apps/testing/com.invoice
 const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
 const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
 
+const String kApiDocsURL = 'https://app.swaggerhub.com/apis/invoiceninja/invoiceninja';
+const String kZapierURL = 'https://zapier.com/developer/public-invite/95884/5e4368b9efb9d377dc0a0b0465b7c1a7';
+
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
