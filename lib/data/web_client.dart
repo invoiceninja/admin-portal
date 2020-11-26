@@ -196,7 +196,7 @@ void _checkResponse(http.Response response) {
 
   if (response.statusCode >= 400) {
     print('==== FAILED ====');
-    throw _parseError(response.statusCode, 'Error: ${response.body}');
+    throw _parseError(response.statusCode, response.body);
   } else if (serverVersion == null) {
     throw 'Error: please check that Invoice Ninja v5 is installed on the server';
   } else if (Version.parse(kClientVersion) < Version.parse(minClientVersion)) {
