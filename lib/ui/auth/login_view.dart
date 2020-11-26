@@ -446,17 +446,12 @@ class _LoginState extends State<LoginView> {
                                 keyboardType: TextInputType.url,
                               ),
                             if (_isSelfHosted)
-                              TextFormField(
+                              PasswordFormField(
+                                labelText:
+                                    '${localization.secret} (${localization.optional})',
                                 controller: _secretController,
                                 textInputAction: TextInputAction.done,
-                                autocorrect: false,
-                                decoration: InputDecoration(
-                                    labelText:
-                                        '${localization.secret} (${localization.optional})'),
-                                obscureText: true,
-                                keyboardType: TextInputType.visiblePassword,
-                                onFieldSubmitted: (String value) =>
-                                    FocusScope.of(context).nextFocus(),
+                                autoValidate: _autoValidate,
                               ),
                             if (_createAccount)
                               Padding(
