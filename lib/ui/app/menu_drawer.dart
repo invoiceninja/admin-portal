@@ -830,6 +830,56 @@ void _showAbout(BuildContext context) async {
                   return AlertDialog(
                     actions: [
                       FlatButton(
+                        child: Text(localization.sourceCode.toUpperCase()),
+                        onPressed: () {
+                          showDialog<AlertDialog>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                actions: [
+                                  FlatButton(
+                                    child:
+                                        Text(localization.close.toUpperCase()),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  ),
+                                ],
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text('Backend'),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: AppButton(
+                                        label: 'Laravel/PHP',
+                                        iconData: MdiIcons.server,
+                                        onPressed: () =>
+                                            launch(kSourceCodeBackend),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 30),
+                                      child: Text('Frontend'),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: AppButton(
+                                        label: 'Flutter/Dart',
+                                        iconData: MdiIcons.desktopClassic,
+                                        onPressed: () =>
+                                            launch(kSourceCodeFrontend),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      FlatButton(
                         child: Text(localization.close.toUpperCase()),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
@@ -838,27 +888,7 @@ void _showAbout(BuildContext context) async {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text('Mobile'),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: AppButton(
-                            label: 'Apple',
-                            iconData: MdiIcons.appleIos,
-                            onPressed: () => launch(kAppleStoreUrl),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: AppButton(
-                            label: 'Android',
-                            iconData: MdiIcons.android,
-                            onPressed: () => launch(kGoogleStoreUrl),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Text('Desktop'),
-                        ),
+                        Text(localization.desktop),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: AppButton(
@@ -878,6 +908,26 @@ void _showAbout(BuildContext context) async {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: Text('Windows coming soon...'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: Text(localization.mobile),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: AppButton(
+                            label: 'Apple',
+                            iconData: MdiIcons.appleIos,
+                            onPressed: () => launch(kAppleStoreUrl),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: AppButton(
+                            label: 'Android',
+                            iconData: MdiIcons.android,
+                            onPressed: () => launch(kGoogleStoreUrl),
+                          ),
                         ),
                       ],
                     ),
