@@ -220,7 +220,7 @@ EntityStats invoiceStatsForUser(
 int precisionForInvoice(AppState state, InvoiceEntity invoice) {
   final client = state.clientState.get(invoice.clientId);
   final currency = state.staticState.currencyMap[client.currencyId];
-  return currency.precision;
+  return currency?.precision ?? 2;
 }
 
 bool hasInvoiceChanges(
