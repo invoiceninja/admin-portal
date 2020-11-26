@@ -999,6 +999,20 @@ class ProductItemFields {
   static const String custom4 = 'custom4';
 }
 
+class TaskItemFields {
+  static const String productKey = 'product_key';
+  static const String description = 'description';
+  static const String rate = 'rate';
+  static const String tax = 'tax';
+  static const String hours = 'hours';
+  static const String lineTotal = 'line_total';
+  static const String discount = 'discount';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
+}
+
 abstract class InvoiceItemEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   factory InvoiceItemEntity({String productKey, double quantity}) {
