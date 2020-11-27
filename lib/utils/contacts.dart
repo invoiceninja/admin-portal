@@ -6,6 +6,8 @@ Future<Contact> getDeviceContact() async {
     final PermissionStatus permissionStatus = await _getPermission();
     if (permissionStatus == PermissionStatus.granted) {
       return await ContactsService.openDeviceContactPicker();
+    } else if (permissionStatus == PermissionStatus.permanentlyDenied){
+      openAppSettings();
     }
   } catch (e) {
     print('Error: failed to get contact: $e');
