@@ -125,8 +125,8 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                     Text(localization.lookup('${invoice.entityType}') +
                         ' ' +
                         (invoice.number ?? '')),
+                    Spacer(),
                     if (_activityId != null && isDesktop(context)) ...[
-                      Spacer(),
                       Flexible(
                         child: IgnorePointer(
                           ignoring: _isLoading,
@@ -157,7 +157,6 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       Spacer(),
                     ],
                     if (!kIsWeb && _pageCount > 1) ...[
-                      Spacer(),
                       IconButton(
                         icon: Icon(Icons.navigate_before),
                         onPressed: _pageNumber > 1
@@ -185,7 +184,17 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                             : null,
                       ),
                       Spacer(),
-                    ]
+                    ],
+                    Container(
+                      width: 200,
+                      child: CheckboxListTile(
+                        title: Text(localization.deliveryNote),
+                        value: true,
+                        onChanged: (value) => null,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        activeColor: store.state.accentColor,
+                      ),
+                    ),
                   ],
                 ),
                 actions: <Widget>[
