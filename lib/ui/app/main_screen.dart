@@ -349,11 +349,14 @@ class EntityScreens extends StatelessWidget {
     final isPreviewShown =
         isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
 
-    const previewFlex = 2;
     int listFlex = 3;
+    int previewFlex = 2;
 
     if (prefState.isModuleTable && !isPreviewShown) {
       listFlex = 5;
+    } else if (subRoute == 'email') {
+      listFlex = 2;
+      previewFlex = 3;
     } else if (prefState.isMenuCollapsed) {
       listFlex += 1;
     }
@@ -367,8 +370,20 @@ class EntityScreens extends StatelessWidget {
         case EntityType.product:
           child = ProductEditScreen();
           break;
+        case EntityType.invoice:
+          child = InvoiceEditScreen();
+          break;
+        case EntityType.recurringInvoice:
+          child = RecurringInvoiceEditScreen();
+          break;
         case EntityType.payment:
           child = PaymentEditScreen();
+          break;
+        case EntityType.quote:
+          child = QuoteEditScreen();
+          break;
+        case EntityType.credit:
+          child = CreditEditScreen();
           break;
         case EntityType.project:
           child = ProjectEditScreen();
