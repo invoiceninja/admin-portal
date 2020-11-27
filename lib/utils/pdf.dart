@@ -246,7 +246,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       controller: _pdfController,
                       onDocumentLoaded: (document) {
                         setState(() {
-                          _pageCount = document.pagesCount;
+                          _pageCount = document?.pagesCount ?? 0;
                         });
                       },
                       onPageChanged: (page) {
