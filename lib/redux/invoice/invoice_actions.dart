@@ -602,19 +602,28 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       );
       break;
     case EntityAction.restore:
+      final message = invoiceIds.length > 1
+          ? localization.restoredInvoices
+              .replaceFirst(':value', invoiceIds.length.toString())
+          : localization.restoredInvoice;
       store.dispatch(RestoreInvoicesRequest(
-          snackBarCompleter<Null>(context, localization.restoredInvoice),
-          invoiceIds));
+          snackBarCompleter<Null>(context, message), invoiceIds));
       break;
     case EntityAction.archive:
+      final message = invoiceIds.length > 1
+          ? localization.archivedInvoices
+              .replaceFirst(':value', invoiceIds.length.toString())
+          : localization.archivedInvoice;
       store.dispatch(ArchiveInvoicesRequest(
-          snackBarCompleter<Null>(context, localization.archivedInvoice),
-          invoiceIds));
+          snackBarCompleter<Null>(context, message), invoiceIds));
       break;
     case EntityAction.delete:
+      final message = invoiceIds.length > 1
+          ? localization.deletedInvoices
+              .replaceFirst(':value', invoiceIds.length.toString())
+          : localization.deletedInvoice;
       store.dispatch(DeleteInvoicesRequest(
-          snackBarCompleter<Null>(context, localization.deletedInvoice),
-          invoiceIds));
+          snackBarCompleter<Null>(context, message), invoiceIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.invoiceListState.isInMultiselect()) {

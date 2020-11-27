@@ -879,9 +879,9 @@ abstract class InvoiceEntity extends Object
   }
 
   /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
-  Map<String, Map<String, dynamic>> getTaxes() {
+  Map<String, Map<String, dynamic>> getTaxes(int precision) {
     final taxes = <String, Map<String, dynamic>>{};
-    final taxable = calculateTaxes(usesInclusiveTaxes);
+    final taxable = calculateTaxes(useInclusiveTaxes: usesInclusiveTaxes, precision: precision);
     final paidAmount = amount - balance;
 
     if (taxRate1 != 0) {
@@ -991,6 +991,20 @@ class ProductItemFields {
   static const String unitCost = 'unit_cost';
   static const String tax = 'tax';
   static const String quantity = 'quantity';
+  static const String lineTotal = 'line_total';
+  static const String discount = 'discount';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
+}
+
+class TaskItemFields {
+  static const String productKey = 'product_key';
+  static const String description = 'description';
+  static const String rate = 'rate';
+  static const String tax = 'tax';
+  static const String hours = 'hours';
   static const String lineTotal = 'line_total';
   static const String discount = 'discount';
   static const String custom1 = 'custom1';

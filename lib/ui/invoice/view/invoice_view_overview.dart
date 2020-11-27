@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -340,7 +341,10 @@ class InvoiceOverview extends StatelessWidget {
 
     widgets.addAll([
       SizedBox(height: 8),
-      surchargeRow(localization.subtotal, invoice.calculateTotal),
+      surchargeRow(
+          localization.subtotal,
+          invoice.calculateTotal(
+              precision: precisionForInvoice(state, invoice))),
       surchargeRow(localization.paidToDate, invoice.paidToDate),
     ]);
 
@@ -357,7 +361,9 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     invoice
-        .calculateTaxes(invoice.usesInclusiveTaxes)
+        .calculateTaxes(
+            useInclusiveTaxes: invoice.usesInclusiveTaxes,
+            precision: precisionForInvoice(state, invoice))
         .forEach((taxName, taxAmount) {
       widgets.add(surchargeRow(taxName, taxAmount));
     });

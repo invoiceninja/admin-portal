@@ -8,12 +8,14 @@ class PasswordFormField extends StatefulWidget {
     this.textInputAction,
     this.autoValidate,
     this.newPassword = true,
+    this.labelText,
   });
 
   final TextEditingController controller;
   final TextInputAction textInputAction;
   final bool autoValidate;
   final bool newPassword;
+  final String labelText;
 
   @override
   _PasswordFormFieldState createState() => _PasswordFormFieldState();
@@ -38,7 +40,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       autocorrect: false,
       autovalidate: widget.autoValidate,
       decoration: InputDecoration(
-        labelText: localization.password,
+        labelText: widget.labelText ?? localization.password,
         suffixIcon: IconButton(
           alignment: Alignment.bottomCenter,
           tooltip: _isPasswordObscured

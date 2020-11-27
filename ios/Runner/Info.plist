@@ -58,6 +58,8 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The photo library is used to upload documents</string>
+	<key>NSCameraUsageDescription</key>
+	<string>The camera is used to upload documents</string>
 	<key>io.flutter.embedded_views_preview</key>
     <true/>
     <key>ITSAppUsesNonExemptEncryption</key>

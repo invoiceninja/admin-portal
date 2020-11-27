@@ -54,7 +54,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 10);
+    _controller = TabController(vsync: this, length: 11);
   }
 
   @override
@@ -90,10 +90,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           Tab(text: localization.quoteDetails),
           Tab(text: localization.creditDetails),
           Tab(text: localization.productColumns),
-          Tab(text: localization.totalFields),
-          /*
           Tab(text: localization.taskColumns),
-           */
+          Tab(text: localization.totalFields),
         ],
       ),
       body: AppTabForm(
@@ -538,22 +536,40 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'product',
             ),
           ),
-          /*
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
+              options: [
+                TaskItemFields.productKey,
+                TaskItemFields.description,
+                TaskItemFields.hours,
+                TaskItemFields.rate,
+                TaskItemFields.tax,
+                TaskItemFields.discount,
+                TaskItemFields.lineTotal,
+                TaskItemFields.custom1,
+                TaskItemFields.custom2,
+                TaskItemFields.custom3,
+                TaskItemFields.custom4,
+              ].map((field) => '\$task.$field').toList(),
+              defaultSelected: [
+                TaskItemFields.productKey,
+                TaskItemFields.description,
+                TaskItemFields.rate,
+                TaskItemFields.hours,
+                TaskItemFields.discount,
+                TaskItemFields.tax,
+                TaskItemFields.lineTotal,
+              ].map((field) => '\$task.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsTaskColumns),
               onSelected: (values) {
-                    viewModel.onSettingsChanged(settings.setFieldsForSection(
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
                     kPdfFieldsTaskColumns, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
               prefix: 'task',
             ),
-          ),          
-           */
+          ),
           FormCard(
             child: MultiSelectList(
               options: [

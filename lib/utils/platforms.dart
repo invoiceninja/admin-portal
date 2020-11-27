@@ -31,12 +31,13 @@ String getPlatform(BuildContext context) =>
     Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android';
 
 String getAppURL(BuildContext context) {
-  if (kIsWeb) {
-    return kCapterralUrl;
-  } else if (isAndroid(context)) {
-    return kGoogleStoreUrl;
-  } else {
-    return kAppleStoreUrl;
+  switch (Theme.of(context).platform) {
+    case TargetPlatform.android:
+      return kGoogleStoreUrl;
+    case TargetPlatform.iOS:
+      return kAppleStoreUrl;
+    default:
+      return kCapterralUrl;
   }
 }
 

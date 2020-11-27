@@ -264,19 +264,28 @@ void handleDesignAction(
       createEntity(context: context, entity: design.clone);
       break;
     case EntityAction.restore:
+      final message = designIds.length > 1
+          ? localization.restoredDesigns
+              .replaceFirst(':value', designIds.length.toString())
+          : localization.restoredDesign;
       store.dispatch(RestoreDesignsRequest(
-          snackBarCompleter<Null>(context, localization.restoredDesign),
-          designIds));
+          snackBarCompleter<Null>(context, message), designIds));
       break;
     case EntityAction.archive:
+      final message = designIds.length > 1
+          ? localization.archivedDesigns
+              .replaceFirst(':value', designIds.length.toString())
+          : localization.archivedDesign;
       store.dispatch(ArchiveDesignsRequest(
-          snackBarCompleter<Null>(context, localization.archivedDesign),
-          designIds));
+          snackBarCompleter<Null>(context, message), designIds));
       break;
     case EntityAction.delete:
+      final message = designIds.length > 1
+          ? localization.deletedDesigns
+              .replaceFirst(':value', designIds.length.toString())
+          : localization.deletedDesign;
       store.dispatch(DeleteDesignsRequest(
-          snackBarCompleter<Null>(context, localization.deletedDesign),
-          designIds));
+          snackBarCompleter<Null>(context, message), designIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.designListState.isInMultiselect()) {

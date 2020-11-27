@@ -4,6 +4,7 @@ version: 5.0.26+26
 author: Hillel Coren
 homepage: https://invoiceninja.com
 documentation: http://docs.invoiceninja.com
+publish_to: none
 
 environment:
   sdk: ">=2.9.0 <3.0.0"
@@ -32,7 +33,6 @@ dependencies:
   url_launcher: ^5.4.2
   share: ^0.6.3+6
   intl: ^0.16.1
-  #intl: 0.17.0-nullsafety.2 # TODO remove this
   flutter_slidable: ^0.5.4
   charts_flutter: ^0.9.0
   firebase_auth: ^0.15.4

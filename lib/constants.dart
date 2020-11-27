@@ -24,10 +24,21 @@ const String kAppPlansURL =
     'https://www.invoiceninja.com/invoicing-pricing-plans/';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
-const String kAppleStoreUrl =
-    'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
-const String kGoogleStoreUrl =
-    'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
+
+//const String kAppleStoreUrl = 'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
+//const String kGoogleStoreUrl = 'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
+
+const String kSourceCodeBackend = 'https://github.com/invoiceninja/invoiceninja';
+const String kSourceCodeFrontend = 'https://github.com/invoiceninja/flutter-client';
+
+const String kAppleStoreUrl = 'https://testflight.apple.com/join/MJ6WpaXh';
+const String kGoogleStoreUrl = 'https://play.google.com/apps/testing/com.invoiceninja.app';
+const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
+const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
+
+const String kApiDocsURL = 'https://app.swaggerhub.com/apis/invoiceninja/invoiceninja';
+const String kZapierURL = 'https://zapier.com/developer/public-invite/95884/5e4368b9efb9d377dc0a0b0465b7c1a7';
+
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
@@ -761,4 +772,3 @@ const String kActivityEmailReminder1 = '63';
 const String kActivityEmailReminder2 = '64';
 const String kActivityEmailReminder3 = '65';
 const String kActivityEmailReminderEndless = '66';
-

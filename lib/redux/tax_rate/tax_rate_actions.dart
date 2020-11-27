@@ -254,19 +254,28 @@ void handleTaxRateAction(
       editEntity(context: context, entity: taxRate);
       break;
     case EntityAction.restore:
+      final message = taxRateIds.length > 1
+          ? localization.restoredTaxRates
+              .replaceFirst(':value', taxRateIds.length.toString())
+          : localization.restoredTaxRate;
       store.dispatch(RestoreTaxRateRequest(
-          snackBarCompleter<Null>(context, localization.restoredTaxRate),
-          taxRateIds));
+          snackBarCompleter<Null>(context, message), taxRateIds));
       break;
     case EntityAction.archive:
+      final message = taxRateIds.length > 1
+          ? localization.archivedTaxRates
+              .replaceFirst(':value', taxRateIds.length.toString())
+          : localization.archivedTaxRate;
       store.dispatch(ArchiveTaxRateRequest(
-          snackBarCompleter<Null>(context, localization.archivedTaxRate),
-          taxRateIds));
+          snackBarCompleter<Null>(context, message), taxRateIds));
       break;
     case EntityAction.delete:
+      final message = taxRateIds.length > 1
+          ? localization.deletedTaxRates
+              .replaceFirst(':value', taxRateIds.length.toString())
+          : localization.deletedTaxRate;
       store.dispatch(DeleteTaxRateRequest(
-          snackBarCompleter<Null>(context, localization.deletedTaxRate),
-          taxRateIds));
+          snackBarCompleter<Null>(context, message), taxRateIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taxRateListState.isInMultiselect()) {

@@ -283,19 +283,28 @@ void handleTaskStatusAction(
       editEntity(context: context, entity: taskStatus);
       break;
     case EntityAction.restore:
+      final message = taskStatusIds.length > 1
+          ? localization.restoredTaskStatuses
+              .replaceFirst(':value', taskStatusIds.length.toString())
+          : localization.restoredTaskStatus;
       store.dispatch(RestoreTaskStatusesRequest(
-          snackBarCompleter<Null>(context, localization.restoredTaskStatus),
-          taskStatusIds));
+          snackBarCompleter<Null>(context, message), taskStatusIds));
       break;
     case EntityAction.archive:
+      final message = taskStatusIds.length > 1
+          ? localization.archivedTaskStatuses
+              .replaceFirst(':value', taskStatusIds.length.toString())
+          : localization.archivedTaskStatus;
       store.dispatch(ArchiveTaskStatusesRequest(
-          snackBarCompleter<Null>(context, localization.archivedTaskStatus),
-          taskStatusIds));
+          snackBarCompleter<Null>(context, message), taskStatusIds));
       break;
     case EntityAction.delete:
+      final message = taskStatusIds.length > 1
+          ? localization.deletedTaskStatuses
+              .replaceFirst(':value', taskStatusIds.length.toString())
+          : localization.deletedTaskStatus;
       store.dispatch(DeleteTaskStatusesRequest(
-          snackBarCompleter<Null>(context, localization.deletedTaskStatus),
-          taskStatusIds));
+          snackBarCompleter<Null>(context, message), taskStatusIds));
       break;
     case EntityAction.newTask:
       createEntity(

@@ -268,19 +268,28 @@ void handleWebhookAction(
       editEntity(context: context, entity: webhook);
       break;
     case EntityAction.restore:
+      final message = webhookIds.length > 1
+          ? localization.restoredWebhooks
+              .replaceFirst(':value', webhookIds.length.toString())
+          : localization.restoredWebhook;
       store.dispatch(RestoreWebhooksRequest(
-          snackBarCompleter<Null>(context, localization.restoredWebhook),
-          webhookIds));
+          snackBarCompleter<Null>(context, message), webhookIds));
       break;
     case EntityAction.archive:
+      final message = webhookIds.length > 1
+          ? localization.archivedWebhooks
+              .replaceFirst(':value', webhookIds.length.toString())
+          : localization.archivedWebhook;
       store.dispatch(ArchiveWebhooksRequest(
-          snackBarCompleter<Null>(context, localization.archivedWebhook),
-          webhookIds));
+          snackBarCompleter<Null>(context, message), webhookIds));
       break;
     case EntityAction.delete:
+      final message = webhookIds.length > 1
+          ? localization.deletedWebhooks
+              .replaceFirst(':value', webhookIds.length.toString())
+          : localization.deletedWebhook;
       store.dispatch(DeleteWebhooksRequest(
-          snackBarCompleter<Null>(context, localization.deletedWebhook),
-          webhookIds));
+          snackBarCompleter<Null>(context, message), webhookIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.webhookListState.isInMultiselect()) {
