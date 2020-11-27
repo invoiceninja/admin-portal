@@ -6,7 +6,8 @@ Future<Contact> getDeviceContact() async {
     final PermissionStatus permissionStatus = await _getPermission();
     if (permissionStatus == PermissionStatus.granted) {
       return await ContactsService.openDeviceContactPicker();
-    } else if (permissionStatus == PermissionStatus.permanentlyDenied){
+    } else if ([PermissionStatus.denied, PermissionStatus.permanentlyDenied]
+        .contains(permissionStatus)) {
       openAppSettings();
     }
   } catch (e) {
@@ -18,10 +19,8 @@ Future<Contact> getDeviceContact() async {
 
 Future<PermissionStatus> _getPermission() async {
   final PermissionStatus permission = await Permission.contacts.status;
-  if (permission != PermissionStatus.granted &&
-      permission != PermissionStatus.denied) {
-    final Map<Permission, PermissionStatus> permissionStatus =
-        await [Permission.contacts].request();
+  if (permission == PermissionStatus.undetermined) {
+    final permissionStatus = await [Permission.contacts].request();
     return permissionStatus[Permission.contacts] ??
         PermissionStatus.undetermined;
   } else {
