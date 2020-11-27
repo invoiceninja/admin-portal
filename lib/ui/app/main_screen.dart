@@ -71,24 +71,19 @@ class MainScreen extends StatelessWidget {
       Widget screen = BlankScreen();
 
       bool isFullScreen = false;
-      bool isEdit = false;
-      bool isEmail = false;
+      final isEdit = subRoute == '/edit';
+      final isEmail = subRoute == '/email';
 
-      if (prefState.isDesktop) {
-        isEdit = subRoute == '/edit';
-        isEmail = subRoute == '/email';
-        if ([
-              InvoiceScreen.route,
-              QuoteScreen.route,
-              CreditScreen.route,
-              RecurringInvoiceScreen.route,
-            ].contains(mainRoute) &&
-            (isEdit || isEmail)) {
-          isFullScreen = true;
-        }
+      if ([
+            InvoiceScreen.route,
+            QuoteScreen.route,
+            CreditScreen.route,
+            RecurringInvoiceScreen.route,
+          ].contains(mainRoute) &&
+          (isEdit || isEmail)) {
+        isFullScreen = true;
       }
-      if (prefState.isNotMobile &&
-          DesignEditScreen.route == uiState.currentRoute) {
+      if (DesignEditScreen.route == uiState.currentRoute) {
         isFullScreen = true;
       }
 
@@ -354,32 +349,17 @@ class EntityScreens extends StatelessWidget {
     final isPreviewShown =
         isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
 
+    const previewFlex = 2;
     int listFlex = 3;
-    int previewFlex = 2;
 
     if (prefState.isModuleTable && !isPreviewShown) {
       listFlex = 5;
-    } else if (subRoute == 'email') {
-      listFlex = 2;
-      previewFlex = 3;
     } else if (prefState.isMenuCollapsed) {
       listFlex += 1;
     }
 
     Widget child;
-    if (subRoute == 'email') {
-      switch (entityType) {
-        case EntityType.invoice:
-          child = InvoiceEmailScreen();
-          break;
-        case EntityType.credit:
-          child = CreditEmailScreen();
-          break;
-        case EntityType.quote:
-          child = QuoteEmailScreen();
-          break;
-      }
-    } else if (subRoute == 'edit' && !editingFIlterEntity) {
+    if (subRoute == 'edit' && !editingFIlterEntity) {
       switch (entityType) {
         case EntityType.client:
           child = ClientEditScreen();
@@ -387,20 +367,8 @@ class EntityScreens extends StatelessWidget {
         case EntityType.product:
           child = ProductEditScreen();
           break;
-        case EntityType.invoice:
-          child = InvoiceEditScreen();
-          break;
-        case EntityType.recurringInvoice:
-          child = RecurringInvoiceEditScreen();
-          break;
         case EntityType.payment:
           child = PaymentEditScreen();
-          break;
-        case EntityType.quote:
-          child = QuoteEditScreen();
-          break;
-        case EntityType.credit:
-          child = CreditEditScreen();
           break;
         case EntityType.project:
           child = ProjectEditScreen();
