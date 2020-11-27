@@ -48,6 +48,7 @@ class PDFScaffold extends StatefulWidget {
 
 class _PDFScaffoldState extends State<PDFScaffold> {
   bool _isLoading = true;
+  bool _isDeliveryNote = false;
   String _activityId;
   String _pdfString;
   http.Response _response;
@@ -189,8 +190,12 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       width: 200,
                       child: CheckboxListTile(
                         title: Text(localization.deliveryNote),
-                        value: true,
-                        onChanged: (value) => null,
+                        value: _isDeliveryNote,
+                        onChanged: (value) {
+                          setState(() {
+                            _isDeliveryNote = !_isDeliveryNote;
+                          });
+                        },
                         controlAffinity: ListTileControlAffinity.leading,
                         activeColor: store.state.accentColor,
                       ),
