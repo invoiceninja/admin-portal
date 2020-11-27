@@ -19,7 +19,7 @@ class ClientRepository {
   Future<ClientEntity> loadItem(
       Credentials credentials, String entityId) async {
     final String url =
-        '${credentials.url}/clients/$entityId?include=gateway_tokens,activities,ledger,system_logs';
+        '${credentials.url}/clients/$entityId?include=gateway_tokens,activities,ledger,system_logs,documents';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -45,7 +45,7 @@ class ClientRepository {
   Future<List<ClientEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url +
-        '/clients/bulk?include=gateway_tokens,activities,ledger,system_logs';
+        '/clients/bulk?include=gateway_tokens,activities,ledger,system_logs,documents';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -64,12 +64,12 @@ class ClientRepository {
     if (client.isNew) {
       response = await webClient.post(
           credentials.url +
-              '/clients?include=gateway_tokens,activities,ledger,system_logs',
+              '/clients?include=gateway_tokens,activities,ledger,system_logs,documents',
           credentials.token,
           data: json.encode(data));
     } else {
       final url = credentials.url +
-          '/clients/${client.id}?include=gateway_tokens,activities,ledger,system_logs';
+          '/clients/${client.id}?include=gateway_tokens,activities,ledger,system_logs,documents';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
