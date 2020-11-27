@@ -53,14 +53,11 @@ class DocumentGrid extends StatelessWidget {
                       iconData: Icons.camera_alt,
                       label: localization.takePicture,
                       onPressed: () async {
-                        PermissionStatus permission =
-                            await Permission.camera.status;
-                        if (permission == PermissionStatus.undetermined) {
-                          final permissionStatus =
-                              await [Permission.camera].request();
-                          permission = permissionStatus[Permission.camera] ??
-                              PermissionStatus.undetermined;
-                        }
+                        final permissionStatus =
+                            await [Permission.camera].request();
+                        final permission =
+                            permissionStatus[Permission.camera] ??
+                                PermissionStatus.undetermined;
 
                         if (permission == PermissionStatus.granted) {
                           final image = await ImagePicker()
@@ -87,14 +84,11 @@ class DocumentGrid extends StatelessWidget {
                       if (kIsWeb) {
                         path = await WebUtils.filePicker();
                       } else {
-                        PermissionStatus permission =
-                            await Permission.photos.status;
-                        if (permission == PermissionStatus.undetermined) {
-                          final permissionStatus =
-                              await [Permission.photos].request();
-                          permission = permissionStatus[Permission.photos] ??
-                              PermissionStatus.undetermined;
-                        }
+                        final permissionStatus =
+                            await [Permission.photos].request();
+                        final permission =
+                            permissionStatus[Permission.photos] ??
+                                PermissionStatus.undetermined;
 
                         if (permission == PermissionStatus.granted) {
                           final image = await ImagePicker()

@@ -18,12 +18,6 @@ Future<Contact> getDeviceContact() async {
 }
 
 Future<PermissionStatus> _getPermission() async {
-  final PermissionStatus permission = await Permission.contacts.status;
-  if (permission == PermissionStatus.undetermined) {
-    final permissionStatus = await [Permission.contacts].request();
-    return permissionStatus[Permission.contacts] ??
-        PermissionStatus.undetermined;
-  } else {
-    return permission;
-  }
+  final permissionStatus = await [Permission.contacts].request();
+  return permissionStatus[Permission.contacts] ?? PermissionStatus.undetermined;
 }
