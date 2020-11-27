@@ -73,7 +73,12 @@ class _PDFScaffoldState extends State<PDFScaffold> {
       _isLoading = true;
     });
 
-    _loadPDF(context, widget.invoice, _activityId).then((response) {
+    _loadPDF(
+      context,
+      widget.invoice,
+      _isDeliveryNote,
+      _activityId,
+    ).then((response) {
       setState(() {
         _response = response;
         _isLoading = false;
@@ -194,6 +199,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                         onChanged: (value) {
                           setState(() {
                             _isDeliveryNote = !_isDeliveryNote;
+                            loadPdf();
                           });
                         },
                         controlAffinity: ListTileControlAffinity.leading,
@@ -254,16 +260,21 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 }
 
 Future<Response> _loadPDF(
-    BuildContext context, InvoiceEntity invoice, String activityId) async {
+  BuildContext context,
+  InvoiceEntity invoice,
+  bool isDeliveryNote,
+  String activityId,
+) async {
   http.Response response;
 
-  if (activityId != null) {
+  if (activityId != null || isDeliveryNote) {
     final store = StoreProvider.of<AppState>(context);
     final credential = store.state.credentials;
-    response = await WebClient().get(
-        '${credential.url}/activities/download_entity/$activityId',
-        credential.token,
-        rawResponse: true);
+    final url = isDeliveryNote
+        ? '/invoices/${invoice.id}/delivery_note'
+        : '/activities/download_entity/$activityId';
+    response = await WebClient()
+        .get('${credential.url}$url', credential.token, rawResponse: true);
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
