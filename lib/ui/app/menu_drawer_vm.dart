@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -40,6 +42,7 @@ class MenuDrawerVM {
     @required this.onCompanyChanged,
     @required this.isLoading,
     @required this.onAddCompany,
+    @required this.onLogoutTap,
   });
 
   final AppState state;
@@ -48,10 +51,13 @@ class MenuDrawerVM {
   final String selectedCompanyIndex;
   final Function(BuildContext context, int, CompanyEntity) onCompanyChanged;
   final Function(BuildContext context) onAddCompany;
+  final Function(BuildContext) onLogoutTap;
 
   final bool isLoading;
 
   static MenuDrawerVM fromStore(Store<AppState> store) {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
     final AppState state = store.state;
 
     return MenuDrawerVM(
@@ -60,6 +66,15 @@ class MenuDrawerVM {
       user: state.user,
       selectedCompany: state.company,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
+      onLogoutTap: (BuildContext context) => confirmCallback(
+          context: context,
+          callback: () async {
+            if (store.state.user.oauthProvider ==
+                UserEntity.OAUTH_PROVIDER_GOOGLE) {
+              await _googleSignIn.signOut();
+            }
+            store.dispatch(UserLogout(context));
+          }),
       onCompanyChanged:
           (BuildContext context, int index, CompanyEntity company) {
         if (index == state.uiState.selectedCompanyIndex) {

@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/.env.dart';
-
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -188,27 +186,19 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                    */
                 ],
               ),
-              if (!Config.DEMO_MODE)
-                FormCard(
-                  children: <Widget>[
-                    Builder(builder: (BuildContext context) {
-                      return ListTile(
-                        leading: Icon(Icons.refresh),
-                        title: Text(AppLocalization.of(context).refreshData),
-                        onTap: () {
-                          viewModel.onRefreshTap(context);
-                        },
-                      );
-                    }),
-                    ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text(AppLocalization.of(context).logout),
+              FormCard(
+                children: <Widget>[
+                  Builder(builder: (BuildContext context) {
+                    return ListTile(
+                      leading: Icon(Icons.refresh),
+                      title: Text(AppLocalization.of(context).refreshData),
                       onTap: () {
-                        viewModel.onLogoutTap(context);
+                        viewModel.onRefreshTap(context);
                       },
-                    ),
-                  ],
-                )
+                    );
+                  }),
+                ],
+              )
             ],
           ),
         ),

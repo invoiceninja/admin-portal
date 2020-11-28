@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -47,7 +48,7 @@ List<String> getCurrencyIds(
     CompanyEntity company,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, GroupEntity> groupMap) {
-  final currencyIds = <String>[];
+  final currencyIds = <String>[kCurrencyAll];
   clientMap.forEach((clientId, client) {
     final group = groupMap[client.groupId];
     if (!client.isDeleted) {
@@ -57,7 +58,7 @@ List<String> getCurrencyIds(
       } else if (group != null && group.hasCurrency) {
         currencyId = group.currencyId;
       }
-      if (currencyId != null && !currencyIds.contains(client.currencyId)) {
+      if (currencyId != null && !currencyIds.contains(currencyId)) {
         currencyIds.add(currencyId);
       }
     }

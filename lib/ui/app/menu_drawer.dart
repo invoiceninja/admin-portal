@@ -121,7 +121,7 @@ class MenuDrawer extends StatelessWidget {
             .toList(),
         if (state.userCompany.isOwner)
           PopupMenuItem<String>(
-            value: '',
+            value: 'company',
             child: Row(
               children: <Widget>[
                 SizedBox(width: 2),
@@ -131,10 +131,23 @@ class MenuDrawer extends StatelessWidget {
               ],
             ),
           ),
+        PopupMenuItem(
+          value: 'logout',
+          child: Row(
+            children: <Widget>[
+              SizedBox(width: 2),
+              Icon(Icons.logout, size: 32),
+              SizedBox(width: 28),
+              Text(localization.logout),
+            ],
+          ),
+        ),
       ],
       onSelected: (String companyId) {
-        if (companyId.isEmpty) {
+        if (companyId == 'company') {
           viewModel.onAddCompany(context);
+        } else if (companyId == 'logout') {
+          viewModel.onLogoutTap(context);
         } else {
           final company =
               state.companies.firstWhere((company) => company.id == companyId);
@@ -156,20 +169,32 @@ class MenuDrawer extends StatelessWidget {
                   .toList(),
               if (viewModel.state.userCompany.isAdmin)
                 DropdownMenuItem<String>(
-                  value: null,
+                  value: 'company',
                   child: Row(
                     children: <Widget>[
-                      SizedBox(width: 2),
                       Icon(Icons.add_circle, size: 32),
                       SizedBox(width: 28),
                       Text(localization.addCompany),
                     ],
                   ),
                 ),
+              DropdownMenuItem<String>(
+                value: 'logout',
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(width: 2),
+                    Icon(Icons.logout, size: 32),
+                    SizedBox(width: 28),
+                    Text(localization.logout),
+                  ],
+                ),
+              ),
             ],
             onChanged: (dynamic value) {
-              if (value == null) {
+              if (value == 'company') {
                 viewModel.onAddCompany(context);
+              } else if (value == 'logout') {
+                viewModel.onLogoutTap(context);
               } else {
                 final index = int.parse(value);
                 viewModel.onCompanyChanged(
