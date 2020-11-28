@@ -285,7 +285,7 @@ Future<Response> _loadPDF(
     showErrorDialog(
         context: context,
         message: '${response.statusCode}: ${response.reasonPhrase}');
-    return null;
+    throw '${response.statusCode}: ${response.reasonPhrase}';
   }
 
   return response;

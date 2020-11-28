@@ -872,6 +872,15 @@ void _showAbout(BuildContext context) async {
                                             launch(kSourceCodeFrontend),
                                       ),
                                     ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: AppButton(
+                                        label: 'Storefront SDK',
+                                        iconData: MdiIcons.tools,
+                                        onPressed: () =>
+                                            launch(kSourceCodeFrontendSDK),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               );
@@ -888,11 +897,11 @@ void _showAbout(BuildContext context) async {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(localization.desktop),
+                        Text(localization.desktop + ' | BETA'),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: AppButton(
-                            label: 'Apple',
+                            label: 'macOS',
                             iconData: MdiIcons.apple,
                             onPressed: () => launch(kMacOSUrl),
                           ),
@@ -916,8 +925,8 @@ void _showAbout(BuildContext context) async {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: AppButton(
-                            label: 'Apple',
-                            iconData: MdiIcons.appleIos,
+                            label: 'iOS',
+                            iconData: MdiIcons.apple,
                             onPressed: () => launch(kAppleStoreUrl),
                           ),
                         ),

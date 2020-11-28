@@ -30,6 +30,7 @@ const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 
 const String kSourceCodeBackend = 'https://github.com/invoiceninja/invoiceninja';
 const String kSourceCodeFrontend = 'https://github.com/invoiceninja/flutter-client';
+const String kSourceCodeFrontendSDK = 'https://pub.dev/packages/invoiceninja';
 
 const String kAppleStoreUrl = 'https://testflight.apple.com/join/MJ6WpaXh';
 const String kGoogleStoreUrl = 'https://play.google.com/apps/testing/com.invoiceninja.app';
