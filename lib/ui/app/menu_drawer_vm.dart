@@ -71,6 +71,7 @@ class MenuDrawerVM {
           return;
         }
         confirmCallback(
+            message: AppLocalization.of(context).logout,
             context: context,
             callback: () async {
               if (store.state.user.oauthProvider ==
