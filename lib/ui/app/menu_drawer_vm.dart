@@ -66,15 +66,20 @@ class MenuDrawerVM {
       user: state.user,
       selectedCompany: state.company,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
-      onLogoutTap: (BuildContext context) => confirmCallback(
-          context: context,
-          callback: () async {
-            if (store.state.user.oauthProvider ==
-                UserEntity.OAUTH_PROVIDER_GOOGLE) {
-              await _googleSignIn.signOut();
-            }
-            store.dispatch(UserLogout(context));
-          }),
+      onLogoutTap: (BuildContext context) {
+        if (state.isDemo) {
+          return;
+        }
+        confirmCallback(
+            context: context,
+            callback: () async {
+              if (store.state.user.oauthProvider ==
+                  UserEntity.OAUTH_PROVIDER_GOOGLE) {
+                await _googleSignIn.signOut();
+              }
+              store.dispatch(UserLogout(context));
+            });
+      },
       onCompanyChanged:
           (BuildContext context, int index, CompanyEntity company) {
         if (index == state.uiState.selectedCompanyIndex) {
