@@ -240,11 +240,6 @@ class MainScreen extends StatelessWidget {
         onWillPop: () async {
           final state = store.state;
           final historyList = state.historyList;
-
-          if (historyList.length <= 1) {
-            return true;
-          }
-
           final isEditing = state.uiState.isEditing;
           final index = isEditing ? 0 : 1;
           HistoryRecord history;
@@ -279,6 +274,7 @@ class MainScreen extends StatelessWidget {
           }
 
           if (history == null) {
+            store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
             return false;
           }
 
