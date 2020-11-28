@@ -145,7 +145,7 @@ class _AccountOverview extends StatelessWidget {
       children: <Widget>[
         AppHeader(
           label: localization.plan,
-          value: account.plan.isEmpty ? localization.free : account.plan,
+          value: account.plan.isEmpty ? localization.free : localization.lookup(account.plan),
           secondLabel: localization.expiresOn,
           secondValue: formatDate(account.planExpires, context),
         ),
