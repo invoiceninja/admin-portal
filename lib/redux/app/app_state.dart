@@ -179,8 +179,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Color get accentColor => convertHexStringToColor(
       userCompany?.settings?.accentColor ?? kDefaultAccentColor);
 
-  String get appVersion =>
-      '${account?.currentVersion ?? '0.0.0'}-${kClientVersion.split('.').last}';
+  String get appVersion {
+    String version = account?.currentVersion ?? '';
+
+    if (version.isNotEmpty) {
+      version += '-';
+    }
+
+    return version + kClientVersion.split('.').last;
+  }
 
   List<HistoryRecord> get historyList =>
       prefState.companyPrefs[company.id].historyList.where((history) {

@@ -51,7 +51,7 @@ Future<Event> getSentryEvent(
   }
 
   return Event(
-    release: state?.appVersion ?? kClientVersion,
+    release: kClientVersion,
     //release: packageInfo.version,
     environment: environment,
     stackTrace: stackTrace,
