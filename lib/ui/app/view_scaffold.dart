@@ -15,7 +15,6 @@ class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
     @required this.body,
     @required this.entity,
-    this.title,
     this.floatingActionButton,
     this.appBarBottom,
     this.isFilter = false,
@@ -24,7 +23,6 @@ class ViewScaffold extends StatelessWidget {
 
   final bool isFilter;
   final BaseEntity entity;
-  final String title;
   final Widget body;
   final Function onBackPressed;
   final Widget floatingActionButton;
@@ -45,7 +43,6 @@ class ViewScaffold extends StatelessWidget {
       title = (entity.listDisplayName ?? '').isEmpty
           ? localization.pending
           : entity.listDisplayName;
-
       if (!(isFilter ?? false)) {
         title = localization.lookup('${entity.entityType}') + '  ›  ' + title;
       }
@@ -88,9 +85,7 @@ class ViewScaffold extends StatelessWidget {
           centerTitle: false,
           leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
-          title: EntityStateTitle(
-            entity: entity,
-          ),
+          title: Text(title),
           bottom: appBarBottom,
           actions: entity.isNew
               ? []

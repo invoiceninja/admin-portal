@@ -73,7 +73,6 @@ class _PaymentViewState extends State<PaymentView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: payment,
-      title: payment.number,
       body: Builder(
         builder: (BuildContext context) {
           return RefreshIndicator(
