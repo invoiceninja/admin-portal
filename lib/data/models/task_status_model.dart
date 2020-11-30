@@ -53,7 +53,7 @@ class TaskStatusFields {
 }
 
 abstract class TaskStatusEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, EntityStatus
     implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
   factory TaskStatusEntity({String id, AppState state}) {
     return _$TaskStatusEntity._(
@@ -81,6 +81,7 @@ abstract class TaskStatusEntity extends Object
     return EntityType.taskStatus;
   }
 
+  @override
   String get name;
 
   @BuiltValueField(wireName: 'sort_order')
