@@ -1950,6 +1950,22 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'use_credits_payment')
   String get useCreditsPayment;
 
+  @nullable
+  @BuiltValueField(wireName: 'portal_custom_head')
+  String get clientPortalCustomHeader;
+
+  @nullable
+  @BuiltValueField(wireName: 'portal_custom_css')
+  String get clientPortalCustomCss;
+
+  @nullable
+  @BuiltValueField(wireName: 'portal_custom_footer')
+  String get clientPortalCustomFooter;
+
+  @nullable
+  @BuiltValueField(wireName: 'portal_custom_js')
+  String get clientPortalCustomJs;
+
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')
