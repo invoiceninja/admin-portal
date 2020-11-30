@@ -134,29 +134,27 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               label: localization.taskRate,
               onSavePressed: viewModel.onSavePressed,
             ),
+            /*
+            BoolDropdownButton(
+              label: localization.emailReminders,
+              value: client.settings.sendReminders,
+              showBlank: true,
+              onChanged: (value) => viewModel.onChanged(
+                  client.rebuild((b) => b..settings.sendReminders = value)),
+            )            
+             */
           ],
         ),
-        // TODO renable this code
-        /*
         FormCard(children: <Widget>[
-          SwitchListTile(
-            activeColor: Theme.of(context).accentColor,
-            title: Text(localization.clientPortal),
-            subtitle: Text(localization.showTasks),
-            value: client.settings.showTasksInPortal,
-            onChanged: (value) => viewModel.onChanged(
-                client.rebuild((b) => b..settings.showTasksInPortal = value)),
-          ),
           SwitchListTile(
             activeColor: Theme.of(context).accentColor,
             title: Text(localization.emailReminders),
             subtitle: Text(localization.enabled),
-            value: client.settings.sendReminders,
-            onChanged: (value) => viewModel.onChanged(
-                client.rebuild((b) => b..settings.sendReminders = value)),
+            value: client.settings.sendReminders ?? true,
+            onChanged: (value) => viewModel.onChanged(client.rebuild((b) =>
+                b..settings.sendReminders = value == true ? null : false)),
           ),
         ]),
-         */
       ],
     );
   }
