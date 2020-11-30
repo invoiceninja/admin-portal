@@ -627,7 +627,7 @@ abstract class InvoiceEntity extends Object
 
       if (status.id == kInvoiceStatusPastDue && isPastDue) {
         return true;
-      } else if (status.id == kInvoiceStatusUnpaid && isUnpaid) {
+      } else if (status.id == kInvoiceStatusUnpaid && isUnpaid && isSent) {
         return true;
       } else if (status.id == kInvoiceStatusViewed && isViewed) {
         return true;
