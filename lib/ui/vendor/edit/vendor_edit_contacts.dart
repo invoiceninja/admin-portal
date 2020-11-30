@@ -40,7 +40,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
             viewModel: viewModel,
             key: Key(contact.entityKey),
             contact: contact,
-            areButtonsVisible: vendor.contacts.length > 1,
+            isDialog: vendor.contacts.length > 1,
             index: vendor.contacts
                 .indexOf(vendor.contacts.firstWhere((c) => c.id == contact.id)),
           );
@@ -69,7 +69,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
           viewModel: viewModel,
           key: Key(contact.entityKey),
           contact: contact,
-          areButtonsVisible: vendor.contacts.length > 1,
+          isDialog: vendor.contacts.length > 1,
           index: vendor.contacts.indexOf(contact),
         ),
       ];
@@ -143,13 +143,13 @@ class VendorContactEditDetails extends StatefulWidget {
     @required this.index,
     @required this.contact,
     @required this.viewModel,
-    @required this.areButtonsVisible,
+    @required this.isDialog,
   }) : super(key: key);
 
   final int index;
   final VendorContactEntity contact;
   final VendorEditContactsVM viewModel;
-  final bool areButtonsVisible;
+  final bool isDialog;
 
   @override
   VendorContactEditDetailsState createState() =>
@@ -236,92 +236,72 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
 
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context)
-            .viewInsets
-            .bottom, // stay clear of the keyboard
-      ),
-      child: SingleChildScrollView(
-        child: FormCard(
-          children: <Widget>[
-            widget.areButtonsVisible
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
-                      AppButton(
-                        color: Colors.red,
-                        iconData: Icons.delete,
-                        label: localization.remove,
-                        onPressed: () => confirmCallback(
-                            context: context,
-                            callback: () {
-                              widget.viewModel
-                                  .onRemoveContactPressed(widget.index);
-                              Navigator.pop(context);
-                            }),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      AppButton(
-                        iconData: Icons.check_circle,
-                        label: localization.done,
-                        onPressed: () {
-                          viewModel.onDoneContactPressed();
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  )
-                : Container(),
-            DecoratedFormField(
-              controller: _firstNameController,
-              decoration: InputDecoration(
-                labelText: localization.firstName,
-                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
-                    ? IconButton(
-                        alignment: Alignment.bottomCenter,
-                        color: Theme.of(context).cardColor,
-                        icon: Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () async {
-                          final contact = await getDeviceContact();
-                          if (contact != null) {
-                            setState(() {
-                              _setContactControllers(contact);
-                            });
-                          }
-                        })
-                    : null,
-              ),
-            ),
-            DecoratedFormField(
-              controller: _lastNameController,
-              label: localization.lastName,
-            ),
-            DecoratedFormField(
-              controller: _emailController,
-              label: localization.email,
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) => value.isNotEmpty && !value.contains('@')
-                  ? localization.emailIsInvalid
-                  : null,
-            ),
-            DecoratedFormField(
-              controller: _phoneController,
-              label: localization.phone,
-              keyboardType: TextInputType.phone,
-            ),
-          ],
+    final column = Column(
+      children: [
+        DecoratedFormField(
+          controller: _firstNameController,
+          decoration: InputDecoration(
+            labelText: localization.firstName,
+            suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                ? IconButton(
+                    alignment: Alignment.bottomCenter,
+                    color: Theme.of(context).cardColor,
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () async {
+                      final contact = await getDeviceContact();
+                      if (contact != null) {
+                        setState(() {
+                          _setContactControllers(contact);
+                        });
+                      }
+                    })
+                : null,
+          ),
         ),
-      ),
+        DecoratedFormField(
+          controller: _lastNameController,
+          label: localization.lastName,
+        ),
+        DecoratedFormField(
+          controller: _emailController,
+          label: localization.email,
+          keyboardType: TextInputType.emailAddress,
+          validator: (value) => value.isNotEmpty && !value.contains('@')
+              ? localization.emailIsInvalid
+              : null,
+        ),
+        DecoratedFormField(
+          controller: _phoneController,
+          label: localization.phone,
+          keyboardType: TextInputType.phone,
+        ),
+      ],
     );
+
+    return widget.isDialog
+        ? AlertDialog(
+            content: SingleChildScrollView(child: column),
+            actions: [
+              FlatButton(
+                child: Text(localization.remove.toUpperCase()),
+                onPressed: () => confirmCallback(
+                    context: context,
+                    callback: () {
+                      widget.viewModel.onRemoveContactPressed(widget.index);
+                      Navigator.pop(context);
+                    }),
+              ),
+              FlatButton(
+                  child: Text(localization.done.toUpperCase()),
+                  onPressed: () {
+                    viewModel.onDoneContactPressed();
+                    Navigator.of(context).pop();
+                  })
+            ],
+          )
+        : FormCard(child: column);
   }
 }
