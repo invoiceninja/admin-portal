@@ -62,12 +62,16 @@ class AccountManagementVM {
                     children: <Widget>[LoadingDialog()],
                   ));
 
+          final companyLength = state.companies.length;
           final deleteCompleter = Completer<Null>()
             ..future.then((value) {
-              store.dispatch(SelectCompany(companyIndex: 0));
-              final refreshCompleter = Completer<Null>()
-                ..future.then((value) {
-                  if (store.state.companies.isNotEmpty) {
+              if (companyLength == 1) {
+                print('## No more companies');
+                store.dispatch(UserLogout(context));
+              } else {
+                store.dispatch(SelectCompany(companyIndex: 0));
+                final refreshCompleter = Completer<Null>()
+                  ..future.then((value) {
                     store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(
                         ViewDashboard(navigator: Navigator.of(context)));
@@ -75,13 +79,10 @@ class AccountManagementVM {
                     if (Navigator.of(context).canPop()) {
                       Navigator.of(context).pop();
                     }
-                  } else {
-                    print('## No companies');
-                    store.dispatch(UserLogout(context));
-                  }
-                });
-              store.dispatch(
-                  RefreshData(clearData: true, completer: refreshCompleter));
+                  });
+                store.dispatch(
+                    RefreshData(clearData: true, completer: refreshCompleter));
+              }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
                   context: context,
