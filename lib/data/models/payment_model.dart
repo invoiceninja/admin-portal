@@ -386,7 +386,7 @@ abstract class PaymentEntity extends Object
             actions.add(EntityAction.refund);
           }
         }
-        
+
         if (client != null && client.hasEmailAddress) {
           actions.add(EntityAction.emailPayment);
         }
