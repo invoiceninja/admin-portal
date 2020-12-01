@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ClientPortal extends StatefulWidget {
@@ -45,6 +46,8 @@ class _ClientPortalState extends State<ClientPortal>
   final _portalDomainController = TextEditingController();
   final _customCssController = TextEditingController();
   final _customJavaScriptController = TextEditingController();
+  final _customHeaderController = TextEditingController();
+  final _customFooterController = TextEditingController();
 
   final _customMessageDashboard = TextEditingController();
   final _customMessageUnpaidInvoice = TextEditingController();
@@ -62,7 +65,7 @@ class _ClientPortalState extends State<ClientPortal>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: 4, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -95,6 +98,8 @@ class _ClientPortalState extends State<ClientPortal>
       _customMessageUnapprovedQuote,
       _termsController,
       _privacyController,
+      _customHeaderController,
+      _customFooterController,
     ];
 
     _controllers
@@ -110,6 +115,10 @@ class _ClientPortalState extends State<ClientPortal>
     _customMessageUnapprovedQuote.text = settings.customMessageUnapprovedQuote;
     _privacyController.text = settings.clientPortalPrivacy;
     _termsController.text = settings.clientPortalTerms;
+    _customHeaderController.text = settings.clientPortalCustomHeader;
+    _customFooterController.text = settings.clientPortalCustomFooter;
+    _customCssController.text = settings.clientPortalCustomCss;
+    _customJavaScriptController.text = settings.clientPortalCustomJs;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -134,7 +143,11 @@ class _ClientPortalState extends State<ClientPortal>
         ..customMessageUnapprovedQuote =
             _customMessageUnapprovedQuote.text.trim()
         ..clientPortalTerms = _termsController.text.trim()
-        ..clientPortalPrivacy = _privacyController.text.trim());
+        ..clientPortalPrivacy = _privacyController.text.trim()
+        ..clientPortalCustomJs = _customJavaScriptController.text.trim()
+        ..clientPortalCustomCss = _customCssController.text.trim()
+        ..clientPortalCustomHeader = _customHeaderController.text.trim()
+        ..clientPortalCustomFooter = _customFooterController.text.trim());
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
       }
@@ -169,6 +182,7 @@ class _ClientPortalState extends State<ClientPortal>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
+        isScrollable: isMobile(context),
         tabs: [
           Tab(
             text: localization.settings,
@@ -176,14 +190,12 @@ class _ClientPortalState extends State<ClientPortal>
           Tab(
             text: localization.authorization,
           ),
-          /*
           Tab(
             text: localization.messages,
           ),
           Tab(
             text: localization.customize,
           ),
-           */
         ],
       ),
       body: AppTabForm(
@@ -386,7 +398,6 @@ class _ClientPortalState extends State<ClientPortal>
               ),
             ],
           ),
-          /*
           ListView(
             children: <Widget>[
               FormCard(
@@ -420,21 +431,30 @@ class _ClientPortalState extends State<ClientPortal>
               FormCard(
                 children: <Widget>[
                   DecoratedFormField(
+                    label: localization.header,
+                    controller: _customHeaderController,
+                    maxLines: 6,
+                  ),
+                  DecoratedFormField(
+                    label: localization.footer,
+                    controller: _customFooterController,
+                    maxLines: 6,
+                  ),
+                  DecoratedFormField(
                     label: localization.customCss,
                     controller: _customCssController,
-                    maxLines: 8,
+                    maxLines: 6,
                   ),
                   if (isSelfHosted(context))
                     DecoratedFormField(
                       label: localization.customJavascript,
                       controller: _customJavaScriptController,
-                      maxLines: 8,
+                      maxLines: 6,
                     ),
                 ],
               )
             ],
           ),
-           */
         ],
       ),
     );

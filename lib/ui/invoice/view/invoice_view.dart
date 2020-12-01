@@ -77,9 +77,6 @@ class _InvoiceViewState extends State<InvoiceView>
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: invoice,
-      title: (invoice.number ?? '').isEmpty
-          ? localization.pending
-          : invoice.number,
       appBarBottom: TabBar(
         controller: _controller,
         isScrollable: true,

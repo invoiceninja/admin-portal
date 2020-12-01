@@ -194,8 +194,7 @@ void _checkResponse(http.Response response) {
   final serverVersion = response.headers['x-app-version'];
   final minClientVersion = response.headers['x-minimum-client-version'];
 
-  if (response.statusCode >= 400) {
-    print('==== FAILED ====');
+  if (response.statusCode >= 500) {
     throw _parseError(response.statusCode, response.body);
   } else if (serverVersion == null) {
     throw 'Error: please check that Invoice Ninja v5 is installed on the server';
@@ -203,6 +202,8 @@ void _checkResponse(http.Response response) {
     throw 'Error: client not supported, please update to the latest version [Current v$kClientVersion < Minimum v$minClientVersion]';
   } else if (Version.parse(serverVersion) < Version.parse(kMinServerVersion)) {
     throw 'Error: server not supported, please update to the latest version [Current v$serverVersion < Minimum v$kMinServerVersion]';
+  } else if (response.statusCode >= 400) {
+    throw _parseError(response.statusCode, response.body);
   }
 }
 

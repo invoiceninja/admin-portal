@@ -60,11 +60,11 @@
 	<string>The photo library is used to upload documents</string>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera is used to upload documents</string>
+	<key>NSContactsUsageDescription</key>
+	<string>The contacts list is used to create clients</string>
 	<key>io.flutter.embedded_views_preview</key>
     <true/>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
-	<key>NSContactsUsageDescription</key>  
-	<string>This app requires contacts access to function properly.</string>
 </dict>
 </plist>

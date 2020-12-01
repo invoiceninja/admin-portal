@@ -48,6 +48,7 @@ class PDFScaffold extends StatefulWidget {
 
 class _PDFScaffoldState extends State<PDFScaffold> {
   bool _isLoading = true;
+  bool _isDeliveryNote = false;
   String _activityId;
   String _pdfString;
   http.Response _response;
@@ -72,7 +73,12 @@ class _PDFScaffoldState extends State<PDFScaffold> {
       _isLoading = true;
     });
 
-    _loadPDF(context, widget.invoice, _activityId).then((response) {
+    _loadPDF(
+      context,
+      widget.invoice,
+      _isDeliveryNote,
+      _activityId,
+    ).then((response) {
       setState(() {
         _response = response;
         _isLoading = false;
@@ -125,8 +131,8 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                     Text(localization.lookup('${invoice.entityType}') +
                         ' ' +
                         (invoice.number ?? '')),
+                    Spacer(),
                     if (_activityId != null && isDesktop(context)) ...[
-                      Spacer(),
                       Flexible(
                         child: IgnorePointer(
                           ignoring: _isLoading,
@@ -157,7 +163,6 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       Spacer(),
                     ],
                     if (!kIsWeb && _pageCount > 1) ...[
-                      Spacer(),
                       IconButton(
                         icon: Icon(Icons.navigate_before),
                         onPressed: _pageNumber > 1
@@ -185,7 +190,22 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                             : null,
                       ),
                       Spacer(),
-                    ]
+                    ],
+                    Container(
+                      width: 200,
+                      child: CheckboxListTile(
+                        title: Text(localization.deliveryNote),
+                        value: _isDeliveryNote,
+                        onChanged: (value) {
+                          setState(() {
+                            _isDeliveryNote = !_isDeliveryNote;
+                            loadPdf();
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity.leading,
+                        activeColor: store.state.accentColor,
+                      ),
+                    ),
                   ],
                 ),
                 actions: <Widget>[
@@ -226,7 +246,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       controller: _pdfController,
                       onDocumentLoaded: (document) {
                         setState(() {
-                          _pageCount = document.pagesCount;
+                          _pageCount = document?.pagesCount ?? 0;
                         });
                       },
                       onPageChanged: (page) {
@@ -240,16 +260,21 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 }
 
 Future<Response> _loadPDF(
-    BuildContext context, InvoiceEntity invoice, String activityId) async {
+  BuildContext context,
+  InvoiceEntity invoice,
+  bool isDeliveryNote,
+  String activityId,
+) async {
   http.Response response;
 
-  if (activityId != null) {
+  if (activityId != null || isDeliveryNote) {
     final store = StoreProvider.of<AppState>(context);
     final credential = store.state.credentials;
-    response = await WebClient().get(
-        '${credential.url}/activities/download_entity/$activityId',
-        credential.token,
-        rawResponse: true);
+    final url = isDeliveryNote
+        ? '/invoices/${invoice.id}/delivery_note'
+        : '/activities/download_entity/$activityId';
+    response = await WebClient()
+        .get('${credential.url}$url', credential.token, rawResponse: true);
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
@@ -260,7 +285,7 @@ Future<Response> _loadPDF(
     showErrorDialog(
         context: context,
         message: '${response.statusCode}: ${response.reasonPhrase}');
-    return null;
+    throw '${response.statusCode}: ${response.reasonPhrase}';
   }
 
   return response;

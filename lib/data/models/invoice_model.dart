@@ -627,6 +627,10 @@ abstract class InvoiceEntity extends Object
 
       if (status.id == kInvoiceStatusPastDue && isPastDue) {
         return true;
+      } else if (status.id == kInvoiceStatusUnpaid && isUnpaid && isSent) {
+        return true;
+      } else if (status.id == kInvoiceStatusViewed && isViewed) {
+        return true;
       }
     }
 
@@ -827,6 +831,9 @@ abstract class InvoiceEntity extends Object
   bool get isPayable =>
       !isPaid && !isQuote && !isRecurringInvoice && !isCancelledOrReversed;
 
+  bool get isViewed =>
+      invitations.any((invitation) => invitation.viewedDate.isNotEmpty);
+
   bool get isPaid => statusId == kInvoiceStatusPaid;
 
   bool get isReversed => statusId == kInvoiceStatusReversed;
@@ -881,7 +888,8 @@ abstract class InvoiceEntity extends Object
   /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
   Map<String, Map<String, dynamic>> getTaxes(int precision) {
     final taxes = <String, Map<String, dynamic>>{};
-    final taxable = calculateTaxes(useInclusiveTaxes: usesInclusiveTaxes, precision: precision);
+    final taxable = calculateTaxes(
+        useInclusiveTaxes: usesInclusiveTaxes, precision: precision);
     final paidAmount = amount - balance;
 
     if (taxRate1 != 0) {

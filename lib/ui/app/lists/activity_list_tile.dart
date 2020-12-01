@@ -105,6 +105,9 @@ class ActivityListTile extends StatelessWidget {
                     filterEntity: client,
                   );
                   break;
+                default:
+                  print(
+                      'Error: entity type ${activity.entityType} not handled in activity_list_tile');
               }
             },
       trailing: enableNavigation ? Icon(Icons.navigate_next) : null,

@@ -1005,6 +1005,7 @@ void editEntity(
     int subIndex,
     Completer completer}) {
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final navigator = Navigator.of(context);
   final localization = AppLocalization.of(context);
   final entityType = entity.entityType;
@@ -1078,17 +1079,38 @@ void editEntity(
                             : localization.updatedCompanyGateway)));
             break;
           case EntityType.invoice:
-            store.dispatch(EditInvoice(
-              invoice: entity,
-              navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<InvoiceEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdInvoice
-                          : localization.updatedInvoice),
-              invoiceItemIndex: subIndex,
-            ));
+            final invoice = entity as InvoiceEntity;
+            final client = state.clientState.get(invoice.clientId);
+            final settings = SettingsEntity(
+              clientSettings: client.settings,
+              groupSettings: state.groupState.get(client.groupId).settings,
+              companySettings: state.company.settings,
+            );
+
+            if (settings.lockInvoices == SettingsEntity.LOCK_INVOICES_PAID &&
+                invoice.isPaid) {
+              showMessageDialog(
+                  context: context,
+                  message: localization.paidInvoicesArelocked);
+            } else if (settings.lockInvoices ==
+                    SettingsEntity.LOCK_INVOICES_SENT &&
+                invoice.isSent) {
+              showMessageDialog(
+                  context: context,
+                  message: localization.sentInvoicesArelocked);
+            } else {
+              store.dispatch(EditInvoice(
+                invoice: entity,
+                navigator: navigator,
+                completer: completer ??
+                    snackBarCompleter<InvoiceEntity>(
+                        context,
+                        entity.isNew
+                            ? localization.createdInvoice
+                            : localization.updatedInvoice),
+                invoiceItemIndex: subIndex,
+              ));
+            }
             break;
           case EntityType.quote:
             store.dispatch(EditQuote(

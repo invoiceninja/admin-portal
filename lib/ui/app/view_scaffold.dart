@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
@@ -15,7 +14,6 @@ class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
     @required this.body,
     @required this.entity,
-    this.title,
     this.floatingActionButton,
     this.appBarBottom,
     this.isFilter = false,
@@ -24,7 +22,6 @@ class ViewScaffold extends StatelessWidget {
 
   final bool isFilter;
   final BaseEntity entity;
-  final String title;
   final Widget body;
   final Function onBackPressed;
   final Widget floatingActionButton;
@@ -45,7 +42,6 @@ class ViewScaffold extends StatelessWidget {
       title = (entity.listDisplayName ?? '').isEmpty
           ? localization.pending
           : entity.listDisplayName;
-
       if (!(isFilter ?? false)) {
         title = localization.lookup('${entity.entityType}') + '  ›  ' + title;
       }
@@ -88,9 +84,7 @@ class ViewScaffold extends StatelessWidget {
           centerTitle: false,
           leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
-          title: EntityStateTitle(
-            entity: entity,
-          ),
+          title: Text(title),
           bottom: appBarBottom,
           actions: entity.isNew
               ? []

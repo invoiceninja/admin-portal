@@ -71,24 +71,19 @@ class MainScreen extends StatelessWidget {
       Widget screen = BlankScreen();
 
       bool isFullScreen = false;
-      bool isEdit = false;
-      bool isEmail = false;
+      final isEdit = subRoute == '/edit';
+      final isEmail = subRoute == '/email';
 
-      if (prefState.isDesktop) {
-        isEdit = subRoute == '/edit';
-        isEmail = subRoute == '/email';
-        if ([
-              InvoiceScreen.route,
-              QuoteScreen.route,
-              CreditScreen.route,
-              RecurringInvoiceScreen.route,
-            ].contains(mainRoute) &&
-            (isEdit || isEmail)) {
-          isFullScreen = true;
-        }
+      if ([
+            InvoiceScreen.route,
+            QuoteScreen.route,
+            CreditScreen.route,
+            RecurringInvoiceScreen.route,
+          ].contains(mainRoute) &&
+          (isEdit || isEmail)) {
+        isFullScreen = true;
       }
-      if (prefState.isNotMobile &&
-          DesignEditScreen.route == uiState.currentRoute) {
+      if (DesignEditScreen.route == uiState.currentRoute) {
         isFullScreen = true;
       }
 
@@ -245,11 +240,6 @@ class MainScreen extends StatelessWidget {
         onWillPop: () async {
           final state = store.state;
           final historyList = state.historyList;
-
-          if (historyList.length <= 1) {
-            return true;
-          }
-
           final isEditing = state.uiState.isEditing;
           final index = isEditing ? 0 : 1;
           HistoryRecord history;
@@ -284,6 +274,7 @@ class MainScreen extends StatelessWidget {
           }
 
           if (history == null) {
+            store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
             return false;
           }
 
@@ -367,19 +358,7 @@ class EntityScreens extends StatelessWidget {
     }
 
     Widget child;
-    if (subRoute == 'email') {
-      switch (entityType) {
-        case EntityType.invoice:
-          child = InvoiceEmailScreen();
-          break;
-        case EntityType.credit:
-          child = CreditEmailScreen();
-          break;
-        case EntityType.quote:
-          child = QuoteEmailScreen();
-          break;
-      }
-    } else if (subRoute == 'edit' && !editingFIlterEntity) {
+    if (subRoute == 'edit' && !editingFIlterEntity) {
       switch (entityType) {
         case EntityType.client:
           child = ClientEditScreen();

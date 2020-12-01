@@ -79,6 +79,25 @@ abstract class ExpenseCategoryEntity extends Object
   int get hashCode;
 
   @override
+  List<EntityAction> getActions(
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
+    final actions = <EntityAction>[];
+
+    if (!isDeleted && includeEdit && userCompany.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(super.getActions(userCompany: userCompany));
+  }
+
+  @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
       return true;

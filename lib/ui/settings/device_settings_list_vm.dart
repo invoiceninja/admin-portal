@@ -2,19 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -37,7 +33,6 @@ class DeviceSettingsScreen extends StatelessWidget {
 class DeviceSettingsVM {
   DeviceSettingsVM({
     @required this.state,
-    @required this.onLogoutTap,
     @required this.onRefreshTap,
     @required this.onDarkModeChanged,
     @required this.onLayoutChanged,
@@ -51,8 +46,6 @@ class DeviceSettingsVM {
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
-
     void _refreshData(BuildContext context) async {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete,
@@ -61,6 +54,7 @@ class DeviceSettingsVM {
       store.dispatch(RefreshData(
         completer: completer,
         clearData: true,
+        includeStatic: true,
       ));
 
       await showDialog<AlertDialog>(
@@ -75,15 +69,6 @@ class DeviceSettingsVM {
 
     return DeviceSettingsVM(
       state: store.state,
-      onLogoutTap: (BuildContext context) => confirmCallback(
-          context: context,
-          callback: () async {
-            if (store.state.user.oauthProvider ==
-                UserEntity.OAUTH_PROVIDER_GOOGLE) {
-              await _googleSignIn.signOut();
-            }
-            store.dispatch(UserLogout(context));
-          }),
       onRefreshTap: (BuildContext context) => _refreshData(context),
       onDarkModeChanged: (BuildContext context, bool value) async {
         store.dispatch(UpdateUserPreferences(enableDarkMode: value));
@@ -160,7 +145,6 @@ class DeviceSettingsVM {
   }
 
   final AppState state;
-  final Function(BuildContext) onLogoutTap;
   final Function(BuildContext) onRefreshTap;
   final Function(BuildContext, bool) onDarkModeChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;

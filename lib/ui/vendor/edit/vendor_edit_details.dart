@@ -130,7 +130,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
                   ? AppLocalization.of(context).pleaseEnterAName
                   : null,
               decoration: InputDecoration(
-                labelText: localization.firstName,
+                labelText: localization.name,
                 suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
                     ? IconButton(
                         alignment: Alignment.bottomCenter,

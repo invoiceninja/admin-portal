@@ -53,7 +53,7 @@ class TaskStatusFields {
 }
 
 abstract class TaskStatusEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, EntityStatus
     implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
   factory TaskStatusEntity({String id, AppState state}) {
     return _$TaskStatusEntity._(
@@ -81,10 +81,30 @@ abstract class TaskStatusEntity extends Object
     return EntityType.taskStatus;
   }
 
+  @override
   String get name;
 
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;
+
+  @override
+  List<EntityAction> getActions(
+      {UserCompanyEntity userCompany,
+        ClientEntity client,
+        bool includeEdit = false,
+        bool multiselect = false}) {
+    final actions = <EntityAction>[];
+
+    if (!isDeleted && includeEdit && userCompany.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(super.getActions(userCompany: userCompany));
+  }
 
   int compareTo({
     TaskStatusEntity taskStatus,

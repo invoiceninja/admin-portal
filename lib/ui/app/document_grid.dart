@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DocumentGrid extends StatelessWidget {
   const DocumentGrid({
@@ -52,10 +53,20 @@ class DocumentGrid extends StatelessWidget {
                       iconData: Icons.camera_alt,
                       label: localization.takePicture,
                       onPressed: () async {
-                        final image = await ImagePicker()
-                            .getImage(source: ImageSource.camera);
-                        if (image != null && image.path != null) {
-                          onUploadDocument(image.path);
+                        final permissionStatus =
+                            await [Permission.camera].request();
+                        final permission =
+                            permissionStatus[Permission.camera] ??
+                                PermissionStatus.undetermined;
+
+                        if (permission == PermissionStatus.granted) {
+                          final image = await ImagePicker()
+                              .getImage(source: ImageSource.camera);
+                          if (image != null && image.path != null) {
+                            onUploadDocument(image.path);
+                          }
+                        } else {
+                          openAppSettings();
                         }
                       },
                     ),
@@ -73,10 +84,20 @@ class DocumentGrid extends StatelessWidget {
                       if (kIsWeb) {
                         path = await WebUtils.filePicker();
                       } else {
-                        final image = await ImagePicker()
-                            .getImage(source: ImageSource.gallery);
-                        if (image != null) {
-                          path = image.path;
+                        final permissionStatus =
+                            await [Permission.photos].request();
+                        final permission =
+                            permissionStatus[Permission.photos] ??
+                                PermissionStatus.undetermined;
+
+                        if (permission == PermissionStatus.granted) {
+                          final image = await ImagePicker()
+                              .getImage(source: ImageSource.gallery);
+                          if (image != null) {
+                            path = image.path;
+                          }
+                        } else {
+                          openAppSettings();
                         }
                       }
                       if (path != null) {

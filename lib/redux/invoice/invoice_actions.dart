@@ -480,7 +480,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: invoice);
+        editEntity(context: context, entity: invoice);
       break;
     case EntityAction.viewPdf:
       viewPdf(invoice, context);

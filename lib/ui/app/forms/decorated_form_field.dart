@@ -92,8 +92,6 @@ class DecoratedFormField extends StatelessWidget {
           return null;
         } else if (kIsWeb && isDesktop(context) && onSavePressed != null) {
           onSavePressed(context);
-        } else {
-          FocusScope.of(context).nextFocus();
         }
       },
       enabled: enabled,

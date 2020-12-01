@@ -80,8 +80,14 @@ class InvoiceSidebar extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final upcomingInvoices = memoizedUpcomingInvoices(state.invoiceState.map);
-    final pastDueInvoices = memoizedPastDueInvoices(state.invoiceState.map);
+    final upcomingInvoices = memoizedUpcomingInvoices(
+      state.invoiceState.map,
+      state.clientState.map,
+    );
+    final pastDueInvoices = memoizedPastDueInvoices(
+      state.invoiceState.map,
+      state.clientState.map,
+    );
     final selectedIds =
         state.dashboardUIState.selectedEntities[EntityType.invoice];
 
@@ -148,7 +154,10 @@ class PaymentSidebar extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final recentPayments = memoizedRecentPayments(state.paymentState.map);
+    final recentPayments = memoizedRecentPayments(
+      state.paymentState.map,
+      state.clientState.map,
+    );
     final selectedIds =
         state.dashboardUIState.selectedEntities[EntityType.payment];
 
@@ -200,8 +209,14 @@ class QuoteSidebar extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final upcomingQuotes = memoizedUpcomingQuotes(state.quoteState.map);
-    final expriedQuotes = memoizedExpiredQuotes(state.quoteState.map);
+    final upcomingQuotes = memoizedUpcomingQuotes(
+      state.quoteState.map,
+      state.clientState.map,
+    );
+    final expriedQuotes = memoizedExpiredQuotes(
+      state.quoteState.map,
+      state.clientState.map,
+    );
     final selectedIds =
         state.dashboardUIState.selectedEntities[EntityType.quote];
 
