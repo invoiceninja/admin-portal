@@ -342,8 +342,10 @@ void handlePaymentAction(
       viewEntity(context: context, entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (payment.invoicePaymentables.length == 1) {
-          payment = payment.rebuild((b) =>
-              b..invoices.add(PaymentableEntity(invoiceId: payment.invoiceId)));
+          payment = payment.rebuild((b) => b
+            ..invoices.add(PaymentableEntity(
+                invoiceId: payment.invoiceId,
+                amount: payment.completedAmount)));
         }
         store.dispatch(ViewRefundPayment(
           navigator: navigator,

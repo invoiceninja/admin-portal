@@ -373,18 +373,20 @@ abstract class PaymentEntity extends Object
 
     if (!isDeleted) {
       if (userCompany.canEditEntity(this)) {
-        if (includeEdit) {
-          actions.add(EntityAction.edit);
-        }
+        if (!multiselect) {
+          if (includeEdit) {
+            actions.add(EntityAction.edit);
+          }
 
-        if (applied < amount) {
-          actions.add(EntityAction.apply);
-        }
+          if (applied < amount) {
+            actions.add(EntityAction.apply);
+          }
 
-        if (completedAmount > 0) {
-          actions.add(EntityAction.refund);
+          if (completedAmount > 0) {
+            actions.add(EntityAction.refund);
+          }
         }
-
+        
         if (client != null && client.hasEmailAddress) {
           actions.add(EntityAction.emailPayment);
         }
