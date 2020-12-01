@@ -131,7 +131,6 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
               ],
             ),
             ListView(
-              padding: const EdgeInsets.all(10),
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
