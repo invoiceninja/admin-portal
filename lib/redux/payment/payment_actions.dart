@@ -338,6 +338,7 @@ void handlePaymentAction(
       });
       break;
     case EntityAction.refund:
+      final navigator = Navigator.of(context);
       viewEntity(context: context, entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (payment.invoicePaymentables.length == 1) {
@@ -345,7 +346,7 @@ void handlePaymentAction(
               b..invoices.add(PaymentableEntity(invoiceId: payment.invoiceId)));
         }
         store.dispatch(ViewRefundPayment(
-          navigator: Navigator.of(context),
+          navigator: navigator,
           payment: payment.rebuild((b) =>
               b..sendEmail = company.settings.clientManualPaymentNotification),
         ));
