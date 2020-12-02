@@ -14,10 +14,6 @@ enum ProductReportFields {
   price,
   cost,
   quantity,
-  vendor,
-  vendor_city,
-  vendor_state,
-  vendor_country,
   tax_rate1,
   tax_rate2,
   tax_rate3,
@@ -60,7 +56,6 @@ ReportResult productReport(
     ProductReportFields.price,
     ProductReportFields.cost,
     ProductReportFields.quantity,
-    ProductReportFields.vendor,
   ];
 
   if (productReportSettings.columns.isNotEmpty) {
@@ -73,7 +68,6 @@ ReportResult productReport(
 
   for (var productId in productMap.keys) {
     final product = productMap[productId];
-    final vendor = vendorMap[product.vendorId];
 
     if (product.isDeleted) {
       continue;
@@ -97,18 +91,6 @@ ReportResult productReport(
           break;
         case ProductReportFields.quantity:
           value = product.quantity;
-          break;
-        case ProductReportFields.vendor:
-          value = vendor?.listDisplayName;
-          break;
-        case ProductReportFields.vendor_city:
-          value = vendor?.city;
-          break;
-        case ProductReportFields.vendor_state:
-          value = vendor?.state;
-          break;
-        case ProductReportFields.vendor_country:
-          value = staticState.countryMap[vendor?.countryId];
           break;
         case ProductReportFields.tax_rate1:
           value = product.taxRate1;

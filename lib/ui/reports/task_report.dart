@@ -17,6 +17,7 @@ enum TaskReportFields {
   calculated_rate,
   start_date,
   end_date,
+  duration,
   description,
   invoice,
   invoice_amount,
@@ -28,10 +29,6 @@ enum TaskReportFields {
   client_address2,
   client_shipping_address1,
   client_shipping_address2,
-  vendor,
-  vendor_city,
-  vendor_state,
-  vendor_country,
   custom_value1,
   custom_value2,
   custom_value3,
@@ -78,7 +75,6 @@ ReportResult taskReport(
     TaskReportFields.description,
     TaskReportFields.client,
     TaskReportFields.invoice,
-    TaskReportFields.vendor,
   ];
 
   if (taskReportSettings.columns.isNotEmpty) {
@@ -92,7 +88,6 @@ ReportResult taskReport(
   for (var taskId in taskMap.keys) {
     final task = taskMap[taskId];
     final client = clientMap[task.clientId];
-    final vendor = vendorMap[task.vendorId];
     final invoice = invoiceMap[task.invoiceId];
     final project = projectMap[task.projectId];
 
@@ -119,7 +114,8 @@ ReportResult taskReport(
           );
           break;
         case TaskReportFields.start_date:
-          value = convertDateTimeToSqlDate(task.taskTimes.firstOrNull?.startDate);
+          value =
+              convertDateTimeToSqlDate(task.taskTimes.firstOrNull?.startDate);
           break;
         case TaskReportFields.end_date:
           value = convertDateTimeToSqlDate(task.taskTimes.firstOrNull?.endDate);
@@ -139,6 +135,9 @@ ReportResult taskReport(
         case TaskReportFields.invoice_due_date:
           value = invoice.dueDate;
           break;
+        case TaskReportFields.duration:
+          value = task.calculateDuration.inSeconds;
+          break;
         case TaskReportFields.client:
           value = clientMap[task.clientId]?.displayName ?? '';
           break;
@@ -156,18 +155,6 @@ ReportResult taskReport(
           break;
         case TaskReportFields.client_shipping_address2:
           value = client.shippingAddress2;
-          break;
-        case TaskReportFields.vendor:
-          value = vendorMap[task.vendorId];
-          break;
-        case TaskReportFields.vendor_city:
-          value = vendor?.city;
-          break;
-        case TaskReportFields.vendor_state:
-          value = vendor?.state;
-          break;
-        case TaskReportFields.vendor_country:
-          value = staticState.countryMap[vendor?.countryId].name;
           break;
         case TaskReportFields.custom_value1:
           value = task.customValue1;
