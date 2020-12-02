@@ -168,7 +168,11 @@ class ReportsScreen extends StatelessWidget {
         },
         items: reportResult.columns
             .where((column) =>
-            [ReportColumnType.number, ReportColumnType.age,].contains(
+            [
+              ReportColumnType.number,
+              ReportColumnType.age,
+              ReportColumnType.duration,
+            ].contains(
                 getReportColumnType(column, context))
         )
             .map((column) =>
@@ -526,6 +530,7 @@ enum ReportColumnType {
   number,
   bool,
   age,
+  duration,
 }
 
 ReportColumnType getReportColumnType(String column, BuildContext context) {
@@ -544,12 +549,16 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
 
   if (company.hasCustomField(column)) {
     return convertCustomFieldType(company.getCustomFieldType(column));
-  } else if (['updated_at', 'created_at'].contains(column)) {
+  } else if (['updated_at', 'created_at', 'start_time', 'end_time'].contains(column)) {
     return ReportColumnType.dateTime;
-  } else if (['date', 'due_date', 'valid_until'].contains(column)) {
+  } else
+  if (['date', 'due_date', 'valid_until', 'start_date', 'end_date'].contains(
+      column)) {
     return ReportColumnType.date;
   } else if (column == 'age') {
     return ReportColumnType.age;
+  } else if (column == 'duration') {
+    return ReportColumnType.duration;
   } else if (EntityPresenter.isFieldNumeric(column)) {
     return ReportColumnType.number;
   } else if (column.startsWith('is_')) {
@@ -628,6 +637,7 @@ class ReportResult {
   }) {
     if (reportsUIState.filters.containsKey(column)) {
       final filter = reportsUIState.filters[column];
+
       if (filter.isNotEmpty) {
         if (column == 'age') {
           final min = kAgeGroups[filter];
@@ -682,11 +692,12 @@ class ReportResult {
     return value.toLowerCase().contains(filter.toLowerCase());
   }
 
-  static bool matchAmount({String filter, double amount}) {
+  static bool matchAmount({String filter, num amount}) {
     final String range = filter.replaceAll(',', '-') + '-';
     final List<String> parts = range.split('-');
     final min = parseDouble(parts[0]);
-    final max = parseDouble(parts[1]);
+    final max = parts.length > 1 ? parseDouble(parts[1]) : 0;
+
     if (amount < min || (max > 0 && amount > max)) {
       return false;
     }
@@ -853,8 +864,9 @@ class ReportResult {
                     )).toList(),
               ))
             else
-              if (getReportColumnType(column, context) ==
-                  ReportColumnType.number)
+              if (
+              [ReportColumnType.number, ReportColumnType.duration,].contains(
+                  getReportColumnType(column, context)))
                 DataCell(TextFormField(
                   controller: textEditingControllers[column],
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -875,10 +887,8 @@ class ReportResult {
                       )),
                 ))
               else
-                if (getReportColumnType(column, context) ==
-                    ReportColumnType.dateTime ||
-                    getReportColumnType(column, context) ==
-                        ReportColumnType.date)
+                if ([ReportColumnType.date, ReportColumnType.dateTime,]
+                    .contains(getReportColumnType(column, context)))
                   DataCell(AppDropdownButton<DateRange>(
                     labelText: null,
                     showBlank: true,
@@ -1010,7 +1020,7 @@ class ReportResult {
                         animationStart: 1,
                         debounceDuration: Duration(seconds: 0),
                       ),
-                    )
+                    ),
     ]);
   }
 
@@ -1036,7 +1046,6 @@ class ReportResult {
           }),
         );
       }
-
       return DataRow(cells: cells);
     } else {
       final groupTotals = viewModel.groupTotals;
@@ -1067,6 +1076,8 @@ class ReportResult {
         } else if (columnType == ReportColumnType.age) {
           value = formatNumber(
               values[column], context, formatNumberType: FormatNumberType.int);
+        } else if (columnType == ReportColumnType.duration) {
+          value = formatDuration(Duration(seconds: values[column].toInt()));
         }
 
         cells.add(DataCell(Text(value), onTap: () {
@@ -1131,7 +1142,11 @@ class ReportResult {
         onSort: onSortCallback,
       ),
       for (String column in sortedColumns)
-        if ([ReportColumnType.number, ReportColumnType.age,].contains(
+        if ([
+          ReportColumnType.number,
+          ReportColumnType.age,
+          ReportColumnType.duration,
+        ].contains(
             getReportColumnType(column, context)))
           DataColumn(
             label: Text(
@@ -1159,15 +1174,18 @@ class ReportResult {
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
+        final canTotal = cell is ReportNumberValue || cell is ReportAgeValue ||
+            cell is ReportDurationValue;
 
-        if (cell is ReportNumberValue || cell is ReportAgeValue) {
-          String currencyId;
+        String currencyId = '';
+        if (canTotal) {
           if (cell is ReportNumberValue) {
-            currencyId = cell.currencyId;
+            currencyId = cell.currencyId ?? '';
           } else if (cell is ReportAgeValue) {
-            currencyId = cell.currencyId;
+            currencyId = cell.currencyId ?? '';
+          } else if (cell is ReportDurationValue) {
+            currencyId = cell.currencyId ?? '';
           }
-
           if (!totals.containsKey(currencyId)) {
             totals[currencyId] = {'count': 0};
           }
@@ -1183,7 +1201,7 @@ class ReportResult {
       }
     }
 
-    final keys = totals.keys.toList();
+    final keys = totals.keys.where((element) => element != null).toList();
     if (reportSettings.sortTotalsIndex != null) {
       keys.sort((rowA, rowB) {
         dynamic valueA;
@@ -1224,6 +1242,7 @@ class ReportResult {
         DataCell(Text(values['count'].toInt().toString())),
       ];
 
+
       final List<String> fields = values.keys.toList()
         ..sort((String str1, String str2) => str1.compareTo(str2));
       fields.forEach((field) {
@@ -1233,6 +1252,8 @@ class ReportResult {
           if (field == 'age') {
             value = formatNumber(amount / values['count'], context,
                 formatNumberType: FormatNumberType.double);
+          } else if (field == 'duration') {
+            value = formatDuration(Duration(seconds: amount.toInt()));
           } else {
             value = formatNumber(amount, context, currencyId: currencyId,
                 formatNumberType: field == 'quantity'
@@ -1330,6 +1351,27 @@ class ReportAgeValue extends ReportElement {
   @override
   String renderText(BuildContext context, String column) {
     return '$value';
+  }
+}
+
+class ReportDurationValue extends ReportElement {
+  ReportDurationValue({
+    @required dynamic value,
+    @required EntityType entityType,
+    @required String entityId,
+    @required this.currencyId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  final String currencyId;
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return formatDuration(Duration(seconds: value));
   }
 }
 

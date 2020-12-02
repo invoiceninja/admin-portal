@@ -8,14 +8,15 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
-import 'package:invoiceninja_flutter/utils/extensions.dart';
 
 enum TaskReportFields {
   rate,
   calculated_rate,
-  start_date,
-  end_date,
+  start_time,
+  end_time,
+  duration,
   description,
   invoice,
   invoice_amount,
@@ -27,10 +28,6 @@ enum TaskReportFields {
   client_address2,
   client_shipping_address1,
   client_shipping_address2,
-  vendor,
-  vendor_city,
-  vendor_state,
-  vendor_country,
   custom_value1,
   custom_value2,
   custom_value3,
@@ -72,17 +69,18 @@ ReportResult taskReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
-    TaskReportFields.start_date,
-    TaskReportFields.end_date,
+    TaskReportFields.start_time,
+    TaskReportFields.end_time,
+    TaskReportFields.duration,
     TaskReportFields.description,
     TaskReportFields.client,
     TaskReportFields.invoice,
-    TaskReportFields.vendor,
   ];
 
   if (taskReportSettings.columns.isNotEmpty) {
     columns = BuiltList(taskReportSettings.columns
         .map((e) => EnumUtils.fromString(TaskReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -90,10 +88,9 @@ ReportResult taskReport(
 
   for (var taskId in taskMap.keys) {
     final task = taskMap[taskId];
-    final client = clientMap[task.clientId];
-    final vendor = vendorMap[task.vendorId];
-    final invoice = invoiceMap[task.invoiceId];
-    final project = projectMap[task.projectId];
+    final client = clientMap[task.clientId] ?? ClientEntity();
+    final invoice = invoiceMap[task.invoiceId] ?? InvoiceEntity();
+    final project = projectMap[task.projectId] ?? ProjectEntity();
 
     if (task.isDeleted) {
       continue;
@@ -106,10 +103,10 @@ ReportResult taskReport(
       dynamic value = '';
 
       switch (column) {
-        case TaskReportFields.calculated_rate:
+        case TaskReportFields.rate:
           value = task.rate;
           break;
-        case TaskReportFields.rate:
+        case TaskReportFields.calculated_rate:
           value = taskRateSelector(
             company: userCompany.company,
             project: project,
@@ -117,17 +114,23 @@ ReportResult taskReport(
             task: task,
           );
           break;
-        case TaskReportFields.start_date:
-          value = task.taskTimes.firstOrNull?.startDate;
+        case TaskReportFields.start_time:
+          final timestamp = task.startTimestamp;
+          value = (timestamp ?? 0) > 0
+              ? convertTimestampToDateString(timestamp)
+              : '';
           break;
-        case TaskReportFields.end_date:
-          value = task.taskTimes.firstOrNull?.endDate;
+        case TaskReportFields.end_time:
+          final timestamp = task.endTimestamp;
+          value = (timestamp ?? 0) > 0
+              ? convertTimestampToDateString(timestamp)
+              : '';
           break;
         case TaskReportFields.description:
           value = task.description;
           break;
         case TaskReportFields.invoice:
-          value = invoice;
+          value = invoice?.listDisplayName ?? '';
           break;
         case TaskReportFields.invoice_amount:
           value = invoice.amount;
@@ -138,8 +141,11 @@ ReportResult taskReport(
         case TaskReportFields.invoice_due_date:
           value = invoice.dueDate;
           break;
+        case TaskReportFields.duration:
+          value = task.calculateDuration.inSeconds;
+          break;
         case TaskReportFields.client:
-          value = clientMap[task.clientId];
+          value = clientMap[task.clientId]?.displayName ?? '';
           break;
         case TaskReportFields.client_balance:
           value = client.balance;
@@ -155,18 +161,6 @@ ReportResult taskReport(
           break;
         case TaskReportFields.client_shipping_address2:
           value = client.shippingAddress2;
-          break;
-        case TaskReportFields.vendor:
-          value = vendorMap[task.vendorId];
-          break;
-        case TaskReportFields.vendor_city:
-          value = vendor?.city;
-          break;
-        case TaskReportFields.vendor_state:
-          value = vendor?.state;
-          break;
-        case TaskReportFields.vendor_country:
-          value = staticState.countryMap[vendor?.countryId];
           break;
         case TaskReportFields.custom_value1:
           value = task.customValue1;
@@ -191,7 +185,10 @@ ReportResult taskReport(
         skip = true;
       }
 
-      if (value.runtimeType == bool) {
+      if (column == TaskReportFields.duration) {
+        row.add(task.getReportDuration(
+            value: value, currencyId: client?.currencyId));
+      } else if (value.runtimeType == bool) {
         row.add(task.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(task.getReportDouble(

@@ -471,7 +471,9 @@ GroupTotals calculateReportTotals({
       if (column == reportState.group) {
         totals['$group']['count'] += 1;
       }
-      if (cell is ReportNumberValue || cell is ReportAgeValue) {
+      if (cell is ReportNumberValue ||
+          cell is ReportAgeValue ||
+          cell is ReportDurationValue) {
         if (!totals['$group'].containsKey(column)) {
           totals['$group'][column] = 0;
         }

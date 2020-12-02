@@ -46,13 +46,12 @@ class ReportCharts extends StatelessWidget {
     Widget child;
     final columnType = getReportColumnType(reportState.group, context);
 
-    print('## DATA: ${viewModel.groupTotals.totals}');
-
     switch (columnType) {
       case ReportColumnType.string:
       case ReportColumnType.bool:
       case ReportColumnType.number:
       case ReportColumnType.age:
+      case ReportColumnType.duration:
         child = charts.BarChart(
           [
             charts.Series<dynamic, String>(

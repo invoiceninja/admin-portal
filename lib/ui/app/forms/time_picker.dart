@@ -123,6 +123,7 @@ class _TimePickerState extends State<TimePicker> {
             widget.onSelected(null);
           }
         } else {
+          print('## value: $value');
           final initialValue = value;
           value = value.replaceAll(RegExp('[^\\d\:]'), '');
           value = value.toLowerCase().replaceAll('.', ':');
@@ -130,31 +131,35 @@ class _TimePickerState extends State<TimePicker> {
           final parts = value.split(':');
           String dateTimeStr = '';
 
-          if (parts.length < 3) {
-            if (parts.length == 1) {
-              dateTimeStr = parts[0] + ':00:00';
-            } else if (parts.length == 2) {
-              dateTimeStr = parts[0] + ':' + parts[1];
-              if (parts[1].length == 1) {
-                dateTimeStr += '0';
-              }
-              dateTimeStr += ':00';
+          if (parts.length == 1) {
+            dateTimeStr = parts[0] + ':00:00';
+          } else {
+            dateTimeStr = parts[0] + ':' + parts[1];
+            if (parts[1].length == 1) {
+              dateTimeStr += '0';
             }
-
-            if (initialValue.contains('a')) {
-              dateTimeStr += ' AM';
-            } else if (initialValue.contains('p')) {
-              dateTimeStr += ' PM';
+            if (parts.length == 3) {
+              dateTimeStr += ':' + parts[2];
             } else {
-              final store = StoreProvider.of<AppState>(context);
-              if (!store.state.company.settings.enableMilitaryTime) {
-                final hour = parseDouble(parts[0]);
-                dateTimeStr += hour > 6 ? ' AM' : ' PM';
-              }
+              dateTimeStr += ':00';
             }
           }
 
+          if (initialValue.contains('a')) {
+            dateTimeStr += ' AM';
+          } else if (initialValue.contains('p')) {
+            dateTimeStr += ' PM';
+          } else {
+            final store = StoreProvider.of<AppState>(context);
+            if (!store.state.company.settings.enableMilitaryTime) {
+              final hour = parseDouble(parts[0]);
+              dateTimeStr += hour > 6 ? ' AM' : ' PM';
+            }
+          }
+
+          print('## dateTimeStr: $dateTimeStr');
           final dateTime = parseTime(dateTimeStr, context);
+          print('## dateTime: $dateTime');
 
           if (dateTime != null) {
             final date = widget.selectedDate;

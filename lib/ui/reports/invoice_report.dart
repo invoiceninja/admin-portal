@@ -93,6 +93,7 @@ ReportResult invoiceReport(
   if (invoiceReportSettings.columns.isNotEmpty) {
     columns = BuiltList(invoiceReportSettings.columns
         .map((e) => EnumUtils.fromString(InvoiceReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

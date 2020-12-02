@@ -67,6 +67,7 @@ ReportResult lineItemReport(
   if (lineItemReportSettings.columns.isNotEmpty) {
     columns = BuiltList(lineItemReportSettings.columns
         .map((e) => EnumUtils.fromString(LineItemReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

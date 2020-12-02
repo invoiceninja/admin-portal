@@ -64,6 +64,7 @@ ReportResult taxRateReport(
   if (taxRateReportSettings.columns.isNotEmpty) {
     columns = BuiltList(taxRateReportSettings.columns
         .map((e) => EnumUtils.fromString(TaxRateReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

@@ -68,6 +68,7 @@ ReportResult paymentReport(
   if (paymentReportSettings.columns.isNotEmpty) {
     columns = BuiltList(paymentReportSettings.columns
         .map((e) => EnumUtils.fromString(PaymentReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

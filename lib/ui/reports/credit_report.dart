@@ -85,6 +85,7 @@ ReportResult creditReport(
   if (creditReportSettings.columns.isNotEmpty) {
     columns = BuiltList(creditReportSettings.columns
         .map((e) => EnumUtils.fromString(CreditReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

@@ -82,6 +82,7 @@ ReportResult documentReport(
   if (documentReportSettings.columns.isNotEmpty) {
     columns = BuiltList(documentReportSettings.columns
         .map((e) => EnumUtils.fromString(DocumentReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
