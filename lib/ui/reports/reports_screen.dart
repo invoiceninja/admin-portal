@@ -1385,6 +1385,10 @@ class ReportTimestampValue extends ReportElement {
 
   @override
   String renderText(BuildContext context, String column) {
+    if (value == null) {
+      return '';
+    }
+
     return formatDate(
         convertTimestampToDateString(value), context, showTime: true);
   }
