@@ -1364,7 +1364,7 @@ class ReportDurationValue extends ReportElement {
 
   @override
   String renderText(BuildContext context, String column) {
-    return '$value';
+    return formatDuration(Duration(seconds: value));
   }
 }
 
