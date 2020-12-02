@@ -178,7 +178,7 @@ ReportResult expenseReport(
         row.add(expense.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(expense.getReportDouble(
-            value: value, currencyId: client.settings.currencyId));
+            value: value, currencyId: expense.currencyId));
       } else {
         row.add(expense.getReportString(value: value));
       }
