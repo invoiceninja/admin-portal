@@ -61,6 +61,7 @@ ReportResult productReport(
   if (productReportSettings.columns.isNotEmpty) {
     columns = BuiltList(productReportSettings.columns
         .map((e) => EnumUtils.fromString(ProductReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

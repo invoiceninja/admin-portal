@@ -76,6 +76,7 @@ ReportResult expenseReport(
   if (expenseReportSettings.columns.isNotEmpty) {
     columns = BuiltList(expenseReportSettings.columns
         .map((e) => EnumUtils.fromString(ExpenseReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

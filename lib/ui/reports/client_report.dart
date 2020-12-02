@@ -96,6 +96,7 @@ ReportResult clientReport(
   if (clientReportSettings.columns.isNotEmpty) {
     columns = BuiltList(clientReportSettings.columns
         .map((e) => EnumUtils.fromString(ClientReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

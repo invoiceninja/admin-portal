@@ -85,6 +85,7 @@ ReportResult quoteReport(
   if (quoteReportSettings.columns.isNotEmpty) {
     columns = BuiltList(quoteReportSettings.columns
         .map((e) => EnumUtils.fromString(QuoteReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

@@ -64,6 +64,7 @@ ReportResult profitAndLossReport(
   if (profitAndLossReportSettings.columns.isNotEmpty) {
     columns = BuiltList(profitAndLossReportSettings.columns
         .map((e) => EnumUtils.fromString(ProfitAndLossReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
