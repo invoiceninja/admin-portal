@@ -1071,6 +1071,8 @@ class ReportResult {
         } else if (columnType == ReportColumnType.age) {
           value = formatNumber(
               values[column], context, formatNumberType: FormatNumberType.int);
+        } else if (columnType == ReportColumnType.duration) {
+          value = formatDuration(Duration(seconds: values[column].toInt()));
         }
 
         cells.add(DataCell(Text(value), onTap: () {
