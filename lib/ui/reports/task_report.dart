@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 import 'package:invoiceninja_flutter/utils/extensions.dart';
 
@@ -118,16 +119,16 @@ ReportResult taskReport(
           );
           break;
         case TaskReportFields.start_date:
-          value = task.taskTimes.firstOrNull?.startDate;
+          value = convertDateTimeToSqlDate(task.taskTimes.firstOrNull?.startDate);
           break;
         case TaskReportFields.end_date:
-          value = task.taskTimes.firstOrNull?.endDate;
+          value = convertDateTimeToSqlDate(task.taskTimes.firstOrNull?.endDate);
           break;
         case TaskReportFields.description:
           value = task.description;
           break;
         case TaskReportFields.invoice:
-          value = invoice;
+          value = invoice?.listDisplayName ?? '';
           break;
         case TaskReportFields.invoice_amount:
           value = invoice.amount;
@@ -139,7 +140,7 @@ ReportResult taskReport(
           value = invoice.dueDate;
           break;
         case TaskReportFields.client:
-          value = clientMap[task.clientId];
+          value = clientMap[task.clientId]?.displayName ?? '';
           break;
         case TaskReportFields.client_balance:
           value = client.balance;
@@ -166,7 +167,7 @@ ReportResult taskReport(
           value = vendor?.state;
           break;
         case TaskReportFields.vendor_country:
-          value = staticState.countryMap[vendor?.countryId];
+          value = staticState.countryMap[vendor?.countryId].name;
           break;
         case TaskReportFields.custom_value1:
           value = task.customValue1;
