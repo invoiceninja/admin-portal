@@ -245,7 +245,7 @@ packages:
       name: extended_image_library
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   extension:
     dependency: transitive
     description:
@@ -287,7 +287,7 @@ packages:
       name: firebase
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.3.2"
+    version: "7.3.3"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -557,7 +557,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.17.0-nullsafety.2"
   io:
     dependency: transitive
     description:
@@ -683,7 +683,7 @@ packages:
       name: overflow_view
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.2"
   package_config:
     dependency: transitive
     description:
@@ -1052,7 +1052,7 @@ packages:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.28"
+    version: "2.0.29"
   timing:
     dependency: transitive
     description:
