@@ -168,7 +168,11 @@ class ReportsScreen extends StatelessWidget {
         },
         items: reportResult.columns
             .where((column) =>
-            [ReportColumnType.number, ReportColumnType.age,].contains(
+            [
+              ReportColumnType.number,
+              ReportColumnType.age,
+              ReportColumnType.duration,
+            ].contains(
                 getReportColumnType(column, context))
         )
             .map((column) =>
