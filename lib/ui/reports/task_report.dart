@@ -102,10 +102,10 @@ ReportResult taskReport(
       dynamic value = '';
 
       switch (column) {
-        case TaskReportFields.calculated_rate:
+        case TaskReportFields.rate:
           value = task.rate;
           break;
-        case TaskReportFields.rate:
+        case TaskReportFields.calculated_rate:
           value = taskRateSelector(
             company: userCompany.company,
             project: project,

@@ -546,7 +546,9 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return convertCustomFieldType(company.getCustomFieldType(column));
   } else if (['updated_at', 'created_at'].contains(column)) {
     return ReportColumnType.dateTime;
-  } else if (['date', 'due_date', 'valid_until', 'start_date', 'end_date'].contains(column)) {
+  } else
+  if (['date', 'due_date', 'valid_until', 'start_date', 'end_date'].contains(
+      column)) {
     return ReportColumnType.date;
   } else if (column == 'age') {
     return ReportColumnType.age;
@@ -1010,7 +1012,7 @@ class ReportResult {
                         animationStart: 1,
                         debounceDuration: Duration(seconds: 0),
                       ),
-                    )
+                    ),
     ]);
   }
 
@@ -1036,7 +1038,6 @@ class ReportResult {
           }),
         );
       }
-
       return DataRow(cells: cells);
     } else {
       final groupTotals = viewModel.groupTotals;

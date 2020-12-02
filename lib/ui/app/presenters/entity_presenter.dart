@@ -85,5 +85,8 @@ class EntityPresenter {
         'payment_amount',
         'net_amount',
         'net_balance',
+        'rate',
+        'calculated_rate',
+        'duration',
       ].contains(field);
 }
