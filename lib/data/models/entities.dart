@@ -330,6 +330,14 @@ abstract class BaseEntity implements SelectableEntity {
       value: value,
       currencyId: currencyId);
 
+  ReportDurationValue getReportDuration({int value, String currencyId}) =>
+      ReportDurationValue(
+        entityType: entityType,
+        entityId: id,
+        value: value,
+        currencyId: currencyId,
+      );
+
   ReportNumberValue getReportDouble(
           {double value,
           String currencyId,

@@ -136,7 +136,7 @@ ReportResult taskReport(
           value = invoice.dueDate;
           break;
         case TaskReportFields.duration:
-          value = task.calculateDuration.inSeconds.toDouble();
+          value = task.calculateDuration.inSeconds;
           break;
         case TaskReportFields.client:
           value = clientMap[task.clientId]?.displayName ?? '';
@@ -179,7 +179,9 @@ ReportResult taskReport(
         skip = true;
       }
 
-      if (value.runtimeType == bool) {
+      if (column == TaskReportFields.duration) {
+        row.add(task.getReportDuration(value: value));
+      } else if (value.runtimeType == bool) {
         row.add(task.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(task.getReportDouble(

@@ -1341,6 +1341,27 @@ class ReportAgeValue extends ReportElement {
   }
 }
 
+class ReportDurationValue extends ReportElement {
+  ReportDurationValue({
+    @required dynamic value,
+    @required EntityType entityType,
+    @required String entityId,
+    @required this.currencyId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  final String currencyId;
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return '$value';
+  }
+}
+
 class ReportIntValue extends ReportElement {
   ReportIntValue({
     dynamic value,
