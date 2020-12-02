@@ -136,7 +136,7 @@ ReportResult taskReport(
           value = invoice.dueDate;
           break;
         case TaskReportFields.duration:
-          value = task.calculateDuration.inSeconds;
+          value = task.calculateDuration.inSeconds.toDouble();
           break;
         case TaskReportFields.client:
           value = clientMap[task.clientId]?.displayName ?? '';

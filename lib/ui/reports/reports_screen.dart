@@ -526,6 +526,7 @@ enum ReportColumnType {
   number,
   bool,
   age,
+  duration,
 }
 
 ReportColumnType getReportColumnType(String column, BuildContext context) {
@@ -552,6 +553,8 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.date;
   } else if (column == 'age') {
     return ReportColumnType.age;
+  } else if (column == 'duration') {
+    return ReportColumnType.duration;
   } else if (EntityPresenter.isFieldNumeric(column)) {
     return ReportColumnType.number;
   } else if (column.startsWith('is_')) {
@@ -1132,7 +1135,11 @@ class ReportResult {
         onSort: onSortCallback,
       ),
       for (String column in sortedColumns)
-        if ([ReportColumnType.number, ReportColumnType.age,].contains(
+        if ([
+          ReportColumnType.number,
+          ReportColumnType.age,
+          ReportColumnType.duration,
+        ].contains(
             getReportColumnType(column, context)))
           DataColumn(
             label: Text(
