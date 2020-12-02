@@ -87,9 +87,9 @@ ReportResult taskReport(
 
   for (var taskId in taskMap.keys) {
     final task = taskMap[taskId];
-    final client = clientMap[task.clientId];
-    final invoice = invoiceMap[task.invoiceId];
-    final project = projectMap[task.projectId];
+    final client = clientMap[task.clientId] ?? ClientEntity();
+    final invoice = invoiceMap[task.invoiceId] ?? InvoiceEntity();
+    final project = projectMap[task.projectId] ?? ProjectEntity();
 
     if (task.isDeleted) {
       continue;
