@@ -691,11 +691,12 @@ class ReportResult {
     return value.toLowerCase().contains(filter.toLowerCase());
   }
 
-  static bool matchAmount({String filter, double amount}) {
+  static bool matchAmount({String filter, num amount}) {
     final String range = filter.replaceAll(',', '-') + '-';
     final List<String> parts = range.split('-');
     final min = parseDouble(parts[0]);
-    final max = parseDouble(parts[1]);
+    final max = parts.length > 1 ? parseDouble(parts[1]) : 0;
+
     if (amount < min || (max > 0 && amount > max)) {
       return false;
     }
@@ -862,8 +863,9 @@ class ReportResult {
                     )).toList(),
               ))
             else
-              if (getReportColumnType(column, context) ==
-                  ReportColumnType.number)
+              if (
+              [ReportColumnType.number, ReportColumnType.duration,].contains(
+                  getReportColumnType(column, context)))
                 DataCell(TextFormField(
                   controller: textEditingControllers[column],
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
