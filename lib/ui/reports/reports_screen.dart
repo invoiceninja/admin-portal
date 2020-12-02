@@ -1173,21 +1173,19 @@ class ReportResult {
         String currencyId = '';
         if (canTotal) {
           if (cell is ReportNumberValue) {
-            currencyId = cell.currencyId;
+            currencyId = cell.currencyId ?? '';
           } else if (cell is ReportAgeValue) {
-            currencyId = cell.currencyId;
+            currencyId = cell.currencyId ?? '';
           } else if (cell is ReportDurationValue) {
-            currencyId = cell.currencyId;
+            currencyId = cell.currencyId ?? '';
           }
-        }
-        if (!totals.containsKey(currencyId)) {
-          totals[currencyId] = {'count': 0};
-        }
-        if (!countedRow) {
-          totals[currencyId]['count']++;
-          countedRow = true;
-        }
-        if (canTotal) {
+          if (!totals.containsKey(currencyId)) {
+            totals[currencyId] = {'count': 0};
+          }
+          if (!countedRow) {
+            totals[currencyId]['count']++;
+            countedRow = true;
+          }
           if (!totals[currencyId].containsKey(column)) {
             totals[currencyId][column] = 0;
           }
@@ -1196,7 +1194,7 @@ class ReportResult {
       }
     }
 
-    final keys = totals.keys.toList();
+    final keys = totals.keys.where((element) => element != null).toList();
     if (reportSettings.sortTotalsIndex != null) {
       keys.sort((rowA, rowB) {
         dynamic valueA;
@@ -1237,6 +1235,7 @@ class ReportResult {
         DataCell(Text(values['count'].toInt().toString())),
       ];
 
+
       final List<String> fields = values.keys.toList()
         ..sort((String str1, String str2) => str1.compareTo(str2));
       fields.forEach((field) {
@@ -1246,6 +1245,8 @@ class ReportResult {
           if (field == 'age') {
             value = formatNumber(amount / values['count'], context,
                 formatNumberType: FormatNumberType.double);
+          } else if (field == 'duration') {
+            value = formatDuration(Duration(seconds: amount.toInt()));
           } else {
             value = formatNumber(amount, context, currencyId: currencyId,
                 formatNumberType: field == 'quantity'

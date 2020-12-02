@@ -182,7 +182,7 @@ ReportResult taskReport(
           column == TaskReportFields.end_time) {
         row.add(task.getReportTimestamp(value: value));
       } else if (column == TaskReportFields.duration) {
-        row.add(task.getReportDuration(value: value));
+        row.add(task.getReportDuration(value: value, currencyId: client?.currencyId));
       } else if (value.runtimeType == bool) {
         row.add(task.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
