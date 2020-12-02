@@ -8,15 +8,13 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
-import 'package:invoiceninja_flutter/utils/extensions.dart';
 
 enum TaskReportFields {
   rate,
   calculated_rate,
-  start_date,
-  end_date,
+  start_time,
+  end_time,
   duration,
   description,
   invoice,
@@ -70,8 +68,9 @@ ReportResult taskReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
-    TaskReportFields.start_date,
-    TaskReportFields.end_date,
+    TaskReportFields.start_time,
+    TaskReportFields.end_time,
+    TaskReportFields.duration,
     TaskReportFields.description,
     TaskReportFields.client,
     TaskReportFields.invoice,
@@ -80,6 +79,7 @@ ReportResult taskReport(
   if (taskReportSettings.columns.isNotEmpty) {
     columns = BuiltList(taskReportSettings.columns
         .map((e) => EnumUtils.fromString(TaskReportFields.values, e))
+        .where((element) => element != null)
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -113,12 +113,11 @@ ReportResult taskReport(
             task: task,
           );
           break;
-        case TaskReportFields.start_date:
-          value =
-              convertDateTimeToSqlDate(task.taskTimes.firstOrNull?.startDate);
+        case TaskReportFields.start_time:
+          value = task.startTimestamp;
           break;
-        case TaskReportFields.end_date:
-          value = convertDateTimeToSqlDate(task.taskTimes.firstOrNull?.endDate);
+        case TaskReportFields.end_time:
+          value = task.endTimestamp;
           break;
         case TaskReportFields.description:
           value = task.description;
@@ -179,7 +178,10 @@ ReportResult taskReport(
         skip = true;
       }
 
-      if (column == TaskReportFields.duration) {
+      if (column == TaskReportFields.start_time ||
+          column == TaskReportFields.end_time) {
+        row.add(task.getReportTimestamp(value: value));
+      } else if (column == TaskReportFields.duration) {
         row.add(task.getReportDuration(value: value));
       } else if (value.runtimeType == bool) {
         row.add(task.getReportBool(value: value));

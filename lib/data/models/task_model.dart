@@ -259,6 +259,42 @@ abstract class TaskEntity extends Object
         DateTime.parse(endDate).compareTo(lastEndDate.toLocal()) == 1;
   }
 
+  int get startTimestamp {
+    if (timeLog.isEmpty) {
+      return null;
+    }
+
+    final List<dynamic> log = jsonDecode(timeLog);
+
+    if (log.isEmpty) {
+      return null;
+    }
+
+    final first = log.first as List;
+
+    return first[0];
+  }
+
+  int get endTimestamp {
+    if (timeLog.isEmpty) {
+      return null;
+    }
+
+    final List<dynamic> log = jsonDecode(timeLog);
+
+    if (log.isEmpty) {
+      return null;
+    }
+
+    final last = log.last as List;
+
+    if (last.length < 2) {
+      return null;
+    }
+
+    return last[1];
+  }
+
   List<TaskTime> get taskTimes {
     final List<TaskTime> details = [];
 

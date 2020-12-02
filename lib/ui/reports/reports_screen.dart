@@ -1167,22 +1167,27 @@ class ReportResult {
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
+        final canTotal = cell is ReportNumberValue || cell is ReportAgeValue ||
+            cell is ReportDurationValue;
 
-        if (cell is ReportNumberValue || cell is ReportAgeValue) {
-          String currencyId;
+        String currencyId = '';
+        if (canTotal) {
           if (cell is ReportNumberValue) {
             currencyId = cell.currencyId;
           } else if (cell is ReportAgeValue) {
             currencyId = cell.currencyId;
+          } else if (cell is ReportDurationValue) {
+            currencyId = cell.currencyId;
           }
-
-          if (!totals.containsKey(currencyId)) {
-            totals[currencyId] = {'count': 0};
-          }
-          if (!countedRow) {
-            totals[currencyId]['count']++;
-            countedRow = true;
-          }
+        }
+        if (!totals.containsKey(currencyId)) {
+          totals[currencyId] = {'count': 0};
+        }
+        if (!countedRow) {
+          totals[currencyId]['count']++;
+          countedRow = true;
+        }
+        if (canTotal) {
           if (!totals[currencyId].containsKey(column)) {
             totals[currencyId][column] = 0;
           }
@@ -1359,6 +1364,28 @@ class ReportDurationValue extends ReportElement {
   @override
   String renderText(BuildContext context, String column) {
     return '$value';
+  }
+}
+
+class ReportTimestampValue extends ReportElement {
+  ReportTimestampValue({
+    @required dynamic value,
+    @required EntityType entityType,
+    @required String entityId,
+    @required this.currencyId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  final String currencyId;
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return formatDate(
+        convertTimestampToDateString(value), context, showTime: true);
   }
 }
 
