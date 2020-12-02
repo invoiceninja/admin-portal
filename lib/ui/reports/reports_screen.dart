@@ -549,7 +549,7 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
 
   if (company.hasCustomField(column)) {
     return convertCustomFieldType(company.getCustomFieldType(column));
-  } else if (['updated_at', 'created_at'].contains(column)) {
+  } else if (['updated_at', 'created_at', 'start_time', 'end_time'].contains(column)) {
     return ReportColumnType.dateTime;
   } else
   if (['date', 'due_date', 'valid_until', 'start_date', 'end_date'].contains(
@@ -637,6 +637,7 @@ class ReportResult {
   }) {
     if (reportsUIState.filters.containsKey(column)) {
       final filter = reportsUIState.filters[column];
+
       if (filter.isNotEmpty) {
         if (column == 'age') {
           final min = kAgeGroups[filter];
@@ -886,10 +887,8 @@ class ReportResult {
                       )),
                 ))
               else
-                if (getReportColumnType(column, context) ==
-                    ReportColumnType.dateTime ||
-                    getReportColumnType(column, context) ==
-                        ReportColumnType.date)
+                if ([ReportColumnType.date, ReportColumnType.dateTime,]
+                    .contains(getReportColumnType(column, context)))
                   DataCell(AppDropdownButton<DateRange>(
                     labelText: null,
                     showBlank: true,
@@ -1373,32 +1372,6 @@ class ReportDurationValue extends ReportElement {
   @override
   String renderText(BuildContext context, String column) {
     return formatDuration(Duration(seconds: value));
-  }
-}
-
-class ReportTimestampValue extends ReportElement {
-  ReportTimestampValue({
-    @required dynamic value,
-    @required EntityType entityType,
-    @required String entityId,
-    @required this.currencyId,
-  }) : super(value: value, entityType: entityType, entityId: entityId);
-
-  final String currencyId;
-
-  @override
-  Widget renderWidget(BuildContext context, String column) {
-    return Text(renderText(context, column));
-  }
-
-  @override
-  String renderText(BuildContext context, String column) {
-    if (value == null) {
-      return '';
-    }
-
-    return formatDate(
-        convertTimestampToDateString(value), context, showTime: true);
   }
 }
 

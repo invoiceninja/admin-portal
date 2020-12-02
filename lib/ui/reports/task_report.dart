@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 enum TaskReportFields {
@@ -114,10 +115,16 @@ ReportResult taskReport(
           );
           break;
         case TaskReportFields.start_time:
-          value = task.startTimestamp;
+          final timestamp = task.startTimestamp;
+          value = (timestamp ?? 0) > 0
+              ? convertTimestampToDateString(timestamp)
+              : '';
           break;
         case TaskReportFields.end_time:
-          value = task.endTimestamp;
+          final timestamp = task.endTimestamp;
+          value = (timestamp ?? 0) > 0
+              ? convertTimestampToDateString(timestamp)
+              : '';
           break;
         case TaskReportFields.description:
           value = task.description;
@@ -178,11 +185,9 @@ ReportResult taskReport(
         skip = true;
       }
 
-      if (column == TaskReportFields.start_time ||
-          column == TaskReportFields.end_time) {
-        row.add(task.getReportTimestamp(value: value));
-      } else if (column == TaskReportFields.duration) {
-        row.add(task.getReportDuration(value: value, currencyId: client?.currencyId));
+      if (column == TaskReportFields.duration) {
+        row.add(task.getReportDuration(
+            value: value, currencyId: client?.currencyId));
       } else if (value.runtimeType == bool) {
         row.add(task.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
