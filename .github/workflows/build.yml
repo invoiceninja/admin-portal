@@ -19,7 +19,7 @@ jobs:
         with:
           channel: 'dev' # TODO change to beta/stable
           #flutter-version: '1.22.0-12.0.pre'
-          flutter-version: '1.24.0-7.0.pre'
+          #flutter-version: '1.24.0-7.0.pre'
           #channel: 'dev'
       - run: flutter pub get
       - run: |
