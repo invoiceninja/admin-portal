@@ -9,7 +9,9 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -209,6 +211,15 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                   ],
                 ),
                 actions: <Widget>[
+                  FlatButton(
+                    child: Text(localization.email,
+                        style: TextStyle(color: store.state.headerTextColor)),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      handleEntityAction(context, invoice,
+                          EntityAction.emailEntityType(invoice.entityType));
+                    },
+                  ),
                   FlatButton(
                     child: Text(
                       localization.download,
