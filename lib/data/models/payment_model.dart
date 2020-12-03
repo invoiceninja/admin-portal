@@ -472,14 +472,14 @@ abstract class PaymentableEntity extends Object
   factory PaymentableEntity.fromInvoice(InvoiceEntity invoice) {
     return PaymentableEntity(
       invoiceId: invoice.id,
-      amount: invoice.balance,
+      amount: invoice.balanceOrAmount,
     );
   }
 
   factory PaymentableEntity.fromCredit(InvoiceEntity credit) {
     return PaymentableEntity(
       creditId: credit.id,
-      amount: credit.balance,
+      amount: credit.balanceOrAmount,
     );
   }
 

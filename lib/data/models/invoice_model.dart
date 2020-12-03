@@ -225,6 +225,8 @@ abstract class InvoiceEntity extends Object
 
   double get balance;
 
+  double get balanceOrAmount => isSent ? balance : amount;
+
   @override
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
