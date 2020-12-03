@@ -49,7 +49,6 @@ class _AccountManagementState extends State<AccountManagement>
     _controller = TabController(
         vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
-
   }
 
   void _onTabChanged() {
@@ -145,7 +144,9 @@ class _AccountOverview extends StatelessWidget {
       children: <Widget>[
         AppHeader(
           label: localization.plan,
-          value: account.plan.isEmpty ? localization.free : localization.lookup(account.plan),
+          value: account.plan.isEmpty
+              ? localization.free
+              : localization.lookup(account.plan),
           secondLabel: localization.expiresOn,
           secondValue: formatDate(account.planExpires, context),
         ),

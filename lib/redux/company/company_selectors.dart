@@ -48,7 +48,7 @@ List<String> getCurrencyIds(
     CompanyEntity company,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, GroupEntity> groupMap) {
-  final currencyIds = <String>[kCurrencyAll];
+  final currencyIds = <String>[company.currencyId];
   clientMap.forEach((clientId, client) {
     final group = groupMap[client.groupId];
     if (!client.isDeleted) {
@@ -64,7 +64,7 @@ List<String> getCurrencyIds(
     }
   });
 
-  return currencyIds;
+  return currencyIds.length > 1 ? [kCurrencyAll, ...currencyIds] : currencyIds;
 }
 
 var memoizedFilteredSelector = memo2(

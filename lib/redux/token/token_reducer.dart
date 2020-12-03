@@ -18,17 +18,13 @@ EntityUIState tokenUIReducer(TokenUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.token
-          ? action.entityId
-          : selectedId),
+      action.entityType == EntityType.token ? action.entityId : selectedId),
   TypedReducer<String, ViewToken>(
       (String selectedId, dynamic action) => action.tokenId),
   TypedReducer<String, AddTokenSuccess>(
       (String selectedId, dynamic action) => action.token.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteTokensSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveTokensSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, FilterByEntity>(
       (selectedId, action) => action.clearSelection

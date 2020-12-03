@@ -133,6 +133,21 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               onSelected: (date) {
                 setState(() {
                   _date = date;
+                  final dateTime = DateTime.parse(_date);
+                  _startDate = DateTime(
+                      dateTime.year,
+                      dateTime.month,
+                      dateTime.day,
+                      _startDate.hour,
+                      _startDate.minute,
+                      _startDate.second);
+                  _endDate = DateTime(
+                      dateTime.year,
+                      dateTime.month,
+                      dateTime.day,
+                      _endDate.hour,
+                      _endDate.minute,
+                      _endDate.second);
                 });
               },
             ),
@@ -200,17 +215,22 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
             final taskTime = TaskTime(
               startDate: DateTime(
-                      startDate.year,
-                      startDate.month,
-                      startDate.day,
+                      _startDate.year,
+                      _startDate.month,
+                      _startDate.day,
                       _startDate.hour,
                       _startDate.minute,
                       _startDate.second)
                   .toUtc(),
               endDate: _endDate != null
-                  ? DateTime(endDate.year, endDate.month, endDate.day,
-                          _endDate.hour, _endDate.minute, _endDate.second)
-                      .toUtc()
+                  ? DateTime(
+                      _endDate.year,
+                      _endDate.month,
+                      _endDate.day,
+                      _endDate.hour,
+                      _endDate.minute,
+                      _endDate.second,
+                    ).toUtc()
                   : null,
             );
             widget.viewModel.onDoneTaskTimePressed(taskTime, widget.index);

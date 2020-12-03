@@ -118,22 +118,33 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   isValid: _response.envWritable,
                 ),
                 _HealthListTile(
+                  title: 'Config Cached',
+                  isValid: _response.cacheEnabled ? true : null,
+                ),
+                _HealthListTile(
                   title: 'PHP Version',
                   isValid: _response.phpVersion.isOkay,
                   subtitle: webPhpVersion == cliPhpVersion
                       ? 'v$webPhpVersion'
                       : 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion}',
                 ),
-                _HealthListTile(
-                  title: 'Node Version',
-                  isValid: _response.nodeStatus.isNotEmpty,
-                  subtitle: _response.nodeStatus,
-                ),
-                _HealthListTile(
-                  title: 'NPM Version',
-                  isValid: _response.npmStatus.isNotEmpty,
-                  subtitle: 'v' + _response.npmStatus,
-                ),
+                if (_response.phantomEnabled)
+                  _HealthListTile(
+                    title: 'Using PhantomJS',
+                    subtitle: 'Use node to generate PDFs locally',
+                  )
+                else ...[
+                  _HealthListTile(
+                    title: 'Node Version',
+                    isValid: _response.nodeStatus.isNotEmpty,
+                    subtitle: _response.nodeStatus,
+                  ),
+                  _HealthListTile(
+                    title: 'NPM Version',
+                    isValid: _response.npmStatus.isNotEmpty,
+                    subtitle: 'v' + _response.npmStatus,
+                  ),
+                ]
               ],
             ),
       actions: _response == null
@@ -159,7 +170,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
 class _HealthListTile extends StatelessWidget {
   const _HealthListTile({
     @required this.title,
-    @required this.isValid,
+    this.isValid,
     this.subtitle,
   });
 
@@ -171,10 +182,16 @@ class _HealthListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      subtitle: Text(isValid ? (subtitle ?? 'Passed') : 'Failed'),
+      subtitle: Text(subtitle != null
+          ? subtitle
+          : (isValid == null ? 'Warning' : (isValid ? 'Passed' : 'Failed'))),
       trailing: Icon(
-        isValid ? Icons.check_circle_outline : Icons.error_outline,
-        color: isValid ? Colors.green : Colors.red,
+        isValid == null
+            ? Icons.warning
+            : (isValid ? Icons.check_circle_outline : Icons.error_outline),
+        color: isValid == null
+            ? Colors.orange
+            : (isValid ? Colors.green : Colors.red),
       ),
     );
   }

@@ -15,7 +15,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
-
 class WorkflowSettings extends StatefulWidget {
   const WorkflowSettings({
     Key key,

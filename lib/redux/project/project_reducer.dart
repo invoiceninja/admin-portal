@@ -39,8 +39,6 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.project.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteProjectSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveProjectSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

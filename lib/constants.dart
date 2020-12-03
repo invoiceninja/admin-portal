@@ -376,7 +376,8 @@ const String kReportPayment = 'payment';
 const String kReportProduct = 'product';
 const String kReportProfitAndLoss = 'profit_and_loss';
 const String kReportTask = 'task';
-const String kReportTaxRate = 'taxRate';
+const String kReportTax = 'tax';
+const String kReportPaymentTax = 'payment_tax';
 const String kReportQuote = 'quote';
 const String kReportLineItem = 'line_item';
 
@@ -608,6 +609,7 @@ List<String> kCustomLabels = [
   'quantity',
   'quote',
   'rate',
+  'service',
   'statement',
   'subtotal',
   'surcharge',

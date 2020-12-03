@@ -20,6 +20,7 @@ class ProductListItem extends StatelessWidget {
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
+    this.isDismissible = true,
   });
 
   final UserCompanyEntity userCompany;
@@ -27,6 +28,7 @@ class ProductListItem extends StatelessWidget {
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
+  final bool isDismissible;
 
   //final ValueChanged<bool> onCheckboxChanged;
   final ProductEntity product;
@@ -48,6 +50,7 @@ class ProductListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
 
     return DismissibleEntity(
+      isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           product.id ==
               (uiState.isEditing

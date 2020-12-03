@@ -18,17 +18,13 @@ EntityUIState webhookUIReducer(WebhookUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.webhook
-          ? action.entityId
-          : selectedId),
+      action.entityType == EntityType.webhook ? action.entityId : selectedId),
   TypedReducer<String, ViewWebhook>(
       (String selectedId, dynamic action) => action.webhookId),
   TypedReducer<String, AddWebhookSuccess>(
       (String selectedId, dynamic action) => action.webhook.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteWebhooksSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveWebhooksSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, FilterByEntity>(
       (selectedId, action) => action.clearSelection

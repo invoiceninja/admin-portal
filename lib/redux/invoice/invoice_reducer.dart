@@ -35,9 +35,7 @@ String filterInvoiceDropdownReducer(
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.invoice
-          ? action.entityId
-          : selectedId),
+      action.entityType == EntityType.invoice ? action.entityId : selectedId),
   TypedReducer<String, ViewInvoice>((selectedId, action) => action.invoiceId),
   TypedReducer<String, AddInvoiceSuccess>(
       (selectedId, action) => action.invoice.id),
@@ -45,8 +43,6 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.invoice.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteInvoicesSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveInvoicesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.invoice ? '' : selectedId),

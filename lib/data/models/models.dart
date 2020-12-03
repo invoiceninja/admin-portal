@@ -100,6 +100,19 @@ class EntityAction extends EnumClass {
     return value;
   }
 
+  static EntityAction emailEntityType(EntityType entityType) {
+    switch (entityType) {
+      case EntityType.invoice:
+        return EntityAction.emailInvoice;
+      case EntityType.quote:
+        return EntityAction.emailQuote;
+      case EntityType.credit:
+        return EntityAction.emailCredit;
+      default:
+        return null;
+    }
+  }
+
   static EntityAction newEntityType(EntityType entityType) {
     switch (entityType) {
       case EntityType.client:

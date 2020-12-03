@@ -17,17 +17,13 @@ EntityUIState designUIReducer(DesignUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.design
-          ? action.entityId
-          : selectedId),
+      action.entityType == EntityType.design ? action.entityId : selectedId),
   TypedReducer<String, ViewDesign>(
       (String selectedId, dynamic action) => action.designId),
   TypedReducer<String, AddDesignSuccess>(
       (String selectedId, dynamic action) => action.design.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteDesignsSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveDesignsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

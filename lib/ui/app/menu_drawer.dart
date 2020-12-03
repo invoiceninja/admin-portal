@@ -975,7 +975,7 @@ void _showAbout(BuildContext context) async {
         padding: const EdgeInsets.only(top: 20),
         child: AppButton(
           label: localization.healthCheck.toUpperCase(),
-          iconData: MdiIcons.shield,
+          iconData: MdiIcons.shieldHalfFull,
           color: Colors.green,
           onPressed: () {
             showDialog<HealthCheckDialog>(

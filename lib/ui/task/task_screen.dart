@@ -74,17 +74,14 @@ class TaskScreen extends StatelessWidget {
         ],
         statuses: [
           TaskStatusEntity().rebuild((b) => b
-              ..id = kTaskStatusInvoiced
-              ..name = localization.invoiced
-          ),
+            ..id = kTaskStatusInvoiced
+            ..name = localization.invoiced),
           TaskStatusEntity().rebuild((b) => b
-              ..id = kTaskStatusLogged
-              ..name = localization.logged
-          ),
+            ..id = kTaskStatusLogged
+            ..name = localization.logged),
           TaskStatusEntity().rebuild((b) => b
-              ..id = kTaskStatusRunning
-              ..name = localization.running
-          ),
+            ..id = kTaskStatusRunning
+            ..name = localization.running),
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTasksByState(state));

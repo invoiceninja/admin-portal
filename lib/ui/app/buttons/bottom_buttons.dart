@@ -41,8 +41,7 @@ class BottomButtons extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: action1Enabled &&
-                        (!entity.isDeleted ||
-                            action1 == EntityAction.viewPdf)
+                        (!entity.isDeleted || action1 == EntityAction.viewPdf)
                     ? () {
                         handleEntityAction(context, entity, action1);
                       }

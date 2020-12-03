@@ -17,17 +17,13 @@ EntityUIState taxRateUIReducer(TaxRateUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.taxRate
-          ? action.entityId
-          : selectedId),
+      action.entityType == EntityType.taxRate ? action.entityId : selectedId),
   TypedReducer<String, ViewTaxRate>(
       (String selectedId, action) => action.taxRateId),
   TypedReducer<String, AddTaxRateSuccess>(
       (String selectedId, action) => action.taxRate.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteTaxRatesSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveTaxRatesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

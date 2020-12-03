@@ -24,6 +24,7 @@ class TaskListItem extends StatelessWidget {
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
+    this.isDismissible = true,
   });
 
   final UserEntity user;
@@ -33,6 +34,7 @@ class TaskListItem extends StatelessWidget {
   final String filter;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
+  final bool isDismissible;
 
   @override
   Widget build(BuildContext context) {
@@ -57,22 +59,26 @@ class TaskListItem extends StatelessWidget {
           formatNumberType: FormatNumberType.duration);
     }, style: textStyle);
 
-    final startStopButton = IconButton(
-      icon: task.isInvoiced
-          ? SizedBox()
-          : Icon(
-              getEntityActionIcon(
-                  task.isRunning ? EntityAction.stop : EntityAction.start),
-              color: task.isRunning ? state.accentColor : null,
-            ),
-      onPressed: task.isInvoiced
-          ? null
-          : () => handleEntityAction(context, task,
-              task.isRunning ? EntityAction.stop : EntityAction.start),
-      visualDensity: VisualDensity.compact,
-    );
+    final startStopButton = !isDismissible
+        ? SizedBox()
+        : IconButton(
+            icon: task.isInvoiced
+                ? SizedBox()
+                : Icon(
+                    getEntityActionIcon(task.isRunning
+                        ? EntityAction.stop
+                        : EntityAction.start),
+                    color: task.isRunning ? state.accentColor : null,
+                  ),
+            onPressed: task.isInvoiced
+                ? null
+                : () => handleEntityAction(context, task,
+                    task.isRunning ? EntityAction.stop : EntityAction.start),
+            visualDensity: VisualDensity.compact,
+          );
 
     return DismissibleEntity(
+      isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           task.id ==
               (uiState.isEditing

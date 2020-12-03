@@ -68,7 +68,8 @@ class TaskEditVM {
         if (task.isRunning) {
           final taskTimes = task.taskTimes;
           store.dispatch(UpdateTaskTime(
-              index: taskTimes.length - 1, taskTime: taskTimes.last.stop));
+              index: taskTimes.length - 1,
+              taskTime: taskTimes.firstWhere((time) => time.isRunning).stop));
         } else {
           store.dispatch(AddTaskTime(TaskTime()));
         }

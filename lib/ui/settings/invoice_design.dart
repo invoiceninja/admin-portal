@@ -539,7 +539,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           FormCard(
             child: MultiSelectList(
               options: [
-                TaskItemFields.productKey,
+                TaskItemFields.service,
                 TaskItemFields.description,
                 TaskItemFields.hours,
                 TaskItemFields.rate,
@@ -552,7 +552,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 TaskItemFields.custom4,
               ].map((field) => '\$task.$field').toList(),
               defaultSelected: [
-                TaskItemFields.productKey,
+                TaskItemFields.service,
                 TaskItemFields.description,
                 TaskItemFields.rate,
                 TaskItemFields.hours,

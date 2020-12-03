@@ -19,12 +19,13 @@ import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/line_item_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/payment_tax_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/profit_loss_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/quote_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/task_report.dart';
-import 'package:invoiceninja_flutter/ui/reports/tax_rate_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/tax_report.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -180,12 +181,26 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
-      case kReportTaxRate:
-        reportResult = memoizedTaxRateReport(
+      case kReportTax:
+        reportResult = memoizedTaxReport(
           state.userCompany,
           state.uiState.reportsUIState,
           state.taxRateState.map,
           state.invoiceState.map,
+          state.creditState.map,
+          state.clientState.map,
+          state.paymentState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportPaymentTax:
+        reportResult = memoizedPaymentTaxReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.taxRateState.map,
+          state.invoiceState.map,
+          state.creditState.map,
           state.clientState.map,
           state.paymentState.map,
           state.userState.map,
