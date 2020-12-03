@@ -79,7 +79,7 @@ class _TimePickerState extends State<TimePicker> {
 
     if (selectedTime != null) {
       var dateTime =
-          convertTimeOfDayToDateTime(selectedTime, widget.selectedDate);
+      convertTimeOfDayToDateTime(selectedTime, widget.selectedDate);
 
       if (widget.selectedDate != null &&
           dateTime.isBefore(widget.selectedDate)) {
@@ -106,16 +106,16 @@ class _TimePickerState extends State<TimePicker> {
         labelText: widget.labelText,
         suffixIcon: widget.allowClearing && widget.selectedDateTime != null
             ? IconButton(
-                icon: Icon(Icons.clear),
-                onPressed: () {
-                  _textController.text = '';
-                  widget.onSelected(null);
-                },
-              )
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            _textController.text = '';
+            widget.onSelected(null);
+          },
+        )
             : IconButton(
-                icon: Icon(Icons.access_time),
-                onPressed: () => _showTimePicker(),
-              ),
+          icon: Icon(Icons.access_time),
+          onPressed: () => _showTimePicker(),
+        ),
       ),
       onChanged: (value) {
         if (value.isEmpty) {
@@ -123,7 +123,6 @@ class _TimePickerState extends State<TimePicker> {
             widget.onSelected(null);
           }
         } else {
-          print('## value: $value');
           final initialValue = value;
           value = value.replaceAll(RegExp('[^\\d\:]'), '');
           value = value.toLowerCase().replaceAll('.', ':');
@@ -157,9 +156,7 @@ class _TimePickerState extends State<TimePicker> {
             }
           }
 
-          print('## dateTimeStr: $dateTimeStr');
           final dateTime = parseTime(dateTimeStr, context);
-          print('## dateTime: $dateTime');
 
           if (dateTime != null) {
             final date = widget.selectedDate;

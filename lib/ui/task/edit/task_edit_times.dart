@@ -48,7 +48,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final viewModel = widget.viewModel;
     final task = viewModel.task;
     final taskTime = viewModel.taskTimeIndex != null &&
-            task.taskTimes.length > viewModel.taskTimeIndex
+        task.taskTimes.length > viewModel.taskTimeIndex
         ? task.taskTimes[viewModel.taskTimeIndex]
         : null;
 
@@ -66,11 +66,12 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final taskTimes = task.taskTimes
         .toList()
         .reversed
-        .map<Widget>((taskTime) => TaskTimeListTile(
-              task: task,
-              taskTime: taskTime,
-              onTap: (context) => _showTaskTimeEditor(taskTime, context),
-            ));
+        .map<Widget>((taskTime) =>
+        TaskTimeListTile(
+          task: task,
+          taskTime: taskTime,
+          onTap: (context) => _showTaskTimeEditor(taskTime, context),
+        ));
 
     return ListView(
       children: taskTimes.toList(),
@@ -200,17 +201,17 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
             final taskTime = TaskTime(
               startDate: DateTime(
-                      startDate.year,
-                      startDate.month,
-                      startDate.day,
-                      _startDate.hour,
-                      _startDate.minute,
-                      _startDate.second)
+                  _startDate.year,
+                  _startDate.month,
+                  _startDate.day,
+                  _startDate.hour,
+                  _startDate.minute,
+                  _startDate.second)
                   .toUtc(),
               endDate: _endDate != null
-                  ? DateTime(endDate.year, endDate.month, endDate.day,
-                          _endDate.hour, _endDate.minute, _endDate.second)
-                      .toUtc()
+                  ? DateTime(_endDate.year, _endDate.month, _endDate.day,
+                _endDate.hour, _endDate.minute, _endDate.second,)
+                  .toUtc()
                   : null,
             );
             widget.viewModel.onDoneTaskTimePressed(taskTime, widget.index);
