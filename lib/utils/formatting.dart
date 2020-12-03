@@ -314,9 +314,8 @@ DateTime parseTime(String value, BuildContext context) {
           ? 'H:mm'
           : 'h:mm a';
 
-  final formatter = DateFormat(format, localeSelector(state));
-
-  return formatter.parse(value);
+  final formatter = DateFormat('y-M-D ' + format, localeSelector(state));
+  return formatter.parse('2000-01-01 ' + value);
 }
 
 String formatDate(String value, BuildContext context,
