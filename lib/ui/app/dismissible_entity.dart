@@ -15,6 +15,7 @@ class DismissibleEntity extends StatelessWidget {
     @required this.child,
     @required this.isSelected,
     this.showCheckbox = true,
+    this.isDismissible = true,
   });
 
   final UserCompanyEntity userCompany;
@@ -22,6 +23,7 @@ class DismissibleEntity extends StatelessWidget {
   final Widget child;
   final bool isSelected;
   final bool showCheckbox;
+  final bool isDismissible;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,23 @@ class DismissibleEntity extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final isMultiselect =
         store.state.getListState(entity.entityType).isInMultiselect();
+
+    final widget = SelectedIndicator(
+      isSelected: isSelected &&
+          showCheckbox &&
+          !isMultiselect &&
+          !entity.entityType.isSetting,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: 60,
+        ),
+        child: child,
+      ),
+    );
+
+    if (!isDismissible) {
+      return widget;
+    }
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
@@ -91,18 +110,7 @@ class DismissibleEntity extends StatelessWidget {
                     handleEntityAction(context, entity, EntityAction.delete),
               ),
       ],
-      child: SelectedIndicator(
-        isSelected: isSelected &&
-            showCheckbox &&
-            !isMultiselect &&
-            !entity.entityType.isSetting,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: 60,
-          ),
-          child: child,
-        ),
-      ),
+      child: widget,
     );
   }
 }

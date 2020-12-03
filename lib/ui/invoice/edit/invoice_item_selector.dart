@@ -204,6 +204,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final String entityId = matches[index];
           final product = state.productState.map[entityId];
           return ProductListItem(
+            isDismissible: false,
             onCheckboxChanged: (checked) => _toggleEntity(product),
             isChecked: _selected.contains(product),
             product: product,
@@ -244,6 +245,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final String entityId = matches[index];
           final task = state.taskState.map[entityId];
           return TaskListItem(
+            isDismissible: false,
             user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(task),
             isChecked: _selected.contains(task),
@@ -280,6 +282,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final String entityId = matches[index];
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
           return ExpenseListItem(
+            isDismissible: false,
             user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(expense),
             isChecked: _selected.contains(expense),

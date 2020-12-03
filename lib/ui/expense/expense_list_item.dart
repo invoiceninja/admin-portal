@@ -21,6 +21,7 @@ class ExpenseListItem extends StatelessWidget {
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
+    this.isDismissible = true,
   });
 
   final UserEntity user;
@@ -30,6 +31,7 @@ class ExpenseListItem extends StatelessWidget {
   final String filter;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
+  final bool isDismissible;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +76,7 @@ class ExpenseListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
+      isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           expense.id ==
               (uiState.isEditing
