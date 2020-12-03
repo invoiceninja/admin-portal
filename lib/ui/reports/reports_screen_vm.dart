@@ -199,6 +199,7 @@ class ReportsScreenVM {
           state.uiState.reportsUIState,
           state.taxRateState.map,
           state.invoiceState.map,
+          state.creditState.map,
           state.clientState.map,
           state.paymentState.map,
           state.userState.map,

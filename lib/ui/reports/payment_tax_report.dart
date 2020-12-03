@@ -23,38 +23,41 @@ enum TaxRateReportFields {
   currency
 }
 
-var memoizedPaymentTaxReport = memo8((
-    UserCompanyEntity userCompany,
-    ReportsUIState reportsUIState,
-    BuiltMap<String, TaxRateEntity> taxRateMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, PaymentEntity> paymentMap,
-    BuiltMap<String, UserEntity> userMap,
-    StaticState staticState,
-    ) =>
+var memoizedPaymentTaxReport = memo9((
+  UserCompanyEntity userCompany,
+  ReportsUIState reportsUIState,
+  BuiltMap<String, TaxRateEntity> taxRateMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, UserEntity> userMap,
+  StaticState staticState,
+) =>
     paymentTaxReport(userCompany, reportsUIState, taxRateMap, invoiceMap,
-        clientMap, paymentMap, userMap, staticState));
+        creditMap, clientMap, paymentMap, userMap, staticState));
 
 ReportResult paymentTaxReport(
-    UserCompanyEntity userCompany,
-    ReportsUIState reportsUIState,
-    BuiltMap<String, TaxRateEntity> taxRateMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, PaymentEntity> paymentMap,
-    BuiltMap<String, UserEntity> userMap,
-    StaticState staticState,
-    ) {
+  UserCompanyEntity userCompany,
+  ReportsUIState reportsUIState,
+  BuiltMap<String, TaxRateEntity> taxRateMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, UserEntity> userMap,
+  StaticState staticState,
+) {
   final List<List<ReportElement>> data = [];
   BuiltList<TaxRateReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
   final taxRateReportSettings =
-  reportSettings != null && reportSettings.containsKey(kReportPaymentTax)
-      ? reportSettings[kReportPaymentTax]
-      : ReportSettingsEntity();
+      reportSettings != null && reportSettings.containsKey(kReportPaymentTax)
+          ? reportSettings[kReportPaymentTax]
+          : ReportSettingsEntity();
 
+  /*
   final Map<String, List<String>> invoicePaymentMap = {};
   paymentMap.forEach((paymentId, payment) {
     payment.invoicePaymentables.forEach((invoicePaymentable) {
@@ -66,6 +69,7 @@ ReportResult paymentTaxReport(
       }
     });
   });
+  */
 
   final defaultColumns = [
     TaxRateReportFields.tax_name,
@@ -85,93 +89,103 @@ ReportResult paymentTaxReport(
     columns = BuiltList(defaultColumns);
   }
 
-  for (var invoiceId in invoiceMap.keys) {
-    final invoice = invoiceMap[invoiceId];
+  for (var paymentId in paymentMap.keys) {
+    final payment = paymentMap[paymentId];
 
-    if (invoice.isActive) {
-      final client = clientMap[invoice.clientId];
-      final paymentIds = invoicePaymentMap[invoiceId];
-      final payment = paymentIds == null
-          ? PaymentEntity()
-          : paymentMap[paymentIds.first] ?? PaymentEntity();
-
-      //final invoiceTaxAmount = invoice.calculateTaxes(invoice.usesInclusiveTaxes);
-      final invoicePaidAmount = invoice.amount - invoice.balance;
+    if (payment.isActive) {
+      final client = clientMap[payment.clientId];
       final precision = staticState.currencyMap[client.currencyId].precision;
-      final taxes = invoice.getTaxes(precision);
 
-      for (final key in taxes.keys) {
-        bool skip = false;
-
-        final List<ReportElement> row = [];
-        final String taxName = taxes[key]['name'];
-        final double taxRate = taxes[key]['rate'];
-
-        if (taxRate == null || taxRate == 0) {
-          continue;
+      for (final paymentable in payment.paymentables) {
+        InvoiceEntity invoice;
+        if (paymentable.entityType == EntityType.invoice) {
+          invoice = invoiceMap[paymentable.invoiceId] ?? InvoiceEntity();
+        } else {
+          invoice = creditMap[paymentable.creditId] ?? InvoiceEntity();
         }
 
-        for (var column in columns) {
-          dynamic value = '';
+        if (invoice.isSent && invoice.isActive) {
+          final taxes = invoice.getTaxes(precision);
 
-          switch (column) {
-            case TaxRateReportFields.client:
-              value = client.displayName;
-              break;
-            case TaxRateReportFields.invoice:
-              value = invoice.listDisplayName;
-              break;
-            case TaxRateReportFields.invoice_date:
-              value = invoice.date;
-              break;
-            case TaxRateReportFields.payment_date:
-              value = payment.date;
-              break;
-            case TaxRateReportFields.invoice_amount:
-              value = invoice.amount;
-              break;
-            case TaxRateReportFields.tax_name:
-              value = taxName;
-              break;
-            case TaxRateReportFields.tax_rate:
-              value = taxRate;
-              break;
-            case TaxRateReportFields.tax_amount:
-              value = taxes[key]['amount'] ?? 0.0;
-              break;
-            case TaxRateReportFields.tax_paid:
-              value = taxes[key]['paid'] ?? 0.0;
-              break;
-            case TaxRateReportFields.payment_amount:
-              value = invoicePaidAmount;
-              break;
-            case TaxRateReportFields.currency:
-              value = staticState.currencyMap[client.currencyId]?.name ??
-                  staticState.currencyMap[client.settings.currencyId]?.name;
-              break;
+          for (final key in taxes.keys) {
+            bool skip = false;
+
+            final List<ReportElement> row = [];
+            final String taxName = taxes[key]['name'];
+            final double taxRate = taxes[key]['rate'];
+
+            if (taxRate == null || taxRate == 0) {
+              continue;
+            }
+
+            for (var column in columns) {
+              dynamic value = '';
+
+              switch (column) {
+                case TaxRateReportFields.client:
+                  value = client.displayName;
+                  break;
+                case TaxRateReportFields.invoice:
+                  value = invoice.listDisplayName;
+                  break;
+                case TaxRateReportFields.invoice_date:
+                  value = invoice.date;
+                  break;
+                case TaxRateReportFields.payment_date:
+                  value = payment.date;
+                  break;
+                case TaxRateReportFields.invoice_amount:
+                  value = invoice.amount * paymentable.amount / invoice.amount;
+                  break;
+                case TaxRateReportFields.tax_name:
+                  value = taxName;
+                  break;
+                case TaxRateReportFields.tax_rate:
+                  value = taxRate;
+                  break;
+                case TaxRateReportFields.tax_amount:
+                  value = (taxes[key]['amount'] ?? 0.0) *
+                      paymentable.amount /
+                      invoice.amount;
+                  break;
+                case TaxRateReportFields.tax_paid:
+                  value = (taxes[key]['paid'] ?? 0.0) *
+                      paymentable.amount /
+                      invoice.amount;
+                  break;
+                case TaxRateReportFields.payment_amount:
+                  value = paymentable.amount;
+                  break;
+                case TaxRateReportFields.currency:
+                  value = staticState.currencyMap[client.currencyId]?.name ??
+                      staticState.currencyMap[client.settings.currencyId]?.name;
+                  break;
+              }
+
+              if (!ReportResult.matchField(
+                value: value,
+                userCompany: userCompany,
+                reportsUIState: reportsUIState,
+                column: EnumUtils.parse(column),
+              )) {
+                skip = true;
+              }
+
+              if (value.runtimeType == bool) {
+                row.add(invoice.getReportBool(value: value));
+              } else if (value.runtimeType == double ||
+                  value.runtimeType == int) {
+                row.add(invoice.getReportDouble(
+                    value: value, currencyId: client.settings.currencyId));
+              } else {
+                row.add(invoice.getReportString(value: value));
+              }
+            }
+
+            if (!skip) {
+              data.add(row);
+            }
           }
-
-          if (!ReportResult.matchField(
-            value: value,
-            userCompany: userCompany,
-            reportsUIState: reportsUIState,
-            column: EnumUtils.parse(column),
-          )) {
-            skip = true;
-          }
-
-          if (value.runtimeType == bool) {
-            row.add(invoice.getReportBool(value: value));
-          } else if (value.runtimeType == double || value.runtimeType == int) {
-            row.add(invoice.getReportDouble(
-                value: value, currencyId: client.settings.currencyId));
-          } else {
-            row.add(invoice.getReportString(value: value));
-          }
-        }
-
-        if (!skip) {
-          data.add(row);
         }
       }
     }
@@ -183,10 +197,10 @@ ReportResult paymentTaxReport(
 
   return ReportResult(
     allColumns:
-    TaxRateReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+        TaxRateReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
     defaultColumns:
-    defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }
