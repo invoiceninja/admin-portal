@@ -57,20 +57,6 @@ ReportResult paymentTaxReport(
           ? reportSettings[kReportPaymentTax]
           : ReportSettingsEntity();
 
-  /*
-  final Map<String, List<String>> invoicePaymentMap = {};
-  paymentMap.forEach((paymentId, payment) {
-    payment.invoicePaymentables.forEach((invoicePaymentable) {
-      final List<String> paymentIds =
-          invoicePaymentMap[invoicePaymentable.invoiceId] ?? [];
-      if (!payment.isDeleted) {
-        paymentIds.add(payment.id);
-        invoicePaymentMap[invoicePaymentable.invoiceId] = paymentIds;
-      }
-    });
-  });
-  */
-
   final defaultColumns = [
     TaxRateReportFields.tax_name,
     TaxRateReportFields.tax_amount,
@@ -78,6 +64,7 @@ ReportResult paymentTaxReport(
     TaxRateReportFields.invoice_amount,
     TaxRateReportFields.invoice_date,
     TaxRateReportFields.invoice,
+    TaxRateReportFields.payment_date,
   ];
 
   if (taxRateReportSettings.columns.isNotEmpty) {
@@ -98,10 +85,12 @@ ReportResult paymentTaxReport(
 
       for (final paymentable in payment.paymentables) {
         InvoiceEntity invoice;
+        int multiplier = 1;
         if (paymentable.entityType == EntityType.invoice) {
           invoice = invoiceMap[paymentable.invoiceId] ?? InvoiceEntity();
         } else {
           invoice = creditMap[paymentable.creditId] ?? InvoiceEntity();
+          multiplier = -1;
         }
 
         if (invoice.isSent && invoice.isActive) {
@@ -135,7 +124,10 @@ ReportResult paymentTaxReport(
                   value = payment.date;
                   break;
                 case TaxRateReportFields.invoice_amount:
-                  value = invoice.amount * paymentable.amount / invoice.amount;
+                  value = invoice.amount *
+                      paymentable.amount /
+                      invoice.amount *
+                      multiplier;
                   break;
                 case TaxRateReportFields.tax_name:
                   value = taxName;
@@ -146,15 +138,17 @@ ReportResult paymentTaxReport(
                 case TaxRateReportFields.tax_amount:
                   value = (taxes[key]['amount'] ?? 0.0) *
                       paymentable.amount /
-                      invoice.amount;
+                      invoice.amount *
+                      multiplier;
                   break;
                 case TaxRateReportFields.tax_paid:
                   value = (taxes[key]['paid'] ?? 0.0) *
                       paymentable.amount /
-                      invoice.amount;
+                      invoice.amount *
+                      multiplier;
                   break;
                 case TaxRateReportFields.payment_amount:
-                  value = paymentable.amount;
+                  value = paymentable.amount * multiplier;
                   break;
                 case TaxRateReportFields.currency:
                   value = staticState.currencyMap[client.currencyId]?.name ??
