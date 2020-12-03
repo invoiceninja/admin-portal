@@ -1009,7 +1009,7 @@ class ProductItemFields {
 }
 
 class TaskItemFields {
-  static const String productKey = 'product_key';
+  static const String service = 'service';
   static const String description = 'description';
   static const String rate = 'rate';
   static const String tax = 'tax';

@@ -609,6 +609,7 @@ List<String> kCustomLabels = [
   'quantity',
   'quote',
   'rate',
+  'service',
   'statement',
   'subtotal',
   'surcharge',
