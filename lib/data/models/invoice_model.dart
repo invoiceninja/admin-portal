@@ -444,7 +444,7 @@ abstract class InvoiceEntity extends Object
 
   double get netBalance => balance - (taxAmount * balance / amount);
 
-  double get paidToDate => amount - balance;
+  double get paidToDate => amount - (isSent ? balance : amount);
 
   @nullable
   int get loadedAt;
@@ -890,12 +890,11 @@ abstract class InvoiceEntity extends Object
     final taxes = <String, Map<String, dynamic>>{};
     final taxable = calculateTaxes(
         useInclusiveTaxes: usesInclusiveTaxes, precision: precision);
-    final paidAmount = amount - balance;
 
     if (taxRate1 != 0) {
       final invoiceTaxAmount = taxable[taxName1];
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
-          ? (paidAmount / amount * invoiceTaxAmount)
+          ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
       _calculateTax(
           taxes, taxName1, taxRate1, invoiceTaxAmount, invoicePaidAmount);
@@ -904,7 +903,7 @@ abstract class InvoiceEntity extends Object
     if (taxRate2 != 0) {
       final invoiceTaxAmount = taxable[taxName2];
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
-          ? (paidAmount / amount * invoiceTaxAmount)
+          ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
       _calculateTax(
           taxes, taxName2, taxRate2, invoiceTaxAmount, invoicePaidAmount);
@@ -913,7 +912,7 @@ abstract class InvoiceEntity extends Object
     if (taxRate3 != 0) {
       final invoiceTaxAmount = taxable[taxName3];
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
-          ? (paidAmount / amount * invoiceTaxAmount)
+          ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
       _calculateTax(
           taxes, taxName3, taxRate3, invoiceTaxAmount, invoicePaidAmount);
@@ -925,7 +924,7 @@ abstract class InvoiceEntity extends Object
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
                 amount * itemTaxAmount != 0
-            ? (paidAmount / amount * itemTaxAmount)
+            ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(
             taxes, item.taxName1, item.taxRate1, itemTaxAmount, itemPaidAmount);
@@ -936,7 +935,7 @@ abstract class InvoiceEntity extends Object
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
                 amount * itemTaxAmount != 0
-            ? (paidAmount / amount * itemTaxAmount)
+            ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(
             taxes, item.taxName2, item.taxRate2, itemTaxAmount, itemPaidAmount);
@@ -947,7 +946,7 @@ abstract class InvoiceEntity extends Object
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
                 amount * itemTaxAmount != 0
-            ? (paidAmount / amount * itemTaxAmount)
+            ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(
             taxes, item.taxName3, item.taxRate3, itemTaxAmount, itemPaidAmount);

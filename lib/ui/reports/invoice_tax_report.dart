@@ -76,10 +76,12 @@ ReportResult invoiceTaxReport(
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
 
-    if (invoice.isActive) {
+    if (invoice.isActive && invoice.isSent) {
       final client = clientMap[invoice.clientId];
       final precision = staticState.currencyMap[client.currencyId].precision;
       final taxes = invoice.getTaxes(precision);
+
+      print('## taxes: $taxes');
 
       for (final key in taxes.keys) {
         bool skip = false;
