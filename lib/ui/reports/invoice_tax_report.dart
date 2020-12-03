@@ -81,8 +81,6 @@ ReportResult invoiceTaxReport(
       final precision = staticState.currencyMap[client.currencyId].precision;
       final taxes = invoice.getTaxes(precision);
 
-      print('## taxes: $taxes');
-
       for (final key in taxes.keys) {
         bool skip = false;
 
