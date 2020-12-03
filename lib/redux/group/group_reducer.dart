@@ -18,17 +18,13 @@ EntityUIState groupUIReducer(GroupUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.group
-          ? action.entityId
-          : selectedId),
+      action.entityType == EntityType.group ? action.entityId : selectedId),
   TypedReducer<String, ViewGroup>(
       (String selectedId, action) => action.groupId),
   TypedReducer<String, AddGroupSuccess>(
       (String selectedId, action) => action.group.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteGroupSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveGroupSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.group ? '' : selectedId),

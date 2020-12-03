@@ -90,9 +90,9 @@ abstract class TaskStatusEntity extends Object
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
-        ClientEntity client,
-        bool includeEdit = false,
-        bool multiselect = false}) {
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted && includeEdit && userCompany.canEditEntity(this)) {

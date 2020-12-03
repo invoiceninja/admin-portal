@@ -648,7 +648,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         textAlign: TextAlign.end,
                         key: ValueKey(
                             '__invoice_subtotal_${invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
-                        initialValue: formatNumber(invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice)), context,
+                        initialValue: formatNumber(
+                            invoice.calculateSubtotal(
+                                precision: precisionForInvoice(state, invoice)),
+                            context,
                             clientId: invoice.clientId),
                       ),
                       if (invoice.isOld)
@@ -713,7 +716,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         key: ValueKey(
                             '__invoice_total_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
                         initialValue: formatNumber(
-                            invoice.calculateTotal(precision: precisionForInvoice(state, invoice)) - invoice.paidToDate, context,
+                            invoice.calculateTotal(
+                                    precision:
+                                        precisionForInvoice(state, invoice)) -
+                                invoice.paidToDate,
+                            context,
                             clientId: invoice.clientId),
                       ),
                       if (invoice.partial != 0)

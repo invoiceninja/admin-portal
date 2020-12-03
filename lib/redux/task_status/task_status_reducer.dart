@@ -27,8 +27,6 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.taskStatus.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteTaskStatusesSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveTaskStatusesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, FilterByEntity>(
       (selectedId, action) => action.clearSelection

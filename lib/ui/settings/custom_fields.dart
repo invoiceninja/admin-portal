@@ -50,7 +50,6 @@ class _CustomFieldsState extends State<CustomFields>
     store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
   }
 
-
   @override
   void dispose() {
     _focusNode.dispose();

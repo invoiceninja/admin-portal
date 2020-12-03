@@ -45,16 +45,12 @@ VendorContactEntity editVendorContact(
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.vendor
-          ? action.entityId
-          : selectedId),
+      action.entityType == EntityType.vendor ? action.entityId : selectedId),
   TypedReducer<String, ViewVendor>((selectedId, action) => action.vendorId),
   TypedReducer<String, AddVendorSuccess>(
       (selectedId, action) => action.vendor.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteVendorSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveVendorSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

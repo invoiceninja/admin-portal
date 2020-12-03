@@ -53,8 +53,6 @@ final selectedIdReducer = combineReducers<String>([
   }),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteClientsSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveClientsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.client ? '' : selectedId),

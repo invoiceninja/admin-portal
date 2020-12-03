@@ -17,16 +17,12 @@ EntityUIState expenseUIReducer(ExpenseUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.expense
-          ? action.entityId
-          : selectedId),
+      action.entityType == EntityType.expense ? action.entityId : selectedId),
   TypedReducer<String, ViewExpense>((selectedId, action) => action.expenseId),
   TypedReducer<String, AddExpenseSuccess>(
       (selectedId, action) => action.expense.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, DeleteExpenseSuccess>((selectedId, action) => ''),
-  TypedReducer<String, ArchiveExpenseSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
