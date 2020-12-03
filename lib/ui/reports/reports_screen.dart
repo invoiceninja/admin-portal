@@ -65,15 +65,17 @@ class ReportsScreen extends StatelessWidget {
           kReportClient,
           if (state.company.isModuleEnabled(EntityType.invoice)) ...[
             kReportInvoice,
+            if (state.company.hasTaxes)
+              kReportInvoiceTax,
             kReportLineItem,
             kReportPayment,
+            if (state.company.hasTaxes)
+              kReportPaymentTax,
           ],
           if (state.company.isModuleEnabled(EntityType.quote))
             kReportQuote,
           if (state.company.isModuleEnabled(EntityType.credit))
             kReportCredit,
-          if (state.company.hasTaxes)
-            kReportTaxRate,
           kReportDocument,
           kReportExpense,
           kReportProduct,
@@ -549,10 +551,10 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
 
   if (company.hasCustomField(column)) {
     return convertCustomFieldType(company.getCustomFieldType(column));
-  } else if (['updated_at', 'created_at', 'start_time', 'end_time'].contains(column)) {
-    return ReportColumnType.dateTime;
   } else
-  if (['date', 'due_date', 'valid_until', 'start_date', 'end_date'].contains(
+  if (['updated_at', 'created_at', 'start_time', 'end_time'].contains(column)) {
+    return ReportColumnType.dateTime;
+  } else if (column.contains('_date') || ['date', 'valid_until'].contains(
       column)) {
     return ReportColumnType.date;
   } else if (column == 'age') {
