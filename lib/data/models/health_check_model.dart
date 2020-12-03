@@ -29,6 +29,12 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'simple_db_check')
   bool get dbCheck;
 
+  @BuiltValueField(wireName: 'cache_enabled')
+  bool get cacheEnabled;
+
+  @BuiltValueField(wireName: 'phantom_enabled')
+  bool get phantomEnabled;
+
   @BuiltValueField(wireName: 'npm_status')
   String get npmStatus;
 

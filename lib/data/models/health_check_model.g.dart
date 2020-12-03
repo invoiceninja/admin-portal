@@ -38,6 +38,12 @@ class _$HealthCheckResponseSerializer
       'simple_db_check',
       serializers.serialize(object.dbCheck,
           specifiedType: const FullType(bool)),
+      'cache_enabled',
+      serializers.serialize(object.cacheEnabled,
+          specifiedType: const FullType(bool)),
+      'phantom_enabled',
+      serializers.serialize(object.phantomEnabled,
+          specifiedType: const FullType(bool)),
       'npm_status',
       serializers.serialize(object.npmStatus,
           specifiedType: const FullType(String)),
@@ -76,6 +82,14 @@ class _$HealthCheckResponseSerializer
           break;
         case 'simple_db_check':
           result.dbCheck = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'cache_enabled':
+          result.cacheEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'phantom_enabled':
+          result.phantomEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'npm_status':
@@ -169,6 +183,10 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   @override
   final bool dbCheck;
   @override
+  final bool cacheEnabled;
+  @override
+  final bool phantomEnabled;
+  @override
   final String npmStatus;
   @override
   final String nodeStatus;
@@ -182,6 +200,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.phpVersion,
       this.envWritable,
       this.dbCheck,
+      this.cacheEnabled,
+      this.phantomEnabled,
       this.npmStatus,
       this.nodeStatus})
       : super._() {
@@ -196,6 +216,13 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     }
     if (dbCheck == null) {
       throw new BuiltValueNullFieldError('HealthCheckResponse', 'dbCheck');
+    }
+    if (cacheEnabled == null) {
+      throw new BuiltValueNullFieldError('HealthCheckResponse', 'cacheEnabled');
+    }
+    if (phantomEnabled == null) {
+      throw new BuiltValueNullFieldError(
+          'HealthCheckResponse', 'phantomEnabled');
     }
     if (npmStatus == null) {
       throw new BuiltValueNullFieldError('HealthCheckResponse', 'npmStatus');
@@ -222,6 +249,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         phpVersion == other.phpVersion &&
         envWritable == other.envWritable &&
         dbCheck == other.dbCheck &&
+        cacheEnabled == other.cacheEnabled &&
+        phantomEnabled == other.phantomEnabled &&
         npmStatus == other.npmStatus &&
         nodeStatus == other.nodeStatus;
   }
@@ -232,9 +261,15 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, systemHealth.hashCode), phpVersion.hashCode),
-                    envWritable.hashCode),
-                dbCheck.hashCode),
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc(0, systemHealth.hashCode),
+                                phpVersion.hashCode),
+                            envWritable.hashCode),
+                        dbCheck.hashCode),
+                    cacheEnabled.hashCode),
+                phantomEnabled.hashCode),
             npmStatus.hashCode),
         nodeStatus.hashCode));
   }
@@ -246,6 +281,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
           ..add('phpVersion', phpVersion)
           ..add('envWritable', envWritable)
           ..add('dbCheck', dbCheck)
+          ..add('cacheEnabled', cacheEnabled)
+          ..add('phantomEnabled', phantomEnabled)
           ..add('npmStatus', npmStatus)
           ..add('nodeStatus', nodeStatus))
         .toString();
@@ -274,6 +311,15 @@ class HealthCheckResponseBuilder
   bool get dbCheck => _$this._dbCheck;
   set dbCheck(bool dbCheck) => _$this._dbCheck = dbCheck;
 
+  bool _cacheEnabled;
+  bool get cacheEnabled => _$this._cacheEnabled;
+  set cacheEnabled(bool cacheEnabled) => _$this._cacheEnabled = cacheEnabled;
+
+  bool _phantomEnabled;
+  bool get phantomEnabled => _$this._phantomEnabled;
+  set phantomEnabled(bool phantomEnabled) =>
+      _$this._phantomEnabled = phantomEnabled;
+
   String _npmStatus;
   String get npmStatus => _$this._npmStatus;
   set npmStatus(String npmStatus) => _$this._npmStatus = npmStatus;
@@ -290,6 +336,8 @@ class HealthCheckResponseBuilder
       _phpVersion = _$v.phpVersion?.toBuilder();
       _envWritable = _$v.envWritable;
       _dbCheck = _$v.dbCheck;
+      _cacheEnabled = _$v.cacheEnabled;
+      _phantomEnabled = _$v.phantomEnabled;
       _npmStatus = _$v.npmStatus;
       _nodeStatus = _$v.nodeStatus;
       _$v = null;
@@ -320,6 +368,8 @@ class HealthCheckResponseBuilder
               phpVersion: phpVersion.build(),
               envWritable: envWritable,
               dbCheck: dbCheck,
+              cacheEnabled: cacheEnabled,
+              phantomEnabled: phantomEnabled,
               npmStatus: npmStatus,
               nodeStatus: nodeStatus);
     } catch (_) {
