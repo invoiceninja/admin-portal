@@ -11,10 +11,9 @@ import 'package:memoize/memoize.dart';
 
 enum TaxRateReportFields {
   client,
-  invoice,
-  invoice_amount,
-  invoice_balance,
-  invoice_date,
+  number,
+  amount,
+  date,
   tax_name,
   tax_rate,
   tax_amount,
@@ -22,24 +21,26 @@ enum TaxRateReportFields {
   currency
 }
 
-var memoizedInvoiceTaxReport = memo8((
+var memoizedTaxReport = memo9((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, TaxRateEntity> taxRateMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    invoiceTaxReport(userCompany, reportsUIState, taxRateMap, invoiceMap,
+    taxReport(userCompany, reportsUIState, taxRateMap, invoiceMap, creditMap,
         clientMap, paymentMap, userMap, staticState));
 
-ReportResult invoiceTaxReport(
+ReportResult taxReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, TaxRateEntity> taxRateMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, UserEntity> userMap,
@@ -50,18 +51,17 @@ ReportResult invoiceTaxReport(
 
   final reportSettings = userCompany.settings.reportSettings;
   final taxRateReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportInvoiceTax)
-          ? reportSettings[kReportInvoiceTax]
+      reportSettings != null && reportSettings.containsKey(kReportTax)
+          ? reportSettings[kReportTax]
           : ReportSettingsEntity();
 
   final defaultColumns = [
     TaxRateReportFields.tax_name,
     TaxRateReportFields.tax_amount,
     TaxRateReportFields.tax_paid,
-    TaxRateReportFields.invoice_amount,
-    TaxRateReportFields.invoice_balance,
-    TaxRateReportFields.invoice_date,
-    TaxRateReportFields.invoice,
+    TaxRateReportFields.amount,
+    TaxRateReportFields.date,
+    TaxRateReportFields.number,
   ];
 
   if (taxRateReportSettings.columns.isNotEmpty) {
@@ -75,7 +75,6 @@ ReportResult invoiceTaxReport(
 
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
-
     if (invoice.isActive && invoice.isSent) {
       final client = clientMap[invoice.clientId];
       final precision = staticState.currencyMap[client.currencyId].precision;
@@ -99,13 +98,13 @@ ReportResult invoiceTaxReport(
             case TaxRateReportFields.client:
               value = client.displayName;
               break;
-            case TaxRateReportFields.invoice:
-              value = invoice.listDisplayName;
+            case TaxRateReportFields.number:
+              value = invoice.number;
               break;
-            case TaxRateReportFields.invoice_date:
+            case TaxRateReportFields.date:
               value = invoice.date;
               break;
-            case TaxRateReportFields.invoice_amount:
+            case TaxRateReportFields.amount:
               value = invoice.amount;
               break;
             case TaxRateReportFields.tax_name:
@@ -119,9 +118,6 @@ ReportResult invoiceTaxReport(
               break;
             case TaxRateReportFields.tax_paid:
               value = taxes[key]['paid'] ?? 0.0;
-              break;
-            case TaxRateReportFields.invoice_balance:
-              value = invoice.balance;
               break;
             case TaxRateReportFields.currency:
               value = staticState.currencyMap[client.currencyId]?.name ??
@@ -145,6 +141,84 @@ ReportResult invoiceTaxReport(
                 value: value, currencyId: client.settings.currencyId));
           } else {
             row.add(invoice.getReportString(value: value));
+          }
+        }
+
+        if (!skip) {
+          data.add(row);
+        }
+      }
+    }
+  }
+
+  for (var creditId in creditMap.keys) {
+    final credit = creditMap[creditId];
+    if (credit.isActive && credit.isSent) {
+      final client = clientMap[credit.clientId];
+      final precision = staticState.currencyMap[client.currencyId].precision;
+      final taxes = credit.getTaxes(precision);
+
+      for (final key in taxes.keys) {
+        bool skip = false;
+
+        final List<ReportElement> row = [];
+        final String taxName = taxes[key]['name'];
+        final double taxRate = taxes[key]['rate'];
+
+        if (taxRate == null || taxRate == 0) {
+          continue;
+        }
+
+        for (var column in columns) {
+          dynamic value = '';
+
+          switch (column) {
+            case TaxRateReportFields.client:
+              value = client.displayName;
+              break;
+            case TaxRateReportFields.number:
+              value = credit.number;
+              break;
+            case TaxRateReportFields.date:
+              value = credit.date;
+              break;
+            case TaxRateReportFields.amount:
+              value = credit.amount * -1;
+              break;
+            case TaxRateReportFields.tax_name:
+              value = taxName;
+              break;
+            case TaxRateReportFields.tax_rate:
+              value = taxRate;
+              break;
+            case TaxRateReportFields.tax_amount:
+              value = (taxes[key]['amount'] ?? 0.0) * -1;
+              break;
+            case TaxRateReportFields.tax_paid:
+              value = (taxes[key]['paid'] ?? 0.0) * -1;
+              break;
+            case TaxRateReportFields.currency:
+              value = staticState.currencyMap[client.currencyId]?.name ??
+                  staticState.currencyMap[client.settings.currencyId]?.name;
+              break;
+          }
+
+          if (!ReportResult.matchField(
+            value: value,
+            userCompany: userCompany,
+            reportsUIState: reportsUIState,
+            column: EnumUtils.parse(column),
+          )) {
+            skip = true;
+          }
+
+          if (value.runtimeType == bool) {
+            row.add(credit.getReportBool(value: value));
+          } else if (value.runtimeType == double || value.runtimeType == int) {
+            row.add(credit.getReportDouble(
+                value: value, currencyId: client.settings.currencyId));
+          } else {
+            row.add(credit.getReportString(value: value));
           }
         }
 
