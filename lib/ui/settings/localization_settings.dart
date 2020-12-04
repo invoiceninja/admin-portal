@@ -254,6 +254,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
