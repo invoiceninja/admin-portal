@@ -1239,9 +1239,6 @@ abstract class SettingsEntity
       emailBodyReminderEndless: clientSettings?.emailBodyReminderEndless ??
           groupSettings?.emailBodyReminderEndless ??
           companySettings?.emailBodyReminderEndless,
-      customPaymentTerms: clientSettings?.customPaymentTerms ??
-          groupSettings?.customPaymentTerms ??
-          companySettings?.customPaymentTerms,
       pdfVariables: clientSettings?.pdfVariables ??
           groupSettings?.pdfVariables ??
           companySettings?.pdfVariables,
@@ -1965,11 +1962,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'portal_custom_js')
   String get clientPortalCustomJs;
-
-  // TODO remove this field
-  @nullable
-  @BuiltValueField(wireName: 'custom_payment_terms')
-  BuiltList<PaymentTermEntity> get customPaymentTerms;
 
   // TODO remove this field
   @nullable

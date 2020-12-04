@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'labels': 'Labels',
+      'add_custom': 'Add Custom',
       'payment_tax': 'Payment Tax',
       'unpaid': 'Unpaid',
       'white_label': 'White Label',
@@ -5216,6 +5218,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get unpaid => _localizedValues[localeCode]['unpaid'] ?? '';
 
   String get paymentTax => _localizedValues[localeCode]['payment_tax'] ?? '';
+
+  String get addCustom => _localizedValues[localeCode]['add_custom'] ?? '';
+
+  String get labels => _localizedValues[localeCode]['labels'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

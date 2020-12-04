@@ -156,6 +156,7 @@ void fieldCallback({
   String field,
   Function(String) callback,
   int maxLength,
+  List<FlatButton> secondaryActions,
 }) {
   showDialog<AlertDialog>(
     context: context,
@@ -166,6 +167,7 @@ void fieldCallback({
         field: field,
         title: title,
         maxLength: maxLength,
+        secondaryActions: secondaryActions,
       );
     },
   );
@@ -177,12 +179,14 @@ class FieldConfirmation extends StatefulWidget {
     @required this.title,
     @required this.field,
     this.maxLength,
+    this.secondaryActions,
   });
 
   final Function(String) callback;
   final String title;
   final String field;
   final int maxLength;
+  final List<FlatButton> secondaryActions;
 
   @override
   _FieldConfirmationState createState() => _FieldConfirmationState();
@@ -213,6 +217,8 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
         onSubmitted: (value) => _submit(),
       ),
       actions: <Widget>[
+        ...widget.secondaryActions ?? [],
+        SizedBox(width: 6),
         SaveCancelButtons(
           isHeader: false,
           saveLabel: localization.save.toUpperCase(),

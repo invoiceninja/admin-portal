@@ -15,9 +15,11 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LocalizationSettings extends StatefulWidget {
   const LocalizationSettings({
@@ -251,20 +253,44 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      items: customLabels
-                          .map((key) => DropdownMenuItem(
-                                child: Text(localization.lookup(key)),
-                                value: key,
-                              ))
-                          .toList(),
-                      hint: Text(localization.selectLabel),
-                      onChanged: (value) {
-                        viewModel.onSettingsChanged(settings
-                            .rebuild((b) => b..translations[value] = ''));
-                      },
-                    ),
+                  Row(
+                    children: [
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          items: customLabels
+                              .map((key) => DropdownMenuItem(
+                                    child: Text(localization.lookup(key)),
+                                    value: key,
+                                  ))
+                              .toList(),
+                          hint: Text(localization.selectLabel),
+                          onChanged: (value) {
+                            viewModel.onSettingsChanged(settings
+                                .rebuild((b) => b..translations[value] = ''));
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      FlatButton(
+                        child: Text(localization.addCustom),
+                        onPressed: () {
+                          fieldCallback(
+                              context: context,
+                              callback: (value) {
+                                viewModel.onSettingsChanged(settings.rebuild(
+                                    (b) => b..translations[value] = ''));
+                              },
+                              field: localization.label,
+                              title: localization.addCustom,
+                              secondaryActions: [
+                                FlatButton(
+                                  child: Text(localization.labels.toUpperCase()),
+                                  onPressed: () => launch(kGitHubLangUrl),
+                                )
+                              ]);
+                        },
+                      )
+                    ],
                   ),
                   SizedBox(height: 16),
                   for (var key in translations.keys)
