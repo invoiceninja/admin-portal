@@ -64,14 +64,15 @@ class LocalizationSettingsVM {
           final settingsUIState = state.uiState.settingsUIState;
           switch (settingsUIState.entityType) {
             case EntityType.company:
+              final appBuilder = AppBuilder.of(context);
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context).savedSettings)
                 ..future.then<dynamic>((value) {
                   store.dispatch(RefreshData(
                       includeStatic: true,
                       completer: Completer<dynamic>()
-                        ..future.then((dynamic value) =>
-                            AppBuilder.of(context).rebuild())));
+                        ..future
+                            .then((dynamic value) => appBuilder.rebuild())));
                 });
               store.dispatch(SaveCompanyRequest(
                   completer: completer, company: settingsUIState.company));
