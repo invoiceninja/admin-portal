@@ -58,15 +58,18 @@ void confirmCallback({
         semanticLabel: localization.areYouSure,
         title: Text(title),
         content: typeToConfirm != null
-            ? Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ? Row(
                 children: [
-                  Text(localization.pleaseTypeToConfirm
-                      .replaceFirst(':value', typeToConfirm)),
-                  DecoratedFormField(
-                    onChanged: (value) => _typed = value,
-                    hint: typeToConfirm,
+                  Flexible(
+                    child: Text(localization.pleaseTypeToConfirm
+                        .replaceFirst(':value', typeToConfirm) + ':'),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: DecoratedFormField(
+                      onChanged: (value) => _typed = value,
+                      hint: typeToConfirm,
+                    ),
                   ),
                 ],
               )
