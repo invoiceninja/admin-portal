@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
+      'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
       'clone_to_other': 'Clone to Other',
@@ -5226,11 +5228,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get labels => _localizedValues[localeCode]['labels'] ?? '';
 
-  String get cloneToOther => _localizedValues[localeCode]['clone_to_other'] ?? '';
+  String get cloneToOther =>
+      _localizedValues[localeCode]['clone_to_other'] ?? '';
 
   String get cloneTo => _localizedValues[localeCode]['clone_to'] ?? '';
 
   String get service => _localizedValues[localeCode]['service'] ?? '';
+
+  String get purge => _localizedValues[localeCode]['purge'] ?? '';
+
+  String get pleaseTypeToConfirm =>
+      _localizedValues[localeCode]['please_type_to_confirm'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

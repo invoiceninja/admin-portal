@@ -298,6 +298,7 @@ class _AccountOverview extends StatelessWidget {
                     confirmCallback(
                         context: context,
                         message: localization.purgeDataMessage,
+                        typeToConfirm: localization.purge.toLowerCase(),
                         callback: () {
                           passwordCallback(
                               alwaysRequire: true,
@@ -331,6 +332,7 @@ class _AccountOverview extends StatelessWidget {
                     confirmCallback(
                         context: context,
                         message: message,
+                        typeToConfirm: localization.delete.toLowerCase(),
                         callback: () {
                           passwordCallback(
                               alwaysRequire: true,

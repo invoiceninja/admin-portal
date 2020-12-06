@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -42,29 +43,55 @@ void confirmCallback({
   @required BuildContext context,
   @required VoidCallback callback,
   String message,
+  String typeToConfirm,
 }) {
   final localization = AppLocalization.of(context);
+  final title = message == null ? localization.areYouSure : message;
+  final content = message == null ? null : localization.areYouSure;
 
   showDialog<AlertDialog>(
     context: context,
-    builder: (BuildContext context) => AlertDialog(
-      semanticLabel: localization.areYouSure,
-      title: Text(message == null ? localization.areYouSure : message),
-      content: message == null ? null : Text(localization.areYouSure),
-      actions: <Widget>[
-        FlatButton(
-            child: Text(localization.cancel.toUpperCase()),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        FlatButton(
-            child: Text(localization.ok.toUpperCase()),
-            onPressed: () {
-              Navigator.pop(context);
-              callback();
-            })
-      ],
-    ),
+    builder: (BuildContext context) {
+      String _typed = '';
+
+      return AlertDialog(
+        semanticLabel: localization.areYouSure,
+        title: Text(title),
+        content: typeToConfirm != null
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(localization.pleaseTypeToConfirm
+                      .replaceFirst(':value', typeToConfirm)),
+                  DecoratedFormField(
+                    onChanged: (value) => _typed = value,
+                    hint: typeToConfirm,
+                  ),
+                ],
+              )
+            : content == null
+                ? null
+                : Text(content),
+        actions: <Widget>[
+          FlatButton(
+              child: Text(localization.cancel.toUpperCase()),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          FlatButton(
+              child: Text(localization.ok.toUpperCase()),
+              onPressed: () {
+                print('## typeToConfirm: $typeToConfirm, typed: $_typed');
+                if (typeToConfirm == null ||
+                    typeToConfirm.toLowerCase() == _typed.toLowerCase()) {
+                  Navigator.pop(context);
+                  callback();
+                }
+              })
+        ],
+      );
+    },
   );
 }
 
