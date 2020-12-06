@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 void showErrorDialog({
@@ -237,4 +241,73 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
       ],
     );
   }
+}
+
+void cloneToDialog({
+  @required BuildContext context,
+  @required InvoiceEntity invoice,
+}) {
+  final localization = AppLocalization.of(context);
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final userCompany = state.userCompany;
+
+  showDialog<AlertDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(localization.cloneTo),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (userCompany.canCreate(EntityType.invoice))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.invoice)),
+                  title: Text(localization.invoice),
+                  onTap: () {
+                    handleEntityAction(
+                        context, invoice, EntityAction.cloneToInvoice);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              if (userCompany.canCreate(EntityType.invoice))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.quote)),
+                  title: Text(localization.quote),
+                  onTap: () {
+                    handleEntityAction(
+                        context, invoice, EntityAction.cloneToQuote);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              if (userCompany.canCreate(EntityType.invoice))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.credit)),
+                  title: Text(localization.credit),
+                  onTap: () {
+                    handleEntityAction(
+                        context, invoice, EntityAction.cloneToCredit);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              if (userCompany.canCreate(EntityType.recurringInvoice))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.recurringInvoice)),
+                  title: Text(localization.recurringInvoice),
+                  onTap: () {
+                    handleEntityAction(
+                        context, invoice, EntityAction.cloneToRecurring);
+                    Navigator.of(context).pop();
+                  },
+                ),
+            ],
+          ),
+          actions: [
+            FlatButton(
+              child: Text(localization.close.toUpperCase()),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        );
+      });
 }

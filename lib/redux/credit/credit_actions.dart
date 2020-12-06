@@ -468,6 +468,9 @@ Future handleCreditAction(
             creditIds));
       }
       break;
+    case EntityAction.cloneToOther:
+      cloneToDialog(context: context, invoice: credit);
+      break;
     case EntityAction.cloneToInvoice:
       createEntity(
           context: context,

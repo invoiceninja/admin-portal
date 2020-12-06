@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'clone_to': 'Clone To',
+      'clone_to_other': 'Clone to Other',
       'labels': 'Labels',
       'add_custom': 'Add Custom',
       'payment_tax': 'Payment Tax',
@@ -5222,6 +5224,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get addCustom => _localizedValues[localeCode]['add_custom'] ?? '';
 
   String get labels => _localizedValues[localeCode]['labels'] ?? '';
+
+  String get cloneToOther => _localizedValues[localeCode]['clone_to_other'] ?? '';
+
+  String get cloneTo => _localizedValues[localeCode]['clone_to'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
