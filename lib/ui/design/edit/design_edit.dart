@@ -306,8 +306,11 @@ class DesignSection extends StatelessWidget {
           child: TextField(
             controller: textController,
             keyboardType: TextInputType.multiline,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+            ),
             maxLines: null,
-            //autofocus: true,
+            minLines: 16,
             style: TextStyle(
               fontFeatures: [FontFeature.tabularFigures()],
               //fontSize: 30,
@@ -319,7 +322,7 @@ class DesignSection extends StatelessWidget {
   }
 }
 
-class DesignSettings extends StatelessWidget {
+class DesignSettings extends StatefulWidget {
   const DesignSettings({
     @required this.nameController,
     @required this.onLoadDesign,
@@ -327,6 +330,13 @@ class DesignSettings extends StatelessWidget {
 
   final Function(DesignEntity) onLoadDesign;
   final TextEditingController nameController;
+
+  @override
+  _DesignSettingsState createState() => _DesignSettingsState();
+}
+
+class _DesignSettingsState extends State<DesignSettings> {
+  DesignEntity _selectedDesign;
 
   @override
   Widget build(BuildContext context) {
@@ -339,11 +349,15 @@ class DesignSettings extends StatelessWidget {
           children: <Widget>[
             DecoratedFormField(
               label: localization.name,
-              controller: nameController,
+              controller: widget.nameController,
             ),
             DesignPicker(
               label: localization.loadDesign,
-              onSelected: (value) => onLoadDesign(value),
+              onSelected: (value) {
+                widget.onLoadDesign(value);
+                _selectedDesign = value;
+              },
+              initialValue: _selectedDesign?.id
             ),
           ],
         ),
