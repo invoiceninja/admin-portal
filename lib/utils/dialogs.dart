@@ -270,7 +270,7 @@ void cloneToDialog({
                     Navigator.of(context).pop();
                   },
                 ),
-              if (userCompany.canCreate(EntityType.invoice))
+              if (userCompany.canCreate(EntityType.quote))
                 ListTile(
                   leading: Icon(getEntityIcon(EntityType.quote)),
                   title: Text(localization.quote),
@@ -280,7 +280,7 @@ void cloneToDialog({
                     Navigator.of(context).pop();
                   },
                 ),
-              if (userCompany.canCreate(EntityType.invoice))
+              if (userCompany.canCreate(EntityType.credit))
                 ListTile(
                   leading: Icon(getEntityIcon(EntityType.credit)),
                   title: Text(localization.credit),

@@ -739,36 +739,46 @@ abstract class InvoiceEntity extends Object
     }
 
     if (!multiselect) {
-      bool showCloneOther = false;
+      int countOtherTypes = 0;
       if (userCompany.canCreate(EntityType.invoice)) {
+        countOtherTypes++;
         if (isInvoice) {
           actions.add(EntityAction.cloneToInvoice);
-        } else {
-          showCloneOther = true;
         }
       }
       if (userCompany.canCreate(EntityType.quote)) {
+        countOtherTypes++;
         if (isQuote) {
           actions.add(EntityAction.cloneToQuote);
-        } else {
-          showCloneOther = true;
         }
       }
       if (userCompany.canCreate(EntityType.credit)) {
+        countOtherTypes++;
         if (isCredit) {
           actions.add(EntityAction.cloneToCredit);
-        } else {
-          showCloneOther = true;
         }
       }
       if (userCompany.canCreate(EntityType.recurringInvoice)) {
+        countOtherTypes++;
         if (isRecurringInvoice) {
           actions.add(EntityAction.cloneToRecurring);
-        } else {
-          showCloneOther = true;
         }
       }
-      if (showCloneOther) {
+      if (countOtherTypes == 2) {
+        if (userCompany.canCreate(EntityType.invoice) && !isInvoice) {
+          actions.add(EntityAction.cloneToInvoice);
+        }
+        if (userCompany.canCreate(EntityType.quote) && !isQuote) {
+          actions.add(EntityAction.cloneToQuote);
+        }
+        if (userCompany.canCreate(EntityType.credit) && !isCredit) {
+          actions.add(EntityAction.cloneToCredit);
+        }
+        if (userCompany.canCreate(EntityType.recurringInvoice) &&
+            !isRecurringInvoice) {
+          actions.add(EntityAction.cloneToRecurring);
+        }
+      } else if (countOtherTypes > 2) {
         actions.add(EntityAction.cloneToOther);
       }
 
