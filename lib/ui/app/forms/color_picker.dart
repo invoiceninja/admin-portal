@@ -124,6 +124,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
         DecoratedFormField(
           controller: _textController,
           label: widget.labelText,
+          hint: '#000000',
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
