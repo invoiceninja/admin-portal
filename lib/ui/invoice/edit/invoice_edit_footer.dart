@@ -47,7 +47,7 @@ class InvoiceEditFooter extends StatelessWidget {
                     onTap: () =>
                         store.dispatch(ToggleEditorLayout(EntityType.invoice)),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Icon(
                           showSidebar ? Icons.chevron_left : Icons.chevron_right),
                     ),

@@ -685,7 +685,7 @@ class SidebarFooter extends StatelessWidget {
                     onTap: () => store.dispatch(
                         UpdateUserPreferences(sidebar: AppSidebar.menu)),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Icon(Icons.chevron_left),
                     ),
                   ),
