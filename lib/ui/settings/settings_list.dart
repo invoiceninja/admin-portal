@@ -256,6 +256,8 @@ class SettingsSearch extends StatelessWidget {
         'website',
         'email',
         'phone',
+        'size',
+        'industry',
       ],
       [
         'address',
@@ -267,9 +269,9 @@ class SettingsSearch extends StatelessWidget {
       ],
       [
         'defaults',
+        'auto_bill',
         'payment_type',
         'payment_terms',
-        'task_rate',
         'online_payment_email',
         'manual_payment_email',
         'invoice_terms',
@@ -287,7 +289,10 @@ class SettingsSearch extends StatelessWidget {
         'email',
         'phone',
         'accent_color',
-      ]
+      ],
+      [
+        'notifications',
+      ],
     ],
     kSettingsLocalization: [
       [
@@ -305,6 +310,10 @@ class SettingsSearch extends StatelessWidget {
     kSettingsOnlinePayments: [
       [
         'custom_labels',
+        'auto_bill_on',
+        'use_available_credits',
+        'allow_over_payment',
+        'allow_under_payment',
       ]
     ],
     kSettingsTaxSettings: [
@@ -322,6 +331,19 @@ class SettingsSearch extends StatelessWidget {
         'fill_products',
         'update_products',
         'convert_products',
+      ],
+    ],
+    kSettingsTasks: [
+      [
+        'task_settings',
+        'auto_start_tasks',
+        'show_tasks_table',
+      ],
+    ],
+    kSettingsExpenses: [
+      [
+        'should_be_invoiced',
+        'mark_paid',
       ],
     ],
     kSettingsAccountManagement: [
@@ -342,7 +364,6 @@ class SettingsSearch extends StatelessWidget {
         'long_press_multiselect',
         'biometric_authentication',
         'refresh_data',
-        'logout',
       ],
     ],
     kSettingsGroupSettings: [
@@ -381,8 +402,8 @@ class SettingsSearch extends StatelessWidget {
       [
         'all_pages_header',
         'all_pages_footer',
-        'hide_paid_to_date',
-        'invoice_embed_documents',
+        //'hide_paid_to_date',
+        //'invoice_embed_documents',
       ],
     ],
     kSettingsCustomDesigns: [
@@ -402,11 +423,13 @@ class SettingsSearch extends StatelessWidget {
     ],
     kSettingsClientPortal: [
       [
+        'client_portal',
+        'dashboard',
+        'tasks',
         'portal_mode',
         'subdomain',
         'domain',
         'client_registration',
-        'custom_css',
       ],
       [
         'enable_portal_password',
@@ -414,6 +437,12 @@ class SettingsSearch extends StatelessWidget {
         'show_accept_quote_terms',
         'require_invoice_signature',
         'require_quote_signature',
+      ],
+      [
+        'messagres',
+      ],
+      [
+        'custom_css',
       ],
     ],
     kSettingsEmailSettings: [
