@@ -710,6 +710,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      height: double.infinity,
       color: Theme.of(context).cardColor,
       child: state.uiState.filterEntityType != null &&
               state.prefState.showFilterSidebar
