@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -20,31 +22,43 @@ class InvoiceEditFooter extends StatelessWidget {
     final state = store.state;
     final total = formatNumber(
         invoice.calculateTotal(precision: precisionForInvoice(state, invoice)),
-        context, clientId: invoice.clientId);
+        context,
+        clientId: invoice.clientId);
 
     return BottomAppBar(
-      color: Theme
-          .of(context)
-          .cardColor,
+      color: Theme.of(context).cardColor,
       shape: CircularNotchedRectangle(),
       child: SizedBox(
         height: kTopBottomBarHeight,
         child: AppBorder(
           isTop: true,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '${localization.lookup('${invoice.entityType}_total')}: $total',
-                style: TextStyle(
-                  color: state.prefState.enableDarkMode
-                      ? Colors.white
-                      : Colors.black,
-                  fontSize: 20.0,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              InkWell(
+                onTap: () =>
+                    store.dispatch(ToggleEditorLayout(EntityType.invoice)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Icon(Icons.view_sidebar),
                 ),
               ),
-            ),
+              AppBorder(
+                isLeft: true,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16, top: 8),
+                  child: Text(
+                    '${localization.lookup('${invoice.entityType}_total')}: $total',
+                    style: TextStyle(
+                      color: state.prefState.enableDarkMode
+                          ? Colors.white
+                          : Colors.black,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

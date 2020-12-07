@@ -123,6 +123,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'historySidebarMode',
       serializers.serialize(object.historySidebarMode,
           specifiedType: const FullType(AppSidebarMode)),
+      'useSidebarEditor',
+      serializers.serialize(object.useSidebarEditor,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(EntityType), const FullType(bool)])),
       'isPreviewVisible',
       serializers.serialize(object.isPreviewVisible,
           specifiedType: const FullType(bool)),
@@ -184,6 +188,11 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'historySidebarMode':
           result.historySidebarMode = serializers.deserialize(value,
               specifiedType: const FullType(AppSidebarMode)) as AppSidebarMode;
+          break;
+        case 'useSidebarEditor':
+          result.useSidebarEditor.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(EntityType), const FullType(bool)])));
           break;
         case 'isPreviewVisible':
           result.isPreviewVisible = serializers.deserialize(value,
@@ -412,6 +421,8 @@ class _$PrefState extends PrefState {
   @override
   final AppSidebarMode historySidebarMode;
   @override
+  final BuiltMap<EntityType, bool> useSidebarEditor;
+  @override
   final bool isPreviewVisible;
   @override
   final bool isMenuVisible;
@@ -438,6 +449,7 @@ class _$PrefState extends PrefState {
       this.moduleLayout,
       this.menuSidebarMode,
       this.historySidebarMode,
+      this.useSidebarEditor,
       this.isPreviewVisible,
       this.isMenuVisible,
       this.isHistoryVisible,
@@ -459,6 +471,9 @@ class _$PrefState extends PrefState {
     }
     if (historySidebarMode == null) {
       throw new BuiltValueNullFieldError('PrefState', 'historySidebarMode');
+    }
+    if (useSidebarEditor == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'useSidebarEditor');
     }
     if (isPreviewVisible == null) {
       throw new BuiltValueNullFieldError('PrefState', 'isPreviewVisible');
@@ -505,6 +520,7 @@ class _$PrefState extends PrefState {
         moduleLayout == other.moduleLayout &&
         menuSidebarMode == other.menuSidebarMode &&
         historySidebarMode == other.historySidebarMode &&
+        useSidebarEditor == other.useSidebarEditor &&
         isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
         isHistoryVisible == other.isHistoryVisible &&
@@ -530,10 +546,14 @@ class _$PrefState extends PrefState {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, appLayout.hashCode),
-                                                    moduleLayout.hashCode),
-                                                menuSidebarMode.hashCode),
-                                            historySidebarMode.hashCode),
+                                                $jc(
+                                                    $jc(
+                                                        $jc(0,
+                                                            appLayout.hashCode),
+                                                        moduleLayout.hashCode),
+                                                    menuSidebarMode.hashCode),
+                                                historySidebarMode.hashCode),
+                                            useSidebarEditor.hashCode),
                                         isPreviewVisible.hashCode),
                                     isMenuVisible.hashCode),
                                 isHistoryVisible.hashCode),
@@ -552,6 +572,7 @@ class _$PrefState extends PrefState {
           ..add('moduleLayout', moduleLayout)
           ..add('menuSidebarMode', menuSidebarMode)
           ..add('historySidebarMode', historySidebarMode)
+          ..add('useSidebarEditor', useSidebarEditor)
           ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
           ..add('isHistoryVisible', isHistoryVisible)
@@ -586,6 +607,12 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   AppSidebarMode get historySidebarMode => _$this._historySidebarMode;
   set historySidebarMode(AppSidebarMode historySidebarMode) =>
       _$this._historySidebarMode = historySidebarMode;
+
+  MapBuilder<EntityType, bool> _useSidebarEditor;
+  MapBuilder<EntityType, bool> get useSidebarEditor =>
+      _$this._useSidebarEditor ??= new MapBuilder<EntityType, bool>();
+  set useSidebarEditor(MapBuilder<EntityType, bool> useSidebarEditor) =>
+      _$this._useSidebarEditor = useSidebarEditor;
 
   bool _isPreviewVisible;
   bool get isPreviewVisible => _$this._isPreviewVisible;
@@ -632,7 +659,9 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set companyPrefs(MapBuilder<String, CompanyPrefState> companyPrefs) =>
       _$this._companyPrefs = companyPrefs;
 
-  PrefStateBuilder();
+  PrefStateBuilder() {
+    PrefState._initializeBuilder(this);
+  }
 
   PrefStateBuilder get _$this {
     if (_$v != null) {
@@ -640,6 +669,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _moduleLayout = _$v.moduleLayout;
       _menuSidebarMode = _$v.menuSidebarMode;
       _historySidebarMode = _$v.historySidebarMode;
+      _useSidebarEditor = _$v.useSidebarEditor?.toBuilder();
       _isPreviewVisible = _$v.isPreviewVisible;
       _isMenuVisible = _$v.isMenuVisible;
       _isHistoryVisible = _$v.isHistoryVisible;
@@ -677,6 +707,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               moduleLayout: moduleLayout,
               menuSidebarMode: menuSidebarMode,
               historySidebarMode: historySidebarMode,
+              useSidebarEditor: useSidebarEditor.build(),
               isPreviewVisible: isPreviewVisible,
               isMenuVisible: isMenuVisible,
               isHistoryVisible: isHistoryVisible,
@@ -689,6 +720,9 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'useSidebarEditor';
+        useSidebarEditor.build();
+
         _$failedField = 'companyPrefs';
         companyPrefs.build();
       } catch (e) {

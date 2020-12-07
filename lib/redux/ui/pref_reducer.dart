@@ -24,21 +24,13 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
-
 import 'package:redux/redux.dart';
 
 PrefState prefReducer(
@@ -63,9 +55,22 @@ PrefState prefReducer(
       ..longPressSelectionIsDefault =
           longPressReducer(state.longPressSelectionIsDefault, action)
       ..requireAuthentication =
-          requireAuthenticationReducer(state.requireAuthentication, action),
+          requireAuthenticationReducer(state.requireAuthentication, action)
+      ..useSidebarEditor
+          .replace(sidebarEditorReducer(state.useSidebarEditor, action)),
   );
 }
+
+Reducer<BuiltMap<EntityType, bool>> sidebarEditorReducer = combineReducers([
+  TypedReducer<BuiltMap<EntityType, bool>, ToggleEditorLayout>((value, action) {
+    final entityType = action.entityType;
+    if (value.containsKey(entityType)) {
+      return value.rebuild((b) => b..[entityType] = !value[entityType]);
+    } else {
+      return value.rebuild((b) => b..[entityType] = true);
+    }
+  }),
+]);
 
 Reducer<bool> menuVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((value, action) {

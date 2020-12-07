@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
@@ -9,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceEdit extends StatefulWidget {
   const InvoiceEdit({
@@ -69,9 +69,11 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final state = viewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
     return EditScaffold(
-      isFullscreen: state.prefState.isDesktop,
+      isFullscreen: isFullscreen,
       entity: invoice,
       title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
@@ -90,7 +92,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
         viewModel.onSavePressed(context);
       },
-      appBarBottom: state.prefState.isDesktop
+      appBarBottom: isFullscreen
           ? null
           : TabBar(
               controller: _controller,
@@ -112,7 +114,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
             ),
       body: Form(
         key: _formKey,
-        child: state.prefState.isDesktop
+        child: isFullscreen
             ? InvoiceEditDetailsScreen(
                 viewModel: widget.viewModel,
               )
@@ -152,7 +154,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId]) {
                     viewModel.onItemsAdded(items, clientId);
-                    if (isNotDesktop(context)) {
+                    if (!isFullscreen) {
                       _controller.animateTo(kItemScreen);
                     }
                   },

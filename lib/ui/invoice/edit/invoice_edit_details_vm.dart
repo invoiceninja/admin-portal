@@ -28,7 +28,7 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
         return InvoiceEditDetailsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isDesktop) {
+        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,

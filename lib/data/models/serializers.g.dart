@@ -460,6 +460,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(BuiltList, const [const FullType(String)])
           ]),
           () => new MapBuilder<EntityType, BuiltList<String>>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(EntityType), const FullType(bool)]), () => new MapBuilder<EntityType, bool>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CompanyPrefState)]), () => new MapBuilder<String, CompanyPrefState>())
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),
@@ -477,7 +479,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CompanyGatewayEntity)]), () => new MapBuilder<String, CompanyGatewayEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
-      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CompanyPrefState)]), () => new MapBuilder<String, CompanyPrefState>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CurrencyEntity)]), () => new MapBuilder<String, CurrencyEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(SizeEntity)]), () => new MapBuilder<String, SizeEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(GatewayEntity)]), () => new MapBuilder<String, GatewayEntity>())

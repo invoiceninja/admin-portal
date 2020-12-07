@@ -105,6 +105,12 @@ class LoadStaticSuccess implements PersistStatic {
   final StaticDataEntity data;
 }
 
+class ToggleEditorLayout implements PersistPrefs {
+  ToggleEditorLayout(this.entityType);
+
+  final EntityType entityType;
+}
+
 class UpdateUserPreferences implements PersistPrefs {
   UpdateUserPreferences({
     this.appLayout,
