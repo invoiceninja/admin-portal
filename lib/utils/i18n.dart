@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
       'please_type_to_confirm': 'Please type \':value\' to confirm',
@@ -5247,6 +5248,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get sidebarEditor =>
       _localizedValues[localeCode]['sidebar_editor'] ?? '';
+
+  String get webhookUrl => _localizedValues[localeCode]['webhook_url'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
