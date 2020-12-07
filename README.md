@@ -56,7 +56,7 @@ The architecture is based off these two projects:
 
 ## Credits
 
-* [https://github.com/invoiceninja/invoiceninja#credits](https://github.com/invoiceninja/invoiceninja/tree/v5-develop#credits)
+[https://github.com/invoiceninja/invoiceninja#credits](https://github.com/invoiceninja/invoiceninja/tree/v5-develop#credits)
 
 ## Contributions
 
