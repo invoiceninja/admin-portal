@@ -557,7 +557,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.17.0-nullsafety.2"
   io:
     dependency: transitive
     description:
@@ -837,7 +837,7 @@ packages:
       name: rounded_loading_button
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.16"
+    version: "1.0.17"
   rxdart:
     dependency: transitive
     description:
