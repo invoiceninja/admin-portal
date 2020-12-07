@@ -302,7 +302,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected: [
                 ...[
                   ClientFields.name,
-                  ClientFields.idNumber,
                   ClientFields.vatNumber,
                   ClientFields.address1,
                   ClientFields.address2,
@@ -522,7 +521,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ProductItemFields.description,
                 ProductItemFields.unitCost,
                 ProductItemFields.quantity,
-                ProductItemFields.discount,
                 ProductItemFields.tax,
                 ProductItemFields.lineTotal,
               ].map((field) => '\$product.$field').toList(),
@@ -556,7 +554,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 TaskItemFields.description,
                 TaskItemFields.rate,
                 TaskItemFields.hours,
-                TaskItemFields.discount,
                 TaskItemFields.tax,
                 TaskItemFields.lineTotal,
               ].map((field) => '\$task.$field').toList(),

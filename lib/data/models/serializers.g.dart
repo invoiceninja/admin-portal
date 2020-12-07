@@ -525,7 +525,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(BuiltList, const [const FullType(String)])
           ]),
           () => new MapBuilder<String, BuiltList<String>>())
-      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(PaymentTermEntity)]), () => new ListBuilder<PaymentTermEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(TaskEntity)]), () => new MapBuilder<String, TaskEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(TaskStatusEntity)]), () => new MapBuilder<String, TaskStatusEntity>())

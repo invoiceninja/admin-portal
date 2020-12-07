@@ -50,6 +50,7 @@ const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
 const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
+const String kGitHubLangUrl = 'https://github.com/invoiceninja/invoiceninja/blob/master/resources/lang/en/texts.php';
 
 enum AppEnvironment {
   hosted,

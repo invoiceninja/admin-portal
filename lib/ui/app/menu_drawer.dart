@@ -344,9 +344,7 @@ class MenuDrawer extends StatelessWidget {
                   isTop: true,
                   child: Align(
                     child: state.isMenuCollapsed
-                        ? SidebarFooterCollapsed(
-                            isUpdateAvailable: state.account.isUpdateAvailable,
-                          )
+                        ? SidebarFooterCollapsed()
                         : SidebarFooter(),
                     alignment: Alignment(0, 1),
                   ),
@@ -698,15 +696,14 @@ class SidebarFooter extends StatelessWidget {
 }
 
 class SidebarFooterCollapsed extends StatelessWidget {
-  const SidebarFooterCollapsed({@required this.isUpdateAvailable});
-
-  final bool isUpdateAvailable;
+  const SidebarFooterCollapsed();
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final isUpdateAvailable = state.account.isUpdateAvailable;
 
     return Container(
       width: double.infinity,

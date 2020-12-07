@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 void showErrorDialog({
@@ -38,29 +43,58 @@ void confirmCallback({
   @required BuildContext context,
   @required VoidCallback callback,
   String message,
+  String typeToConfirm,
 }) {
   final localization = AppLocalization.of(context);
+  final title = message == null ? localization.areYouSure : message;
+  final content = message == null ? null : localization.areYouSure;
 
   showDialog<AlertDialog>(
     context: context,
-    builder: (BuildContext context) => AlertDialog(
-      semanticLabel: localization.areYouSure,
-      title: Text(message == null ? localization.areYouSure : message),
-      content: message == null ? null : Text(localization.areYouSure),
-      actions: <Widget>[
-        FlatButton(
-            child: Text(localization.cancel.toUpperCase()),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        FlatButton(
-            child: Text(localization.ok.toUpperCase()),
-            onPressed: () {
-              Navigator.pop(context);
-              callback();
-            })
-      ],
-    ),
+    builder: (BuildContext context) {
+      String _typed = '';
+
+      return AlertDialog(
+        semanticLabel: localization.areYouSure,
+        title: Text(title),
+        content: typeToConfirm != null
+            ? Row(
+                children: [
+                  Flexible(
+                    child: Text(localization.pleaseTypeToConfirm
+                        .replaceFirst(':value', typeToConfirm) + ':'),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: DecoratedFormField(
+                      onChanged: (value) => _typed = value,
+                      hint: typeToConfirm,
+                    ),
+                  ),
+                ],
+              )
+            : content == null
+                ? null
+                : Text(content),
+        actions: <Widget>[
+          FlatButton(
+              child: Text(localization.cancel.toUpperCase()),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          FlatButton(
+              child: Text(localization.ok.toUpperCase()),
+              onPressed: () {
+                print('## typeToConfirm: $typeToConfirm, typed: $_typed');
+                if (typeToConfirm == null ||
+                    typeToConfirm.toLowerCase() == _typed.toLowerCase()) {
+                  Navigator.pop(context);
+                  callback();
+                }
+              })
+        ],
+      );
+    },
   );
 }
 
@@ -156,6 +190,7 @@ void fieldCallback({
   String field,
   Function(String) callback,
   int maxLength,
+  List<FlatButton> secondaryActions,
 }) {
   showDialog<AlertDialog>(
     context: context,
@@ -166,6 +201,7 @@ void fieldCallback({
         field: field,
         title: title,
         maxLength: maxLength,
+        secondaryActions: secondaryActions,
       );
     },
   );
@@ -177,12 +213,14 @@ class FieldConfirmation extends StatefulWidget {
     @required this.title,
     @required this.field,
     this.maxLength,
+    this.secondaryActions,
   });
 
   final Function(String) callback;
   final String title;
   final String field;
   final int maxLength;
+  final List<FlatButton> secondaryActions;
 
   @override
   _FieldConfirmationState createState() => _FieldConfirmationState();
@@ -213,6 +251,8 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
         onSubmitted: (value) => _submit(),
       ),
       actions: <Widget>[
+        ...widget.secondaryActions ?? [],
+        SizedBox(width: 6),
         SaveCancelButtons(
           isHeader: false,
           saveLabel: localization.save.toUpperCase(),
@@ -231,4 +271,73 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
       ],
     );
   }
+}
+
+void cloneToDialog({
+  @required BuildContext context,
+  @required InvoiceEntity invoice,
+}) {
+  final localization = AppLocalization.of(context);
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final userCompany = state.userCompany;
+
+  showDialog<AlertDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(localization.cloneTo),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (userCompany.canCreate(EntityType.invoice))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.invoice)),
+                  title: Text(localization.invoice),
+                  onTap: () {
+                    handleEntityAction(
+                        context, invoice, EntityAction.cloneToInvoice);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              if (userCompany.canCreate(EntityType.quote))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.quote)),
+                  title: Text(localization.quote),
+                  onTap: () {
+                    handleEntityAction(
+                        context, invoice, EntityAction.cloneToQuote);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              if (userCompany.canCreate(EntityType.credit))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.credit)),
+                  title: Text(localization.credit),
+                  onTap: () {
+                    handleEntityAction(
+                        context, invoice, EntityAction.cloneToCredit);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              if (userCompany.canCreate(EntityType.recurringInvoice))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.recurringInvoice)),
+                  title: Text(localization.recurringInvoice),
+                  onTap: () {
+                    handleEntityAction(
+                        context, invoice, EntityAction.cloneToRecurring);
+                    Navigator.of(context).pop();
+                  },
+                ),
+            ],
+          ),
+          actions: [
+            FlatButton(
+              child: Text(localization.close.toUpperCase()),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        );
+      });
 }

@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:version/version.dart';
 
 part 'account_model.g.dart';
 
@@ -45,7 +46,8 @@ abstract class AccountEntity
   String get currentVersion;
 
   bool get isUpdateAvailable =>
-      latestVersion != currentVersion && isCronEnabled;
+      Version.parse(currentVersion) < Version.parse(latestVersion) &&
+      isCronEnabled;
 
   bool get isCronEnabled => latestVersion != '0.0.0';
 

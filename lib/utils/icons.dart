@@ -12,6 +12,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.clientPortal:
       return Icons.cloud_circle;
     case EntityAction.clone:
+    case EntityAction.cloneToOther:
     case EntityAction.cloneToInvoice:
     case EntityAction.cloneToQuote:
     case EntityAction.cloneToCredit:
