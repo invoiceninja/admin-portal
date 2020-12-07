@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceEditFooter extends StatelessWidget {
   const InvoiceEditFooter({@required this.invoice});
@@ -24,6 +25,8 @@ class InvoiceEditFooter extends StatelessWidget {
         invoice.calculateTotal(precision: precisionForInvoice(state, invoice)),
         context,
         clientId: invoice.clientId);
+    final showSidebar =
+        state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
 
     return BottomAppBar(
       color: Theme.of(context).cardColor,
@@ -35,16 +38,23 @@ class InvoiceEditFooter extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              InkWell(
-                onTap: () =>
-                    store.dispatch(ToggleEditorLayout(EntityType.invoice)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Icon(Icons.view_sidebar),
+              if (isDesktop(context))
+                Tooltip(
+                  message: showSidebar
+                      ? localization.fullscreenEditor
+                      : localization.sidebarEditor,
+                  child: InkWell(
+                    onTap: () =>
+                        store.dispatch(ToggleEditorLayout(EntityType.invoice)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Icon(
+                          showSidebar ? Icons.chevron_left : Icons.chevron_right),
+                    ),
+                  ),
                 ),
-              ),
               AppBorder(
-                isLeft: true,
+                isLeft: isDesktop(context),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, top: 8),
                   child: Text(

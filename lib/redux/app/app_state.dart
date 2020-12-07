@@ -719,6 +719,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'LOG: ${clientState.map[clientUIState.selectedId]?.systemLogs ?? ''}';
     //return 'FREQ: ${recurringInvoiceUIState.editing.frequencyId}';
 
+    return '## useSidebarEditor: ${prefState.useSidebarEditor}';
+
     return '\n\nURL: ${authState.url}'
         '\nRoute: ${uiState.currentRoute}'
         '\nPrevious: ${uiState.previousRoute}'
