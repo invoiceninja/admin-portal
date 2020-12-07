@@ -55,14 +55,8 @@ The architecture is based off these two projects:
     - Download "google-services.json" and put it in `android/app` directory.
 
 ## Credits
-* [Hillel Coren](https://github.com/hillelcoren) 
-* [David Bomba](https://github.com/turbo124)
-* [All contributors](https://github.com/invoiceninja/flutter-mobile/graphs/contributors)
 
-**Special thanks to:**
-* [Efthymios Sarmpanis](https://github.com/esarbanis)
-* [Gianfranco Gasbarri](https://github.com/gincos)
-* [Clemens Mol](https://github.com/clemensmol)
+* [https://github.com/invoiceninja/invoiceninja#credits](https://github.com/invoiceninja/invoiceninja/tree/v5-develop#credits)
 
 ## Contributions
 
