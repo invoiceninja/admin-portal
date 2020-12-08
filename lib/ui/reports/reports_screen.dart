@@ -554,8 +554,9 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
   } else
   if (['updated_at', 'created_at', 'start_time', 'end_time'].contains(column)) {
     return ReportColumnType.dateTime;
-  } else if (column.contains('_date') || ['date', 'valid_until'].contains(
-      column)) {
+  } else if ((column.contains('_date') && column != 'paid_to_date') ||
+      ['date', 'valid_until'].contains(
+          column)) {
     return ReportColumnType.date;
   } else if (column == 'age') {
     return ReportColumnType.age;
@@ -1244,7 +1245,6 @@ class ReportResult {
         DataCell(Text(values['count'].toInt().toString())),
       ];
 
-
       final List<String> fields = values.keys.toList()
         ..sort((String str1, String str2) => str1.compareTo(str2));
       fields.forEach((field) {
@@ -1268,7 +1268,6 @@ class ReportResult {
 
       rows.add(DataRow(cells: cells));
     });
-
 
     return rows;
   }

@@ -240,7 +240,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch map - do not remove comment
       case EntityType.taskStatus:
         return taskStatusState.map;
-
       case EntityType.expenseCategory:
         return expenseCategoryState.map;
       case EntityType.recurringInvoice:
@@ -312,10 +311,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch list - do not remove comment
       case EntityType.taskStatus:
         return taskStatusState.list;
-
       case EntityType.expenseCategory:
         return expenseCategoryState.list;
-
       case EntityType.recurringInvoice:
         return recurringInvoiceState.list;
       case EntityType.webhook:
@@ -366,7 +363,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.taskStatus:
         return taskStatusUIState;
-
       case EntityType.expenseCategory:
         return expenseCategoryUIState;
       case EntityType.recurringInvoice:

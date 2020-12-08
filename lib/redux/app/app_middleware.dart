@@ -283,7 +283,6 @@ Middleware<AppState> _createLoadState(
         completer.future.then((_) {
           final layout = calculateLayout(action.context);
           if (store.state.prefState.isNotMobile && layout == AppLayout.mobile) {
-            print('## View dashboard');
             store.dispatch(UpdateUserPreferences(appLayout: layout));
             AppBuilder.of(action.context).rebuild();
             WidgetsBinding.instance.addPostFrameCallback((duration) {
@@ -320,7 +319,7 @@ List<String> _getRoutes(AppState state) {
       .forEach((part) {
     if (part == 'edit') {
       // Only restore new unsaved entities to prevent conflicts
-      final bool isNew = state.getUIState(entityType).isCreatingNew;
+      final bool isNew = state.getUIState(entityType)?.isCreatingNew ?? false;
       if (isNew) {
         route += '/edit';
       } else if (entityType != EntityType.product) {

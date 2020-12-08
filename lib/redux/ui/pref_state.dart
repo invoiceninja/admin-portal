@@ -12,6 +12,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.table,
       isPreviewVisible: true,
+      useSidebarEditor: BuiltMap<EntityType, bool>(),
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,
       rowsPerPage: 10,
@@ -39,6 +40,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   AppSidebarMode get historySidebarMode;
 
+  BuiltMap<EntityType, bool> get useSidebarEditor;
+
   bool get isPreviewVisible;
 
   bool get isMenuVisible;
@@ -58,6 +61,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   BuiltMap<String, CompanyPrefState> get companyPrefs;
 
   bool get isDesktop => appLayout == AppLayout.desktop;
+
+  bool isEditorFullScreen(EntityType entityType) =>
+      isDesktop && !(useSidebarEditor[entityType] ?? false);
 
   bool get isNotDesktop => !isDesktop;
 
@@ -87,6 +93,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isNotMobile &&
       menuSidebarMode == AppSidebarMode.collapse &&
       !isMenuVisible;
+
+  // ignore: unused_element
+  static void _initializeBuilder(PrefStateBuilder builder) =>
+      builder..useSidebarEditor.replace(BuiltMap<EntityType, bool>());
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

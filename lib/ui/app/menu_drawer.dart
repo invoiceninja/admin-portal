@@ -529,6 +529,7 @@ class SidebarFooter extends StatelessWidget {
       color: Theme.of(context).bottomAppBarColor,
       child: Row(
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
@@ -673,18 +674,20 @@ class SidebarFooter extends StatelessWidget {
             SizedBox(width: 14)
           ],
            */
+            Spacer(),
             if (isNotMobile(context) &&
                 state.prefState.menuSidebarMode == AppSidebarMode.collapse)
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    tooltip: localization.hideMenu,
-                    icon: Icon(Icons.chevron_left),
-                    onPressed: () {
-                      store.dispatch(
-                          UpdateUserPreferences(sidebar: AppSidebar.menu));
-                    },
+              AppBorder(
+                isLeft: true,
+                child: Tooltip(
+                  message: localization.hideMenu,
+                  child: InkWell(
+                    onTap: () => store.dispatch(
+                        UpdateUserPreferences(sidebar: AppSidebar.menu)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(Icons.chevron_left),
+                    ),
                   ),
                 ),
               ),
@@ -707,6 +710,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      height: double.infinity,
       color: Theme.of(context).cardColor,
       child: state.uiState.filterEntityType != null &&
               state.prefState.showFilterSidebar
@@ -766,7 +770,10 @@ class SidebarFooterCollapsed extends StatelessWidget {
               ],
             )
           : IconButton(
-              icon: Icon(Icons.chevron_right),
+              icon: Icon(
+                Icons.chevron_right,
+                color: isUpdateAvailable ? state.accentColor : null,
+              ),
               tooltip: localization.showMenu,
               onPressed: () {
                 store.dispatch(UpdateUserPreferences(sidebar: AppSidebar.menu));

@@ -25,7 +25,7 @@ class QuoteEditItemsScreen extends StatelessWidget {
         return QuoteEditItemsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isDesktop) {
+        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,

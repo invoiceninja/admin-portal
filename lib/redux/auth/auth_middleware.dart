@@ -196,6 +196,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     if (state.isSaving ||
         state.isLoading ||
         (state.company.isLarge && !state.isLoaded)) {
+      print('Skipping refresh request');
       next(action);
       return;
     }

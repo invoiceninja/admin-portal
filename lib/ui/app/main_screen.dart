@@ -75,13 +75,16 @@ class MainScreen extends StatelessWidget {
       final isEmail = subRoute == '/email';
 
       if ([
-            InvoiceScreen.route,
-            QuoteScreen.route,
-            CreditScreen.route,
-            RecurringInvoiceScreen.route,
-          ].contains(mainRoute) &&
-          (isEdit || isEmail)) {
-        isFullScreen = true;
+        InvoiceScreen.route,
+        QuoteScreen.route,
+        CreditScreen.route,
+        RecurringInvoiceScreen.route,
+      ].contains(mainRoute)) {
+        if (isEmail) {
+          isFullScreen = true;
+        } else if (isEdit) {
+          isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);
+        }
       }
       if (DesignEditScreen.route == uiState.currentRoute) {
         isFullScreen = true;

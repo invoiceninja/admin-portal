@@ -384,6 +384,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           child: AppBorder(
             isTop: true,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 IconButton(
                   tooltip: localization.multiselect,
@@ -501,10 +502,15 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (state.prefState.isDesktop)
                   AppBorder(
                     isLeft: true,
-                    child: IconButton(
-                      icon: Icon(Icons.refresh),
-                      onPressed: () => store.dispatch(RefreshData()),
-                      tooltip: localization.refresh,
+                    child: Tooltip(
+                      message: localization.refreshData,
+                      child: InkWell(
+                        onTap: () => store.dispatch(RefreshData()),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Icon(Icons.refresh),
+                        ),
+                      ),
                     ),
                   ),
               ],

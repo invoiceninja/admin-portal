@@ -1,15 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditEdit extends StatefulWidget {
@@ -125,32 +122,7 @@ class _CreditEditState extends State<CreditEdit>
                 ],
               ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Theme.of(context).cardColor,
-        shape: CircularNotchedRectangle(),
-        child: SizedBox(
-          height: kTopBottomBarHeight,
-          child: AppBorder(
-            isTop: true,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '${localization.total}: ${formatNumber(invoice.calculateTotal(precision: precisionForInvoice(state, invoice)), context, clientId: viewModel.invoice.clientId)}',
-                  style: TextStyle(
-                    //color: Theme.of(context).selectedRowColor,
-                    color: state.prefState.enableDarkMode
-                        ? Colors.white
-                        : Colors.black,
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: InvoiceEditFooter(invoice: invoice),
       floatingActionButton: FloatingActionButton(
         heroTag: 'credit_edit_fab',
         backgroundColor: Theme.of(context).primaryColorDark,

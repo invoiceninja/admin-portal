@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
@@ -36,6 +39,8 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     final localization = AppLocalization.of(context);
     final processed = memoizedCalculateCompanyGatewayProcessed(
         companyGateway.id, viewModel.state.paymentState.map);
+    final webhookUrl =
+        '${state.account.defaultUrl}/payment_webhook/${state.company.companyKey}/${companyGateway.id}';
 
     final allFields = <String, Map<String, String>>{};
     for (var gatewayTypeId in kGatewayTypes.keys) {
@@ -79,8 +84,25 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             label: localization.processed,
             value: formatNumber(processed, context)),
         ListDivider(),
+        ListTile(
+          contentPadding: const EdgeInsets.all(22),
+          title: Text(localization.webhookUrl),
+          subtitle: Text(
+            webhookUrl,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          trailing: Icon(Icons.content_copy),
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: webhookUrl));
+            showToast(localization.copiedToClipboard
+                .replaceFirst(':value ', webhookUrl));
+          },
+        ),
+        ListDivider(),
         if (gateway?.supportsTokenBilling == true) ...[
           EntitiesListTile(
+            hideNew: true,
             entity: companyGateway,
             isFilter: widget.isFilter,
             entityType: EntityType.client,
@@ -92,6 +114,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
         ],
         ListDivider(),
         EntitiesListTile(
+          hideNew: true,
           entity: companyGateway,
           isFilter: widget.isFilter,
           entityType: EntityType.payment,
