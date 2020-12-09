@@ -57,6 +57,8 @@ class MultiSelectList extends StatefulWidget {
 
 class MultiSelectListState extends State<MultiSelectList> {
   List<String> selected;
+
+  // TODO remove this https://github.com/flutter/flutter/issues/71946
   ScrollController _controller;
 
   @override
