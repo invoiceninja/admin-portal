@@ -57,11 +57,19 @@ class MultiSelectList extends StatefulWidget {
 
 class MultiSelectListState extends State<MultiSelectList> {
   List<String> selected;
+  ScrollController _controller;
 
   @override
   void initState() {
     super.initState();
     selected = widget.selected ?? widget.defaultSelected;
+    _controller = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   String lookupOption(String value) {
@@ -135,6 +143,7 @@ class MultiSelectListState extends State<MultiSelectList> {
           SizedBox(height: 20),
           Expanded(
             child: ReorderableListView(
+              scrollController: _controller,
               children: selected.asMap().entries.map((entry) {
                 final option = entry.value;
                 final columnTitle = state.company.getCustomFieldLabel(option);
