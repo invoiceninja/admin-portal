@@ -98,15 +98,15 @@ void main({bool isTesting = false}) async {
   if (_sentry == null) {
     runApp(InvoiceNinjaApp(store: store));
   } else {
-    runZoned<Future<void>>(() async {
+    runZonedGuarded(() {
       runApp(InvoiceNinjaApp(store: store));
-    }, onError: (dynamic exception, dynamic stackTrace) async {
+    }, (Object error, StackTrace stackTrace) async {
       if (kDebugMode) {
         print(stackTrace);
       } else if (store.state.reportErrors) {
         final event = await getSentryEvent(
           state: store.state,
-          exception: exception,
+          exception: error,
           stackTrace: stackTrace,
         );
         _sentry.capture(event: event);
