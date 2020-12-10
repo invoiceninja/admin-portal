@@ -77,10 +77,10 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             )),
           ],
           icon: Icons.email,
-          title: (contact.fullName.isEmpty
-                  ? localization.blankContact
-                  : contact.fullName) +
-              ('\n' + contact.email).trim(),
+          title: contact.fullName.isEmpty
+              ? localization.blankContact
+              : contact.fullName,
+          subtitle: contact.email,
           copyValue: contact.email,
           onTap: () => setState(() {
             if ((contact.email ?? '').isEmpty) {
