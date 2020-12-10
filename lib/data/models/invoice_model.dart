@@ -351,23 +351,23 @@ abstract class InvoiceEntity extends Object
   double get customSurcharge4;
 
   @override
-  @nullable
-  @BuiltValueField(wireName: 'custom_taxes1')
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'custom_surcharge_tax1')
   bool get customTaxes1;
 
   @override
-  @nullable
-  @BuiltValueField(wireName: 'custom_taxes2')
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'custom_surcharge_tax2')
   bool get customTaxes2;
 
   @override
-  @nullable
-  @BuiltValueField(wireName: 'custom_taxes3')
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'custom_surcharge_tax3')
   bool get customTaxes3;
 
   @override
-  @nullable
-  @BuiltValueField(wireName: 'custom_taxes4')
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'custom_surcharge_tax4')
   bool get customTaxes4;
 
   @BuiltValueField(wireName: 'has_expenses')
