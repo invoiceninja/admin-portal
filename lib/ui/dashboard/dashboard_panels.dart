@@ -82,7 +82,7 @@ class DashboardPanels extends StatelessWidget {
         ),
       );
 
-      Widget currencySettings;
+      Widget currencySettings = SizedBox();
       if (hasMultipleCurrencies) {
         currencySettings = Padding(
           padding: const EdgeInsets.only(left: 16),
