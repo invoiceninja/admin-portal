@@ -438,7 +438,9 @@ class _DrawerTileState extends State<DrawerTile> {
             }
             store.dispatch(ViewDashboard(
                 navigator: Navigator.of(context),
-                filter: uiState.filter == '' ? null : ''));
+                filter: uiState.mainRoute == 'dashboard' && uiState.filter == ''
+                    ? null
+                    : ''));
           },
         );
       } else if (userCompany.canCreate(widget.entityType)) {
