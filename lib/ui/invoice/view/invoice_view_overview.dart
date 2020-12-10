@@ -359,6 +359,16 @@ class InvoiceOverview extends StatelessWidget {
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
           invoice.customSurcharge2));
     }
+    if (invoice.customSurcharge3 != 0 && company.enableCustomSurchargeTaxes3) {
+      widgets.add(surchargeRow(
+          company.getCustomFieldLabel(CustomFieldType.surcharge3),
+          invoice.customSurcharge3));
+    }
+    if (invoice.customSurcharge4 != 0 && company.enableCustomSurchargeTaxes4) {
+      widgets.add(surchargeRow(
+          company.getCustomFieldLabel(CustomFieldType.surcharge4),
+          invoice.customSurcharge4));
+    }
 
     invoice
         .calculateTaxes(

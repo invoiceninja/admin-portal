@@ -38,6 +38,7 @@ class _CustomFieldState extends State<CustomField> {
     super.initState();
 
     _controller = widget.controller ?? TextEditingController();
+    _controller.text = widget.value;
   }
 
   @override
@@ -53,7 +54,6 @@ class _CustomFieldState extends State<CustomField> {
     final state = StoreProvider.of<AppState>(context).state;
     final CompanyEntity company = state.company;
     final localization = AppLocalization.of(context);
-
     final fieldLabel = company.getCustomFieldLabel(widget.field);
 
     if (fieldLabel.isEmpty) {
