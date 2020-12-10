@@ -502,7 +502,7 @@ class HelpPanel extends StatelessWidget {
         children: fields
             .where((field) => showVendorFields || !field.startsWith('vendor'))
             .where((field) => showClientFields || !field.startsWith('client'))
-            .map((field) => '\$\{$field\}')
+            .map((field) => '\{\$$field\}')
             .map((field) => InkWell(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
