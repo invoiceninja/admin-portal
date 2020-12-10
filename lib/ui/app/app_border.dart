@@ -18,10 +18,11 @@ class AppBorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const borderWidth = 1.5;
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
+    final isAllSides = isTop == null && isLeft == null;
+    const borderWidth = 1.5;
 
     final color = enableDarkMode
         ? convertHexStringToColor(kDefaultDarkBorderColor)
@@ -29,38 +30,25 @@ class AppBorder extends StatelessWidget {
 
     return Container(
         decoration: BoxDecoration(
-          border: isTop != null || isLeft != null
-              ? Border(
+          borderRadius: isAllSides ? BorderRadius.circular(5) : null,
+          border: isAllSides
+              ? Border.all(
+                  width: borderWidth,
+                  color: color,
+                )
+              : Border(
                   top: isTop == true
                       ? BorderSide(
                           width: borderWidth,
                           color: color,
                         )
                       : BorderSide.none,
-                  /*
-                  right: false
-                      ? BorderSide(
-                          width: borderWidth,
-                          color: convertHexStringToColor(kDefaultBorderColor),
-                        )
-                      : BorderSide.none,
-                  bottom: false
-                      ? BorderSide(
-                          width: borderWidth,
-                          color: convertHexStringToColor(kDefaultBorderColor),
-                        )
-                      : BorderSide.none,
-                   */
                   left: isLeft == true
                       ? BorderSide(
                           width: borderWidth,
                           color: color,
                         )
                       : BorderSide.none,
-                )
-              : Border.all(
-                  width: borderWidth,
-                  color: color,
                 ),
         ),
         child: child);

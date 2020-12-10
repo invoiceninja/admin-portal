@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 
 class FormCard extends StatelessWidget {
   const FormCard({
@@ -33,19 +34,21 @@ class FormCard extends StatelessWidget {
               : const EdgeInsets.all(kMobileDialogPadding)),
       child: Card(
         elevation: 4.0,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: child != null
-              ? child
-              : Container(
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment:
-                        crossAxisAlignment ?? CrossAxisAlignment.center,
-                    children: children,
+        child: AppBorder(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: child != null
+                ? child
+                : Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment:
+                          crossAxisAlignment ?? CrossAxisAlignment.center,
+                      children: children,
+                    ),
                   ),
-                ),
+          ),
         ),
       ),
     );
