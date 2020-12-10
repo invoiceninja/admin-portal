@@ -177,7 +177,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                       icon: Icon(Icons.check),
                       onPressed: () => _onItemsSelected(context),
                     )
-                  : isNotDesktop(context)
+                  : !state.prefState.isEditorFullScreen(EntityType.invoice)
                       ? IconButton(
                           icon: Icon(Icons.add_circle_outline),
                           tooltip: localization.createNew,
