@@ -229,6 +229,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return false;
   }
 
+  BaseEntity getEntity(EntityType type, String id) {
+    final map = getEntityMap(type);
+
+    return map != null ? map[id] : null;
+  }
+
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
     switch (type) {
       case EntityType.product:
