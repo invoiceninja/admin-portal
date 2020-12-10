@@ -14639,9 +14639,7 @@
 'deleted_invoice': 'Lasku poistettiin onnistuneesti',
 'restored_invoice': 'Lasku palautettu onnistuneesti',
 'archived_invoices': ':count asiakas(ta) arkistoitu onnistuneesti',
-'deleted_invoices': ':count laskua poistettiin onnistuneesti
-:count lasku poistettiin (jos only yksi)
-Lasku poistettiin (jos only yksi, alternative)',
+'deleted_invoices': ':count laskua poistettiin onnistuneesti',
 'restored_invoices': 'Successfully restored :value invoices',
 'emailed_invoice': 'Lasku lähetettiin onnistuneesti',
 'emailed_payment': 'onnistuneesti emailed maksu',
