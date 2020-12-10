@@ -113,6 +113,7 @@ class _TaskEditState extends State<TaskEdit>
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        elevation: 0,
         color: Theme.of(context).cardColor,
         shape: CircularNotchedRectangle(),
         child: SizedBox(

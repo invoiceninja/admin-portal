@@ -29,6 +29,7 @@ class InvoiceEditFooter extends StatelessWidget {
         state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
 
     return BottomAppBar(
+      elevation: 0,
       color: Theme.of(context).cardColor,
       shape: CircularNotchedRectangle(),
       child: SizedBox(
