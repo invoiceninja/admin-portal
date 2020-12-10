@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -231,29 +230,6 @@ class _DashboardChartState extends State<DashboardChart> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _FormCard extends StatelessWidget {
-  const _FormCard({
-    Key key,
-    @required this.children,
-  }) : super(key: key);
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Card(
-        elevation: 4.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
-        ),
-      ),
     );
   }
 }
