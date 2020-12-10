@@ -38,7 +38,7 @@ class _CustomFieldState extends State<CustomField> {
     super.initState();
 
     _controller = widget.controller ?? TextEditingController();
-    _controller.text = widget.value;
+    _controller.text = widget.value ?? '';
   }
 
   @override
