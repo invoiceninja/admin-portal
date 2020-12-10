@@ -810,7 +810,7 @@ void _showAbout(BuildContext context) async {
   final TextStyle linkStyle =
       themeData.textTheme.bodyText2.copyWith(color: themeData.accentColor);
 
-  final appVersion = 'Version: ${state.appVersion}';
+  final appVersion = 'v${state.appVersion}';
   final appLegalese = '© ${DateTime.now().year} Invoice Ninja';
   final apppIcon = Image.asset(
     'assets/images/logo.png',
@@ -853,10 +853,9 @@ void _showAbout(BuildContext context) async {
                 ),
                 subtitle: Text(appVersion),
                 onTap: () {
-                  final version = 'v${state.appVersion}';
-                  Clipboard.setData(ClipboardData(text: version));
+                  Clipboard.setData(ClipboardData(text: appVersion));
                   showToast(localization.copiedToClipboard
-                      .replaceFirst(':value', version));
+                      .replaceFirst(':value', appVersion));
                 },
               ),
               Padding(
