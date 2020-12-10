@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -436,7 +438,9 @@ class _DrawerTileState extends State<DrawerTile> {
             }
             store.dispatch(ViewDashboard(
                 navigator: Navigator.of(context),
-                filter: uiState.filter == '' ? null : ''));
+                filter: uiState.mainRoute == 'dashboard' && uiState.filter == ''
+                    ? null
+                    : ''));
           },
         );
       } else if (userCompany.canCreate(widget.entityType)) {
@@ -808,199 +812,243 @@ void _showAbout(BuildContext context) async {
   final TextStyle linkStyle =
       themeData.textTheme.bodyText2.copyWith(color: themeData.accentColor);
 
-  showAboutDialog(
-    context: context,
-    applicationName: 'Invoice Ninja',
-    applicationIcon: Image.asset(
-      'assets/images/logo.png',
-      width: 40.0,
-      height: 40.0,
-    ),
-    //applicationVersion: 'Version: ${packageInfo.version}',
-    applicationVersion: 'Version: ${state.appVersion}',
-    applicationLegalese: '© ${DateTime.now().year} Invoice Ninja',
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                style: aboutTextStyle,
-                text: localization.thankYouForUsingOurApp +
-                    '\n\n' +
-                    localization.ifYouLikeIt,
+  final appVersion = 'v${state.appVersion}';
+  final appLegalese = '© ${DateTime.now().year} Invoice Ninja';
+  final apppIcon = Image.asset(
+    'assets/images/logo.png',
+    width: 40.0,
+    height: 40.0,
+  );
+
+  showDialog<AlertDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          actions: [
+            FlatButton(
+              child: Text(localization.viewLicenses.toUpperCase()),
+              onPressed: () => showLicensePage(
+                context: context,
+                applicationName: 'Invoice Ninja',
+                applicationIcon: apppIcon,
+                applicationLegalese: appLegalese,
+                applicationVersion: appVersion,
               ),
-              TextSpan(
-                style: linkStyle,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    launch(getAppURL(context), forceSafariVC: false);
+            ),
+            FlatButton(
+              child: Text(localization.close.toUpperCase()),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ListTile(
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: apppIcon,
+                ),
+                title: Text(
+                  'Invoice Ninja',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                subtitle: Text(appVersion),
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: appVersion));
+                  showToast(localization.copiedToClipboard
+                      .replaceFirst(':value', appVersion));
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        style: aboutTextStyle,
+                        text: localization.thankYouForUsingOurApp +
+                            '\n\n' +
+                            localization.ifYouLikeIt,
+                      ),
+                      TextSpan(
+                        style: linkStyle,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            launch(getAppURL(context), forceSafariVC: false);
+                          },
+                        text: ' ' + localization.clickHere + ' ',
+                      ),
+                      TextSpan(
+                        style: aboutTextStyle,
+                        text: localization.toRateIt,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: AppButton(
+                  label: localization.appPlatforms.toUpperCase(),
+                  iconData: MdiIcons.desktopMac,
+                  onPressed: () {
+                    showDialog<AlertDialog>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            actions: [
+                              FlatButton(
+                                child:
+                                    Text(localization.sourceCode.toUpperCase()),
+                                onPressed: () {
+                                  showDialog<AlertDialog>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        actions: [
+                                          FlatButton(
+                                            child: Text(localization.close
+                                                .toUpperCase()),
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(),
+                                          ),
+                                        ],
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            Text('Backend'),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: AppButton(
+                                                label: 'Laravel/PHP',
+                                                iconData: MdiIcons.server,
+                                                onPressed: () =>
+                                                    launch(kSourceCodeBackend),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 30),
+                                              child: Text('Frontend'),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: AppButton(
+                                                label: 'Flutter/Dart',
+                                                iconData:
+                                                    MdiIcons.desktopClassic,
+                                                onPressed: () =>
+                                                    launch(kSourceCodeFrontend),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
+                                              child: AppButton(
+                                                label: 'Storefront SDK',
+                                                iconData: MdiIcons.tools,
+                                                onPressed: () => launch(
+                                                    kSourceCodeFrontendSDK),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              FlatButton(
+                                child: Text(localization.close.toUpperCase()),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
+                            ],
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(localization.desktop + ' | BETA'),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: AppButton(
+                                    label: 'macOS',
+                                    iconData: MdiIcons.apple,
+                                    onPressed: () => launch(kMacOSUrl),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: AppButton(
+                                    label: 'Linux',
+                                    iconData: MdiIcons.linux,
+                                    onPressed: () => launch(kLinuxUrl),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Text('Windows coming soon...'),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: Text(localization.mobile),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: AppButton(
+                                    label: 'iOS',
+                                    iconData: MdiIcons.apple,
+                                    onPressed: () => launch(kAppleStoreUrl),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: AppButton(
+                                    label: 'Android',
+                                    iconData: MdiIcons.android,
+                                    onPressed: () => launch(kGoogleStoreUrl),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
                   },
-                text: ' ' + localization.clickHere + ' ',
+                ),
               ),
-              TextSpan(
-                style: aboutTextStyle,
-                text: localization.toRateIt,
+              //if (!state.isProduction) // TODO enable this check
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: AppButton(
+                  label: localization.healthCheck.toUpperCase(),
+                  iconData: MdiIcons.shieldHalfFull,
+                  color: Colors.green,
+                  onPressed: () {
+                    showDialog<HealthCheckDialog>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return HealthCheckDialog();
+                        });
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: AppButton(
+                  label: localization.forceUpdate.toUpperCase(),
+                  iconData: MdiIcons.update,
+                  color: Colors.orange,
+                  onPressed: () => _showUpdate(context),
+                ),
               ),
             ],
           ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 30),
-        child: AppButton(
-          label: localization.appPlatforms.toUpperCase(),
-          iconData: MdiIcons.desktopMac,
-          onPressed: () {
-            showDialog<AlertDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    actions: [
-                      FlatButton(
-                        child: Text(localization.sourceCode.toUpperCase()),
-                        onPressed: () {
-                          showDialog<AlertDialog>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                actions: [
-                                  FlatButton(
-                                    child:
-                                        Text(localization.close.toUpperCase()),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                  ),
-                                ],
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Text('Backend'),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20),
-                                      child: AppButton(
-                                        label: 'Laravel/PHP',
-                                        iconData: MdiIcons.server,
-                                        onPressed: () =>
-                                            launch(kSourceCodeBackend),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 30),
-                                      child: Text('Frontend'),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20),
-                                      child: AppButton(
-                                        label: 'Flutter/Dart',
-                                        iconData: MdiIcons.desktopClassic,
-                                        onPressed: () =>
-                                            launch(kSourceCodeFrontend),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20),
-                                      child: AppButton(
-                                        label: 'Storefront SDK',
-                                        iconData: MdiIcons.tools,
-                                        onPressed: () =>
-                                            launch(kSourceCodeFrontendSDK),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                      FlatButton(
-                        child: Text(localization.close.toUpperCase()),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ],
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(localization.desktop + ' | BETA'),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: AppButton(
-                            label: 'macOS',
-                            iconData: MdiIcons.apple,
-                            onPressed: () => launch(kMacOSUrl),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: AppButton(
-                            label: 'Linux',
-                            iconData: MdiIcons.linux,
-                            onPressed: () => launch(kLinuxUrl),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Text('Windows coming soon...'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Text(localization.mobile),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: AppButton(
-                            label: 'iOS',
-                            iconData: MdiIcons.apple,
-                            onPressed: () => launch(kAppleStoreUrl),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: AppButton(
-                            label: 'Android',
-                            iconData: MdiIcons.android,
-                            onPressed: () => launch(kGoogleStoreUrl),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                });
-          },
-        ),
-      ),
-      //if (!state.isProduction) // TODO enable this check
-      Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: AppButton(
-          label: localization.healthCheck.toUpperCase(),
-          iconData: MdiIcons.shieldHalfFull,
-          color: Colors.green,
-          onPressed: () {
-            showDialog<HealthCheckDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return HealthCheckDialog();
-                });
-          },
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: AppButton(
-          label: localization.forceUpdate.toUpperCase(),
-          iconData: MdiIcons.update,
-          color: Colors.orange,
-          onPressed: () => _showUpdate(context),
-        ),
-      ),
-    ],
-  );
+        );
+      });
 }
 
 class ContactUsDialog extends StatefulWidget {

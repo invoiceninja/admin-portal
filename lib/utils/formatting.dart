@@ -137,6 +137,16 @@ String formatNumber(
     ZERO_DIGIT: '0',
     PLUS_SIGN: '+',
     MINUS_SIGN: '-',
+    CURRENCY_PATTERN: '',
+    DECIMAL_PATTERN: '',
+    DEF_CURRENCY_CODE: '',
+    EXP_SYMBOL: '',
+    INFINITY: '',
+    NAN: '',
+    PERCENT: '',
+    PERCENT_PATTERN: '',
+    PERMILL: '',
+    SCIENTIFIC_PATTERN: '',
   );
 
   NumberFormat formatter;

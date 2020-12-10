@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_item.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
 
-class CompanyGatewayList extends StatelessWidget {
+class CompanyGatewayList extends StatefulWidget {
   const CompanyGatewayList({
     Key key,
     @required this.viewModel,
@@ -15,39 +15,64 @@ class CompanyGatewayList extends StatelessWidget {
   final CompanyGatewayListVM viewModel;
 
   @override
+  _CompanyGatewayListState createState() => _CompanyGatewayListState();
+}
+
+class _CompanyGatewayListState extends State<CompanyGatewayList> {
+  // TODO remove this https://github.com/flutter/flutter/issues/71946
+  ScrollController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    return !viewModel.state.isLoaded && viewModel.companyGatewayList.isEmpty
+    return !widget.viewModel.state.isLoaded &&
+            widget.viewModel.companyGatewayList.isEmpty
         ? LoadingIndicator()
         : RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
+            onRefresh: () => widget.viewModel.onRefreshed(context),
             child: ReorderableListView(
+              scrollController: _controller,
               onReorder: (oldIndex, newIndex) {
                 // https://stackoverflow.com/a/54164333/497368
                 // These two lines are workarounds for ReorderableListView problems
-                if (newIndex > viewModel.companyGatewayList.length) {
-                  newIndex = viewModel.companyGatewayList.length;
+                if (newIndex > widget.viewModel.companyGatewayList.length) {
+                  newIndex = widget.viewModel.companyGatewayList.length;
                 }
                 if (oldIndex < newIndex) {
                   newIndex--;
                 }
 
-                viewModel.onSortChanged(oldIndex, newIndex);
+                widget.viewModel.onSortChanged(oldIndex, newIndex);
               },
-              children: viewModel.companyGatewayList.map((companyGatewayId) {
+              children:
+                  widget.viewModel.companyGatewayList.map((companyGatewayId) {
                 final companyGateway =
-                    viewModel.companyGatewayMap[companyGatewayId];
+                    widget.viewModel.companyGatewayMap[companyGatewayId];
                 return CompanyGatewayListItem(
                     key: ValueKey('__company_gateway_$companyGatewayId'),
                     user: state.userCompany.user,
-                    filter: viewModel.filter,
+                    filter: widget.viewModel.filter,
                     companyGateway: companyGateway,
-                    onRemovePressed: viewModel.state.settingsUIState.isFiltered
-                        ? () => viewModel.onRemovePressed(companyGatewayId)
+                    onRemovePressed: widget
+                            .viewModel.state.settingsUIState.isFiltered
+                        ? () =>
+                            widget.viewModel.onRemovePressed(companyGatewayId)
                         : null,
                     isChecked: isInMultiselect &&
                         listUIState.isSelected(companyGateway.id));

@@ -166,7 +166,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Credentials get credentials =>
       Credentials(token: userCompanyState.token.token, url: authState.url);
 
-  bool get hasAccentColor => userCompany?.settings?.accentColor != null;
+  bool get hasAccentColor {
+    if (isDemo) {
+      return true;
+    }
+
+    return userCompany?.settings?.accentColor != null;
+  }
 
   Color get linkColor => prefState.enableDarkMode
       ? convertHexStringToColor('#FFFFFF')
@@ -227,6 +233,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
 
     return false;
+  }
+
+  BaseEntity getEntity(EntityType type, String id) {
+    final map = getEntityMap(type);
+
+    return map != null ? map[id] : null;
   }
 
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {

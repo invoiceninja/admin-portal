@@ -277,25 +277,25 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
     }
     if (object.customTaxes1 != null) {
       result
-        ..add('custom_taxes1')
+        ..add('custom_surcharge_tax1')
         ..add(serializers.serialize(object.customTaxes1,
             specifiedType: const FullType(bool)));
     }
     if (object.customTaxes2 != null) {
       result
-        ..add('custom_taxes2')
+        ..add('custom_surcharge_tax2')
         ..add(serializers.serialize(object.customTaxes2,
             specifiedType: const FullType(bool)));
     }
     if (object.customTaxes3 != null) {
       result
-        ..add('custom_taxes3')
+        ..add('custom_surcharge_tax3')
         ..add(serializers.serialize(object.customTaxes3,
             specifiedType: const FullType(bool)));
     }
     if (object.customTaxes4 != null) {
       result
-        ..add('custom_taxes4')
+        ..add('custom_surcharge_tax4')
         ..add(serializers.serialize(object.customTaxes4,
             specifiedType: const FullType(bool)));
     }
@@ -568,19 +568,19 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.customSurcharge4 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'custom_taxes1':
+        case 'custom_surcharge_tax1':
           result.customTaxes1 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'custom_taxes2':
+        case 'custom_surcharge_tax2':
           result.customTaxes2 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'custom_taxes3':
+        case 'custom_surcharge_tax3':
           result.customTaxes3 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'custom_taxes4':
+        case 'custom_surcharge_tax4':
           result.customTaxes4 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;

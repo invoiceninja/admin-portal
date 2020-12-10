@@ -82,28 +82,31 @@ class DashboardPanels extends StatelessWidget {
         ),
       );
 
-      final currencySettings = Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                .map((currencyId) => DropdownMenuItem<String>(
-                      child: Text(currencyId == kCurrencyAll
-                          ? localization.all
-                          : viewModel.currencyMap[currencyId]?.code),
-                      value: currencyId,
-                    ))
-                .toList(),
-            onChanged: (currencyId) {
-              viewModel.onCurrencyChanged(currencyId);
-              if (!isWide && Navigator.canPop(context)) {
-                Navigator.pop(context);
-              }
-            },
-            value: settings.currencyId,
+      Widget currencySettings = SizedBox();
+      if (hasMultipleCurrencies) {
+        currencySettings = Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                  .map((currencyId) => DropdownMenuItem<String>(
+                        child: Text(currencyId == kCurrencyAll
+                            ? localization.all
+                            : viewModel.currencyMap[currencyId]?.code),
+                        value: currencyId,
+                      ))
+                  .toList(),
+              onChanged: (currencyId) {
+                viewModel.onCurrencyChanged(currencyId);
+                if (!isWide && Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+              },
+              value: settings.currencyId,
+            ),
           ),
-        ),
-      );
+        );
+      }
 
       return Material(
         color: Theme.of(context).cardColor,

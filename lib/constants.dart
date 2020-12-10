@@ -8,7 +8,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.28';
+const String kClientVersion = '5.0.29';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -28,8 +28,9 @@ const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 //const String kAppleStoreUrl = 'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
 //const String kGoogleStoreUrl = 'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
 
+//const String kSourceCodeBackend = 'https://github.com/invoiceninja/invoiceninja';
 const String kSourceCodeBackend =
-    'https://github.com/invoiceninja/invoiceninja';
+    'https://github.com/invoiceninja/invoiceninja/tree/v5-stable';
 const String kSourceCodeFrontend =
     'https://github.com/invoiceninja/flutter-client';
 const String kSourceCodeFrontendSDK = 'https://pub.dev/packages/invoiceninja';
@@ -50,7 +51,8 @@ const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
 const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
-const String kGitHubLangUrl = 'https://github.com/invoiceninja/invoiceninja/blob/master/resources/lang/en/texts.php';
+const String kGitHubLangUrl =
+    'https://github.com/invoiceninja/invoiceninja/blob/master/resources/lang/en/texts.php';
 
 enum AppEnvironment {
   hosted,

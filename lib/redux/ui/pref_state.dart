@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 part 'pref_state.g.dart';
 
 abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
-  factory PrefState({bool enableDarkMode, ModuleLayout moduleLayout}) {
+  factory PrefState({ModuleLayout moduleLayout}) {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.table,
@@ -18,7 +18,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       rowsPerPage: 10,
       isMenuVisible: true,
       isHistoryVisible: false,
-      enableDarkMode: enableDarkMode ?? false,
+      enableDarkMode: false,
       requireAuthentication: false,
       showFilterSidebar: false,
       longPressSelectionIsDefault: false,

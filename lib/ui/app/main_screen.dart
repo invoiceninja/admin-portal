@@ -247,6 +247,11 @@ class MainScreen extends StatelessWidget {
           final index = isEditing ? 0 : 1;
           HistoryRecord history;
 
+          if (state.uiState.isPreviewing) {
+            store.dispatch(PopPreviewStack());
+            return false;
+          }
+
           for (int i = index; i < historyList.length; i++) {
             final item = historyList[i];
             if ([

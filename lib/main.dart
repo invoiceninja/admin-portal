@@ -98,15 +98,15 @@ void main({bool isTesting = false}) async {
   if (_sentry == null) {
     runApp(InvoiceNinjaApp(store: store));
   } else {
-    runZoned<Future<void>>(() async {
+    runZonedGuarded(() {
       runApp(InvoiceNinjaApp(store: store));
-    }, onError: (dynamic exception, dynamic stackTrace) async {
-      if (kDebugMode) {
+    }, (Object error, StackTrace stackTrace) async {
+      if (kDebugMode || kIsWeb) {
         print(stackTrace);
       } else if (store.state.reportErrors) {
         final event = await getSentryEvent(
           state: store.state,
-          exception: exception,
+          exception: error,
           stackTrace: stackTrace,
         );
         _sentry.capture(event: event);
@@ -115,7 +115,7 @@ void main({bool isTesting = false}) async {
   }
 
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (kDebugMode) {
+    if (kDebugMode || kIsWeb) {
       FlutterError.dumpErrorToConsole(details);
     } else if (store.state.reportErrors) {
       Zone.current.handleUncaughtError(details.exception, details.stack);
@@ -128,8 +128,7 @@ Future<AppState> _initialState(bool isTesting) async {
   final prefString = prefs?.getString(kSharedPrefs);
   final url = prefs.getString(kSharedPrefUrl) ?? WebUtils.browserUrl ?? '';
 
-  var prefState = PrefState(enableDarkMode: url.startsWith(kAppDemoUrl));
-
+  var prefState = PrefState();
   if (prefString != null) {
     try {
       prefState = serializers.deserializeWith(

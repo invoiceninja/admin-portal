@@ -378,6 +378,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       }
 
       return BottomAppBar(
+        elevation: 0,
         shape: CircularNotchedRectangle(),
         child: SizedBox(
           height: kTopBottomBarHeight,

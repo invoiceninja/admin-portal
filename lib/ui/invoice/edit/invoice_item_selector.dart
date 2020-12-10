@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
@@ -177,7 +176,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                       icon: Icon(Icons.check),
                       onPressed: () => _onItemsSelected(context),
                     )
-                  : isNotDesktop(context)
+                  : !state.prefState.isEditorFullScreen(EntityType.invoice)
                       ? IconButton(
                           icon: Icon(Icons.add_circle_outline),
                           tooltip: localization.createNew,

@@ -186,6 +186,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final company = viewModel.company;
     final client = state.clientState.get(invoice.clientId);
     final entityType = invoice.entityType;
+    final originalInvoice =
+        state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
 
     final countProducts = invoice.lineItems
         .where((item) =>
@@ -389,7 +391,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             ? localization.quoteNumber
                             : localization.invoiceNumber,
                     validator: (String val) => val.trim().isEmpty &&
-                            invoice.isOld
+                            invoice.isOld &&
+                            originalInvoice.number.isNotEmpty
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
                     onSavePressed: widget.entityViewModel.onSavePressed,

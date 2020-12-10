@@ -507,7 +507,9 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
         maxLines: widget.field == 'text' ? 6 : 1,
         onChanged: (value) => _onChanged(),
         obscureText: _obscureText(widget.field),
-        keyboardType: TextInputType.visiblePassword,
+        keyboardType: widget.field == 'text'
+            ? TextInputType.multiline
+            : TextInputType.visiblePassword,
       );
     }
   }

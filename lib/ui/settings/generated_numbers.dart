@@ -269,17 +269,16 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
               ),
             ],
           ),
-          ListView(children: <Widget>[
-            EntityNumberSettings(
-              counterValue: settings.clientNumberCounter,
-              patternValue: settings.clientNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
-                    ..clientNumberCounter = counter
-                    ..clientNumberPattern = pattern)),
-            ),
-          ]),
-          ListView(children: <Widget>[
+          EntityNumberSettings(
+            showClientFields: false,
+            counterValue: settings.clientNumberCounter,
+            patternValue: settings.clientNumberPattern,
+            onChanged: (counter, pattern) =>
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..clientNumberCounter = counter
+                  ..clientNumberPattern = pattern)),
+          ),
+          if (company.isModuleEnabled(EntityType.invoice))
             EntityNumberSettings(
               counterValue: settings.invoiceNumberCounter,
               patternValue: settings.invoiceNumberPattern,
@@ -288,19 +287,16 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     ..invoiceNumberCounter = counter
                     ..invoiceNumberPattern = pattern)),
             ),
-          ]),
           if (company.isModuleEnabled(EntityType.recurringInvoice))
-            ListView(children: <Widget>[
-              EntityNumberSettings(
-                counterValue: settings.recurringInvoiceNumberCounter,
-                patternValue: settings.recurringInvoiceNumberPattern,
-                onChanged: (counter, pattern) =>
-                    viewModel.onSettingsChanged(settings.rebuild((b) => b
-                      ..recurringInvoiceNumberCounter = counter
-                      ..recurringInvoiceNumberPattern = pattern)),
-              ),
-            ]),
-          ListView(children: <Widget>[
+            EntityNumberSettings(
+              counterValue: settings.recurringInvoiceNumberCounter,
+              patternValue: settings.recurringInvoiceNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..recurringInvoiceNumberCounter = counter
+                    ..recurringInvoiceNumberPattern = pattern)),
+            ),
+          if (company.isModuleEnabled(EntityType.invoice))
             EntityNumberSettings(
               counterValue: settings.paymentNumberCounter,
               patternValue: settings.paymentNumberPattern,
@@ -309,73 +305,62 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     ..paymentNumberCounter = counter
                     ..paymentNumberPattern = pattern)),
             ),
-          ]),
           if (company.isModuleEnabled(EntityType.quote))
-            ListView(children: <Widget>[
-              EntityNumberSettings(
-                counterValue: settings.quoteNumberCounter,
-                patternValue: settings.quoteNumberPattern,
-                onChanged: (counter, pattern) =>
-                    viewModel.onSettingsChanged(settings.rebuild((b) => b
-                      ..quoteNumberCounter = counter
-                      ..quoteNumberPattern = pattern)),
-              ),
-            ]),
+            EntityNumberSettings(
+              counterValue: settings.quoteNumberCounter,
+              patternValue: settings.quoteNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..quoteNumberCounter = counter
+                    ..quoteNumberPattern = pattern)),
+            ),
           if (company.isModuleEnabled(EntityType.credit))
-            ListView(children: <Widget>[
-              EntityNumberSettings(
-                counterValue: settings.creditNumberCounter,
-                patternValue: settings.creditNumberPattern,
-                onChanged: (counter, pattern) =>
-                    viewModel.onSettingsChanged(settings.rebuild((b) => b
-                      ..creditNumberCounter = counter
-                      ..creditNumberPattern = pattern)),
-              ),
-            ]),
+            EntityNumberSettings(
+              counterValue: settings.creditNumberCounter,
+              patternValue: settings.creditNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..creditNumberCounter = counter
+                    ..creditNumberPattern = pattern)),
+            ),
           if (company.isModuleEnabled(EntityType.project))
-            ListView(children: <Widget>[
-              EntityNumberSettings(
-                counterValue: settings.projectNumberCounter,
-                patternValue: settings.projectNumberPattern,
-                onChanged: (counter, pattern) =>
-                    viewModel.onSettingsChanged(settings.rebuild((b) => b
-                      ..projectNumberCounter = counter
-                      ..projectNumberPattern = pattern)),
-              ),
-            ]),
+            EntityNumberSettings(
+              counterValue: settings.projectNumberCounter,
+              patternValue: settings.projectNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..projectNumberCounter = counter
+                    ..projectNumberPattern = pattern)),
+            ),
           if (company.isModuleEnabled(EntityType.task))
-            ListView(children: <Widget>[
-              EntityNumberSettings(
-                counterValue: settings.taskNumberCounter,
-                patternValue: settings.taskNumberPattern,
-                onChanged: (counter, pattern) =>
-                    viewModel.onSettingsChanged(settings.rebuild((b) => b
-                      ..taskNumberCounter = counter
-                      ..taskNumberPattern = pattern)),
-              ),
-            ]),
+            EntityNumberSettings(
+              counterValue: settings.taskNumberCounter,
+              patternValue: settings.taskNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..taskNumberCounter = counter
+                    ..taskNumberPattern = pattern)),
+            ),
           if (company.isModuleEnabled(EntityType.vendor))
-            ListView(children: <Widget>[
-              EntityNumberSettings(
-                counterValue: settings.vendorNumberCounter,
-                patternValue: settings.vendorNumberPattern,
-                onChanged: (counter, pattern) =>
-                    viewModel.onSettingsChanged(settings.rebuild((b) => b
-                      ..vendorNumberCounter = counter
-                      ..vendorNumberPattern = pattern)),
-              ),
-            ]),
+            EntityNumberSettings(
+              showClientFields: false,
+              counterValue: settings.vendorNumberCounter,
+              patternValue: settings.vendorNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..vendorNumberCounter = counter
+                    ..vendorNumberPattern = pattern)),
+            ),
           if (company.isModuleEnabled(EntityType.expense))
-            ListView(children: <Widget>[
-              EntityNumberSettings(
-                counterValue: settings.expenseNumberCounter,
-                patternValue: settings.expenseNumberPattern,
-                onChanged: (counter, pattern) =>
-                    viewModel.onSettingsChanged(settings.rebuild((b) => b
-                      ..expenseNumberCounter = counter
-                      ..expenseNumberPattern = pattern)),
-              ),
-            ]),
+            EntityNumberSettings(
+              showVendorFields: true,
+              counterValue: settings.expenseNumberCounter,
+              patternValue: settings.expenseNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..expenseNumberCounter = counter
+                    ..expenseNumberPattern = pattern)),
+            ),
         ],
       ),
     );
@@ -387,11 +372,15 @@ class EntityNumberSettings extends StatefulWidget {
     @required this.counterValue,
     @required this.patternValue,
     @required this.onChanged,
+    this.showVendorFields = false,
+    this.showClientFields = true,
   });
 
   final int counterValue;
   final String patternValue;
   final Function(int, String) onChanged;
+  final bool showVendorFields;
+  final bool showClientFields;
 
   @override
   _EntityNumberSettingsState createState() => _EntityNumberSettingsState();
@@ -448,17 +437,79 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return FormCard(
-      children: <Widget>[
-        DecoratedFormField(
-          label: localization.numberPattern,
-          controller: _patternController,
+    return ListView(
+      children: [
+        FormCard(
+          children: <Widget>[
+            DecoratedFormField(
+              label: localization.numberPattern,
+              controller: _patternController,
+            ),
+            DecoratedFormField(
+              label: localization.numberCounter,
+              controller: _counterController,
+            ),
+          ],
         ),
-        DecoratedFormField(
-          label: localization.numberCounter,
-          controller: _counterController,
+        HelpPanel(
+          showClientFields: widget.showClientFields,
+          showVendorFields: widget.showVendorFields,
+          onFieldPressed: (field) {
+            _patternController.text += field;
+            _patternController.selection = TextSelection.fromPosition(
+                TextPosition(offset: _patternController.text.length));
+          },
         ),
       ],
     );
+  }
+}
+
+class HelpPanel extends StatelessWidget {
+  const HelpPanel({
+    @required this.onFieldPressed,
+    this.showVendorFields = false,
+    this.showClientFields = true,
+  });
+
+  final bool showVendorFields;
+  final bool showClientFields;
+  final Function(String) onFieldPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final fields = [
+      'counter',
+      'client_counter',
+      'group_counter',
+      'year',
+      'date:format',
+      'user_id',
+      'client_id_number',
+      'client_custom1',
+      'client_custom2',
+      'client_custom3',
+      'client_custom4',
+      'vendor_id_number',
+      'vendor_custom1',
+      'vendor_custom2',
+      'vendor_custom3',
+      'vendor_custom4',
+    ];
+
+    return FormCard(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: fields
+            .where((field) => showVendorFields || !field.startsWith('vendor'))
+            .where((field) => showClientFields || !field.startsWith('client'))
+            .map((field) => '\{\$$field\}')
+            .map((field) => InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Text(field),
+                  ),
+                  onTap: () => onFieldPressed(field),
+                ))
+            .toList());
   }
 }

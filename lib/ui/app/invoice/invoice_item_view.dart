@@ -62,6 +62,18 @@ class InvoiceItemListTile extends StatelessWidget {
           field: CustomFieldType.product2,
           value: invoiceItem.customValue2));
     }
+    if (invoiceItem.customValue3.isNotEmpty) {
+      parts.add(formatCustomValue(
+          context: context,
+          field: CustomFieldType.product3,
+          value: invoiceItem.customValue3));
+    }
+    if (invoiceItem.customValue4.isNotEmpty) {
+      parts.add(formatCustomValue(
+          context: context,
+          field: CustomFieldType.product4,
+          value: invoiceItem.customValue4));
+    }
     if (invoiceItem.notes.isNotEmpty) {
       parts.add(invoiceItem.notes);
     }
