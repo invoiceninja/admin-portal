@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -38,6 +39,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _partialController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
   final _surcharge1Controller = TextEditingController();
   final _surcharge2Controller = TextEditingController();
   final _surcharge3Controller = TextEditingController();
@@ -55,6 +58,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       _partialController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
       _surcharge1Controller,
       _surcharge2Controller,
       _surcharge3Controller,
@@ -73,6 +78,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = invoice.customValue1;
     _custom2Controller.text = invoice.customValue2;
+    _custom3Controller.text = invoice.customValue3;
+    _custom4Controller.text = invoice.customValue4;
     _surcharge1Controller.text = formatNumber(invoice.customSurcharge1, context,
         formatNumberType: FormatNumberType.inputMoney);
     _surcharge2Controller.text = formatNumber(invoice.customSurcharge2, context,
@@ -106,6 +113,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         ..partial = parseDouble(_partialController.text)
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim()
         ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
         ..customSurcharge2 = parseDouble(_surcharge2Controller.text)
         ..customSurcharge3 = parseDouble(_surcharge3Controller.text)
@@ -124,6 +133,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final invoice = viewModel.invoice;
     final company = viewModel.company;
     final client = state.clientState.get(invoice.clientId);
+    final originalInvoice =
+        state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
 
     return ListView(
       children: <Widget>[
@@ -145,7 +156,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         : widget.entityType == EntityType.quote
                             ? localization.quoteNumber
                             : localization.invoiceNumber,
-                    validator: (String val) => val.trim().isEmpty
+                    validator: (String val) => val.trim().isEmpty &&
+                            invoice.isOld &&
+                            originalInvoice.number.isNotEmpty
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
                   ),
@@ -296,6 +309,16 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               controller: _custom2Controller,
               field: CustomFieldType.invoice2,
               value: invoice.customValue2,
+            ),
+            CustomField(
+              controller: _custom3Controller,
+              field: CustomFieldType.invoice3,
+              value: invoice.customValue3,
+            ),
+            CustomField(
+              controller: _custom4Controller,
+              field: CustomFieldType.invoice4,
+              value: invoice.customValue4,
             ),
             if (company.hasCustomField(CustomFieldType.surcharge1))
               DecoratedFormField(
