@@ -101,7 +101,7 @@ void main({bool isTesting = false}) async {
     runZonedGuarded(() {
       runApp(InvoiceNinjaApp(store: store));
     }, (Object error, StackTrace stackTrace) async {
-      if (kDebugMode) {
+      if (kDebugMode || kIsWeb) {
         print(stackTrace);
       } else if (store.state.reportErrors) {
         final event = await getSentryEvent(
@@ -115,7 +115,7 @@ void main({bool isTesting = false}) async {
   }
 
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (kDebugMode) {
+    if (kDebugMode || kIsWeb) {
       FlutterError.dumpErrorToConsole(details);
     } else if (store.state.reportErrors) {
       Zone.current.handleUncaughtError(details.exception, details.stack);
