@@ -67,7 +67,7 @@ class MenuDrawerVM {
       selectedCompany: state.company,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onLogoutTap: (BuildContext context) {
-        if (state.isDemo) {
+        if (state.isDemo && kReleaseMode) {
           return;
         }
         confirmCallback(
