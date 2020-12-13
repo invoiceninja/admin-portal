@@ -161,7 +161,7 @@ IconData getSettingIcon(String section) {
     case kSettingsIntegrations:
       return MdiIcons.link;
     case kSettingsImportExport:
-      return MdiIcons.fileExport;
+      return MdiIcons.import;
     case kSettingsDeviceSettings:
       return Icons.settings;
     case kSettingsGroupSettings:
