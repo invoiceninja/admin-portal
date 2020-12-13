@@ -89,6 +89,7 @@ class _ImportExportState extends State<ImportExport> {
               )
             else
               _FileMapper(
+                key: ValueKey(_fileHash),
                 fields1: _fields1,
                 fields2: _fields2,
                 onCancelPressed: () {
@@ -220,10 +221,11 @@ class _FileImportState extends State<_FileImport> {
 
 class _FileMapper extends StatefulWidget {
   const _FileMapper({
+    Key key,
     @required this.fields1,
     @required this.fields2,
     @required this.onCancelPressed,
-  });
+  }) : super(key: key);
 
   final List<String> fields1;
   final List<String> fields2;
