@@ -289,12 +289,18 @@ class _FieldMapper extends StatelessWidget {
           isExpanded: true,
           value: fields.contains(mappedTo) ? mappedTo : null,
           onChanged: onMappedToChanged,
-          items: fields
-              .map((field) => DropdownMenuItem<String>(
-                    child: Text(field),
-                    value: field,
-                  ))
-              .toList(),
+          items: [
+            DropdownMenuItem<String>(
+              child: SizedBox(),
+              value: null,
+            ),
+            ...fields
+                .map((field) => DropdownMenuItem<String>(
+                      child: Text(field),
+                      value: field,
+                    ))
+                .toList(),
+          ],
         )),
       ],
     );
