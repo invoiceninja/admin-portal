@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -8,6 +12,9 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ImportExport extends StatefulWidget {
   const ImportExport({
@@ -27,6 +34,8 @@ class _ImportExportState extends State<ImportExport> {
   FocusScopeNode _focusNode;
   bool autoValidate = false;
   String _filePath;
+  String _fileName;
+  Uint8List _fileBytes;
 
   @override
   void initState() {
@@ -82,9 +91,10 @@ class _ImportExportState extends State<ImportExport> {
                   ),
                 ),
                 DecoratedFormField(
+                  key: ValueKey(_fileName),
                   enabled: false,
                   label: localization.csvFile,
-                  initialValue: localization.noFileSelected,
+                  initialValue: _fileName ?? localization.noFileSelected,
                 ),
                 SizedBox(height: 20),
                 Row(
@@ -94,7 +104,20 @@ class _ImportExportState extends State<ImportExport> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         child: Text(localization.selectFile),
-                        onPressed: () {},
+                        onPressed: () async {
+                          final result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['csv'],
+                          );
+                          if (result != null) {
+                            setState(() {
+                              final file = result.files.single;
+                              _filePath = file.path;
+                              _fileName = file.name;
+                              _fileBytes = file.bytes;
+                            });
+                          }
+                        },
                       ),
                     ),
                     SizedBox(width: kTableColumnGap),
@@ -103,9 +126,11 @@ class _ImportExportState extends State<ImportExport> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         child: Text(localization.uploadFile),
-                        onPressed: _filePath == null ? null : () {
-                          //
-                        },
+                        onPressed: _fileName == null
+                            ? null
+                            : () {
+                                //
+                              },
                       ),
                     ),
                   ],
