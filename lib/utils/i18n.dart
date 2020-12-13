@@ -16,7 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'draft_mode': 'Draft Mode',
-      'draft_mode_help': 'Faster response but less accurate',
+      'draft_mode_help': 'Preview updates faster but is less accurate',
       'view_licenses': 'View Licenses',
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
