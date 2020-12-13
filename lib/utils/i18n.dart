@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'first_row_headers': 'Use first row as headers',
       'select_file': 'Select File',
       'no_file_selected': 'No File Selected',
       'csv_file': 'CSV File',
@@ -5274,6 +5275,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get noFileSelected =>
       _localizedValues[localeCode]['no_file_selected'] ?? '';
+
+  String get firstRowHeaders =>
+      _localizedValues[localeCode]['first_row_headers'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

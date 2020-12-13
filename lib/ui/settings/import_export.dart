@@ -117,6 +117,8 @@ class _FileImportState extends State<_FileImport> {
     const dataStr =
         '{"data":{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}}';
 
+    widget.onUploaded(dataStr);
+
     return;
 
     /*
@@ -234,6 +236,7 @@ class _FileMapper extends StatelessWidget {
         children: [
           SwitchListTile(
             activeColor: Theme.of(context).accentColor,
+            title: Text(AppLocalization.of(context).firstRowHeaders),
             value: false,
             onChanged: (value) {
               //
@@ -256,6 +259,10 @@ class _FieldMapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(field);
+    return Row(
+      children: [
+        Expanded(child: Text(field)),
+      ],
+    );
   }
 }
