@@ -228,7 +228,7 @@ class _FileMapper extends StatefulWidget {
 
 class __FileMapperState extends State<_FileMapper> {
   bool _useFirstRowAsHeaders = true;
-  final _mapping = <String>[];
+  final _mapping = <int, String>{};
 
   @override
   Widget build(BuildContext context) {
@@ -249,7 +249,13 @@ class __FileMapperState extends State<_FileMapper> {
             _FieldMapper(
               field1: widget.fields1[i],
               field2: widget.fields2.length > i ? widget.fields2[i] : null,
-              mappedTo: _mapping.length > i ? _mapping[i] : '',
+              mappedTo: _mapping[i] ?? '',
+              onMappedToChanged: (String value) {
+                print('## onMappedToChanged: $value');
+                setState(() {
+                  _mapping[i] = value;
+                });
+              },
             )
         ],
       ),
@@ -262,11 +268,13 @@ class _FieldMapper extends StatelessWidget {
     @required this.field1,
     @required this.field2,
     @required this.mappedTo,
+    @required this.onMappedToChanged,
   });
 
   final String field1;
   final String field2;
   final String mappedTo;
+  final Function onMappedToChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -280,9 +288,12 @@ class _FieldMapper extends StatelessWidget {
             child: DropdownButton<String>(
           isExpanded: true,
           value: fields.contains(mappedTo) ? mappedTo : null,
-          onChanged: (value) => null,
+          onChanged: onMappedToChanged,
           items: fields
-              .map((field) => DropdownMenuItem<String>(child: Text(field)))
+              .map((field) => DropdownMenuItem<String>(
+                    child: Text(field),
+                    value: field,
+                  ))
               .toList(),
         )),
       ],
