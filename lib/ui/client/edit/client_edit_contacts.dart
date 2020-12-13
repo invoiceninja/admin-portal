@@ -96,7 +96,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
       children: []
         ..addAll(contacts)
         ..add(Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: AppButton(
             label: localization.addContact.toUpperCase(),
             onPressed: () => viewModel.onAddContactPressed(),
