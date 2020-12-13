@@ -121,6 +121,8 @@ class _$DocumentEntitySerializer
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'hash',
+      serializers.serialize(object.hash, specifiedType: const FullType(String)),
       'type',
       serializers.serialize(object.type, specifiedType: const FullType(String)),
       'url',
@@ -190,6 +192,10 @@ class _$DocumentEntitySerializer
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'hash':
+          result.hash = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'type':
@@ -455,6 +461,8 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String name;
   @override
+  final String hash;
+  @override
   final String type;
   @override
   final String url;
@@ -490,6 +498,7 @@ class _$DocumentEntity extends DocumentEntity {
 
   _$DocumentEntity._(
       {this.name,
+      this.hash,
       this.type,
       this.url,
       this.width,
@@ -508,6 +517,9 @@ class _$DocumentEntity extends DocumentEntity {
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'name');
+    }
+    if (hash == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'hash');
     }
     if (type == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'type');
@@ -557,6 +569,7 @@ class _$DocumentEntity extends DocumentEntity {
     if (identical(other, this)) return true;
     return other is DocumentEntity &&
         name == other.name &&
+        hash == other.hash &&
         type == other.type &&
         url == other.url &&
         width == other.width &&
@@ -592,8 +605,10 @@ class _$DocumentEntity extends DocumentEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                $jc(0,
-                                                                    name.hashCode),
+                                                                $jc(
+                                                                    $jc(0,
+                                                                        name.hashCode),
+                                                                    hash.hashCode),
                                                                 type.hashCode),
                                                             url.hashCode),
                                                         width.hashCode),
@@ -615,6 +630,7 @@ class _$DocumentEntity extends DocumentEntity {
   String toString() {
     return (newBuiltValueToStringHelper('DocumentEntity')
           ..add('name', name)
+          ..add('hash', hash)
           ..add('type', type)
           ..add('url', url)
           ..add('width', width)
@@ -641,6 +657,10 @@ class DocumentEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _hash;
+  String get hash => _$this._hash;
+  set hash(String hash) => _$this._hash = hash;
 
   String _type;
   String get type => _$this._type;
@@ -709,6 +729,7 @@ class DocumentEntityBuilder
   DocumentEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _hash = _$v.hash;
       _type = _$v.type;
       _url = _$v.url;
       _width = _$v.width;
@@ -747,6 +768,7 @@ class DocumentEntityBuilder
     final _$result = _$v ??
         new _$DocumentEntity._(
             name: name,
+            hash: hash,
             type: type,
             url: url,
             width: width,
