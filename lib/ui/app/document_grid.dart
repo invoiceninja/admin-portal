@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DocumentGrid extends StatelessWidget {
   const DocumentGrid({
@@ -162,15 +163,6 @@ class DocumentTile extends StatelessWidget {
           return AlertDialog(
             title: Text(document.name),
             actions: [
-              /*
-              FlatButton(
-                child: Text(localization.download.toUpperCase()),
-                onPressed: () {
-                  launch(document.url,
-                      forceWebView: false, forceSafariVC: false);
-                },
-              ),
-               */
               isFromExpense && onViewExpense != null
                   ? FlatButton(
                       child: Text(localization.expense.toUpperCase()),
@@ -194,37 +186,36 @@ class DocumentTile extends StatelessWidget {
                             });
                       },
                     ),
-              if (!kIsWeb)
-                FlatButton(
-                  child: Text(localization.download.toUpperCase()),
-                  onPressed: () async {
-                    if (Platform.isIOS || Platform.isAndroid) {
-                      Directory directory;
-                      if (Platform.isAndroid) {
-                        directory = await getExternalStorageDirectory();
-                      } else {
-                        directory = await getApplicationDocumentsDirectory();
-                      }
-
-                      final String folder = '${directory.path}/documents';
-                      await Directory(folder).create(recursive: true);
-                      final filePath = '$folder/${document.name}';
-                      final store = StoreProvider.of<AppState>(context);
-
-                      final http.Response response = await WebClient().get(
-                          document.url, store.state.credentials.token,
-                          rawResponse: true);
-
-                      await File(filePath).writeAsBytes(response.bodyBytes);
-                      await FlutterShare.shareFile(
-                        title: '${localization.name}',
-                        filePath: filePath,
-                      );
+              FlatButton(
+                child: Text(localization.download.toUpperCase()),
+                onPressed: () async {
+                  if (Platform.isIOS || Platform.isAndroid) {
+                    Directory directory;
+                    if (Platform.isAndroid) {
+                      directory = await getExternalStorageDirectory();
                     } else {
-
+                      directory = await getApplicationDocumentsDirectory();
                     }
-                  },
-                ),
+
+                    final String folder = '${directory.path}/documents';
+                    await Directory(folder).create(recursive: true);
+                    final filePath = '$folder/${document.name}';
+                    final store = StoreProvider.of<AppState>(context);
+
+                    final http.Response response = await WebClient().get(
+                        document.url, store.state.credentials.token,
+                        rawResponse: true);
+
+                    await File(filePath).writeAsBytes(response.bodyBytes);
+                    await FlutterShare.shareFile(
+                      title: '${localization.name}',
+                      filePath: filePath,
+                    );
+                  } else {
+                    launch(document.downloadUrl);
+                  }
+                },
+              ),
               FlatButton(
                 child: Text(localization.close.toUpperCase()),
                 onPressed: () {

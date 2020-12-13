@@ -68,6 +68,7 @@ abstract class DocumentEntity extends Object
       width: 0,
       height: 0,
       size: 0,
+      hash: '',
       createdUserId: '',
       assignedUserId: '',
       createdAt: 0,

@@ -186,8 +186,6 @@ class DocumentStateBuilder
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
   set list(ListBuilder<String> list) => _$this._list = list;
 
-  DocumentStateBuilder();
-
   DocumentStateBuilder get _$this {
     if (_$v != null) {
       _map = _$v.map?.toBuilder();
