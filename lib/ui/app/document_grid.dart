@@ -198,27 +198,31 @@ class DocumentTile extends StatelessWidget {
                 FlatButton(
                   child: Text(localization.download.toUpperCase()),
                   onPressed: () async {
-                    Directory directory;
-                    if (Platform.isAndroid) {
-                      directory = await getExternalStorageDirectory();
+                    if (Platform.isIOS || Platform.isAndroid) {
+                      Directory directory;
+                      if (Platform.isAndroid) {
+                        directory = await getExternalStorageDirectory();
+                      } else {
+                        directory = await getApplicationDocumentsDirectory();
+                      }
+
+                      final String folder = '${directory.path}/documents';
+                      await Directory(folder).create(recursive: true);
+                      final filePath = '$folder/${document.name}';
+                      final store = StoreProvider.of<AppState>(context);
+
+                      final http.Response response = await WebClient().get(
+                          document.url, store.state.credentials.token,
+                          rawResponse: true);
+
+                      await File(filePath).writeAsBytes(response.bodyBytes);
+                      await FlutterShare.shareFile(
+                        title: '${localization.name}',
+                        filePath: filePath,
+                      );
                     } else {
-                      directory = await getApplicationDocumentsDirectory();
+
                     }
-
-                    final String folder = '${directory.path}/documents';
-                    await Directory(folder).create(recursive: true);
-                    final filePath = '$folder/${document.name}';
-                    final store = StoreProvider.of<AppState>(context);
-
-                    final http.Response response = await WebClient().get(
-                        document.url, store.state.credentials.token,
-                        rawResponse: true);
-
-                    await File(filePath).writeAsBytes(response.bodyBytes);
-                    await FlutterShare.shareFile(
-                      title: '${localization.name}',
-                      filePath: filePath,
-                    );
                   },
                 ),
               FlatButton(
