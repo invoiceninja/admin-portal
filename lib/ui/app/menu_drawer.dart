@@ -1021,29 +1021,23 @@ void _showAbout(BuildContext context) async {
                 ),
               ),
               //if (!state.isProduction) // TODO enable this check
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: AppButton(
-                  label: localization.healthCheck.toUpperCase(),
-                  iconData: MdiIcons.shieldHalfFull,
-                  color: Colors.green,
-                  onPressed: () {
-                    showDialog<HealthCheckDialog>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return HealthCheckDialog();
-                        });
-                  },
-                ),
+              AppButton(
+                label: localization.healthCheck.toUpperCase(),
+                iconData: MdiIcons.shieldHalfFull,
+                color: Colors.green,
+                onPressed: () {
+                  showDialog<HealthCheckDialog>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return HealthCheckDialog();
+                      });
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: AppButton(
-                  label: localization.forceUpdate.toUpperCase(),
-                  iconData: MdiIcons.update,
-                  color: Colors.orange,
-                  onPressed: () => _showUpdate(context),
-                ),
+              AppButton(
+                label: localization.forceUpdate.toUpperCase(),
+                iconData: MdiIcons.update,
+                color: Colors.orange,
+                onPressed: () => _showUpdate(context),
               ),
             ],
           ),

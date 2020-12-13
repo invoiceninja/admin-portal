@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
@@ -36,7 +35,7 @@ class AppButton extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.only(top: kMobileDialogPadding),
+      padding: const EdgeInsets.only(top: 20),
       child: width == null
           ? button
           : SizedBox(

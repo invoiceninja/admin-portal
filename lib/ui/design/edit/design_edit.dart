@@ -505,6 +505,25 @@ class HtmlDesignPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(html);
+    return Container(
+      color: Colors.grey,
+      alignment: Alignment.center,
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Text(html),
+          if (isLoading)
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                LinearProgressIndicator(),
+                Expanded(
+                  child: SizedBox(),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
   }
 }
