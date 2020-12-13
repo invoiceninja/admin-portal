@@ -189,7 +189,11 @@ class DocumentTile extends StatelessWidget {
               FlatButton(
                 child: Text(localization.download.toUpperCase()),
                 onPressed: () async {
-                  if (Platform.isIOS || Platform.isAndroid) {
+                  final store = StoreProvider.of<AppState>(context);
+                  final state = store.state;
+                  if (kIsWeb || (!Platform.isIOS && !Platform.isAndroid)) {
+                    launch(state.account.defaultUrl + document.downloadUrl);
+                  } else {
                     Directory directory;
                     if (Platform.isAndroid) {
                       directory = await getExternalStorageDirectory();
@@ -200,10 +204,9 @@ class DocumentTile extends StatelessWidget {
                     final String folder = '${directory.path}/documents';
                     await Directory(folder).create(recursive: true);
                     final filePath = '$folder/${document.name}';
-                    final store = StoreProvider.of<AppState>(context);
 
                     final http.Response response = await WebClient().get(
-                        document.url, store.state.credentials.token,
+                        document.url, state.credentials.token,
                         rawResponse: true);
 
                     await File(filePath).writeAsBytes(response.bodyBytes);
@@ -211,8 +214,6 @@ class DocumentTile extends StatelessWidget {
                       title: '${localization.name}',
                       filePath: filePath,
                     );
-                  } else {
-                    launch(document.downloadUrl);
                   }
                 },
               ),
