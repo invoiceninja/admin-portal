@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
@@ -27,10 +26,7 @@ class _ImportExportState extends State<ImportExport> {
       GlobalKey<FormState>(debugLabel: '_importExport');
   FocusScopeNode _focusNode;
   bool autoValidate = false;
-
-  final _firstNameController = TextEditingController();
-
-  List<TextEditingController> _controllers = [];
+  String _filePath;
 
   @override
   void initState() {
@@ -40,30 +36,8 @@ class _ImportExportState extends State<ImportExport> {
 
   @override
   void dispose() {
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
     _focusNode.dispose();
     super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    _controllers = [_firstNameController];
-
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
-    /*
-    final product = widget.viewModel.product;
-    _productKeyController.text = product.productKey;
-      */
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
   }
 
   void _onChanged() {}
@@ -119,7 +93,8 @@ class _ImportExportState extends State<ImportExport> {
                       child: OutlineButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        child: Text(localization.uploadFile),
+                        child: Text(localization.selectFile),
+                        onPressed: () {},
                       ),
                     ),
                     SizedBox(width: kTableColumnGap),
@@ -128,6 +103,9 @@ class _ImportExportState extends State<ImportExport> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         child: Text(localization.uploadFile),
+                        onPressed: _filePath == null ? null : () {
+                          //
+                        },
                       ),
                     ),
                   ],

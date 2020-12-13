@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'select_file': 'Select File',
       'no_file_selected': 'No File Selected',
       'csv_file': 'CSV File',
       'import_type': 'Import Type',
@@ -2627,6 +2628,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get noHistory => _localizedValues[localeCode]['no_history'] ?? '';
 
   String get takePicture => _localizedValues[localeCode]['take_picture'] ?? '';
+
+  String get selectFile => _localizedValues[localeCode]['select_file'] ?? '';
 
   String get uploadFile => _localizedValues[localeCode]['upload_file'] ?? '';
 
