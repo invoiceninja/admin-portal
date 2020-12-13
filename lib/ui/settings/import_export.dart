@@ -1,13 +1,19 @@
-import 'dart:typed_data';
+import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -30,7 +36,6 @@ class _ImportExportState extends State<ImportExport> {
   bool autoValidate = false;
   String _filePath;
   String _fileName;
-  Uint8List _fileBytes;
 
   @override
   void initState() {
@@ -44,7 +49,25 @@ class _ImportExportState extends State<ImportExport> {
     super.dispose();
   }
 
-  void _onChanged() {}
+  void uploadFile() {
+    final webClient = WebClient();
+    final state = StoreProvider.of<AppState>(context).state;
+    final credentials = state.credentials;
+    final url = '${credentials.url}/preimport';
+
+    webClient
+        .post(
+      url,
+      credentials.token,
+      filePath: _filePath,
+      fileIndex: 'file',
+    )
+        .then((dynamic response) {
+      print('## respnse: ${(response as Response).body}');
+    }).catchError((dynamic error) {
+      showErrorDialog(context: context, message: '$error');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,9 +129,11 @@ class _ImportExportState extends State<ImportExport> {
                           if (result != null) {
                             setState(() {
                               final file = result.files.single;
-                              _filePath = file.path;
+                              _filePath = kIsWeb
+                                  ? 'data:application/octet-stream;charset=utf-16le;base64,' +
+                                      base64Encode(file.bytes)
+                                  : file.path;
                               _fileName = file.name;
-                              _fileBytes = file.bytes;
                             });
                           }
                         },
@@ -120,11 +145,8 @@ class _ImportExportState extends State<ImportExport> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         child: Text(localization.uploadFile),
-                        onPressed: _fileName == null
-                            ? null
-                            : () {
-                                //
-                              },
+                        onPressed:
+                            _fileName == null ? null : () => uploadFile(),
                       ),
                     ),
                   ],
