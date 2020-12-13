@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'no_file_selected': 'No File Selected',
+      'csv_file': 'CSV File',
       'import_type': 'Import Type',
       'draft_mode': 'Draft Mode',
       'draft_mode_help': 'Preview updates faster but is less accurate',
@@ -5262,8 +5264,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get draftMode => _localizedValues[localeCode]['draft_mode'] ?? '';
 
+  String get csvFile => _localizedValues[localeCode]['csv_file'] ?? '';
+
   String get draftModeHelp =>
       _localizedValues[localeCode]['draft_mode_help'] ?? '';
+
+  String get noFileSelected =>
+      _localizedValues[localeCode]['no_file_selected'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
