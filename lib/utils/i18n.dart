@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'draft_mode': 'Draft Mode',
+      'draft_mode_help': 'Faster response but less accurate',
       'view_licenses': 'View Licenses',
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
@@ -5252,7 +5254,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get webhookUrl => _localizedValues[localeCode]['webhook_url'] ?? '';
 
-  String get viewLicenses => _localizedValues[localeCode]['view_licenses'] ?? '';
+  String get viewLicenses =>
+      _localizedValues[localeCode]['view_licenses'] ?? '';
+
+  String get draftMode => _localizedValues[localeCode]['draft_mode'] ?? '';
+
+  String get draftModeHelp =>
+      _localizedValues[localeCode]['draft_mode_help'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

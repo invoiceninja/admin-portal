@@ -54,6 +54,7 @@ class _DesignEditState extends State<DesignEdit>
   TabController _tabController;
   Uint8List _pdfBytes;
   bool _isLoading = false;
+  bool _isDraftMode = false;
 
   List<TextEditingController> _controllers;
 
@@ -157,6 +158,7 @@ class _DesignEditState extends State<DesignEdit>
     loadDesign(
         context: context,
         design: design,
+        isDraftMode: _isDraftMode,
         onComplete: (response) async {
           if (!mounted) {
             return;
@@ -169,6 +171,14 @@ class _DesignEditState extends State<DesignEdit>
             }
           });
         });
+  }
+
+  void _setDraftMode(bool isDraftMode) {
+    setState(() {
+      _isDraftMode = isDraftMode;
+    });
+
+    _loadPreview(context, widget.viewModel.design);
   }
 
   @override
@@ -222,6 +232,8 @@ class _DesignEditState extends State<DesignEdit>
                     DesignSettings(
                       nameController: _nameController,
                       onLoadDesign: _loadDesign,
+                      draftMode: _isDraftMode,
+                      onDraftModeChanged: (value) => _setDraftMode(value),
                     ),
                     DesignPreview(
                       pdfBytes: _pdfBytes,
@@ -262,6 +274,9 @@ class _DesignEditState extends State<DesignEdit>
                                 DesignSettings(
                                   nameController: _nameController,
                                   onLoadDesign: _loadDesign,
+                                  draftMode: _isDraftMode,
+                                  onDraftModeChanged: (value) =>
+                                      _setDraftMode(value),
                                 ),
                                 DesignSection(textController: _bodyController),
                                 DesignSection(
@@ -326,10 +341,14 @@ class DesignSettings extends StatefulWidget {
   const DesignSettings({
     @required this.nameController,
     @required this.onLoadDesign,
+    @required this.draftMode,
+    @required this.onDraftModeChanged,
   });
 
   final Function(DesignEntity) onLoadDesign;
   final TextEditingController nameController;
+  final bool draftMode;
+  final Function(bool) onDraftModeChanged;
 
   @override
   _DesignSettingsState createState() => _DesignSettingsState();
@@ -352,12 +371,18 @@ class _DesignSettingsState extends State<DesignSettings> {
               controller: widget.nameController,
             ),
             DesignPicker(
-              label: localization.loadDesign,
-              onSelected: (value) {
-                widget.onLoadDesign(value);
-                _selectedDesign = value;
-              },
-              initialValue: _selectedDesign?.id
+                label: localization.loadDesign,
+                onSelected: (value) {
+                  widget.onLoadDesign(value);
+                  _selectedDesign = value;
+                },
+                initialValue: _selectedDesign?.id),
+            SizedBox(height: 16),
+            SwitchListTile(
+              title: Text(localization.draftMode),
+              subtitle: Text(localization.draftModeHelp),
+              value: widget.draftMode,
+              onChanged: widget.onDraftModeChanged,
             ),
           ],
         ),
