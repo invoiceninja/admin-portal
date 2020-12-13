@@ -217,7 +217,7 @@ class _FileImportState extends State<_FileImport> {
   }
 }
 
-class _FileMapper extends StatelessWidget {
+class _FileMapper extends StatefulWidget {
   const _FileMapper({
     @required this.fields1,
     @required this.fields2,
@@ -227,8 +227,15 @@ class _FileMapper extends StatelessWidget {
   final List<String> fields2;
 
   @override
+  __FileMapperState createState() => __FileMapperState();
+}
+
+class __FileMapperState extends State<_FileMapper> {
+  bool _useFirstRowAsHeaders = true;
+
+  @override
   Widget build(BuildContext context) {
-    final fields = fields1;
+    final fields = widget.fields1;
 
     return SingleChildScrollView(
       child: FormCard(
@@ -237,10 +244,8 @@ class _FileMapper extends StatelessWidget {
           SwitchListTile(
             activeColor: Theme.of(context).accentColor,
             title: Text(AppLocalization.of(context).firstRowHeaders),
-            value: false,
-            onChanged: (value) {
-              //
-            },
+            value: _useFirstRowAsHeaders,
+            onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),
           ),
           SizedBox(height: 20),
           for (var field in fields)
