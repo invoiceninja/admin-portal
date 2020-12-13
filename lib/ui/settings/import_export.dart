@@ -242,6 +242,7 @@ class _FileMapper extends StatelessWidget {
               //
             },
           ),
+          SizedBox(height: 20),
           for (var field in fields)
             _FieldMapper(
               field: field,
