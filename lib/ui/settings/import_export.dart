@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -111,6 +112,26 @@ class _ImportExportState extends State<ImportExport> {
                   label: localization.csvFile,
                   initialValue: localization.noFileSelected,
                 ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlineButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Text(localization.uploadFile),
+                      ),
+                    ),
+                    SizedBox(width: kTableColumnGap),
+                    Expanded(
+                      child: OutlineButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Text(localization.uploadFile),
+                      ),
+                    ),
+                  ],
+                )
               ],
             )
           ],
