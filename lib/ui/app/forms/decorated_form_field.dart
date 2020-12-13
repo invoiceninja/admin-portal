@@ -56,19 +56,42 @@ class DecoratedFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget suffixIconButton;
+    final hasValue =
+        (initialValue ?? '').isNotEmpty || (controller?.text ?? '').isNotEmpty;
+    if (hasValue) {
+      if (suffixIcon == null) {
+        suffixIconButton = IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () =>
+              controller != null ? controller.text = '' : onChanged(''),
+        );
+      }
+    }
+
+    InputDecoration inputDecoration;
+    if (decoration != null) {
+      inputDecoration = decoration;
+      if (suffixIconButton != null) {
+        inputDecoration =
+            inputDecoration.copyWith(suffixIcon: suffixIconButton);
+      }
+    } else if (label == null) {
+      inputDecoration = null;
+    } else {
+      inputDecoration = InputDecoration(
+        labelText: label,
+        hintText: hint,
+        suffixIcon: suffixIcon ?? suffixIconButton,
+      );
+    }
+
     return TextFormField(
       key: key ?? ValueKey(label),
       focusNode: focusNode,
       controller: controller,
       autofocus: autofocus,
-      decoration: decoration ??
-          (label == null
-              ? null
-              : InputDecoration(
-                  labelText: label,
-                  hintText: hint,
-                  suffixIcon: suffixIcon,
-                )),
+      decoration: inputDecoration,
       validator: validator,
       keyboardType: keyboardType ?? TextInputType.text,
       maxLines: expands ? null : maxLines ?? 1,
