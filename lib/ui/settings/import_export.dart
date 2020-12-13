@@ -244,53 +244,56 @@ class __FileMapperState extends State<_FileMapper> {
     final localization = AppLocalization.of(context);
 
     return SingleChildScrollView(
-      child: FormCard(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SwitchListTile(
-            activeColor: Theme.of(context).accentColor,
-            title: Text(AppLocalization.of(context).firstRowHeaders),
-            value: _useFirstRowAsHeaders,
-            onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),
-          ),
-          SizedBox(height: 20),
-          for (var i = 0; i < widget.fields1.length; i++)
-            _FieldMapper(
-              field1: widget.fields1[i],
-              field2: widget.fields2.length > i ? widget.fields2[i] : null,
-              mappedTo: _mapping[i] ?? '',
-              onMappedToChanged: (String value) {
-                print('## onMappedToChanged: $value');
-                setState(() {
-                  _mapping[i] = value;
-                });
-              },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: FormCard(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SwitchListTile(
+              activeColor: Theme.of(context).accentColor,
+              title: Text(AppLocalization.of(context).firstRowHeaders),
+              value: _useFirstRowAsHeaders,
+              onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),
             ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: OutlineButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Text(localization.cancel),
-                  onPressed: () => widget.onCancelPressed(),
-                ),
+            SizedBox(height: 20),
+            for (var i = 0; i < widget.fields1.length; i++)
+              _FieldMapper(
+                field1: widget.fields1[i],
+                field2: widget.fields2.length > i ? widget.fields2[i] : null,
+                mappedTo: _mapping[i] ?? '',
+                onMappedToChanged: (String value) {
+                  print('## onMappedToChanged: $value');
+                  setState(() {
+                    _mapping[i] = value;
+                  });
+                },
               ),
-              SizedBox(width: kTableColumnGap),
-              Expanded(
-                child: OutlineButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Text(localization.import),
-                  onPressed: () {
-                    //
-                  },
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlineButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Text(localization.cancel),
+                    onPressed: () => widget.onCancelPressed(),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                SizedBox(width: kTableColumnGap),
+                Expanded(
+                  child: OutlineButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Text(localization.import),
+                    onPressed: () {
+                      //
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
