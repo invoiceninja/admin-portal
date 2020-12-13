@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -114,14 +113,12 @@ class _FileImportState extends State<_FileImport> {
   String _fileName;
 
   void uploadFile() {
-    /*
     const dataStr =
         '{"data":{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}}';
 
-    widget.onUploaded(dataStr);
+    widget.onUploaded(json.decode(dataStr));
 
     return;
-     */
 
     final webClient = WebClient();
     final state = StoreProvider.of<AppState>(context).state;
@@ -231,6 +228,7 @@ class _FileMapper extends StatefulWidget {
 
 class __FileMapperState extends State<_FileMapper> {
   bool _useFirstRowAsHeaders = true;
+  final _mapping = <String>[];
 
   @override
   Widget build(BuildContext context) {
@@ -251,6 +249,7 @@ class __FileMapperState extends State<_FileMapper> {
             _FieldMapper(
               field1: widget.fields1[i],
               field2: widget.fields2.length > i ? widget.fields2[i] : null,
+              mappedTo: _mapping.length > i ? _mapping[i] : '',
             )
         ],
       ),
@@ -262,13 +261,17 @@ class _FieldMapper extends StatelessWidget {
   const _FieldMapper({
     @required this.field1,
     @required this.field2,
+    @required this.mappedTo,
   });
 
   final String field1;
   final String field2;
+  final String mappedTo;
 
   @override
   Widget build(BuildContext context) {
+    final fields = ['first name', 'last name'];
+
     return Row(
       children: [
         Expanded(child: Text(field1)),
@@ -276,8 +279,9 @@ class _FieldMapper extends StatelessWidget {
         Expanded(
             child: DropdownButton<String>(
           isExpanded: true,
+          value: fields.contains(mappedTo) ? mappedTo : null,
           onChanged: (value) => null,
-          items: ['test']
+          items: fields
               .map((field) => DropdownMenuItem<String>(child: Text(field)))
               .toList(),
         )),
