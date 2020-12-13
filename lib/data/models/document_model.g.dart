@@ -295,7 +295,6 @@ class _$DocumentListResponse extends DocumentListResponse {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(0, data.hashCode));
@@ -314,10 +313,8 @@ class DocumentListResponseBuilder
   _$DocumentListResponse _$v;
 
   ListBuilder<DocumentEntity> _data;
-
   ListBuilder<DocumentEntity> get data =>
       _$this._data ??= new ListBuilder<DocumentEntity>();
-
   set data(ListBuilder<DocumentEntity> data) => _$this._data = data;
 
   DocumentListResponseBuilder();
@@ -394,7 +391,6 @@ class _$DocumentItemResponse extends DocumentItemResponse {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(0, data.hashCode));
@@ -413,10 +409,8 @@ class DocumentItemResponseBuilder
   _$DocumentItemResponse _$v;
 
   DocumentEntityBuilder _data;
-
   DocumentEntityBuilder get data =>
       _$this._data ??= new DocumentEntityBuilder();
-
   set data(DocumentEntityBuilder data) => _$this._data = data;
 
   DocumentItemResponseBuilder();
@@ -594,7 +588,6 @@ class _$DocumentEntity extends DocumentEntity {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -662,107 +655,73 @@ class DocumentEntityBuilder
   _$DocumentEntity _$v;
 
   String _name;
-
   String get name => _$this._name;
-
   set name(String name) => _$this._name = name;
 
   String _hash;
-
   String get hash => _$this._hash;
-
   set hash(String hash) => _$this._hash = hash;
 
   String _type;
-
   String get type => _$this._type;
-
   set type(String type) => _$this._type = type;
 
   String _url;
-
   String get url => _$this._url;
-
   set url(String url) => _$this._url = url;
 
   int _width;
-
   int get width => _$this._width;
-
   set width(int width) => _$this._width = width;
 
   int _height;
-
   int get height => _$this._height;
-
   set height(int height) => _$this._height = height;
 
   int _size;
-
   int get size => _$this._size;
-
   set size(int size) => _$this._size = size;
 
   String _preview;
-
   String get preview => _$this._preview;
-
   set preview(String preview) => _$this._preview = preview;
 
   bool _isDefault;
-
   bool get isDefault => _$this._isDefault;
-
   set isDefault(bool isDefault) => _$this._isDefault = isDefault;
 
   bool _isChanged;
-
   bool get isChanged => _$this._isChanged;
-
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
-
   int get createdAt => _$this._createdAt;
-
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
 
   int _updatedAt;
-
   int get updatedAt => _$this._updatedAt;
-
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
   int _archivedAt;
-
   int get archivedAt => _$this._archivedAt;
-
   set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
 
   bool _isDeleted;
-
   bool get isDeleted => _$this._isDeleted;
-
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
   String _createdUserId;
-
   String get createdUserId => _$this._createdUserId;
-
   set createdUserId(String createdUserId) =>
       _$this._createdUserId = createdUserId;
 
   String _assignedUserId;
-
   String get assignedUserId => _$this._assignedUserId;
-
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
   String _id;
-
   String get id => _$this._id;
-
   set id(String id) => _$this._id = id;
 
   DocumentEntityBuilder();
