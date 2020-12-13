@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'import': 'Import',
       'first_row_headers': 'Use first row as headers',
       'select_file': 'Select File',
       'no_file_selected': 'No File Selected',
@@ -4408,6 +4409,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get type => _localizedValues[localeCode]['type'] ?? '';
 
   String get importType => _localizedValues[localeCode]['import_type'] ?? '';
+
+  String get import => _localizedValues[localeCode]['import'] ?? '';
 
   String get invoiceAmount =>
       _localizedValues[localeCode]['invoice_amount'] ?? '';

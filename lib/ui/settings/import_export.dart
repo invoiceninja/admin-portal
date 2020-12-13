@@ -91,6 +91,11 @@ class _ImportExportState extends State<ImportExport> {
               _FileMapper(
                 fields1: _fields1,
                 fields2: _fields2,
+                onCancelPressed: () {
+                  setState(() {
+                    _fileHash = null;
+                  });
+                },
               ),
           ],
         ),
@@ -207,7 +212,7 @@ class _FileImportState extends State<_FileImport> {
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -217,10 +222,12 @@ class _FileMapper extends StatefulWidget {
   const _FileMapper({
     @required this.fields1,
     @required this.fields2,
+    @required this.onCancelPressed,
   });
 
   final List<String> fields1;
   final List<String> fields2;
+  final Function onCancelPressed;
 
   @override
   __FileMapperState createState() => __FileMapperState();
@@ -232,7 +239,7 @@ class __FileMapperState extends State<_FileMapper> {
 
   @override
   Widget build(BuildContext context) {
-    final fields = widget.fields1;
+    final localization = AppLocalization.of(context);
 
     return SingleChildScrollView(
       child: FormCard(
@@ -256,7 +263,31 @@ class __FileMapperState extends State<_FileMapper> {
                   _mapping[i] = value;
                 });
               },
-            )
+            ),
+          SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: OutlineButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Text(localization.cancel),
+                  onPressed: () => widget.onCancelPressed(),
+                ),
+              ),
+              SizedBox(width: kTableColumnGap),
+              Expanded(
+                child: OutlineButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Text(localization.import),
+                  onPressed: () {
+                    //
+                  },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
