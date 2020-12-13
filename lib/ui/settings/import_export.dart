@@ -3,17 +3,15 @@ import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -34,8 +32,9 @@ class _ImportExportState extends State<ImportExport> {
       GlobalKey<FormState>(debugLabel: '_importExport');
   FocusScopeNode _focusNode;
   bool autoValidate = false;
-  String _filePath;
-  String _fileName;
+  String _fileHash;
+  final _fields1 = <String>[];
+  final _fields2 = <String>[];
 
   @override
   void initState() {
@@ -47,26 +46,6 @@ class _ImportExportState extends State<ImportExport> {
   void dispose() {
     _focusNode.dispose();
     super.dispose();
-  }
-
-  void uploadFile() {
-    final webClient = WebClient();
-    final state = StoreProvider.of<AppState>(context).state;
-    final credentials = state.credentials;
-    final url = '${credentials.url}/preimport';
-
-    webClient
-        .post(
-      url,
-      credentials.token,
-      filePath: _filePath,
-      fileIndex: 'file',
-    )
-        .then((dynamic response) {
-      print('## respnse: ${(response as Response).body}');
-    }).catchError((dynamic error) {
-      showErrorDialog(context: context, message: '$error');
-    });
   }
 
   @override
@@ -85,77 +64,198 @@ class _ImportExportState extends State<ImportExport> {
         focusNode: _focusNode,
         child: ListView(
           children: [
-            FormCard(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: localization.importType,
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<EntityType>(
-                        isDense: true,
-                        value: EntityType.client,
-                        onChanged: (dynamic value) {
-                          //
-                        },
-                        items: [EntityType.client]
-                            .map((entityType) => DropdownMenuItem<EntityType>(
-                                value: entityType,
-                                child:
-                                    Text(localization.lookup('$entityType'))))
-                            .toList()),
-                  ),
-                ),
-                DecoratedFormField(
-                  key: ValueKey(_fileName),
-                  enabled: false,
-                  label: localization.csvFile,
-                  initialValue: _fileName ?? localization.noFileSelected,
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlineButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Text(localization.selectFile),
-                        onPressed: () async {
-                          final result = await FilePicker.platform.pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: ['csv'],
-                          );
-                          if (result != null) {
-                            setState(() {
-                              final file = result.files.single;
-                              _filePath = kIsWeb
-                                  ? 'data:application/octet-stream;charset=utf-16le;base64,' +
-                                      base64Encode(file.bytes)
-                                  : file.path;
-                              _fileName = file.name;
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(width: kTableColumnGap),
-                    Expanded(
-                      child: OutlineButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Text(localization.uploadFile),
-                        onPressed:
-                            _fileName == null ? null : () => uploadFile(),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            )
+            if (_fileHash == null)
+              _FileImport(
+                onUploaded: (result) {
+                  setState(() {
+                    final Map<String, dynamic> decodedResponse =
+                        json.decode(result);
+                    final Map<String, dynamic> data = decodedResponse['data'];
+
+                    _fileHash = data['hash'];
+                    final List<dynamic> fields = data['headers'];
+
+                    for (var i = 0; i < fields.length; i++) {
+                      final list = fields[i] as List<dynamic>;
+                      for (var field in list) {
+                        if (i == 0) {
+                          _fields1.add(field);
+                        } else {
+                          _fields2.add(field);
+                        }
+                      }
+                    }
+                  });
+                },
+              )
+            else
+              _FileMapper(
+                fields1: _fields1,
+                fields2: _fields2,
+              ),
           ],
         ),
       ),
     );
+  }
+}
+
+class _FileImport extends StatefulWidget {
+  const _FileImport({@required this.onUploaded});
+
+  final Function(String) onUploaded;
+
+  @override
+  _FileImportState createState() => _FileImportState();
+}
+
+class _FileImportState extends State<_FileImport> {
+  String _filePath;
+  String _fileName;
+
+  void uploadFile() {
+    const dataStr =
+        '{"data":{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}}';
+
+    return;
+
+    /*
+    final webClient = WebClient();
+    final state = StoreProvider.of<AppState>(context).state;
+    final credentials = state.credentials;
+    const url = '\${credentials.url}/preimport';
+
+    webClient
+        .post(
+      url,
+      credentials.token,
+      filePath: _filePath,
+      fileIndex: 'file',
+    )
+        .then((dynamic response) {
+      print('## respnse: \${(response as Response).body}');
+      //widget.onUploaded(dataStr);
+    }).catchError((dynamic error) {
+      showErrorDialog(context: context, message: '\$error');
+    });    
+     */
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return FormCard(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        InputDecorator(
+          decoration: InputDecoration(
+            labelText: localization.importType,
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<EntityType>(
+                isDense: true,
+                value: EntityType.client,
+                onChanged: (dynamic value) {
+                  //
+                },
+                items: [EntityType.client]
+                    .map((entityType) => DropdownMenuItem<EntityType>(
+                        value: entityType,
+                        child: Text(localization.lookup('\$entityType'))))
+                    .toList()),
+          ),
+        ),
+        DecoratedFormField(
+          key: ValueKey(_fileName),
+          enabled: false,
+          label: localization.csvFile,
+          initialValue: _fileName ?? localization.noFileSelected,
+        ),
+        SizedBox(height: 20),
+        Row(
+          children: [
+            Expanded(
+              child: OutlineButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                child: Text(localization.selectFile),
+                onPressed: () async {
+                  final result = await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowedExtensions: ['csv'],
+                  );
+                  if (result != null) {
+                    setState(() {
+                      final file = result.files.single;
+                      _filePath = kIsWeb
+                          ? 'data:application/octet-stream;charset=utf-16le;base64,' +
+                              base64Encode(file.bytes)
+                          : file.path;
+                      _fileName = file.name;
+                    });
+                  }
+                },
+              ),
+            ),
+            SizedBox(width: kTableColumnGap),
+            Expanded(
+              child: OutlineButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                child: Text(localization.uploadFile),
+                //onPressed: _fileName == null ? null : () => uploadFile(),
+                onPressed: () => uploadFile(),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class _FileMapper extends StatelessWidget {
+  const _FileMapper({
+    @required this.fields1,
+    @required this.fields2,
+  });
+
+  final List<String> fields1;
+  final List<String> fields2;
+
+  @override
+  Widget build(BuildContext context) {
+    final fields = fields1;
+
+    return SingleChildScrollView(
+      child: FormCard(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SwitchListTile(
+            activeColor: Theme.of(context).accentColor,
+            value: false,
+            onChanged: (value) {
+              //
+            },
+          ),
+          for (var field in fields)
+            _FieldMapper(
+              field: field,
+            )
+        ],
+      ),
+    );
+  }
+}
+
+class _FieldMapper extends StatelessWidget {
+  const _FieldMapper({@required this.field});
+
+  final String field;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(field);
   }
 }
