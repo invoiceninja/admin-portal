@@ -110,7 +110,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             if (expense.isOld)
               DecoratedFormField(
                 controller: _numberController,
-                label: localization.projectNumber,
+                label: localization.expenseNumber,
                 autocorrect: false,
               ),
             EntityDropdown(
