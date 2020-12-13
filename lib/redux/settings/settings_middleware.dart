@@ -47,9 +47,7 @@ Middleware<AppState> _viewSettings() {
         callback: () {
           String route = SettingsScreen.route;
 
-          if (!store.state.userCompany.isAdmin) {
-            route += '/$kSettingsUserDetails';
-          } else if (action.section != null) {
+          if (action.section != null) {
             route += '/${action.section}';
           } else if (uiState.mainRoute == kSettings) {
             route += '/$kSettingsCompanyDetails';
