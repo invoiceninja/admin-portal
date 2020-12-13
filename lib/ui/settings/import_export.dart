@@ -248,9 +248,10 @@ class __FileMapperState extends State<_FileMapper> {
             onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),
           ),
           SizedBox(height: 20),
-          for (var field in fields)
+          for (var i = 0; i < widget.fields1.length; i++)
             _FieldMapper(
-              field: field,
+              field1: widget.fields1[i],
+              field2: widget.fields2.length > i ? widget.fields2[i] : null,
             )
         ],
       ),
@@ -259,15 +260,28 @@ class __FileMapperState extends State<_FileMapper> {
 }
 
 class _FieldMapper extends StatelessWidget {
-  const _FieldMapper({@required this.field});
+  const _FieldMapper({
+    @required this.field1,
+    @required this.field2,
+  });
 
-  final String field;
+  final String field1;
+  final String field2;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: Text(field)),
+        Expanded(child: Text(field1)),
+        Expanded(child: Text(field2 ?? '')),
+        Expanded(
+            child: DropdownButton<String>(
+              isExpanded: true,
+          onChanged: (value) => null,
+          items: ['test']
+              .map((field) => DropdownMenuItem<String>(child: Text(field)))
+              .toList(),
+        )),
       ],
     );
   }
