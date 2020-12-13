@@ -53,6 +53,7 @@ class _DesignEditState extends State<DesignEdit>
   FocusScopeNode _focusNode;
   TabController _tabController;
   Uint8List _pdfBytes;
+  String _html = '';
   bool _isLoading = false;
   bool _isDraftMode = false;
 
@@ -167,7 +168,13 @@ class _DesignEditState extends State<DesignEdit>
           setState(() {
             _isLoading = false;
             if (response != null) {
-              _pdfBytes = response.bodyBytes;
+              if (_isDraftMode) {
+                _html = response.body;
+                _pdfBytes = null;
+              } else {
+                _pdfBytes = response.bodyBytes;
+                _html = '';
+              }
             }
           });
         });
@@ -235,10 +242,15 @@ class _DesignEditState extends State<DesignEdit>
                       draftMode: _isDraftMode,
                       onDraftModeChanged: (value) => _setDraftMode(value),
                     ),
-                    DesignPreview(
-                      pdfBytes: _pdfBytes,
-                      isLoading: _isLoading,
-                    ),
+                    _isDraftMode
+                        ? HtmlDesignPreview(
+                            html: _html,
+                            isLoading: _isLoading,
+                          )
+                        : PdfDesignPreview(
+                            pdfBytes: _pdfBytes,
+                            isLoading: _isLoading,
+                          ),
                     DesignSection(textController: _bodyController),
                     DesignSection(textController: _headerController),
                     DesignSection(textController: _footerController),
@@ -295,10 +307,15 @@ class _DesignEditState extends State<DesignEdit>
                       ),
                     ),
                     Expanded(
-                      child: DesignPreview(
-                        pdfBytes: _pdfBytes,
-                        isLoading: _isLoading,
-                      ),
+                      child: _isDraftMode
+                          ? HtmlDesignPreview(
+                              html: _html,
+                              isLoading: _isLoading,
+                            )
+                          : PdfDesignPreview(
+                              pdfBytes: _pdfBytes,
+                              isLoading: _isLoading,
+                            ),
                     ),
                   ],
                 ),
@@ -379,6 +396,7 @@ class _DesignSettingsState extends State<DesignSettings> {
                 initialValue: _selectedDesign?.id),
             SizedBox(height: 16),
             SwitchListTile(
+              activeColor: Theme.of(context).accentColor,
               title: Text(localization.draftMode),
               subtitle: Text(localization.draftModeHelp),
               value: widget.draftMode,
@@ -392,8 +410,8 @@ class _DesignSettingsState extends State<DesignSettings> {
   }
 }
 
-class DesignPreview extends StatefulWidget {
-  const DesignPreview({
+class PdfDesignPreview extends StatefulWidget {
+  const PdfDesignPreview({
     @required this.pdfBytes,
     @required this.isLoading,
   });
@@ -403,10 +421,10 @@ class DesignPreview extends StatefulWidget {
   final bool isLoading;
 
   @override
-  _DesignPreviewState createState() => _DesignPreviewState();
+  _PdfDesignPreviewState createState() => _PdfDesignPreviewState();
 }
 
-class _DesignPreviewState extends State<DesignPreview> {
+class _PdfDesignPreviewState extends State<PdfDesignPreview> {
   PdfController _pdfController;
 
   String get _pdfString =>
@@ -473,5 +491,20 @@ class _DesignPreviewState extends State<DesignPreview> {
         ],
       ),
     );
+  }
+}
+
+class HtmlDesignPreview extends StatelessWidget {
+  const HtmlDesignPreview({
+    @required this.html,
+    @required this.isLoading,
+  });
+
+  final String html;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(html);
   }
 }
