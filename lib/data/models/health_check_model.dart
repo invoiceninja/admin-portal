@@ -35,6 +35,12 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'phantom_enabled')
   bool get phantomEnabled;
 
+  @BuiltValueField(wireName: 'open_basedir')
+  bool get openBasedir;
+
+  @BuiltValueField(wireName: 'exec')
+  bool get execEnabled;
+
   @BuiltValueField(wireName: 'npm_status')
   String get npmStatus;
 
