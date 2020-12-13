@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ImportExport extends StatefulWidget {
   const ImportExport({
@@ -59,9 +59,13 @@ class _ImportExportState extends State<ImportExport> {
     final localization = AppLocalization.of(context);
     //final viewModel = widget.viewModel;
 
-    return EditScaffold(
-      title: localization.importExport,
-      onSavePressed: null,
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        automaticallyImplyLeading: isMobile(context),
+        title: Text(localization.importExport),
+        actions: <Widget>[],
+      ),
       body: SizedBox(),
     );
   }

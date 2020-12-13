@@ -31,176 +31,169 @@ class _DeviceSettingsState extends State<DeviceSettings> {
     final state = viewModel.state;
     final prefState = state.prefState;
 
-    return WillPopScope(
-      onWillPop: () async {
-        //viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.deviceSettings),
-          actions: <Widget>[],
-        ),
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              FormCard(
-                children: <Widget>[
-                  AppDropdownButton<AppLayout>(
-                    showUseDefault: true,
-                    labelText: localization.layout,
-                    value: viewModel.state.prefState.appLayout,
-                    onChanged: (dynamic value) =>
-                        viewModel.onLayoutChanged(context, value),
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(localization.desktop),
-                        value: AppLayout.desktop,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.mobile),
-                        value: AppLayout.mobile,
-                      ),
-                    ],
-                  ),
-                  if (state.prefState.isNotMobile) ...[
-                    AppDropdownButton<AppSidebarMode>(
-                      showUseDefault: true,
-                      labelText: localization.menuSidebar,
-                      value: state.prefState.menuSidebarMode,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(localization.collapse),
-                          value: AppSidebarMode.collapse,
-                        ),
-                        DropdownMenuItem(
-                          child: Text(localization.float),
-                          value: AppSidebarMode.float,
-                        ),
-                      ],
-                      onChanged: (dynamic value) =>
-                          viewModel.onMenuModeChanged(context, value),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        automaticallyImplyLeading: isMobile(context),
+        title: Text(localization.deviceSettings),
+      ),
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            FormCard(
+              children: <Widget>[
+                AppDropdownButton<AppLayout>(
+                  showUseDefault: true,
+                  labelText: localization.layout,
+                  value: viewModel.state.prefState.appLayout,
+                  onChanged: (dynamic value) =>
+                      viewModel.onLayoutChanged(context, value),
+                  items: [
+                    DropdownMenuItem(
+                      child: Text(localization.desktop),
+                      value: AppLayout.desktop,
                     ),
-                    AppDropdownButton<AppSidebarMode>(
-                      showUseDefault: true,
-                      labelText: localization.historySidebar,
-                      value: state.prefState.historySidebarMode,
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(localization.showOrHide),
-                          value: AppSidebarMode.visible,
-                        ),
-                        DropdownMenuItem(
-                          child: Text(localization.float),
-                          value: AppSidebarMode.float,
-                        ),
-                      ],
-                      onChanged: (dynamic value) =>
-                          viewModel.onHistoryModeChanged(context, value),
+                    DropdownMenuItem(
+                      child: Text(localization.mobile),
+                      value: AppLayout.mobile,
                     ),
                   ],
-                  AppDropdownButton<int>(
-                    labelText: localization.rowsPerPage,
-                    value: prefState.rowsPerPage,
-                    onChanged: (dynamic value) =>
-                        viewModel.onRowsPerPageChanged(context, value),
+                ),
+                if (state.prefState.isNotMobile) ...[
+                  AppDropdownButton<AppSidebarMode>(
+                    showUseDefault: true,
+                    labelText: localization.menuSidebar,
+                    value: state.prefState.menuSidebarMode,
                     items: [
-                      10,
-                      25,
-                      50,
-                      // 100, // TODO optimize datatables to support this
-                    ]
-                        .map(
-                          (value) => DropdownMenuItem(
-                            child: Text('$value'),
-                            value: value,
-                          ),
-                        )
-                        .toList(),
+                      DropdownMenuItem(
+                        child: Text(localization.collapse),
+                        value: AppSidebarMode.collapse,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.float),
+                        value: AppSidebarMode.float,
+                      ),
+                    ],
+                    onChanged: (dynamic value) =>
+                        viewModel.onMenuModeChanged(context, value),
+                  ),
+                  AppDropdownButton<AppSidebarMode>(
+                    showUseDefault: true,
+                    labelText: localization.historySidebar,
+                    value: state.prefState.historySidebarMode,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.showOrHide),
+                        value: AppSidebarMode.visible,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.float),
+                        value: AppSidebarMode.float,
+                      ),
+                    ],
+                    onChanged: (dynamic value) =>
+                        viewModel.onHistoryModeChanged(context, value),
                   ),
                 ],
-              ),
-              FormCard(
-                children: <Widget>[
-                  SwitchListTile(
-                    title: Text(localization.darkMode),
-                    value: prefState.enableDarkMode,
-                    onChanged: (value) =>
-                        viewModel.onDarkModeChanged(context, value),
-                    secondary: Icon(kIsWeb
-                        ? Icons.lightbulb_outline
-                        : MdiIcons.themeLightDark),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
-                  SwitchListTile(
-                    title: Text(localization.longPressSelectionIsDefault),
-                    value: prefState.longPressSelectionIsDefault,
-                    onChanged: (value) =>
-                        viewModel.onLongPressSelectionIsDefault(context, value),
-                    secondary: Icon(
-                        kIsWeb ? Icons.check_box : MdiIcons.checkBoxOutline),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
-                  /*
-                  SwitchListTile(
-                    title: Text(localization.alwaysShowSidebar),
-                    value: prefState.alwaysShowFilterSidebar,
-                    onChanged: (value) =>
-                        viewModel.onAlwaysShowSidebarChanged(context, value),
-                    secondary: Icon(Icons.chrome_reader_mode),
-                    activeColor: Theme.of(context).accentColor,
-                  ),                  
-                   */
-                  FutureBuilder(
-                    future: viewModel.authenticationSupported,
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData && snapshot.data == true) {
-                        return SwitchListTile(
-                          title: Text(AppLocalization.of(context)
-                              .biometricAuthentication),
-                          value: prefState.requireAuthentication,
-                          onChanged: (value) => viewModel
-                              .onRequireAuthenticationChanged(context, value),
-                          secondary: Icon(prefState.requireAuthentication
-                              ? MdiIcons.lock
-                              : MdiIcons.lockOpen),
-                          activeColor: Theme.of(context).accentColor,
-                        );
-                      } else {
-                        return SizedBox();
-                      }
+                AppDropdownButton<int>(
+                  labelText: localization.rowsPerPage,
+                  value: prefState.rowsPerPage,
+                  onChanged: (dynamic value) =>
+                      viewModel.onRowsPerPageChanged(context, value),
+                  items: [
+                    10,
+                    25,
+                    50,
+                    // 100, // TODO optimize datatables to support this
+                  ]
+                      .map(
+                        (value) => DropdownMenuItem(
+                          child: Text('$value'),
+                          value: value,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
+            FormCard(
+              children: <Widget>[
+                SwitchListTile(
+                  title: Text(localization.darkMode),
+                  value: prefState.enableDarkMode,
+                  onChanged: (value) =>
+                      viewModel.onDarkModeChanged(context, value),
+                  secondary: Icon(kIsWeb
+                      ? Icons.lightbulb_outline
+                      : MdiIcons.themeLightDark),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+                SwitchListTile(
+                  title: Text(localization.longPressSelectionIsDefault),
+                  value: prefState.longPressSelectionIsDefault,
+                  onChanged: (value) =>
+                      viewModel.onLongPressSelectionIsDefault(context, value),
+                  secondary: Icon(
+                      kIsWeb ? Icons.check_box : MdiIcons.checkBoxOutline),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+                /*
+                SwitchListTile(
+                  title: Text(localization.alwaysShowSidebar),
+                  value: prefState.alwaysShowFilterSidebar,
+                  onChanged: (value) =>
+                      viewModel.onAlwaysShowSidebarChanged(context, value),
+                  secondary: Icon(Icons.chrome_reader_mode),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+                 */
+                FutureBuilder(
+                  future: viewModel.authenticationSupported,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData && snapshot.data == true) {
+                      return SwitchListTile(
+                        title: Text(AppLocalization.of(context)
+                            .biometricAuthentication),
+                        value: prefState.requireAuthentication,
+                        onChanged: (value) => viewModel
+                            .onRequireAuthenticationChanged(context, value),
+                        secondary: Icon(prefState.requireAuthentication
+                            ? MdiIcons.lock
+                            : MdiIcons.lockOpen),
+                        activeColor: Theme.of(context).accentColor,
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  },
+                ),
+                /*
+                SwitchListTile(
+                  title: Text(localization.fullWidthEditor),
+                  value: prefState.fullWidthEditor,
+                  onChanged: (value) =>
+                      viewModel.onFullWidthEditorChanged(context, value),
+                  secondary: Icon(getEntityIcon(EntityType.invoice)),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+                 */
+              ],
+            ),
+            FormCard(
+              children: <Widget>[
+                Builder(builder: (BuildContext context) {
+                  return ListTile(
+                    leading: Icon(Icons.refresh),
+                    title: Text(AppLocalization.of(context).refreshData),
+                    onTap: () {
+                      viewModel.onRefreshTap(context);
                     },
-                  ),
-                  /*
-                  SwitchListTile(
-                    title: Text(localization.fullWidthEditor),
-                    value: prefState.fullWidthEditor,
-                    onChanged: (value) =>
-                        viewModel.onFullWidthEditorChanged(context, value),
-                    secondary: Icon(getEntityIcon(EntityType.invoice)),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
-                   */
-                ],
-              ),
-              FormCard(
-                children: <Widget>[
-                  Builder(builder: (BuildContext context) {
-                    return ListTile(
-                      leading: Icon(Icons.refresh),
-                      title: Text(AppLocalization.of(context).refreshData),
-                      onTap: () {
-                        viewModel.onRefreshTap(context);
-                      },
-                    );
-                  }),
-                ],
-              )
-            ],
-          ),
+                  );
+                }),
+              ],
+            )
+          ],
         ),
       ),
     );
