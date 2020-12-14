@@ -231,10 +231,10 @@ class __FileMapperState extends State<_FileMapper> {
     for (var i = 0; i < fields.length; i++) {
       final field = fields[i];
       for (var possible in response.available) {
-        final lowerSpace = possible.replaceAll('_', ' ');
+        final spaceCase = possible.replaceAll('_', ' ');
         final translated = localization.lookup(possible);
 
-        if ([possible, lowerSpace, translated].contains(field.toLowerCase())) {
+        if ([possible, spaceCase, translated].contains(field.toLowerCase())) {
           _mapping[i] = possible;
         }
       }
