@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -286,10 +287,13 @@ class __FileMapperState extends State<_FileMapper> {
                     response.fields2.length > i ? response.fields2[i] : null,
                 available: response.available,
                 mappedTo: _mapping[i] ?? '',
+                mapping: _mapping,
                 onMappedToChanged: (String value) {
                   print('## onMappedToChanged: $value');
+
                   setState(() {
                     _mapping[i] = value;
+                    widget.formKey.currentState.validate();
                   });
                 },
               ),
@@ -334,6 +338,7 @@ class _FieldMapper extends StatelessWidget {
     @required this.mappedTo,
     @required this.available,
     @required this.onMappedToChanged,
+    @required this.mapping,
   });
 
   final String field1;
@@ -341,6 +346,7 @@ class _FieldMapper extends StatelessWidget {
   final BuiltList<String> available;
   final String mappedTo;
   final Function onMappedToChanged;
+  final Map<int, String> mapping;
 
   @override
   Widget build(BuildContext context) {
@@ -354,7 +360,10 @@ class _FieldMapper extends StatelessWidget {
             child: DropdownButtonFormField<String>(
           isExpanded: true,
           value: available.contains(mappedTo) ? mappedTo : null,
-          validator: (value) => 'test',
+          validator: (value) => (value ?? '').isNotEmpty &&
+                  mapping.values.where((element) => element == value).length > 1
+              ? 'ERROR'
+              : null,
           onChanged: onMappedToChanged,
           items: [
             DropdownMenuItem<String>(
