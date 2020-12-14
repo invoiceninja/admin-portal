@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/import_model.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -33,9 +36,7 @@ class _ImportExportState extends State<ImportExport> {
       GlobalKey<FormState>(debugLabel: '_importExport');
   FocusScopeNode _focusNode;
   bool autoValidate = false;
-  String _fileHash;
-  final _fields1 = <String>[];
-  final _fields2 = <String>[];
+  PreImportResponse _response;
 
   @override
   void initState() {
@@ -65,38 +66,16 @@ class _ImportExportState extends State<ImportExport> {
         focusNode: _focusNode,
         child: ListView(
           children: [
-            if (_fileHash == null)
+            if (_response == null)
               _FileImport(
-                onUploaded: (response) {
-                  setState(() {
-                    final Map<String, dynamic> data = response['data'];
-
-                    _fileHash = data['hash'];
-                    final List<dynamic> fields = data['headers'];
-
-                    for (var i = 0; i < fields.length; i++) {
-                      final list = fields[i] as List<dynamic>;
-                      for (var field in list) {
-                        if (i == 0) {
-                          _fields1.add(field);
-                        } else {
-                          _fields2.add(field);
-                        }
-                      }
-                    }
-                  });
-                },
+                onUploaded: (response) => setState(() => _response = response),
               )
             else
               _FileMapper(
-                key: ValueKey(_fileHash),
-                fields1: _fields1,
-                fields2: _fields2,
-                onCancelPressed: () {
-                  setState(() {
-                    _fileHash = null;
-                  });
-                },
+                key: ValueKey(_response.hash),
+                fields1: _response.fields1,
+                fields2: _response.fields2,
+                onCancelPressed: () => setState(() => _response = null),
               ),
           ],
         ),
@@ -108,7 +87,7 @@ class _ImportExportState extends State<ImportExport> {
 class _FileImport extends StatefulWidget {
   const _FileImport({@required this.onUploaded});
 
-  final Function(Map<String, dynamic>) onUploaded;
+  final Function(PreImportResponse) onUploaded;
 
   @override
   _FileImportState createState() => _FileImportState();
@@ -120,9 +99,13 @@ class _FileImportState extends State<_FileImport> {
 
   void uploadFile() {
     const dataStr =
-        '{"data":{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}}';
+        '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
 
-    widget.onUploaded(json.decode(dataStr));
+    final response = serializers.deserializeWith(
+        PreImportResponse.serializer, json.decode(dataStr));
+
+    print('## respnse: $response');
+    widget.onUploaded(response);
 
     return;
 
@@ -227,8 +210,8 @@ class _FileMapper extends StatefulWidget {
     @required this.onCancelPressed,
   }) : super(key: key);
 
-  final List<String> fields1;
-  final List<String> fields2;
+  final BuiltList<String> fields1;
+  final BuiltList<String> fields2;
   final Function onCancelPressed;
 
   @override
@@ -253,7 +236,8 @@ class __FileMapperState extends State<_FileMapper> {
               activeColor: Theme.of(context).accentColor,
               title: Text(AppLocalization.of(context).firstRowHeaders),
               value: _useFirstRowAsHeaders,
-              onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),
+              onChanged: (value) =>
+                  setState(() => _useFirstRowAsHeaders = value),
             ),
             SizedBox(height: 20),
             for (var i = 0; i < widget.fields1.length; i++)
