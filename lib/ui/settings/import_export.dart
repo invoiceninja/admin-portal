@@ -73,6 +73,7 @@ class _ImportExportState extends State<ImportExport> {
             else
               _FileMapper(
                 key: ValueKey(_response.hash),
+                formKey: _formKey,
                 response: _response,
                 onCancelPressed: () => setState(() => _response = null),
               ),
@@ -207,10 +208,12 @@ class _FileMapper extends StatefulWidget {
     Key key,
     @required this.response,
     @required this.onCancelPressed,
+    @required this.formKey,
   }) : super(key: key);
 
   final PreImportResponse response;
   final Function onCancelPressed;
+  final GlobalKey<FormState> formKey;
 
   @override
   __FileMapperState createState() => __FileMapperState();
@@ -308,7 +311,10 @@ class __FileMapperState extends State<_FileMapper> {
                         borderRadius: BorderRadius.circular(5)),
                     child: Text(localization.import),
                     onPressed: () {
-                      //
+                      final bool isValid =
+                          widget.formKey.currentState.validate();
+
+                      print('## isValid: $isValid');
                     },
                   ),
                 ),
@@ -345,9 +351,10 @@ class _FieldMapper extends StatelessWidget {
         Expanded(child: Text(field1)),
         Expanded(child: Text(field2 ?? '')),
         Expanded(
-            child: DropdownButton<String>(
+            child: DropdownButtonFormField<String>(
           isExpanded: true,
           value: available.contains(mappedTo) ? mappedTo : null,
+          validator: (value) => 'test',
           onChanged: onMappedToChanged,
           items: [
             DropdownMenuItem<String>(
@@ -355,10 +362,12 @@ class _FieldMapper extends StatelessWidget {
               value: null,
             ),
             ...available
-                .map((field) => DropdownMenuItem<String>(
-                      child: Text(localization.lookup(field)),
-                      value: field,
-                    ))
+                .map(
+                  (field) => DropdownMenuItem<String>(
+                    child: Text(localization.lookup(field)),
+                    value: field,
+                  ),
+                )
                 .toList(),
           ],
         )),
