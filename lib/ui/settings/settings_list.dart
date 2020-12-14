@@ -344,6 +344,12 @@ class SettingsSearch extends StatelessWidget {
         'mark_paid',
       ],
     ],
+    kSettingsImportExport: [
+      [
+        'import',
+        'export',
+      ],
+    ],
     kSettingsAccountManagement: [
       [
         'api_tokens',
