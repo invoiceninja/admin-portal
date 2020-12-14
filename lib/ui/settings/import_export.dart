@@ -97,9 +97,9 @@ class _FileImportState extends State<_FileImport> {
   String _fileName;
 
   void uploadFile() {
-
     //const dataStr = '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
-    const dataStr = '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","available":["invoice_number","user"],"headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
+    const dataStr =
+        '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","available":["client","invoice_number","user"],"headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
 
     final response = serializers.deserializeWith(
         PreImportResponse.serializer, json.decode(dataStr));
@@ -221,6 +221,22 @@ class __FileMapperState extends State<_FileMapper> {
   final _mapping = <int, String>{};
 
   @override
+  void initState() {
+    super.initState();
+
+    final response = widget.response;
+    final fields = response.fields1;
+    for (var i = 0; i < fields.length; i++) {
+      final field = fields[i];
+      for (var possible in response.available) {
+        if (field.toLowerCase() == possible.toLowerCase()) {
+          _mapping[i] = possible;
+        }
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final response = widget.response;
@@ -242,7 +258,8 @@ class __FileMapperState extends State<_FileMapper> {
             for (var i = 0; i < response.fields1.length; i++)
               _FieldMapper(
                 field1: response.fields1[i],
-                field2: response.fields2.length > i ? response.fields2[i] : null,
+                field2:
+                    response.fields2.length > i ? response.fields2[i] : null,
                 available: response.available,
                 mappedTo: _mapping[i] ?? '',
                 onMappedToChanged: (String value) {
