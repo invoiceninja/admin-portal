@@ -125,7 +125,7 @@ abstract class DocumentEntity extends Object
       ? '${round(size / 1000000, 1).toInt()} MB'
       : '${round(size / 1000, 0).toInt()} KB';
 
-  String get downloadUrl => '/documents/$hash/download';
+  String get downloadUrl => '/documents/$hash';
 
   int compareTo(DocumentEntity document,
       [String sortField, bool sortAscending = true]) {
