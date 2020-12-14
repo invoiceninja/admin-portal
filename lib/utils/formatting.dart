@@ -54,6 +54,12 @@ enum FormatNumberType {
   duration,
 }
 
+String formatSize(int size) {
+  return size > 1000000
+      ? '${round(size / 1000000, 1).toInt()} MB'
+      : '${round(size / 1000, 0).toInt()} KB';
+}
+
 String formatNumber(
   double value,
   BuildContext context, {

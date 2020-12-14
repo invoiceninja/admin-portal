@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -165,11 +166,12 @@ class _FileImportState extends State<_FileImport> {
           ),
         ),
         DecoratedFormField(
-          key: ValueKey(_multipartFile?.filename),
-          enabled: false,
-          label: localization.csvFile,
-          initialValue: _multipartFile?.filename ?? localization.noFileSelected,
-        ),
+            key: ValueKey(_multipartFile?.filename),
+            enabled: false,
+            label: localization.csvFile,
+            initialValue: _multipartFile == null
+                ? localization.noFileSelected
+                : '${_multipartFile.filename} • ${formatSize(_multipartFile.length)}'),
         SizedBox(height: 20),
         if (_isLoading)
           LinearProgressIndicator()

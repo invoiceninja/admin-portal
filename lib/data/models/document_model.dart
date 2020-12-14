@@ -121,9 +121,7 @@ abstract class DocumentEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  String get prettySize => size > 1000000
-      ? '${round(size / 1000000, 1).toInt()} MB'
-      : '${round(size / 1000, 0).toInt()} KB';
+  String get prettySize => formatSize(size);
 
   String get downloadUrl => '/documents/$hash';
 
