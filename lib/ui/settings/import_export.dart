@@ -97,6 +97,7 @@ class _FileImport extends StatefulWidget {
 class _FileImportState extends State<_FileImport> {
   String _filePath;
   String _fileName;
+  bool _isLoading = false;
 
   void uploadFile() {
     if (kIsWeb) {
@@ -104,6 +105,8 @@ class _FileImportState extends State<_FileImport> {
       final state = StoreProvider.of<AppState>(context).state;
       final credentials = state.credentials;
       final url = '${credentials.url}/preimport';
+
+      setState(() => _isLoading = true);
 
       webClient
           .post(
@@ -113,11 +116,13 @@ class _FileImportState extends State<_FileImport> {
         fileIndex: 'file',
       )
           .then((dynamic result) {
+        setState(() => _isLoading = false);
         final response =
             serializers.deserializeWith(PreImportResponse.serializer, result);
 
         widget.onUploaded(response);
       }).catchError((dynamic error) {
+        setState(() => _isLoading = false);
         showErrorDialog(context: context, message: '$error');
       });
     } else {
@@ -165,43 +170,46 @@ class _FileImportState extends State<_FileImport> {
           initialValue: _fileName ?? localization.noFileSelected,
         ),
         SizedBox(height: 20),
-        Row(
-          children: [
-            Expanded(
-              child: OutlineButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: Text(localization.selectFile),
-                onPressed: () async {
-                  final result = await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['csv'],
-                  );
-                  if (result != null) {
-                    setState(() {
-                      final file = result.files.single;
-                      _filePath = kIsWeb
-                          ? 'data:application/octet-stream;charset=utf-16le;base64,' +
-                              base64Encode(file.bytes)
-                          : file.path;
-                      _fileName = file.name;
-                    });
-                  }
-                },
+        if (_isLoading)
+          LinearProgressIndicator()
+        else
+          Row(
+            children: [
+              Expanded(
+                child: OutlineButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Text(localization.selectFile),
+                  onPressed: () async {
+                    final result = await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions: ['csv'],
+                    );
+                    if (result != null) {
+                      setState(() {
+                        final file = result.files.single;
+                        _filePath = kIsWeb
+                            ? 'data:application/octet-stream;charset=utf-16le;base64,' +
+                                base64Encode(file.bytes)
+                            : file.path;
+                        _fileName = file.name;
+                      });
+                    }
+                  },
+                ),
               ),
-            ),
-            SizedBox(width: kTableColumnGap),
-            Expanded(
-              child: OutlineButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: Text(localization.uploadFile),
-                //onPressed: _fileName == null ? null : () => uploadFile(),
-                onPressed: () => uploadFile(),
+              SizedBox(width: kTableColumnGap),
+              Expanded(
+                child: OutlineButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Text(localization.uploadFile),
+                  //onPressed: _fileName == null ? null : () => uploadFile(),
+                  onPressed: () => uploadFile(),
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
       ],
     );
   }
@@ -353,6 +361,9 @@ class _FieldMapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
+    final sorted = available.toList();
+    sorted.sort((a, b) => localization.lookup(a).compareTo(localization.lookup(b)));
+
     return Row(
       children: [
         Expanded(child: Text(field1)),
@@ -371,7 +382,7 @@ class _FieldMapper extends StatelessWidget {
               child: SizedBox(),
               value: null,
             ),
-            ...available
+            ...sorted
                 .map(
                   (field) => DropdownMenuItem<String>(
                     child: Text(localization.lookup(field)),
