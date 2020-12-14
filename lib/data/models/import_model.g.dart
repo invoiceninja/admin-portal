@@ -22,6 +22,11 @@ class _$PreImportResponseSerializer
     final result = <Object>[
       'hash',
       serializers.serialize(object.hash, specifiedType: const FullType(String)),
+      'headers',
+      serializers.serialize(object.headers,
+          specifiedType: const FullType(BuiltList, const [
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
     ];
 
     return result;
@@ -43,6 +48,12 @@ class _$PreImportResponseSerializer
           result.hash = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'headers':
+          result.headers.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(BuiltList, const [const FullType(String)])
+              ])) as BuiltList<Object>);
+          break;
       }
     }
 
@@ -53,14 +64,19 @@ class _$PreImportResponseSerializer
 class _$PreImportResponse extends PreImportResponse {
   @override
   final String hash;
+  @override
+  final BuiltList<BuiltList<String>> headers;
 
   factory _$PreImportResponse(
           [void Function(PreImportResponseBuilder) updates]) =>
       (new PreImportResponseBuilder()..update(updates)).build();
 
-  _$PreImportResponse._({this.hash}) : super._() {
+  _$PreImportResponse._({this.hash, this.headers}) : super._() {
     if (hash == null) {
       throw new BuiltValueNullFieldError('PreImportResponse', 'hash');
+    }
+    if (headers == null) {
+      throw new BuiltValueNullFieldError('PreImportResponse', 'headers');
     }
   }
 
@@ -75,18 +91,22 @@ class _$PreImportResponse extends PreImportResponse {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PreImportResponse && hash == other.hash;
+    return other is PreImportResponse &&
+        hash == other.hash &&
+        headers == other.headers;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, hash.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, hash.hashCode), headers.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PreImportResponse')..add('hash', hash))
+    return (newBuiltValueToStringHelper('PreImportResponse')
+          ..add('hash', hash)
+          ..add('headers', headers))
         .toString();
   }
 }
@@ -99,11 +119,18 @@ class PreImportResponseBuilder
   String get hash => _$this._hash;
   set hash(String hash) => _$this._hash = hash;
 
+  ListBuilder<BuiltList<String>> _headers;
+  ListBuilder<BuiltList<String>> get headers =>
+      _$this._headers ??= new ListBuilder<BuiltList<String>>();
+  set headers(ListBuilder<BuiltList<String>> headers) =>
+      _$this._headers = headers;
+
   PreImportResponseBuilder();
 
   PreImportResponseBuilder get _$this {
     if (_$v != null) {
       _hash = _$v.hash;
+      _headers = _$v.headers?.toBuilder();
       _$v = null;
     }
     return this;
@@ -124,7 +151,21 @@ class PreImportResponseBuilder
 
   @override
   _$PreImportResponse build() {
-    final _$result = _$v ?? new _$PreImportResponse._(hash: hash);
+    _$PreImportResponse _$result;
+    try {
+      _$result = _$v ??
+          new _$PreImportResponse._(hash: hash, headers: headers.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'headers';
+        headers.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'PreImportResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

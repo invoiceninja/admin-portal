@@ -18,7 +18,7 @@ abstract class PreImportResponse
 
   String get hash;
 
-  BuiltList<BuiltList<String>> get headers
+  BuiltList<BuiltList<String>> get headers;
 
   static Serializer<PreImportResponse> get serializer =>
       _$preImportResponseSerializer;

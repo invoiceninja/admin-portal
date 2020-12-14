@@ -121,6 +121,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(PaymentTypeListResponse.serializer)
       ..add(PaymentUIState.serializer)
       ..add(PaymentableEntity.serializer)
+      ..add(PreImportResponse.serializer)
       ..add(PrefState.serializer)
       ..add(ProductEntity.serializer)
       ..add(ProductItemResponse.serializer)
@@ -193,6 +194,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(WebhookListResponse.serializer)
       ..add(WebhookState.serializer)
       ..add(WebhookUIState.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(BuiltList, const [const FullType(String)])
+          ]),
+          () => new ListBuilder<BuiltList<String>>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ClientEntity)]),
           () => new ListBuilder<ClientEntity>())
