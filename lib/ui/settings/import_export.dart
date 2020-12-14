@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -73,8 +72,7 @@ class _ImportExportState extends State<ImportExport> {
             else
               _FileMapper(
                 key: ValueKey(_response.hash),
-                fields1: _response.fields1,
-                fields2: _response.fields2,
+                response: _response,
                 onCancelPressed: () => setState(() => _response = null),
               ),
           ],
@@ -206,13 +204,11 @@ class _FileImportState extends State<_FileImport> {
 class _FileMapper extends StatefulWidget {
   const _FileMapper({
     Key key,
-    @required this.fields1,
-    @required this.fields2,
+    @required this.response,
     @required this.onCancelPressed,
   }) : super(key: key);
 
-  final BuiltList<String> fields1;
-  final BuiltList<String> fields2;
+  final PreImportResponse response;
   final Function onCancelPressed;
 
   @override
@@ -226,6 +222,7 @@ class __FileMapperState extends State<_FileMapper> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final response = widget.response;
 
     return SingleChildScrollView(
       child: Padding(
@@ -241,10 +238,10 @@ class __FileMapperState extends State<_FileMapper> {
                   setState(() => _useFirstRowAsHeaders = value),
             ),
             SizedBox(height: 20),
-            for (var i = 0; i < widget.fields1.length; i++)
+            for (var i = 0; i < response.fields1.length; i++)
               _FieldMapper(
-                field1: widget.fields1[i],
-                field2: widget.fields2.length > i ? widget.fields2[i] : null,
+                field1: response.fields1[i],
+                field2: response.fields2.length > i ? response.fields2[i] : null,
                 mappedTo: _mapping[i] ?? '',
                 onMappedToChanged: (String value) {
                   print('## onMappedToChanged: $value');
