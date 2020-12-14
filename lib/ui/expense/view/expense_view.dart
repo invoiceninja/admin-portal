@@ -116,8 +116,7 @@ class _ExpenseViewState extends State<ExpenseView>
                           .getImage(source: ImageSource.camera);
                       if (image != null && image.path != null) {
                         final bytes = await image.readAsBytes();
-                        multipartFile = MultipartFile.fromBytes(
-                            'file', bytes,
+                        multipartFile = MultipartFile.fromBytes('file', bytes,
                             filename: image.path.split('/').last);
                       }
                     } else {

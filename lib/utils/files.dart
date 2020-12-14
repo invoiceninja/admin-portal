@@ -1,17 +1,33 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<MultipartFile> pickFile({String fileIndex = 'file'}) async {
+Future<MultipartFile> pickFile(
+    {String fileIndex,
+    FileType fileType,
+    List<String> allowedExtensions}) async {
   if (kIsWeb) {
-    return _pickFile(fileIndex: fileIndex);
+    return _pickFile(
+      fileIndex: fileIndex,
+      fileType: fileType,
+      allowedExtensions: allowedExtensions,
+    );
   } else {
-    final permissionStatus = await [Permission.photos].request();
+    final permissionType = fileType == FileType.image && Platform.isIOS
+        ? Permission.photos
+        : Permission.storage;
+    final permissionStatus = await [permissionType].request();
     final permission =
-        permissionStatus[Permission.photos] ?? PermissionStatus.undetermined;
+        permissionStatus[permissionType] ?? PermissionStatus.undetermined;
     if (permission == PermissionStatus.granted) {
-      return _pickFile(fileIndex: fileIndex);
+      return _pickFile(
+        fileIndex: fileIndex,
+        fileType: fileType,
+        allowedExtensions: allowedExtensions,
+      );
     } else {
       openAppSettings();
       return null;
@@ -19,8 +35,16 @@ Future<MultipartFile> pickFile({String fileIndex = 'file'}) async {
   }
 }
 
-Future<MultipartFile> _pickFile({String fileIndex}) async {
-  final result = await FilePicker.platform.pickFiles();
+Future<MultipartFile> _pickFile(
+    {String fileIndex,
+    FileType fileType,
+    List<String> allowedExtensions}) async {
+  final result = await FilePicker.platform.pickFiles(
+    withData: true,
+    type: fileType ?? FileType.any,
+    allowedExtensions: allowedExtensions ?? [],
+    allowCompression: true,
+  );
   if (result != null) {
     final file = result.files.single;
     return MultipartFile.fromBytes(fileIndex ?? 'file', file.bytes,

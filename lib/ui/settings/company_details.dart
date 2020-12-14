@@ -24,6 +24,7 @@ import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:file_picker/file_picker.dart';
 
 class CompanyDetails extends StatefulWidget {
   const CompanyDetails({
@@ -426,7 +427,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             label: localization.uploadLogo,
                             iconData: Icons.cloud_upload,
                             onPressed: () async {
-                              final multipartFile = await pickFile(fileIndex: 'company_logo');
+                              final multipartFile = await pickFile(
+                                fileIndex: 'company_logo',
+                                fileType: FileType.image,
+                              );
                               if (multipartFile != null) {
                                 viewModel.onUploadLogo(context, multipartFile);
                               }
