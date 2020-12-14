@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ImportExport extends StatefulWidget {
   const ImportExport({
@@ -95,6 +96,7 @@ class _FileImport extends StatefulWidget {
 }
 
 class _FileImportState extends State<_FileImport> {
+  var _entityType = EntityType.client;
   String _filePath;
   String _fileName;
   bool _isLoading = false;
@@ -108,14 +110,15 @@ class _FileImportState extends State<_FileImport> {
 
       setState(() => _isLoading = true);
 
-      webClient
-          .post(
+      webClient.post(
         url,
         credentials.token,
         filePath: _filePath,
         fileIndex: 'file',
-      )
-          .then((dynamic result) {
+        data: {
+          'entity_type': toSnakeCase('$_entityType'),
+        },
+      ).then((dynamic result) {
         setState(() => _isLoading = false);
         final response =
             serializers.deserializeWith(PreImportResponse.serializer, result);
@@ -152,10 +155,8 @@ class _FileImportState extends State<_FileImport> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<EntityType>(
                 isDense: true,
-                value: EntityType.client,
-                onChanged: (dynamic value) {
-                  //
-                },
+                value: _entityType,
+                onChanged: (dynamic value) => _entityType = value,
                 items: [EntityType.client]
                     .map((entityType) => DropdownMenuItem<EntityType>(
                         value: entityType,
@@ -362,7 +363,8 @@ class _FieldMapper extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     final sorted = available.toList();
-    sorted.sort((a, b) => localization.lookup(a).compareTo(localization.lookup(b)));
+    sorted.sort(
+        (a, b) => localization.lookup(a).compareTo(localization.lookup(b)));
 
     return Row(
       children: [
