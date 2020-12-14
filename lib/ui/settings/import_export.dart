@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -181,15 +182,14 @@ class _FileImportState extends State<_FileImport> {
                       borderRadius: BorderRadius.circular(5)),
                   child: Text(localization.selectFile),
                   onPressed: () async {
-                    final result = await FilePicker.platform.pickFiles(
-                      type: FileType.custom,
+                    final multipartFile = await pickFile(
+                      fileType: FileType.custom,
                       allowedExtensions: ['csv'],
                     );
-                    if (result != null) {
+
+                    if (multipartFile != null) {
                       setState(() {
-                        final file = result.files.single;
-                        _multipartFile = MultipartFile.fromBytes('file', file.bytes,
-                            filename: file.name);
+                        _multipartFile = multipartFile;
                       });
                     }
                   },

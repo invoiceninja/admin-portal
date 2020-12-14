@@ -40,11 +40,12 @@ Future<MultipartFile> _pickFile(
     FileType fileType,
     List<String> allowedExtensions}) async {
   final result = await FilePicker.platform.pickFiles(
-    withData: true,
     type: fileType ?? FileType.any,
     allowedExtensions: allowedExtensions ?? [],
     allowCompression: true,
+    withData: true,
   );
+
   if (result != null) {
     final file = result.files.single;
     return MultipartFile.fromBytes(fileIndex ?? 'file', file.bytes,
