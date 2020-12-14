@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/import_model.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -97,37 +98,35 @@ class _FileImportState extends State<_FileImport> {
   String _fileName;
 
   void uploadFile() {
-    /*
-    //const dataStr = '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
-    const dataStr =
-        '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","available":["client","invoice_number","user"],"headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
+    if (kIsWeb) {
+      final webClient = WebClient();
+      final state = StoreProvider.of<AppState>(context).state;
+      final credentials = state.credentials;
+      final url = '${credentials.url}/preimport';
 
-    final response = serializers.deserializeWith(
-        PreImportResponse.serializer, json.decode(dataStr));
+      webClient
+          .post(
+        url,
+        credentials.token,
+        filePath: _filePath,
+        fileIndex: 'file',
+      )
+          .then((dynamic response) {
+        widget.onUploaded(response);
+      }).catchError((dynamic error) {
+        showErrorDialog(context: context, message: '$error');
+      });
+    } else {
+      //const dataStr = '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
+      const dataStr =
+          '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","available":["client","invoice_number","user"],"headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
 
-    print('## respnse: $response');
-    widget.onUploaded(response);
+      final response = serializers.deserializeWith(
+          PreImportResponse.serializer, json.decode(dataStr));
 
-    return;
-    */
-
-    final webClient = WebClient();
-    final state = StoreProvider.of<AppState>(context).state;
-    final credentials = state.credentials;
-    final url = '${credentials.url}/preimport';
-
-    webClient
-        .post(
-      url,
-      credentials.token,
-      filePath: _filePath,
-      fileIndex: 'file',
-    )
-        .then((dynamic response) {
+      print('## respnse: $response');
       widget.onUploaded(response);
-    }).catchError((dynamic error) {
-      showErrorDialog(context: context, message: '$error');
-    });
+    }
   }
 
   @override
