@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -12,12 +13,11 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,7 +31,7 @@ class DocumentGrid extends StatelessWidget {
   });
 
   final List<DocumentEntity> documents;
-  final Function(String) onUploadDocument;
+  final Function(MultipartFile) onUploadDocument;
   final Function(DocumentEntity, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
 
@@ -64,7 +64,11 @@ class DocumentGrid extends StatelessWidget {
                           final image = await ImagePicker()
                               .getImage(source: ImageSource.camera);
                           if (image != null && image.path != null) {
-                            onUploadDocument(image.path);
+                            final bytes = await image.readAsBytes();
+                            final multipartFile = MultipartFile.fromBytes(
+                                'documents[]', bytes,
+                                filename: image.path.split('/').last);
+                            onUploadDocument(multipartFile);
                           }
                         } else {
                           openAppSettings();
@@ -81,29 +85,9 @@ class DocumentGrid extends StatelessWidget {
                     iconData: Icons.insert_drive_file,
                     label: localization.uploadFile,
                     onPressed: () async {
-                      String path;
-                      if (kIsWeb) {
-                        path = await WebUtils.filePicker();
-                      } else {
-                        final permissionStatus =
-                            await [Permission.photos].request();
-                        final permission =
-                            permissionStatus[Permission.photos] ??
-                                PermissionStatus.undetermined;
-
-                        if (permission == PermissionStatus.granted) {
-                          final image = await ImagePicker()
-                              .getImage(source: ImageSource.gallery);
-                          if (image != null) {
-                            path = image.path;
-                          }
-                        } else {
-                          openAppSettings();
-                        }
-                      }
-                      if (path != null) {
-                        onUploadDocument(path);
-                      }
+                      final multipartFile =
+                          await pickFile(fileIndex: 'documents[]');
+                      onUploadDocument(multipartFile);
                     },
                   ),
                 ),

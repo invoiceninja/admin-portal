@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -434,12 +435,12 @@ class ClearClientMultiselect {}
 class SaveClientDocumentRequest implements StartSaving {
   SaveClientDocumentRequest({
     @required this.completer,
-    @required this.filePath,
+    @required this.multipartFile,
     @required this.client,
   });
 
   final Completer completer;
-  final String filePath;
+  final MultipartFile multipartFile;
   final ClientEntity client;
 }
 

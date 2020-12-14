@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -79,10 +80,10 @@ class ProductViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [product], action, autoPop: true),
-      onUploadDocument: (BuildContext context, String filePath) {
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveProductDocumentRequest(
-            filePath: filePath, product: product, completer: completer));
+            multipartFile: multipartFile, product: product, completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {
@@ -113,7 +114,7 @@ class ProductViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, String) onUploadDocument;
+  final Function(BuildContext, MultipartFile) onUploadDocument;
   final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;

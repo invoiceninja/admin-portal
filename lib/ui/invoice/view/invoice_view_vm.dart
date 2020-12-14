@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -66,7 +67,7 @@ class EntityViewVM {
   final Function(BuildContext, [int]) onEditPressed;
   final Function(BuildContext) onPaymentsPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, String) onUploadDocument;
+  final Function(BuildContext, MultipartFile) onUploadDocument;
   final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
   final Function(BuildContext, DocumentEntity) onViewExpense;
 }
@@ -86,7 +87,7 @@ class InvoiceViewVM extends EntityViewVM {
     Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, String) onUploadDocument,
+    Function(BuildContext, MultipartFile) onUploadDocument,
     Function(BuildContext, DocumentEntity, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
   }) : super(
@@ -140,10 +141,10 @@ class InvoiceViewVM extends EntityViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [invoice], action, autoPop: true),
-      onUploadDocument: (BuildContext context, String filePath) {
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
-            filePath: filePath, invoice: invoice, completer: completer));
+            multipartFile: multipartFile, invoice: invoice, completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

@@ -8,8 +8,6 @@ class WebUtils {
 
   static String getHtmlValue(String field) => null;
 
-  static Future<String> filePicker() => null;
-
   static void downloadTextFile(String filename, String data) {}
 
   static void downloadBinaryFile(String filename, Uint8List data) {}

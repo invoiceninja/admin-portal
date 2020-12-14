@@ -144,7 +144,7 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
             ? settingsState.group.id
             : settingsState.client.id;
     settingsRepository
-        .uploadLogo(store.state.credentials, entityId, action.path, action.type)
+        .uploadLogo(store.state.credentials, entityId, action.multipartFile, action.type)
         .then((entity) {
       if (action.type == EntityType.client) {
         store.dispatch(SaveClientSuccess(entity as ClientEntity));

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -111,11 +112,11 @@ class ExpenseViewVM {
         },
         onEntityAction: (BuildContext context, EntityAction action) =>
             handleEntitiesActions(context, [expense], action, autoPop: true),
-        onUploadDocument: (BuildContext context, String filePath) {
+        onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
           final Completer<DocumentEntity> completer =
               Completer<DocumentEntity>();
           store.dispatch(SaveDocumentRequest(
-              filePath: filePath, entity: expense, completer: completer));
+              multipartFile: multipartFile, entity: expense, completer: completer));
           completer.future.then((client) {
             showToast(AppLocalization.of(context).uploadedDocument);
           }).catchError((Object error) {
@@ -143,7 +144,7 @@ class ExpenseViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, String) onUploadDocument;
+  final Function(BuildContext, MultipartFile) onUploadDocument;
   final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;

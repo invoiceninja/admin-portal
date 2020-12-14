@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/import_model.dart';
@@ -97,8 +98,7 @@ class _FileImport extends StatefulWidget {
 
 class _FileImportState extends State<_FileImport> {
   var _entityType = EntityType.client;
-  String _filePath;
-  String _fileName;
+  MultipartFile _multipartFile;
   bool _isLoading = false;
 
   void uploadFile() {
@@ -113,8 +113,7 @@ class _FileImportState extends State<_FileImport> {
       webClient.post(
         url,
         credentials.token,
-        filePath: _filePath,
-        fileIndex: 'file',
+        multipartFile: _multipartFile,
         data: {
           'entity_type': toSnakeCase('$_entityType'),
         },
@@ -165,10 +164,10 @@ class _FileImportState extends State<_FileImport> {
           ),
         ),
         DecoratedFormField(
-          key: ValueKey(_fileName),
+          key: ValueKey(_multipartFile?.filename),
           enabled: false,
           label: localization.csvFile,
-          initialValue: _fileName ?? localization.noFileSelected,
+          initialValue: _multipartFile?.filename ?? localization.noFileSelected,
         ),
         SizedBox(height: 20),
         if (_isLoading)
@@ -189,11 +188,8 @@ class _FileImportState extends State<_FileImport> {
                     if (result != null) {
                       setState(() {
                         final file = result.files.single;
-                        _filePath = kIsWeb
-                            ? 'data:application/octet-stream;charset=utf-16le;base64,' +
-                                base64Encode(file.bytes)
-                            : file.path;
-                        _fileName = file.name;
+                        _multipartFile = MultipartFile.fromBytes('file', file.bytes,
+                            filename: file.name);
                       });
                     }
                   },
@@ -205,7 +201,7 @@ class _FileImportState extends State<_FileImport> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)),
                   child: Text(localization.uploadFile),
-                  onPressed: _fileName == null ? null : () => uploadFile(),
+                  onPressed: _multipartFile == null ? null : () => uploadFile(),
                   //onPressed: () => uploadFile(),
                 ),
               ),

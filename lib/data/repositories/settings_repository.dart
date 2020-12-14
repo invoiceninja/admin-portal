@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -67,7 +68,7 @@ class SettingsRepository {
   }
 
   Future<BaseEntity> uploadLogo(Credentials credentials, String entityId,
-      String path, EntityType type) async {
+      MultipartFile multipartFile, EntityType type) async {
     final route = type == EntityType.company
         ? 'companies'
         : type == EntityType.group
@@ -76,7 +77,7 @@ class SettingsRepository {
     final url = '${credentials.url}/$route/$entityId';
 
     final dynamic response = await webClient.post(url, credentials.token,
-        data: {'_method': 'PUT'}, filePath: path, fileIndex: 'company_logo');
+        data: {'_method': 'PUT'}, multipartFile: multipartFile);
 
     if (type == EntityType.client) {
       return serializers
