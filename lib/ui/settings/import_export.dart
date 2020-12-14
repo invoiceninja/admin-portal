@@ -254,7 +254,7 @@ class __FileMapperState extends State<_FileMapper> {
               onChanged: (value) =>
                   setState(() => _useFirstRowAsHeaders = value),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 25),
             for (var i = 0; i < response.fields1.length; i++)
               _FieldMapper(
                 field1: response.fields1[i],
@@ -269,7 +269,7 @@ class __FileMapperState extends State<_FileMapper> {
                   });
                 },
               ),
-            SizedBox(height: 20),
+            SizedBox(height: 25),
             Row(
               children: [
                 Expanded(
