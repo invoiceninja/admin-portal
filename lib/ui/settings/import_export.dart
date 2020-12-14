@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -242,6 +243,7 @@ class __FileMapperState extends State<_FileMapper> {
               _FieldMapper(
                 field1: response.fields1[i],
                 field2: response.fields2.length > i ? response.fields2[i] : null,
+                available: response.available,
                 mappedTo: _mapping[i] ?? '',
                 onMappedToChanged: (String value) {
                   print('## onMappedToChanged: $value');
@@ -286,17 +288,19 @@ class _FieldMapper extends StatelessWidget {
     @required this.field1,
     @required this.field2,
     @required this.mappedTo,
+    @required this.available,
     @required this.onMappedToChanged,
   });
 
   final String field1;
   final String field2;
+  final BuiltList<String> available;
   final String mappedTo;
   final Function onMappedToChanged;
 
   @override
   Widget build(BuildContext context) {
-    final fields = ['first name', 'last name'];
+    final localization = AppLocalization.of(context);
 
     return Row(
       children: [
@@ -305,16 +309,16 @@ class _FieldMapper extends StatelessWidget {
         Expanded(
             child: DropdownButton<String>(
           isExpanded: true,
-          value: fields.contains(mappedTo) ? mappedTo : null,
+          value: available.contains(mappedTo) ? mappedTo : null,
           onChanged: onMappedToChanged,
           items: [
             DropdownMenuItem<String>(
               child: SizedBox(),
               value: null,
             ),
-            ...fields
+            ...available
                 .map((field) => DropdownMenuItem<String>(
-                      child: Text(field),
+                      child: Text(localization.lookup(field)),
                       value: field,
                     ))
                 .toList(),
