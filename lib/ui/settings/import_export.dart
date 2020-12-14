@@ -112,7 +112,10 @@ class _FileImportState extends State<_FileImport> {
         filePath: _filePath,
         fileIndex: 'file',
       )
-          .then((dynamic response) {
+          .then((dynamic result) {
+        final response =
+            serializers.deserializeWith(PreImportResponse.serializer, result);
+
         widget.onUploaded(response);
       }).catchError((dynamic error) {
         showErrorDialog(context: context, message: '$error');
@@ -289,8 +292,6 @@ class __FileMapperState extends State<_FileMapper> {
                 mappedTo: _mapping[i] ?? '',
                 mapping: _mapping,
                 onMappedToChanged: (String value) {
-                  print('## onMappedToChanged: $value');
-
                   setState(() {
                     _mapping[i] = value;
                     widget.formKey.currentState.validate();

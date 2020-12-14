@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'uses_inclusive_taxes': 'Uses Inclusive Taxes',
+      'is_amount_discount': 'Is Amount Discount',
       'column': 'Column',
       'sample': 'Sample',
       'map_to': 'Map To',
@@ -1561,6 +1563,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_currency_id': 'Invoice Currency ID',
       'tax_name1': 'Tax Name 1',
       'tax_name2': 'Tax Name 2',
+      'tax_name3': 'Tax Name 3',
       'transaction_id': 'Transaction ID',
     },
     // OTHER_LANGUAGES
@@ -5142,6 +5145,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get taxName2 => _localizedValues[localeCode]['tax_name2'] ?? '';
 
+  String get taxName3 => _localizedValues[localeCode]['tax_name3'] ?? '';
+
   String get transactionId =>
       _localizedValues[localeCode]['transaction_id'] ?? '';
 
@@ -5290,6 +5295,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get sample => _localizedValues[localeCode]['sample'] ?? '';
 
   String get mapTo => _localizedValues[localeCode]['map_to'] ?? '';
+
+  String get usesInclusiveTaxes =>
+      _localizedValues[localeCode]['uses_inclusive_taxes'] ?? '';
+
+  String get isAmountDiscount =>
+      _localizedValues[localeCode]['is_amount_discount'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
