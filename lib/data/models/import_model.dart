@@ -20,6 +20,8 @@ abstract class PreImportResponse
 
   BuiltList<BuiltList<String>> get headers;
 
+  BuiltList<String> get available;
+
   static Serializer<PreImportResponse> get serializer =>
       _$preImportResponseSerializer;
 }
