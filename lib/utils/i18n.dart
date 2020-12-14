@@ -15,8 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'column': 'Column',
+      'sample': 'Sample',
+      'map_to': 'Map To',
       'import': 'Import',
-      'first_row_headers': 'Use first row as headers',
+      'first_row_as_column_names': 'Use first row as column names',
       'select_file': 'Select File',
       'no_file_selected': 'No File Selected',
       'csv_file': 'CSV File',
@@ -5279,8 +5282,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get noFileSelected =>
       _localizedValues[localeCode]['no_file_selected'] ?? '';
 
-  String get firstRowHeaders =>
-      _localizedValues[localeCode]['first_row_headers'] ?? '';
+  String get firstRowAsColumnNames =>
+      _localizedValues[localeCode]['first_row_as_column_names'] ?? '';
+
+  String get column => _localizedValues[localeCode]['column'] ?? '';
+
+  String get sample => _localizedValues[localeCode]['sample'] ?? '';
+
+  String get mapTo => _localizedValues[localeCode]['map_to'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
