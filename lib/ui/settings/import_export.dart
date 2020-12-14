@@ -221,15 +221,20 @@ class __FileMapperState extends State<_FileMapper> {
   final _mapping = <int, String>{};
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
+    final localization = AppLocalization.of(context);
     final response = widget.response;
     final fields = response.fields1;
+
     for (var i = 0; i < fields.length; i++) {
       final field = fields[i];
       for (var possible in response.available) {
-        if (field.toLowerCase() == possible.toLowerCase()) {
+        final lowerSpace = possible.replaceAll('_', ' ');
+        final translated = localization.lookup(possible);
+
+        if ([possible, lowerSpace, translated].contains(field.toLowerCase())) {
           _mapping[i] = possible;
         }
       }
