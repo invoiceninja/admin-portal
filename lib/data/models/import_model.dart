@@ -20,12 +20,14 @@ abstract class PreImportResponse
 
   BuiltList<BuiltList<String>> get headers;
 
+  BuiltList<String> get available;
+
   BuiltList<String> get fields1 =>
       headers.isEmpty ? BuiltList<String>() : headers[0];
 
   BuiltList<String> get fields2 =>
       headers.length < 2 ? BuiltList<String>() : headers[1];
-
+  
   static Serializer<PreImportResponse> get serializer =>
       _$preImportResponseSerializer;
 }
