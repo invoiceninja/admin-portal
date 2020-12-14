@@ -376,7 +376,7 @@ class _FieldMapper extends StatelessWidget {
           value: available.contains(mappedTo) ? mappedTo : null,
           validator: (value) => (value ?? '').isNotEmpty &&
                   mapping.values.where((element) => element == value).length > 1
-              ? 'ERROR'
+              ? localization.duplicateColumnMapping
               : null,
           onChanged: onMappedToChanged,
           items: [

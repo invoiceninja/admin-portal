@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'duplicate_column_mapping': 'Duplicate column mapping',
       'uses_inclusive_taxes': 'Uses Inclusive Taxes',
       'is_amount_discount': 'Is Amount Discount',
       'column': 'Column',
@@ -5301,6 +5302,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get isAmountDiscount =>
       _localizedValues[localeCode]['is_amount_discount'] ?? '';
+
+  String get duplicateColumnMapping =>
+      _localizedValues[localeCode]['duplicate_column_mapping'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
