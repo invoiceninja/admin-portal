@@ -114,20 +114,34 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   isValid: _response.dbCheck,
                 ),
                 _HealthListTile(
-                  title: '.env Writable',
-                  isValid: _response.envWritable,
-                ),
-                _HealthListTile(
-                  title: 'Config Cached',
-                  isValid: _response.cacheEnabled ? true : null,
-                ),
-                _HealthListTile(
                   title: 'PHP Version',
                   isValid: _response.phpVersion.isOkay,
                   subtitle: webPhpVersion == cliPhpVersion
                       ? 'v$webPhpVersion'
                       : 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion}',
                 ),
+                if (!_response.execEnabled)
+                  _HealthListTile(
+                    title: 'PHP Exec',
+                    isValid: false,
+                    subtitle: 'Not enabled',
+                  ),
+                if (!_response.openBasedir)
+                  _HealthListTile(
+                    title: 'Open Basedir',
+                    isValid: false,
+                    subtitle: 'Not enabled',
+                  ),
+                if (!_response.envWritable)
+                  _HealthListTile(
+                    title: '.env Writable',
+                    isValid: _response.envWritable,
+                  ),
+                if (!_response.cacheEnabled)
+                  _HealthListTile(
+                    title: 'Config Cached',
+                    isValid: _response.cacheEnabled ? true : null,
+                  ),
                 if (_response.phantomEnabled)
                   _HealthListTile(
                     title: 'Using PhantomJS',

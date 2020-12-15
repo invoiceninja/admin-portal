@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -349,12 +350,12 @@ class ClearProductMultiselect {}
 class SaveProductDocumentRequest implements StartSaving {
   SaveProductDocumentRequest({
     @required this.completer,
-    @required this.filePath,
+    @required this.multipartFile,
     @required this.product,
   });
 
   final Completer completer;
-  final String filePath;
+  final MultipartFile multipartFile;
   final ProductEntity product;
 }
 

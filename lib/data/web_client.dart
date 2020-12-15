@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:path/path.dart';
 import 'package:version/version.dart';
 
 class WebClient {
@@ -55,8 +54,7 @@ class WebClient {
     String url,
     String token, {
     dynamic data,
-    String filePath,
-    String fileIndex,
+    MultipartFile multipartFile,
     String secret,
     String password,
     bool rawResponse = false,
@@ -75,9 +73,8 @@ class WebClient {
     }
     http.Response response;
 
-    if (filePath != null) {
-      response = await _uploadFile(url, token, filePath,
-          fileIndex: fileIndex, data: data);
+    if (multipartFile != null) {
+      response = await _uploadFile(url, token, multipartFile, data: data);
     } else {
       response = await http.Client()
           .post(url,
@@ -100,7 +97,7 @@ class WebClient {
     String url,
     String token, {
     dynamic data,
-    String filePath,
+    MultipartFile multipartFile,
     String fileIndex = 'file',
     String password,
   }) async {
@@ -118,8 +115,8 @@ class WebClient {
     }
     http.Response response;
 
-    if (filePath != null) {
-      response = await _uploadFile(url, token, filePath,
+    if (multipartFile != null) {
+      response = await _uploadFile(url, token, multipartFile,
           fileIndex: fileIndex, data: data, method: 'PUT');
     } else {
       response = await http.Client().put(
@@ -238,27 +235,9 @@ String _parseError(int code, String response) {
   return '$code: $message';
 }
 
-Future<http.Response> _uploadFile(String url, String token, String filePath,
+Future<http.Response> _uploadFile(
+    String url, String token, MultipartFile multipartFile,
     {String method = 'POST', String fileIndex = 'file', dynamic data}) async {
-  dynamic multipartFile;
-
-  if (filePath.startsWith('data:')) {
-    final parts = filePath.split(',');
-    final prefix = parts[0];
-    final startIndex = prefix.indexOf('/') + 1;
-    final endIndex = prefix.indexOf(';');
-    final fileExt = prefix.substring(startIndex, endIndex);
-    final bytes = base64.decode(parts[1]);
-    multipartFile = http.MultipartFile.fromBytes(fileIndex, bytes,
-        filename: 'file.$fileExt');
-  } else {
-    final file = File(filePath);
-    final stream = http.ByteStream(file.openRead().cast());
-    final length = await file.length();
-    multipartFile = http.MultipartFile(fileIndex, stream, length,
-        filename: basename(file.path));
-  }
-
   final request = http.MultipartRequest(method, Uri.parse(url))
     ..fields.addAll(data ?? {})
     ..headers.addAll(_getHeaders(url, token))

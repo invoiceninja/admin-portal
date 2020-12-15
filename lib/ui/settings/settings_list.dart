@@ -118,13 +118,11 @@ class SettingsList extends StatelessWidget {
             viewModel: viewModel,
           ),
          */
-        /*
         if (showAll)
           SettingsListTile(
             section: kSettingsImportExport,
             viewModel: viewModel,
           ),
-         */
         if (showAll && state.userCompany.isOwner)
           SettingsListTile(
             section: kSettingsAccountManagement,
@@ -344,6 +342,12 @@ class SettingsSearch extends StatelessWidget {
       [
         'should_be_invoiced',
         'mark_paid',
+      ],
+    ],
+    kSettingsImportExport: [
+      [
+        'import',
+        'export',
       ],
     ],
     kSettingsAccountManagement: [

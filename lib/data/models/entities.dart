@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'entities.g.dart';
 
@@ -37,7 +38,6 @@ class EntityType extends EnumClass {
   static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
-
   // STARTER: entity type - do not remove comment
   static const EntityType webhook = _$webhook;
   static const EntityType token = _$token;
@@ -153,6 +153,8 @@ class EntityType extends EnumClass {
         return [];
     }
   }
+
+  String get snakeCase => toSnakeCase(toString());
 
   static BuiltSet<EntityType> get values => _$typeValues;
 

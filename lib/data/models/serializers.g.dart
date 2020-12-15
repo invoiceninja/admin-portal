@@ -87,6 +87,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(HealthCheckPHPResponse.serializer)
       ..add(HealthCheckResponse.serializer)
       ..add(HistoryRecord.serializer)
+      ..add(ImportRequest.serializer)
       ..add(IndustryEntity.serializer)
       ..add(IndustryItemResponse.serializer)
       ..add(IndustryListResponse.serializer)
@@ -121,6 +122,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(PaymentTypeListResponse.serializer)
       ..add(PaymentUIState.serializer)
       ..add(PaymentableEntity.serializer)
+      ..add(PreImportResponse.serializer)
       ..add(PrefState.serializer)
       ..add(ProductEntity.serializer)
       ..add(ProductItemResponse.serializer)
@@ -193,6 +195,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(WebhookListResponse.serializer)
       ..add(WebhookState.serializer)
       ..add(WebhookUIState.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(BuiltList, const [const FullType(String)])
+          ]),
+          () => new ListBuilder<BuiltList<String>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ClientEntity)]),
           () => new ListBuilder<ClientEntity>())
@@ -539,7 +549,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(VendorEntity)]), () => new MapBuilder<String, VendorEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(WebhookEntity)]), () => new MapBuilder<String, WebhookEntity>())
-      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>()))
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(int), const FullType(String)]), () => new MapBuilder<int, String>()))
     .build();
 
 // ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

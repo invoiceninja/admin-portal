@@ -34,11 +34,14 @@ class AppButton extends StatelessWidget {
       onPressed: () => onPressed(),
     );
 
-    return width == null
-        ? button
-        : SizedBox(
-            width: width,
-            child: button,
-          );
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: width == null
+          ? button
+          : SizedBox(
+        width: width,
+        child: button,
+      ),
+    );
   }
 }

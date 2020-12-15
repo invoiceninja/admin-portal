@@ -661,8 +661,10 @@ class AppDataTable extends StatelessWidget {
         !rows
             .any((DataRow row) => row.onSelectChanged != null && !row.selected);
 
-    final List<TableColumnWidth> tableColumns = List<TableColumnWidth>(
-        columns.length + (displayCheckboxColumn ? 1 : 0));
+    final List<TableColumnWidth> tableColumns = List<TableColumnWidth>.filled(
+        columns.length + (displayCheckboxColumn ? 1 : 0),
+        const _NullTableColumnWidth());
+
     final List<TableRow> tableRows = List<TableRow>.generate(
       rows.length + 1, // the +1 is for the header row
       (int index) {
@@ -671,7 +673,8 @@ class AppDataTable extends StatelessWidget {
           decoration: index > 0 && rows[index - 1].selected
               ? _kSelectedDecoration
               : _kUnselectedDecoration,
-          children: List<Widget>(tableColumns.length),
+          children:
+              List<Widget>.filled(tableColumns.length, const _NullWidget()),
         );
       },
     );
@@ -979,4 +982,23 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
       ),
     );
   }
+}
+
+class _NullTableColumnWidth extends TableColumnWidth {
+  const _NullTableColumnWidth();
+
+  @override
+  double maxIntrinsicWidth(Iterable<RenderBox> cells, double containerWidth) =>
+      throw UnimplementedError();
+
+  @override
+  double minIntrinsicWidth(Iterable<RenderBox> cells, double containerWidth) =>
+      throw UnimplementedError();
+}
+
+class _NullWidget extends Widget {
+  const _NullWidget();
+
+  @override
+  Element createElement() => throw UnimplementedError();
 }

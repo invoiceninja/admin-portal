@@ -68,6 +68,7 @@ abstract class DocumentEntity extends Object
       width: 0,
       height: 0,
       size: 0,
+      hash: '',
       createdUserId: '',
       assignedUserId: '',
       createdAt: 0,
@@ -81,6 +82,8 @@ abstract class DocumentEntity extends Object
   int get hashCode;
 
   String get name;
+
+  String get hash;
 
   String get type;
 
@@ -118,9 +121,9 @@ abstract class DocumentEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  String get prettySize => size > 1000000
-      ? '${round(size / 1000000, 1).toInt()} MB'
-      : '${round(size / 1000, 0).toInt()} KB';
+  String get prettySize => formatSize(size);
+
+  String get downloadUrl => '/documents/$hash';
 
   int compareTo(DocumentEntity document,
       [String sortField, bool sortAscending = true]) {

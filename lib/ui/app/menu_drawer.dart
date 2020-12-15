@@ -812,7 +812,6 @@ void _showAbout(BuildContext context) async {
   final TextStyle linkStyle =
       themeData.textTheme.bodyText2.copyWith(color: themeData.accentColor);
 
-  final appVersion = 'v${state.appVersion}';
   final appLegalese = '© ${DateTime.now().year} Invoice Ninja';
   final apppIcon = Image.asset(
     'assets/images/logo.png',
@@ -832,7 +831,7 @@ void _showAbout(BuildContext context) async {
                 applicationName: 'Invoice Ninja',
                 applicationIcon: apppIcon,
                 applicationLegalese: appLegalese,
-                applicationVersion: appVersion,
+                applicationVersion: state.appVersion,
               ),
             ),
             FlatButton(
@@ -853,11 +852,11 @@ void _showAbout(BuildContext context) async {
                   'Invoice Ninja',
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                subtitle: Text(appVersion),
+                subtitle: Text(state.appVersion),
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: appVersion));
+                  Clipboard.setData(ClipboardData(text: state.appVersion));
                   showToast(localization.copiedToClipboard
-                      .replaceFirst(':value', appVersion));
+                      .replaceFirst(':value', state.appVersion));
                 },
               ),
               Padding(
@@ -920,41 +919,29 @@ void _showAbout(BuildContext context) async {
                                               CrossAxisAlignment.stretch,
                                           children: [
                                             Text('Backend'),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20),
-                                              child: AppButton(
-                                                label: 'Laravel/PHP',
-                                                iconData: MdiIcons.server,
-                                                onPressed: () =>
-                                                    launch(kSourceCodeBackend),
-                                              ),
+                                            AppButton(
+                                              label: 'Laravel/PHP',
+                                              iconData: MdiIcons.server,
+                                              onPressed: () =>
+                                                  launch(kSourceCodeBackend),
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 30),
                                               child: Text('Frontend'),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20),
-                                              child: AppButton(
-                                                label: 'Flutter/Dart',
-                                                iconData:
-                                                    MdiIcons.desktopClassic,
-                                                onPressed: () =>
-                                                    launch(kSourceCodeFrontend),
-                                              ),
+                                            AppButton(
+                                              label: 'Flutter/Dart',
+                                              iconData:
+                                                  MdiIcons.desktopClassic,
+                                              onPressed: () =>
+                                                  launch(kSourceCodeFrontend),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20),
-                                              child: AppButton(
-                                                label: 'Storefront SDK',
-                                                iconData: MdiIcons.tools,
-                                                onPressed: () => launch(
-                                                    kSourceCodeFrontendSDK),
-                                              ),
+                                            AppButton(
+                                              label: 'Storefront SDK',
+                                              iconData: MdiIcons.tools,
+                                              onPressed: () => launch(
+                                                  kSourceCodeFrontendSDK),
                                             ),
                                           ],
                                         ),
@@ -973,21 +960,15 @@ void _showAbout(BuildContext context) async {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(localization.desktop + ' | BETA'),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: AppButton(
-                                    label: 'macOS',
-                                    iconData: MdiIcons.apple,
-                                    onPressed: () => launch(kMacOSUrl),
-                                  ),
+                                AppButton(
+                                  label: 'macOS',
+                                  iconData: MdiIcons.apple,
+                                  onPressed: () => launch(kMacOSUrl),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: AppButton(
-                                    label: 'Linux',
-                                    iconData: MdiIcons.linux,
-                                    onPressed: () => launch(kLinuxUrl),
-                                  ),
+                                AppButton(
+                                  label: 'Linux',
+                                  iconData: MdiIcons.linux,
+                                  onPressed: () => launch(kLinuxUrl),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20),
@@ -997,21 +978,15 @@ void _showAbout(BuildContext context) async {
                                   padding: const EdgeInsets.only(top: 30),
                                   child: Text(localization.mobile),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: AppButton(
-                                    label: 'iOS',
-                                    iconData: MdiIcons.apple,
-                                    onPressed: () => launch(kAppleStoreUrl),
-                                  ),
+                                AppButton(
+                                  label: 'iOS',
+                                  iconData: MdiIcons.apple,
+                                  onPressed: () => launch(kAppleStoreUrl),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: AppButton(
-                                    label: 'Android',
-                                    iconData: MdiIcons.android,
-                                    onPressed: () => launch(kGoogleStoreUrl),
-                                  ),
+                                AppButton(
+                                  label: 'Android',
+                                  iconData: MdiIcons.android,
+                                  onPressed: () => launch(kGoogleStoreUrl),
                                 ),
                               ],
                             ),
@@ -1021,29 +996,23 @@ void _showAbout(BuildContext context) async {
                 ),
               ),
               //if (!state.isProduction) // TODO enable this check
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: AppButton(
-                  label: localization.healthCheck.toUpperCase(),
-                  iconData: MdiIcons.shieldHalfFull,
-                  color: Colors.green,
-                  onPressed: () {
-                    showDialog<HealthCheckDialog>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return HealthCheckDialog();
-                        });
-                  },
-                ),
+              AppButton(
+                label: localization.healthCheck.toUpperCase(),
+                iconData: MdiIcons.shieldHalfFull,
+                color: Colors.green,
+                onPressed: () {
+                  showDialog<HealthCheckDialog>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return HealthCheckDialog();
+                      });
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: AppButton(
-                  label: localization.forceUpdate.toUpperCase(),
-                  iconData: MdiIcons.update,
-                  color: Colors.orange,
-                  onPressed: () => _showUpdate(context),
-                ),
+              AppButton(
+                label: localization.forceUpdate.toUpperCase(),
+                iconData: MdiIcons.update,
+                color: Colors.orange,
+                onPressed: () => _showUpdate(context),
               ),
             ],
           ),

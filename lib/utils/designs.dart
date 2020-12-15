@@ -13,6 +13,7 @@ import 'dialogs.dart';
 void loadDesign({
   @required BuildContext context,
   @required DesignEntity design,
+  @required bool isDraftMode,
   @required Function(Response) onComplete,
 }) {
   if (Config.DEMO_MODE) {
@@ -23,7 +24,11 @@ void loadDesign({
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
   final credentials = state.credentials;
-  final url = '${credentials.url}/preview';
+  String url = '${credentials.url}/preview';
+
+  if (isDraftMode) {
+    url += '?html=true';
+  }
 
   final request = DesignPreviewRequest(design: design);
   final data =
@@ -32,6 +37,7 @@ void loadDesign({
   webClient
       .post(url, credentials.token, data: json.encode(data), rawResponse: true)
       .then((dynamic response) {
+        print('## respnse: ${(response as Response).body}');
     if ((response as Response).statusCode >= 400) {
       showErrorDialog(
           context: context,

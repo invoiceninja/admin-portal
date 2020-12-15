@@ -432,7 +432,7 @@ Middleware<AppState> _saveDocument(InvoiceRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.invoice, action.filePath)
+              store.state.credentials, action.invoice, action.multipartFile)
           .then((invoice) {
         store.dispatch(SaveInvoiceSuccess(invoice));
         action.completer.complete(null);

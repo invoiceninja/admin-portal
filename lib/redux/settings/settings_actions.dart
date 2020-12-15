@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -52,10 +53,10 @@ class UpdateUserSettings implements PersistUI {
 }
 
 class UploadLogoRequest implements StartSaving {
-  UploadLogoRequest({this.completer, this.path, this.type});
+  UploadLogoRequest({this.completer, this.multipartFile, this.type});
 
   final Completer completer;
-  final String path;
+  final MultipartFile multipartFile;
   final EntityType type;
 }
 

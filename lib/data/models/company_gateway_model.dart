@@ -174,7 +174,8 @@ abstract class CompanyGatewayEntity extends Object
       feesAndLimitsMap[gatewayTypeId] ?? FeesAndLimitsSettings();
 
   @override
-  String get listDisplayName => label;
+  String get listDisplayName =>
+      (gatewayId == kGatewayCustom ? parsedConfig['name'] : label) ?? label;
 
   bool get isCustom => gatewayId == kGatewayCustom;
 

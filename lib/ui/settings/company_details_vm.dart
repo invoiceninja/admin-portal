@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -112,12 +113,12 @@ class CompanyDetailsVM {
             break;
         }
       },
-      onUploadLogo: (context, path) {
+      onUploadLogo: (context, multipartFile) {
         final type = state.uiState.settingsUIState.entityType;
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).uploadedLogo);
         store.dispatch(
-            UploadLogoRequest(completer: completer, path: path, type: type));
+            UploadLogoRequest(completer: completer, multipartFile: multipartFile, type: type));
       },
       onConfigurePaymentTermsPressed: (context) {
         if (state.paymentTermState.list.isEmpty) {
@@ -139,7 +140,7 @@ class CompanyDetailsVM {
   final Function(SettingsEntity) onSettingsChanged;
   final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext, String) onUploadLogo;
+  final Function(BuildContext, MultipartFile) onUploadLogo;
   final Function(BuildContext) onDeleteLogo;
   final Function(BuildContext) onConfigurePaymentTermsPressed;
 }

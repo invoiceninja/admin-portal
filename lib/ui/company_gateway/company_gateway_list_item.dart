@@ -74,7 +74,7 @@ class CompanyGatewayListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  companyGateway.label,
+                  companyGateway.listDisplayName,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

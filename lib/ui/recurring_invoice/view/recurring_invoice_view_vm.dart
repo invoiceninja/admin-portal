@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class RecurringInvoiceViewVM extends EntityViewVM {
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, String) onUploadDocument,
+    Function(BuildContext, MultipartFile) onUploadDocument,
     Function(BuildContext, DocumentEntity, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
   }) : super(
@@ -106,10 +107,10 @@ class RecurringInvoiceViewVM extends EntityViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [invoice], action, autoPop: true),
-      onUploadDocument: (BuildContext context, String filePath) {
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveRecurringInvoiceDocumentRequest(
-            filePath: filePath, invoice: invoice, completer: completer));
+            multipartFile: multipartFile, invoice: invoice, completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

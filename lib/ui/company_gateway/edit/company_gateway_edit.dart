@@ -71,12 +71,13 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final companyGateway = viewModel.companyGateway;
+    final origCompanyGateway = state.companyGatewayState.get(companyGateway.id);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
 
     return EditScaffold(
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
-          : companyGateway.label,
+          : origCompanyGateway.listDisplayName,
       onSavePressed: viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       appBarBottom: TabBar(
@@ -137,12 +138,13 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ListView(
             children: <Widget>[
               FormCard(children: <Widget>[
-                DecoratedFormField(
-                  label: localization.label,
-                  initialValue: companyGateway.label,
-                  onChanged: (String value) => viewModel.onChanged(
-                      companyGateway.rebuild((b) => b..label = value.trim())),
-                ),
+                if (companyGateway.gatewayId != kGatewayCustom)
+                  DecoratedFormField(
+                    label: localization.label,
+                    initialValue: companyGateway.label,
+                    onChanged: (String value) => viewModel.onChanged(
+                        companyGateway.rebuild((b) => b..label = value.trim())),
+                  ),
                 if (state.staticState.gatewayMap[companyGateway.gatewayId]
                         ?.supportsTokenBilling ==
                     true)

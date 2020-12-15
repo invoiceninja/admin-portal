@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -21,11 +20,11 @@ import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:file_picker/file_picker.dart';
 
 class CompanyDetails extends StatefulWidget {
   const CompanyDetails({
@@ -397,8 +396,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(30),
-            child: Column(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView(
+              shrinkWrap: true,
               children: <Widget>[
                 Builder(
                   builder: (context) {
@@ -427,20 +427,12 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             label: localization.uploadLogo,
                             iconData: Icons.cloud_upload,
                             onPressed: () async {
-                              String path;
-                              if (kIsWeb) {
-                                path = await WebUtils.filePicker();
-                              } else {
-                                final image = await ImagePicker().getImage(
-                                    source: kReleaseMode
-                                        ? ImageSource.gallery
-                                        : ImageSource.camera);
-                                if (image != null) {
-                                  path = image.path;
-                                }
-                              }
-                              if (path != null) {
-                                viewModel.onUploadLogo(context, path);
+                              final multipartFile = await pickFile(
+                                fileIndex: 'company_logo',
+                                fileType: FileType.image,
+                              );
+                              if (multipartFile != null) {
+                                viewModel.onUploadLogo(context, multipartFile);
                               }
                             },
                           ),
@@ -451,7 +443,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 ),
                 if ('${settings.companyLogo ?? ''}'.isNotEmpty)
                   Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       child: CachedImage(
                         width: double.infinity,
                         url: settings.companyLogo,

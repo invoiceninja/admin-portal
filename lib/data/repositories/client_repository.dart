@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -80,15 +81,15 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future<ClientEntity> uploadDocument(
-      Credentials credentials, BaseEntity entity, String filePath) async {
+  Future<ClientEntity> uploadDocument(Credentials credentials,
+      BaseEntity entity, MultipartFile multipartFile) async {
     final fields = <String, String>{
       '_method': 'put',
     };
 
     final dynamic response = await webClient.post(
         '${credentials.url}/clients/${entity.id}', credentials.token,
-        data: fields, filePath: filePath, fileIndex: 'documents[]');
+        data: fields, multipartFile: multipartFile);
 
     final ClientItemResponse clientResponse =
         serializers.deserializeWith(ClientItemResponse.serializer, response);

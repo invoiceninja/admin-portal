@@ -31,7 +31,11 @@ class FormCard extends StatelessWidget {
                   vertical: kMobileDialogPadding,
                   horizontal: (MediaQuery.of(context).size.width - 400) / 2,
                 )
-              : const EdgeInsets.all(kMobileDialogPadding)),
+              : const EdgeInsets.only(
+                  left: kMobileDialogPadding,
+                  top: kMobileDialogPadding,
+                  right: kMobileDialogPadding,
+                )),
       child: Card(
         elevation: 4.0,
         child: AppBorder(

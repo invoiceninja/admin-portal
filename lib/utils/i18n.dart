@@ -15,6 +15,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'started_import': 'Successfully started import',
+      'duplicate_column_mapping': 'Duplicate column mapping',
+      'uses_inclusive_taxes': 'Uses Inclusive Taxes',
+      'is_amount_discount': 'Is Amount Discount',
+      'column': 'Column',
+      'sample': 'Sample',
+      'map_to': 'Map To',
+      'import': 'Import',
+      'first_row_as_column_names': 'Use first row as column names',
+      'select_file': 'Select File',
+      'no_file_selected': 'No File Selected',
+      'csv_file': 'CSV File',
+      'import_type': 'Import Type',
+      'draft_mode': 'Draft Mode',
+      'draft_mode_help': 'Preview updates faster but is less accurate',
       'view_licenses': 'View Licenses',
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
@@ -1550,6 +1565,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_currency_id': 'Invoice Currency ID',
       'tax_name1': 'Tax Name 1',
       'tax_name2': 'Tax Name 2',
+      'tax_name3': 'Tax Name 3',
       'transaction_id': 'Transaction ID',
     },
     // OTHER_LANGUAGES
@@ -2622,6 +2638,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get noHistory => _localizedValues[localeCode]['no_history'] ?? '';
 
   String get takePicture => _localizedValues[localeCode]['take_picture'] ?? '';
+
+  String get selectFile => _localizedValues[localeCode]['select_file'] ?? '';
 
   String get uploadFile => _localizedValues[localeCode]['upload_file'] ?? '';
 
@@ -4398,6 +4416,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get type => _localizedValues[localeCode]['type'] ?? '';
 
+  String get importType => _localizedValues[localeCode]['import_type'] ?? '';
+
+  String get import => _localizedValues[localeCode]['import'] ?? '';
+
   String get invoiceAmount =>
       _localizedValues[localeCode]['invoice_amount'] ?? '';
 
@@ -5125,6 +5147,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get taxName2 => _localizedValues[localeCode]['tax_name2'] ?? '';
 
+  String get taxName3 => _localizedValues[localeCode]['tax_name3'] ?? '';
+
   String get transactionId =>
       _localizedValues[localeCode]['transaction_id'] ?? '';
 
@@ -5252,7 +5276,38 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get webhookUrl => _localizedValues[localeCode]['webhook_url'] ?? '';
 
-  String get viewLicenses => _localizedValues[localeCode]['view_licenses'] ?? '';
+  String get viewLicenses =>
+      _localizedValues[localeCode]['view_licenses'] ?? '';
+
+  String get draftMode => _localizedValues[localeCode]['draft_mode'] ?? '';
+
+  String get csvFile => _localizedValues[localeCode]['csv_file'] ?? '';
+
+  String get draftModeHelp =>
+      _localizedValues[localeCode]['draft_mode_help'] ?? '';
+
+  String get noFileSelected =>
+      _localizedValues[localeCode]['no_file_selected'] ?? '';
+
+  String get firstRowAsColumnNames =>
+      _localizedValues[localeCode]['first_row_as_column_names'] ?? '';
+
+  String get column => _localizedValues[localeCode]['column'] ?? '';
+
+  String get sample => _localizedValues[localeCode]['sample'] ?? '';
+
+  String get mapTo => _localizedValues[localeCode]['map_to'] ?? '';
+
+  String get usesInclusiveTaxes =>
+      _localizedValues[localeCode]['uses_inclusive_taxes'] ?? '';
+
+  String get isAmountDiscount =>
+      _localizedValues[localeCode]['is_amount_discount'] ?? '';
+
+  String get duplicateColumnMapping =>
+      _localizedValues[localeCode]['duplicate_column_mapping'] ?? '';
+
+  String get startedImport => _localizedValues[localeCode]['started_import'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
