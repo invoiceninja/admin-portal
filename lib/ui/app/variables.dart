@@ -208,19 +208,25 @@ class _VariableGrid extends StatelessWidget {
         childAspectRatio: 4,
         children: fields
             .map(
-              (field) => FlatButton(
-                child: Text(
-                  '\$$field',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.start,
+              (field) => Tooltip(
+                message: '\$$field',
+                child: FlatButton(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '\$$field',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: '\$$field'));
+                    showToast(AppLocalization.of(context)
+                        .copiedToClipboard
+                        .replaceFirst(':value', '\$$field'));
+                  },
                 ),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: '\$$field'));
-                  showToast(AppLocalization.of(context)
-                      .copiedToClipboard
-                      .replaceFirst(':value', '\$$field'));
-                },
               ),
             )
             .toList(),
