@@ -510,6 +510,12 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(object.invoiceId,
             specifiedType: const FullType(String)));
     }
+    if (object.quoteId != null) {
+      result
+        ..add('quote_id')
+        ..add(serializers.serialize(object.quoteId,
+            specifiedType: const FullType(String)));
+    }
     if (object.paymentId != null) {
       result
         ..add('payment_id')
@@ -607,6 +613,10 @@ class _$ActivityEntitySerializer
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'quote_id':
+          result.quoteId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'payment_id':
@@ -956,6 +966,8 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final String invoiceId;
   @override
+  final String quoteId;
+  @override
   final String paymentId;
   @override
   final String creditId;
@@ -988,6 +1000,7 @@ class _$ActivityEntity extends ActivityEntity {
       this.clientId,
       this.userId,
       this.invoiceId,
+      this.quoteId,
       this.paymentId,
       this.creditId,
       this.updatedAt,
@@ -1035,6 +1048,7 @@ class _$ActivityEntity extends ActivityEntity {
         clientId == other.clientId &&
         userId == other.userId &&
         invoiceId == other.invoiceId &&
+        quoteId == other.quoteId &&
         paymentId == other.paymentId &&
         creditId == other.creditId &&
         updatedAt == other.updatedAt &&
@@ -1068,16 +1082,19 @@ class _$ActivityEntity extends ActivityEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        notes
+                                                                        $jc(
+                                                                            0,
+                                                                            notes
+                                                                                .hashCode),
+                                                                        key
                                                                             .hashCode),
-                                                                    key
+                                                                    activityTypeId
                                                                         .hashCode),
-                                                                activityTypeId
+                                                                clientId
                                                                     .hashCode),
-                                                            clientId.hashCode),
-                                                        userId.hashCode),
-                                                    invoiceId.hashCode),
+                                                            userId.hashCode),
+                                                        invoiceId.hashCode),
+                                                    quoteId.hashCode),
                                                 paymentId.hashCode),
                                             creditId.hashCode),
                                         updatedAt.hashCode),
@@ -1100,6 +1117,7 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('clientId', clientId)
           ..add('userId', userId)
           ..add('invoiceId', invoiceId)
+          ..add('quoteId', quoteId)
           ..add('paymentId', paymentId)
           ..add('creditId', creditId)
           ..add('updatedAt', updatedAt)
@@ -1143,6 +1161,10 @@ class ActivityEntityBuilder
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
+
+  String _quoteId;
+  String get quoteId => _$this._quoteId;
+  set quoteId(String quoteId) => _$this._quoteId = quoteId;
 
   String _paymentId;
   String get paymentId => _$this._paymentId;
@@ -1198,6 +1220,7 @@ class ActivityEntityBuilder
       _clientId = _$v.clientId;
       _userId = _$v.userId;
       _invoiceId = _$v.invoiceId;
+      _quoteId = _$v.quoteId;
       _paymentId = _$v.paymentId;
       _creditId = _$v.creditId;
       _updatedAt = _$v.updatedAt;
@@ -1237,6 +1260,7 @@ class ActivityEntityBuilder
             clientId: clientId,
             userId: userId,
             invoiceId: invoiceId,
+            quoteId: quoteId,
             paymentId: paymentId,
             creditId: creditId,
             updatedAt: updatedAt,
