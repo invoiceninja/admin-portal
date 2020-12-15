@@ -8,10 +8,10 @@ Client app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja)
 Note: the mobile app requires the latest version of the web app.
 
 <p align="center">
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_01.png" alt="View Invoice" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_02.png" alt="List Invoices" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_03.png" alt="Contact Details" width="200"/>
-    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_04.png" alt="Edit Product" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/1.png" alt="Dashboard" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/2.png" alt="View Invoice" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/3.png" alt="List Invoice" width="200"/>
+    <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/4.png" alt="New Invoice" width="200"/>
 </p>
 
 ## Setting up the app
