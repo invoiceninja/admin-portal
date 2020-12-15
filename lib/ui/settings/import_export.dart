@@ -23,7 +23,6 @@ import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ImportExport extends StatefulWidget {
   const ImportExport({
@@ -373,7 +372,7 @@ class __FileMapperState extends State<_FileMapper> {
                             .then((dynamic result) {
                           setState(() => _isLoading = false);
 
-                          //showToast(localization.)
+                          showToast(localization.startedImport);
                         }).catchError((dynamic error) {
                           setState(() => _isLoading = false);
                           showErrorDialog(context: context, message: '$error');
