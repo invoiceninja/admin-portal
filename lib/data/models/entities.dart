@@ -553,6 +553,10 @@ abstract class ActivityEntity
   String get invoiceId;
 
   @nullable
+  @BuiltValueField(wireName: 'quote_id')
+  String get quoteId;
+
+  @nullable
   @BuiltValueField(wireName: 'payment_id')
   String get paymentId;
 
