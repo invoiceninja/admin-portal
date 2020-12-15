@@ -1,1 +1,3 @@
-Invoice Ninja is a invoicing application that makes sending invoices and receiving payments simple and easy. Our latest version is a clean slate rewrite of our popular invoicing application which buids on the existing feature set and adds a wide range of features and enhancements that you have asked for.
+<i>Invoice Ninja</i> is an invoicing application that makes sending invoices and receiving payments simple and easy. Our latest version is a clean slate rewrite of our popular invoicing application which builds on the existing feature set and adds a wide range of features and enhancements that you have asked for.
+
+We're similar to WordPress, you can either run the app on our server (hosted) or on your own server (selfhosted) – the server-part is built with PHP/Laravel; many people use Docker or Cloudron to install a packaged version, but you also can install it manually.

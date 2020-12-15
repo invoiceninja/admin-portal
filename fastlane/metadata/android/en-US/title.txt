@@ -1,1 +1,1 @@
-Invoice Ninja
+Invoice Ninja - The leading open-source invoicing app
