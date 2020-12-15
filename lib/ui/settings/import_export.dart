@@ -142,12 +142,11 @@ class _FileImportState extends State<_FileImport> {
     } else {
       //const dataStr = '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date","Public Notes","Private Notes","surcharge Label","tax tax","crv","ody","Item Product","Item Notes","prod1","prod2","Item Cost","Item Quantity","Item Tax Name","Item Tax Rate","Item Tax Name","Item Tax Rate"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
       const dataStr =
-          '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","available":["client","invoice_number","user"],"headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
+          '{"hash":"GdfMUa4ULdW6fTP4IXIB4LBQlxHZVH64","available":["invoice.client_id","invoice.invoice_number","invoice.user","payment.date"],"headers":[["Client","Email","User","Invoice Number","Amount","Paid","PO Number","Status","Invoice Date","Due Date","Discount","Partial\/Deposit","Partial Due Date"],["Test","g@gmail.com","David Bomba","0001","\$10.00","\$10.00","","Archived","2016-02-01","","","\$0.00","","","","0","0","","","10","Green Men","","","10","1","","0","","0"]]}';
 
       final response = serializers.deserializeWith(
           PreImportResponse.serializer, json.decode(dataStr));
 
-      print('## respnse: $response');
       widget.onUploaded(response);
     }
   }
@@ -213,8 +212,8 @@ class _FileImportState extends State<_FileImport> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)),
                   child: Text(localization.uploadFile),
-                  onPressed: _multipartFile == null ? null : () => uploadFile(),
-                  //onPressed: () => uploadFile(),
+                  //onPressed: _multipartFile == null ? null : () => uploadFile(),
+                  onPressed: () => uploadFile(),
                 ),
               ),
             ],
@@ -411,8 +410,19 @@ class _FieldMapper extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     final sorted = available.toList();
-    sorted.sort(
-        (a, b) => localization.lookup(a).compareTo(localization.lookup(b)));
+    sorted.sort((fieldA, fieldB) {
+      final partsA = fieldA.split('.');
+      final partsB = fieldB.split('.');
+      if (partsA[0] == partsB[0]) {
+        return localization
+            .lookup(partsA[1])
+            .compareTo(localization.lookup(partsB[1]));
+      } else {
+        return localization
+            .lookup(partsA[0])
+            .compareTo(localization.lookup(partsB[0]));
+      }
+    });
 
     return Row(
       children: [
@@ -421,6 +431,16 @@ class _FieldMapper extends StatelessWidget {
         Expanded(
             child: DropdownButtonFormField<String>(
           isExpanded: true,
+          selectedItemBuilder: (BuildContext context) {
+            return [
+              Text(''),
+              ...sorted
+                  .map(
+                    (field) => Text(localization.lookup(field.split('.').last)),
+                  )
+                  .toList(),
+            ];
+          },
           value: available.contains(mappedTo) ? mappedTo : null,
           validator: (value) => (value ?? '').isNotEmpty &&
                   mapping.values.where((element) => element == value).length > 1
@@ -435,7 +455,11 @@ class _FieldMapper extends StatelessWidget {
             ...sorted
                 .map(
                   (field) => DropdownMenuItem<String>(
-                    child: Text(localization.lookup(field)),
+                    child: ListTile(
+                      title: Text(localization.lookup(field.split('.').last)),
+                      subtitle:
+                          Text(localization.lookup(field.split('.').first)),
+                    ),
                     value: field,
                   ),
                 )
