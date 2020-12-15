@@ -370,7 +370,7 @@ class __FileMapperState extends State<_FileMapper> {
                         )
                             .then((dynamic result) {
                           setState(() => _isLoading = false);
-
+                          widget.onCancelPressed();
                           showToast(localization.startedImport);
                         }).catchError((dynamic error) {
                           setState(() => _isLoading = false);
