@@ -8,6 +8,8 @@ part of 'import_model.dart';
 
 Serializer<PreImportResponse> _$preImportResponseSerializer =
     new _$PreImportResponseSerializer();
+Serializer<ImportRequest> _$importRequestSerializer =
+    new _$ImportRequestSerializer();
 
 class _$PreImportResponseSerializer
     implements StructuredSerializer<PreImportResponse> {
@@ -63,6 +65,69 @@ class _$PreImportResponseSerializer
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
               as BuiltList<Object>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ImportRequestSerializer implements StructuredSerializer<ImportRequest> {
+  @override
+  final Iterable<Type> types = const [ImportRequest, _$ImportRequest];
+  @override
+  final String wireName = 'ImportRequest';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, ImportRequest object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'hash',
+      serializers.serialize(object.hash, specifiedType: const FullType(String)),
+      'entity_type',
+      serializers.serialize(object.entityType,
+          specifiedType: const FullType(String)),
+      'skip_header',
+      serializers.serialize(object.skipHeader,
+          specifiedType: const FullType(bool)),
+      'column_map',
+      serializers.serialize(object.columnMap,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(int), const FullType(String)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  ImportRequest deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ImportRequestBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'hash':
+          result.hash = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.entityType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'skip_header':
+          result.skipHeader = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'column_map':
+          result.columnMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(int), const FullType(String)])));
           break;
       }
     }
@@ -192,6 +257,147 @@ class PreImportResponseBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'PreImportResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ImportRequest extends ImportRequest {
+  @override
+  final String hash;
+  @override
+  final String entityType;
+  @override
+  final bool skipHeader;
+  @override
+  final BuiltMap<int, String> columnMap;
+
+  factory _$ImportRequest([void Function(ImportRequestBuilder) updates]) =>
+      (new ImportRequestBuilder()..update(updates)).build();
+
+  _$ImportRequest._(
+      {this.hash, this.entityType, this.skipHeader, this.columnMap})
+      : super._() {
+    if (hash == null) {
+      throw new BuiltValueNullFieldError('ImportRequest', 'hash');
+    }
+    if (entityType == null) {
+      throw new BuiltValueNullFieldError('ImportRequest', 'entityType');
+    }
+    if (skipHeader == null) {
+      throw new BuiltValueNullFieldError('ImportRequest', 'skipHeader');
+    }
+    if (columnMap == null) {
+      throw new BuiltValueNullFieldError('ImportRequest', 'columnMap');
+    }
+  }
+
+  @override
+  ImportRequest rebuild(void Function(ImportRequestBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ImportRequestBuilder toBuilder() => new ImportRequestBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ImportRequest &&
+        hash == other.hash &&
+        entityType == other.entityType &&
+        skipHeader == other.skipHeader &&
+        columnMap == other.columnMap;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(
+        $jc($jc($jc(0, hash.hashCode), entityType.hashCode),
+            skipHeader.hashCode),
+        columnMap.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ImportRequest')
+          ..add('hash', hash)
+          ..add('entityType', entityType)
+          ..add('skipHeader', skipHeader)
+          ..add('columnMap', columnMap))
+        .toString();
+  }
+}
+
+class ImportRequestBuilder
+    implements Builder<ImportRequest, ImportRequestBuilder> {
+  _$ImportRequest _$v;
+
+  String _hash;
+  String get hash => _$this._hash;
+  set hash(String hash) => _$this._hash = hash;
+
+  String _entityType;
+  String get entityType => _$this._entityType;
+  set entityType(String entityType) => _$this._entityType = entityType;
+
+  bool _skipHeader;
+  bool get skipHeader => _$this._skipHeader;
+  set skipHeader(bool skipHeader) => _$this._skipHeader = skipHeader;
+
+  MapBuilder<int, String> _columnMap;
+  MapBuilder<int, String> get columnMap =>
+      _$this._columnMap ??= new MapBuilder<int, String>();
+  set columnMap(MapBuilder<int, String> columnMap) =>
+      _$this._columnMap = columnMap;
+
+  ImportRequestBuilder();
+
+  ImportRequestBuilder get _$this {
+    if (_$v != null) {
+      _hash = _$v.hash;
+      _entityType = _$v.entityType;
+      _skipHeader = _$v.skipHeader;
+      _columnMap = _$v.columnMap?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ImportRequest other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$ImportRequest;
+  }
+
+  @override
+  void update(void Function(ImportRequestBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ImportRequest build() {
+    _$ImportRequest _$result;
+    try {
+      _$result = _$v ??
+          new _$ImportRequest._(
+              hash: hash,
+              entityType: entityType,
+              skipHeader: skipHeader,
+              columnMap: columnMap.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'columnMap';
+        columnMap.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ImportRequest', _$failedField, e.toString());
       }
       rethrow;
     }
