@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'entities.g.dart';
 
@@ -152,6 +153,8 @@ class EntityType extends EnumClass {
         return [];
     }
   }
+
+  String get snakeCase => toSnakeCase(toString());
 
   static BuiltSet<EntityType> get values => _$typeValues;
 

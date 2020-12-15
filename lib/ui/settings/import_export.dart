@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -42,6 +43,7 @@ class _ImportExportState extends State<ImportExport> {
   FocusScopeNode _focusNode;
   bool autoValidate = false;
   PreImportResponse _response;
+  var _entityType = EntityType.client;
 
   @override
   void initState() {
@@ -73,11 +75,15 @@ class _ImportExportState extends State<ImportExport> {
           children: [
             if (_response == null)
               _FileImport(
+                entityType: _entityType,
                 onUploaded: (response) => setState(() => _response = response),
+                onEntityTypeChanged: (entityType) =>
+                    setState(() => _entityType = entityType),
               )
             else
               _FileMapper(
                 key: ValueKey(_response.hash),
+                entityType: _entityType,
                 formKey: _formKey,
                 response: _response,
                 onCancelPressed: () => setState(() => _response = null),
@@ -90,8 +96,14 @@ class _ImportExportState extends State<ImportExport> {
 }
 
 class _FileImport extends StatefulWidget {
-  const _FileImport({@required this.onUploaded});
+  const _FileImport({
+    @required this.entityType,
+    @required this.onEntityTypeChanged,
+    @required this.onUploaded,
+  });
 
+  final EntityType entityType;
+  final Function(EntityType) onEntityTypeChanged;
   final Function(PreImportResponse) onUploaded;
 
   @override
@@ -99,7 +111,6 @@ class _FileImport extends StatefulWidget {
 }
 
 class _FileImportState extends State<_FileImport> {
-  var _entityType = EntityType.client;
   MultipartFile _multipartFile;
   bool _isLoading = false;
 
@@ -117,7 +128,7 @@ class _FileImportState extends State<_FileImport> {
         credentials.token,
         multipartFile: _multipartFile,
         data: {
-          'entity_type': toSnakeCase('$_entityType'),
+          'entity_type': widget.entityType.snakeCase,
         },
       ).then((dynamic result) {
         setState(() => _isLoading = false);
@@ -156,8 +167,8 @@ class _FileImportState extends State<_FileImport> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<EntityType>(
                 isDense: true,
-                value: _entityType,
-                onChanged: (dynamic value) => _entityType = value,
+                value: widget.entityType,
+                onChanged: (dynamic value) => widget.onEntityTypeChanged(value),
                 items: [EntityType.client]
                     .map((entityType) => DropdownMenuItem<EntityType>(
                         value: entityType,
@@ -217,11 +228,13 @@ class _FileImportState extends State<_FileImport> {
 class _FileMapper extends StatefulWidget {
   const _FileMapper({
     Key key,
+    @required this.entityType,
     @required this.response,
     @required this.onCancelPressed,
     @required this.formKey,
   }) : super(key: key);
 
+  final EntityType entityType;
   final PreImportResponse response;
   final Function onCancelPressed;
   final GlobalKey<FormState> formKey;
@@ -233,6 +246,7 @@ class _FileMapper extends StatefulWidget {
 class __FileMapperState extends State<_FileMapper> {
   bool _useFirstRowAsHeaders = true;
   final _mapping = <int, String>{};
+  bool _isLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -306,32 +320,69 @@ class __FileMapperState extends State<_FileMapper> {
                 },
               ),
             SizedBox(height: 25),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlineButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Text(localization.cancel),
-                    onPressed: () => widget.onCancelPressed(),
+            if (_isLoading)
+              LinearProgressIndicator()
+            else
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlineButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(localization.cancel),
+                      onPressed: () => widget.onCancelPressed(),
+                    ),
                   ),
-                ),
-                SizedBox(width: kTableColumnGap),
-                Expanded(
-                  child: OutlineButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Text(localization.import),
-                    onPressed: () {
-                      final bool isValid =
-                          widget.formKey.currentState.validate();
+                  SizedBox(width: kTableColumnGap),
+                  Expanded(
+                    child: OutlineButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Text(localization.import),
+                      onPressed: () {
+                        final bool isValid =
+                            widget.formKey.currentState.validate();
 
-                      print('## isValid: $isValid');
-                    },
+                        if (!isValid) {
+                          return;
+                        }
+
+                        final webClient = WebClient();
+                        final state = StoreProvider.of<AppState>(context).state;
+                        final credentials = state.credentials;
+                        final url = '${credentials.url}/import';
+
+                        setState(() => _isLoading = true);
+
+                        final importRequest = ImportRequest(
+                          hash: widget.response.hash,
+                          skipHeader: _useFirstRowAsHeaders,
+                          columnMap: BuiltMap(_mapping),
+                          entityType: widget.entityType.snakeCase,
+                        );
+
+                        final data = serializers.serializeWith(
+                            ImportRequest.serializer, importRequest);
+
+                        webClient
+                            .post(
+                          url,
+                          credentials.token,
+                          data: json.encode(data),
+                        )
+                            .then((dynamic result) {
+                          setState(() => _isLoading = false);
+
+                          //showToast(localization.)
+                        }).catchError((dynamic error) {
+                          setState(() => _isLoading = false);
+                          showErrorDialog(context: context, message: '$error');
+                        });
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
           ],
         ),
       ),
