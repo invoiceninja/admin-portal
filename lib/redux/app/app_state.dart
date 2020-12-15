@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:built_collection/built_collection.dart';
@@ -186,13 +187,33 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       userCompany?.settings?.accentColor ?? kDefaultAccentColor);
 
   String get appVersion {
-    String version = account?.currentVersion ?? '';
+    String version = 'v';
+
+    version += account?.currentVersion ?? '';
 
     if (version.isNotEmpty) {
       version += '-';
     }
 
-    return version + kClientVersion.split('.').last;
+    if (kIsWeb) {
+      version += 'C';
+    } else {
+      if (Platform.isIOS) {
+        version += 'I';
+      } else if (Platform.isAndroid) {
+        version += 'A';
+      } else if (Platform.isWindows) {
+        version += 'W';
+      } else if (Platform.isLinux) {
+        version += 'L';
+      } else if (Platform.isMacOS) {
+        version += 'M';
+      }
+    }
+
+    version += kClientVersion.split('.').last;
+
+    return version;
   }
 
   List<HistoryRecord> get historyList =>

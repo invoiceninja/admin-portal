@@ -114,7 +114,7 @@ class _FileImportState extends State<_FileImport> {
   bool _isLoading = false;
 
   void uploadFile() {
-    if (kIsWeb) {
+    if (true) {
       final webClient = WebClient();
       final state = StoreProvider.of<AppState>(context).state;
       final credentials = state.credentials;

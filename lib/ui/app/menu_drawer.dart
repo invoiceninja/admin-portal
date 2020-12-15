@@ -812,7 +812,6 @@ void _showAbout(BuildContext context) async {
   final TextStyle linkStyle =
       themeData.textTheme.bodyText2.copyWith(color: themeData.accentColor);
 
-  final appVersion = 'v${state.appVersion}';
   final appLegalese = '© ${DateTime.now().year} Invoice Ninja';
   final apppIcon = Image.asset(
     'assets/images/logo.png',
@@ -832,7 +831,7 @@ void _showAbout(BuildContext context) async {
                 applicationName: 'Invoice Ninja',
                 applicationIcon: apppIcon,
                 applicationLegalese: appLegalese,
-                applicationVersion: appVersion,
+                applicationVersion: state.appVersion,
               ),
             ),
             FlatButton(
@@ -853,11 +852,11 @@ void _showAbout(BuildContext context) async {
                   'Invoice Ninja',
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                subtitle: Text(appVersion),
+                subtitle: Text(state.appVersion),
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: appVersion));
+                  Clipboard.setData(ClipboardData(text: state.appVersion));
                   showToast(localization.copiedToClipboard
-                      .replaceFirst(':value', appVersion));
+                      .replaceFirst(':value', state.appVersion));
                 },
               ),
               Padding(
