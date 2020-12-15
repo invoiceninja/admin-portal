@@ -58,7 +58,7 @@ class _VariablesHelpState extends State<VariablesHelp>
           ],
         ),
         SizedBox(
-          height: 500,
+          height: 400,
           child: TabBarView(
             controller: _controller,
             children: [
@@ -200,7 +200,7 @@ class _VariableGrid extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: GridView.count(
-        physics: NeverScrollableScrollPhysics(),
+        //physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(6),
         shrinkWrap: true,
         primary: true,
@@ -208,25 +208,22 @@ class _VariableGrid extends StatelessWidget {
         childAspectRatio: 4,
         children: fields
             .map(
-              (field) => Tooltip(
-                message: '\$$field',
-                child: FlatButton(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '\$$field',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                    ),
+              (field) => FlatButton(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '\$$field',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.start,
                   ),
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: '\$$field'));
-                    showToast(AppLocalization.of(context)
-                        .copiedToClipboard
-                        .replaceFirst(':value', '\$$field'));
-                  },
                 ),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: '\$$field'));
+                  showToast(AppLocalization.of(context)
+                      .copiedToClipboard
+                      .replaceFirst(':value', '\$$field'));
+                },
               ),
             )
             .toList(),
