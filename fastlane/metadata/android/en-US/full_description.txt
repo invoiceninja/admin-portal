@@ -1,0 +1,1 @@
+Invoice Ninja is a invoicing application that makes sending invoices and receiving payments simple and easy. Our latest version is a clean slate rewrite of our popular invoicing application which buids on the existing feature set and adds a wide range of features and enhancements that you have asked for.
