@@ -436,7 +436,11 @@ class _FieldMapper extends StatelessWidget {
               Text(''),
               ...sorted
                   .map(
-                    (field) => Text(localization.lookup(field.split('.').last)),
+                    (field) => Text(
+                      localization.lookup(
+                        field.split('.').last.replaceAll('_id', ''),
+                      ),
+                    ),
                   )
                   .toList(),
             ];
@@ -456,7 +460,8 @@ class _FieldMapper extends StatelessWidget {
                 .map(
                   (field) => DropdownMenuItem<String>(
                     child: ListTile(
-                      title: Text(localization.lookup(field.split('.').last)),
+                      title: Text(localization
+                          .lookup(field.split('.').last.replaceAll('_id', ''))),
                       subtitle:
                           Text(localization.lookup(field.split('.').first)),
                     ),
