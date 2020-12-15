@@ -920,41 +920,29 @@ void _showAbout(BuildContext context) async {
                                               CrossAxisAlignment.stretch,
                                           children: [
                                             Text('Backend'),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20),
-                                              child: AppButton(
-                                                label: 'Laravel/PHP',
-                                                iconData: MdiIcons.server,
-                                                onPressed: () =>
-                                                    launch(kSourceCodeBackend),
-                                              ),
+                                            AppButton(
+                                              label: 'Laravel/PHP',
+                                              iconData: MdiIcons.server,
+                                              onPressed: () =>
+                                                  launch(kSourceCodeBackend),
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 30),
                                               child: Text('Frontend'),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20),
-                                              child: AppButton(
-                                                label: 'Flutter/Dart',
-                                                iconData:
-                                                    MdiIcons.desktopClassic,
-                                                onPressed: () =>
-                                                    launch(kSourceCodeFrontend),
-                                              ),
+                                            AppButton(
+                                              label: 'Flutter/Dart',
+                                              iconData:
+                                                  MdiIcons.desktopClassic,
+                                              onPressed: () =>
+                                                  launch(kSourceCodeFrontend),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20),
-                                              child: AppButton(
-                                                label: 'Storefront SDK',
-                                                iconData: MdiIcons.tools,
-                                                onPressed: () => launch(
-                                                    kSourceCodeFrontendSDK),
-                                              ),
+                                            AppButton(
+                                              label: 'Storefront SDK',
+                                              iconData: MdiIcons.tools,
+                                              onPressed: () => launch(
+                                                  kSourceCodeFrontendSDK),
                                             ),
                                           ],
                                         ),
@@ -973,21 +961,15 @@ void _showAbout(BuildContext context) async {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(localization.desktop + ' | BETA'),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: AppButton(
-                                    label: 'macOS',
-                                    iconData: MdiIcons.apple,
-                                    onPressed: () => launch(kMacOSUrl),
-                                  ),
+                                AppButton(
+                                  label: 'macOS',
+                                  iconData: MdiIcons.apple,
+                                  onPressed: () => launch(kMacOSUrl),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: AppButton(
-                                    label: 'Linux',
-                                    iconData: MdiIcons.linux,
-                                    onPressed: () => launch(kLinuxUrl),
-                                  ),
+                                AppButton(
+                                  label: 'Linux',
+                                  iconData: MdiIcons.linux,
+                                  onPressed: () => launch(kLinuxUrl),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 20),
@@ -997,21 +979,15 @@ void _showAbout(BuildContext context) async {
                                   padding: const EdgeInsets.only(top: 30),
                                   child: Text(localization.mobile),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: AppButton(
-                                    label: 'iOS',
-                                    iconData: MdiIcons.apple,
-                                    onPressed: () => launch(kAppleStoreUrl),
-                                  ),
+                                AppButton(
+                                  label: 'iOS',
+                                  iconData: MdiIcons.apple,
+                                  onPressed: () => launch(kAppleStoreUrl),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: AppButton(
-                                    label: 'Android',
-                                    iconData: MdiIcons.android,
-                                    onPressed: () => launch(kGoogleStoreUrl),
-                                  ),
+                                AppButton(
+                                  label: 'Android',
+                                  iconData: MdiIcons.android,
+                                  onPressed: () => launch(kGoogleStoreUrl),
                                 ),
                               ],
                             ),
