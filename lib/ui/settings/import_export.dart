@@ -212,8 +212,8 @@ class _FileImportState extends State<_FileImport> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5)),
                   child: Text(localization.uploadFile),
-                  //onPressed: _multipartFile == null ? null : () => uploadFile(),
-                  onPressed: () => uploadFile(),
+                  onPressed: _multipartFile == null ? null : () => uploadFile(),
+                  //onPressed: () => uploadFile(),
                 ),
               ),
             ],
