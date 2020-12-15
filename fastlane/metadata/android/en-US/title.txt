@@ -1,1 +1,1 @@
-Invoice Ninja - The leading open-source invoicing app
+Invoice Ninja - Invoices, Expenses and Tasks built with Laravel and Flutter
