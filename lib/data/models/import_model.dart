@@ -31,3 +31,31 @@ abstract class PreImportResponse
   static Serializer<PreImportResponse> get serializer =>
       _$preImportResponseSerializer;
 }
+
+
+abstract class ImportRequest
+    implements Built<ImportRequest, ImportRequestBuilder> {
+  factory ImportRequest() {
+    return _$ImportRequest._();
+  }
+
+  ImportRequest._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get hash;
+
+  @BuiltValueField(wireName: 'entity_type')
+  String get entityType;
+
+  @BuiltValueField(wireName: 'skip_header')
+  bool get skipHeader;
+
+  @BuiltValueField(wireName: 'column_map')
+  BuiltMap<int, String> get columnMap;
+
+  static Serializer<ImportRequest> get serializer =>
+      _$importRequestSerializer;
+}
