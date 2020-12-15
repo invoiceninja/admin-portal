@@ -454,7 +454,7 @@ class _FieldMapper extends StatelessWidget {
           items: [
             DropdownMenuItem<String>(
               child: SizedBox(),
-              value: null,
+              value: '',
             ),
             ...sorted
                 .map(
