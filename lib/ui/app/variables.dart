@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -197,13 +200,31 @@ class _VariableGrid extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: GridView.count(
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(6),
-          shrinkWrap: true,
-          primary: true,
-          crossAxisCount: 3,
-          childAspectRatio: 3 / 1,
-          children: fields.map((field) => SelectableText('\$$field')).toList()),
+        physics: NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.all(6),
+        shrinkWrap: true,
+        primary: true,
+        crossAxisCount: 2,
+        childAspectRatio: 4,
+        children: fields
+            .map(
+              (field) => FlatButton(
+                child: Text(
+                  '\$$field',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.start,
+                ),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: '\$$field'));
+                  showToast(AppLocalization.of(context)
+                      .copiedToClipboard
+                      .replaceFirst(':value', '\$$field'));
+                },
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }
