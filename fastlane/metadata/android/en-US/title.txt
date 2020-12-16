@@ -1,1 +1,1 @@
-Invoice Ninja - Invoices, Expenses and Tasks built with Laravel and Flutter
+Invoice Ninja - Open-Source Invoices, Expenses and Tasks

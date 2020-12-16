@@ -27,7 +27,7 @@ class ActivityListTile extends StatelessWidget {
     final user = state.userState.map[activity.userId];
     final client = state.clientState.map[activity.clientId];
     final invoice = state.invoiceState.map[activity.invoiceId];
-    final quote = state.quoteState.map[activity.invoiceId];
+    final quote = state.quoteState.map[activity.quoteId];
     final payment = state.paymentState.map[activity.paymentId];
     final task = state.taskState.map[activity.taskId];
     final expense = state.expenseState.map[activity.expenseId];
@@ -76,7 +76,7 @@ class ActivityListTile extends StatelessWidget {
                 case EntityType.quote:
                   viewEntityById(
                     context: context,
-                    entityId: activity.invoiceId,
+                    entityId: activity.quoteId,
                     entityType: EntityType.quote,
                     filterEntity: client,
                   );
