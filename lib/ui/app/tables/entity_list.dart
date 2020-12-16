@@ -162,10 +162,12 @@ class _EntityListState extends State<EntityList> {
                       child: ListView.separated(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         controller: _scrollController,
-                        separatorBuilder: (context, index) => ListDivider(),
+                        separatorBuilder: (context, index) =>
+                            (index == 0 || index == entityList.length)
+                                ? SizedBox()
+                                : ListDivider(),
                         itemCount: entityList.length + 2,
                         itemBuilder: (BuildContext context, index) {
-                          //Widget item = widget.itemBuilder(context, index);
                           if (index == 0 || index == entityList.length + 1) {
                             return Container(
                               color: Theme.of(context).cardColor,
