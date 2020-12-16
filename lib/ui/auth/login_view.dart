@@ -426,23 +426,17 @@ class _LoginState extends State<LoginView> {
                                 newPassword: _createAccount,
                               ),
                             if (_isSelfHosted || viewModel.state.isDemo)
-                              TextFormField(
+                              DecoratedFormField(
                                 controller: _urlController,
                                 autocorrect: false,
-                                autovalidateMode: _autoValidate
-                                    ? AutovalidateMode.always
-                                    : AutovalidateMode.onUserInteraction,
                                 textInputAction: _isFormComplete
                                     ? TextInputAction.done
                                     : TextInputAction.next,
-                                decoration: InputDecoration(
-                                    labelText: localization.url),
+                                label: localization.url,
                                 validator: (val) =>
                                     val.isEmpty || val.trim().isEmpty
                                         ? localization.pleaseEnterYourUrl
                                         : null,
-                                onFieldSubmitted: (String value) =>
-                                    FocusScope.of(context).nextFocus(),
                                 keyboardType: TextInputType.url,
                               ),
                             if (_isSelfHosted)
