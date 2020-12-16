@@ -61,7 +61,7 @@ class AppDropdownButton<T> extends StatelessWidget {
       dropDownButton = InputDecorator(
           decoration: InputDecoration(
             labelText: labelText,
-            contentPadding: EdgeInsets.only(right: 12, top: 12, bottom: 12),
+            contentPadding: EdgeInsets.only(right: 10, top: 12, bottom: 12),
           ),
           isEmpty: isEmpty,
           child: dropDownButton);
