@@ -21,9 +21,9 @@ Note: the mobile app requires the latest version of the web app.
 
 Note: if you don't have an Invoice Ninja backend setup you can test the app with these credentials:
 
-- Email: demo@invoiceninja.com
-- Password: Password0
-- URL: demo.invoiceninja.com
+- Email: `demo@invoiceninja.com`
+- Password: `Password0`
+- URL: `demo.invoiceninja.com`
 
 ## Application Architecture
 
