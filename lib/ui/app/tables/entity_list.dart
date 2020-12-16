@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 import 'package:flutter_redux/flutter_redux.dart';
@@ -51,10 +52,13 @@ class EntityList extends StatefulWidget {
 
 class _EntityListState extends State<EntityList> {
   EntityDataTableSource dataTableSource;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController = ScrollController();
 
     final entityType = widget.entityType;
     final state = widget.state;
@@ -87,6 +91,12 @@ class _EntityListState extends State<EntityList> {
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -128,48 +138,48 @@ class _EntityListState extends State<EntityList> {
 
     final listOrTable = () {
       if (isList) {
-        return Column(children: <Widget>[
-          if (uiState.filterEntityId != null && isMobile(context))
-            ListFilterMessage(
-              filterEntityId: uiState.filterEntityId,
-              filterEntityType: uiState.filterEntityType,
-              onPressed: (_) => viewEntityById(
-                  context: context,
-                  entityId: state.uiState.filterEntityId,
-                  entityType: state.uiState.filterEntityType),
-              onClearPressed: () => store.dispatch(ClearEntityFilter()),
-            ),
-          /*
-          SizedBox(
-            height: 32,
-          ),
-           */
-          Flexible(
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            if (uiState.filterEntityId != null && isMobile(context))
+              ListFilterMessage(
+                filterEntityId: uiState.filterEntityId,
+                filterEntityType: uiState.filterEntityType,
+                onPressed: (_) => viewEntityById(
+                    context: context,
+                    entityId: state.uiState.filterEntityId,
+                    entityType: state.uiState.filterEntityType),
+                onClearPressed: () => store.dispatch(ClearEntityFilter()),
+              ),
+            Flexible(
+              fit: FlexFit.loose,
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
-                  : Material(
-                      color: Theme.of(context).cardColor,
+                  : DraggableScrollbar.semicircle(
+                      backgroundColor: Theme.of(context).backgroundColor,
+                      scrollbarTimeToFade: Duration(seconds: 1),
+                      controller: _scrollController,
                       child: ListView.separated(
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => ListDivider(),
-                          itemCount: entityList.length,
-                          itemBuilder: (BuildContext context, index) {
-                            Widget item = widget.itemBuilder(context, index);
-                            if (index == 0) {
-                              item = Container(
-                                padding: const EdgeInsets.only(top: 32),
-                                color: Theme.of(context).backgroundColor,
-                                child: Container(
-                                  padding: const EdgeInsets.only(top: 16),
-                                  color: Theme.of(context).cardColor,
-                                  child: item,
-                                ),
-                              );
-                            }
-                            return item;
-                          }),
-                    )),
-        ]);
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        controller: _scrollController,
+                        separatorBuilder: (context, index) => ListDivider(),
+                        itemCount: entityList.length + 2,
+                        itemBuilder: (BuildContext context, index) {
+                          //Widget item = widget.itemBuilder(context, index);
+                          if (index == 0 || index == entityList.length + 1) {
+                            return Container(
+                              color: Theme.of(context).cardColor,
+                              height: 25,
+                            );
+                          } else {
+                            return widget.itemBuilder(context, index - 1);
+                          }
+                        },
+                      ),
+                    ),
+            ),
+          ],
+        );
       } else {
         if (widget.tableColumns.isEmpty) {
           return SizedBox();

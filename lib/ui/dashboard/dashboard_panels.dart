@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:charts_common/common.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -398,42 +399,47 @@ class DashboardPanels extends StatelessWidget {
 
     return Stack(
       children: <Widget>[
-        ListView(
-          controller: scrollController,
-          children: <Widget>[
-            SizedBox(
-              height: 74.0,
+        Padding(
+          padding: const EdgeInsets.only(top: 74),
+          child: DraggableScrollbar.semicircle(
+            backgroundColor: Theme.of(context).backgroundColor,
+            scrollbarTimeToFade: Duration(seconds: 1),
+            controller: scrollController,
+            child: ListView(
+              controller: scrollController,
+              children: <Widget>[
+                if (company.isModuleEnabled(EntityType.invoice))
+                  _InvoiceChart(
+                      viewModel: viewModel,
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                          EntityType.invoice, entityIds)),
+                if (company.isModuleEnabled(EntityType.invoice))
+                  _paymentChart(
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                          EntityType.payment, entityIds)),
+                if (company.isModuleEnabled(EntityType.quote))
+                  _quoteChart(
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                          EntityType.quote, entityIds)),
+                if (company.isModuleEnabled(EntityType.task))
+                  _taskChart(
+                      context: context,
+                      onDateSelected: (entityIds) =>
+                          viewModel.onSelectionChanged(EntityType.task, entityIds)),
+                if (company.isModuleEnabled(EntityType.expense))
+                  _expenseChart(
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                          EntityType.expense, entityIds)),
+                SizedBox(
+                  height: 500,
+                )
+              ],
             ),
-            if (company.isModuleEnabled(EntityType.invoice))
-              _InvoiceChart(
-                  viewModel: viewModel,
-                  context: context,
-                  onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                      EntityType.invoice, entityIds)),
-            if (company.isModuleEnabled(EntityType.invoice))
-              _paymentChart(
-                  context: context,
-                  onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                      EntityType.payment, entityIds)),
-            if (company.isModuleEnabled(EntityType.quote))
-              _quoteChart(
-                  context: context,
-                  onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                      EntityType.quote, entityIds)),
-            if (company.isModuleEnabled(EntityType.task))
-              _taskChart(
-                  context: context,
-                  onDateSelected: (entityIds) =>
-                      viewModel.onSelectionChanged(EntityType.task, entityIds)),
-            if (company.isModuleEnabled(EntityType.expense))
-              _expenseChart(
-                  context: context,
-                  onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                      EntityType.expense, entityIds)),
-            SizedBox(
-              height: 500,
-            )
-          ],
+          ),
         ),
         ConstrainedBox(
           child: Column(

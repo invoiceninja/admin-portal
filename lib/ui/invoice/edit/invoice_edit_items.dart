@@ -1,3 +1,4 @@
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -29,6 +30,19 @@ class InvoiceEditItems extends StatefulWidget {
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
   int selectedItemIndex;
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   void _showInvoiceItemEditor(int lineItemIndex, BuildContext context) {
     showDialog<ItemEditDetails>(
@@ -70,15 +84,21 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
       return HelpText(localization.clickPlusToAddItem);
     }
 
-    return ListView(
-      children: [
-        for (int i = 0; i < invoice.lineItems.length; i++)
-          InvoiceItemListTile(
-            invoice: invoice,
-            invoiceItem: invoice.lineItems[i],
-            onTap: () => _showInvoiceItemEditor(i, context),
-          )
-      ],
+    return DraggableScrollbar.semicircle(
+      backgroundColor: Theme.of(context).backgroundColor,
+      scrollbarTimeToFade: Duration(seconds: 1),
+      controller: _scrollController,
+      child: ListView(
+        controller: _scrollController,
+        children: [
+          for (int i = 0; i < invoice.lineItems.length; i++)
+            InvoiceItemListTile(
+              invoice: invoice,
+              invoiceItem: invoice.lineItems[i],
+              onTap: () => _showInvoiceItemEditor(i, context),
+            )
+        ],
+      ),
     );
   }
 }
