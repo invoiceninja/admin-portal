@@ -19,7 +19,11 @@ Note: the mobile app requires the latest version of the web app.
 - Run `cp android/app/build.gradle.dev android/app/build.gradle` to support running the code unsigned.
 - Run `flutter run` while you have a device connected to the computer or an emulator running and now you can run it.
 
-Note: if you don't have an Invoice Ninja backend you can set DEMO_MODE to true in lib/.env.dart to run the app offline. 
+Note: if you don't have an Invoice Ninja backend setup you can test the app with these credentials:
+
+- Email: demo@invoiceninja.com
+- Password: Password0
+- URL: demo.invoiceninja.com
 
 ## Application Architecture
 
