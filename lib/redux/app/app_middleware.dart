@@ -255,7 +255,7 @@ Middleware<AppState> _createLoadState(
         throw 'Unknown page';
       }
     } catch (error) {
-      print('Load state error: $error');
+      print('Error (app_middleware - load state): $error');
 
       if (!kIsWeb && !await NetworkUtils.isOnline()) {
         showMessageDialog(
@@ -290,12 +290,11 @@ Middleware<AppState> _createLoadState(
                   ViewDashboard(navigator: Navigator.of(action.context)));
             });
           } else {
-            print('## View main screen');
             store.dispatch(
                 ViewMainScreen(navigator: Navigator.of(action.context)));
           }
         }).catchError((Object error) {
-          print('Error (app_middleware): $error');
+          print('Error (app_middleware - refresh): $error');
           store.dispatch(UserLogout(action.context));
         });
         store.dispatch(RefreshData(completer: completer));
@@ -439,8 +438,6 @@ Middleware<AppState> _createAccountLoaded() {
       store.dispatch(LoadStaticSuccess(data: response.static));
     }
 
-    print('## userCompanies.length: ${response.userCompanies.length}');
-
     try {
       for (int i = 0; i < response.userCompanies.length; i++) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
@@ -466,17 +463,14 @@ Middleware<AppState> _createAccountLoaded() {
         companyIndex: selectedCompanyIndex, clearSelection: loadedStaticData));
     store.dispatch(UserLoginSuccess());
 
-    print('## Account is loaded');
     if (!store.state.userCompanyState.isLoaded &&
         response.userCompanies.isNotEmpty && // TODO remove this check
         response.userCompanies.length > selectedCompanyIndex &&
         response.userCompanies[selectedCompanyIndex].company.isLarge) {
-      print('## Loading clients..');
       store.dispatch(LoadClients());
     }
 
     if (action.completer != null) {
-      print('## Completing...');
       action.completer.complete(null);
     }
   };
