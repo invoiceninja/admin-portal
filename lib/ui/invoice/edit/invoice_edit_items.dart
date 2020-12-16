@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -275,7 +276,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               onSavePressed: widget.entityViewModel.onSavePressed,
             ),
-            company.settings.hasInvoiceField('quantity')
+            company.settings.doesPdfHaveField(
+                    kPdfFieldsProductColumns, '\$product.quantity')
                 ? DecoratedFormField(
                     label: localization.quantity,
                     controller: _qtyController,
@@ -284,7 +286,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     onSavePressed: widget.entityViewModel.onSavePressed,
                   )
                 : Container(),
-            company.settings.hasInvoiceField('discount')
+            company.settings.doesPdfHaveField(
+                    kPdfFieldsProductColumns, '\$product.discount')
                 ? DecoratedFormField(
                     label: localization.discount,
                     controller: _discountController,

@@ -1039,9 +1039,6 @@ abstract class SettingsEntity
       defaultPaymentTypeId: clientSettings?.defaultPaymentTypeId ??
           groupSettings?.defaultPaymentTypeId ??
           companySettings?.defaultPaymentTypeId,
-      invoiceFields: clientSettings?.invoiceFields ??
-          groupSettings?.invoiceFields ??
-          companySettings?.invoiceFields,
       emailSignature: clientSettings?.emailSignature ??
           groupSettings?.emailSignature ??
           companySettings?.emailSignature,
@@ -1595,10 +1592,6 @@ abstract class SettingsEntity
   String get defaultPaymentTypeId;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_fields')
-  String get invoiceFields;
-
-  @nullable
   @BuiltValueField(wireName: 'pdf_variables')
   BuiltMap<String, BuiltList<String>> get pdfVariables;
 
@@ -1993,6 +1986,12 @@ abstract class SettingsEntity
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
 
+  bool doesPdfHaveField(String section, String field) {
+    final fields = getFieldsForSection(section);
+    print('## FIELDs: $fields');
+    return fields.contains(field);
+  }
+
   List<String> getFieldsForSection(String section) =>
       pdfVariables != null && pdfVariables.containsKey(section)
           ? pdfVariables[section].toList()
@@ -2057,17 +2056,6 @@ abstract class SettingsEntity
         return emailBodyCustom3;
       default:
         return emailBodyInvoice;
-    }
-  }
-
-  bool hasInvoiceField(String field,
-      [EntityType entityType = EntityType.product]) {
-    if (invoiceFields != null && invoiceFields.isNotEmpty) {
-      return invoiceFields.contains('$entityType.$field');
-    } else if (field == 'discount') {
-      return false;
-    } else {
-      return true;
     }
   }
 
