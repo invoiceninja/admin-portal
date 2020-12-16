@@ -1988,7 +1988,6 @@ abstract class SettingsEntity
 
   bool doesPdfHaveField(String section, String field) {
     final fields = getFieldsForSection(section);
-    print('## FIELDs: $fields');
     return fields.contains(field);
   }
 

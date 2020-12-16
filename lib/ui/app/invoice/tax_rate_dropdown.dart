@@ -74,7 +74,6 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
 
     return InputDecorator(
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.only(right: 10, top: 12, bottom: 12),
         labelText: widget.labelText,
       ),
       isEmpty: taxRate == null || taxRate.isEmpty,

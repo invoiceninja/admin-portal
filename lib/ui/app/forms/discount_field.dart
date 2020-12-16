@@ -59,7 +59,6 @@ class DiscountField extends StatelessWidget {
             onChanged: onTypeChanged,
           ),
         ),
-        SizedBox(width: 12),
       ],
     );
   }

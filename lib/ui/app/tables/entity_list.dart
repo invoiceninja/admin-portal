@@ -160,7 +160,7 @@ class _EntityListState extends State<EntityList> {
                       scrollbarTimeToFade: Duration(seconds: 1),
                       controller: _scrollController,
                       child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 25),
                         controller: _scrollController,
                         separatorBuilder: (context, index) =>
                             (index == 0 || index == entityList.length)
