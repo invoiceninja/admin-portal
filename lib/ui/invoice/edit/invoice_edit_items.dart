@@ -276,8 +276,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               onSavePressed: widget.entityViewModel.onSavePressed,
             ),
-            company.settings.doesPdfHaveField(
-                    kPdfFieldsProductColumns, '\$product.quantity')
+            company.enableProductQuantity
                 ? DecoratedFormField(
                     label: localization.quantity,
                     controller: _qtyController,
