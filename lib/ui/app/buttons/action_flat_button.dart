@@ -28,7 +28,7 @@ class ActionFlatButton extends StatelessWidget {
 
     if (isSaving) {
       return SizedBox(
-        width: 88,
+        width: 80,
         child: IconButton(
           onPressed: null,
           icon: SizedBox(
