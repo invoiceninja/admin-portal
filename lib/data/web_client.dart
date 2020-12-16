@@ -183,10 +183,11 @@ void _checkResponse(http.Response response) {
       wrapWidth: 1000);
   debugPrint('response: ${response.statusCode} ${response.body}');
    */
+
   if (!kReleaseMode) {
     printWrapped('${response.statusCode} ${response.body}');
+    print('headers: ${response.headers}');
   }
-  print('headers: ${response.headers}');
 
   final serverVersion = response.headers['x-app-version'];
   final minClientVersion = response.headers['x-minimum-client-version'];
