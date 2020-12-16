@@ -1451,7 +1451,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_51': ':user deleted task :user',
       'activity_52': ':user restored task :user',
       'activity_53': ':user marked invoice :invoice as sent',
-      'activity_54': '',
+      'activity_54': ':user applied payment :payment to invoice :invoice',
       'activity_55': '',
       'activity_56': '',
       'activity_57': 'System failed to email invoice :invoice',
