@@ -142,7 +142,6 @@ abstract class UserEntity extends Object
   @BuiltValueField(wireName: 'company_user')
   UserCompanyEntity get userCompany;
 
-  @nullable
   @BuiltValueField(wireName: 'oauth_provider_id')
   String get oauthProvider;
 

@@ -180,7 +180,6 @@ abstract class VendorEntity extends Object
 
   BuiltList<VendorContactEntity> get contacts;
 
-  @nullable
   BuiltList<DocumentEntity> get documents;
 
   @override

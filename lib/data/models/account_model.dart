@@ -30,7 +30,6 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'default_url')
   String get defaultUrl;
 
-  @nullable
   @BuiltValueField(wireName: 'report_errors')
   bool get reportErrors;
 
