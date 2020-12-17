@@ -158,9 +158,9 @@ abstract class TaskEntity extends Object
       description: '',
       duration: 0,
       rate: 0,
-      invoiceId: null,
-      clientId: null,
-      projectId: null,
+      invoiceId: '',
+      clientId: '',
+      projectId: '',
       timeLog: isRunning
           ? '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]'
           : '[]',
