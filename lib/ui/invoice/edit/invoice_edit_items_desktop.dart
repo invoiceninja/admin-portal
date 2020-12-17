@@ -55,8 +55,18 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       lineItems.add(InvoiceItemEntity());
     }
 
-    int lastIndex = 5;
+    final hasLineItemDiscount = company.settings.doesPdfHaveField(
+        widget.isTasks ? kPdfFieldsTaskColumns : kPdfFieldsProductColumns,
+        widget.isTasks ? '\$task.discount' : '\$product.discount');
+
+    int lastIndex = 4;
     lastIndex += company.numberOfItemTaxRates ?? 0;
+    if (company.enableProductQuantity || widget.isTasks) {
+      lastIndex++;
+    }
+    if (hasLineItemDiscount) {
+      lastIndex++;
+    }
     if (company.hasCustomField(CustomFieldType.product1)) {
       lastIndex++;
     }
@@ -106,9 +116,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             TableHeader(
                 widget.isTasks ? localization.rate : localization.unitCost,
                 isNumeric: true),
-            TableHeader(
-                widget.isTasks ? localization.hours : localization.quantity,
-                isNumeric: true),
+            if (company.enableProductQuantity || widget.isTasks)
+              TableHeader(
+                  widget.isTasks ? localization.hours : localization.quantity,
+                  isNumeric: true),
+            if (hasLineItemDiscount)
+              TableHeader(localization.discount, isNumeric: true),
             TableHeader(localization.lineTotal, isNumeric: true),
             TableHeader(''),
           ]),
@@ -395,24 +408,44 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         onSavePressed: widget.entityViewModel.onSavePressed,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: DecoratedFormField(
-                        key: ValueKey('__line_item_${index}_quantity__'),
-                        textAlign: TextAlign.right,
-                        initialValue: formatNumber(
-                            lineItems[index].quantity, context,
-                            formatNumberType: FormatNumberType.inputAmount,
-                            clientId: invoice.clientId),
-                        onChanged: (value) => viewModel.onChangedInvoiceItem(
-                            lineItems[index].rebuild(
-                                (b) => b..quantity = parseDouble(value)),
-                            index),
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true, signed: true),
-                        onSavePressed: widget.entityViewModel.onSavePressed,
+                    if (company.enableProductQuantity || widget.isTasks)
+                      Padding(
+                        padding: const EdgeInsets.only(right: kTableColumnGap),
+                        child: DecoratedFormField(
+                          key: ValueKey('__line_item_${index}_quantity__'),
+                          textAlign: TextAlign.right,
+                          initialValue: formatNumber(
+                              lineItems[index].quantity, context,
+                              formatNumberType: FormatNumberType.inputAmount,
+                              clientId: invoice.clientId),
+                          onChanged: (value) => viewModel.onChangedInvoiceItem(
+                              lineItems[index].rebuild(
+                                  (b) => b..quantity = parseDouble(value)),
+                              index),
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: true),
+                          onSavePressed: widget.entityViewModel.onSavePressed,
+                        ),
                       ),
-                    ),
+                    if (hasLineItemDiscount)
+                      Padding(
+                        padding: const EdgeInsets.only(right: kTableColumnGap),
+                        child: DecoratedFormField(
+                          key: ValueKey('__line_item_${index}_discount__'),
+                          textAlign: TextAlign.right,
+                          initialValue: formatNumber(
+                              lineItems[index].discount, context,
+                              formatNumberType: FormatNumberType.inputAmount,
+                              clientId: invoice.clientId),
+                          onChanged: (value) => viewModel.onChangedInvoiceItem(
+                              lineItems[index].rebuild(
+                                  (b) => b..discount = parseDouble(value)),
+                              index),
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: true),
+                          onSavePressed: widget.entityViewModel.onSavePressed,
+                        ),
+                      ),
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TextFormField(

@@ -2,10 +2,8 @@
 
 Client app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja) web app.
 
-- [Google Play Store](https://play.google.com/store/apps/details?id=com.invoiceninja.flutter)
-- [Apple App Store](https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8)
-
-Note: the mobile app requires the latest version of the web app.
+- Google Play Store: [v4](https://play.google.com/store/apps/details?id=com.invoiceninja.flutter) | [v5](https://play.google.com/apps/testing/com.invoiceninja.app)
+- Apple App Store: [v4](https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8) | [v5](https://testflight.apple.com/join/MJ6WpaXh)
 
 <p align="center">
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/1.png" alt="Dashboard" width="200"/>
@@ -19,7 +17,11 @@ Note: the mobile app requires the latest version of the web app.
 - Run `cp android/app/build.gradle.dev android/app/build.gradle` to support running the code unsigned.
 - Run `flutter run` while you have a device connected to the computer or an emulator running and now you can run it.
 
-Note: if you don't have an Invoice Ninja backend you can set DEMO_MODE to true in lib/.env.dart to run the app offline. 
+Note: if you don't have an Invoice Ninja backend setup you can test the app with these credentials:
+
+- Email: `demo@invoiceninja.com`
+- Password: `Password0`
+- URL: `demo.invoiceninja.com`
 
 ## Application Architecture
 

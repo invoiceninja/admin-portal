@@ -51,7 +51,6 @@ abstract class CompanyEntity extends Object
       isChanged: false,
       isDeleted: false,
       companyKey: '',
-      plan: '',
       settings: SettingsEntity(),
       sizeId: '',
       industryId: '',
@@ -184,10 +183,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'enable_shop_api')
   bool get enableShopApi;
 
-  // TODO remove this
-  @nullable
-  String get plan;
-
   @BuiltValueField(wireName: 'company_key')
   String get companyKey;
 
@@ -283,13 +278,11 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'auto_start_tasks')
   bool get autoStartTasks;
 
-  @nullable // TODO remove this nullable
   @BuiltValueField(wireName: 'show_tasks_table')
   bool get showTasksTable;
 
   SettingsEntity get settings;
 
-  @nullable
   @BuiltValueField(wireName: 'enabled_modules')
   int get enabledModules;
 
@@ -498,7 +491,6 @@ abstract class GatewayEntity extends Object
   static Serializer<GatewayEntity> get serializer => _$gatewayEntitySerializer;
 
   @override
-  @nullable
   @BuiltValueField(wireName: 'key')
   String get id;
 
@@ -513,7 +505,6 @@ abstract class GatewayEntity extends Object
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;
 
-  @nullable
   @BuiltValueField(wireName: 'default_gateway_type_id')
   String get defaultGatewayTypeId;
 
@@ -738,10 +729,8 @@ abstract class UserSettingsEntity
   @memoized
   int get hashCode;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'accent_color')
-  @nullable
   String get accentColor;
 
   @BuiltValueField(wireName: 'table_columns')
@@ -773,7 +762,7 @@ abstract class ReportSettingsEntity
     return _$ReportSettingsEntity._(
       sortColumn: sortColumn ?? '',
       sortAscending: sortAscending ?? true,
-      sortTotalsIndex: sortTotalsIndex,
+      sortTotalsIndex: sortTotalsIndex ?? 0,
       sortTotalsAscending: sortTotalsAscending ?? true,
       columns: BuiltList<String>(),
     );
@@ -785,21 +774,15 @@ abstract class ReportSettingsEntity
   @memoized
   int get hashCode;
 
-  @nullable
   @BuiltValueField(wireName: 'sort_column')
   String get sortColumn;
 
-  // TODO remove nullable
-  @nullable
   @BuiltValueField(wireName: 'sort_ascending')
   bool get sortAscending;
 
-  @nullable
   @BuiltValueField(wireName: 'sort_totals_index')
   int get sortTotalsIndex;
 
-  // TODO remove nullable
-  @nullable
   @BuiltValueField(wireName: 'sort_totals_ascending')
   bool get sortTotalsAscending;
 
@@ -1039,9 +1022,6 @@ abstract class SettingsEntity
       defaultPaymentTypeId: clientSettings?.defaultPaymentTypeId ??
           groupSettings?.defaultPaymentTypeId ??
           companySettings?.defaultPaymentTypeId,
-      invoiceFields: clientSettings?.invoiceFields ??
-          groupSettings?.invoiceFields ??
-          companySettings?.invoiceFields,
       emailSignature: clientSettings?.emailSignature ??
           groupSettings?.emailSignature ??
           companySettings?.emailSignature,
@@ -1595,10 +1575,6 @@ abstract class SettingsEntity
   String get defaultPaymentTypeId;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_fields')
-  String get invoiceFields;
-
-  @nullable
   @BuiltValueField(wireName: 'pdf_variables')
   BuiltMap<String, BuiltList<String>> get pdfVariables;
 
@@ -1993,6 +1969,11 @@ abstract class SettingsEntity
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
 
+  bool doesPdfHaveField(String section, String field) {
+    final fields = getFieldsForSection(section);
+    return fields.contains(field);
+  }
+
   List<String> getFieldsForSection(String section) =>
       pdfVariables != null && pdfVariables.containsKey(section)
           ? pdfVariables[section].toList()
@@ -2057,17 +2038,6 @@ abstract class SettingsEntity
         return emailBodyCustom3;
       default:
         return emailBodyInvoice;
-    }
-  }
-
-  bool hasInvoiceField(String field,
-      [EntityType entityType = EntityType.product]) {
-    if (invoiceFields != null && invoiceFields.isNotEmpty) {
-      return invoiceFields.contains('$entityType.$field');
-    } else if (field == 'discount') {
-      return false;
-    } else {
-      return true;
     }
   }
 

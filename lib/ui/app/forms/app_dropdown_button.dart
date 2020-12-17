@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -61,7 +60,6 @@ class AppDropdownButton<T> extends StatelessWidget {
       dropDownButton = InputDecorator(
           decoration: InputDecoration(
             labelText: labelText,
-            contentPadding: EdgeInsets.only(right: 12, top: 12, bottom: 12),
           ),
           isEmpty: isEmpty,
           child: dropDownButton);

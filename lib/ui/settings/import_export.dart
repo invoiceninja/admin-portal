@@ -167,7 +167,11 @@ class _FileImportState extends State<_FileImport> {
                 isDense: true,
                 value: widget.entityType,
                 onChanged: (dynamic value) => widget.onEntityTypeChanged(value),
-                items: [EntityType.client]
+                items: [
+                  EntityType.client,
+                  EntityType.product,
+                  EntityType.invoice,
+                ]
                     .map((entityType) => DropdownMenuItem<EntityType>(
                         value: entityType,
                         child: Text(localization.lookup('$entityType'))))
@@ -256,12 +260,13 @@ class __FileMapperState extends State<_FileMapper> {
 
     for (var i = 0; i < fields.length; i++) {
       final field = fields[i];
-      for (var possible in response.available) {
+      for (var availableField in response.available) {
+        final possible = availableField.split('.').last;
         final spaceCase = possible.replaceAll('_', ' ');
         final translated = localization.lookup(possible);
 
         if ([possible, spaceCase, translated].contains(field.toLowerCase())) {
-          _mapping[i] = possible;
+          _mapping[i] = availableField;
         }
       }
     }

@@ -281,13 +281,10 @@ class _$TemplateEntitySerializer
       'subject',
       serializers.serialize(object.subject,
           specifiedType: const FullType(String)),
+      'body',
+      serializers.serialize(object.body, specifiedType: const FullType(String)),
     ];
-    if (object.body != null) {
-      result
-        ..add('body')
-        ..add(serializers.serialize(object.body,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -841,6 +838,9 @@ class _$TemplateEntity extends TemplateEntity {
   _$TemplateEntity._({this.subject, this.body}) : super._() {
     if (subject == null) {
       throw new BuiltValueNullFieldError('TemplateEntity', 'subject');
+    }
+    if (body == null) {
+      throw new BuiltValueNullFieldError('TemplateEntity', 'body');
     }
   }
 

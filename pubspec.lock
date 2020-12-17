@@ -232,6 +232,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  draggable_scrollbar:
+    dependency: "direct main"
+    description:
+      name: draggable_scrollbar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   extended_image:
     dependency: "direct main"
     description:
@@ -287,7 +294,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.4"
   firebase:
     dependency: transitive
     description:

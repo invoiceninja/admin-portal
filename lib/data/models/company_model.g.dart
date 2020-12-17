@@ -230,9 +230,15 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'auto_start_tasks',
       serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
+      'show_tasks_table',
+      serializers.serialize(object.showTasksTable,
+          specifiedType: const FullType(bool)),
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
+      'enabled_modules',
+      serializers.serialize(object.enabledModules,
+          specifiedType: const FullType(int)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -245,24 +251,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.plan != null) {
-      result
-        ..add('plan')
-        ..add(serializers.serialize(object.plan,
-            specifiedType: const FullType(String)));
-    }
-    if (object.showTasksTable != null) {
-      result
-        ..add('show_tasks_table')
-        ..add(serializers.serialize(object.showTasksTable,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enabledModules != null) {
-      result
-        ..add('enabled_modules')
-        ..add(serializers.serialize(object.enabledModules,
-            specifiedType: const FullType(int)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -653,6 +641,8 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
   Iterable<Object> serialize(Serializers serializers, GatewayEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'key',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'is_offsite',
@@ -664,6 +654,9 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
       'sort_order',
       serializers.serialize(object.sortOrder,
           specifiedType: const FullType(int)),
+      'default_gateway_type_id',
+      serializers.serialize(object.defaultGatewayTypeId,
+          specifiedType: const FullType(String)),
       'options',
       serializers.serialize(object.options,
           specifiedType: const FullType(BuiltMap, const [
@@ -674,18 +667,7 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
       serializers.serialize(object.fields,
           specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('key')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
-    if (object.defaultGatewayTypeId != null) {
-      result
-        ..add('default_gateway_type_id')
-        ..add(serializers.serialize(object.defaultGatewayTypeId,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -1003,35 +985,24 @@ class _$ReportSettingsEntitySerializer
       Serializers serializers, ReportSettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'sort_column',
+      serializers.serialize(object.sortColumn,
+          specifiedType: const FullType(String)),
+      'sort_ascending',
+      serializers.serialize(object.sortAscending,
+          specifiedType: const FullType(bool)),
+      'sort_totals_index',
+      serializers.serialize(object.sortTotalsIndex,
+          specifiedType: const FullType(int)),
+      'sort_totals_ascending',
+      serializers.serialize(object.sortTotalsAscending,
+          specifiedType: const FullType(bool)),
       'columns',
       serializers.serialize(object.columns,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.sortColumn != null) {
-      result
-        ..add('sort_column')
-        ..add(serializers.serialize(object.sortColumn,
-            specifiedType: const FullType(String)));
-    }
-    if (object.sortAscending != null) {
-      result
-        ..add('sort_ascending')
-        ..add(serializers.serialize(object.sortAscending,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.sortTotalsIndex != null) {
-      result
-        ..add('sort_totals_index')
-        ..add(serializers.serialize(object.sortTotalsIndex,
-            specifiedType: const FullType(int)));
-    }
-    if (object.sortTotalsAscending != null) {
-      result
-        ..add('sort_totals_ascending')
-        ..add(serializers.serialize(object.sortTotalsAscending,
-            specifiedType: const FullType(bool)));
-    }
+
     return result;
   }
 
@@ -1548,12 +1519,6 @@ class _$SettingsEntitySerializer
       result
         ..add('payment_type_id')
         ..add(serializers.serialize(object.defaultPaymentTypeId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.invoiceFields != null) {
-      result
-        ..add('invoice_fields')
-        ..add(serializers.serialize(object.invoiceFields,
             specifiedType: const FullType(String)));
     }
     if (object.pdfVariables != null) {
@@ -2459,10 +2424,6 @@ class _$SettingsEntitySerializer
           result.defaultPaymentTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_fields':
-          result.invoiceFields = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'pdf_variables':
           result.pdfVariables.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -2946,8 +2907,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool enableShopApi;
   @override
-  final String plan;
-  @override
   final String companyKey;
   @override
   final String firstDayOfWeek;
@@ -3070,7 +3029,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.isLarge,
       this.isDisabled,
       this.enableShopApi,
-      this.plan,
       this.companyKey,
       this.firstDayOfWeek,
       this.firstMonthOfYear,
@@ -3303,8 +3261,14 @@ class _$CompanyEntity extends CompanyEntity {
     if (autoStartTasks == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'autoStartTasks');
     }
+    if (showTasksTable == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'showTasksTable');
+    }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
+    }
+    if (enabledModules == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'enabledModules');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'createdAt');
@@ -3351,7 +3315,6 @@ class _$CompanyEntity extends CompanyEntity {
         isLarge == other.isLarge &&
         isDisabled == other.isDisabled &&
         enableShopApi == other.enableShopApi &&
-        plan == other.plan &&
         companyKey == other.companyKey &&
         firstDayOfWeek == other.firstDayOfWeek &&
         firstMonthOfYear == other.firstMonthOfYear &&
@@ -3424,7 +3387,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
                                                                                 googleAnalyticsKey.hashCode),
                                                                             markExpensesInvoiceable.hashCode),
                                                                         markExpensesPaid.hashCode),
@@ -3469,7 +3432,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('isLarge', isLarge)
           ..add('isDisabled', isDisabled)
           ..add('enableShopApi', enableShopApi)
-          ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('firstDayOfWeek', firstDayOfWeek)
           ..add('firstMonthOfYear', firstMonthOfYear)
@@ -3899,7 +3861,6 @@ class CompanyEntityBuilder
       _isLarge = _$v.isLarge;
       _isDisabled = _$v.isDisabled;
       _enableShopApi = _$v.enableShopApi;
-      _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _firstDayOfWeek = _$v.firstDayOfWeek;
       _firstMonthOfYear = _$v.firstMonthOfYear;
@@ -3993,7 +3954,6 @@ class CompanyEntityBuilder
               isLarge: isLarge,
               isDisabled: isDisabled,
               enableShopApi: enableShopApi,
-              plan: plan,
               companyKey: companyKey,
               firstDayOfWeek: firstDayOfWeek,
               firstMonthOfYear: firstMonthOfYear,
@@ -4139,6 +4099,9 @@ class _$GatewayEntity extends GatewayEntity {
       this.options,
       this.fields})
       : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'id');
+    }
     if (name == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'name');
     }
@@ -4150,6 +4113,10 @@ class _$GatewayEntity extends GatewayEntity {
     }
     if (sortOrder == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'sortOrder');
+    }
+    if (defaultGatewayTypeId == null) {
+      throw new BuiltValueNullFieldError(
+          'GatewayEntity', 'defaultGatewayTypeId');
     }
     if (options == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'options');
@@ -4792,6 +4759,21 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
       this.sortTotalsAscending,
       this.columns})
       : super._() {
+    if (sortColumn == null) {
+      throw new BuiltValueNullFieldError('ReportSettingsEntity', 'sortColumn');
+    }
+    if (sortAscending == null) {
+      throw new BuiltValueNullFieldError(
+          'ReportSettingsEntity', 'sortAscending');
+    }
+    if (sortTotalsIndex == null) {
+      throw new BuiltValueNullFieldError(
+          'ReportSettingsEntity', 'sortTotalsIndex');
+    }
+    if (sortTotalsAscending == null) {
+      throw new BuiltValueNullFieldError(
+          'ReportSettingsEntity', 'sortTotalsAscending');
+    }
     if (columns == null) {
       throw new BuiltValueNullFieldError('ReportSettingsEntity', 'columns');
     }
@@ -5078,8 +5060,6 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String defaultPaymentTypeId;
   @override
-  final String invoiceFields;
-  @override
   final BuiltMap<String, BuiltList<String>> pdfVariables;
   @override
   final String emailSignature;
@@ -5353,7 +5333,6 @@ class _$SettingsEntity extends SettingsEntity {
       this.defaultTaxName3,
       this.defaultTaxRate3,
       this.defaultPaymentTypeId,
-      this.invoiceFields,
       this.pdfVariables,
       this.emailSignature,
       this.emailSubjectInvoice,
@@ -5541,7 +5520,6 @@ class _$SettingsEntity extends SettingsEntity {
         defaultTaxName3 == other.defaultTaxName3 &&
         defaultTaxRate3 == other.defaultTaxRate3 &&
         defaultPaymentTypeId == other.defaultPaymentTypeId &&
-        invoiceFields == other.invoiceFields &&
         pdfVariables == other.pdfVariables &&
         emailSignature == other.emailSignature &&
         emailSubjectInvoice == other.emailSubjectInvoice &&
@@ -5664,7 +5642,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode), emailBodyReminderEndless.hashCode), clientOnlinePaymentNotification.hashCode), clientManualPaymentNotification.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode), emailBodyReminderEndless.hashCode), clientOnlinePaymentNotification.hashCode), clientManualPaymentNotification.hashCode),
                                                                                 counterNumberApplied.hashCode),
                                                                             emailSendingMethod.hashCode),
                                                                         gmailSendingUserId.hashCode),
@@ -5766,7 +5744,6 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('defaultTaxName3', defaultTaxName3)
           ..add('defaultTaxRate3', defaultTaxRate3)
           ..add('defaultPaymentTypeId', defaultPaymentTypeId)
-          ..add('invoiceFields', invoiceFields)
           ..add('pdfVariables', pdfVariables)
           ..add('emailSignature', emailSignature)
           ..add('emailSubjectInvoice', emailSubjectInvoice)
@@ -6250,11 +6227,6 @@ class SettingsEntityBuilder
   String get defaultPaymentTypeId => _$this._defaultPaymentTypeId;
   set defaultPaymentTypeId(String defaultPaymentTypeId) =>
       _$this._defaultPaymentTypeId = defaultPaymentTypeId;
-
-  String _invoiceFields;
-  String get invoiceFields => _$this._invoiceFields;
-  set invoiceFields(String invoiceFields) =>
-      _$this._invoiceFields = invoiceFields;
 
   MapBuilder<String, BuiltList<String>> _pdfVariables;
   MapBuilder<String, BuiltList<String>> get pdfVariables =>
@@ -6802,7 +6774,6 @@ class SettingsEntityBuilder
       _defaultTaxName3 = _$v.defaultTaxName3;
       _defaultTaxRate3 = _$v.defaultTaxRate3;
       _defaultPaymentTypeId = _$v.defaultPaymentTypeId;
-      _invoiceFields = _$v.invoiceFields;
       _pdfVariables = _$v.pdfVariables?.toBuilder();
       _emailSignature = _$v.emailSignature;
       _emailSubjectInvoice = _$v.emailSubjectInvoice;
@@ -7000,7 +6971,6 @@ class SettingsEntityBuilder
               defaultTaxName3: defaultTaxName3,
               defaultTaxRate3: defaultTaxRate3,
               defaultPaymentTypeId: defaultPaymentTypeId,
-              invoiceFields: invoiceFields,
               pdfVariables: _pdfVariables?.build(),
               emailSignature: emailSignature,
               emailSubjectInvoice: emailSubjectInvoice,

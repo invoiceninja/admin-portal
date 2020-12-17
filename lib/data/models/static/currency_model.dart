@@ -87,8 +87,6 @@ abstract class CurrencyEntity extends Object
   @BuiltValueField(wireName: 'swap_currency_symbol')
   bool get swapCurrencySymbol;
 
-  // TODO remove once fixed in the app
-  @nullable
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 

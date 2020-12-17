@@ -156,6 +156,12 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -172,30 +178,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.customValue3 != null) {
-      result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
-            specifiedType: const FullType(String)));
-    }
-    if (object.projectId != null) {
-      result
-        ..add('project_id')
-        ..add(serializers.serialize(object.projectId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.vendorId != null) {
-      result
-        ..add('vendor_id')
-        ..add(serializers.serialize(object.vendorId,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -293,14 +275,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'project_id':
-          result.projectId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'vendor_id':
-          result.vendorId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'documents':
@@ -571,10 +545,6 @@ class _$ProductEntity extends ProductEntity {
   @override
   final String customValue4;
   @override
-  final String projectId;
-  @override
-  final String vendorId;
-  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
@@ -612,8 +582,6 @@ class _$ProductEntity extends ProductEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
-      this.projectId,
-      this.vendorId,
       this.documents,
       this.isChanged,
       this.createdAt,
@@ -663,6 +631,12 @@ class _$ProductEntity extends ProductEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'customValue2');
     }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'customValue4');
+    }
     if (documents == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'documents');
     }
@@ -706,8 +680,6 @@ class _$ProductEntity extends ProductEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
-        projectId == other.projectId &&
-        vendorId == other.vendorId &&
         documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -740,17 +712,17 @@ class _$ProductEntity extends ProductEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode), taxRate1.hashCode),
-                                                                                taxName2.hashCode),
-                                                                            taxRate2.hashCode),
-                                                                        taxName3.hashCode),
-                                                                    taxRate3.hashCode),
-                                                                customValue1.hashCode),
-                                                            customValue2.hashCode),
-                                                        customValue3.hashCode),
-                                                    customValue4.hashCode),
-                                                projectId.hashCode),
-                                            vendorId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode),
+                                                                                taxName1.hashCode),
+                                                                            taxRate1.hashCode),
+                                                                        taxName2.hashCode),
+                                                                    taxRate2.hashCode),
+                                                                taxName3.hashCode),
+                                                            taxRate3.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
                                         documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -780,8 +752,6 @@ class _$ProductEntity extends ProductEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
-          ..add('projectId', projectId)
-          ..add('vendorId', vendorId)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -859,14 +829,6 @@ class ProductEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
-  String _projectId;
-  String get projectId => _$this._projectId;
-  set projectId(String projectId) => _$this._projectId = projectId;
-
-  String _vendorId;
-  String get vendorId => _$this._vendorId;
-  set vendorId(String vendorId) => _$this._vendorId = vendorId;
-
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -926,8 +888,6 @@ class ProductEntityBuilder
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
-      _projectId = _$v.projectId;
-      _vendorId = _$v.vendorId;
       _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -976,8 +936,6 @@ class ProductEntityBuilder
               customValue2: customValue2,
               customValue3: customValue3,
               customValue4: customValue4,
-              projectId: projectId,
-              vendorId: vendorId,
               documents: documents.build(),
               isChanged: isChanged,
               createdAt: createdAt,

@@ -97,6 +97,7 @@ abstract class UserEntity extends Object
       customValue3: '',
       customValue4: '',
       userCompany: userCompany,
+      oauthProvider: '',
     );
   }
 
@@ -142,7 +143,6 @@ abstract class UserEntity extends Object
   @BuiltValueField(wireName: 'company_user')
   UserCompanyEntity get userCompany;
 
-  @nullable
   @BuiltValueField(wireName: 'oauth_provider_id')
   String get oauthProvider;
 

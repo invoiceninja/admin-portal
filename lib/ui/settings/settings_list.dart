@@ -1,3 +1,4 @@
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -10,7 +11,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class SettingsList extends StatelessWidget {
+class SettingsList extends StatefulWidget {
   const SettingsList({
     Key key,
     @required this.viewModel,
@@ -19,9 +20,28 @@ class SettingsList extends StatelessWidget {
   final SettingsListVM viewModel;
 
   @override
+  _SettingsListState createState() => _SettingsListState();
+}
+
+class _SettingsListState extends State<SettingsList> {
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = viewModel.state;
+    final state = widget.viewModel.state;
     final settingsUIState = state.uiState.settingsUIState;
     final showAll = settingsUIState.entityType == EntityType.company;
 
@@ -34,169 +54,175 @@ class SettingsList extends StatelessWidget {
         children: <Widget>[
           SettingsListTile(
             section: kSettingsUserDetails,
-            viewModel: viewModel,
+            viewModel: widget.viewModel,
           ),
           SettingsListTile(
             section: kSettingsDeviceSettings,
-            viewModel: viewModel,
+            viewModel: widget.viewModel,
           ),
         ],
       );
     else if (settingsUIState.filter != null)
       return SettingsSearch(
-        viewModel: viewModel,
+        viewModel: widget.viewModel,
         filter: settingsUIState.filter,
       );
 
-    return ListView(
-      children: <Widget>[
-        if (settingsUIState.isFiltered)
+    return DraggableScrollbar.semicircle(
+      backgroundColor: Theme.of(context).backgroundColor,
+      scrollbarTimeToFade: Duration(seconds: 1),
+      controller: _scrollController,
+      child: ListView(
+        controller: _scrollController,
+        children: <Widget>[
+          if (settingsUIState.isFiltered)
+            Container(
+              color: Colors.orangeAccent,
+              child: ListFilterMessage(
+                filterEntityType: settingsUIState.entityType,
+                filterEntityId: settingsUIState.entityType == EntityType.group
+                    ? settingsUIState.group.id
+                    : settingsUIState.client.id,
+                onPressed: settingsUIState.entityType == EntityType.client
+                    ? widget.viewModel.onViewClientPressed
+                    : widget.viewModel.onViewGroupPressed,
+                onClearPressed: widget.viewModel.onClearSettingsFilterPressed,
+                isSettings: true,
+              ),
+            ),
           Container(
-            color: Colors.orangeAccent,
-            child: ListFilterMessage(
-              filterEntityType: settingsUIState.entityType,
-              filterEntityId: settingsUIState.entityType == EntityType.group
-                  ? settingsUIState.group.id
-                  : settingsUIState.client.id,
-              onPressed: settingsUIState.entityType == EntityType.client
-                  ? viewModel.onViewClientPressed
-                  : viewModel.onViewGroupPressed,
-              onClearPressed: viewModel.onClearSettingsFilterPressed,
-              isSettings: true,
+            color: Theme.of(context).backgroundColor,
+            padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
+            child: Text(
+              localization.basicSettings,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
-          child: Text(
-            localization.basicSettings,
-            style: Theme.of(context).textTheme.bodyText2,
-          ),
-        ),
-        SettingsListTile(
-          section: kSettingsCompanyDetails,
-          viewModel: viewModel,
-        ),
-        if (showAll)
           SettingsListTile(
-            section: kSettingsUserDetails,
+            section: kSettingsCompanyDetails,
+            viewModel: widget.viewModel,
+          ),
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsUserDetails,
+              viewModel: widget.viewModel,
+            ),
+          SettingsListTile(
+            section: kSettingsLocalization,
+            viewModel: widget.viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsOnlinePayments,
+            viewModel: widget.viewModel,
+          ),
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsTaxSettings,
+              viewModel: widget.viewModel,
+            ),
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsProducts,
+              viewModel: widget.viewModel,
+            ),
+          if (showAll && state.company.isModuleEnabled(EntityType.task))
+            SettingsListTile(
+              section: kSettingsTasks,
+              viewModel: widget.viewModel,
+            ),
+          if (showAll && state.company.isModuleEnabled(EntityType.expense))
+            SettingsListTile(
+              section: kSettingsExpenses,
+              viewModel: widget.viewModel,
+            ),
+          // TODO Re-entable
+          /*
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsIntegrations,
+              viewModel: viewModel,
+            ),
+           */
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsImportExport,
+              viewModel: widget.viewModel,
+            ),
+          if (showAll && state.userCompany.isOwner)
+            SettingsListTile(
+              section: kSettingsAccountManagement,
+              viewModel: widget.viewModel,
+            ),
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsDeviceSettings,
+              viewModel: widget.viewModel,
+            ),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
+            child: Text(
+              localization.advancedSettings,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+          ),
+          SettingsListTile(
+            section: kSettingsGroupSettings,
+            viewModel: widget.viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsGeneratedNumbers,
+            viewModel: widget.viewModel,
+          ),
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsCustomFields,
+              viewModel: widget.viewModel,
+            ),
+          SettingsListTile(
+            section: kSettingsInvoiceDesign,
+            viewModel: widget.viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsWorkflowSettings,
+            viewModel: widget.viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsClientPortal,
+            viewModel: widget.viewModel,
+          ),
+          /*
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsBuyNowButtons,
+              viewModel: viewModel,
+            ),
+           */
+          SettingsListTile(
+            section: kSettingsEmailSettings,
+            viewModel: widget.viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsTemplatesAndReminders,
+            viewModel: widget.viewModel,
+          ),
+          /*
+          SettingsListTile(
+            section: kSettingsCreditCardsAndBanks,
             viewModel: viewModel,
           ),
-        SettingsListTile(
-          section: kSettingsLocalization,
-          viewModel: viewModel,
-        ),
-        SettingsListTile(
-          section: kSettingsOnlinePayments,
-          viewModel: viewModel,
-        ),
-        if (showAll)
           SettingsListTile(
-            section: kSettingsTaxSettings,
+            section: kSettingsDataVisualizations,
             viewModel: viewModel,
           ),
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsProducts,
-            viewModel: viewModel,
-          ),
-        if (showAll && state.company.isModuleEnabled(EntityType.task))
-          SettingsListTile(
-            section: kSettingsTasks,
-            viewModel: viewModel,
-          ),
-        if (showAll && state.company.isModuleEnabled(EntityType.expense))
-          SettingsListTile(
-            section: kSettingsExpenses,
-            viewModel: viewModel,
-          ),
-        // TODO Re-entable
-        /*
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsIntegrations,
-            viewModel: viewModel,
-          ),
-         */
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsImportExport,
-            viewModel: viewModel,
-          ),
-        if (showAll && state.userCompany.isOwner)
-          SettingsListTile(
-            section: kSettingsAccountManagement,
-            viewModel: viewModel,
-          ),
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsDeviceSettings,
-            viewModel: viewModel,
-          ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
-          child: Text(
-            localization.advancedSettings,
-            style: Theme.of(context).textTheme.bodyText2,
-          ),
-        ),
-        SettingsListTile(
-          section: kSettingsGroupSettings,
-          viewModel: viewModel,
-        ),
-        SettingsListTile(
-          section: kSettingsGeneratedNumbers,
-          viewModel: viewModel,
-        ),
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsCustomFields,
-            viewModel: viewModel,
-          ),
-        SettingsListTile(
-          section: kSettingsInvoiceDesign,
-          viewModel: viewModel,
-        ),
-        SettingsListTile(
-          section: kSettingsWorkflowSettings,
-          viewModel: viewModel,
-        ),
-        SettingsListTile(
-          section: kSettingsClientPortal,
-          viewModel: viewModel,
-        ),
-        /*
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsBuyNowButtons,
-            viewModel: viewModel,
-          ),
-         */
-        SettingsListTile(
-          section: kSettingsEmailSettings,
-          viewModel: viewModel,
-        ),
-        SettingsListTile(
-          section: kSettingsTemplatesAndReminders,
-          viewModel: viewModel,
-        ),
-        /*
-        SettingsListTile(
-          section: kSettingsCreditCardsAndBanks,
-          viewModel: viewModel,
-        ),
-        SettingsListTile(
-          section: kSettingsDataVisualizations,
-          viewModel: viewModel,
-        ),
-         */
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsUserManagement,
-            viewModel: viewModel,
-          ),
-      ],
+           */
+          if (showAll)
+            SettingsListTile(
+              section: kSettingsUserManagement,
+              viewModel: widget.viewModel,
+            ),
+        ],
+      ),
     );
   }
 }

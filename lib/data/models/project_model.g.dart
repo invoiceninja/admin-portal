@@ -150,6 +150,9 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'number',
+      serializers.serialize(object.number,
+          specifiedType: const FullType(String)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -166,12 +169,6 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.number != null) {
-      result
-        ..add('number')
-        ..add(serializers.serialize(object.number,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -597,6 +594,9 @@ class _$ProjectEntity extends ProjectEntity {
     }
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'customValue4');
+    }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'number');
     }
     if (documents == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'documents');

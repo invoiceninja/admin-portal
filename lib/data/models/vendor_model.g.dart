@@ -171,6 +171,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -183,13 +187,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.documents != null) {
-      result
-        ..add('documents')
-        ..add(serializers.serialize(object.documents,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(DocumentEntity)])));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -840,6 +837,9 @@ class _$VendorEntity extends VendorEntity {
     if (contacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
     }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'documents');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'createdAt');
     }
@@ -1178,7 +1178,7 @@ class VendorEntityBuilder
               customValue3: customValue3,
               customValue4: customValue4,
               contacts: contacts.build(),
-              documents: _documents?.build(),
+              documents: documents.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1193,7 +1193,7 @@ class VendorEntityBuilder
         _$failedField = 'contacts';
         contacts.build();
         _$failedField = 'documents';
-        _documents?.build();
+        documents.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'VendorEntity', _$failedField, e.toString());

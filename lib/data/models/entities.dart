@@ -631,6 +631,7 @@ abstract class ActivityEntity
       kActivityDeletePayment,
       kActivityRestorePayment,
       kActivityFailedPayment,
+      kActivityPaidInvoice,
     ].contains(activityTypeId)) {
       return EntityType.payment;
     } else if ([

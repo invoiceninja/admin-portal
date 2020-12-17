@@ -72,10 +72,6 @@ class DecoratedFormField extends StatelessWidget {
     InputDecoration inputDecoration;
     if (decoration != null) {
       inputDecoration = decoration;
-      if (suffixIconButton != null) {
-        inputDecoration =
-            inputDecoration.copyWith(suffixIcon: suffixIconButton);
-      }
     } else if (label == null) {
       inputDecoration = null;
     } else {
