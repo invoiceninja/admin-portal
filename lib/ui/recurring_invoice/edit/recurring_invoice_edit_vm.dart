@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -69,6 +70,15 @@ class RecurringInvoiceEditVM extends EntityEditVM {
       invoiceItemIndex: state.recurringInvoiceUIState.editingItemIndex,
       origInvoice: store.state.recurringInvoiceState.map[recurringInvoice.id],
       onSavePressed: (BuildContext context) {
+        if (recurringInvoice.clientId.isEmpty) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(
+                    AppLocalization.of(context).pleaseSelectAClient);
+              });
+          return null;
+        }
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(SaveRecurringInvoiceRequest(
             completer: completer, recurringInvoice: recurringInvoice));
