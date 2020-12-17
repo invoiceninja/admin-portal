@@ -175,7 +175,6 @@ abstract class TaskEntity extends Object
       assignedUserId: '',
       createdAt: 0,
       createdUserId: '',
-      vendorId: '',
       statusId: '',
       statusSortOrder: 0,
       documents: BuiltList<DocumentEntity>(),

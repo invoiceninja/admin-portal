@@ -87,8 +87,6 @@ abstract class ProductEntity extends Object
       createdAt: 0,
       assignedUserId: '',
       createdUserId: '',
-      projectId: '',
-      vendorId: '',
       documents: BuiltList<DocumentEntity>(),
     );
   }
