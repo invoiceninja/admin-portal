@@ -184,8 +184,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'enable_shop_api')
   bool get enableShopApi;
 
-  // TODO remove this
-  @nullable
   String get plan;
 
   @BuiltValueField(wireName: 'company_key')
@@ -283,13 +281,11 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'auto_start_tasks')
   bool get autoStartTasks;
 
-  @nullable // TODO remove this nullable
   @BuiltValueField(wireName: 'show_tasks_table')
   bool get showTasksTable;
 
   SettingsEntity get settings;
 
-  @nullable
   @BuiltValueField(wireName: 'enabled_modules')
   int get enabledModules;
 
@@ -498,7 +494,6 @@ abstract class GatewayEntity extends Object
   static Serializer<GatewayEntity> get serializer => _$gatewayEntitySerializer;
 
   @override
-  @nullable
   @BuiltValueField(wireName: 'key')
   String get id;
 
@@ -513,7 +508,6 @@ abstract class GatewayEntity extends Object
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;
 
-  @nullable
   @BuiltValueField(wireName: 'default_gateway_type_id')
   String get defaultGatewayTypeId;
 
@@ -738,10 +732,7 @@ abstract class UserSettingsEntity
   @memoized
   int get hashCode;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'accent_color')
-  @nullable
   String get accentColor;
 
   @BuiltValueField(wireName: 'table_columns')
@@ -773,7 +764,7 @@ abstract class ReportSettingsEntity
     return _$ReportSettingsEntity._(
       sortColumn: sortColumn ?? '',
       sortAscending: sortAscending ?? true,
-      sortTotalsIndex: sortTotalsIndex,
+      sortTotalsIndex: sortTotalsIndex ?? 0,
       sortTotalsAscending: sortTotalsAscending ?? true,
       columns: BuiltList<String>(),
     );
@@ -785,21 +776,15 @@ abstract class ReportSettingsEntity
   @memoized
   int get hashCode;
 
-  @nullable
   @BuiltValueField(wireName: 'sort_column')
   String get sortColumn;
 
-  // TODO remove nullable
-  @nullable
   @BuiltValueField(wireName: 'sort_ascending')
   bool get sortAscending;
 
-  @nullable
   @BuiltValueField(wireName: 'sort_totals_index')
   int get sortTotalsIndex;
 
-  // TODO remove nullable
-  @nullable
   @BuiltValueField(wireName: 'sort_totals_ascending')
   bool get sortTotalsAscending;
 
