@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
@@ -40,7 +42,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 3, initialIndex: index);
+    _controller = TabController(vsync: this, length: 4, initialIndex: index);
   }
 
   @override
@@ -65,8 +67,11 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     final recurringInvoice = viewModel.invoice;
     final state = viewModel.state;
     final invoice = viewModel.invoice;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       title: recurringInvoice.isNew
           ? localization.newRecurringInvoice
           : localization.editRecurringInvoice,
@@ -86,7 +91,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
 
         viewModel.onSavePressed(context);
       },
-      appBarBottom: state.prefState.isDesktop
+      appBarBottom: isFullscreen
           ? null
           : TabBar(
               controller: _controller,
@@ -94,6 +99,9 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
               tabs: [
                 Tab(
                   text: localization.details,
+                ),
+                Tab(
+                  text: localization.contacts,
                 ),
                 Tab(
                   text: localization.items,
@@ -105,7 +113,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
             ),
       body: Form(
         key: _formKey,
-        child: state.prefState.isDesktop
+        child: isFullscreen
             ? RecurringInvoiceEditDetailsScreen(
                 viewModel: widget.viewModel,
               )
@@ -115,6 +123,9 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                 children: <Widget>[
                   RecurringInvoiceEditDetailsScreen(
                     viewModel: widget.viewModel,
+                  ),
+                  InvoiceEditContactsScreen(
+                    entityType: invoice.entityType,
                   ),
                   RecurringInvoiceEditItemsScreen(
                     viewModel: widget.viewModel,
@@ -142,7 +153,9 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId]) {
                     viewModel.onItemsAdded(items, clientId);
-                    _controller.animateTo(kItemScreen);
+                    if (!isFullscreen) {
+                      _controller.animateTo(kItemScreen);
+                    }
                   },
                 );
               });
