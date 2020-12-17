@@ -93,6 +93,8 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'enable_shop_api',
       serializers.serialize(object.enableShopApi,
           specifiedType: const FullType(bool)),
+      'plan',
+      serializers.serialize(object.plan, specifiedType: const FullType(String)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -230,9 +232,15 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'auto_start_tasks',
       serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
+      'show_tasks_table',
+      serializers.serialize(object.showTasksTable,
+          specifiedType: const FullType(bool)),
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
+      'enabled_modules',
+      serializers.serialize(object.enabledModules,
+          specifiedType: const FullType(int)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -245,24 +253,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.plan != null) {
-      result
-        ..add('plan')
-        ..add(serializers.serialize(object.plan,
-            specifiedType: const FullType(String)));
-    }
-    if (object.showTasksTable != null) {
-      result
-        ..add('show_tasks_table')
-        ..add(serializers.serialize(object.showTasksTable,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enabledModules != null) {
-      result
-        ..add('enabled_modules')
-        ..add(serializers.serialize(object.enabledModules,
-            specifiedType: const FullType(int)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -653,6 +643,8 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
   Iterable<Object> serialize(Serializers serializers, GatewayEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'key',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'is_offsite',
@@ -664,6 +656,9 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
       'sort_order',
       serializers.serialize(object.sortOrder,
           specifiedType: const FullType(int)),
+      'default_gateway_type_id',
+      serializers.serialize(object.defaultGatewayTypeId,
+          specifiedType: const FullType(String)),
       'options',
       serializers.serialize(object.options,
           specifiedType: const FullType(BuiltMap, const [
@@ -674,18 +669,7 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
       serializers.serialize(object.fields,
           specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('key')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
-    if (object.defaultGatewayTypeId != null) {
-      result
-        ..add('default_gateway_type_id')
-        ..add(serializers.serialize(object.defaultGatewayTypeId,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -929,6 +913,9 @@ class _$UserSettingsEntitySerializer
   Iterable<Object> serialize(Serializers serializers, UserSettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'accent_color',
+      serializers.serialize(object.accentColor,
+          specifiedType: const FullType(String)),
       'table_columns',
       serializers.serialize(object.tableColumns,
           specifiedType: const FullType(BuiltMap, const [
@@ -942,12 +929,7 @@ class _$UserSettingsEntitySerializer
             const FullType(ReportSettingsEntity)
           ])),
     ];
-    if (object.accentColor != null) {
-      result
-        ..add('accent_color')
-        ..add(serializers.serialize(object.accentColor,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -1003,35 +985,24 @@ class _$ReportSettingsEntitySerializer
       Serializers serializers, ReportSettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'sort_column',
+      serializers.serialize(object.sortColumn,
+          specifiedType: const FullType(String)),
+      'sort_ascending',
+      serializers.serialize(object.sortAscending,
+          specifiedType: const FullType(bool)),
+      'sort_totals_index',
+      serializers.serialize(object.sortTotalsIndex,
+          specifiedType: const FullType(int)),
+      'sort_totals_ascending',
+      serializers.serialize(object.sortTotalsAscending,
+          specifiedType: const FullType(bool)),
       'columns',
       serializers.serialize(object.columns,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.sortColumn != null) {
-      result
-        ..add('sort_column')
-        ..add(serializers.serialize(object.sortColumn,
-            specifiedType: const FullType(String)));
-    }
-    if (object.sortAscending != null) {
-      result
-        ..add('sort_ascending')
-        ..add(serializers.serialize(object.sortAscending,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.sortTotalsIndex != null) {
-      result
-        ..add('sort_totals_index')
-        ..add(serializers.serialize(object.sortTotalsIndex,
-            specifiedType: const FullType(int)));
-    }
-    if (object.sortTotalsAscending != null) {
-      result
-        ..add('sort_totals_ascending')
-        ..add(serializers.serialize(object.sortTotalsAscending,
-            specifiedType: const FullType(bool)));
-    }
+
     return result;
   }
 
@@ -3177,6 +3148,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (enableShopApi == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'enableShopApi');
     }
+    if (plan == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'plan');
+    }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }
@@ -3293,8 +3267,14 @@ class _$CompanyEntity extends CompanyEntity {
     if (autoStartTasks == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'autoStartTasks');
     }
+    if (showTasksTable == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'showTasksTable');
+    }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
+    }
+    if (enabledModules == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'enabledModules');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'createdAt');
@@ -4129,6 +4109,9 @@ class _$GatewayEntity extends GatewayEntity {
       this.options,
       this.fields})
       : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'id');
+    }
     if (name == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'name');
     }
@@ -4140,6 +4123,10 @@ class _$GatewayEntity extends GatewayEntity {
     }
     if (sortOrder == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'sortOrder');
+    }
+    if (defaultGatewayTypeId == null) {
+      throw new BuiltValueNullFieldError(
+          'GatewayEntity', 'defaultGatewayTypeId');
     }
     if (options == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'options');
@@ -4642,6 +4629,9 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   _$UserSettingsEntity._(
       {this.accentColor, this.tableColumns, this.reportSettings})
       : super._() {
+    if (accentColor == null) {
+      throw new BuiltValueNullFieldError('UserSettingsEntity', 'accentColor');
+    }
     if (tableColumns == null) {
       throw new BuiltValueNullFieldError('UserSettingsEntity', 'tableColumns');
     }
@@ -4782,6 +4772,21 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
       this.sortTotalsAscending,
       this.columns})
       : super._() {
+    if (sortColumn == null) {
+      throw new BuiltValueNullFieldError('ReportSettingsEntity', 'sortColumn');
+    }
+    if (sortAscending == null) {
+      throw new BuiltValueNullFieldError(
+          'ReportSettingsEntity', 'sortAscending');
+    }
+    if (sortTotalsIndex == null) {
+      throw new BuiltValueNullFieldError(
+          'ReportSettingsEntity', 'sortTotalsIndex');
+    }
+    if (sortTotalsAscending == null) {
+      throw new BuiltValueNullFieldError(
+          'ReportSettingsEntity', 'sortTotalsAscending');
+    }
     if (columns == null) {
       throw new BuiltValueNullFieldError('ReportSettingsEntity', 'columns');
     }
