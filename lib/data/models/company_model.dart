@@ -732,6 +732,7 @@ abstract class UserSettingsEntity
   @memoized
   int get hashCode;
 
+  @nullable
   @BuiltValueField(wireName: 'accent_color')
   String get accentColor;
 
