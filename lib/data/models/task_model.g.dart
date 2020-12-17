@@ -168,8 +168,17 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'duration',
       serializers.serialize(object.duration,
           specifiedType: const FullType(int)),
+      'invoice_id',
+      serializers.serialize(object.invoiceId,
+          specifiedType: const FullType(String)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(String)),
       'rate',
       serializers.serialize(object.rate, specifiedType: const FullType(double)),
+      'project_id',
+      serializers.serialize(object.projectId,
+          specifiedType: const FullType(String)),
       'time_log',
       serializers.serialize(object.timeLog,
           specifiedType: const FullType(String)),
@@ -181,6 +190,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           specifiedType: const FullType(String)),
       'custom_value2',
       serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
       'status_id',
       serializers.serialize(object.statusId,
@@ -204,42 +219,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.invoiceId != null) {
-      result
-        ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.clientId != null) {
-      result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.projectId != null) {
-      result
-        ..add('project_id')
-        ..add(serializers.serialize(object.projectId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue3 != null) {
-      result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
-            specifiedType: const FullType(String)));
-    }
-    if (object.vendorId != null) {
-      result
-        ..add('vendor_id')
-        ..add(serializers.serialize(object.vendorId,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -337,10 +316,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'status_sort_order':
           result.statusSortOrder = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
-          break;
-        case 'vendor_id':
-          result.vendorId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
@@ -696,8 +671,6 @@ class _$TaskEntity extends TaskEntity {
   @override
   final int statusSortOrder;
   @override
-  final String vendorId;
-  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
@@ -735,7 +708,6 @@ class _$TaskEntity extends TaskEntity {
       this.customValue4,
       this.statusId,
       this.statusSortOrder,
-      this.vendorId,
       this.documents,
       this.isChanged,
       this.createdAt,
@@ -755,8 +727,17 @@ class _$TaskEntity extends TaskEntity {
     if (duration == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'duration');
     }
+    if (invoiceId == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'invoiceId');
+    }
+    if (clientId == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'clientId');
+    }
     if (rate == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'rate');
+    }
+    if (projectId == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'projectId');
     }
     if (timeLog == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'timeLog');
@@ -769,6 +750,12 @@ class _$TaskEntity extends TaskEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'customValue4');
     }
     if (statusId == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'statusId');
@@ -819,7 +806,6 @@ class _$TaskEntity extends TaskEntity {
         customValue4 == other.customValue4 &&
         statusId == other.statusId &&
         statusSortOrder == other.statusSortOrder &&
-        vendorId == other.vendorId &&
         documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -852,17 +838,17 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode), rate.hashCode),
-                                                                                projectId.hashCode),
-                                                                            timeLog.hashCode),
-                                                                        isRunning.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    statusId.hashCode),
-                                                statusSortOrder.hashCode),
-                                            vendorId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
+                                                                                rate.hashCode),
+                                                                            projectId.hashCode),
+                                                                        timeLog.hashCode),
+                                                                    isRunning.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                statusId.hashCode),
+                                            statusSortOrder.hashCode),
                                         documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -892,7 +878,6 @@ class _$TaskEntity extends TaskEntity {
           ..add('customValue4', customValue4)
           ..add('statusId', statusId)
           ..add('statusSortOrder', statusSortOrder)
-          ..add('vendorId', vendorId)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -970,10 +955,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   set statusSortOrder(int statusSortOrder) =>
       _$this._statusSortOrder = statusSortOrder;
 
-  String _vendorId;
-  String get vendorId => _$this._vendorId;
-  set vendorId(String vendorId) => _$this._vendorId = vendorId;
-
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -1033,7 +1014,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _customValue4 = _$v.customValue4;
       _statusId = _$v.statusId;
       _statusSortOrder = _$v.statusSortOrder;
-      _vendorId = _$v.vendorId;
       _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -1082,7 +1062,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               customValue4: customValue4,
               statusId: statusId,
               statusSortOrder: statusSortOrder,
-              vendorId: vendorId,
               documents: documents.build(),
               isChanged: isChanged,
               createdAt: createdAt,
