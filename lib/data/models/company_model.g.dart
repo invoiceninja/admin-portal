@@ -913,9 +913,6 @@ class _$UserSettingsEntitySerializer
   Iterable<Object> serialize(Serializers serializers, UserSettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'accent_color',
-      serializers.serialize(object.accentColor,
-          specifiedType: const FullType(String)),
       'table_columns',
       serializers.serialize(object.tableColumns,
           specifiedType: const FullType(BuiltMap, const [
@@ -929,7 +926,12 @@ class _$UserSettingsEntitySerializer
             const FullType(ReportSettingsEntity)
           ])),
     ];
-
+    if (object.accentColor != null) {
+      result
+        ..add('accent_color')
+        ..add(serializers.serialize(object.accentColor,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -4629,9 +4631,6 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   _$UserSettingsEntity._(
       {this.accentColor, this.tableColumns, this.reportSettings})
       : super._() {
-    if (accentColor == null) {
-      throw new BuiltValueNullFieldError('UserSettingsEntity', 'accentColor');
-    }
     if (tableColumns == null) {
       throw new BuiltValueNullFieldError('UserSettingsEntity', 'tableColumns');
     }
