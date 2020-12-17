@@ -167,7 +167,11 @@ class _FileImportState extends State<_FileImport> {
                 isDense: true,
                 value: widget.entityType,
                 onChanged: (dynamic value) => widget.onEntityTypeChanged(value),
-                items: [EntityType.client]
+                items: [
+                  EntityType.client,
+                  EntityType.product,
+                  EntityType.invoice,
+                ]
                     .map((entityType) => DropdownMenuItem<EntityType>(
                         value: entityType,
                         child: Text(localization.lookup('$entityType'))))
