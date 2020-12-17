@@ -2453,10 +2453,6 @@ class _$SettingsEntitySerializer
           result.defaultPaymentTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_fields':
-          result.invoiceFields = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'pdf_variables':
           result.pdfVariables.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -6239,11 +6235,6 @@ class SettingsEntityBuilder
   String get defaultPaymentTypeId => _$this._defaultPaymentTypeId;
   set defaultPaymentTypeId(String defaultPaymentTypeId) =>
       _$this._defaultPaymentTypeId = defaultPaymentTypeId;
-
-  String _invoiceFields;
-  String get invoiceFields => _$this._invoiceFields;
-  set invoiceFields(String invoiceFields) =>
-      _$this._invoiceFields = invoiceFields;
 
   MapBuilder<String, BuiltList<String>> _pdfVariables;
   MapBuilder<String, BuiltList<String>> get pdfVariables =>

@@ -24,6 +24,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'default_url',
       serializers.serialize(object.defaultUrl,
           specifiedType: const FullType(String)),
+      'report_errors',
+      serializers.serialize(object.reportErrors,
+          specifiedType: const FullType(bool)),
       'plan',
       serializers.serialize(object.plan, specifiedType: const FullType(String)),
       'plan_expires',
@@ -36,12 +39,7 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       serializers.serialize(object.currentVersion,
           specifiedType: const FullType(String)),
     ];
-    if (object.reportErrors != null) {
-      result
-        ..add('report_errors')
-        ..add(serializers.serialize(object.reportErrors,
-            specifiedType: const FullType(bool)));
-    }
+
     return result;
   }
 
@@ -125,6 +123,9 @@ class _$AccountEntity extends AccountEntity {
     }
     if (defaultUrl == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'defaultUrl');
+    }
+    if (reportErrors == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'reportErrors');
     }
     if (plan == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'plan');

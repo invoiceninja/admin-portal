@@ -182,6 +182,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'oauth_provider_id',
+      serializers.serialize(object.oauthProvider,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -205,12 +208,6 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         ..add('company_user')
         ..add(serializers.serialize(object.userCompany,
             specifiedType: const FullType(UserCompanyEntity)));
-    }
-    if (object.oauthProvider != null) {
-      result
-        ..add('oauth_provider_id')
-        ..add(serializers.serialize(object.oauthProvider,
-            specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
       result
@@ -705,6 +702,9 @@ class _$UserEntity extends UserEntity {
     }
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'customValue4');
+    }
+    if (oauthProvider == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'oauthProvider');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'createdAt');
