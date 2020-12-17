@@ -227,6 +227,18 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'custom_surcharge4',
       serializers.serialize(object.customSurcharge4,
           specifiedType: const FullType(double)),
+      'custom_surcharge_tax1',
+      serializers.serialize(object.customTaxes1,
+          specifiedType: const FullType(bool)),
+      'custom_surcharge_tax2',
+      serializers.serialize(object.customTaxes2,
+          specifiedType: const FullType(bool)),
+      'custom_surcharge_tax3',
+      serializers.serialize(object.customTaxes3,
+          specifiedType: const FullType(bool)),
+      'custom_surcharge_tax4',
+      serializers.serialize(object.customTaxes4,
+          specifiedType: const FullType(bool)),
       'has_expenses',
       serializers.serialize(object.hasExpenses,
           specifiedType: const FullType(bool)),
@@ -273,30 +285,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       result
         ..add('auto_bill_enabled')
         ..add(serializers.serialize(object.autoBillEnabled,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.customTaxes1 != null) {
-      result
-        ..add('custom_surcharge_tax1')
-        ..add(serializers.serialize(object.customTaxes1,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.customTaxes2 != null) {
-      result
-        ..add('custom_surcharge_tax2')
-        ..add(serializers.serialize(object.customTaxes2,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.customTaxes3 != null) {
-      result
-        ..add('custom_surcharge_tax3')
-        ..add(serializers.serialize(object.customTaxes3,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.customTaxes4 != null) {
-      result
-        ..add('custom_surcharge_tax4')
-        ..add(serializers.serialize(object.customTaxes4,
             specifiedType: const FullType(bool)));
     }
     if (object.reminder1Sent != null) {
@@ -1685,6 +1673,18 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (customSurcharge4 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customSurcharge4');
+    }
+    if (customTaxes1 == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes1');
+    }
+    if (customTaxes2 == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes2');
+    }
+    if (customTaxes3 == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes3');
+    }
+    if (customTaxes4 == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes4');
     }
     if (hasExpenses == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasExpenses');
