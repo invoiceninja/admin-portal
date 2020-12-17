@@ -397,18 +397,15 @@ abstract class TaskEntity extends Object
     return Duration(seconds: seconds);
   }
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
   @override
-  @nullable
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
   double get rate;
 
-  @nullable
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
 
@@ -424,11 +421,9 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value3')
   String get customValue3;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
@@ -437,10 +432,6 @@ abstract class TaskEntity extends Object
 
   @BuiltValueField(wireName: 'status_sort_order')
   int get statusSortOrder;
-
-  @nullable
-  @BuiltValueField(wireName: 'vendor_id')
-  String get vendorId;
 
   BuiltList<DocumentEntity> get documents;
 

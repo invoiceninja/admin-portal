@@ -141,7 +141,6 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  @nullable // TODO remove this
   String get number;
 
   BuiltList<DocumentEntity> get documents;

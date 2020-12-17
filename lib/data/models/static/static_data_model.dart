@@ -144,7 +144,6 @@ abstract class TemplateEntity
 
   String get subject;
 
-  @nullable // TODO remove nullable
   String get body;
 
   static Serializer<TemplateEntity> get serializer =>
