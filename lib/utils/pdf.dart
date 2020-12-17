@@ -116,6 +116,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final localization = AppLocalization.of(context);
     final invoice = widget.invoice;
 
@@ -130,10 +131,12 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                 ),
                 title: Row(
                   children: [
-                    Text(localization.lookup('${invoice.entityType}') +
-                        ' ' +
-                        (invoice.number ?? '')),
-                    Spacer(),
+                    if (isDesktop(context)) ...[
+                      Text(localization.lookup('${invoice.entityType}') +
+                          ' ' +
+                          (invoice.number ?? '')),
+                      Spacer(),
+                    ],
                     if (_activityId != null && isDesktop(context)) ...[
                       Flexible(
                         child: IgnorePointer(
@@ -193,37 +196,48 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       ),
                       Spacer(),
                     ],
-                    Container(
-                      width: 200,
-                      child: CheckboxListTile(
-                        title: Text(localization.deliveryNote),
-                        value: _isDeliveryNote,
-                        onChanged: (value) {
-                          setState(() {
-                            _isDeliveryNote = !_isDeliveryNote;
-                            loadPdf();
-                          });
-                        },
-                        controlAffinity: ListTileControlAffinity.leading,
-                        activeColor: store.state.accentColor,
+                    Theme(
+                      data: ThemeData(
+                        unselectedWidgetColor: state.headerTextColor,
+                      ),
+                      child: Container(
+                        width: 200,
+                        child: CheckboxListTile(
+                          title: Text(
+                            localization.deliveryNote,
+                            style: TextStyle(
+                              color: state.headerTextColor,
+                            ),
+                          ),
+                          value: _isDeliveryNote,
+                          onChanged: (value) {
+                            setState(() {
+                              _isDeliveryNote = !_isDeliveryNote;
+                              loadPdf();
+                            });
+                          },
+                          controlAffinity: ListTileControlAffinity.leading,
+                          activeColor: state.accentColor,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 actions: <Widget>[
-                  FlatButton(
-                    child: Text(localization.email,
-                        style: TextStyle(color: store.state.headerTextColor)),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      handleEntityAction(context, invoice,
-                          EntityAction.emailEntityType(invoice.entityType));
-                    },
-                  ),
+                  if (isDesktop(context))
+                    FlatButton(
+                      child: Text(localization.email,
+                          style: TextStyle(color: state.headerTextColor)),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        handleEntityAction(context, invoice,
+                            EntityAction.emailEntityType(invoice.entityType));
+                      },
+                    ),
                   FlatButton(
                     child: Text(
                       localization.download,
-                      style: TextStyle(color: store.state.headerTextColor),
+                      style: TextStyle(color: state.headerTextColor),
                     ),
                     onPressed: _response == null
                         ? null
