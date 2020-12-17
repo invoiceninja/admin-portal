@@ -97,6 +97,7 @@ abstract class UserEntity extends Object
       customValue3: '',
       customValue4: '',
       userCompany: userCompany,
+      oauthProvider: '',
     );
   }
 
