@@ -93,8 +93,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'enable_shop_api',
       serializers.serialize(object.enableShopApi,
           specifiedType: const FullType(bool)),
-      'plan',
-      serializers.serialize(object.plan, specifiedType: const FullType(String)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -2909,8 +2907,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool enableShopApi;
   @override
-  final String plan;
-  @override
   final String companyKey;
   @override
   final String firstDayOfWeek;
@@ -3033,7 +3029,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.isLarge,
       this.isDisabled,
       this.enableShopApi,
-      this.plan,
       this.companyKey,
       this.firstDayOfWeek,
       this.firstMonthOfYear,
@@ -3149,9 +3144,6 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (enableShopApi == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'enableShopApi');
-    }
-    if (plan == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'plan');
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
@@ -3323,7 +3315,6 @@ class _$CompanyEntity extends CompanyEntity {
         isLarge == other.isLarge &&
         isDisabled == other.isDisabled &&
         enableShopApi == other.enableShopApi &&
-        plan == other.plan &&
         companyKey == other.companyKey &&
         firstDayOfWeek == other.firstDayOfWeek &&
         firstMonthOfYear == other.firstMonthOfYear &&
@@ -3396,7 +3387,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
                                                                                 googleAnalyticsKey.hashCode),
                                                                             markExpensesInvoiceable.hashCode),
                                                                         markExpensesPaid.hashCode),
@@ -3441,7 +3432,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('isLarge', isLarge)
           ..add('isDisabled', isDisabled)
           ..add('enableShopApi', enableShopApi)
-          ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('firstDayOfWeek', firstDayOfWeek)
           ..add('firstMonthOfYear', firstMonthOfYear)
@@ -3871,7 +3861,6 @@ class CompanyEntityBuilder
       _isLarge = _$v.isLarge;
       _isDisabled = _$v.isDisabled;
       _enableShopApi = _$v.enableShopApi;
-      _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _firstDayOfWeek = _$v.firstDayOfWeek;
       _firstMonthOfYear = _$v.firstMonthOfYear;
@@ -3965,7 +3954,6 @@ class CompanyEntityBuilder
               isLarge: isLarge,
               isDisabled: isDisabled,
               enableShopApi: enableShopApi,
-              plan: plan,
               companyKey: companyKey,
               firstDayOfWeek: firstDayOfWeek,
               firstMonthOfYear: firstMonthOfYear,

@@ -51,7 +51,6 @@ abstract class CompanyEntity extends Object
       isChanged: false,
       isDeleted: false,
       companyKey: '',
-      plan: '',
       settings: SettingsEntity(),
       sizeId: '',
       industryId: '',
@@ -183,8 +182,6 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'enable_shop_api')
   bool get enableShopApi;
-
-  String get plan;
 
   @BuiltValueField(wireName: 'company_key')
   String get companyKey;
