@@ -116,7 +116,7 @@ String formatNumber(
     return '';
   }
 
-  if (formatNumberType == FormatNumberType.money) {
+  if (formatNumberType == FormatNumberType.money && roundToPrecision) {
     value = round(value, currency.precision);
   }
 
