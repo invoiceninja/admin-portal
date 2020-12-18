@@ -1212,8 +1212,8 @@ class ReportResult {
 
         if (reportSettings.sortTotalsIndex == 0) {
           final currencyMap = state.staticState.currencyMap;
-          valueA = currencyMap[rowA].listDisplayName;
-          valueB = currencyMap[rowB].listDisplayName;
+          valueA = currencyMap[rowA]?.listDisplayName;
+          valueB = currencyMap[rowB]?.listDisplayName;
         } else if (reportSettings.sortTotalsIndex == 1) {
           valueA = totals[rowA]['count'];
           valueB = totals[rowB]['count'];
