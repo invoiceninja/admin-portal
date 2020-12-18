@@ -22,6 +22,7 @@ enum TaskReportFields {
   invoice_amount,
   invoice_date,
   invoice_due_date,
+  project,
   client,
   client_balance,
   client_address1,
@@ -74,6 +75,7 @@ ReportResult taskReport(
     TaskReportFields.duration,
     TaskReportFields.description,
     TaskReportFields.client,
+    TaskReportFields.project,
     TaskReportFields.invoice,
   ];
 
@@ -143,6 +145,9 @@ ReportResult taskReport(
           break;
         case TaskReportFields.duration:
           value = task.calculateDuration.inSeconds;
+          break;
+        case TaskReportFields.project:
+          value = projectMap[task.projectId]?.name ?? '';
           break;
         case TaskReportFields.client:
           value = clientMap[task.clientId]?.displayName ?? '';
