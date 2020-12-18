@@ -17,12 +17,11 @@ class AppToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
     final width = MediaQuery.of(context).size.width;
-    final double toggleWidth = isDesktop ? 178 : (width - 70) / 2;
+    final double toggleWidth = isDesktop ? 177 : (width - 70) / 2;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: ToggleButtons(
-        constraints: BoxConstraints(),
         children: [
           Container(
             width: toggleWidth,

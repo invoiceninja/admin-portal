@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
@@ -41,7 +43,7 @@ class _CreditEditState extends State<CreditEdit>
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 3, initialIndex: index);
+    _controller = TabController(vsync: this, length: 4, initialIndex: index);
   }
 
   @override
@@ -65,8 +67,11 @@ class _CreditEditState extends State<CreditEdit>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final state = viewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       entity: invoice,
       title: invoice.isNew ? localization.newCredit : localization.editCredit,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
@@ -85,7 +90,7 @@ class _CreditEditState extends State<CreditEdit>
 
         viewModel.onSavePressed(context);
       },
-      appBarBottom: state.prefState.isDesktop
+      appBarBottom: isFullscreen
           ? null
           : TabBar(
               controller: _controller,
@@ -93,6 +98,9 @@ class _CreditEditState extends State<CreditEdit>
               tabs: [
                 Tab(
                   text: localization.details,
+                ),
+                Tab(
+                  text: localization.contacts,
                 ),
                 Tab(
                   text: localization.items,
@@ -104,7 +112,7 @@ class _CreditEditState extends State<CreditEdit>
             ),
       body: Form(
         key: _formKey,
-        child: state.prefState.isDesktop
+        child: isFullscreen
             ? CreditEditDetailsScreen(
                 viewModel: widget.viewModel,
               )
@@ -114,6 +122,9 @@ class _CreditEditState extends State<CreditEdit>
                 children: <Widget>[
                   CreditEditDetailsScreen(
                     viewModel: widget.viewModel,
+                  ),
+                  InvoiceEditContactsScreen(
+                    entityType: invoice.entityType,
                   ),
                   CreditEditItemsScreen(
                     viewModel: widget.viewModel,
@@ -141,7 +152,9 @@ class _CreditEditState extends State<CreditEdit>
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId]) {
                     viewModel.onItemsAdded(items, clientId);
-                    _controller.animateTo(kItemScreen);
+                    if (!isFullscreen) {
+                      _controller.animateTo(kItemScreen);
+                    }
                   },
                 );
               });

@@ -74,8 +74,8 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
             : null;
 
     if (invoiceItem != null && itemIndex != selectedItemIndex) {
-      selectedItemIndex = itemIndex;
-      WidgetsBinding.instance.addPostFrameCallback((duration) {
+      viewModel.clearSelectedInvoiceItem();
+      WidgetsBinding.instance.addPostFrameCallback((duration) async {
         _showInvoiceItemEditor(itemIndex, context);
       });
     }
@@ -247,7 +247,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         FlatButton(
           child: Text(localization.done.toUpperCase()),
           onPressed: () {
-            viewModel.onDoneInvoiceItemPressed();
+            viewModel.clearSelectedInvoiceItem();
             Navigator.of(context).pop();
           },
         )

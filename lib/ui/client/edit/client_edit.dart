@@ -52,7 +52,6 @@ class _ClientEditState extends State<ClientEdit>
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
-
         setState(() {
           //autoValidate = !isValid;
         });

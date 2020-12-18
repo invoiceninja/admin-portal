@@ -67,10 +67,10 @@ class _ProductOverviewState extends State<ProductOverview> {
         EntityHeader(
           entity: product,
           label: localization.price,
-          value: formatNumber(product.price, context),
+          value: formatNumber(product.price, context, roundToPrecision: false),
           secondLabel: localization.cost,
           secondValue: company.enableProductCost
-              ? formatNumber(product.cost, context)
+              ? formatNumber(product.cost, context, roundToPrecision: false)
               : null,
         ),
         ListDivider(),

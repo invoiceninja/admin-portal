@@ -63,7 +63,7 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
           deleteLineItem: deleteLineItem,
           invoiceItemIndex: invoiceItemIndex,
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
-          onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
+          clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
           onChangedInvoiceItem: onChangedInvoiceItem,
         );
 
