@@ -212,7 +212,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DecoratedFormField(
-                    maxLines: 4,
+                    maxLines: 6,
                     controller: _descriptionController,
                     keyboardType: TextInputType.multiline,
                     label: localization.description,
