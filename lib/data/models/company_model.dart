@@ -1986,11 +1986,6 @@ abstract class SettingsEntity
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
 
-  bool doesPdfHaveField(String section, String field) {
-    final fields = getFieldsForSection(section);
-    return fields.contains(field);
-  }
-
   List<String> getFieldsForSection(String section) =>
       pdfVariables != null && pdfVariables.containsKey(section)
           ? pdfVariables[section].toList()
