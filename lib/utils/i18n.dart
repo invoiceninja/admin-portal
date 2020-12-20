@@ -34,6 +34,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'view_licenses': 'View Licenses',
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
+      'wide_editor': 'Wide Editor',
       'sidebar_editor': 'Sidebar Editor',
       'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
@@ -5279,6 +5280,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get fullscreenEditor =>
       _localizedValues[localeCode]['fullscreen_editor'] ?? '';
+
+  String get wideEditor =>
+      _localizedValues[localeCode]['wide_editor'] ?? '';
 
   String get sidebarEditor =>
       _localizedValues[localeCode]['sidebar_editor'] ?? '';
