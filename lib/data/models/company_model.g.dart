@@ -376,10 +376,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.enableShopApi = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'plan':
-          result.plan = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'company_key':
           result.companyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -3581,10 +3577,6 @@ class CompanyEntityBuilder
   set enableShopApi(bool enableShopApi) =>
       _$this._enableShopApi = enableShopApi;
 
-  String _plan;
-  String get plan => _$this._plan;
-  set plan(String plan) => _$this._plan = plan;
-
   String _companyKey;
   String get companyKey => _$this._companyKey;
   set companyKey(String companyKey) => _$this._companyKey = companyKey;
@@ -4850,7 +4842,9 @@ class ReportSettingsEntityBuilder
       _$this._columns ??= new ListBuilder<String>();
   set columns(ListBuilder<String> columns) => _$this._columns = columns;
 
-  ReportSettingsEntityBuilder();
+  ReportSettingsEntityBuilder() {
+    ReportSettingsEntity._initializeBuilder(this);
+  }
 
   ReportSettingsEntityBuilder get _$this {
     if (_$v != null) {
