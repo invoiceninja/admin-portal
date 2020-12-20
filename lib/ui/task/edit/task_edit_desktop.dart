@@ -263,17 +263,22 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   TableHeader(''),
                 ],
               ),
-              for (var taskTime in taskTimes)
+              for (var index = 0; index < taskTimes.length; index++)
                 TableRow(children: [
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: DatePicker(
-                      selectedDate: taskTime.startDate == null
+                      selectedDate: taskTimes[index].startDate == null
                           ? null
-                          : convertDateTimeToSqlDate(taskTime.startDate),
+                          : convertDateTimeToSqlDate(
+                              taskTimes[index].startDate),
                       onSelected: (date) {
+                        print('## onSelected: $index $date');
+                        var taskTime = taskTimes[index];
+
+                        //viewModel.onUpdatedTaskTime(index);
+                        /*
                         setState(() {
-                          /*
                           _date = date;
                           final dateTime = DateTime.parse(_date);
                           _startDate = DateTime(
@@ -290,16 +295,16 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                               _endDate.hour,
                               _endDate.minute,
                               _endDate.second);
-                           */
-                        });
+                        });                        
+                         */
                       },
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TimePicker(
-                      selectedDate: taskTime.startDate,
-                      selectedDateTime: taskTime.startDate,
+                      selectedDate: taskTimes[index].startDate,
+                      selectedDateTime: taskTimes[index].startDate,
                       onSelected: (timeOfDay) {
                         setState(() {
                           //_startDate = timeOfDay;
@@ -311,8 +316,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TimePicker(
                       //key: ValueKey('$_startDate$_durationChanged'),
-                      selectedDate: taskTime.startDate,
-                      selectedDateTime: taskTime.endDate,
+                      selectedDate: taskTimes[index].startDate,
+                      selectedDateTime: taskTimes[index].endDate,
                       allowClearing: true,
                       onSelected: (timeOfDay) {
                         setState(() {
@@ -333,16 +338,16 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           //_durationChanged = DateTime.now();
                         });
                       },
-                      selectedDuration: (taskTime.startDate == null ||
-                              taskTime.endDate == null)
+                      selectedDuration: (taskTimes[index].startDate == null ||
+                              taskTimes[index].endDate == null)
                           ? null
-                          : taskTime.duration,
+                          : taskTimes[index].duration,
                     ),
                   ),
                   IconButton(
                     icon: Icon(Icons.clear),
                     tooltip: localization.remove,
-                    onPressed: taskTime.isEmpty
+                    onPressed: taskTimes[index].isEmpty
                         ? null
                         : () {
                             //viewModel.onRemoveInvoiceItemPressed(index);

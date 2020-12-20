@@ -48,6 +48,7 @@ class TaskEditDetailsVM {
     @required this.onChanged,
     @required this.onAddClientPressed,
     @required this.onAddProjectPressed,
+    @required this.onUpdatedTaskTime,
     @required this.isSaving,
     @required this.origTask,
     @required this.isLoading,
@@ -82,6 +83,13 @@ class TaskEditDetailsVM {
           store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
         });
       },
+      onUpdatedTaskTime: (taskTime, index) {
+        if (index == task.taskTimes.length) {
+          store.dispatch(AddTaskTime(taskTime));
+        } else {
+          store.dispatch(UpdateTaskTime(taskTime: taskTime, index: index));
+        }
+      },
       onAddProjectPressed: (context, completer) {
         createEntity(
             context: context,
@@ -112,4 +120,5 @@ class TaskEditDetailsVM {
       onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddProjectPressed;
+  final Function(TaskTime, int) onUpdatedTaskTime;
 }
