@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -101,6 +100,12 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     final localization = AppLocalization.of(context);
     final task = viewModel.task;
     final state = viewModel.state;
+
+    final taskTime = task.taskTimes;
+
+    if (!taskTime.any((taskTime) => taskTime.isEmpty)) {
+
+    }
 
     return ListView(
       children: [
@@ -233,6 +238,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                 TableHeader(localization.startTime),
                 TableHeader(localization.endTime),
                 TableHeader(localization.duration),
+                TableHeader(''),
               ])
             ],
           ),

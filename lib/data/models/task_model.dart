@@ -88,6 +88,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   @memoized
   int get hashCode;
 
+  @nullable
   DateTime get startDate;
 
   @nullable
@@ -106,6 +107,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
       startDate == taskTime.startDate && endDate == taskTime.endDate;
 
   bool get isRunning => endDate == null;
+
+  bool get isEmpty => startDate == null && endDate == null;
 
   Map<String, Duration> getParts(int timezoneOffset) {
     final localStartDate = startDate.toLocal();
