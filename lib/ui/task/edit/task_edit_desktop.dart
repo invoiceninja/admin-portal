@@ -236,10 +236,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
           //padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
           child: Table(
             columnWidths: {
-              //0: FractionColumnWidth(.25),
-              //1: FractionColumnWidth(.25),
-              //2: FractionColumnWidth(.25),
-              //3: FractionColumnWidth(.25),
               4: FixedColumnWidth(kMinInteractiveDimension),
             },
             children: [
