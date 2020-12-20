@@ -79,8 +79,10 @@ class _TaskEditState extends State<TaskEdit>
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.task] ?? false;
     final store = StoreProvider.of<AppState>(context);
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.task);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       entity: task,
       title: task.isNew ? localization.newTask : localization.editTask,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
@@ -99,18 +101,20 @@ class _TaskEditState extends State<TaskEdit>
 
         viewModel.onSavePressed(context);
       },
-      appBarBottom: TabBar(
-        controller: _controller,
-        //isScrollable: true,
-        tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.times,
-          ),
-        ],
-      ),
+      appBarBottom: isFullscreen
+          ? null
+          : TabBar(
+              controller: _controller,
+              //isScrollable: true,
+              tabs: [
+                Tab(
+                  text: localization.details,
+                ),
+                Tab(
+                  text: localization.times,
+                ),
+              ],
+            ),
       body: Form(
         key: _formKey,
         child: TabBarView(
@@ -136,7 +140,7 @@ class _TaskEditState extends State<TaskEdit>
                 if (isDesktop(context))
                   Tooltip(
                     message: useSidebarEditor
-                        ? localization.wideEditor
+                        ? localization.fullscreenEditor
                         : localization.sidebarEditor,
                     child: InkWell(
                       onTap: () =>

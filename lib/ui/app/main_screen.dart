@@ -85,7 +85,10 @@ class MainScreen extends StatelessWidget {
         } else if (isEdit) {
           isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);
         }
+      } else if (mainRoute == TaskScreen.route) {
+        isFullScreen = prefState.isEditorFullScreen(EntityType.task);
       }
+
       if (DesignEditScreen.route == uiState.currentRoute) {
         isFullScreen = true;
       }
@@ -103,6 +106,9 @@ class MainScreen extends StatelessWidget {
             break;
           case RecurringInvoiceScreen.route:
             screen = RecurringInvoiceEditScreen();
+            break;
+          case TaskScreen.route:
+            screen = TaskEditScreen();
             break;
           default:
             switch (uiState.currentRoute) {
