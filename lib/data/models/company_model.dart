@@ -65,7 +65,9 @@ abstract class CompanyEntity extends Object
       showProductDetails: true,
       enableProductCost: false,
       enableProductQuantity: true,
+      enableProductDiscount: false,
       defaultQuantity: true,
+      defaultTaskIsDateBased: false,
       slackWebhookUrl: '',
       googleAnalyticsKey: '',
       clientCanRegister: true,
@@ -470,7 +472,9 @@ abstract class CompanyEntity extends Object
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
 
   // ignore: unused_element
-  //static void _initializeBuilder(CompanyEntityBuilder builder) => builder..enableProduct;
+  static void _initializeBuilder(CompanyEntityBuilder builder) => builder
+    ..enableProductDiscount = false
+    ..defaultTaskIsDateBased = false;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
