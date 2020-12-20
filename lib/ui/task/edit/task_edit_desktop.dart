@@ -119,6 +119,11 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
             Expanded(
               child: FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding),
                 children: [
                   if (!task.isInvoiced) ...[
                     EntityDropdown(
@@ -178,6 +183,11 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
             Expanded(
               child: FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding / 2),
                 children: [
                   if (task.isOld)
                     DecoratedFormField(
@@ -220,6 +230,11 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
             Expanded(
               child: FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding / 2),
                 children: [
                   DecoratedFormField(
                     maxLines: 6,
@@ -233,7 +248,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
           ],
         ),
         FormCard(
-          //padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
+          padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
           child: Table(
             columnWidths: {
               4: FixedColumnWidth(kMinInteractiveDimension),
