@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -8,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -221,6 +223,19 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
               ),
             ),
           ],
+        ),
+        FormCard(
+          //padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
+          child: Table(
+            children: [
+              TableRow(children: [
+                TableHeader(localization.date),
+                TableHeader(localization.startTime),
+                TableHeader(localization.endTime),
+                TableHeader(localization.duration),
+              ])
+            ],
+          ),
         )
       ],
     );
