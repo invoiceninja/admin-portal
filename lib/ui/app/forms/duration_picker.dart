@@ -8,12 +8,14 @@ class DurationPicker extends StatefulWidget {
     Key key,
     @required this.selectedDuration,
     @required this.onSelected,
+    this.labelText,
     this.allowClearing = false,
   }) : super(key: key);
 
   final Duration selectedDuration;
   final Function onSelected;
   final bool allowClearing;
+  final String labelText;
 
   @override
   _DurationPickerState createState() => _DurationPickerState();
@@ -56,8 +58,6 @@ class _DurationPickerState extends State<DurationPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-
     return DecoratedFormField(
       controller: _textController,
       focusNode: _focusNode,
@@ -81,7 +81,7 @@ class _DurationPickerState extends State<DurationPicker> {
         widget.onSelected(duration);
       },
       decoration: InputDecoration(
-          labelText: localization.duration,
+          labelText: widget.labelText,
           suffixIcon: widget.allowClearing &&
                   (widget.selectedDuration != null &&
                       widget.selectedDuration.inSeconds != 0)

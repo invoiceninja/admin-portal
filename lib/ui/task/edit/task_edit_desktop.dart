@@ -7,8 +7,10 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/duration_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
@@ -234,10 +236,10 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
           //padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
           child: Table(
             columnWidths: {
-              0: FractionColumnWidth(.25),
-              1: FractionColumnWidth(.25),
-              2: FractionColumnWidth(.25),
-              3: FractionColumnWidth(.25),
+              //0: FractionColumnWidth(.25),
+              //1: FractionColumnWidth(.25),
+              //2: FractionColumnWidth(.25),
+              //3: FractionColumnWidth(.25),
               4: FixedColumnWidth(kMinInteractiveDimension),
             },
             children: [
@@ -282,10 +284,62 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       },
                     ),
                   ),
-                  SizedBox(),
-                  SizedBox(),
-                  SizedBox(),
-                  SizedBox(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: TimePicker(
+                      selectedDate: taskTime.startDate,
+                      selectedDateTime: taskTime.startDate,
+                      onSelected: (timeOfDay) {
+                        setState(() {
+                          //_startDate = timeOfDay;
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: TimePicker(
+                      //key: ValueKey('$_startDate$_durationChanged'),
+                      selectedDate: taskTime.startDate,
+                      //selectedDateTime: task.,
+                      allowClearing: true,
+                      onSelected: (timeOfDay) {
+                        setState(() {
+                          //_endDate = timeOfDay;
+                          //_endDateChanged = DateTime.now();
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: DurationPicker(
+                      //key: ValueKey(_endDateChanged),
+                      allowClearing: true,
+                      onSelected: (Duration duration) {
+                        setState(() {
+                          //_endDate = _startDate.add(duration);
+                          //_durationChanged = DateTime.now();
+                        });
+                      },
+                      /*
+                      selectedDuration: (_endDate != null && _startDate != null)
+                          ? _endDate.difference(_startDate)
+                          : null,
+
+                       */
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.clear),
+                    tooltip: localization.remove,
+                    onPressed: taskTime.isEmpty
+                        ? null
+                        : () {
+                            //viewModel.onRemoveInvoiceItemPressed(index);
+                            //_updateTable();
+                          },
+                  ),
                 ]),
             ],
           ),

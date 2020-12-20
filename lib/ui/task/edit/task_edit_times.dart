@@ -176,6 +176,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             ),
             DurationPicker(
               key: ValueKey(_endDateChanged),
+              labelText: localization.duration,
               allowClearing: true,
               onSelected: (Duration duration) {
                 setState(() {

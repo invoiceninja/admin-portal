@@ -88,6 +88,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   @memoized
   int get hashCode;
 
+  @nullable
   DateTime get startDate;
 
   @nullable
