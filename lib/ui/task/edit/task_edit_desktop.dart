@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
@@ -101,10 +103,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     final task = viewModel.task;
     final state = viewModel.state;
 
-    final taskTime = task.taskTimes;
-
-    if (!taskTime.any((taskTime) => taskTime.isEmpty)) {
-
+    final taskTimes = task.taskTimes;
+    if (!taskTimes.any((taskTime) => taskTime.isEmpty)) {
+      taskTimes.add(TaskTime(startDate: null, endDate: null));
     }
 
     return ListView(
@@ -233,13 +234,53 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
           //padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
           child: Table(
             children: [
-              TableRow(children: [
-                TableHeader(localization.date),
-                TableHeader(localization.startTime),
-                TableHeader(localization.endTime),
-                TableHeader(localization.duration),
-                TableHeader(''),
-              ])
+              TableRow(
+                children: [
+                  TableHeader(localization.date),
+                  TableHeader(localization.startTime),
+                  TableHeader(localization.endTime),
+                  TableHeader(localization.duration),
+                  TableHeader(''),
+                ],
+              ),
+              for (var taskTime in taskTimes)
+                TableRow(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: DatePicker(
+                      labelText: localization.date,
+                      selectedDate: taskTime.startDate == null
+                          ? null
+                          : convertDateTimeToSqlDate(taskTime.startDate),
+                      onSelected: (date) {
+                        setState(() {
+                          /*
+                          _date = date;
+                          final dateTime = DateTime.parse(_date);
+                          _startDate = DateTime(
+                              dateTime.year,
+                              dateTime.month,
+                              dateTime.day,
+                              _startDate.hour,
+                              _startDate.minute,
+                              _startDate.second);
+                          _endDate = DateTime(
+                              dateTime.year,
+                              dateTime.month,
+                              dateTime.day,
+                              _endDate.hour,
+                              _endDate.minute,
+                              _endDate.second);
+                           */
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(),
+                  SizedBox(),
+                  SizedBox(),
+                  SizedBox(),
+                ]),
             ],
           ),
         )
