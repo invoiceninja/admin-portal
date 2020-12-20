@@ -297,7 +297,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     child: TimePicker(
                       //key: ValueKey('$_startDate$_durationChanged'),
                       selectedDate: taskTime.startDate,
-                      //selectedDateTime: task.,
+                      selectedDateTime: taskTime.endDate,
                       allowClearing: true,
                       onSelected: (timeOfDay) {
                         setState(() {
@@ -318,12 +318,10 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           //_durationChanged = DateTime.now();
                         });
                       },
-                      /*
-                      selectedDuration: (_endDate != null && _startDate != null)
-                          ? _endDate.difference(_startDate)
-                          : null,
-
-                       */
+                      selectedDuration: (taskTime.startDate == null ||
+                              taskTime.endDate == null)
+                          ? null
+                          : taskTime.duration,
                     ),
                   ),
                   IconButton(
