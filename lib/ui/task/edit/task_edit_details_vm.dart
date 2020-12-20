@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -22,9 +23,17 @@ class TaskEditDetailsScreen extends StatelessWidget {
         return TaskEditDetailsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return TaskEditDetails(
-          viewModel: viewModel,
-        );
+        if (viewModel.state.prefState.isEditorFullScreen(EntityType.task)) {
+          return TaskEditDesktop(
+            viewModel: viewModel,
+            //entityViewModel: this.viewModel,
+            //key: ValueKey('__task_${viewModel.task.id}__'),
+          );
+        } else {
+          return TaskEditDetails(
+            viewModel: viewModel,
+          );
+        }
       },
     );
   }
