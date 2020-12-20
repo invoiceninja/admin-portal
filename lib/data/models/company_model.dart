@@ -168,6 +168,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'enable_product_discount')
   bool get enableProductDiscount;
 
+  @BuiltValueField(wireName: 'default_task_is_date_based')
+  bool get defaultTaskIsDateBased;
+
   @BuiltValueField(wireName: 'default_quantity')
   bool get defaultQuantity;
 
@@ -465,6 +468,9 @@ abstract class CompanyEntity extends Object
   }
 
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
+
+  // ignore: unused_element
+  //static void _initializeBuilder(CompanyEntityBuilder builder) => builder..enableProduct;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
