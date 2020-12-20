@@ -43,6 +43,11 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
 
+  int _dateUpdatedAt = 0;
+  int _startUpdatedAt = 0;
+  int _endUpdatedAt = 0;
+  int _durationUpdateAt = 0;
+
   @override
   void didChangeDependencies() {
     _controllers = [
@@ -276,6 +281,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         print('## date - onSelected: $date');
                         final taskTime = taskTimes[index].copyWithDate(date);
                         viewModel.onUpdatedTaskTime(taskTime, index);
+                        setState(() {
+                          _dateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                        });
                       },
                     ),
                   ),
@@ -289,6 +297,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         print('## start date - onSelected: $timeOfDay');
                         final taskTime = taskTimes[index].copyWithStartDateTime(timeOfDay);
                         viewModel.onUpdatedTaskTime(taskTime, index);
+                        setState(() {
+                          _startUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                        });
                       },
                     ),
                   ),
@@ -298,23 +309,23 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       //key: ValueKey('$_startDate$_durationChanged'),
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].endDate,
-                      //allowClearing: true,
                       onSelected: (timeOfDay) {
                         print('## end date - onSelected: $timeOfDay');
                         final taskTime = taskTimes[index].copyWithEndDateTime(timeOfDay);
                         viewModel.onUpdatedTaskTime(taskTime, index);
+                        setState(() {
+                          _endUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                        });
                       },
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: DurationPicker(
-                      //key: ValueKey(_endDateChanged),
-                      //allowClearing: true,
+                      key: ValueKey('__${_startUpdatedAt}_${_endUpdatedAt}__'),
                       onSelected: (Duration duration) {
                         setState(() {
-                          //_endDate = _startDate.add(duration);
-                          //_durationChanged = DateTime.now();
+                          _durationUpdateAt = DateTime.now().millisecondsSinceEpoch;
                         });
                       },
                       selectedDuration: (taskTimes[index].startDate == null ||
