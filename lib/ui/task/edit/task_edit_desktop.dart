@@ -107,7 +107,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
 
     final taskTimes = task.taskTimes;
     if (!taskTimes.any((taskTime) => taskTime.isEmpty)) {
-      taskTimes.add(TaskTime(startDate: null, endDate: null));
+      taskTimes.add(TaskTime().rebuild((b) => b..startDate = null));
     }
 
     return ListView(
@@ -273,18 +273,18 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           : convertDateTimeToSqlDate(
                               taskTimes[index].startDate),
                       onSelected: (date) {
-                        print('## onSelected: $index $date');
                         final oldTaskTime = taskTimes[index];
                         final dateTime = DateTime.parse(date);
+                        final now = DateTime.now();
 
                         final taskTime = TaskTime(
                             startDate: DateTime(
                               dateTime.year,
                               dateTime.month,
                               dateTime.day,
-                              oldTaskTime.startDate.hour,
-                              oldTaskTime.startDate.minute,
-                              oldTaskTime.startDate.second,
+                              oldTaskTime?.startDate?.hour ?? now.hour,
+                              oldTaskTime?.startDate?.minute ?? now.minute,
+                              oldTaskTime?.startDate?.second ?? now.second,
                             ),
                             endDate: oldTaskTime.endDate == null
                                 ? null
