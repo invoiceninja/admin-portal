@@ -110,12 +110,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
               child: FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (task.isOld)
-                    DecoratedFormField(
-                      controller: _numberController,
-                      label: localization.taskNumber,
-                      autocorrect: false,
-                    ),
                   if (!task.isInvoiced) ...[
                     EntityDropdown(
                       key: Key('__client_${task.clientId}__'),
@@ -175,6 +169,12 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
               child: FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (task.isOld)
+                    DecoratedFormField(
+                      controller: _numberController,
+                      label: localization.taskNumber,
+                      autocorrect: false,
+                    ),
                   DynamicSelector(
                     key: ValueKey('__task_status_${task.statusId}__'),
                     allowClearing: false,
