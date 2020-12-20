@@ -165,6 +165,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'enable_product_quantity')
   bool get enableProductQuantity;
 
+  @BuiltValueField(wireName: 'enable_product_discount')
+  bool get enableProductDiscount;
+
   @BuiltValueField(wireName: 'default_quantity')
   bool get defaultQuantity;
 
