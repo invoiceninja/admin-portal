@@ -146,6 +146,59 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     return dates;
   }
 
+  TaskTime copyWithDate(String date) {
+    final dateTime = DateTime.parse(date);
+    final now = DateTime.now();
+
+    return TaskTime(
+        startDate: DateTime(
+          dateTime.year,
+          dateTime.month,
+          dateTime.day,
+          startDate?.hour ?? now.hour,
+          startDate?.minute ?? now.minute,
+          startDate?.second ?? now.second,
+        ),
+        endDate: endDate == null
+            ? null
+            : DateTime(
+                dateTime.year,
+                dateTime.month,
+                dateTime.day,
+                endDate.hour,
+                endDate.minute,
+                endDate.second,
+              ));
+  }
+
+  TaskTime copyWithStartDateTime(DateTime dateTime) {
+    return TaskTime(
+      startDate: DateTime(
+        startDate.year,
+        startDate.month,
+        startDate.day,
+        dateTime.hour,
+        dateTime.minute,
+        dateTime.second,
+      ),
+      endDate: endDate,
+    );
+  }
+
+  TaskTime copyWithEndDateTime(DateTime dateTime) {
+    return TaskTime(
+      startDate: startDate,
+      endDate: DateTime(
+        endDate?.year ?? dateTime.year,
+        endDate?.month ?? dateTime.month,
+        endDate?.day ?? dateTime.day,
+        dateTime.hour,
+        dateTime.minute,
+        dateTime.second,
+      ),
+    );
+  }
+
   static Serializer<TaskTime> get serializer => _$taskTimeSerializer;
 }
 

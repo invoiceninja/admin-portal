@@ -273,30 +273,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           : convertDateTimeToSqlDate(
                               taskTimes[index].startDate),
                       onSelected: (date) {
-                        final oldTaskTime = taskTimes[index];
-                        final dateTime = DateTime.parse(date);
-                        final now = DateTime.now();
-
-                        final taskTime = TaskTime(
-                            startDate: DateTime(
-                              dateTime.year,
-                              dateTime.month,
-                              dateTime.day,
-                              oldTaskTime?.startDate?.hour ?? now.hour,
-                              oldTaskTime?.startDate?.minute ?? now.minute,
-                              oldTaskTime?.startDate?.second ?? now.second,
-                            ),
-                            endDate: oldTaskTime.endDate == null
-                                ? null
-                                : DateTime(
-                                    dateTime.year,
-                                    dateTime.month,
-                                    dateTime.day,
-                                    oldTaskTime.endDate.hour,
-                                    oldTaskTime.endDate.minute,
-                                    oldTaskTime.endDate.second,
-                                  ));
-
+                        print('## date - onSelected: $date');
+                        final taskTime = taskTimes[index].copyWithDate(date);
                         viewModel.onUpdatedTaskTime(taskTime, index);
                       },
                     ),
@@ -307,9 +285,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].startDate,
                       onSelected: (timeOfDay) {
-                        setState(() {
-                          //_startDate = timeOfDay;
-                        });
+                        print('## start date - onSelected: $timeOfDay');
+                        final taskTime = taskTimes[index].copyWithStartDateTime(timeOfDay);
+                        viewModel.onUpdatedTaskTime(taskTime, index);
                       },
                     ),
                   ),
@@ -321,10 +299,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       selectedDateTime: taskTimes[index].endDate,
                       allowClearing: true,
                       onSelected: (timeOfDay) {
-                        setState(() {
-                          //_endDate = timeOfDay;
-                          //_endDateChanged = DateTime.now();
-                        });
+                        print('## end date - onSelected: $timeOfDay');
+                        final taskTime = taskTimes[index].copyWithEndDateTime(timeOfDay);
+                        viewModel.onUpdatedTaskTime(taskTime, index);
                       },
                     ),
                   ),
