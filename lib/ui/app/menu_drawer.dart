@@ -1013,7 +1013,7 @@ void _showAbout(BuildContext context) async {
                         ? localization.updateApp
                         : localization.forceUpdate)
                     .toUpperCase(),
-                iconData: MdiIcons.update,
+                iconData: MdiIcons.cloudDownload,
                 color: Colors.orange,
                 onPressed: () => _showUpdate(context),
               ),
