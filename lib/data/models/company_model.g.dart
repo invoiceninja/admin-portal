@@ -3871,7 +3871,9 @@ class CompanyEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  CompanyEntityBuilder();
+  CompanyEntityBuilder() {
+    CompanyEntity._initializeBuilder(this);
+  }
 
   CompanyEntityBuilder get _$this {
     if (_$v != null) {
