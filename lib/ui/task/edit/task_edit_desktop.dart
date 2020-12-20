@@ -233,6 +233,13 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
         FormCard(
           //padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
           child: Table(
+            columnWidths: {
+              0: FractionColumnWidth(.25),
+              1: FractionColumnWidth(.25),
+              2: FractionColumnWidth(.25),
+              3: FractionColumnWidth(.25),
+              4: FixedColumnWidth(kMinInteractiveDimension),
+            },
             children: [
               TableRow(
                 children: [
@@ -248,7 +255,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: DatePicker(
-                      labelText: localization.date,
                       selectedDate: taskTime.startDate == null
                           ? null
                           : convertDateTimeToSqlDate(taskTime.startDate),

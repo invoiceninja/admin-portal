@@ -4,9 +4,9 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({
-    @required this.labelText,
     @required this.onSelected,
     @required this.selectedDate,
+    this.labelText,
     this.validator,
     this.autoValidate = false,
     this.allowClearing = false,
