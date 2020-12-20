@@ -602,6 +602,7 @@ class SidebarFooter extends StatelessWidget {
                 )
               else if (account.isUpdateAvailable)
                 IconButton(
+                  tooltip: localization.updateAvailable,
                   icon: Icon(
                     Icons.warning,
                     color: Theme.of(context).accentColor,
@@ -932,8 +933,7 @@ void _showAbout(BuildContext context) async {
                                             ),
                                             AppButton(
                                               label: 'Flutter/Dart',
-                                              iconData:
-                                                  MdiIcons.desktopClassic,
+                                              iconData: MdiIcons.desktopClassic,
                                               onPressed: () =>
                                                   launch(kSourceCodeFrontend),
                                             ),
@@ -1009,7 +1009,10 @@ void _showAbout(BuildContext context) async {
                 },
               ),
               AppButton(
-                label: localization.forceUpdate.toUpperCase(),
+                label: (state.account.isUpdateAvailable
+                        ? localization.updateApp
+                        : localization.forceUpdate)
+                    .toUpperCase(),
                 iconData: MdiIcons.update,
                 color: Colors.orange,
                 onPressed: () => _showUpdate(context),
