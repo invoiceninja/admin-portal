@@ -79,7 +79,7 @@ class _TimePickerState extends State<TimePicker> {
 
     if (selectedTime != null) {
       var dateTime =
-      convertTimeOfDayToDateTime(selectedTime, widget.selectedDate);
+          convertTimeOfDayToDateTime(selectedTime, widget.selectedDate);
 
       if (widget.selectedDate != null &&
           dateTime.isBefore(widget.selectedDate)) {
@@ -106,16 +106,16 @@ class _TimePickerState extends State<TimePicker> {
         labelText: widget.labelText,
         suffixIcon: widget.allowClearing && widget.selectedDateTime != null
             ? IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            _textController.text = '';
-            widget.onSelected(null);
-          },
-        )
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  _textController.text = '';
+                  widget.onSelected(null);
+                },
+              )
             : IconButton(
-          icon: Icon(Icons.access_time),
-          onPressed: () => _showTimePicker(),
-        ),
+                icon: Icon(Icons.access_time),
+                onPressed: () => _showTimePicker(),
+              ),
       ),
       onChanged: (value) {
         if (value.isEmpty) {
@@ -144,9 +144,9 @@ class _TimePickerState extends State<TimePicker> {
             }
           }
 
-          if (initialValue.contains('a')) {
+          if (initialValue.toLowerCase().contains('a')) {
             dateTimeStr += ' AM';
-          } else if (initialValue.contains('p')) {
+          } else if (initialValue.toLowerCase().contains('p')) {
             dateTimeStr += ' PM';
           } else {
             final store = StoreProvider.of<AppState>(context);
