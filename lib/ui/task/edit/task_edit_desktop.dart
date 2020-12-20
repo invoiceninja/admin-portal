@@ -274,29 +274,30 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                               taskTimes[index].startDate),
                       onSelected: (date) {
                         print('## onSelected: $index $date');
-                        var taskTime = taskTimes[index];
+                        final oldTaskTime = taskTimes[index];
+                        final dateTime = DateTime.parse(date);
 
-                        //viewModel.onUpdatedTaskTime(index);
-                        /*
-                        setState(() {
-                          _date = date;
-                          final dateTime = DateTime.parse(_date);
-                          _startDate = DateTime(
+                        final taskTime = TaskTime(
+                            startDate: DateTime(
                               dateTime.year,
                               dateTime.month,
                               dateTime.day,
-                              _startDate.hour,
-                              _startDate.minute,
-                              _startDate.second);
-                          _endDate = DateTime(
-                              dateTime.year,
-                              dateTime.month,
-                              dateTime.day,
-                              _endDate.hour,
-                              _endDate.minute,
-                              _endDate.second);
-                        });                        
-                         */
+                              oldTaskTime.startDate.hour,
+                              oldTaskTime.startDate.minute,
+                              oldTaskTime.startDate.second,
+                            ),
+                            endDate: oldTaskTime.endDate == null
+                                ? null
+                                : DateTime(
+                                    dateTime.year,
+                                    dateTime.month,
+                                    dateTime.day,
+                                    oldTaskTime.endDate.hour,
+                                    oldTaskTime.endDate.minute,
+                                    oldTaskTime.endDate.second,
+                                  ));
+
+                        viewModel.onUpdatedTaskTime(taskTime, index);
                       },
                     ),
                   ),
