@@ -284,7 +284,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     child: TimePicker(
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].startDate,
-                      allowClearing: true,
+                      //allowClearing: true,
                       onSelected: (timeOfDay) {
                         print('## start date - onSelected: $timeOfDay');
                         final taskTime = taskTimes[index].copyWithStartDateTime(timeOfDay);
@@ -298,7 +298,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       //key: ValueKey('$_startDate$_durationChanged'),
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].endDate,
-                      allowClearing: true,
+                      //allowClearing: true,
                       onSelected: (timeOfDay) {
                         print('## end date - onSelected: $timeOfDay');
                         final taskTime = taskTimes[index].copyWithEndDateTime(timeOfDay);
@@ -310,7 +310,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: DurationPicker(
                       //key: ValueKey(_endDateChanged),
-                      allowClearing: true,
+                      //allowClearing: true,
                       onSelected: (Duration duration) {
                         setState(() {
                           //_endDate = _startDate.add(duration);
