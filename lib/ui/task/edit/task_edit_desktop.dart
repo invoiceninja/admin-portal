@@ -284,6 +284,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     child: TimePicker(
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].startDate,
+                      allowClearing: true,
                       onSelected: (timeOfDay) {
                         print('## start date - onSelected: $timeOfDay');
                         final taskTime = taskTimes[index].copyWithStartDateTime(timeOfDay);

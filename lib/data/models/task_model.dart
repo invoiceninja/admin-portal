@@ -158,7 +158,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
           startDate?.hour ?? now.hour,
           startDate?.minute ?? now.minute,
           startDate?.second ?? now.second,
-        ),
+        ).toUtc(),
         endDate: endDate == null
             ? null
             : DateTime(
@@ -168,7 +168,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
                 endDate.hour,
                 endDate.minute,
                 endDate.second,
-              ));
+              ).toUtc());
   }
 
   TaskTime copyWithStartDateTime(DateTime dateTime) {
@@ -180,7 +180,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         dateTime.hour,
         dateTime.minute,
         dateTime.second,
-      ),
+      ).toUtc(),
       endDate: endDate,
     );
   }
@@ -195,7 +195,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         dateTime.hour,
         dateTime.minute,
         dateTime.second,
-      ),
+      ).toUtc(),
     );
   }
 
