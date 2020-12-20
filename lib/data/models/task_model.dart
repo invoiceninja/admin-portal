@@ -148,7 +148,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   TaskTime copyWithDate(String date) {
     final dateTime = DateTime.parse(date);
-    final now = DateTime.now();
+    final now = DateTime.now().toLocal();
 
     return TaskTime(
         startDate: DateTime(
@@ -172,11 +172,13 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   }
 
   TaskTime copyWithStartDateTime(DateTime dateTime) {
+    final now = DateTime.now().toLocal();
+
     return TaskTime(
       startDate: DateTime(
-        startDate.year,
-        startDate.month,
-        startDate.day,
+        startDate?.year ?? now.year,
+        startDate?.month ?? now.month,
+        startDate?.day ?? now.day,
         dateTime.hour,
         dateTime.minute,
         dateTime.second,

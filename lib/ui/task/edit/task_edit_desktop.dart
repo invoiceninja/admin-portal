@@ -273,6 +273,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: DatePicker(
+                      key: ValueKey('__${_startUpdatedAt}__'),
                       selectedDate: taskTimes[index].startDate == null
                           ? null
                           : convertDateTimeToSqlDate(
@@ -282,7 +283,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         final taskTime = taskTimes[index].copyWithDate(date);
                         viewModel.onUpdatedTaskTime(taskTime, index);
                         setState(() {
-                          _dateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                          _dateUpdatedAt =
+                              DateTime.now().millisecondsSinceEpoch;
                         });
                       },
                     ),
@@ -290,15 +292,18 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TimePicker(
-                      selectedDate: taskTimes[index].startDate,
+                      selectedDate: taskTimes[index].startDate ??
+                          DateTime.now().toLocal(),
                       selectedDateTime: taskTimes[index].startDate,
                       //allowClearing: true,
                       onSelected: (timeOfDay) {
                         print('## start date - onSelected: $timeOfDay');
-                        final taskTime = taskTimes[index].copyWithStartDateTime(timeOfDay);
+                        final taskTime =
+                            taskTimes[index].copyWithStartDateTime(timeOfDay);
                         viewModel.onUpdatedTaskTime(taskTime, index);
                         setState(() {
-                          _startUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                          _startUpdatedAt =
+                              DateTime.now().millisecondsSinceEpoch;
                         });
                       },
                     ),
@@ -311,7 +316,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       selectedDateTime: taskTimes[index].endDate,
                       onSelected: (timeOfDay) {
                         print('## end date - onSelected: $timeOfDay');
-                        final taskTime = taskTimes[index].copyWithEndDateTime(timeOfDay);
+                        final taskTime =
+                            taskTimes[index].copyWithEndDateTime(timeOfDay);
                         viewModel.onUpdatedTaskTime(taskTime, index);
                         setState(() {
                           _endUpdatedAt = DateTime.now().millisecondsSinceEpoch;
@@ -325,7 +331,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       key: ValueKey('__${_startUpdatedAt}_${_endUpdatedAt}__'),
                       onSelected: (Duration duration) {
                         setState(() {
-                          _durationUpdateAt = DateTime.now().millisecondsSinceEpoch;
+                          _durationUpdateAt =
+                              DateTime.now().millisecondsSinceEpoch;
                         });
                       },
                       selectedDuration: (taskTimes[index].startDate == null ||
