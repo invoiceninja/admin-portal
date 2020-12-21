@@ -275,13 +275,13 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: DatePicker(
-                      key: ValueKey('__${_startUpdatedAt}__'),
+                      key: ValueKey('__${_startUpdatedAt}_${index}__'),
                       selectedDate: taskTimes[index].startDate == null
                           ? null
                           : convertDateTimeToSqlDate(
                               taskTimes[index].startDate),
                       onSelected: (date) {
-                        print('## SELECTED: $date');
+                        print('## SELECTED: $date - $index');
                         final taskTime = taskTimes[index].copyWithDate(date);
                         print('## SELECTED HOUR: ${taskTime.startDate.hour}');
                         viewModel.onUpdatedTaskTime(taskTime, index);
@@ -295,7 +295,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TimePicker(
-                      key: ValueKey('__${_dateUpdatedAt}__'),
+                      key: ValueKey('__${_dateUpdatedAt}_${index}__'),
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].startDate,
                       onSelected: (timeOfDay) {
@@ -312,7 +312,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TimePicker(
-                      key: ValueKey('__${_durationUpdateAt}__'),
+                      key: ValueKey('__${_durationUpdateAt}_${index}__'),
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].endDate,
                       isEndTime: true,
@@ -330,7 +330,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: DurationPicker(
                       key: ValueKey(
-                          '__${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}_'),
+                          '__${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}_${index}__'),
                       onSelected: (Duration duration) {
                         final taskTime =
                             taskTimes[index].copyWithDuration(duration);
