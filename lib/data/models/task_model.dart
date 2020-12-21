@@ -201,6 +201,13 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     );
   }
 
+  TaskTime copyWithDuration(Duration duration) {
+    return TaskTime(
+      startDate: startDate,
+      endDate: startDate.add(duration),
+    );
+  }
+
   static Serializer<TaskTime> get serializer => _$taskTimeSerializer;
 }
 

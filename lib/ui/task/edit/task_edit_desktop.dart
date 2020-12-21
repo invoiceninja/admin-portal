@@ -311,7 +311,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TimePicker(
-                      //key: ValueKey('$_startDate$_durationChanged'),
+                      key: ValueKey('__${_durationUpdateAt}__'),
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].endDate,
                       onSelected: (timeOfDay) {
@@ -328,8 +328,13 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: DurationPicker(
-                      key: ValueKey('__${_startUpdatedAt}_${_endUpdatedAt}__'),
+                      key: ValueKey(
+                          '__${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}_'),
                       onSelected: (Duration duration) {
+                        print('## duration - onSelected: $duration');
+                        final taskTime =
+                            taskTimes[index].copyWithDuration(duration);
+                        viewModel.onUpdatedTaskTime(taskTime, index);
                         setState(() {
                           _durationUpdateAt =
                               DateTime.now().millisecondsSinceEpoch;
