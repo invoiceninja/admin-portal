@@ -85,7 +85,7 @@ class MainScreen extends StatelessWidget {
         } else if (isEdit) {
           isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);
         }
-      } else if (mainRoute == TaskScreen.route) {
+      } else if (mainRoute == TaskScreen.route && isEdit) {
         isFullScreen = prefState.isEditorFullScreen(EntityType.task);
       }
 
