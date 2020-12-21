@@ -9,6 +9,7 @@ class TimePicker extends StatefulWidget {
     @required this.onSelected,
     @required this.selectedDateTime,
     @required this.selectedDate,
+    this.isEndTime = false,
     this.labelText,
     this.validator,
     this.autoValidate = false,
@@ -22,6 +23,7 @@ class TimePicker extends StatefulWidget {
   final Function validator;
   final bool autoValidate;
   final bool allowClearing;
+  final bool isEndTime;
 
   @override
   _TimePickerState createState() => new _TimePickerState();
@@ -159,7 +161,7 @@ class _TimePickerState extends State<TimePicker> {
           final dateTime = parseTime(dateTimeStr, context);
 
           if (dateTime != null) {
-            final date = widget.selectedDate;
+            final date = widget.selectedDate.toLocal();
             var selectedDate = DateTime(
               date.year,
               date.month,
@@ -168,9 +170,15 @@ class _TimePickerState extends State<TimePicker> {
               dateTime.minute,
               dateTime.second,
             );
-            if (selectedDate.isBefore(date)) {
+
+            print('## date: $date ${date.isUtc}');
+            print('## SELECTED DATE: $selectedDate ${selectedDate.isUtc}');
+
+            if (selectedDate.isBefore(date) && widget.isEndTime) {
+              print('## Adding 24 horus');
               selectedDate = selectedDate.add(Duration(hours: 24));
             }
+            print('## SELECTING: $selectedDate ${selectedDate.isUtc}');
             widget.onSelected(selectedDate);
           }
         }

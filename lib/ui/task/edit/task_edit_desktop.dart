@@ -256,7 +256,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
         FormCard(
           padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
           child: Table(
-            key: ValueKey('__datatable_${_updatedAt}__'),
+            key: ValueKey('__table_${_updatedAt}__'),
             columnWidths: {
               4: FixedColumnWidth(kMinInteractiveDimension),
             },
@@ -313,6 +313,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       key: ValueKey('__${_durationUpdateAt}__'),
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].endDate,
+                      isEndTime: true,
                       onSelected: (timeOfDay) {
                         final taskTime =
                             taskTimes[index].copyWithEndDateTime(timeOfDay);
@@ -351,9 +352,10 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         : () {
                             viewModel.onRemoveTaskTime(index);
                             setState(() {
-                              _updatedAt = DateTime.now().millisecondsSinceEpoch;
+                              _updatedAt =
+                                  DateTime.now().millisecondsSinceEpoch;
                             });
-                    },
+                          },
                   ),
                 ]),
             ],

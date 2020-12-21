@@ -191,9 +191,9 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     return TaskTime(
       startDate: startDate,
       endDate: DateTime(
-        endDate?.year ?? dateTime.year,
-        endDate?.month ?? dateTime.month,
-        endDate?.day ?? dateTime.day,
+        dateTime.year,
+        dateTime.month,
+        dateTime.day,
         dateTime.hour,
         dateTime.minute,
         dateTime.second,
