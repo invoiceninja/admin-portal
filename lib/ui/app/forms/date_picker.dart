@@ -123,6 +123,7 @@ class _DatePickerState extends State<DatePicker> {
           if (isAllDigits(value) || value.length <= 5) {
             String firstPart = '01';
             String secondPart = '01';
+            int year = DateTime.now().year;
             if (value.contains('/')) {
               final parts = value.split('/');
               if (parts[0].length == 1) {
@@ -137,14 +138,30 @@ class _DatePickerState extends State<DatePicker> {
               }
             } else {
               value = value.replaceAll(RegExp(r'[^0-9]'), '');
+
               if (value.length <= 2) {
                 firstPart = value;
               } else if (value.length == 3) {
                 firstPart = '0' + value.substring(0, 1);
                 secondPart = value.substring(1, 3);
               } else {
+                if (value.length == 5) {
+                  value = '0$value';
+                }
+
                 firstPart = value.substring(0, 2);
                 secondPart = value.substring(2, 4);
+
+                if (value.length == 6) {
+                  year = int.tryParse(value.substring(4, 6));
+                  if (year < 30) {
+                    year += 2000;
+                  } else {
+                    year += 1900;
+                  }
+                } else if (value.length == 8) {
+                  year = int.tryParse(value.substring(4, 8));
+                }
               }
             }
 
@@ -162,8 +179,10 @@ class _DatePickerState extends State<DatePicker> {
                 : '$month$day';
 
             if (value.length == 4) {
-              value = '${DateTime.now().year}$value';
+              value = '$year$value';
             }
+
+            print('## VLAUE: $value');
 
             date = convertDateTimeToSqlDate(DateTime.tryParse(value));
           } else {
