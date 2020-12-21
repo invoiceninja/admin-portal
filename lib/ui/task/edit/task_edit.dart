@@ -32,6 +32,7 @@ class _TaskEditState extends State<TaskEdit>
     with SingleTickerProviderStateMixin {
   Timer _timer;
   TabController _controller;
+  int _updatedAt = 0;
 
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taskEdit');
@@ -121,7 +122,7 @@ class _TaskEditState extends State<TaskEdit>
           key: ValueKey(viewModel.task.id),
           controller: _controller,
           children: <Widget>[
-            TaskEditDetailsScreen(),
+            TaskEditDetailsScreen(key: ValueKey('__${_updatedAt}__')),
             TaskEditTimesScreen(),
           ],
         ),
@@ -184,7 +185,12 @@ class _TaskEditState extends State<TaskEdit>
           : FloatingActionButton(
               heroTag: 'task_edit_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () => viewModel.onFabPressed(),
+              onPressed: () {
+                viewModel.onFabPressed();
+                setState(() {
+                  _updatedAt = DateTime.now().millisecondsSinceEpoch;
+                });
+              },
               child: Icon(
                 task.isRunning ? Icons.stop : Icons.play_arrow,
                 color: Colors.white,
