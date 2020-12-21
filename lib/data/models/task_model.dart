@@ -173,7 +173,6 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   TaskTime copyWithStartDateTime(DateTime dateTime) {
     final now = DateTime.now().toUtc();
-
     return TaskTime(
       startDate: DateTime.utc(
         startDate?.year ?? now.year,

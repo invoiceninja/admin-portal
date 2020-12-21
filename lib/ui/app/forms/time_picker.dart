@@ -172,7 +172,7 @@ class _TimePickerState extends State<TimePicker> {
           print('## dateTime: $dateTime ${dateTime.isUtc}');
           if (dateTime != null) {
             dateTime = dateTime.toUtc();
-            final date = widget.selectedDate;
+            final date = widget.selectedDate ?? DateTime.now().toUtc();
             var selectedDate = DateTime.utc(
               date.year,
               date.month,
