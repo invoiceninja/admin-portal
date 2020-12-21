@@ -279,7 +279,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       selectedDate: taskTimes[index].startDate == null
                           ? null
                           : convertDateTimeToSqlDate(
-                              taskTimes[index].startDate),
+                              taskTimes[index].startDate.toLocal()),
                       onSelected: (date) {
                         print('## SELECTED: $date - $index');
                         final taskTime = taskTimes[index].copyWithDate(date);
