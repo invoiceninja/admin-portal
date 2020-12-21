@@ -353,6 +353,9 @@ String formatDate(String value, BuildContext context,
           : company.settings.enableMilitaryTime
               ? 'H:mm'
               : 'h:mm a';
+
+      // Set the day to today to avoid timezone issues
+      value = convertDateTimeToSqlDate() + 'T' + value.split('T').last;
     } else {
       final dateFormats = state.staticState.dateFormatMap;
       final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
