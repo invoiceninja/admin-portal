@@ -751,7 +751,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final times = taskUIState.editing.taskTimes;
     var str = '\n\nTask:';
     times.forEach((time) {
-      str += '\nStart: ${time.startDate} - End: ${time.endDate}';
+      str += '\nStart: ${time.startDate} ${time.startDate.isUtc} - End: ${time.endDate} ${time.endDate?.isUtc}';
     });
     return str + '\n\n';
 
