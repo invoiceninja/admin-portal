@@ -117,16 +117,51 @@ class _DatePickerState extends State<DatePicker> {
           widget.onSelected('');
         } else {
           String date = '';
-          if (isAllDigits(value)) {
-            if (value.length < 4) {
-              value = '0$value';
+          if (isAllDigits(value) || value.length <= 5) {
+            String firstPart = '01';
+            String secondPart = '01';
+            if (value.contains('/')) {
+              final parts = value.split('/');
+              if (parts[0].length == 1) {
+                firstPart = '0' + parts[0];
+              } else {
+                firstPart = parts[0];
+              }
+              if (parts[1].length == 1) {
+                secondPart  = '0' + parts[1];
+              } else {
+                secondPart = parts[1];
+              }
+            } else {
+              value = value.replaceAll(RegExp(r'[^0-9]'), '');
+              if (value.length <= 2) {
+                firstPart = value;
+              } else if (value.length == 3) {
+                firstPart = '0' + value.substring(0, 1);
+                secondPart = value.substring(1, 3);
+              } else {
+                firstPart = value.substring(0, 2);
+                secondPart = value.substring(2, 4);
+              }
             }
-            if (value.length < 5) {
-              value = '${DateTime.now().year}$value';
+
+            final month = firstPart;
+            final day = secondPart;
+            value = '$month$day';
+
+            print('## VALUE: $value');
+
+            if (value.length == 4) {
+              value = '${DateTime.now().year}$month$day';
             }
+
             date = convertDateTimeToSqlDate(DateTime.tryParse(value));
           } else {
-            date = parseDate(value, context);
+            try {
+              date = parseDate(value, context);
+            } catch (e) {
+              return;
+            }
           }
 
           if ((date ?? '').isNotEmpty) {
