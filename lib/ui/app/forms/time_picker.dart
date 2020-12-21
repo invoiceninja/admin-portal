@@ -163,7 +163,7 @@ class _TimePickerState extends State<TimePicker> {
           final dateTime = parseTime(dateTimeStr, context);
 
           if (dateTime != null) {
-            final date = widget.selectedDate ?? DateTime.now();
+            final date = widget.selectedDate?.toLocal() ?? DateTime.now();
             var selectedDate = DateTime(
               date.year,
               date.month,
