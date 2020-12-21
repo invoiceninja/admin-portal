@@ -69,7 +69,7 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   void _showTimePicker() async {
-    final selectedDateTime = widget.selectedDateTime.toLocal();
+    final selectedDateTime = widget.selectedDateTime?.toLocal();
     final now = DateTime.now();
 
     final hour = selectedDateTime?.hour ?? now.hour;

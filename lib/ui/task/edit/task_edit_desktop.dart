@@ -294,7 +294,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TimePicker(
-                      key: ValueKey('__${_dateUpdatedAt}_${index}__'),
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].startDate,
                       onSelected: (timeOfDay) {
