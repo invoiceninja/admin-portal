@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -128,7 +131,7 @@ class _DatePickerState extends State<DatePicker> {
                 firstPart = parts[0];
               }
               if (parts[1].length == 1) {
-                secondPart  = '0' + parts[1];
+                secondPart = '0' + parts[1];
               } else {
                 secondPart = parts[1];
               }
@@ -147,12 +150,19 @@ class _DatePickerState extends State<DatePicker> {
 
             final month = firstPart;
             final day = secondPart;
-            value = '$month$day';
 
-            print('## VALUE: $value');
+            final state = StoreProvider.of<AppState>(context).state;
+            final dateFormatId =
+                state.company.settings.dateFormatId ?? kDefaultDateFormat;
+            final dateFormat =
+                state.staticState.dateFormatMap[dateFormatId].format;
+
+            value = dateFormat.substring(0, 1).toLowerCase() == 'd'
+                ? '$day$month'
+                : '$month$day';
 
             if (value.length == 4) {
-              value = '${DateTime.now().year}$month$day';
+              value = '${DateTime.now().year}$value';
             }
 
             date = convertDateTimeToSqlDate(DateTime.tryParse(value));
