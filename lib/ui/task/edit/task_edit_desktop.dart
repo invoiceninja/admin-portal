@@ -279,7 +279,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           : convertDateTimeToSqlDate(
                               taskTimes[index].startDate),
                       onSelected: (date) {
-                        print('## date - onSelected: $date');
                         final taskTime = taskTimes[index].copyWithDate(date);
                         viewModel.onUpdatedTaskTime(taskTime, index);
                         setState(() {
@@ -295,9 +294,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       selectedDate: taskTimes[index].startDate ??
                           DateTime.now().toLocal(),
                       selectedDateTime: taskTimes[index].startDate,
-                      //allowClearing: true,
                       onSelected: (timeOfDay) {
-                        print('## start date - onSelected: $timeOfDay');
                         final taskTime =
                             taskTimes[index].copyWithStartDateTime(timeOfDay);
                         viewModel.onUpdatedTaskTime(taskTime, index);
@@ -315,7 +312,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].endDate,
                       onSelected: (timeOfDay) {
-                        print('## end date - onSelected: $timeOfDay');
                         final taskTime =
                             taskTimes[index].copyWithEndDateTime(timeOfDay);
                         viewModel.onUpdatedTaskTime(taskTime, index);
@@ -331,7 +327,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       key: ValueKey(
                           '__${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}_'),
                       onSelected: (Duration duration) {
-                        print('## duration - onSelected: $duration');
                         final taskTime =
                             taskTimes[index].copyWithDuration(duration);
                         viewModel.onUpdatedTaskTime(taskTime, index);
