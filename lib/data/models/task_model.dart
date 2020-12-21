@@ -148,27 +148,27 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   TaskTime copyWithDate(String date) {
     final dateTime = DateTime.parse(date);
-    final now = DateTime.now().toLocal();
+    final now = DateTime.now().toUtc();
 
     return TaskTime(
-        startDate: DateTime(
+        startDate: DateTime.utc(
           dateTime.year,
           dateTime.month,
           dateTime.day,
           startDate?.hour ?? now.hour,
           startDate?.minute ?? now.minute,
           startDate?.second ?? now.second,
-        ).toUtc(),
+        ),
         endDate: endDate == null
             ? null
-            : DateTime(
+            : DateTime.utc(
                 dateTime.year,
                 dateTime.month,
                 dateTime.day,
                 endDate.hour,
                 endDate.minute,
                 endDate.second,
-              ).toUtc());
+              ));
   }
 
   TaskTime copyWithStartDateTime(DateTime dateTime) {

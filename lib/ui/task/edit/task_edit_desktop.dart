@@ -281,7 +281,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           : convertDateTimeToSqlDate(
                               taskTimes[index].startDate),
                       onSelected: (date) {
+                        print('## SELECTED: $date');
                         final taskTime = taskTimes[index].copyWithDate(date);
+                        print('## SELECTED HOUR: ${taskTime.startDate.hour}');
                         viewModel.onUpdatedTaskTime(taskTime, index);
                         setState(() {
                           _dateUpdatedAt =
@@ -293,8 +295,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TimePicker(
-                      selectedDate: taskTimes[index].startDate ??
-                          DateTime.now().toLocal(),
+                      key: ValueKey('__${_dateUpdatedAt}__'),
+                      selectedDate: taskTimes[index].startDate,
                       selectedDateTime: taskTimes[index].startDate,
                       onSelected: (timeOfDay) {
                         final taskTime =

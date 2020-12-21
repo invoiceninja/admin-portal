@@ -51,9 +51,9 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   void _onFoucsChanged() {
-    if (!_focusNode.hasFocus) {
+    if (!_focusNode.hasFocus && widget.selectedDateTime != null) {
       _textController.text = formatDate(
-          widget.selectedDateTime?.toIso8601String(), context,
+          widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
     }
   }
@@ -67,7 +67,7 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   void _showTimePicker() async {
-    final selectedDateTime = widget.selectedDateTime;
+    final selectedDateTime = widget.selectedDateTime.toLocal();
     final now = DateTime.now();
 
     final hour = selectedDateTime?.hour ?? now.hour;
