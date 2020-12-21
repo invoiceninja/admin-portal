@@ -160,23 +160,23 @@ class _TimePickerState extends State<TimePicker> {
             }
           }
 
-          var dateTime = parseTime(dateTimeStr, context);
+          final dateTime = parseTime(dateTimeStr, context);
 
           if (dateTime != null) {
-            dateTime = dateTime.toUtc();
-            final date = widget.selectedDate ?? DateTime.now().toUtc();
-            var selectedDate = DateTime.utc(
+            final date = widget.selectedDate ?? DateTime.now();
+            var selectedDate = DateTime(
               date.year,
               date.month,
               date.day,
               dateTime.hour,
               dateTime.minute,
               dateTime.second,
-            );
+            ).toUtc();
 
             if (selectedDate.isBefore(date) && widget.isEndTime) {
               selectedDate = selectedDate.add(Duration(days: 1));
             }
+
             widget.onSelected(selectedDate);
           }
         }

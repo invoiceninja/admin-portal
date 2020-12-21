@@ -152,23 +152,23 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     }
 
     final dateTime = DateTime.parse(date);
-    final now = DateTime.now().toUtc();
+    final now = DateTime.now();
 
     return TaskTime(
-        startDate: DateTime.utc(
+        startDate: DateTime(
           dateTime.year,
           dateTime.month,
           dateTime.day,
-          startDate?.hour ?? now.hour,
-          startDate?.minute ?? now.minute,
-          startDate?.second ?? now.second,
-        ),
+          startDate?.toLocal()?.hour ?? now.hour,
+          startDate?.toLocal()?.minute ?? now.minute,
+          startDate?.toLocal()?.second ?? now.second,
+        ).toUtc(),
         endDate: endDate == null
             ? null
             : DateTime.utc(
-                dateTime.year,
-                dateTime.month,
-                dateTime.day,
+                dateTime.toUtc().year,
+                dateTime.toUtc().month,
+                dateTime.toUtc().day,
                 endDate.hour,
                 endDate.minute,
                 endDate.second,
@@ -176,16 +176,9 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   }
 
   TaskTime copyWithStartDateTime(DateTime dateTime) {
-    final now = DateTime.now().toUtc();
+    print('## copyWithStartDateTime: $dateTime ${dateTime.isUtc}');
     return TaskTime(
-      startDate: DateTime.utc(
-        startDate?.year ?? now.year,
-        startDate?.month ?? now.month,
-        startDate?.day ?? now.day,
-        dateTime.hour,
-        dateTime.minute,
-        dateTime.second,
-      ),
+      startDate: dateTime,
       endDate: endDate,
     );
   }
@@ -391,7 +384,8 @@ abstract class TaskEntity extends Object
     });
 
     if (sort) {
-      details.sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
+      details
+          .sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
     }
 
     return details;
