@@ -147,6 +147,10 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   }
 
   TaskTime copyWithDate(String date) {
+    if ((date ?? '').isEmpty) {
+      return this;
+    }
+
     final dateTime = DateTime.parse(date);
     final now = DateTime.now().toUtc();
 
@@ -259,7 +263,7 @@ abstract class TaskEntity extends Object
   TaskEntity start() => addTaskTime(TaskTime());
 
   TaskEntity stop() {
-    final times = taskTimes;
+    final times = getTaskTimes();
     final taskTime = times.last.stop;
 
     return updateTaskTime(taskTime, times.length - 1);
@@ -279,7 +283,7 @@ abstract class TaskEntity extends Object
   int get duration;
 
   bool get areTimesValid {
-    final times = taskTimes;
+    final times = getTaskTimes();
     DateTime lastDateTime = DateTime(2000);
     int countRunning = 0;
     bool isValid = true;
@@ -305,7 +309,7 @@ abstract class TaskEntity extends Object
   }
 
   bool isBetween(String startDate, String endDate) {
-    final times = taskTimes;
+    final times = getTaskTimes();
     if (times.isEmpty) {
       return false;
     }
@@ -351,7 +355,7 @@ abstract class TaskEntity extends Object
     return last[1];
   }
 
-  List<TaskTime> get taskTimes {
+  List<TaskTime> getTaskTimes({bool sort = true}) {
     final List<TaskTime> details = [];
 
     if (timeLog.isEmpty) {
@@ -386,7 +390,9 @@ abstract class TaskEntity extends Object
       }
     });
 
-    details.sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
+    if (sort) {
+      details.sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
+    }
 
     return details;
   }
@@ -446,7 +452,7 @@ abstract class TaskEntity extends Object
   Duration get calculateDuration {
     int seconds = 0;
 
-    taskTimes.forEach((taskTime) {
+    getTaskTimes().forEach((taskTime) {
       seconds += taskTime.duration.inSeconds;
     });
 

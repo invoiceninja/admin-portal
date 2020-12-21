@@ -31,7 +31,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
           final task = viewModel.task;
-          final taskTimes = task.taskTimes;
+          final taskTimes = task.getTaskTimes();
           return TimeEditDetails(
             viewModel: viewModel,
             //key: Key(taskTime.entityKey),
@@ -47,9 +47,10 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final task = viewModel.task;
+    final taskTimes = task.getTaskTimes();
     final taskTime = viewModel.taskTimeIndex != null &&
-            task.taskTimes.length > viewModel.taskTimeIndex
-        ? task.taskTimes[viewModel.taskTimeIndex]
+            taskTimes.length > viewModel.taskTimeIndex
+        ? taskTimes[viewModel.taskTimeIndex]
         : null;
 
     if (taskTime != null && taskTime != selectedTaskTime) {
@@ -59,11 +60,11 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
       });
     }
 
-    if (task.taskTimes.isEmpty) {
+    if (task.getTaskTimes().isEmpty) {
       return HelpText(localization.clickPlusToAddTime);
     }
 
-    final taskTimes = task.taskTimes
+    final taskTimeWidgets = task.getTaskTimes()
         .toList()
         .reversed
         .map<Widget>((taskTime) => TaskTimeListTile(
@@ -73,7 +74,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
             ));
 
     return ListView(
-      children: taskTimes.toList(),
+      children: taskTimeWidgets.toList(),
     );
   }
 }

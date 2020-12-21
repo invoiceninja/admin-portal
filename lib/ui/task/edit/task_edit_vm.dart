@@ -66,7 +66,7 @@ class TaskEditVM {
       },
       onFabPressed: () {
         if (task.isRunning) {
-          final taskTimes = task.taskTimes;
+          final taskTimes = task.getTaskTimes();
           store.dispatch(UpdateTaskTime(
               index: taskTimes.length - 1,
               taskTime: taskTimes.firstWhere((time) => time.isRunning).stop));

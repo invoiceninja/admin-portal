@@ -111,7 +111,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     final task = viewModel.task;
     final state = viewModel.state;
 
-    final taskTimes = task.taskTimes;
+    final taskTimes = task.getTaskTimes(sort: false);
     if (!taskTimes.any((taskTime) => taskTime.isEmpty)) {
       taskTimes.add(TaskTime().rebuild((b) => b..startDate = null));
     }
@@ -283,7 +283,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       onSelected: (date) {
                         print('## SELECTED: $date - $index');
                         final taskTime = taskTimes[index].copyWithDate(date);
-                        print('## SELECTED HOUR: ${taskTime.startDate.hour}');
                         viewModel.onUpdatedTaskTime(taskTime, index);
                         setState(() {
                           _dateUpdatedAt =

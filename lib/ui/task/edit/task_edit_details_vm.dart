@@ -85,7 +85,7 @@ class TaskEditDetailsVM {
         });
       },
       onUpdatedTaskTime: (taskTime, index) {
-        if (index == task.taskTimes.length) {
+        if (index == task.getTaskTimes().length) {
           store.dispatch(AddTaskTime(taskTime));
         } else {
           store.dispatch(UpdateTaskTime(taskTime: taskTime, index: index));

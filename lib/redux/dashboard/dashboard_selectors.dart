@@ -531,7 +531,7 @@ List<ChartDataGroup> chartTasks(
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
-      task.taskTimes.forEach((taskTime) {
+      task.getTaskTimes().forEach((taskTime) {
         taskTime.getParts(0).forEach((date, duration) {
           if (totals[STATUS_LOGGED][date] == null) {
             totals[STATUS_LOGGED][date] = 0.0;

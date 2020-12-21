@@ -42,15 +42,9 @@ class _TimePickerState extends State<TimePicker> {
   @override
   void didChangeDependencies() {
     if (widget.selectedDateTime != null) {
-      print(
-          '## selectedDateTime: ${widget.selectedDateTime} ${widget.selectedDateTime.isUtc}');
-      print('## ${widget.selectedDateTime.toIso8601String()}');
-
       final formatted = formatDate(
           widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
-
-      print('## formatted: $formatted');
 
       _textController.text = formatted;
     }
@@ -60,8 +54,6 @@ class _TimePickerState extends State<TimePicker> {
 
   void _onFoucsChanged() {
     if (!_focusNode.hasFocus && widget.selectedDateTime != null) {
-      print(
-          '## onFoucsChanged: ${widget.selectedDateTime} ${widget.selectedDateTime.isUtc}');
       _textController.text = formatDate(
           widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
@@ -169,7 +161,7 @@ class _TimePickerState extends State<TimePicker> {
           }
 
           var dateTime = parseTime(dateTimeStr, context);
-          print('## dateTime: $dateTime ${dateTime.isUtc}');
+
           if (dateTime != null) {
             dateTime = dateTime.toUtc();
             final date = widget.selectedDate ?? DateTime.now().toUtc();
@@ -182,14 +174,9 @@ class _TimePickerState extends State<TimePicker> {
               dateTime.second,
             );
 
-            print('## date: $date ${date?.isUtc}');
-            print('## SELECTED DATE: $selectedDate ${selectedDate?.isUtc}');
-
             if (selectedDate.isBefore(date) && widget.isEndTime) {
-              print('## Adding 24 horus');
               selectedDate = selectedDate.add(Duration(days: 1));
             }
-            print('## SELECTING: $selectedDate ${selectedDate.isUtc}');
             widget.onSelected(selectedDate);
           }
         }

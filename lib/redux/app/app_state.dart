@@ -748,7 +748,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'LOG: ${clientState.map[clientUIState.selectedId]?.systemLogs ?? ''}';
     //return 'FREQ: ${recurringInvoiceUIState.editing.frequencyId}';
 
-    final times = taskUIState.editing.taskTimes;
+    final times = taskUIState.editing.getTaskTimes();
     var str = '\n\nTask:';
     times.forEach((time) {
       str += '\nStart: ${time.startDate} ${time.startDate.isUtc} - End: ${time.endDate} ${time.endDate?.isUtc}';
