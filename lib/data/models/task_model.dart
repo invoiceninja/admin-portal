@@ -246,7 +246,7 @@ abstract class TaskEntity extends Object
     ..number = ''
     ..isChanged = false
     ..isDeleted = false
-    ..invoiceId = null
+    ..invoiceId = ''
     ..isRunning = false
     ..duration = 0
     ..timeLog = '[]');

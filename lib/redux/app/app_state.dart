@@ -748,6 +748,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'LOG: ${clientState.map[clientUIState.selectedId]?.systemLogs ?? ''}';
     //return 'FREQ: ${recurringInvoiceUIState.editing.frequencyId}';
 
+    return 'Task Client Id: ${taskUIState.editing.clientId}';
+
     /*
     final times = taskUIState.editing.getTaskTimes();
     var str = '\n\nTask:';
