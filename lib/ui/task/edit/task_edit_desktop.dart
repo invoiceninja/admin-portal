@@ -43,6 +43,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
 
+  int _updatedAt = 0;
   int _dateUpdatedAt = 0;
   int _startUpdatedAt = 0;
   int _endUpdatedAt = 0;
@@ -255,6 +256,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
         FormCard(
           padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
           child: Table(
+            key: ValueKey('__datatable_${_updatedAt}__'),
             columnWidths: {
               4: FixedColumnWidth(kMinInteractiveDimension),
             },
@@ -348,7 +350,10 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         ? null
                         : () {
                             viewModel.onRemoveTaskTime(index);
-                          },
+                            setState(() {
+                              _updatedAt = DateTime.now().millisecondsSinceEpoch;
+                            });
+                    },
                   ),
                 ]),
             ],
