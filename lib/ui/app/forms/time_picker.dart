@@ -42,9 +42,17 @@ class _TimePickerState extends State<TimePicker> {
   @override
   void didChangeDependencies() {
     if (widget.selectedDateTime != null) {
-      _textController.text = formatDate(
+      print(
+          '## selectedDateTime: ${widget.selectedDateTime} ${widget.selectedDateTime.isUtc}');
+      print('## ${widget.selectedDateTime.toIso8601String()}');
+
+      final formatted = formatDate(
           widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
+
+      print('## formatted: $formatted');
+
+      _textController.text = formatted;
     }
 
     super.didChangeDependencies();
@@ -52,7 +60,8 @@ class _TimePickerState extends State<TimePicker> {
 
   void _onFoucsChanged() {
     if (!_focusNode.hasFocus && widget.selectedDateTime != null) {
-      print('## onFoucsChanged: ${widget.selectedDateTime} ${widget.selectedDateTime.isUtc}');
+      print(
+          '## onFoucsChanged: ${widget.selectedDateTime} ${widget.selectedDateTime.isUtc}');
       _textController.text = formatDate(
           widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
@@ -159,18 +168,19 @@ class _TimePickerState extends State<TimePicker> {
             }
           }
 
-          final dateTime = parseTime(dateTimeStr, context);
-
+          var dateTime = parseTime(dateTimeStr, context);
+          print('## dateTime: $dateTime ${dateTime.isUtc}');
           if (dateTime != null) {
+            dateTime = dateTime.toUtc();
             final date = widget.selectedDate;
-            var selectedDate = DateTime(
+            var selectedDate = DateTime.utc(
               date.year,
               date.month,
               date.day,
               dateTime.hour,
               dateTime.minute,
               dateTime.second,
-            ).toUtc();
+            );
 
             print('## date: $date ${date?.isUtc}');
             print('## SELECTED DATE: $selectedDate ${selectedDate?.isUtc}');
