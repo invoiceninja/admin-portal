@@ -49,6 +49,7 @@ class TaskEditDetailsVM {
     @required this.onAddClientPressed,
     @required this.onAddProjectPressed,
     @required this.onUpdatedTaskTime,
+    @required this.onRemoveTaskTime,
     @required this.isSaving,
     @required this.origTask,
     @required this.isLoading,
@@ -90,6 +91,9 @@ class TaskEditDetailsVM {
           store.dispatch(UpdateTaskTime(taskTime: taskTime, index: index));
         }
       },
+      onRemoveTaskTime: (index) {
+        store.dispatch(DeleteTaskTime(index));
+      },
       onAddProjectPressed: (context, completer) {
         createEntity(
             context: context,
@@ -121,4 +125,5 @@ class TaskEditDetailsVM {
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddProjectPressed;
   final Function(TaskTime, int) onUpdatedTaskTime;
+  final Function(int) onRemoveTaskTime;
 }

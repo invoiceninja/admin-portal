@@ -347,8 +347,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     onPressed: taskTimes[index].isEmpty
                         ? null
                         : () {
-                            //viewModel.onRemoveInvoiceItemPressed(index);
-                            //_updateTable();
+                            viewModel.onRemoveTaskTime(index);
                           },
                   ),
                 ]),
