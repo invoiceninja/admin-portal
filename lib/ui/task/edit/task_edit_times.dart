@@ -122,6 +122,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
           children: <Widget>[
             DatePicker(
               key: ValueKey('__date_${_startUpdatedAt}__'),
+              labelText: localization.date,
               selectedDate: _taskTime.startDate == null
                   ? null
                   : convertDateTimeToSqlDate(_taskTime.startDate.toLocal()),
@@ -134,6 +135,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               },
             ),
             TimePicker(
+              labelText: localization.startTime,
               selectedDate: _taskTime.startDate,
               selectedDateTime: _taskTime.startDate,
               onSelected: (timeOfDay) {
@@ -146,6 +148,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             ),
             TimePicker(
               key: ValueKey('__end_time_${_durationUpdateAt}__'),
+              labelText: localization.endTime,
               selectedDate: _taskTime.startDate,
               selectedDateTime: _taskTime.endDate,
               isEndTime: true,
@@ -160,6 +163,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             DurationPicker(
               key: ValueKey(
                   '__duration_${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}__'),
+              labelText: localization.duration,
               onSelected: (Duration duration) {
                 setState(() {
                   _taskTime = _taskTime.copyWithDuration(duration);

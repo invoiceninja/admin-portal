@@ -176,7 +176,6 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   }
 
   TaskTime copyWithStartDateTime(DateTime dateTime) {
-    print('## copyWithStartDateTime: $dateTime ${dateTime.isUtc}');
     return TaskTime(
       startDate: dateTime,
       endDate: endDate,
