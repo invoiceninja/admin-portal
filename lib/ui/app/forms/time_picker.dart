@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class TimePicker extends StatefulWidget {
@@ -99,12 +100,9 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return DecoratedFormField(
       focusNode: _focusNode,
       validator: widget.validator,
-      autovalidateMode: widget.autoValidate
-          ? AutovalidateMode.always
-          : AutovalidateMode.onUserInteraction,
       controller: _textController,
       decoration: InputDecoration(
         labelText: widget.labelText,
