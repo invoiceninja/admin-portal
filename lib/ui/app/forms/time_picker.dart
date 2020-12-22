@@ -93,7 +93,7 @@ class _TimePickerState extends State<TimePicker> {
 
       if (widget.selectedDate != null &&
           dateTime.isBefore(widget.selectedDate)) {
-        dateTime = dateTime.add(Duration(days: 1));
+        dateTime = dateTime.toUtc().add(Duration(days: 1)).toLocal();
       }
 
       _textController.text = formatDate(dateTime.toIso8601String(), context,
@@ -177,7 +177,8 @@ class _TimePickerState extends State<TimePicker> {
             ).toUtc();
 
             if (selectedDate.isBefore(date) && widget.isEndTime) {
-              selectedDate = selectedDate.add(Duration(days: 1));
+              selectedDate =
+                  selectedDate.toUtc().add(Duration(days: 1)).toLocal();
             }
 
             widget.onSelected(selectedDate);
