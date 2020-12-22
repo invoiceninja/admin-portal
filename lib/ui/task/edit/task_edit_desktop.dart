@@ -248,6 +248,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     keyboardType: TextInputType.multiline,
                     label: localization.description,
                   ),
+                  SizedBox(height: 4),
                 ],
               ),
             ),
