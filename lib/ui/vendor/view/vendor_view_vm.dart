@@ -104,7 +104,9 @@ class VendorViewVM {
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveVendorDocumentRequest(
-            multipartFile: multipartFile, vendor: vendor, completer: completer));
+            multipartFile: multipartFile,
+            vendor: vendor,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

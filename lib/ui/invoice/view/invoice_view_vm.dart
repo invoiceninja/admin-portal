@@ -144,7 +144,9 @@ class InvoiceViewVM extends EntityViewVM {
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
-            multipartFile: multipartFile, invoice: invoice, completer: completer));
+            multipartFile: multipartFile,
+            invoice: invoice,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

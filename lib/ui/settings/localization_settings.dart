@@ -281,7 +281,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                               title: localization.addCustom,
                               secondaryActions: [
                                 FlatButton(
-                                  child: Text(localization.labels.toUpperCase()),
+                                  child:
+                                      Text(localization.labels.toUpperCase()),
                                   onPressed: () => launch(kGitHubLangUrl),
                                 )
                               ]);

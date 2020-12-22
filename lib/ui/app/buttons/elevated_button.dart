@@ -39,9 +39,9 @@ class AppButton extends StatelessWidget {
       child: width == null
           ? button
           : SizedBox(
-        width: width,
-        child: button,
-      ),
+              width: width,
+              child: button,
+            ),
     );
   }
 }

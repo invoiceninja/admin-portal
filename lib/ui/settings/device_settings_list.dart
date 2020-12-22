@@ -134,8 +134,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   value: prefState.longPressSelectionIsDefault,
                   onChanged: (value) =>
                       viewModel.onLongPressSelectionIsDefault(context, value),
-                  secondary: Icon(
-                      kIsWeb ? Icons.check_box : MdiIcons.checkBoxOutline),
+                  secondary:
+                      Icon(kIsWeb ? Icons.check_box : MdiIcons.checkBoxOutline),
                   activeColor: Theme.of(context).accentColor,
                 ),
                 /*

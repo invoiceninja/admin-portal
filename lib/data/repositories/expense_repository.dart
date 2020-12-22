@@ -74,8 +74,8 @@ class ExpenseRepository {
     return expenseResponse.data;
   }
 
-  Future<ExpenseEntity> uploadDocument(
-      Credentials credentials, BaseEntity entity, MultipartFile multipartFile) async {
+  Future<ExpenseEntity> uploadDocument(Credentials credentials,
+      BaseEntity entity, MultipartFile multipartFile) async {
     final fields = <String, String>{
       '_method': 'put',
     };

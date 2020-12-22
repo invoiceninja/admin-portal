@@ -64,7 +64,8 @@ class EntityStatusChip extends StatelessWidget {
         label = task.isInvoiced
             ? localization.invoiced
             : state.taskStatusState.get(task.calculateStatusId).name;
-        color = TaskStatusColors.colors[task.calculateStatusId] ?? state.accentColor;
+        color = TaskStatusColors.colors[task.calculateStatusId] ??
+            state.accentColor;
         break;
       default:
         print(

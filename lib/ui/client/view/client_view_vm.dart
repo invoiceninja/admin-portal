@@ -84,7 +84,9 @@ class ClientViewVM {
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveClientDocumentRequest(
-            multipartFile: multipartFile, client: client, completer: completer));
+            multipartFile: multipartFile,
+            client: client,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

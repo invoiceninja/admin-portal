@@ -117,8 +117,8 @@ class CompanyDetailsVM {
         final type = state.uiState.settingsUIState.entityType;
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).uploadedLogo);
-        store.dispatch(
-            UploadLogoRequest(completer: completer, multipartFile: multipartFile, type: type));
+        store.dispatch(UploadLogoRequest(
+            completer: completer, multipartFile: multipartFile, type: type));
       },
       onConfigurePaymentTermsPressed: (context) {
         if (state.paymentTermState.list.isEmpty) {

@@ -100,8 +100,8 @@ class InvoiceRepository {
     return invoiceResponse.data;
   }
 
-  Future<InvoiceEntity> uploadDocument(
-      Credentials credentials, BaseEntity entity, MultipartFile multipartFile) async {
+  Future<InvoiceEntity> uploadDocument(Credentials credentials,
+      BaseEntity entity, MultipartFile multipartFile) async {
     final fields = <String, String>{
       '_method': 'put',
     };
