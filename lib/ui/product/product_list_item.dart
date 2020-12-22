@@ -138,7 +138,8 @@ class ProductListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        formatNumber(product.price, context),
+                        formatNumber(product.price, context,
+                            roundToPrecision: false),
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -177,7 +178,9 @@ class ProductListItem extends StatelessWidget {
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
-                      Text(formatNumber(product.price, context),
+                      Text(
+                          formatNumber(product.price, context,
+                              roundToPrecision: false),
                           style: Theme.of(context).textTheme.headline6),
                     ],
                   ),
