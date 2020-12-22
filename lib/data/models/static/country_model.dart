@@ -74,13 +74,9 @@ abstract class CountryEntity extends Object
   @BuiltValueField(wireName: 'swap_currency_symbol')
   bool get swapCurrencySymbol;
 
-  // TODO remove once fixed in the app
-  @nullable
   @BuiltValueField(wireName: 'thousand_separator')
   String get thousandSeparator;
 
-  // TODO remove once fixed in the app
-  @nullable
   @BuiltValueField(wireName: 'decimal_separator')
   String get decimalSeparator;
 
