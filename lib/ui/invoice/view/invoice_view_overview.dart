@@ -343,7 +343,7 @@ class InvoiceOverview extends StatelessWidget {
       SizedBox(height: 8),
       surchargeRow(
           localization.subtotal,
-          invoice.calculateTotal(
+          invoice.calculateSubtotal(
               precision: precisionForInvoice(state, invoice))),
       surchargeRow(localization.paidToDate, invoice.paidToDate),
     ]);
