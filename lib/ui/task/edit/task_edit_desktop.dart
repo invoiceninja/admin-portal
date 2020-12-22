@@ -284,7 +284,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                             : convertDateTimeToSqlDate(
                                 taskTimes[index].startDate.toLocal()),
                         onSelected: (date) {
-                          print('## SELECTED: $date - $index');
                           final taskTime = taskTimes[index].copyWithDate(date);
                           viewModel.onUpdatedTaskTime(taskTime, index);
                           setState(() {

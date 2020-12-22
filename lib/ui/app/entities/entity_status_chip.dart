@@ -64,7 +64,7 @@ class EntityStatusChip extends StatelessWidget {
         label = task.isInvoiced
             ? localization.invoiced
             : state.taskStatusState.get(task.calculateStatusId).name;
-        color = TaskStatusColors.colors[task.calculateStatusId] ?? Colors.grey;
+        color = TaskStatusColors.colors[task.calculateStatusId] ?? state.accentColor;
         break;
       default:
         print(
@@ -91,7 +91,7 @@ class EntityStatusChip extends StatelessWidget {
             maxWidth: width,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
             child: Text(
               label.toUpperCase(),
               style: TextStyle(fontSize: 14, color: Colors.white),

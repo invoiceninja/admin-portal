@@ -700,7 +700,7 @@ abstract class TaskEntity extends Object
       //} else if (isRunning) {
       //  return kTaskStatusRunning;
     } else {
-      return statusId;
+      return (statusId ?? '').isEmpty ? kTaskStatusLogged : statusId;
     }
   }
 
