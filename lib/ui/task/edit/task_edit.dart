@@ -118,14 +118,16 @@ class _TaskEditState extends State<TaskEdit>
             ),
       body: Form(
         key: _formKey,
-        child: TabBarView(
-          key: ValueKey(viewModel.task.id),
-          controller: _controller,
-          children: <Widget>[
-            TaskEditDetailsScreen(key: ValueKey('__${_updatedAt}__')),
-            TaskEditTimesScreen(),
-          ],
-        ),
+        child: isFullscreen
+            ? TaskEditDetailsScreen(key: ValueKey('__${_updatedAt}__'))
+            : TabBarView(
+                key: ValueKey(viewModel.task.id),
+                controller: _controller,
+                children: <Widget>[
+                  TaskEditDetailsScreen(),
+                  TaskEditTimesScreen(),
+                ],
+              ),
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
