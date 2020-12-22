@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityStatusChip extends StatelessWidget {
@@ -65,7 +66,7 @@ class EntityStatusChip extends StatelessWidget {
             ? localization.invoiced
             : state.taskStatusState.get(task.calculateStatusId).name;
         color = TaskStatusColors.colors[task.calculateStatusId] ??
-            state.accentColor;
+            convertHexStringToColor('#505F73');
         break;
       default:
         print(
