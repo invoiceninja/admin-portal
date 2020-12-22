@@ -31,10 +31,9 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_middleware.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
-import 'package:invoiceninja_flutter/utils/sentry.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
-import 'package:sentry/sentry.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
@@ -49,12 +48,6 @@ import 'package:invoiceninja_flutter/redux/payment_term/payment_term_middleware.
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
-      ? null
-      : SentryClient(
-          dsn: Config.SENTRY_DNS,
-          environmentAttributes: await getSentryEvent());
 
   final store = Store<AppState>(appReducer,
       initialState: await _initialState(isTesting),
@@ -95,32 +88,27 @@ void main({bool isTesting = false}) async {
                 ),
               ]));
 
-  if (_sentry == null) {
+  if (kIsWeb || !kReleaseMode || Config.SENTRY_DNS.isEmpty) {
     runApp(InvoiceNinjaApp(store: store));
   } else {
-    runZonedGuarded(() {
-      runApp(InvoiceNinjaApp(store: store));
-    }, (Object error, StackTrace stackTrace) async {
-      if (kDebugMode || kIsWeb) {
-        print(stackTrace);
-      } else if (store.state.reportErrors) {
-        final event = await getSentryEvent(
-          state: store.state,
-          exception: error,
-          stackTrace: stackTrace,
-        );
-        _sentry.capture(event: event);
-      }
-    });
+    await SentryFlutter.init(
+      (options) {
+        options.dsn = Config.SENTRY_DNS;
+        options.release = kClientVersion;
+        options.beforeSend = (SentryEvent event, {dynamic hint}) {
+          final state = store.state;
+          event = event.copyWith(
+            environment: '${state.environment}'.split('.').last,
+            extra: <String, dynamic>{
+              'server_version': state.account?.currentVersion ?? 'Unknown',
+            },
+          );
+          return event;
+        };
+      },
+      appRunner: () => runApp(InvoiceNinjaApp(store: store)),
+    );
   }
-
-  FlutterError.onError = (FlutterErrorDetails details) {
-    if (kDebugMode || kIsWeb) {
-      FlutterError.dumpErrorToConsole(details);
-    } else if (store.state.reportErrors) {
-      Zone.current.handleUncaughtError(details.exception, details.stack);
-    }
-  };
 }
 
 Future<AppState> _initialState(bool isTesting) async {

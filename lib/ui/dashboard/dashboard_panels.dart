@@ -412,28 +412,28 @@ class DashboardPanels extends StatelessWidget {
                   _InvoiceChart(
                       viewModel: viewModel,
                       context: context,
-                      onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                          EntityType.invoice, entityIds)),
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.invoice, entityIds)),
                 if (company.isModuleEnabled(EntityType.invoice))
                   _paymentChart(
                       context: context,
-                      onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                          EntityType.payment, entityIds)),
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.payment, entityIds)),
                 if (company.isModuleEnabled(EntityType.quote))
                   _quoteChart(
                       context: context,
-                      onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                          EntityType.quote, entityIds)),
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.quote, entityIds)),
                 if (company.isModuleEnabled(EntityType.task))
                   _taskChart(
                       context: context,
-                      onDateSelected: (entityIds) =>
-                          viewModel.onSelectionChanged(EntityType.task, entityIds)),
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.task, entityIds)),
                 if (company.isModuleEnabled(EntityType.expense))
                   _expenseChart(
                       context: context,
-                      onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                          EntityType.expense, entityIds)),
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.expense, entityIds)),
                 SizedBox(
                   height: 500,
                 )
