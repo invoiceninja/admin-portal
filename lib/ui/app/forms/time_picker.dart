@@ -158,8 +158,9 @@ class _TimePickerState extends State<TimePicker> {
           } else {
             final store = StoreProvider.of<AppState>(context);
             if (!store.state.company.settings.enableMilitaryTime) {
-              final hour = parseDouble(parts[0]);
-              dateTimeStr += hour > 6 ? ' AM' : ' PM';
+              //final hour = parseDouble(parts[0]);
+              //dateTimeStr += hour > 6 ? ' AM' : ' PM';
+              dateTimeStr += ' PM';
             }
           }
 
