@@ -195,12 +195,16 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 children: [
-                  if (task.isOld)
-                    DecoratedFormField(
-                      controller: _numberController,
-                      label: localization.taskNumber,
-                      autocorrect: false,
-                    ),
+                  DecoratedFormField(
+                    controller: _numberController,
+                    label: localization.taskNumber,
+                    autocorrect: false,
+                  ),
+                  DecoratedFormField(
+                    controller: _rateController,
+                    label: localization.rate,
+                    keyboardType: TextInputType.number,
+                  ),
                   DynamicSelector(
                     key: ValueKey('__task_status_${task.statusId}__'),
                     allowClearing: false,
@@ -214,11 +218,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         ..statusId = taskStatus?.id ?? ''
                         ..statusSortOrder = 9999));
                     },
-                  ),
-                  DecoratedFormField(
-                    controller: _rateController,
-                    label: localization.rate,
-                    keyboardType: TextInputType.number,
                   ),
                   CustomField(
                     controller: _custom2Controller,

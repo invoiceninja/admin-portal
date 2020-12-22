@@ -104,12 +104,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            if (task.isOld)
-              DecoratedFormField(
-                controller: _numberController,
-                label: localization.taskNumber,
-                autocorrect: false,
-              ),
             if (!task.isInvoiced) ...[
               EntityDropdown(
                 key: Key('__client_${task.clientId}__'),
@@ -152,6 +146,16 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               onChanged: (userId) => viewModel
                   .onChanged(task.rebuild((b) => b..assignedUserId = userId)),
             ),
+            DecoratedFormField(
+              controller: _numberController,
+              label: localization.taskNumber,
+              autocorrect: false,
+            ),
+            DecoratedFormField(
+              controller: _rateController,
+              label: localization.rate,
+              keyboardType: TextInputType.number,
+            ),
             DynamicSelector(
               key: ValueKey('__task_status_${task.statusId}__'),
               allowClearing: false,
@@ -165,11 +169,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                   ..statusId = taskStatus?.id
                   ..statusSortOrder = 9999));
               },
-            ),
-            DecoratedFormField(
-              controller: _rateController,
-              label: localization.rate,
-              keyboardType: TextInputType.number,
             ),
             DecoratedFormField(
               maxLines: 4,
