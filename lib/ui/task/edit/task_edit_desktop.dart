@@ -211,7 +211,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     onChanged: (selectedId) {
                       final taskStatus = state.taskStatusState.map[selectedId];
                       viewModel.onChanged(task.rebuild((b) => b
-                        ..statusId = taskStatus?.id
+                        ..statusId = taskStatus?.id ?? ''
                         ..statusSortOrder = 9999));
                     },
                   ),
@@ -321,7 +321,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                               taskTimes[index].copyWithEndDateTime(timeOfDay);
                           viewModel.onUpdatedTaskTime(taskTime, index);
                           setState(() {
-                            _endUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                            _endUpdatedAt =
+                                DateTime.now().millisecondsSinceEpoch;
                           });
                         },
                       ),
