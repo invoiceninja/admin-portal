@@ -398,6 +398,7 @@ abstract class TaskEntity extends Object
     taskTimes.add(time.asList);
 
     return rebuild((b) => b
+      ..isChanged = true
       ..timeLog = jsonEncode(taskTimes)
       ..isRunning = time.isRunning);
   }
@@ -417,6 +418,7 @@ abstract class TaskEntity extends Object
     }
 
     return rebuild((b) => b
+      ..isChanged = true
       ..timeLog = jsonEncode(taskTimes)
       ..isRunning = isRunning);
   }
@@ -436,6 +438,7 @@ abstract class TaskEntity extends Object
     }
 
     return rebuild((b) => b
+      ..isChanged = true
       ..timeLog = jsonEncode(taskTimes)
       ..isRunning = isRunning);
   }
