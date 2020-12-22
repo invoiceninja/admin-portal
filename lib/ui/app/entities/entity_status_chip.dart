@@ -92,7 +92,7 @@ class EntityStatusChip extends StatelessWidget {
             maxWidth: width,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
             child: Text(
               label.toUpperCase(),
               style: TextStyle(fontSize: 14, color: Colors.white),
