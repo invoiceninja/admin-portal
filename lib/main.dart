@@ -88,7 +88,7 @@ void main({bool isTesting = false}) async {
                 ),
               ]));
 
-  if (kIsWeb || !kReleaseMode || Config.SENTRY_DNS.isEmpty) {
+  if (kIsWeb || !kReleaseMode) {
     runApp(InvoiceNinjaApp(store: store));
   } else {
     await SentryFlutter.init(
