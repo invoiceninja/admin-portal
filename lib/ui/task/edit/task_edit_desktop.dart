@@ -255,110 +255,113 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
         ),
         FormCard(
           padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
-          child: Table(
-            key: ValueKey('__table_${_updatedAt}__'),
-            columnWidths: {
-              4: FixedColumnWidth(kMinInteractiveDimension),
-            },
-            children: [
-              TableRow(
-                children: [
-                  TableHeader(localization.date),
-                  TableHeader(localization.startTime),
-                  TableHeader(localization.endTime),
-                  TableHeader(localization.duration),
-                  TableHeader(''),
-                ],
-              ),
-              for (var index = 0; index < taskTimes.length; index++)
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: DatePicker(
-                      key: ValueKey('__${_startUpdatedAt}_${index}__'),
-                      selectedDate: taskTimes[index].startDate == null
+          child: FocusTraversalGroup(
+            policy: ReadingOrderTraversalPolicy(),
+            child: Table(
+              key: ValueKey('__table_${_updatedAt}__'),
+              columnWidths: {
+                4: FixedColumnWidth(kMinInteractiveDimension),
+              },
+              children: [
+                TableRow(
+                  children: [
+                    TableHeader(localization.date),
+                    TableHeader(localization.startTime),
+                    TableHeader(localization.endTime),
+                    TableHeader(localization.duration),
+                    TableHeader(''),
+                  ],
+                ),
+                for (var index = 0; index < taskTimes.length; index++)
+                  TableRow(children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: DatePicker(
+                        key: ValueKey('__${_startUpdatedAt}_${index}__'),
+                        selectedDate: taskTimes[index].startDate == null
+                            ? null
+                            : convertDateTimeToSqlDate(
+                                taskTimes[index].startDate.toLocal()),
+                        onSelected: (date) {
+                          print('## SELECTED: $date - $index');
+                          final taskTime = taskTimes[index].copyWithDate(date);
+                          viewModel.onUpdatedTaskTime(taskTime, index);
+                          setState(() {
+                            _dateUpdatedAt =
+                                DateTime.now().millisecondsSinceEpoch;
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: TimePicker(
+                        selectedDate: taskTimes[index].startDate,
+                        selectedDateTime: taskTimes[index].startDate,
+                        onSelected: (timeOfDay) {
+                          final taskTime =
+                              taskTimes[index].copyWithStartDateTime(timeOfDay);
+                          viewModel.onUpdatedTaskTime(taskTime, index);
+                          setState(() {
+                            _startUpdatedAt =
+                                DateTime.now().millisecondsSinceEpoch;
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: TimePicker(
+                        key: ValueKey('__${_durationUpdateAt}_${index}__'),
+                        selectedDate: taskTimes[index].startDate,
+                        selectedDateTime: taskTimes[index].endDate,
+                        isEndTime: true,
+                        onSelected: (timeOfDay) {
+                          final taskTime =
+                              taskTimes[index].copyWithEndDateTime(timeOfDay);
+                          viewModel.onUpdatedTaskTime(taskTime, index);
+                          setState(() {
+                            _endUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: DurationPicker(
+                        key: ValueKey(
+                            '__${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}_${index}__'),
+                        onSelected: (Duration duration) {
+                          final taskTime =
+                              taskTimes[index].copyWithDuration(duration);
+                          viewModel.onUpdatedTaskTime(taskTime, index);
+                          setState(() {
+                            _durationUpdateAt =
+                                DateTime.now().millisecondsSinceEpoch;
+                          });
+                        },
+                        selectedDuration: (taskTimes[index].startDate == null ||
+                                taskTimes[index].endDate == null)
+                            ? null
+                            : taskTimes[index].duration,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.clear),
+                      tooltip: localization.remove,
+                      onPressed: taskTimes[index].isEmpty
                           ? null
-                          : convertDateTimeToSqlDate(
-                              taskTimes[index].startDate.toLocal()),
-                      onSelected: (date) {
-                        print('## SELECTED: $date - $index');
-                        final taskTime = taskTimes[index].copyWithDate(date);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _dateUpdatedAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
+                          : () {
+                              viewModel.onRemoveTaskTime(index);
+                              setState(() {
+                                _updatedAt =
+                                    DateTime.now().millisecondsSinceEpoch;
+                              });
+                            },
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TimePicker(
-                      selectedDate: taskTimes[index].startDate,
-                      selectedDateTime: taskTimes[index].startDate,
-                      onSelected: (timeOfDay) {
-                        final taskTime =
-                            taskTimes[index].copyWithStartDateTime(timeOfDay);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _startUpdatedAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TimePicker(
-                      key: ValueKey('__${_durationUpdateAt}_${index}__'),
-                      selectedDate: taskTimes[index].startDate,
-                      selectedDateTime: taskTimes[index].endDate,
-                      isEndTime: true,
-                      onSelected: (timeOfDay) {
-                        final taskTime =
-                            taskTimes[index].copyWithEndDateTime(timeOfDay);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _endUpdatedAt = DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: DurationPicker(
-                      key: ValueKey(
-                          '__${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}_${index}__'),
-                      onSelected: (Duration duration) {
-                        final taskTime =
-                            taskTimes[index].copyWithDuration(duration);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _durationUpdateAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                      selectedDuration: (taskTimes[index].startDate == null ||
-                              taskTimes[index].endDate == null)
-                          ? null
-                          : taskTimes[index].duration,
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.clear),
-                    tooltip: localization.remove,
-                    onPressed: taskTimes[index].isEmpty
-                        ? null
-                        : () {
-                            viewModel.onRemoveTaskTime(index);
-                            setState(() {
-                              _updatedAt =
-                                  DateTime.now().millisecondsSinceEpoch;
-                            });
-                          },
-                  ),
-                ]),
-            ],
+                  ]),
+              ],
+            ),
           ),
         )
       ],
