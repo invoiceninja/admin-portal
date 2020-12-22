@@ -33,6 +33,7 @@ class TimePicker extends StatefulWidget {
 class _TimePickerState extends State<TimePicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
+  String _pendingValue;
 
   @override
   void initState() {
@@ -58,6 +59,10 @@ class _TimePickerState extends State<TimePicker> {
       _textController.text = formatDate(
           widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
+
+      setState(() {
+        _pendingValue = null;
+      });
     }
   }
 
@@ -105,7 +110,7 @@ class _TimePickerState extends State<TimePicker> {
       validator: widget.validator,
       controller: _textController,
       decoration: InputDecoration(
-        labelText: widget.labelText,
+        labelText: _pendingValue ?? widget.labelText ?? '',
         suffixIcon: widget.allowClearing && widget.selectedDateTime != null
             ? IconButton(
                 icon: Icon(Icons.clear),
@@ -176,6 +181,12 @@ class _TimePickerState extends State<TimePicker> {
             }
 
             widget.onSelected(selectedDate);
+
+            setState(() {
+              _pendingValue = formatDate(
+                  selectedDate.toIso8601String(), context,
+                  showTime: true, showDate: false);
+            });
           }
         }
       },

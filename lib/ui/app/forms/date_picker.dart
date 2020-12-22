@@ -33,6 +33,7 @@ class DatePicker extends StatefulWidget {
 class _DatePickerState extends State<DatePicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
+  String _pendingValue;
 
   @override
   void initState() {
@@ -50,6 +51,10 @@ class _DatePickerState extends State<DatePicker> {
   void _onFoucsChanged() {
     if (!_focusNode.hasFocus) {
       _textController.text = formatDate(widget.selectedDate, context);
+
+      setState(() {
+        _pendingValue = null;
+      });
     }
   }
 
@@ -99,7 +104,7 @@ class _DatePickerState extends State<DatePicker> {
       validator: widget.validator,
       controller: _textController,
       decoration: InputDecoration(
-          labelText: widget.labelText,
+          labelText: _pendingValue ?? widget.labelText ?? '',
           suffixIcon:
               widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
                   ? IconButton(
@@ -180,8 +185,6 @@ class _DatePickerState extends State<DatePicker> {
               value = '$year$value';
             }
 
-            print('## VLAUE: $value');
-
             date = convertDateTimeToSqlDate(DateTime.tryParse(value));
           } else {
             try {
@@ -194,6 +197,10 @@ class _DatePickerState extends State<DatePicker> {
           if ((date ?? '').isNotEmpty) {
             widget.onSelected(date);
           }
+
+          setState(() {
+            _pendingValue = formatDate(date, context);
+          });
         }
       },
     );
