@@ -126,6 +126,12 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       'swap_currency_symbol',
       serializers.serialize(object.swapCurrencySymbol,
           specifiedType: const FullType(bool)),
+      'thousand_separator',
+      serializers.serialize(object.thousandSeparator,
+          specifiedType: const FullType(String)),
+      'decimal_separator',
+      serializers.serialize(object.decimalSeparator,
+          specifiedType: const FullType(String)),
       'iso_3166_2',
       serializers.serialize(object.iso2, specifiedType: const FullType(String)),
       'iso_3166_3',
@@ -133,18 +139,7 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.thousandSeparator != null) {
-      result
-        ..add('thousand_separator')
-        ..add(serializers.serialize(object.thousandSeparator,
-            specifiedType: const FullType(String)));
-    }
-    if (object.decimalSeparator != null) {
-      result
-        ..add('decimal_separator')
-        ..add(serializers.serialize(object.decimalSeparator,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -429,6 +424,12 @@ class _$CountryEntity extends CountryEntity {
     }
     if (swapCurrencySymbol == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'swapCurrencySymbol');
+    }
+    if (thousandSeparator == null) {
+      throw new BuiltValueNullFieldError('CountryEntity', 'thousandSeparator');
+    }
+    if (decimalSeparator == null) {
+      throw new BuiltValueNullFieldError('CountryEntity', 'decimalSeparator');
     }
     if (iso2 == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'iso2');
