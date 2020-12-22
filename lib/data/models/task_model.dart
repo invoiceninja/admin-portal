@@ -704,8 +704,8 @@ abstract class TaskEntity extends Object
   String get calculateStatusId {
     if (isInvoiced) {
       return kTaskStatusInvoiced;
-      //} else if (isRunning) {
-      //  return kTaskStatusRunning;
+    } else if (isRunning) {
+      return kTaskStatusRunning;
     } else {
       return (statusId ?? '').isEmpty ? kTaskStatusLogged : statusId;
     }
