@@ -135,6 +135,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               },
             ),
             TimePicker(
+              key: ValueKey('__start_time_${_durationUpdateAt}__'),
               labelText: localization.startTime,
               selectedDate: _taskTime.startDate,
               selectedDateTime: _taskTime.startDate,
