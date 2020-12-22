@@ -111,7 +111,9 @@ class CreditViewVM extends EntityViewVM {
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveCreditDocumentRequest(
-            multipartFile: multipartFile, credit: credit, completer: completer));
+            multipartFile: multipartFile,
+            credit: credit,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

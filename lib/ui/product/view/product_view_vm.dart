@@ -83,7 +83,9 @@ class ProductViewVM {
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveProductDocumentRequest(
-            multipartFile: multipartFile, product: product, completer: completer));
+            multipartFile: multipartFile,
+            product: product,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

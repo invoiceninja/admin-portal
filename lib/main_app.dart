@@ -78,6 +78,7 @@ import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class InvoiceNinjaApp extends StatefulWidget {
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
@@ -191,6 +192,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 .toList(),
             //debugShowCheckedModeBanner: false,
             //showPerformanceOverlay: true,
+            navigatorObservers: [
+              SentryNavigatorObserver(),
+            ],
             localizationsDelegates: [
               const AppLocalizationsDelegate(),
               GlobalCupertinoLocalizations.delegate,

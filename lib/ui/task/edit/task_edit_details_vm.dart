@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -22,9 +23,17 @@ class TaskEditDetailsScreen extends StatelessWidget {
         return TaskEditDetailsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return TaskEditDetails(
-          viewModel: viewModel,
-        );
+        if (viewModel.state.prefState.isEditorFullScreen(EntityType.task)) {
+          return TaskEditDesktop(
+            viewModel: viewModel,
+            //entityViewModel: this.viewModel,
+            //key: ValueKey('__task_${viewModel.task.id}__'),
+          );
+        } else {
+          return TaskEditDetails(
+            viewModel: viewModel,
+          );
+        }
       },
     );
   }
@@ -39,6 +48,8 @@ class TaskEditDetailsVM {
     @required this.onChanged,
     @required this.onAddClientPressed,
     @required this.onAddProjectPressed,
+    @required this.onUpdatedTaskTime,
+    @required this.onRemoveTaskTime,
     @required this.isSaving,
     @required this.origTask,
     @required this.isLoading,
@@ -73,6 +84,16 @@ class TaskEditDetailsVM {
           store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
         });
       },
+      onUpdatedTaskTime: (taskTime, index) {
+        if (index == task.getTaskTimes().length) {
+          store.dispatch(AddTaskTime(taskTime));
+        } else {
+          store.dispatch(UpdateTaskTime(taskTime: taskTime, index: index));
+        }
+      },
+      onRemoveTaskTime: (index) {
+        store.dispatch(DeleteTaskTime(index));
+      },
       onAddProjectPressed: (context, completer) {
         createEntity(
             context: context,
@@ -103,4 +124,6 @@ class TaskEditDetailsVM {
       onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddProjectPressed;
+  final Function(TaskTime, int) onUpdatedTaskTime;
+  final Function(int) onRemoveTaskTime;
 }

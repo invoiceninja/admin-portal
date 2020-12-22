@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'update_app': 'Update App',
       'started_import': 'Successfully started import',
       'duplicate_column_mapping': 'Duplicate column mapping',
       'uses_inclusive_taxes': 'Uses Inclusive Taxes',
@@ -679,6 +680,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
           'Display a line item quantity field, otherwise default to one',
+      'show_product_discount': 'Show Product Discount',
+      'show_product_discount_help': 'Display a line item discount field',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
           'Automatically set the line item quantity to one',
@@ -3613,6 +3616,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get showInvoiceQuantityHelp =>
       _localizedValues[localeCode]['show_invoice_quantity_help'] ?? '';
 
+  String get showProductDiscount =>
+      _localizedValues[localeCode]['show_product_discount'] ?? '';
+
+  String get showProductDiscountHelp =>
+      _localizedValues[localeCode]['show_product_discount_help'] ?? '';
+
   String get defaultQuantity =>
       _localizedValues[localeCode]['default_quantity'] ?? '';
 
@@ -5307,7 +5316,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get duplicateColumnMapping =>
       _localizedValues[localeCode]['duplicate_column_mapping'] ?? '';
 
-  String get startedImport => _localizedValues[localeCode]['started_import'] ?? '';
+  String get startedImport =>
+      _localizedValues[localeCode]['started_import'] ?? '';
+
+  String get updateApp => _localizedValues[localeCode]['update_app'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

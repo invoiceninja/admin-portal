@@ -25,7 +25,7 @@ class InvoiceEditFooter extends StatelessWidget {
         invoice.calculateTotal(precision: precisionForInvoice(state, invoice)),
         context,
         clientId: invoice.clientId);
-    final showSidebar =
+    final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
 
     return BottomAppBar(
@@ -41,7 +41,7 @@ class InvoiceEditFooter extends StatelessWidget {
             children: [
               if (isDesktop(context))
                 Tooltip(
-                  message: showSidebar
+                  message: useSidebarEditor
                       ? localization.fullscreenEditor
                       : localization.sidebarEditor,
                   child: InkWell(
@@ -49,8 +49,9 @@ class InvoiceEditFooter extends StatelessWidget {
                         store.dispatch(ToggleEditorLayout(EntityType.invoice)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Icon(
-                          showSidebar ? Icons.chevron_left : Icons.chevron_right),
+                      child: Icon(useSidebarEditor
+                          ? Icons.chevron_left
+                          : Icons.chevron_right),
                     ),
                   ),
                 ),

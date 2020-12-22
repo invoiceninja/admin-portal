@@ -76,8 +76,8 @@ class ProductRepository {
     return productResponse.data;
   }
 
-  Future<ProductEntity> uploadDocument(
-      Credentials credentials, BaseEntity entity, MultipartFile multipartFile) async {
+  Future<ProductEntity> uploadDocument(Credentials credentials,
+      BaseEntity entity, MultipartFile multipartFile) async {
     final fields = <String, String>{
       '_method': 'put',
     };

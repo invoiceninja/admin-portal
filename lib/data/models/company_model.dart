@@ -65,7 +65,9 @@ abstract class CompanyEntity extends Object
       showProductDetails: true,
       enableProductCost: false,
       enableProductQuantity: true,
+      enableProductDiscount: false,
       defaultQuantity: true,
+      defaultTaskIsDateBased: false,
       slackWebhookUrl: '',
       googleAnalyticsKey: '',
       clientCanRegister: true,
@@ -164,6 +166,12 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'enable_product_quantity')
   bool get enableProductQuantity;
+
+  @BuiltValueField(wireName: 'enable_product_discount')
+  bool get enableProductDiscount;
+
+  @BuiltValueField(wireName: 'default_task_is_date_based')
+  bool get defaultTaskIsDateBased;
 
   @BuiltValueField(wireName: 'default_quantity')
   bool get defaultQuantity;
@@ -462,6 +470,11 @@ abstract class CompanyEntity extends Object
   }
 
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
+
+  // ignore: unused_element
+  static void _initializeBuilder(CompanyEntityBuilder builder) => builder
+    ..enableProductDiscount = false
+    ..defaultTaskIsDateBased = false;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
@@ -1972,11 +1985,6 @@ abstract class SettingsEntity
 
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
-
-  bool doesPdfHaveField(String section, String field) {
-    final fields = getFieldsForSection(section);
-    return fields.contains(field);
-  }
 
   List<String> getFieldsForSection(String section) =>
       pdfVariables != null && pdfVariables.containsKey(section)

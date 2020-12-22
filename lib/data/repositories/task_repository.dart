@@ -73,8 +73,8 @@ class TaskRepository {
     return taskResponse.data;
   }
 
-  Future<TaskEntity> uploadDocument(
-      Credentials credentials, BaseEntity entity, MultipartFile multipartFile) async {
+  Future<TaskEntity> uploadDocument(Credentials credentials, BaseEntity entity,
+      MultipartFile multipartFile) async {
     final fields = <String, String>{
       '_method': 'put',
     };

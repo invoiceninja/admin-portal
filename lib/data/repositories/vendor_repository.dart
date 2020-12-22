@@ -74,8 +74,8 @@ class VendorRepository {
     return vendorResponse.data;
   }
 
-  Future<VendorEntity> uploadDocument(
-      Credentials credentials, BaseEntity entity, MultipartFile multipartFile) async {
+  Future<VendorEntity> uploadDocument(Credentials credentials,
+      BaseEntity entity, MultipartFile multipartFile) async {
     final fields = <String, String>{
       '_method': 'put',
     };

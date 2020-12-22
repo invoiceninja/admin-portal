@@ -53,7 +53,7 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.showCost),
-                value: company.enableProductCost ?? false,
+                value: company.enableProductCost,
                 subtitle: Text(localization.showCostHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..enableProductCost = value)),
@@ -61,7 +61,7 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.showProductQuantity),
-                value: company.enableProductQuantity ?? false,
+                value: company.enableProductQuantity,
                 subtitle: Text(localization.showProductQuantityHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..enableProductQuantity = value)),
@@ -69,10 +69,18 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.defaultQuantity),
-                value: company.defaultQuantity ?? false,
+                value: company.defaultQuantity,
                 subtitle: Text(localization.defaultQuantityHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..defaultQuantity = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.showProductDiscount),
+                value: company.enableProductDiscount,
+                subtitle: Text(localization.showProductDiscountHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..enableProductDiscount = value)),
               ),
             ],
           ),
@@ -91,7 +99,7 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.fillProducts),
-                value: company.fillProducts ?? false,
+                value: company.fillProducts,
                 subtitle: Text(localization.fillProductsHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..fillProducts = value)),
@@ -99,7 +107,7 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.updateProducts),
-                value: company.updateProducts ?? true,
+                value: company.updateProducts,
                 subtitle: Text(localization.updateProductsHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..updateProducts = value)),

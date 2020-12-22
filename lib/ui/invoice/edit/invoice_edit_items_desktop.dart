@@ -55,16 +55,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       lineItems.add(InvoiceItemEntity());
     }
 
-    final hasLineItemDiscount = company.settings.doesPdfHaveField(
-        widget.isTasks ? kPdfFieldsTaskColumns : kPdfFieldsProductColumns,
-        widget.isTasks ? '\$task.discount' : '\$product.discount');
-
     int lastIndex = 4;
     lastIndex += company.numberOfItemTaxRates ?? 0;
     if (company.enableProductQuantity || widget.isTasks) {
       lastIndex++;
     }
-    if (hasLineItemDiscount) {
+    if (company.enableProductDiscount) {
       lastIndex++;
     }
     if (company.hasCustomField(CustomFieldType.product1)) {
@@ -120,7 +116,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
               TableHeader(
                   widget.isTasks ? localization.hours : localization.quantity,
                   isNumeric: true),
-            if (hasLineItemDiscount)
+            if (company.enableProductDiscount)
               TableHeader(localization.discount, isNumeric: true),
             TableHeader(localization.lineTotal, isNumeric: true),
             TableHeader(''),
@@ -427,7 +423,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           onSavePressed: widget.entityViewModel.onSavePressed,
                         ),
                       ),
-                    if (hasLineItemDiscount)
+                    if (company.enableProductDiscount)
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: DecoratedFormField(

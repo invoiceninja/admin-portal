@@ -90,7 +90,7 @@ class _TaskViewState extends State<TaskView>
               entity: task,
               action1: task.isRunning
                   ? EntityAction.stop
-                  : task.taskTimes.isEmpty
+                  : task.getTaskTimes().isEmpty
                       ? EntityAction.start
                       : EntityAction.resume,
               action2: task.isInvoiced

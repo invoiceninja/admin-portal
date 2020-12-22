@@ -75,6 +75,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'enable_product_quantity',
       serializers.serialize(object.enableProductQuantity,
           specifiedType: const FullType(bool)),
+      'enable_product_discount',
+      serializers.serialize(object.enableProductDiscount,
+          specifiedType: const FullType(bool)),
+      'default_task_is_date_based',
+      serializers.serialize(object.defaultTaskIsDateBased,
+          specifiedType: const FullType(bool)),
       'default_quantity',
       serializers.serialize(object.defaultQuantity,
           specifiedType: const FullType(bool)),
@@ -350,6 +356,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'enable_product_quantity':
           result.enableProductQuantity = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_product_discount':
+          result.enableProductDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'default_task_is_date_based':
+          result.defaultTaskIsDateBased = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'default_quantity':
@@ -2891,6 +2905,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool enableProductQuantity;
   @override
+  final bool enableProductDiscount;
+  @override
+  final bool defaultTaskIsDateBased;
+  @override
   final bool defaultQuantity;
   @override
   final bool showProductDetails;
@@ -3019,6 +3037,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.fillProducts,
       this.enableProductCost,
       this.enableProductQuantity,
+      this.enableProductDiscount,
+      this.defaultTaskIsDateBased,
       this.defaultQuantity,
       this.showProductDetails,
       this.clientCanRegister,
@@ -3122,6 +3142,14 @@ class _$CompanyEntity extends CompanyEntity {
     if (enableProductQuantity == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableProductQuantity');
+    }
+    if (enableProductDiscount == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableProductDiscount');
+    }
+    if (defaultTaskIsDateBased == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'defaultTaskIsDateBased');
     }
     if (defaultQuantity == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultQuantity');
@@ -3305,6 +3333,8 @@ class _$CompanyEntity extends CompanyEntity {
         fillProducts == other.fillProducts &&
         enableProductCost == other.enableProductCost &&
         enableProductQuantity == other.enableProductQuantity &&
+        enableProductDiscount == other.enableProductDiscount &&
+        defaultTaskIsDateBased == other.defaultTaskIsDateBased &&
         defaultQuantity == other.defaultQuantity &&
         showProductDetails == other.showProductDetails &&
         clientCanRegister == other.clientCanRegister &&
@@ -3383,7 +3413,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
                                                                                 googleAnalyticsKey.hashCode),
                                                                             markExpensesInvoiceable.hashCode),
                                                                         markExpensesPaid.hashCode),
@@ -3422,6 +3452,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('fillProducts', fillProducts)
           ..add('enableProductCost', enableProductCost)
           ..add('enableProductQuantity', enableProductQuantity)
+          ..add('enableProductDiscount', enableProductDiscount)
+          ..add('defaultTaskIsDateBased', defaultTaskIsDateBased)
           ..add('defaultQuantity', defaultQuantity)
           ..add('showProductDetails', showProductDetails)
           ..add('clientCanRegister', clientCanRegister)
@@ -3548,6 +3580,16 @@ class CompanyEntityBuilder
   bool get enableProductQuantity => _$this._enableProductQuantity;
   set enableProductQuantity(bool enableProductQuantity) =>
       _$this._enableProductQuantity = enableProductQuantity;
+
+  bool _enableProductDiscount;
+  bool get enableProductDiscount => _$this._enableProductDiscount;
+  set enableProductDiscount(bool enableProductDiscount) =>
+      _$this._enableProductDiscount = enableProductDiscount;
+
+  bool _defaultTaskIsDateBased;
+  bool get defaultTaskIsDateBased => _$this._defaultTaskIsDateBased;
+  set defaultTaskIsDateBased(bool defaultTaskIsDateBased) =>
+      _$this._defaultTaskIsDateBased = defaultTaskIsDateBased;
 
   bool _defaultQuantity;
   bool get defaultQuantity => _$this._defaultQuantity;
@@ -3829,7 +3871,9 @@ class CompanyEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  CompanyEntityBuilder();
+  CompanyEntityBuilder() {
+    CompanyEntity._initializeBuilder(this);
+  }
 
   CompanyEntityBuilder get _$this {
     if (_$v != null) {
@@ -3847,6 +3891,8 @@ class CompanyEntityBuilder
       _fillProducts = _$v.fillProducts;
       _enableProductCost = _$v.enableProductCost;
       _enableProductQuantity = _$v.enableProductQuantity;
+      _enableProductDiscount = _$v.enableProductDiscount;
+      _defaultTaskIsDateBased = _$v.defaultTaskIsDateBased;
       _defaultQuantity = _$v.defaultQuantity;
       _showProductDetails = _$v.showProductDetails;
       _clientCanRegister = _$v.clientCanRegister;
@@ -3940,6 +3986,8 @@ class CompanyEntityBuilder
               fillProducts: fillProducts,
               enableProductCost: enableProductCost,
               enableProductQuantity: enableProductQuantity,
+              enableProductDiscount: enableProductDiscount,
+              defaultTaskIsDateBased: defaultTaskIsDateBased,
               defaultQuantity: defaultQuantity,
               showProductDetails: showProductDetails,
               clientCanRegister: clientCanRegister,

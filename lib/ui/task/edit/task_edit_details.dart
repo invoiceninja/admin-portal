@@ -123,8 +123,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     state.staticState),
                 onSelected: (client) {
                   viewModel.onChanged(task.rebuild((b) => b
-                    ..clientId = client?.id
-                    ..projectId = null));
+                    ..clientId = client?.id ?? ''
+                    ..projectId = ''));
                 },
                 onAddPressed: (completer) {
                   viewModel.onAddClientPressed(context, completer);

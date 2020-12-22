@@ -88,6 +88,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   @memoized
   int get hashCode;
 
+  @nullable
   DateTime get startDate;
 
   @nullable
@@ -107,7 +108,9 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   bool get isRunning => endDate == null;
 
-  Map<String, Duration> getParts(int timezoneOffset) {
+  bool get isEmpty => startDate == null && endDate == null;
+
+  Map<String, Duration> getParts() {
     final localStartDate = startDate.toLocal();
     final localEndDate = (endDate ?? DateTime.now()).toLocal();
     final startSqlDate = convertDateTimeToSqlDate(localStartDate);
@@ -141,6 +144,56 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     } while (nextDate.isBefore(localEndDate.subtract(Duration(days: 1))));
 
     return dates;
+  }
+
+  TaskTime copyWithDate(String date) {
+    if ((date ?? '').isEmpty) {
+      return this;
+    }
+
+    final dateTime = DateTime.parse(date);
+    final now = DateTime.now();
+
+    return TaskTime(
+        startDate: DateTime(
+          dateTime.year,
+          dateTime.month,
+          dateTime.day,
+          startDate?.toLocal()?.hour ?? now.hour,
+          startDate?.toLocal()?.minute ?? now.minute,
+          startDate?.toLocal()?.second ?? now.second,
+        ).toUtc(),
+        endDate: endDate == null
+            ? null
+            : DateTime.utc(
+                dateTime.toUtc().year,
+                dateTime.toUtc().month,
+                dateTime.toUtc().day,
+                endDate.hour,
+                endDate.minute,
+                endDate.second,
+              ));
+  }
+
+  TaskTime copyWithStartDateTime(DateTime dateTime) {
+    return TaskTime(
+      startDate: dateTime,
+      endDate: endDate,
+    );
+  }
+
+  TaskTime copyWithEndDateTime(DateTime dateTime) {
+    return TaskTime(
+      startDate: startDate,
+      endDate: dateTime,
+    );
+  }
+
+  TaskTime copyWithDuration(Duration duration) {
+    return TaskTime(
+      startDate: startDate,
+      endDate: startDate.add(duration),
+    );
   }
 
   static Serializer<TaskTime> get serializer => _$taskTimeSerializer;
@@ -192,7 +245,7 @@ abstract class TaskEntity extends Object
     ..number = ''
     ..isChanged = false
     ..isDeleted = false
-    ..invoiceId = null
+    ..invoiceId = ''
     ..isRunning = false
     ..duration = 0
     ..timeLog = '[]');
@@ -202,7 +255,7 @@ abstract class TaskEntity extends Object
   TaskEntity start() => addTaskTime(TaskTime());
 
   TaskEntity stop() {
-    final times = taskTimes;
+    final times = getTaskTimes();
     final taskTime = times.last.stop;
 
     return updateTaskTime(taskTime, times.length - 1);
@@ -222,7 +275,7 @@ abstract class TaskEntity extends Object
   int get duration;
 
   bool get areTimesValid {
-    final times = taskTimes;
+    final times = getTaskTimes();
     DateTime lastDateTime = DateTime(2000);
     int countRunning = 0;
     bool isValid = true;
@@ -248,14 +301,21 @@ abstract class TaskEntity extends Object
   }
 
   bool isBetween(String startDate, String endDate) {
-    final times = taskTimes;
+    final times = getTaskTimes();
+
     if (times.isEmpty) {
       return false;
     }
-    final firstEndDate = times.first.endDate ?? DateTime.now();
-    final lastEndDate = times.first.endDate ?? DateTime.now();
-    return DateTime.parse(startDate).compareTo(firstEndDate.toLocal()) <= 0 &&
-        DateTime.parse(endDate).compareTo(lastEndDate.toLocal()) == 1;
+
+    final taskTimes = getTaskTimes();
+
+    if (taskTimes.isEmpty) {
+      return false;
+    }
+
+    final date = convertDateTimeToSqlDate(taskTimes.first.startDate.toLocal());
+
+    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
 
   int get startTimestamp {
@@ -294,7 +354,7 @@ abstract class TaskEntity extends Object
     return last[1];
   }
 
-  List<TaskTime> get taskTimes {
+  List<TaskTime> getTaskTimes({bool sort = true}) {
     final List<TaskTime> details = [];
 
     if (timeLog.isEmpty) {
@@ -329,7 +389,10 @@ abstract class TaskEntity extends Object
       }
     });
 
-    details.sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
+    if (sort) {
+      details
+          .sort((timeA, timeB) => timeA.startDate.compareTo(timeB.startDate));
+    }
 
     return details;
   }
@@ -341,6 +404,7 @@ abstract class TaskEntity extends Object
     taskTimes.add(time.asList);
 
     return rebuild((b) => b
+      ..isChanged = true
       ..timeLog = jsonEncode(taskTimes)
       ..isRunning = time.isRunning);
   }
@@ -360,6 +424,7 @@ abstract class TaskEntity extends Object
     }
 
     return rebuild((b) => b
+      ..isChanged = true
       ..timeLog = jsonEncode(taskTimes)
       ..isRunning = isRunning);
   }
@@ -379,6 +444,7 @@ abstract class TaskEntity extends Object
     }
 
     return rebuild((b) => b
+      ..isChanged = true
       ..timeLog = jsonEncode(taskTimes)
       ..isRunning = isRunning);
   }
@@ -389,7 +455,7 @@ abstract class TaskEntity extends Object
   Duration get calculateDuration {
     int seconds = 0;
 
-    taskTimes.forEach((taskTime) {
+    getTaskTimes().forEach((taskTime) {
       seconds += taskTime.duration.inSeconds;
     });
 
@@ -641,7 +707,7 @@ abstract class TaskEntity extends Object
       //} else if (isRunning) {
       //  return kTaskStatusRunning;
     } else {
-      return statusId;
+      return (statusId ?? '').isEmpty ? kTaskStatusLogged : statusId;
     }
   }
 

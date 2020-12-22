@@ -104,7 +104,9 @@ class ProjectViewVM {
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveProjectDocumentRequest(
-            multipartFile: multipartFile, project: project, completer: completer));
+            multipartFile: multipartFile,
+            project: project,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

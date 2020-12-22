@@ -158,7 +158,7 @@ class _TaskOverviewState extends State<TaskOverview> {
         ]);
       }
 
-      final items = task.taskTimes;
+      final items = task.getTaskTimes();
       if (items.isNotEmpty) {
         items.reversed.forEach((taskTime) {
           widgets.addAll([

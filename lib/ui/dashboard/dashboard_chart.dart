@@ -118,16 +118,14 @@ class _DashboardChartState extends State<DashboardChart> {
         ),
         Divider(height: 1.0),
         LimitedBox(
-          //maxHeight: settings.enableComparison ? 116 : 96,
-          maxHeight: settings.enableComparison ? 120 : 100,
+          maxHeight: settings.enableComparison ? 122 : 102,
           child: ListView(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             children: widget.data.map((dataGroup) {
               final int index = widget.data.indexOf(dataGroup);
               final bool isSelected = index == _selectedIndex;
-              final bool isIncrease =
-                  dataGroup.total > dataGroup.previousTotal;
+              final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
               final String changeAmount = (isIncrease ? '+' : '') +
                   formatNumber(
                       dataGroup.total - dataGroup.previousTotal, context,
@@ -159,8 +157,8 @@ class _DashboardChartState extends State<DashboardChart> {
                 },
                 child: Container(
                   color: isSelected ? state.accentColor : theme.cardColor,
-                  padding: EdgeInsets.only(
-                      left: 16, top: 16, right: 32, bottom: 16),
+                  padding:
+                      EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -182,9 +180,7 @@ class _DashboardChartState extends State<DashboardChart> {
                                 fontSize: 16,
                                 color: isSelected
                                     ? Colors.white
-                                    : (isIncrease
-                                        ? Colors.green
-                                        : Colors.red),
+                                    : (isIncrease ? Colors.green : Colors.red),
                               ),
                             )
                           : SizedBox(),

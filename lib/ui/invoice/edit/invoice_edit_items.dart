@@ -1,5 +1,4 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -305,8 +304,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     onSavePressed: widget.entityViewModel.onSavePressed,
                   )
                 : Container(),
-            company.settings.doesPdfHaveField(
-                    kPdfFieldsProductColumns, '\$product.discount')
+            company.enableProductDiscount
                 ? DecoratedFormField(
                     label: localization.discount,
                     controller: _discountController,

@@ -116,7 +116,9 @@ class ExpenseViewVM {
           final Completer<DocumentEntity> completer =
               Completer<DocumentEntity>();
           store.dispatch(SaveDocumentRequest(
-              multipartFile: multipartFile, entity: expense, completer: completer));
+              multipartFile: multipartFile,
+              entity: expense,
+              completer: completer));
           completer.future.then((client) {
             showToast(AppLocalization.of(context).uploadedDocument);
           }).catchError((Object error) {

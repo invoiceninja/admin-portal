@@ -41,13 +41,15 @@ class ProductPresenter extends EntityPresenter {
         return Align(
           alignment: Alignment.centerRight,
           child: Text(formatNumber(product.cost, context,
-              formatNumberType: FormatNumberType.money)),
+              formatNumberType: FormatNumberType.money,
+              roundToPrecision: false)),
         );
       case ProductFields.price:
         return Align(
           alignment: Alignment.centerRight,
           child: Text(formatNumber(product.price, context,
-              formatNumberType: FormatNumberType.money)),
+              formatNumberType: FormatNumberType.money,
+              roundToPrecision: false)),
         );
       case ProductFields.quantity:
         return Align(

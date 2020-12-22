@@ -83,8 +83,8 @@ class _ProjectOverviewState extends State<ProjectOverview> {
           value: formatDuration(
               taskDurationForProject(project, state.taskState.map)),
           secondLabel: localization.budgeted,
-          secondValue: formatDuration(
-              Duration(hours: project.budgetedHours.toInt())),
+          secondValue:
+              formatDuration(Duration(hours: project.budgetedHours.toInt())),
         ),
         ListDivider(),
         if ((project.privateNotes ?? '').isNotEmpty) ...[

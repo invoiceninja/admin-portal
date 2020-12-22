@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class TimePicker extends StatefulWidget {
   const TimePicker({
     Key key,
-    @required this.labelText,
     @required this.onSelected,
     @required this.selectedDateTime,
     @required this.selectedDate,
+    this.isEndTime = false,
+    this.labelText,
     this.validator,
     this.autoValidate = false,
     this.allowClearing = false,
@@ -22,6 +24,7 @@ class TimePicker extends StatefulWidget {
   final Function validator;
   final bool autoValidate;
   final bool allowClearing;
+  final bool isEndTime;
 
   @override
   _TimePickerState createState() => new _TimePickerState();
@@ -30,6 +33,7 @@ class TimePicker extends StatefulWidget {
 class _TimePickerState extends State<TimePicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
+  String _pendingValue;
 
   @override
   void initState() {
@@ -40,19 +44,25 @@ class _TimePickerState extends State<TimePicker> {
   @override
   void didChangeDependencies() {
     if (widget.selectedDateTime != null) {
-      _textController.text = formatDate(
+      final formatted = formatDate(
           widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
+
+      _textController.text = formatted;
     }
 
     super.didChangeDependencies();
   }
 
   void _onFoucsChanged() {
-    if (!_focusNode.hasFocus) {
+    if (!_focusNode.hasFocus && widget.selectedDateTime != null) {
       _textController.text = formatDate(
-          widget.selectedDateTime?.toIso8601String(), context,
+          widget.selectedDateTime.toIso8601String(), context,
           showDate: false, showTime: true);
+
+      setState(() {
+        _pendingValue = null;
+      });
     }
   }
 
@@ -65,7 +75,7 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   void _showTimePicker() async {
-    final selectedDateTime = widget.selectedDateTime;
+    final selectedDateTime = widget.selectedDateTime?.toLocal();
     final now = DateTime.now();
 
     final hour = selectedDateTime?.hour ?? now.hour;
@@ -83,7 +93,7 @@ class _TimePickerState extends State<TimePicker> {
 
       if (widget.selectedDate != null &&
           dateTime.isBefore(widget.selectedDate)) {
-        dateTime = dateTime.add(Duration(days: 1));
+        dateTime = dateTime.toUtc().add(Duration(days: 1)).toLocal();
       }
 
       _textController.text = formatDate(dateTime.toIso8601String(), context,
@@ -95,15 +105,12 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return DecoratedFormField(
       focusNode: _focusNode,
       validator: widget.validator,
-      autovalidateMode: widget.autoValidate
-          ? AutovalidateMode.always
-          : AutovalidateMode.onUserInteraction,
       controller: _textController,
       decoration: InputDecoration(
-        labelText: widget.labelText,
+        labelText: _pendingValue ?? widget.labelText ?? '',
         suffixIcon: widget.allowClearing && widget.selectedDateTime != null
             ? IconButton(
                 icon: Icon(Icons.clear),
@@ -151,15 +158,16 @@ class _TimePickerState extends State<TimePicker> {
           } else {
             final store = StoreProvider.of<AppState>(context);
             if (!store.state.company.settings.enableMilitaryTime) {
-              final hour = parseDouble(parts[0]);
-              dateTimeStr += hour > 6 ? ' AM' : ' PM';
+              //final hour = parseDouble(parts[0]);
+              //dateTimeStr += hour > 6 ? ' AM' : ' PM';
+              dateTimeStr += ' PM';
             }
           }
 
           final dateTime = parseTime(dateTimeStr, context);
 
           if (dateTime != null) {
-            final date = widget.selectedDate;
+            final date = widget.selectedDate?.toLocal() ?? DateTime.now();
             var selectedDate = DateTime(
               date.year,
               date.month,
@@ -167,11 +175,20 @@ class _TimePickerState extends State<TimePicker> {
               dateTime.hour,
               dateTime.minute,
               dateTime.second,
-            );
-            if (selectedDate.isBefore(date)) {
-              selectedDate = selectedDate.add(Duration(hours: 24));
+            ).toUtc();
+
+            if (selectedDate.isBefore(date) && widget.isEndTime) {
+              selectedDate =
+                  selectedDate.toUtc().add(Duration(days: 1)).toLocal();
             }
+
             widget.onSelected(selectedDate);
+
+            setState(() {
+              _pendingValue = formatDate(
+                  selectedDate.toIso8601String(), context,
+                  showTime: true, showDate: false);
+            });
           }
         }
       },

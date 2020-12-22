@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({
-    @required this.labelText,
+    Key key,
     @required this.onSelected,
     @required this.selectedDate,
+    this.labelText,
     this.validator,
     this.autoValidate = false,
     this.allowClearing = false,
     this.firstDate,
-  });
+  }) : super(key: key);
 
   final String labelText;
   final String selectedDate;
@@ -28,6 +33,7 @@ class DatePicker extends StatefulWidget {
 class _DatePickerState extends State<DatePicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
+  String _pendingValue;
 
   @override
   void initState() {
@@ -45,6 +51,10 @@ class _DatePickerState extends State<DatePicker> {
   void _onFoucsChanged() {
     if (!_focusNode.hasFocus) {
       _textController.text = formatDate(widget.selectedDate, context);
+
+      setState(() {
+        _pendingValue = null;
+      });
     }
   }
 
@@ -89,15 +99,12 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return DecoratedFormField(
       focusNode: _focusNode,
       validator: widget.validator,
-      autovalidateMode: widget.autoValidate
-          ? AutovalidateMode.always
-          : AutovalidateMode.onUserInteraction,
       controller: _textController,
       decoration: InputDecoration(
-          labelText: widget.labelText,
+          labelText: _pendingValue ?? widget.labelText ?? '',
           suffixIcon:
               widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
                   ? IconButton(
@@ -116,21 +123,84 @@ class _DatePickerState extends State<DatePicker> {
           widget.onSelected('');
         } else {
           String date = '';
-          if (isAllDigits(value)) {
-            if (value.length < 4) {
-              value = '0$value';
+          if (isAllDigits(value) || value.length <= 5) {
+            String firstPart = '01';
+            String secondPart = '01';
+            int year = DateTime.now().year;
+            if (value.contains('/')) {
+              final parts = value.split('/');
+              if (parts[0].length == 1) {
+                firstPart = '0' + parts[0];
+              } else {
+                firstPart = parts[0];
+              }
+              if (parts[1].length == 1) {
+                secondPart = '0' + parts[1];
+              } else {
+                secondPart = parts[1];
+              }
+            } else {
+              value = value.replaceAll(RegExp(r'[^0-9]'), '');
+
+              if (value.length <= 2) {
+                firstPart = value;
+              } else if (value.length == 3) {
+                firstPart = '0' + value.substring(0, 1);
+                secondPart = value.substring(1, 3);
+              } else {
+                if (value.length == 5) {
+                  value = '0$value';
+                }
+
+                firstPart = value.substring(0, 2);
+                secondPart = value.substring(2, 4);
+
+                if (value.length == 6) {
+                  year = int.tryParse(value.substring(4, 6));
+                  if (year < 30) {
+                    year += 2000;
+                  } else {
+                    year += 1900;
+                  }
+                } else if (value.length == 8) {
+                  year = int.tryParse(value.substring(4, 8));
+                }
+              }
             }
-            if (value.length < 5) {
-              value = '${DateTime.now().year}$value';
+
+            final month = firstPart;
+            final day = secondPart;
+
+            final state = StoreProvider.of<AppState>(context).state;
+            final dateFormatId =
+                state.company.settings.dateFormatId ?? kDefaultDateFormat;
+            final dateFormat =
+                state.staticState.dateFormatMap[dateFormatId].format;
+
+            value = dateFormat.substring(0, 1).toLowerCase() == 'd'
+                ? '$day$month'
+                : '$month$day';
+
+            if (value.length == 4) {
+              value = '$year$value';
             }
+
             date = convertDateTimeToSqlDate(DateTime.tryParse(value));
           } else {
-            date = parseDate(value, context);
+            try {
+              date = parseDate(value, context);
+            } catch (e) {
+              return;
+            }
           }
 
           if ((date ?? '').isNotEmpty) {
             widget.onSelected(date);
           }
+
+          setState(() {
+            _pendingValue = formatDate(date, context);
+          });
         }
       },
     );

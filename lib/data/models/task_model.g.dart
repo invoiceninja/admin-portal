@@ -109,11 +109,13 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
   @override
   Iterable<Object> serialize(Serializers serializers, TaskTime object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'startDate',
-      serializers.serialize(object.startDate,
-          specifiedType: const FullType(DateTime)),
-    ];
+    final result = <Object>[];
+    if (object.startDate != null) {
+      result
+        ..add('startDate')
+        ..add(serializers.serialize(object.startDate,
+            specifiedType: const FullType(DateTime)));
+    }
     if (object.endDate != null) {
       result
         ..add('endDate')
@@ -558,11 +560,7 @@ class _$TaskTime extends TaskTime {
   factory _$TaskTime([void Function(TaskTimeBuilder) updates]) =>
       (new TaskTimeBuilder()..update(updates)).build();
 
-  _$TaskTime._({this.startDate, this.endDate}) : super._() {
-    if (startDate == null) {
-      throw new BuiltValueNullFieldError('TaskTime', 'startDate');
-    }
-  }
+  _$TaskTime._({this.startDate, this.endDate}) : super._();
 
   @override
   TaskTime rebuild(void Function(TaskTimeBuilder) updates) =>

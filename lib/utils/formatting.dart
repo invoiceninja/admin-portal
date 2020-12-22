@@ -248,6 +248,15 @@ String convertDateTimeToSqlDate([DateTime date]) {
   return date.toIso8601String().split('T').first;
 }
 
+DateTime convertSqlDateToDateTime(String date) {
+  final parts = date.split('-');
+  return DateTime(
+    parseInt(parts[0]),
+    parseInt(parts[1]),
+    parseInt(parts[2]),
+  ).toUtc();
+}
+
 DateTime convertTimestampToDate(int timestamp) =>
     DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000);
 

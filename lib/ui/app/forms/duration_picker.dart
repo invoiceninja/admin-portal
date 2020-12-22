@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DurationPicker extends StatefulWidget {
   const DurationPicker({
     Key key,
     @required this.selectedDuration,
     @required this.onSelected,
+    this.labelText,
     this.allowClearing = false,
   }) : super(key: key);
 
   final Duration selectedDuration;
   final Function onSelected;
   final bool allowClearing;
+  final String labelText;
 
   @override
   _DurationPickerState createState() => _DurationPickerState();
@@ -22,6 +23,7 @@ class DurationPicker extends StatefulWidget {
 class _DurationPickerState extends State<DurationPicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
+  String _pendingValue;
 
   @override
   void initState() {
@@ -43,6 +45,10 @@ class _DurationPickerState extends State<DurationPicker> {
       _textController.text = widget.selectedDuration != null
           ? formatDuration(widget.selectedDuration)
           : '';
+
+      setState(() {
+        _pendingValue = null;
+      });
     }
   }
 
@@ -56,8 +62,6 @@ class _DurationPickerState extends State<DurationPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-
     return DecoratedFormField(
       controller: _textController,
       focusNode: _focusNode,
@@ -79,9 +83,13 @@ class _DurationPickerState extends State<DurationPicker> {
         }
         final duration = Duration(seconds: seconds);
         widget.onSelected(duration);
+
+        setState(() {
+          _pendingValue = formatDuration(duration);
+        });
       },
       decoration: InputDecoration(
-          labelText: localization.duration,
+          labelText: _pendingValue ?? widget.labelText ?? '',
           suffixIcon: widget.allowClearing &&
                   (widget.selectedDuration != null &&
                       widget.selectedDuration.inSeconds != 0)

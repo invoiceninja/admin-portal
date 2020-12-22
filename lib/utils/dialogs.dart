@@ -62,7 +62,8 @@ void confirmCallback({
                 children: [
                   Flexible(
                     child: Text(localization.pleaseTypeToConfirm
-                        .replaceFirst(':value', typeToConfirm) + ':'),
+                            .replaceFirst(':value', typeToConfirm) +
+                        ':'),
                   ),
                   SizedBox(width: 16),
                   Expanded(
