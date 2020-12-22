@@ -532,7 +532,7 @@ List<ChartDataGroup> chartTasks(
       // skip it
     } else {
       task.getTaskTimes().forEach((taskTime) {
-        taskTime.getParts(0).forEach((date, duration) {
+        taskTime.getParts().forEach((date, duration) {
           if (totals[STATUS_LOGGED][date] == null) {
             totals[STATUS_LOGGED][date] = 0.0;
             totals[STATUS_INVOICED][date] = 0.0;

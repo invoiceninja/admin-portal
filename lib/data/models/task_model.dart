@@ -110,7 +110,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   bool get isEmpty => startDate == null && endDate == null;
 
-  Map<String, Duration> getParts(int timezoneOffset) {
+  Map<String, Duration> getParts() {
     final localStartDate = startDate.toLocal();
     final localEndDate = (endDate ?? DateTime.now()).toLocal();
     final startSqlDate = convertDateTimeToSqlDate(localStartDate);
@@ -302,13 +302,20 @@ abstract class TaskEntity extends Object
 
   bool isBetween(String startDate, String endDate) {
     final times = getTaskTimes();
+
     if (times.isEmpty) {
       return false;
     }
-    final firstEndDate = times.first.endDate ?? DateTime.now();
-    final lastEndDate = times.first.endDate ?? DateTime.now();
-    return DateTime.parse(startDate).compareTo(firstEndDate.toLocal()) <= 0 &&
-        DateTime.parse(endDate).compareTo(lastEndDate.toLocal()) == 1;
+
+    final taskTimes = getTaskTimes();
+
+    if (taskTimes.isEmpty) {
+      return false;
+    }
+
+    final date = convertDateTimeToSqlDate(taskTimes.first.startDate.toLocal());
+
+    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
 
   int get startTimestamp {
