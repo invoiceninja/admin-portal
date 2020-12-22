@@ -347,18 +347,21 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                             : taskTimes[index].duration,
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.clear),
-                      tooltip: localization.remove,
-                      onPressed: taskTimes[index].isEmpty
-                          ? null
-                          : () {
-                              viewModel.onRemoveTaskTime(index);
-                              setState(() {
-                                _updatedAt =
-                                    DateTime.now().millisecondsSinceEpoch;
-                              });
-                            },
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: IconButton(
+                        icon: Icon(Icons.clear),
+                        tooltip: localization.remove,
+                        onPressed: taskTimes[index].isEmpty
+                            ? null
+                            : () {
+                                viewModel.onRemoveTaskTime(index);
+                                setState(() {
+                                  _updatedAt =
+                                      DateTime.now().millisecondsSinceEpoch;
+                                });
+                              },
+                      ),
                     ),
                   ]),
               ],
