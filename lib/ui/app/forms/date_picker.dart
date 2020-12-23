@@ -143,10 +143,19 @@ class _DatePickerState extends State<DatePicker> {
               value = value.replaceAll(RegExp(r'[^0-9]'), '');
 
               if (value.length <= 2) {
+                if (value.length == 1) {
+                  value = '0$value';
+                }
+
                 firstPart = value;
               } else if (value.length == 3) {
-                firstPart = '0' + value.substring(0, 1);
-                secondPart = value.substring(1, 3);
+                if (value.substring(0, 1) == '0') {
+                  firstPart = value.substring(0, 2);
+                  secondPart = '0' + value.substring(2, 3);
+                } else {
+                  firstPart = '0' + value.substring(0, 1);
+                  secondPart = value.substring(1, 3);
+                }
               } else {
                 if (value.length == 5) {
                   value = '0$value';

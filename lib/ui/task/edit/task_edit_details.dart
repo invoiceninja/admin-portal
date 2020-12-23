@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -100,6 +101,22 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     final task = viewModel.task;
     final state = viewModel.state;
 
+    final company = state.company;
+    final client = state.clientState.get(task.clientId);
+    final rateLabel = localization.rate +
+        ' • ' +
+        formatNumber(
+            taskRateSelector(
+              company: company,
+              task: TaskEntity(),
+              client: client,
+              project: state.projectState.get(task.projectId),
+            ),
+            context,
+            currencyId: (client.currencyId ?? '').isNotEmpty
+                ? client.currencyId
+                : company.currencyId);
+
     return ListView(
       children: <Widget>[
         FormCard(
@@ -152,8 +169,9 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               autocorrect: false,
             ),
             DecoratedFormField(
+              key: ValueKey('__rate__'),
               controller: _rateController,
-              label: localization.rate,
+              label: rateLabel,
               keyboardType: TextInputType.number,
             ),
             DynamicSelector(
