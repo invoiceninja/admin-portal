@@ -65,10 +65,18 @@ class _CustomFieldState extends State<CustomField> {
 
     switch (fieldType) {
       case kFieldTypeSingleLineText:
+        return DecoratedFormField(
+          controller: _controller,
+          maxLines: 1,
+          label: widget.hideFieldLabel ? null : fieldLabel,
+          onChanged: widget.onChanged,
+          onSavePressed: widget.onSavePressed,
+        );
       case kFieldTypeMultiLineText:
         return DecoratedFormField(
           controller: _controller,
-          maxLines: fieldType == kFieldTypeSingleLineText ? 1 : 3,
+          maxLines: 3,
+          keyboardType: TextInputType.multiline,
           label: widget.hideFieldLabel ? null : fieldLabel,
           onChanged: widget.onChanged,
           onSavePressed: widget.onSavePressed,
