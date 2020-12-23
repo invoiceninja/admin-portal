@@ -97,6 +97,9 @@ void main({bool isTesting = false}) async {
         options.release = kClientVersion;
         options.beforeSend = (SentryEvent event, {dynamic hint}) {
           final state = store.state;
+          if (!state.account.reportErrors) {
+            return null;
+          }
           event = event.copyWith(
             environment: '${state.environment}'.split('.').last,
             extra: <String, dynamic>{
