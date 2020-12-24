@@ -178,6 +178,9 @@ Middleware<AppState> _saveToken(TokenRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveTokenFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
       action.completer.completeError(error);
     });
 

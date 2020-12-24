@@ -127,3 +127,5 @@ class OAuthSignUpRequest implements StartLoading {
 }
 
 class UserVerifiedPassword {}
+
+class UserUnverifiedPassword {}
