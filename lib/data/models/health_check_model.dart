@@ -41,12 +41,6 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'exec')
   bool get execEnabled;
 
-  @BuiltValueField(wireName: 'npm_status')
-  String get npmStatus;
-
-  @BuiltValueField(wireName: 'node_status')
-  String get nodeStatus;
-
   static Serializer<HealthCheckResponse> get serializer =>
       _$healthCheckResponseSerializer;
 }

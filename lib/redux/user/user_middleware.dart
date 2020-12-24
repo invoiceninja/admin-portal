@@ -107,6 +107,9 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveUserFailure(prevUsers));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -134,6 +137,9 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteUserFailure(prevUsers));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -161,6 +167,9 @@ Middleware<AppState> _restoreUser(UserRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreUserFailure(prevUsers));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -209,6 +218,9 @@ Middleware<AppState> _saveUser(UserRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
       action.completer.completeError(error);
     });
 

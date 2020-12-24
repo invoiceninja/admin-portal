@@ -107,6 +107,9 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveAuthUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
       action.completer.completeError(error);
     });
 

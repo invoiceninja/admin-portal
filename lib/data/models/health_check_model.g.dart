@@ -50,12 +50,6 @@ class _$HealthCheckResponseSerializer
       'exec',
       serializers.serialize(object.execEnabled,
           specifiedType: const FullType(bool)),
-      'npm_status',
-      serializers.serialize(object.npmStatus,
-          specifiedType: const FullType(String)),
-      'node_status',
-      serializers.serialize(object.nodeStatus,
-          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -105,14 +99,6 @@ class _$HealthCheckResponseSerializer
         case 'exec':
           result.execEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'npm_status':
-          result.npmStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'node_status':
-          result.nodeStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -204,10 +190,6 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   final bool openBasedir;
   @override
   final bool execEnabled;
-  @override
-  final String npmStatus;
-  @override
-  final String nodeStatus;
 
   factory _$HealthCheckResponse(
           [void Function(HealthCheckResponseBuilder) updates]) =>
@@ -221,9 +203,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.cacheEnabled,
       this.phantomEnabled,
       this.openBasedir,
-      this.execEnabled,
-      this.npmStatus,
-      this.nodeStatus})
+      this.execEnabled})
       : super._() {
     if (systemHealth == null) {
       throw new BuiltValueNullFieldError('HealthCheckResponse', 'systemHealth');
@@ -250,12 +230,6 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     if (execEnabled == null) {
       throw new BuiltValueNullFieldError('HealthCheckResponse', 'execEnabled');
     }
-    if (npmStatus == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'npmStatus');
-    }
-    if (nodeStatus == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'nodeStatus');
-    }
   }
 
   @override
@@ -278,9 +252,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         cacheEnabled == other.cacheEnabled &&
         phantomEnabled == other.phantomEnabled &&
         openBasedir == other.openBasedir &&
-        execEnabled == other.execEnabled &&
-        npmStatus == other.npmStatus &&
-        nodeStatus == other.nodeStatus;
+        execEnabled == other.execEnabled;
   }
 
   int __hashCode;
@@ -292,18 +264,14 @@ class _$HealthCheckResponse extends HealthCheckResponse {
                 $jc(
                     $jc(
                         $jc(
-                            $jc(
-                                $jc(
-                                    $jc($jc(0, systemHealth.hashCode),
-                                        phpVersion.hashCode),
-                                    envWritable.hashCode),
-                                dbCheck.hashCode),
-                            cacheEnabled.hashCode),
-                        phantomEnabled.hashCode),
-                    openBasedir.hashCode),
-                execEnabled.hashCode),
-            npmStatus.hashCode),
-        nodeStatus.hashCode));
+                            $jc($jc(0, systemHealth.hashCode),
+                                phpVersion.hashCode),
+                            envWritable.hashCode),
+                        dbCheck.hashCode),
+                    cacheEnabled.hashCode),
+                phantomEnabled.hashCode),
+            openBasedir.hashCode),
+        execEnabled.hashCode));
   }
 
   @override
@@ -316,9 +284,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
           ..add('cacheEnabled', cacheEnabled)
           ..add('phantomEnabled', phantomEnabled)
           ..add('openBasedir', openBasedir)
-          ..add('execEnabled', execEnabled)
-          ..add('npmStatus', npmStatus)
-          ..add('nodeStatus', nodeStatus))
+          ..add('execEnabled', execEnabled))
         .toString();
   }
 }
@@ -362,14 +328,6 @@ class HealthCheckResponseBuilder
   bool get execEnabled => _$this._execEnabled;
   set execEnabled(bool execEnabled) => _$this._execEnabled = execEnabled;
 
-  String _npmStatus;
-  String get npmStatus => _$this._npmStatus;
-  set npmStatus(String npmStatus) => _$this._npmStatus = npmStatus;
-
-  String _nodeStatus;
-  String get nodeStatus => _$this._nodeStatus;
-  set nodeStatus(String nodeStatus) => _$this._nodeStatus = nodeStatus;
-
   HealthCheckResponseBuilder();
 
   HealthCheckResponseBuilder get _$this {
@@ -382,8 +340,6 @@ class HealthCheckResponseBuilder
       _phantomEnabled = _$v.phantomEnabled;
       _openBasedir = _$v.openBasedir;
       _execEnabled = _$v.execEnabled;
-      _npmStatus = _$v.npmStatus;
-      _nodeStatus = _$v.nodeStatus;
       _$v = null;
     }
     return this;
@@ -415,9 +371,7 @@ class HealthCheckResponseBuilder
               cacheEnabled: cacheEnabled,
               phantomEnabled: phantomEnabled,
               openBasedir: openBasedir,
-              execEnabled: execEnabled,
-              npmStatus: npmStatus,
-              nodeStatus: nodeStatus);
+              execEnabled: execEnabled);
     } catch (_) {
       String _$failedField;
       try {

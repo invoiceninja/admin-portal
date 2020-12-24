@@ -135,30 +135,18 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 if (!_response.envWritable)
                   _HealthListTile(
                     title: '.env Writable',
-                    isValid: _response.envWritable,
+                    isValid: false,
                   ),
                 if (!_response.cacheEnabled)
                   _HealthListTile(
-                    title: 'Config Cached',
-                    isValid: _response.cacheEnabled ? true : null,
+                    title: 'Config not cached',
+                    subtitle: 'Run php artisan optimize to improve performance',
                   ),
                 if (_response.phantomEnabled)
                   _HealthListTile(
                     title: 'Using PhantomJS',
-                    subtitle: 'Use node to generate PDFs locally',
+                    subtitle: 'Use headless Chrome to generate PDFs locally',
                   )
-                else ...[
-                  _HealthListTile(
-                    title: 'Node Version',
-                    isValid: _response.nodeStatus.isNotEmpty,
-                    subtitle: _response.nodeStatus,
-                  ),
-                  _HealthListTile(
-                    title: 'NPM Version',
-                    isValid: _response.npmStatus.isNotEmpty,
-                    subtitle: 'v' + _response.npmStatus,
-                  ),
-                ]
               ],
             ),
       actions: _response == null
