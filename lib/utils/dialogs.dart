@@ -144,6 +144,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
     return AlertDialog(
       title: Text(localization.verifyPassword),
       content: TextField(
+        autofocus: true,
         onChanged: (value) => _password = value,
         obscureText: _isPasswordObscured,
         keyboardType: TextInputType.visiblePassword,

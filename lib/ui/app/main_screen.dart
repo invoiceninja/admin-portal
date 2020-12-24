@@ -894,7 +894,11 @@ class _EntityFilter extends StatelessWidget {
                                   border: relatedTypes[i] == routeEntityType
                                       ? Border(
                                           bottom: BorderSide(
-                                            color: state.accentColor,
+                                            color: state.prefState
+                                                        .enableDarkMode ||
+                                                    !state.hasAccentColor
+                                                ? state.accentColor
+                                                : Colors.white,
                                             width: 2,
                                           ),
                                         )
