@@ -277,14 +277,15 @@ class _ClientPortalState extends State<ClientPortal>
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BoolDropdownButton(
-                    label: localization.clientRegistration,
-                    helpLabel: localization.clientRegistrationHelp,
-                    value: company.clientCanRegister,
-                    iconData: MdiIcons.login,
-                    onChanged: (value) => viewModel.onCompanyChanged(
-                        company.rebuild((b) => b..clientCanRegister = value)),
-                  ),
+                  if (!state.settingsUIState.isFiltered)
+                    BoolDropdownButton(
+                      label: localization.clientRegistration,
+                      helpLabel: localization.clientRegistrationHelp,
+                      value: company.clientCanRegister,
+                      iconData: MdiIcons.login,
+                      onChanged: (value) => viewModel.onCompanyChanged(
+                          company.rebuild((b) => b..clientCanRegister = value)),
+                    ),
                   BoolDropdownButton(
                     label: localization.storefront,
                     helpLabel: localization.storefrontHelp,
