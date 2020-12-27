@@ -137,6 +137,7 @@ class _UserEditState extends State<UserEdit>
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final user = viewModel.user;
     final userCompany = user.userCompany;
@@ -289,7 +290,17 @@ class _UserEditState extends State<UserEdit>
                       ],
                       rows: [
                         DataRow(cells: [
-                          DataCell(Text(localization.all)),
+                          DataCell(Text(localization.all), onTap: () {
+                            _togglePermission(kPermissionCreateAll);
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((duration) {
+                              _togglePermission(kPermissionViewAll);
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((duration) {
+                                _togglePermission(kPermissionEditAll);
+                              });
+                            });
+                          }),
                           DataCell(
                               _PermissionCheckbox(
                                 userCompany: userCompany,
@@ -323,14 +334,34 @@ class _UserEditState extends State<UserEdit>
                           EntityType.product,
                           EntityType.invoice,
                           EntityType.payment,
+                          EntityType.recurringInvoice,
                           EntityType.quote,
-                        ].map((EntityType type) {
+                          EntityType.credit,
+                          EntityType.project,
+                          EntityType.task,
+                          EntityType.vendor,
+                          EntityType.expense,
+                        ]
+                            .where((entityType) =>
+                                state.company.isModuleEnabled(entityType))
+                            .map((EntityType type) {
                           final createPermission =
                               'create_' + toSnakeCase('$type');
                           final editPermission = 'edit_' + toSnakeCase('$type');
                           final viewPermission = 'view_' + toSnakeCase('$type');
                           return DataRow(cells: [
-                            DataCell(Text(localization.lookup('$type'))),
+                            DataCell(Text(localization.lookup('$type')),
+                                onTap: () {
+                              _togglePermission(createPermission);
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((duration) {
+                                _togglePermission(viewPermission);
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((duration) {
+                                  _togglePermission(editPermission);
+                                });
+                              });
+                            }),
                             DataCell(
                                 _PermissionCheckbox(
                                   userCompany: userCompany,
