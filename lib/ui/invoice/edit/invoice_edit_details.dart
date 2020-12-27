@@ -373,16 +373,15 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               onSelected: (value) => viewModel
                   .onChanged(invoice.rebuild((b) => b..designId = value?.id)),
             ),
-            if (client.isOld && client.currencyId != company.currencyId)
-              DecoratedFormField(
-                key: ValueKey('__exchange_rate_${invoice.clientId}__'),
-                label: localization.exchangeRate,
-                initialValue: formatNumber(invoice.exchangeRate, context,
-                    formatNumberType: FormatNumberType.inputAmount),
-                onChanged: (value) => viewModel.onChanged(invoice
-                    .rebuild((b) => b..exchangeRate = parseDouble(value))),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-              ),
+            DecoratedFormField(
+              key: ValueKey('__exchange_rate_${invoice.clientId}__'),
+              label: localization.exchangeRate,
+              initialValue: formatNumber(invoice.exchangeRate, context,
+                  formatNumberType: FormatNumberType.inputAmount),
+              onChanged: (value) => viewModel.onChanged(
+                  invoice.rebuild((b) => b..exchangeRate = parseDouble(value))),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+            ),
           ],
         ),
       ],

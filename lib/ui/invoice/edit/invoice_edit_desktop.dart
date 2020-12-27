@@ -533,10 +533,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ],
                   ),
                   SizedBox(
-                    height: (client.isOld &&
-                            client.currencyId != company.currencyId)
-                        ? 140
-                        : 100,
+                    height: 125,
                     child: TabBarView(
                       controller: _optionTabController,
                       children: <Widget>[
@@ -591,32 +588,25 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             ),
                             Row(
                               children: [
-                                if (client.isOld &&
-                                    client.currencyId != company.currencyId)
-                                  Expanded(
-                                    child: DecoratedFormField(
-                                      key: ValueKey(
-                                          '__exchange_rate_${invoice.clientId}__'),
-                                      label: localization.exchangeRate,
-                                      initialValue: formatNumber(
-                                          invoice.exchangeRate, context,
-                                          formatNumberType:
-                                              FormatNumberType.inputMoney),
-                                      onChanged: (value) => viewModel.onChanged(
-                                          invoice.rebuild((b) => b
-                                            ..exchangeRate =
-                                                parseDouble(value))),
-                                      keyboardType:
-                                          TextInputType.numberWithOptions(
-                                              decimal: true),
-                                      onSavePressed:
-                                          widget.entityViewModel.onSavePressed,
-                                    ),
-                                  )
-                                else
-                                  Expanded(
-                                    child: SizedBox(),
+                                Expanded(
+                                  child: DecoratedFormField(
+                                    key: ValueKey(
+                                        '__exchange_rate_${invoice.clientId}__'),
+                                    label: localization.exchangeRate,
+                                    initialValue: formatNumber(
+                                        invoice.exchangeRate, context,
+                                        formatNumberType:
+                                            FormatNumberType.inputMoney),
+                                    onChanged: (value) => viewModel.onChanged(
+                                        invoice.rebuild((b) => b
+                                          ..exchangeRate = parseDouble(value))),
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                            decimal: true),
+                                    onSavePressed:
+                                        widget.entityViewModel.onSavePressed,
                                   ),
+                                ),
                                 SizedBox(
                                   width: 38,
                                 ),
@@ -745,6 +735,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
+        SizedBox(height: 16),
       ],
     );
   }
