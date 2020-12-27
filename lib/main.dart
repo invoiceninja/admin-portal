@@ -104,6 +104,7 @@ void main({bool isTesting = false}) async {
             extra: <String, dynamic>{
               'server_version':
                   store.state.account?.currentVersion ?? 'Unknown',
+              'route': store.state.uiState.currentRoute,
             },
           );
           return event;
