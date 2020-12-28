@@ -95,50 +95,53 @@ class _TaskSettingsState extends State<TaskSettings> {
                 label: localization.defaultTaskRate,
                 onSavePressed: viewModel.onSavePressed,
               ),
-              SizedBox(height: 32),
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.autoStartTasks),
-                value: company.autoStartTasks,
-                subtitle: Text(localization.autoStartTasksHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..autoStartTasks = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.showTasksTable),
-                value: company.showTasksTable ?? false,
-                // TODO remove null check
-                subtitle: Text(localization.showTasksTableHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..showTasksTable = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.invoiceTaskTimelog),
-                value: company.invoiceTaskTimelog,
-                subtitle: Text(localization.invoiceTaskTimelogHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..invoiceTaskTimelog = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.addDocumentsToInvoice),
-                value: company.invoiceTaskDocuments ?? false,
-                subtitle: Text(localization.addDocumentsToInvoiceHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..invoiceTaskDocuments = value)),
-              ),
+              if (!viewModel.state.settingsUIState.isFiltered) ...[
+                SizedBox(height: 32),
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.autoStartTasks),
+                  value: company.autoStartTasks,
+                  subtitle: Text(localization.autoStartTasksHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..autoStartTasks = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.showTasksTable),
+                  value: company.showTasksTable ?? false,
+                  // TODO remove null check
+                  subtitle: Text(localization.showTasksTableHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..showTasksTable = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.invoiceTaskTimelog),
+                  value: company.invoiceTaskTimelog,
+                  subtitle: Text(localization.invoiceTaskTimelogHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..invoiceTaskTimelog = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.addDocumentsToInvoice),
+                  value: company.invoiceTaskDocuments ?? false,
+                  subtitle: Text(localization.addDocumentsToInvoiceHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..invoiceTaskDocuments = value)),
+                ),
+              ],
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: AppButton(
-              iconData: Icons.settings,
-              label: localization.configureStatuses.toUpperCase(),
-              onPressed: () => viewModel.onConfigureStatusesPressed(context),
+          if (!viewModel.state.settingsUIState.isFiltered)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: AppButton(
+                iconData: Icons.settings,
+                label: localization.configureStatuses.toUpperCase(),
+                onPressed: () => viewModel.onConfigureStatusesPressed(context),
+              ),
             ),
-          ),
         ],
       ),
     );

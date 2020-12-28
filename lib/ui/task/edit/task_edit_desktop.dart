@@ -126,12 +126,16 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
               company: company,
               task: TaskEntity(),
               client: client,
+              group: state.groupState.get(client.groupId),
               project: state.projectState.get(task.projectId),
             ),
             context,
             currencyId: (client.currencyId ?? '').isNotEmpty
                 ? client.currencyId
                 : company.currencyId);
+
+    final group = state.groupState.get(client.groupId);
+    print('## group: ${group.name} ${group.settings.defaultTaskRate}');
 
     return ListView(
       children: [

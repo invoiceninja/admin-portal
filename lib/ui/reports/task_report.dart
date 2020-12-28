@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -35,25 +36,27 @@ enum TaskReportFields {
   custom_value4,
 }
 
-var memoizedTaskReport = memo9((
+var memoizedTaskReport = memo10((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, TaskEntity> taskMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, GroupEntity> groupMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) =>
-    taskReport(userCompany, reportsUIState, taskMap, invoiceMap, clientMap,
-        vendorMap, userMap, projectMap, staticState));
+    taskReport(userCompany, reportsUIState, taskMap, invoiceMap, groupMap,
+        clientMap, vendorMap, userMap, projectMap, staticState));
 
 ReportResult taskReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, TaskEntity> taskMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, GroupEntity> groupMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
@@ -93,6 +96,7 @@ ReportResult taskReport(
     final client = clientMap[task.clientId] ?? ClientEntity();
     final invoice = invoiceMap[task.invoiceId] ?? InvoiceEntity();
     final project = projectMap[task.projectId] ?? ProjectEntity();
+    final group = groupMap[client.groupId] ?? GroupEntity();
 
     if (task.isDeleted) {
       continue;
@@ -114,6 +118,7 @@ ReportResult taskReport(
             project: project,
             client: client,
             task: task,
+            group: group,
           );
           break;
         case TaskReportFields.start_time:

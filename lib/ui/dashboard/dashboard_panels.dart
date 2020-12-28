@@ -325,6 +325,7 @@ class DashboardPanels extends StatelessWidget {
       state.invoiceState.map,
       state.projectState.map,
       state.clientState.map,
+      state.groupState.map,
     );
 
     List<ChartDataGroup> previousData;
@@ -337,6 +338,7 @@ class DashboardPanels extends StatelessWidget {
         state.invoiceState.map,
         state.projectState.map,
         state.clientState.map,
+        state.groupState.map,
       );
     }
 
