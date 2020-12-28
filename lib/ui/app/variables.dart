@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VariablesHelp extends StatefulWidget {
@@ -45,7 +46,7 @@ class _VariablesHelpState extends State<VariablesHelp>
 
     return FormCard(
       children: [
-        TabBar(
+        AppTabBar(
           controller: _controller,
           isScrollable: true,
           tabs: [
