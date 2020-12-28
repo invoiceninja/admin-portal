@@ -130,7 +130,7 @@ class DashboardPanels extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
-                                .copyWith(fontSize: 18),
+                                .copyWith(fontSize: 16),
                           ),
                         ),
                         SizedBox(width: 6.0),
