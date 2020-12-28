@@ -149,13 +149,13 @@ class DashboardPanels extends StatelessWidget {
                   onSelected: (dateRange) {
                     final settings =
                         DashboardSettings.fromState(state.dashboardUIState);
-                    settings.dateRange = dateRange;
-                    viewModel.onSettingsChanged(settings);
-
                     if (dateRange == DateRange.custom) {
                       WidgetsBinding.instance.addPostFrameCallback((duration) {
                         _showDateOptions(context);
                       });
+                    } else {
+                      settings.dateRange = dateRange;
+                      viewModel.onSettingsChanged(settings);
                     }
                   },
                 ),
