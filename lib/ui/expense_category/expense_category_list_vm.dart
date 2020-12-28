@@ -42,9 +42,6 @@ class ExpenseCategoryListBuilder extends StatelessWidget {
               final listState = state.getListState(EntityType.expenseCategory);
               final isInMultiselect = listState.isInMultiselect();
 
-              print('## Type: ${ExpenseCategoryEntity().entityType}');
-              print('## Type: ${expenseCategory.entityType}');
-
               return ExpenseCategoryListItem(
                 user: viewModel.state.user,
                 filter: viewModel.filter,

@@ -114,7 +114,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
       entityId: _languageId,
       onSelected: (SelectableEntity language) {
         setState(() => _languageId = language?.id);
-        print('## SET LANUGAGE TO ${language?.id}');
         store.dispatch(UpdateCompanyLanguage(languageId: language?.id));
         AppBuilder.of(context).rebuild();
       },

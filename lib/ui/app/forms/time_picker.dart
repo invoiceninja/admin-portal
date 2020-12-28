@@ -161,8 +161,6 @@ class _TimePickerState extends State<TimePicker> {
             }
           }
 
-          print('## dateTimeStr: $dateTimeStr');
-
           if (initialValue.toLowerCase().contains('a')) {
             dateTimeStr += ' AM';
           } else if (initialValue.toLowerCase().contains('p')) {

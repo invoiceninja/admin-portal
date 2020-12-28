@@ -134,9 +134,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                 ? client.currencyId
                 : company.currencyId);
 
-    final group = state.groupState.get(client.groupId);
-    print('## group: ${group.name} ${group.settings.defaultTaskRate}');
-
     return ListView(
       children: [
         Row(

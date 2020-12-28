@@ -56,7 +56,6 @@ class ClientEditContactsVM {
         },
         onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
         onDoneContactPressed: (_) {
-          print('## onDoneContactPressed');
           store.dispatch(EditContact());
         },
         onChangedContact: (contact, index) {

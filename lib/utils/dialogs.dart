@@ -86,7 +86,6 @@ void confirmCallback({
           FlatButton(
               child: Text(localization.ok.toUpperCase()),
               onPressed: () {
-                print('## typeToConfirm: $typeToConfirm, typed: $_typed');
                 if (typeToConfirm == null ||
                     typeToConfirm.toLowerCase() == _typed.toLowerCase()) {
                   Navigator.pop(context);
