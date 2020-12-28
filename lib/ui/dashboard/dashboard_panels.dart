@@ -116,20 +116,6 @@ class DashboardPanels extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
           child: Row(
             children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.navigate_before),
-                onPressed: () => viewModel.onOffsetChanged(1),
-                visualDensity: VisualDensity.compact,
-              ),
-              SizedBox(width: 8),
-              IconButton(
-                icon: Icon(Icons.navigate_next),
-                onPressed: viewModel.isNextEnabled
-                    ? () => viewModel.onOffsetChanged(-1)
-                    : null,
-                visualDensity: VisualDensity.compact,
-              ),
-              SizedBox(width: 8),
               Expanded(
                 child: PopupMenuButton<DateRange>(
                   child: Padding(
@@ -226,7 +212,21 @@ class DashboardPanels extends StatelessWidget {
                 IconButton(
                     tooltip: localization.showSidebar,
                     icon: Icon(Icons.view_sidebar),
-                    onPressed: () => viewModel.onShowSidebar())
+                    onPressed: () => viewModel.onShowSidebar()),
+              SizedBox(width: 8),
+              IconButton(
+                icon: Icon(Icons.navigate_before),
+                onPressed: () => viewModel.onOffsetChanged(1),
+                visualDensity: VisualDensity.compact,
+              ),
+              SizedBox(width: 8),
+              IconButton(
+                icon: Icon(Icons.navigate_next),
+                onPressed: viewModel.isNextEnabled
+                    ? () => viewModel.onOffsetChanged(-1)
+                    : null,
+                visualDensity: VisualDensity.compact,
+              ),
             ],
           ),
         ),
