@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class TimePicker extends StatefulWidget {
   const TimePicker({
@@ -138,7 +139,16 @@ class _TimePickerState extends State<TimePicker> {
           String dateTimeStr = '';
 
           if (parts.length == 1) {
-            dateTimeStr = parts[0] + ':00:00';
+            final part = parts[0];
+            if (part.length == 1 || part.length == 2) {
+              dateTimeStr = part + ':00:00';
+            } else if (part.length == 3) {
+              dateTimeStr =
+                  part.substring(0, 1) + ':' + part.substring(1, 3) + ':00';
+            } else if (part.length == 4) {
+              dateTimeStr =
+                  part.substring(0, 2) + ':' + part.substring(2, 4) + ':00';
+            }
           } else {
             dateTimeStr = parts[0] + ':' + parts[1];
             if (parts[1].length == 1) {
@@ -150,6 +160,8 @@ class _TimePickerState extends State<TimePicker> {
               dateTimeStr += ':00';
             }
           }
+
+          print('## dateTimeStr: $dateTimeStr');
 
           if (initialValue.toLowerCase().contains('a')) {
             dateTimeStr += ' AM';
