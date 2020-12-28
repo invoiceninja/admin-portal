@@ -132,6 +132,7 @@ class ExpenseListItem extends StatelessWidget {
                               ),
                       ),
                       SizedBox(
+                        width: kListNumberWidth,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -143,7 +144,6 @@ class ExpenseListItem extends StatelessWidget {
                             if (!expense.isActive) EntityStateLabel(expense)
                           ],
                         ),
-                        width: 120,
                       ),
                       SizedBox(width: 10),
                       Expanded(

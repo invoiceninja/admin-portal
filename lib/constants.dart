@@ -88,6 +88,7 @@ const double kTableColumnGap = 20;
 const double kTopBottomBarHeight = 50;
 const double kDialogWidth = 400;
 const double kDashboardPanelHeight = 525; // TODO remove this
+const double kListNumberWidth = 100;
 
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;

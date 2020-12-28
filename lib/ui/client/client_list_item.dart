@@ -99,6 +99,7 @@ class ClientListItem extends StatelessWidget {
                               ),
                       ),
                       SizedBox(
+                        width: kListNumberWidth,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -110,7 +111,6 @@ class ClientListItem extends StatelessWidget {
                             if (!client.isActive) EntityStateLabel(client)
                           ],
                         ),
-                        width: 120,
                       ),
                       SizedBox(width: 10),
                       Expanded(

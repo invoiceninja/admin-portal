@@ -104,6 +104,7 @@ class ProjectListItem extends StatelessWidget {
                               ),
                       ),
                       SizedBox(
+                        width: kListNumberWidth,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -115,7 +116,6 @@ class ProjectListItem extends StatelessWidget {
                             if (!project.isActive) EntityStateLabel(project)
                           ],
                         ),
-                        width: 120,
                       ),
                       SizedBox(width: 10),
                       Expanded(

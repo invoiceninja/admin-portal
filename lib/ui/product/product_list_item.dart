@@ -102,6 +102,7 @@ class ProductListItem extends StatelessWidget {
                                           context, product, action),
                                 )),
                       SizedBox(
+                        width: kListNumberWidth,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -114,7 +115,6 @@ class ProductListItem extends StatelessWidget {
                             if (!product.isActive) EntityStateLabel(product)
                           ],
                         ),
-                        width: 120,
                       ),
                       SizedBox(width: 10),
                       Expanded(

@@ -107,7 +107,8 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                         handleEntityAction(
                                             context, invoice, action),
                                   )),
-                        ConstrainedBox(
+                        SizedBox(
+                          width: kListNumberWidth,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -120,10 +121,6 @@ class RecurringInvoiceListItem extends StatelessWidget {
                               ),
                               if (!invoice.isActive) EntityStateLabel(invoice)
                             ],
-                          ),
-                          constraints: BoxConstraints(
-                            minWidth: 80,
-                            maxWidth: 80,
                           ),
                         ),
                         SizedBox(width: 10),

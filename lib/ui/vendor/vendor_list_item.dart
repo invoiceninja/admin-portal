@@ -100,6 +100,7 @@ class VendorListItem extends StatelessWidget {
                               ),
                       ),
                       SizedBox(
+                        width: kListNumberWidth,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -111,7 +112,6 @@ class VendorListItem extends StatelessWidget {
                             if (!vendor.isActive) EntityStateLabel(vendor)
                           ],
                         ),
-                        width: 120,
                       ),
                       SizedBox(width: 10),
                       Expanded(

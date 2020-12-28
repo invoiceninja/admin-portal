@@ -102,7 +102,8 @@ class QuoteListItem extends StatelessWidget {
                                         handleEntityAction(
                                             context, quote, action),
                                   )),
-                        ConstrainedBox(
+                        SizedBox(
+                          width: kListNumberWidth,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -115,10 +116,6 @@ class QuoteListItem extends StatelessWidget {
                               ),
                               if (!quote.isActive) EntityStateLabel(quote)
                             ],
-                          ),
-                          constraints: BoxConstraints(
-                            minWidth: 80,
-                            maxWidth: 80,
                           ),
                         ),
                         SizedBox(width: 10),
