@@ -281,9 +281,8 @@ Middleware<AppState> _createLoadState(
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
-          final layout = calculateLayout(action.context);
-          if (store.state.prefState.isNotMobile && layout == AppLayout.mobile) {
-            store.dispatch(UpdateUserPreferences(appLayout: layout));
+          if (calculateLayout(action.context) == AppLayout.mobile) {
+            store.dispatch(UpdateUserPreferences(appLayout: AppLayout.mobile));
             AppBuilder.of(action.context).rebuild();
             WidgetsBinding.instance.addPostFrameCallback((duration) {
               store.dispatch(
