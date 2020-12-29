@@ -126,6 +126,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
               company: company,
               task: TaskEntity(),
               client: client,
+              group: state.groupState.get(client.groupId),
               project: state.projectState.get(task.projectId),
             ),
             context,

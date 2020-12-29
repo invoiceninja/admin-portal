@@ -57,11 +57,13 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.rate:
         return Text(formatNumber(task.rate, context));
       case TaskFields.calculatedRate:
+        final client = state.clientState.get(task.clientId);
         final rate = taskRateSelector(
+          task: task,
+          client: client,
           company: state.company,
           project: state.projectState.get(task.projectId),
-          client: state.clientState.get(task.clientId),
-          task: task,
+          group: state.groupState.get(client.groupId),
         );
         return Text(formatNumber(rate, context));
       case TaskFields.project:

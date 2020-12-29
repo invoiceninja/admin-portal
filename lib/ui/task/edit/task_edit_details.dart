@@ -110,6 +110,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               company: company,
               task: TaskEntity(),
               client: client,
+              group: state.groupState.get(client.groupId),
               project: state.projectState.get(task.projectId),
             ),
             context,

@@ -105,7 +105,8 @@ class CreditListItem extends StatelessWidget {
                                       handleEntityAction(
                                           context, credit, action),
                                 )),
-                      ConstrainedBox(
+                      SizedBox(
+                        width: kListNumberWidth,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -118,10 +119,6 @@ class CreditListItem extends StatelessWidget {
                             ),
                             if (!credit.isActive) EntityStateLabel(credit)
                           ],
-                        ),
-                        constraints: BoxConstraints(
-                          minWidth: 80,
-                          maxWidth: 80,
                         ),
                       ),
                       SizedBox(width: 10),

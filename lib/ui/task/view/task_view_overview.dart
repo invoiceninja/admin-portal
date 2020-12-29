@@ -56,6 +56,7 @@ class _TaskOverviewState extends State<TaskOverview> {
     final company = viewModel.company;
     final invoice = viewModel.state.invoiceState.map[task.invoiceId];
     final user = viewModel.state.userState.map[task.assignedUserId];
+    final group = state.groupState.get(client.groupId);
 
     final Map<String, String> fields = {
       TaskFields.rate: formatNumber(task.rate, context, zeroIsNull: true),
@@ -101,6 +102,7 @@ class _TaskOverviewState extends State<TaskOverview> {
                 project: project,
                 client: client,
                 task: task,
+                group: group,
               ),
             ),
             context,

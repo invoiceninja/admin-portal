@@ -96,14 +96,15 @@ void main({bool isTesting = false}) async {
         options.dsn = Config.SENTRY_DNS;
         options.release = kClientVersion;
         options.beforeSend = (SentryEvent event, {dynamic hint}) {
-          final state = store.state;
-          if (!state.account.reportErrors) {
+          if (!(store.state.account?.reportErrors ?? false)) {
             return null;
           }
           event = event.copyWith(
-            environment: '${state.environment}'.split('.').last,
+            environment: '${store.state.environment}'.split('.').last,
             extra: <String, dynamic>{
-              'server_version': state.account?.currentVersion ?? 'Unknown',
+              'server_version':
+                  store.state.account?.currentVersion ?? 'Unknown',
+              'route': store.state.uiState.currentRoute,
             },
           );
           return event;

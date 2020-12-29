@@ -133,6 +133,7 @@ class TaskListItem extends StatelessWidget {
                               ),
                       ),
                       SizedBox(
+                        width: kListNumberWidth,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -144,7 +145,6 @@ class TaskListItem extends StatelessWidget {
                             if (!task.isActive) EntityStateLabel(task)
                           ],
                         ),
-                        width: 120,
                       ),
                       SizedBox(width: 10),
                       Expanded(

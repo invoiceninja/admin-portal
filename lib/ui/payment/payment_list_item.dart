@@ -105,7 +105,8 @@ class PaymentListItem extends StatelessWidget {
                                       handleEntityAction(
                                           context, payment, action),
                                 )),
-                      ConstrainedBox(
+                      SizedBox(
+                        width: kListNumberWidth,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -116,9 +117,6 @@ class PaymentListItem extends StatelessWidget {
                             ),
                             if (!payment.isActive) EntityStateLabel(payment)
                           ],
-                        ),
-                        constraints: BoxConstraints(
-                          minWidth: 80,
                         ),
                       ),
                       SizedBox(width: 10),

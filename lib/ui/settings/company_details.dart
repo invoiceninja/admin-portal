@@ -503,7 +503,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     }).toList(),
                     value: '${settings.defaultPaymentTerms}',
                     onChanged: (dynamic numDays) {
-                      print('## onChanged: $numDays');
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..defaultPaymentTerms =
                             numDays == null ? null : '$numDays'));

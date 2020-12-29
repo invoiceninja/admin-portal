@@ -116,20 +116,6 @@ class DashboardPanels extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
           child: Row(
             children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.navigate_before),
-                onPressed: () => viewModel.onOffsetChanged(1),
-                visualDensity: VisualDensity.compact,
-              ),
-              SizedBox(width: 8),
-              IconButton(
-                icon: Icon(Icons.navigate_next),
-                onPressed: viewModel.isNextEnabled
-                    ? () => viewModel.onOffsetChanged(-1)
-                    : null,
-                visualDensity: VisualDensity.compact,
-              ),
-              SizedBox(width: 8),
               Expanded(
                 child: PopupMenuButton<DateRange>(
                   child: Padding(
@@ -144,7 +130,7 @@ class DashboardPanels extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6
-                                .copyWith(fontSize: 18),
+                                .copyWith(fontSize: 16),
                           ),
                         ),
                         SizedBox(width: 6.0),
@@ -163,13 +149,13 @@ class DashboardPanels extends StatelessWidget {
                   onSelected: (dateRange) {
                     final settings =
                         DashboardSettings.fromState(state.dashboardUIState);
-                    settings.dateRange = dateRange;
-                    viewModel.onSettingsChanged(settings);
-
                     if (dateRange == DateRange.custom) {
                       WidgetsBinding.instance.addPostFrameCallback((duration) {
                         _showDateOptions(context);
                       });
+                    } else {
+                      settings.dateRange = dateRange;
+                      viewModel.onSettingsChanged(settings);
                     }
                   },
                 ),
@@ -226,7 +212,21 @@ class DashboardPanels extends StatelessWidget {
                 IconButton(
                     tooltip: localization.showSidebar,
                     icon: Icon(Icons.view_sidebar),
-                    onPressed: () => viewModel.onShowSidebar())
+                    onPressed: () => viewModel.onShowSidebar()),
+              SizedBox(width: 8),
+              IconButton(
+                icon: Icon(Icons.navigate_before),
+                onPressed: () => viewModel.onOffsetChanged(1),
+                visualDensity: VisualDensity.compact,
+              ),
+              SizedBox(width: 8),
+              IconButton(
+                icon: Icon(Icons.navigate_next),
+                onPressed: viewModel.isNextEnabled
+                    ? () => viewModel.onOffsetChanged(-1)
+                    : null,
+                visualDensity: VisualDensity.compact,
+              ),
             ],
           ),
         ),
@@ -325,6 +325,7 @@ class DashboardPanels extends StatelessWidget {
       state.invoiceState.map,
       state.projectState.map,
       state.clientState.map,
+      state.groupState.map,
     );
 
     List<ChartDataGroup> previousData;
@@ -337,6 +338,7 @@ class DashboardPanels extends StatelessWidget {
         state.invoiceState.map,
         state.projectState.map,
         state.clientState.map,
+        state.groupState.map,
       );
     }
 

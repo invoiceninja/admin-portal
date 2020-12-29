@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
@@ -297,7 +298,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TabBar(
+                    AppTabBar(
                       tabs: [
                         Tab(
                           child: Text(localization.customize),

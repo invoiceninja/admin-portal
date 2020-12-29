@@ -125,7 +125,7 @@ class _SettingsListState extends State<SettingsList> {
               section: kSettingsProducts,
               viewModel: widget.viewModel,
             ),
-          if (showAll && state.company.isModuleEnabled(EntityType.task))
+          if (state.company.isModuleEnabled(EntityType.task))
             SettingsListTile(
               section: kSettingsTasks,
               viewModel: widget.viewModel,

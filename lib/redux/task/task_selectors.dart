@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -12,6 +13,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   final state = StoreProvider.of<AppState>(context).state;
   final project = state.projectState.map[task.projectId];
   final client = state.clientState.map[task.clientId];
+  final group = state.groupState.get(client.groupId);
 
   return InvoiceItemEntity().rebuild((b) => b
     ..taskId = task.id
@@ -22,6 +24,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
       project: project,
       client: client,
       task: task,
+      group: group,
     )
     ..quantity = round(task.calculateDuration.inSeconds / 3600, 3));
 }
@@ -185,6 +188,7 @@ double taskRateSelector({
   @required ProjectEntity project,
   @required ClientEntity client,
   @required TaskEntity task,
+  @required GroupEntity group,
 }) {
   if (task != null && task.rate > 0) {
     return task.rate;
@@ -192,6 +196,8 @@ double taskRateSelector({
     return project.taskRate;
   } else if (client != null && (client.settings.defaultTaskRate ?? 0) > 0) {
     return client.settings.defaultTaskRate;
+  } else if (group != null && (group.settings.defaultTaskRate ?? 0) > 0) {
+    return group.settings.defaultTaskRate;
   } else if (company != null && (company.settings.defaultTaskRate ?? 0) > 0) {
     return company.settings.defaultTaskRate;
   }

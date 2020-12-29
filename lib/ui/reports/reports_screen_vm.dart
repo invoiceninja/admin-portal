@@ -163,6 +163,7 @@ class ReportsScreenVM {
           state.uiState.reportsUIState,
           state.taskState.map,
           state.invoiceState.map,
+          state.groupState.map,
           state.clientState.map,
           state.vendorState.map,
           state.userState.map,

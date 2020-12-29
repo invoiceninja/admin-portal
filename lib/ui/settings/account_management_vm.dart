@@ -66,7 +66,6 @@ class AccountManagementVM {
           final deleteCompleter = Completer<Null>()
             ..future.then((value) {
               if (companyLength == 1) {
-                print('## No more companies');
                 store.dispatch(UserLogout(context));
               } else {
                 store.dispatch(SelectCompany(companyIndex: 0));

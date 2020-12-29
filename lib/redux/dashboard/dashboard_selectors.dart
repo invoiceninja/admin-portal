@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:charts_common/common.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
@@ -452,7 +453,7 @@ List<ChartDataGroup> chartPayments(
   return data;
 }
 
-var memoizedChartTasks = memo7((
+var memoizedChartTasks = memo8((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
   DashboardUISettings settings,
@@ -460,6 +461,7 @@ var memoizedChartTasks = memo7((
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
 ) =>
     chartTasks(
       currencyMap,
@@ -469,9 +471,10 @@ var memoizedChartTasks = memo7((
       invoiceMap,
       projectMap,
       clientMap,
+      groupMap,
     ));
 
-var memoizedPreviousChartTasks = memo7((
+var memoizedPreviousChartTasks = memo8((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
   DashboardUISettings settings,
@@ -479,6 +482,7 @@ var memoizedPreviousChartTasks = memo7((
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
 ) =>
     chartTasks(
       currencyMap,
@@ -488,16 +492,19 @@ var memoizedPreviousChartTasks = memo7((
       invoiceMap,
       projectMap,
       clientMap,
+      groupMap,
     ));
 
 List<ChartDataGroup> chartTasks(
-    BuiltMap<String, CurrencyEntity> currencyMap,
-    CompanyEntity company,
-    DashboardUISettings settings,
-    BuiltMap<String, TaskEntity> taskMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ProjectEntity> projectMap,
-    BuiltMap<String, ClientEntity> clientMap) {
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUISettings settings,
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+) {
   const STATUS_LOGGED = 'logged';
   const STATUS_INVOICED = 'invoiced';
   const STATUS_PAID = 'paid';
@@ -522,6 +529,7 @@ List<ChartDataGroup> chartTasks(
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
     final project =
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
+    final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
 
     if (task.isDeleted || client.isDeleted || project.isDeleted) {
       // skip it
@@ -548,6 +556,7 @@ List<ChartDataGroup> chartTasks(
             project: project,
             client: client,
             task: task,
+            group: group,
           );
           double amount = taskRate * round(duration.inSeconds / 3600, 3);
 
