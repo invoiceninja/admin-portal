@@ -132,7 +132,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final state = viewModel.state;
     final invoice = viewModel.invoice;
     final company = viewModel.company;
-    final client = state.clientState.get(invoice.clientId);
     final originalInvoice =
         state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
 
