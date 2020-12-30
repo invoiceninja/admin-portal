@@ -12,7 +12,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     {BuildContext context, TaskEntity task}) {
   final state = StoreProvider.of<AppState>(context).state;
   final project = state.projectState.map[task.projectId];
-  final client = state.clientState.map[task.clientId];
+  final client = state.clientState.get(task.clientId);
   final group = state.groupState.get(client.groupId);
 
   return InvoiceItemEntity().rebuild((b) => b
