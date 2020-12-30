@@ -80,7 +80,6 @@ class TaskListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isDismissible: isDismissible,
-      showCheckbox: showCheckbox,
       isSelected: isDesktop(context) &&
           task.id ==
               (uiState.isEditing
