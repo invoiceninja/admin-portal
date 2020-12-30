@@ -46,7 +46,6 @@ class ProductListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
 
     return DismissibleEntity(
-      showCheckbox: showCheckbox,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           product.id ==
