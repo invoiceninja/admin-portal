@@ -79,7 +79,7 @@ class TaskListItem extends StatelessWidget {
           );
 
     return DismissibleEntity(
-      showCheckbox: showCheckbox,
+      showCheckbox: this.showCheckbox,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           task.id ==
