@@ -97,7 +97,6 @@ class TaskListItem extends StatelessWidget {
                     : selectEntity(
                         entity: task,
                         context: context,
-                        forceView: !showCheckbox,
                       ),
                 onLongPress: () => selectEntity(
                   entity: task,
@@ -195,7 +194,6 @@ class TaskListItem extends StatelessWidget {
                     : selectEntity(
                         entity: task,
                         context: context,
-                        forceView: !showCheckbox,
                       ),
                 onLongPress: () => selectEntity(
                     entity: task, context: context, longPress: true),

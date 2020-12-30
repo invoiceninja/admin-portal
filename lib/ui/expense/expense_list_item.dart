@@ -94,7 +94,7 @@ class ExpenseListItem extends StatelessWidget {
                     : selectEntity(
                         entity: expense,
                         context: context,
-                        forceView: !showCheckbox),
+                      ),
                 onLongPress: () => selectEntity(
                     entity: expense, context: context, longPress: true),
                 child: Padding(
@@ -190,7 +190,7 @@ class ExpenseListItem extends StatelessWidget {
                     : selectEntity(
                         entity: expense,
                         context: context,
-                        forceView: !showCheckbox),
+                      ),
                 onLongPress: () => selectEntity(
                     entity: expense, context: context, longPress: true),
                 leading: showCheckbox

@@ -263,7 +263,7 @@ abstract class ExpenseEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this) && !multiselect) {
         actions.add(EntityAction.edit);
       }
 
@@ -272,11 +272,11 @@ abstract class ExpenseEntity extends Object
       }
     }
 
-    if (isInvoiced) {
+    if (isInvoiced && !multiselect) {
       actions.add(EntityAction.viewInvoice);
     }
 
-    if (userCompany.canCreate(EntityType.task)) {
+    if (userCompany.canCreate(EntityType.task) && !multiselect) {
       actions.add(EntityAction.clone);
     }
 
