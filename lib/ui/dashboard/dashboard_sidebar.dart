@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
@@ -371,7 +370,6 @@ class ExpenseSidbar extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    /*
     final recentExpenses = memoizedRecentExpenses(
       state.expenseState.map,
       state.clientState.map,
@@ -400,16 +398,16 @@ class ExpenseSidbar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.recentTasks +
-          (recentTasks.isNotEmpty ? ' (${recentTasks.length})' : ''),
-      list2: recentTasks.isEmpty
+      label2: localization.recentExpenses +
+          (recentExpenses.isNotEmpty ? ' (${recentExpenses.length})' : ''),
+      list2: recentExpenses.isEmpty
           ? null
           : ListView.separated(
               shrinkWrap: true,
-              itemCount: recentTasks.length,
+              itemCount: recentExpenses.length,
               itemBuilder: (BuildContext context, int index) {
-                return TaskListItem(
-                  task: recentTasks[index],
+                return ExpenseListItem(
+                  expense: recentExpenses[index],
                   showCheckbox: false,
                 );
               },
@@ -424,18 +422,17 @@ class ExpenseSidbar extends StatelessWidget {
               shrinkWrap: true,
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                final task = state.taskState.map[selectedIds[index]];
-                return task == null
+                final expense = state.expenseState.map[selectedIds[index]];
+                return expense == null
                     ? SizedBox()
-                    : TaskListItem(
-                        task: task,
+                    : ExpenseListItem(
+                        expense: expense,
                         showCheckbox: false,
                       );
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
     );
-    */
   }
 }
 

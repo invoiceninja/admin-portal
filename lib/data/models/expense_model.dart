@@ -519,6 +519,8 @@ abstract class ExpenseEntity extends Object
         (endDate ?? '').compareTo(date ?? '') >= 0;
   }
 
+  bool get isUpcoming => convertSqlDateToDateTime(date).isAfter(DateTime.now());
+
   @override
   double get listDisplayAmount => null;
 
