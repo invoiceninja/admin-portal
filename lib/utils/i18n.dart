@@ -18,6 +18,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
+      'upcoming_expenses': 'Upcoming Expenses',
       'update_app': 'Update App',
       'started_import': 'Successfully started import',
       'duplicate_column_mapping': 'Duplicate column mapping',
@@ -5331,6 +5332,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get recentExpenses =>
       _localizedValues[localeCode]['recent_expenses'] ?? '';
+
+  String get upcomingExpenses =>
+      _localizedValues[localeCode]['upcoming_expenses'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

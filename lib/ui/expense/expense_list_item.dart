@@ -14,24 +14,22 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
-    @required this.user,
     @required this.expense,
-    @required this.filter,
+    this.filter,
     this.onTap,
-    this.onLongPress,
     this.onCheckboxChanged,
-    this.isChecked = false,
+    this.showCheckbox = false,
     this.isDismissible = true,
+    this.isChecked = false,
   });
 
-  final UserEntity user;
+  final Function(bool) onCheckboxChanged;
   final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
   final ExpenseEntity expense;
   final String filter;
-  final Function(bool) onCheckboxChanged;
-  final bool isChecked;
+  final bool showCheckbox;
   final bool isDismissible;
+  final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +47,9 @@ class ExpenseListItem extends StatelessWidget {
     final listUIState = expenseUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final isChecked = isDismissible
+        ? (isInMultiselect && listUIState.isSelected(expense.id))
+        : this.isChecked;
     final textStyle = TextStyle(fontSize: 16);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
@@ -90,11 +91,12 @@ class ExpenseListItem extends StatelessWidget {
             ? InkWell(
                 onTap: () => onTap != null
                     ? onTap()
-                    : selectEntity(entity: expense, context: context),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress()
                     : selectEntity(
-                        entity: expense, context: context, longPress: true),
+                        entity: expense,
+                        context: context,
+                        forceView: !showCheckbox),
+                onLongPress: () => selectEntity(
+                    entity: expense, context: context, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -185,11 +187,12 @@ class ExpenseListItem extends StatelessWidget {
             : ListTile(
                 onTap: () => onTap != null
                     ? onTap()
-                    : selectEntity(entity: expense, context: context),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress()
                     : selectEntity(
-                        entity: expense, context: context, longPress: true),
+                        entity: expense,
+                        context: context,
+                        forceView: !showCheckbox),
+                onLongPress: () => selectEntity(
+                    entity: expense, context: context, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),

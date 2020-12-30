@@ -19,14 +19,20 @@ class TaskListItem extends StatelessWidget {
   const TaskListItem({
     @required this.task,
     this.filter,
+    this.onTap,
+    this.onCheckboxChanged,
     this.isDismissible = true,
-    this.showCheckbox = true,
+    this.showCheckbox = false,
+    this.isChecked = false,
   });
 
+  final Function(bool) onCheckboxChanged;
+  final GestureTapCallback onTap;
   final TaskEntity task;
   final String filter;
   final bool showCheckbox;
   final bool isDismissible;
+  final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +45,11 @@ class TaskListItem extends StatelessWidget {
         ? (task.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
         : null;
     final listUIState = taskUIState.listUIState;
-    final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
-    final isChecked = isInMultiselect && listUIState.isSelected(task.id);
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final isChecked = isDismissible
+        ? (isInMultiselect && listUIState.isSelected(task.id))
+        : this.isChecked;
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
     final textColor = Theme.of(context).textTheme.bodyText1.color;
@@ -83,11 +92,13 @@ class TaskListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () => selectEntity(
-                  entity: task,
-                  context: context,
-                  forceView: !showCheckbox,
-                ),
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(
+                        entity: task,
+                        context: context,
+                        forceView: !showCheckbox,
+                      ),
                 onLongPress: () => selectEntity(
                   entity: task,
                   context: context,
@@ -113,7 +124,8 @@ class TaskListItem extends StatelessWidget {
                                     value: isChecked,
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
-                                    onChanged: (value) => null,
+                                    onChanged: (value) =>
+                                        onCheckboxChanged(value),
                                     activeColor: Theme.of(context).accentColor,
                                   ),
                                 ),
@@ -178,11 +190,13 @@ class TaskListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () => selectEntity(
-                  entity: task,
-                  context: context,
-                  forceView: !showCheckbox,
-                ),
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(
+                        entity: task,
+                        context: context,
+                        forceView: !showCheckbox,
+                      ),
                 onLongPress: () => selectEntity(
                     entity: task, context: context, longPress: true),
                 leading: showCheckbox
@@ -192,7 +206,7 @@ class TaskListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => null,
+                          onChanged: (value) => onCheckboxChanged(value),
                           activeColor: Theme.of(context).accentColor,
                         ),
                       )

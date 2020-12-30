@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
@@ -369,29 +370,31 @@ class ExpenseSidbar extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final runningTasks = memoizedRunningTasks(
-      state.taskState.map,
+
+    /*
+    final recentExpenses = memoizedRecentExpenses(
+      state.expenseState.map,
       state.clientState.map,
     );
-    final recentTasks = memoizedRecentTasks(
-      state.taskState.map,
+    final upcomingExpenses = memoizedUpcomingExpenses(
+      state.expenseState.map,
       state.clientState.map,
     );
     final selectedIds =
-        state.dashboardUIState.selectedEntities[EntityType.task];
+        state.dashboardUIState.selectedEntities[EntityType.expense];
 
     return _DashboardSidebar(
       entityType: EntityType.quote,
-      label1: localization.runningTasks +
-          (runningTasks.isNotEmpty ? ' (${runningTasks.length})' : ''),
-      list1: runningTasks.isEmpty
+      label1: localization.upcomingExpenses +
+          (upcomingExpenses.isNotEmpty ? ' (${upcomingExpenses.length})' : ''),
+      list1: upcomingExpenses.isEmpty
           ? null
           : ListView.separated(
               shrinkWrap: true,
-              itemCount: runningTasks.length,
+              itemCount: upcomingExpenses.length,
               itemBuilder: (BuildContext context, int index) {
-                return TaskListItem(
-                  task: runningTasks[index],
+                return ExpenseListItem(
+                  expense: upcomingExpenses[index],
                   showCheckbox: false,
                 );
               },
@@ -432,6 +435,7 @@ class ExpenseSidbar extends StatelessWidget {
               separatorBuilder: (context, index) => ListDivider(),
             ),
     );
+    */
   }
 }
 

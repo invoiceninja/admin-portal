@@ -205,10 +205,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           return ProductListItem(
             isDismissible: false,
             onCheckboxChanged: (checked) => _toggleEntity(product),
-            isChecked: _selected.contains(product),
             product: product,
-            userCompany: state.userCompany,
             filter: _filter,
+            isChecked: _selected.contains(product),
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(product);
@@ -247,6 +246,15 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
             isDismissible: false,
             task: task,
             filter: _filter,
+            isChecked: _selected.contains(task),
+            onTap: () {
+              if (_selected.isNotEmpty) {
+                _toggleEntity(task);
+              } else {
+                _selected.add(task);
+                _onItemsSelected(context);
+              }
+            },
           );
         },
       );
@@ -271,7 +279,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
           return ExpenseListItem(
             isDismissible: false,
-            user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(expense),
             isChecked: _selected.contains(expense),
             expense: expense,

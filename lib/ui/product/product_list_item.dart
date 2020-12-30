@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
-    @required this.userCompany,
     @required this.product,
     @required this.filter,
     this.onTap,
@@ -23,14 +22,11 @@ class ProductListItem extends StatelessWidget {
     this.isDismissible = true,
   });
 
-  final UserCompanyEntity userCompany;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
   final bool isDismissible;
-
-  //final ValueChanged<bool> onCheckboxChanged;
   final ProductEntity product;
   final String filter;
 
@@ -56,7 +52,7 @@ class ProductListItem extends StatelessWidget {
               (uiState.isEditing
                   ? productUIState.editing.id
                   : productUIState.selectedId),
-      userCompany: userCompany,
+      userCompany: state.userCompany,
       entity: product,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
