@@ -252,16 +252,6 @@ class FilterExpensesByCustom4 implements PersistUI {
 
 void handleExpenseAction(
     BuildContext context, List<BaseEntity> expenses, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          expenses.length == 1,
-      'Cannot perform this action on more than one expense');
-
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.company;
@@ -278,15 +268,24 @@ void handleExpenseAction(
       createEntity(context: context, entity: expense.clone);
       break;
     case EntityAction.newInvoice:
-      final item = convertExpenseToInvoiceItem(
-          expense: expense,
-          categoryMap: state.expenseCategoryState.map,
-          company: company);
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..hasExpenses = true
-            ..lineItems.add(item)));
+      final items = expenses
+          .where((entity) {
+            final expense = entity as ExpenseEntity;
+            return !expense.isDeleted && !expense.isInvoiced;
+          })
+          .map((expense) => convertExpenseToInvoiceItem(
+                expense: expense,
+                categoryMap: state.expenseCategoryState.map,
+                company: company,
+              ))
+          .toList();
+      if (items.isNotEmpty) {
+        createEntity(
+            context: context,
+            entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
+              ..hasExpenses = true
+              ..lineItems.addAll(items)));
+      }
       break;
     case EntityAction.viewInvoice:
       viewEntityById(
