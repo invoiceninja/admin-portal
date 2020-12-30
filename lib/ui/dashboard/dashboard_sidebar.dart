@@ -382,7 +382,7 @@ class ExpenseSidbar extends StatelessWidget {
         state.dashboardUIState.selectedEntities[EntityType.expense];
 
     return _DashboardSidebar(
-      entityType: EntityType.quote,
+      entityType: EntityType.expense,
       label1: localization.upcomingExpenses +
           (upcomingExpenses.isNotEmpty ? ' (${upcomingExpenses.length})' : ''),
       list1: upcomingExpenses.isEmpty
@@ -415,7 +415,7 @@ class ExpenseSidbar extends StatelessWidget {
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : localization.selectedTasks + ' (${selectedIds.length})',
+          : localization.selectedExpenses + ' (${selectedIds.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ListView.separated(
