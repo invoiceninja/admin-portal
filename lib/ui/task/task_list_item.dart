@@ -19,7 +19,7 @@ class TaskListItem extends StatelessWidget {
   const TaskListItem({
     @required this.task,
     this.filter,
-    this.isDismissible,
+    this.isDismissible = true,
     this.showCheckbox = true,
   });
 
@@ -39,7 +39,7 @@ class TaskListItem extends StatelessWidget {
         ? (task.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
         : null;
     final listUIState = taskUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
+    final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
     final isChecked = isInMultiselect && listUIState.isSelected(task.id);
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
@@ -71,6 +71,7 @@ class TaskListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isDismissible: isDismissible,
+      showCheckbox: showCheckbox,
       isSelected: isDesktop(context) &&
           task.id ==
               (uiState.isEditing
@@ -82,9 +83,16 @@ class TaskListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () => selectEntity(entity: task, context: context),
+                onTap: () => selectEntity(
+                  entity: task,
+                  context: context,
+                  forceView: !showCheckbox,
+                ),
                 onLongPress: () => selectEntity(
-                    entity: task, context: context, longPress: true),
+                  entity: task,
+                  context: context,
+                  longPress: true,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -96,7 +104,7 @@ class TaskListItem extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
-                        child: showCheckbox
+                        child: isInMultiselect
                             ? Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: IgnorePointer(
@@ -170,7 +178,11 @@ class TaskListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () => selectEntity(entity: task, context: context),
+                onTap: () => selectEntity(
+                  entity: task,
+                  context: context,
+                  forceView: !showCheckbox,
+                ),
                 onLongPress: () => selectEntity(
                     entity: task, context: context, longPress: true),
                 leading: showCheckbox
