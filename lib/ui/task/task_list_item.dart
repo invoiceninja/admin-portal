@@ -113,7 +113,7 @@ class TaskListItem extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
-                        child: isInMultiselect
+                        child: showCheckbox
                             ? Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: IgnorePointer(
