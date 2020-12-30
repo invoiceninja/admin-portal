@@ -374,15 +374,18 @@ class ExpenseSidbar extends StatelessWidget {
       state.expenseState.map,
       state.clientState.map,
     );
+    /*
     final upcomingExpenses = memoizedUpcomingExpenses(
       state.expenseState.map,
       state.clientState.map,
     );
+    */
     final selectedIds =
         state.dashboardUIState.selectedEntities[EntityType.expense];
 
     return _DashboardSidebar(
       entityType: EntityType.expense,
+      /*
       label1: localization.upcomingExpenses +
           (upcomingExpenses.isNotEmpty ? ' (${upcomingExpenses.length})' : ''),
       list1: upcomingExpenses.isEmpty
@@ -398,9 +401,10 @@ class ExpenseSidbar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.recentExpenses +
+            */
+      label1: localization.recentExpenses +
           (recentExpenses.isNotEmpty ? ' (${recentExpenses.length})' : ''),
-      list2: recentExpenses.isEmpty
+      list1: recentExpenses.isEmpty
           ? null
           : ListView.separated(
               shrinkWrap: true,

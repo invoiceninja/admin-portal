@@ -213,6 +213,7 @@ List<TaskEntity> _recentTasks({
   return tasks;
 }
 
+/*
 var memoizedUpcomingExpenses = memo2((
   BuiltMap<String, ExpenseEntity> expenseMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -242,6 +243,7 @@ List<ExpenseEntity> _upcomingExpenses({
 
   return expenses;
 }
+*/
 
 var memoizedRecentExpenses = memo2((
   BuiltMap<String, ExpenseEntity> expenseMap,
@@ -262,7 +264,7 @@ List<ExpenseEntity> _recentExpenses({
         expenseMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
     if (expense.isDeleted || client.isDeleted) {
       // do noting
-    } else if (!expense.isUpcoming) {
+    } else {
       expenses.add(expense);
     }
   });
