@@ -18,7 +18,7 @@ class ExpenseListItem extends StatelessWidget {
     this.filter,
     this.onTap,
     this.onCheckboxChanged,
-    this.showCheckbox = false,
+    this.showCheckbox = true,
     this.isDismissible = true,
     this.isChecked = false,
   });
@@ -46,8 +46,7 @@ class ExpenseListItem extends StatelessWidget {
         : null;
     final listUIState = expenseUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox =
-        onCheckboxChanged != null || isInMultiselect || this.showCheckbox;
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final isChecked = isDismissible
         ? (isInMultiselect && listUIState.isSelected(expense.id))
         : this.isChecked;
@@ -78,6 +77,7 @@ class ExpenseListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
+      showCheckbox: showCheckbox,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           expense.id ==
