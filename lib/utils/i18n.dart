@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'running_tasks': 'Running Tasks',
+      'recent_tasks': 'Recent Tasks',
+      'recent_expenses': 'Recent Expenses',
       'update_app': 'Update App',
       'started_import': 'Successfully started import',
       'duplicate_column_mapping': 'Duplicate column mapping',
@@ -5320,6 +5323,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['started_import'] ?? '';
 
   String get updateApp => _localizedValues[localeCode]['update_app'] ?? '';
+
+  String get runningTasks =>
+      _localizedValues[localeCode]['running_tasks'] ?? '';
+
+  String get recentTasks => _localizedValues[localeCode]['recent_tasks'] ?? '';
+
+  String get recentExpenses =>
+      _localizedValues[localeCode]['recent_expenses'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

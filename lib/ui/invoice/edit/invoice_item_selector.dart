@@ -245,18 +245,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final task = state.taskState.map[entityId];
           return TaskListItem(
             isDismissible: false,
-            user: state.user,
-            onCheckboxChanged: (checked) => _toggleEntity(task),
-            isChecked: _selected.contains(task),
             task: task,
-            onTap: () {
-              if (_selected.isNotEmpty) {
-                _toggleEntity(task);
-              } else {
-                _selected.add(task);
-                _onItemsSelected(context);
-              }
-            },
             filter: _filter,
           );
         },

@@ -17,23 +17,15 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem({
-    @required this.user,
     @required this.task,
-    @required this.filter,
-    this.onTap,
-    this.onLongPress,
-    this.onCheckboxChanged,
-    this.isChecked = false,
-    this.isDismissible = true,
+    this.filter,
+    this.isDismissible,
+    this.showCheckbox = true,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
   final TaskEntity task;
   final String filter;
-  final Function(bool) onCheckboxChanged;
-  final bool isChecked;
+  final bool showCheckbox;
   final bool isDismissible;
 
   @override
@@ -48,7 +40,7 @@ class TaskListItem extends StatelessWidget {
         : null;
     final listUIState = taskUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final isChecked = isInMultiselect && listUIState.isSelected(task.id);
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
     final textColor = Theme.of(context).textTheme.bodyText1.color;
@@ -90,13 +82,9 @@ class TaskListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(entity: task, context: context),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(
-                        entity: task, context: context, longPress: true),
+                onTap: () => selectEntity(entity: task, context: context),
+                onLongPress: () => selectEntity(
+                    entity: task, context: context, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -117,8 +105,7 @@ class TaskListItem extends StatelessWidget {
                                     value: isChecked,
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
-                                    onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                    onChanged: (value) => null,
                                     activeColor: Theme.of(context).accentColor,
                                   ),
                                 ),
@@ -183,13 +170,9 @@ class TaskListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(entity: task, context: context),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(
-                        entity: task, context: context, longPress: true),
+                onTap: () => selectEntity(entity: task, context: context),
+                onLongPress: () => selectEntity(
+                    entity: task, context: context, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
@@ -197,7 +180,7 @@ class TaskListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => null,
                           activeColor: Theme.of(context).accentColor,
                         ),
                       )
