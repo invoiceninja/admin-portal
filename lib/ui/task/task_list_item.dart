@@ -21,8 +21,8 @@ class TaskListItem extends StatelessWidget {
     this.filter,
     this.onTap,
     this.onCheckboxChanged,
-    this.isDismissible = true,
     this.showCheckbox = false,
+    this.isDismissible = true,
     this.isChecked = false,
   });
 
@@ -46,7 +46,8 @@ class TaskListItem extends StatelessWidget {
         : null;
     final listUIState = taskUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final showCheckbox =
+        onCheckboxChanged != null || isInMultiselect || this.showCheckbox;
     final isChecked = isDismissible
         ? (isInMultiselect && listUIState.isSelected(task.id))
         : this.isChecked;
@@ -79,6 +80,7 @@ class TaskListItem extends StatelessWidget {
           );
 
     return DismissibleEntity(
+      showCheckbox: showCheckbox,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           task.id ==
