@@ -261,7 +261,7 @@ List<ExpenseEntity> _recentExpenses({
   final expenses = <ExpenseEntity>[];
   expenseMap.forEach((index, expense) {
     final client =
-        expenseMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
+        clientMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
     if (expense.isDeleted || client.isDeleted) {
       // do noting
     } else {
