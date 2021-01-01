@@ -113,7 +113,7 @@ class LoadDocumentsSuccess implements StopLoading {
   }
 }
 
-class SaveDocumentRequest implements StartSaving {
+abstract class SaveDocumentRequest implements StartSaving {
   SaveDocumentRequest({
     @required this.completer,
     @required this.multipartFile,
