@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:memoize/memoize.dart';
 
@@ -152,4 +153,124 @@ List<InvoiceEntity> _expiredQuotes({
   quotes.sort((quoteA, quoteB) => quoteA.dueDate.compareTo(quoteB.dueDate));
 
   return quotes;
+}
+
+var memoizedRunningTasks = memo2((
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity> clientMap,
+) =>
+    _runningTasks(
+      taskMap: taskMap,
+      clientMap: clientMap,
+    ));
+
+List<TaskEntity> _runningTasks({
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity> clientMap,
+}) {
+  final tasks = <TaskEntity>[];
+  taskMap.forEach((index, task) {
+    final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
+    if (task.isDeleted || client.isDeleted) {
+      // do noting
+    } else if (task.isRunning) {
+      tasks.add(task);
+    }
+  });
+
+  tasks.sort((taskA, taskB) =>
+      (taskA.startTimestamp ?? 0).compareTo(taskB.startTimestamp ?? 0));
+
+  return tasks;
+}
+
+var memoizedRecentTasks = memo2((
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity> clientMap,
+) =>
+    _recentTasks(
+      taskMap: taskMap,
+      clientMap: clientMap,
+    ));
+
+List<TaskEntity> _recentTasks({
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity> clientMap,
+}) {
+  final tasks = <TaskEntity>[];
+  taskMap.forEach((index, task) {
+    final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
+    if (task.isDeleted || client.isDeleted) {
+      // do noting
+    } else if (!task.isRunning) {
+      tasks.add(task);
+    }
+  });
+
+  tasks.sort((taskA, taskB) =>
+      (taskA.startTimestamp ?? 0).compareTo(taskB.startTimestamp ?? 0));
+
+  return tasks;
+}
+
+/*
+var memoizedUpcomingExpenses = memo2((
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ClientEntity> clientMap,
+) =>
+    _upcomingExpenses(
+      expenseMap: expenseMap,
+      clientMap: clientMap,
+    ));
+
+List<ExpenseEntity> _upcomingExpenses({
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ClientEntity> clientMap,
+}) {
+  final expenses = <ExpenseEntity>[];
+  expenseMap.forEach((index, expense) {
+    final client =
+        expenseMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
+    if (expense.isDeleted || client.isDeleted) {
+      // do noting
+    } else if (expense.isUpcoming) {
+      expenses.add(expense);
+    }
+  });
+
+  expenses.sort((expenseA, expenseB) =>
+      (expenseA.date ?? '').compareTo(expenseB.date ?? ''));
+
+  return expenses;
+}
+*/
+
+var memoizedRecentExpenses = memo2((
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ClientEntity> clientMap,
+) =>
+    _recentExpenses(
+      expenseMap: expenseMap,
+      clientMap: clientMap,
+    ));
+
+List<ExpenseEntity> _recentExpenses({
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ClientEntity> clientMap,
+}) {
+  final expenses = <ExpenseEntity>[];
+  expenseMap.forEach((index, expense) {
+    final client =
+        clientMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
+    if (expense.isDeleted || client.isDeleted) {
+      // do noting
+    } else {
+      expenses.add(expense);
+    }
+  });
+
+  expenses.sort((expenseA, expenseB) =>
+      (expenseA.date ?? '').compareTo(expenseB.date ?? ''));
+
+  return expenses;
 }

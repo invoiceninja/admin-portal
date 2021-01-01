@@ -67,11 +67,12 @@ class ExpenseOverview extends StatelessWidget {
       }
 
       final fields = <String, String>{
+        localization.date: formatDate(expense.date, context),
+        localization.transactionReference: expense.transactionReference,
         localization.tax: tax,
+        localization.paymentDate: formatDate(expense.paymentDate, context),
         localization.paymentType:
             state.staticState.paymentTypeMap[expense.paymentTypeId]?.name,
-        localization.paymentDate: formatDate(expense.paymentDate, context),
-        localization.transactionReference: expense.transactionReference,
         localization.exchangeRate: expense.isConverted
             ? formatNumber(expense.exchangeRate, context,
                 formatNumberType: FormatNumberType.double)

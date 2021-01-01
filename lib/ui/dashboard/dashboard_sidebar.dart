@@ -7,9 +7,11 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
+import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SidebarScaffold extends StatelessWidget {
@@ -48,6 +50,14 @@ class SidebarScaffold extends StatelessWidget {
                     Tab(
                       text: localization.quotes,
                     ),
+                  if (company.isModuleEnabled(EntityType.task))
+                    Tab(
+                      text: localization.tasks,
+                    ),
+                  if (company.isModuleEnabled(EntityType.expense))
+                    Tab(
+                      text: localization.expenses,
+                    ),
                 ],
               ),
             ),
@@ -66,6 +76,8 @@ class SidebarScaffold extends StatelessWidget {
           if (company.isModuleEnabled(EntityType.invoice)) InvoiceSidebar(),
           if (company.isModuleEnabled(EntityType.payment)) PaymentSidebar(),
           if (company.isModuleEnabled(EntityType.quote)) QuoteSidebar(),
+          if (company.isModuleEnabled(EntityType.task)) TaskSidebar(),
+          if (company.isModuleEnabled(EntityType.expense)) ExpenseSidbar(),
         ],
       ),
     );
@@ -266,6 +278,159 @@ class QuoteSidebar extends StatelessWidget {
                     ? SizedBox()
                     : QuoteListItem(
                         quote: quote,
+                        showCheckbox: false,
+                      );
+              },
+              separatorBuilder: (context, index) => ListDivider(),
+            ),
+    );
+  }
+}
+
+class TaskSidebar extends StatelessWidget {
+  const TaskSidebar();
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final runningTasks = memoizedRunningTasks(
+      state.taskState.map,
+      state.clientState.map,
+    );
+    final recentTasks = memoizedRecentTasks(
+      state.taskState.map,
+      state.clientState.map,
+    );
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.task];
+
+    return _DashboardSidebar(
+      entityType: EntityType.quote,
+      label1: localization.runningTasks +
+          (runningTasks.isNotEmpty ? ' (${runningTasks.length})' : ''),
+      list1: runningTasks.isEmpty
+          ? null
+          : ListView.separated(
+              shrinkWrap: true,
+              itemCount: runningTasks.length,
+              itemBuilder: (BuildContext context, int index) {
+                return TaskListItem(
+                  task: runningTasks[index],
+                  showCheckbox: false,
+                );
+              },
+              separatorBuilder: (context, index) => ListDivider(),
+            ),
+      label2: localization.recentTasks +
+          (recentTasks.isNotEmpty ? ' (${recentTasks.length})' : ''),
+      list2: recentTasks.isEmpty
+          ? null
+          : ListView.separated(
+              shrinkWrap: true,
+              itemCount: recentTasks.length,
+              itemBuilder: (BuildContext context, int index) {
+                return TaskListItem(
+                  task: recentTasks[index],
+                  showCheckbox: false,
+                );
+              },
+              separatorBuilder: (context, index) => ListDivider(),
+            ),
+      label3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : localization.selectedTasks + ' (${selectedIds.length})',
+      list3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : ListView.separated(
+              shrinkWrap: true,
+              itemCount: selectedIds?.length,
+              itemBuilder: (BuildContext context, int index) {
+                final task = state.taskState.map[selectedIds[index]];
+                return task == null
+                    ? SizedBox()
+                    : TaskListItem(
+                        task: task,
+                        showCheckbox: false,
+                      );
+              },
+              separatorBuilder: (context, index) => ListDivider(),
+            ),
+    );
+  }
+}
+
+class ExpenseSidbar extends StatelessWidget {
+  const ExpenseSidbar();
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    final recentExpenses = memoizedRecentExpenses(
+      state.expenseState.map,
+      state.clientState.map,
+    );
+    /*
+    final upcomingExpenses = memoizedUpcomingExpenses(
+      state.expenseState.map,
+      state.clientState.map,
+    );
+    */
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.expense];
+
+    return _DashboardSidebar(
+      entityType: EntityType.expense,
+      /*
+      label1: localization.upcomingExpenses +
+          (upcomingExpenses.isNotEmpty ? ' (${upcomingExpenses.length})' : ''),
+      list1: upcomingExpenses.isEmpty
+          ? null
+          : ListView.separated(
+              shrinkWrap: true,
+              itemCount: upcomingExpenses.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ExpenseListItem(
+                  expense: upcomingExpenses[index],
+                  showCheckbox: false,
+                );
+              },
+              separatorBuilder: (context, index) => ListDivider(),
+            ),
+            */
+      label1: localization.recentExpenses +
+          (recentExpenses.isNotEmpty ? ' (${recentExpenses.length})' : ''),
+      list1: recentExpenses.isEmpty
+          ? null
+          : ListView.separated(
+              shrinkWrap: true,
+              itemCount: recentExpenses.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ExpenseListItem(
+                  expense: recentExpenses[index],
+                  showCheckbox: false,
+                );
+              },
+              separatorBuilder: (context, index) => ListDivider(),
+            ),
+      label3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : localization.selectedExpenses + ' (${selectedIds.length})',
+      list3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : ListView.separated(
+              shrinkWrap: true,
+              itemCount: selectedIds?.length,
+              itemBuilder: (BuildContext context, int index) {
+                final expense = state.expenseState.map[selectedIds[index]];
+                return expense == null
+                    ? SizedBox()
+                    : ExpenseListItem(
+                        expense: expense,
                         showCheckbox: false,
                       );
               },

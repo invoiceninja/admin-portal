@@ -205,10 +205,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           return ProductListItem(
             isDismissible: false,
             onCheckboxChanged: (checked) => _toggleEntity(product),
-            isChecked: _selected.contains(product),
             product: product,
-            userCompany: state.userCompany,
             filter: _filter,
+            isChecked: _selected.contains(product),
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(product);
@@ -245,10 +244,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final task = state.taskState.map[entityId];
           return TaskListItem(
             isDismissible: false,
-            user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(task),
-            isChecked: _selected.contains(task),
             task: task,
+            filter: _filter,
+            isChecked: _selected.contains(task),
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(task);
@@ -257,7 +256,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                 _onItemsSelected(context);
               }
             },
-            filter: _filter,
           );
         },
       );
@@ -282,10 +280,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
           return ExpenseListItem(
             isDismissible: false,
-            user: state.user,
             onCheckboxChanged: (checked) => _toggleEntity(expense),
             isChecked: _selected.contains(expense),
             expense: expense,
+            filter: _filter,
             onTap: () {
               if (_selected.isNotEmpty) {
                 _toggleEntity(expense);
@@ -294,7 +292,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                 _onItemsSelected(context);
               }
             },
-            filter: _filter,
           );
         },
       );

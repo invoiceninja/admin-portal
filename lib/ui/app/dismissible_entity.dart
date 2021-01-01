@@ -39,6 +39,7 @@ class DismissibleEntity extends StatelessWidget {
     final widget = SelectedIndicator(
       isSelected: isSelected &&
           showCheckbox &&
+          isDismissible &&
           !isMultiselect &&
           !entity.entityType.isSetting,
       child: ConstrainedBox(

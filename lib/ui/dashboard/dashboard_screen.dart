@@ -49,6 +49,8 @@ class _DashboardScreenState extends State<DashboardScreen>
       EntityType.invoice,
       EntityType.payment,
       EntityType.quote,
+      EntityType.task,
+      EntityType.expense,
     ].forEach((entityType) {
       if (company.isModuleEnabled(entityType)) {
         _tabs.add(entityType);
@@ -197,6 +199,15 @@ class _DashboardScreenState extends State<DashboardScreen>
               Tab(
                 text: localization.quotes,
               ),
+            if (isMobile(context) && company.isModuleEnabled(EntityType.task))
+              Tab(
+                text: localization.tasks,
+              ),
+            if (isMobile(context) &&
+                company.isModuleEnabled(EntityType.expense))
+              Tab(
+                text: localization.expense,
+              ),
           ],
         ),
       ),
@@ -288,6 +299,10 @@ class _CustomTabBarView extends StatelessWidget {
           PaymentSidebar(),
         if (isMobile(context) && company.isModuleEnabled(EntityType.quote))
           QuoteSidebar(),
+        if (isMobile(context) && company.isModuleEnabled(EntityType.task))
+          TaskSidebar(),
+        if (isMobile(context) && company.isModuleEnabled(EntityType.expense))
+          ExpenseSidbar(),
       ],
     );
   }

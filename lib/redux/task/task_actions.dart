@@ -325,7 +325,7 @@ void handleTaskAction(
       final items = tasks
           .where((entity) {
             final task = entity as TaskEntity;
-            return !task.isRunning && !task.isInvoiced;
+            return !task.isDeleted && !task.isRunning && !task.isInvoiced;
           })
           .map((task) => convertTaskToInvoiceItem(task: task, context: context))
           .toList();

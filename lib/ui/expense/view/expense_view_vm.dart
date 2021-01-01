@@ -115,9 +115,9 @@ class ExpenseViewVM {
         onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
           final Completer<DocumentEntity> completer =
               Completer<DocumentEntity>();
-          store.dispatch(SaveDocumentRequest(
+          store.dispatch(SaveExpenseDocumentRequest(
               multipartFile: multipartFile,
-              entity: expense,
+              expense: expense,
               completer: completer));
           completer.future.then((client) {
             showToast(AppLocalization.of(context).uploadedDocument);

@@ -42,7 +42,6 @@ class ProductListBuilder extends StatelessWidget {
               final isInMultiselect = listState.isInMultiselect();
 
               return ProductListItem(
-                userCompany: viewModel.state.userCompany,
                 filter: viewModel.filter,
                 product: product,
                 isChecked: isInMultiselect && listState.isSelected(product.id),

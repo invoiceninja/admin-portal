@@ -100,6 +100,7 @@ abstract class ProjectEntity extends Object
 
   ProjectEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..number = ''
     ..isChanged = false
     ..isDeleted = false);
 

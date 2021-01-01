@@ -18,10 +18,15 @@ class ErrorDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
+    var errorStr = '$error';
+
+    if (error is Error) {
+      errorStr += '\n\n' + (error as Error).stackTrace.toString();
+    }
 
     return AlertDialog(
       title: Text(localization.error),
-      content: error != null ? SelectableText(error.toString()) : SizedBox(),
+      content: error != null ? SelectableText(errorStr.toString()) : SizedBox(),
       actions: [
         if (clearErrorOnDismiss && !Config.DEMO_MODE)
           FlatButton(
@@ -36,7 +41,7 @@ class ErrorDialog extends StatelessWidget {
         FlatButton(
             child: Text(localization.copy.toUpperCase()),
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: '$error'));
+              Clipboard.setData(ClipboardData(text: errorStr));
             }),
         FlatButton(
             child: Text(localization.dismiss.toUpperCase()),

@@ -27,7 +27,6 @@ jobs:
           cp android/app/build.gradle.prod android/app/build.gradle
           sed -i 's/secret/${{secrets.api_secret}}/g' lib/.env.dart
           sed -i 's/dns/${{secrets.app_sentry}}/g' lib/.env.dart
-          sed -i -e '/OTHER_LANGUAGES/{r lib/utils/i18n' -e 'd}' lib/utils/i18n.dart
       - run: flutter upgrade
       - run: flutter config --enable-web
       - run: flutter build web --release

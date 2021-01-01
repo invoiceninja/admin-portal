@@ -143,6 +143,7 @@ abstract class ExpenseEntity extends Object
 
   ExpenseEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..number = ''
     ..isChanged = false
     ..isDeleted = false
     ..invoiceId = null
@@ -263,7 +264,7 @@ abstract class ExpenseEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this) && !multiselect) {
         actions.add(EntityAction.edit);
       }
 
@@ -272,11 +273,11 @@ abstract class ExpenseEntity extends Object
       }
     }
 
-    if (isInvoiced) {
+    if (isInvoiced && !multiselect) {
       actions.add(EntityAction.viewInvoice);
     }
 
-    if (userCompany.canCreate(EntityType.task)) {
+    if (userCompany.canCreate(EntityType.task) && !multiselect) {
       actions.add(EntityAction.clone);
     }
 
@@ -518,6 +519,8 @@ abstract class ExpenseEntity extends Object
     return (startDate ?? '').compareTo(date ?? '') <= 0 &&
         (endDate ?? '').compareTo(date ?? '') >= 0;
   }
+
+  bool get isUpcoming => convertSqlDateToDateTime(date).isAfter(DateTime.now());
 
   @override
   double get listDisplayAmount => null;
