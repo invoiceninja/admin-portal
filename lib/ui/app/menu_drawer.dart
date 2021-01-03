@@ -121,7 +121,7 @@ class MenuDrawer extends StatelessWidget {
                   value: company.id,
                 ))
             .toList(),
-        if (state.userCompany.isOwner)
+        if (state.canAddCompany)
           PopupMenuItem<String>(
             value: 'company',
             child: Row(
@@ -169,7 +169,7 @@ class MenuDrawer extends StatelessWidget {
                       value: (state.companies.indexOf(company)).toString(),
                       child: _companyListItem(company)))
                   .toList(),
-              if (viewModel.state.userCompany.isAdmin)
+              if (state.canAddCompany)
                 DropdownMenuItem<String>(
                   value: 'company',
                   child: Row(
