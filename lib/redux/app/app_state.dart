@@ -702,8 +702,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
    */
 
   bool get isProPlan => true;
-
   bool get isEnterprisePlan => true;
+
+  bool get canAddCompany => userCompany.isOwner && companies.length < 10;
 
   bool get isMenuCollapsed =>
       (prefState.isNotMobile &&
