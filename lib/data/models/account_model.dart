@@ -16,7 +16,7 @@ abstract class AccountEntity
       latestVersion: '',
       currentVersion: '',
       reportErrors: reportErrors,
-      debug_enabled: false,
+      debugEnabled: false,
     );
   }
 
