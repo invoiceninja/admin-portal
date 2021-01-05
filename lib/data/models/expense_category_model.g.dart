@@ -128,6 +128,9 @@ class _$ExpenseCategoryEntitySerializer
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'color',
+      serializers.serialize(object.color,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -181,6 +184,10 @@ class _$ExpenseCategoryEntitySerializer
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'color':
+          result.color = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -422,6 +429,8 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   final String name;
   @override
+  final String color;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -444,6 +453,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
 
   _$ExpenseCategoryEntity._(
       {this.name,
+      this.color,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -455,6 +465,9 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'name');
+    }
+    if (color == null) {
+      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'color');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'createdAt');
@@ -484,6 +497,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
     if (identical(other, this)) return true;
     return other is ExpenseCategoryEntity &&
         name == other.name &&
+        color == other.color &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -503,7 +517,9 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, name.hashCode), isChanged.hashCode),
+                            $jc(
+                                $jc($jc($jc(0, name.hashCode), color.hashCode),
+                                    isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
                         archivedAt.hashCode),
@@ -517,6 +533,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   String toString() {
     return (newBuiltValueToStringHelper('ExpenseCategoryEntity')
           ..add('name', name)
+          ..add('color', color)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -536,6 +553,10 @@ class ExpenseCategoryEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _color;
+  String get color => _$this._color;
+  set color(String color) => _$this._color = color;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -571,11 +592,14 @@ class ExpenseCategoryEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  ExpenseCategoryEntityBuilder();
+  ExpenseCategoryEntityBuilder() {
+    ExpenseCategoryEntity._initializeBuilder(this);
+  }
 
   ExpenseCategoryEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _color = _$v.color;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -607,6 +631,7 @@ class ExpenseCategoryEntityBuilder
     final _$result = _$v ??
         new _$ExpenseCategoryEntity._(
             name: name,
+            color: color,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

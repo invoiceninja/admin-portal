@@ -122,6 +122,9 @@ class _$TaskStatusEntitySerializer
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'color',
+      serializers.serialize(object.color,
+          specifiedType: const FullType(String)),
       'sort_order',
       serializers.serialize(object.sortOrder,
           specifiedType: const FullType(int)),
@@ -178,6 +181,10 @@ class _$TaskStatusEntitySerializer
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'color':
+          result.color = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'sort_order':
@@ -419,6 +426,8 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   @override
   final String name;
   @override
+  final String color;
+  @override
   final int sortOrder;
   @override
   final bool isChanged;
@@ -443,6 +452,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
 
   _$TaskStatusEntity._(
       {this.name,
+      this.color,
       this.sortOrder,
       this.isChanged,
       this.createdAt,
@@ -455,6 +465,9 @@ class _$TaskStatusEntity extends TaskStatusEntity {
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('TaskStatusEntity', 'name');
+    }
+    if (color == null) {
+      throw new BuiltValueNullFieldError('TaskStatusEntity', 'color');
     }
     if (sortOrder == null) {
       throw new BuiltValueNullFieldError('TaskStatusEntity', 'sortOrder');
@@ -486,6 +499,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
     if (identical(other, this)) return true;
     return other is TaskStatusEntity &&
         name == other.name &&
+        color == other.color &&
         sortOrder == other.sortOrder &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -508,7 +522,9 @@ class _$TaskStatusEntity extends TaskStatusEntity {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, name.hashCode),
+                                    $jc(
+                                        $jc($jc(0, name.hashCode),
+                                            color.hashCode),
                                         sortOrder.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -524,6 +540,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   String toString() {
     return (newBuiltValueToStringHelper('TaskStatusEntity')
           ..add('name', name)
+          ..add('color', color)
           ..add('sortOrder', sortOrder)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -544,6 +561,10 @@ class TaskStatusEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _color;
+  String get color => _$this._color;
+  set color(String color) => _$this._color = color;
 
   int _sortOrder;
   int get sortOrder => _$this._sortOrder;
@@ -583,11 +604,14 @@ class TaskStatusEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  TaskStatusEntityBuilder();
+  TaskStatusEntityBuilder() {
+    TaskStatusEntity._initializeBuilder(this);
+  }
 
   TaskStatusEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _color = _$v.color;
       _sortOrder = _$v.sortOrder;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -620,6 +644,7 @@ class TaskStatusEntityBuilder
     final _$result = _$v ??
         new _$TaskStatusEntity._(
             name: name,
+            color: color,
             sortOrder: sortOrder,
             isChanged: isChanged,
             createdAt: createdAt,

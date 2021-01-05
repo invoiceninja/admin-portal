@@ -245,6 +245,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'enabled_modules',
       serializers.serialize(object.enabledModules,
           specifiedType: const FullType(int)),
+      'calculate_expense_tax_by_amount',
+      serializers.serialize(object.calculateExpenseTaxByAmount,
+          specifiedType: const FullType(bool)),
+      'hide_empty_columns_on_pdf',
+      serializers.serialize(object.hideEmptyColumnsOnPdf,
+          specifiedType: const FullType(bool)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -597,6 +603,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'enabled_modules':
           result.enabledModules = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'calculate_expense_tax_by_amount':
+          result.calculateExpenseTaxByAmount = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'hide_empty_columns_on_pdf':
+          result.hideEmptyColumnsOnPdf = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -3001,6 +3015,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final int enabledModules;
   @override
+  final bool calculateExpenseTaxByAmount;
+  @override
+  final bool hideEmptyColumnsOnPdf;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -3085,6 +3103,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.showTasksTable,
       this.settings,
       this.enabledModules,
+      this.calculateExpenseTaxByAmount,
+      this.hideEmptyColumnsOnPdf,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -3294,6 +3314,14 @@ class _$CompanyEntity extends CompanyEntity {
     if (enabledModules == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'enabledModules');
     }
+    if (calculateExpenseTaxByAmount == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'calculateExpenseTaxByAmount');
+    }
+    if (hideEmptyColumnsOnPdf == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'hideEmptyColumnsOnPdf');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'createdAt');
     }
@@ -3381,6 +3409,8 @@ class _$CompanyEntity extends CompanyEntity {
         showTasksTable == other.showTasksTable &&
         settings == other.settings &&
         enabledModules == other.enabledModules &&
+        calculateExpenseTaxByAmount == other.calculateExpenseTaxByAmount &&
+        hideEmptyColumnsOnPdf == other.hideEmptyColumnsOnPdf &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -3413,17 +3443,17 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode),
-                                                                                googleAnalyticsKey.hashCode),
-                                                                            markExpensesInvoiceable.hashCode),
-                                                                        markExpensesPaid.hashCode),
-                                                                    invoiceExpenseDocuments.hashCode),
-                                                                invoiceTaskDocuments.hashCode),
-                                                            invoiceTaskTimelog.hashCode),
-                                                        autoStartTasks.hashCode),
-                                                    showTasksTable.hashCode),
-                                                settings.hashCode),
-                                            enabledModules.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode),
+                                                                                markExpensesPaid.hashCode),
+                                                                            invoiceExpenseDocuments.hashCode),
+                                                                        invoiceTaskDocuments.hashCode),
+                                                                    invoiceTaskTimelog.hashCode),
+                                                                autoStartTasks.hashCode),
+                                                            showTasksTable.hashCode),
+                                                        settings.hashCode),
+                                                    enabledModules.hashCode),
+                                                calculateExpenseTaxByAmount.hashCode),
+                                            hideEmptyColumnsOnPdf.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -3500,6 +3530,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('showTasksTable', showTasksTable)
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
+          ..add('calculateExpenseTaxByAmount', calculateExpenseTaxByAmount)
+          ..add('hideEmptyColumnsOnPdf', hideEmptyColumnsOnPdf)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -3833,6 +3865,16 @@ class CompanyEntityBuilder
   set enabledModules(int enabledModules) =>
       _$this._enabledModules = enabledModules;
 
+  bool _calculateExpenseTaxByAmount;
+  bool get calculateExpenseTaxByAmount => _$this._calculateExpenseTaxByAmount;
+  set calculateExpenseTaxByAmount(bool calculateExpenseTaxByAmount) =>
+      _$this._calculateExpenseTaxByAmount = calculateExpenseTaxByAmount;
+
+  bool _hideEmptyColumnsOnPdf;
+  bool get hideEmptyColumnsOnPdf => _$this._hideEmptyColumnsOnPdf;
+  set hideEmptyColumnsOnPdf(bool hideEmptyColumnsOnPdf) =>
+      _$this._hideEmptyColumnsOnPdf = hideEmptyColumnsOnPdf;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -3939,6 +3981,8 @@ class CompanyEntityBuilder
       _showTasksTable = _$v.showTasksTable;
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
+      _calculateExpenseTaxByAmount = _$v.calculateExpenseTaxByAmount;
+      _hideEmptyColumnsOnPdf = _$v.hideEmptyColumnsOnPdf;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -4034,6 +4078,8 @@ class CompanyEntityBuilder
               showTasksTable: showTasksTable,
               settings: settings.build(),
               enabledModules: enabledModules,
+              calculateExpenseTaxByAmount: calculateExpenseTaxByAmount,
+              hideEmptyColumnsOnPdf: hideEmptyColumnsOnPdf,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,

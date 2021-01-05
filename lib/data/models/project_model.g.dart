@@ -120,6 +120,9 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'color',
+      serializers.serialize(object.color,
+          specifiedType: const FullType(String)),
       'client_id',
       serializers.serialize(object.clientId,
           specifiedType: const FullType(String)),
@@ -210,6 +213,10 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'color':
+          result.color = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'client_id':
@@ -496,6 +503,8 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String name;
   @override
+  final String color;
+  @override
   final String clientId;
   @override
   final double taskRate;
@@ -541,6 +550,7 @@ class _$ProjectEntity extends ProjectEntity {
 
   _$ProjectEntity._(
       {this.name,
+      this.color,
       this.clientId,
       this.taskRate,
       this.dueDate,
@@ -564,6 +574,9 @@ class _$ProjectEntity extends ProjectEntity {
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'name');
+    }
+    if (color == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'color');
     }
     if (clientId == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'clientId');
@@ -627,6 +640,7 @@ class _$ProjectEntity extends ProjectEntity {
     if (identical(other, this)) return true;
     return other is ProjectEntity &&
         name == other.name &&
+        color == other.color &&
         clientId == other.clientId &&
         taskRate == other.taskRate &&
         dueDate == other.dueDate &&
@@ -670,7 +684,7 @@ class _$ProjectEntity extends ProjectEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, name.hashCode), clientId.hashCode),
+                                                                            $jc($jc($jc($jc(0, name.hashCode), color.hashCode), clientId.hashCode),
                                                                                 taskRate.hashCode),
                                                                             dueDate.hashCode),
                                                                         privateNotes.hashCode),
@@ -696,6 +710,7 @@ class _$ProjectEntity extends ProjectEntity {
   String toString() {
     return (newBuiltValueToStringHelper('ProjectEntity')
           ..add('name', name)
+          ..add('color', color)
           ..add('clientId', clientId)
           ..add('taskRate', taskRate)
           ..add('dueDate', dueDate)
@@ -727,6 +742,10 @@ class ProjectEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _color;
+  String get color => _$this._color;
+  set color(String color) => _$this._color = color;
 
   String _clientId;
   String get clientId => _$this._clientId;
@@ -813,11 +832,14 @@ class ProjectEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  ProjectEntityBuilder();
+  ProjectEntityBuilder() {
+    ProjectEntity._initializeBuilder(this);
+  }
 
   ProjectEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _color = _$v.color;
       _clientId = _$v.clientId;
       _taskRate = _$v.taskRate;
       _dueDate = _$v.dueDate;
@@ -863,6 +885,7 @@ class ProjectEntityBuilder
       _$result = _$v ??
           new _$ProjectEntity._(
               name: name,
+              color: color,
               clientId: clientId,
               taskRate: taskRate,
               dueDate: dueDate,
