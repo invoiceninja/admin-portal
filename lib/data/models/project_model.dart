@@ -46,6 +46,7 @@ abstract class ProjectItemResponse
 class ProjectFields {
   static const String number = 'number';
   static const String name = 'name';
+  static const String color = 'color';
   static const String clientId = 'client_id';
   static const String client = 'client';
   static const String taskRate = 'task_rate';
@@ -72,6 +73,7 @@ abstract class ProjectEntity extends Object
       number: '',
       isChanged: false,
       name: '',
+      color: '',
       clientId: '',
       taskRate: 0.0,
       dueDate: '',
@@ -110,6 +112,8 @@ abstract class ProjectEntity extends Object
   }
 
   String get name;
+
+  String get color;
 
   @override
   @BuiltValueField(wireName: 'client_id')
@@ -332,6 +336,10 @@ abstract class ProjectEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  // ignore: unused_element
+  static void _initializeBuilder(ProjectEntityBuilder builder) =>
+      builder..color = '';
 
   static Serializer<ProjectEntity> get serializer => _$projectEntitySerializer;
 }

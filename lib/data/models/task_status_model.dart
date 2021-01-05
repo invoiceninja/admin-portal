@@ -46,6 +46,7 @@ abstract class TaskStatusItemResponse
 
 class TaskStatusFields {
   static const String name = 'name';
+  static const String color = 'color';
   static const String sortOrder = 'sort_order';
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
@@ -59,6 +60,7 @@ abstract class TaskStatusEntity extends Object
     return _$TaskStatusEntity._(
       id: id ?? BaseEntity.nextId,
       name: '',
+      color: '',
       sortOrder: 9999,
       createdUserId: '',
       isDeleted: false,
@@ -83,6 +85,8 @@ abstract class TaskStatusEntity extends Object
 
   @override
   String get name;
+
+  String get color;
 
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;
@@ -154,6 +158,10 @@ abstract class TaskStatusEntity extends Object
   String get listDisplayName {
     return name;
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaskStatusEntityBuilder builder) =>
+      builder..color = '';
 
   static Serializer<TaskStatusEntity> get serializer =>
       _$taskStatusEntitySerializer;

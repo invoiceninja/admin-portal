@@ -16,6 +16,7 @@ abstract class AccountEntity
       latestVersion: '',
       currentVersion: '',
       reportErrors: reportErrors,
+      debug_enabled: false,
     );
   }
 
@@ -44,11 +45,18 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'current_version')
   String get currentVersion;
 
+  @BuiltValueField(wireName: 'debug_enabled')
+  bool get debugEnabled;
+
   bool get isUpdateAvailable =>
       Version.parse(currentVersion) < Version.parse(latestVersion) &&
       isCronEnabled;
 
   bool get isCronEnabled => latestVersion != '0.0.0';
+
+  // ignore: unused_element
+  static void _initializeBuilder(AccountEntityBuilder builder) =>
+      builder..debugEnabled = false;
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }
