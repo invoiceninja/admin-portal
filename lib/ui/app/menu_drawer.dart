@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/health_check_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -233,6 +234,30 @@ class MenuDrawer extends StatelessWidget {
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[
+                          if (state.account.debugEnabled)
+                            if (state.isMenuCollapsed)
+                              Tooltip(
+                                message: localization.debugModeIsEnabled,
+                                child: ListTile(
+                                  onTap: () => launch(kDebugModeUrl),
+                                  leading:
+                                      Icon(Icons.warning, color: Colors.red),
+                                ),
+                              )
+                            else
+                              ListTile(
+                                tileColor: Colors.red.shade800,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: IconText(
+                                    icon: Icons.warning,
+                                    text: localization.debugModeIsEnabled,
+                                  ),
+                                ),
+                                subtitle:
+                                    Text(localization.debugModeIsEnabledHelp),
+                                onTap: () => launch(kDebugModeUrl),
+                              ),
                           DrawerTile(
                             company: company,
                             icon: getEntityIcon(EntityType.dashboard),

@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'debug_mode_is_enabled': 'Debug mode is enabled',
+      'debug_mode_is_enabled_help':
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -51705,6 +51708,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get upcomingExpenses =>
       _localizedValues[localeCode]['upcoming_expenses'] ?? '';
+
+  String get debugModeIsEnabled =>
+      _localizedValues[localeCode]['debug_mode_is_enabled'] ?? '';
+
+  String get debugModeIsEnabledHelp =>
+      _localizedValues[localeCode]['debug_mode_is_enabled_help'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
