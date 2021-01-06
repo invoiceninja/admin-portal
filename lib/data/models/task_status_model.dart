@@ -88,8 +88,9 @@ abstract class TaskStatusEntity extends Object
 
   String get color;
 
-  @BuiltValueField(wireName: 'sort_order')
-  int get sortOrder;
+  @nullable
+  @BuiltValueField(wireName: 'status_order')
+  int get statusOrder;
 
   @override
   List<EntityAction> getActions(
