@@ -56,7 +56,7 @@ class _CustomFieldState extends State<CustomField> {
     final localization = AppLocalization.of(context);
     final fieldLabel = company.getCustomFieldLabel(widget.field);
 
-    if (fieldLabel.isEmpty) {
+    if ((fieldLabel ?? '').isEmpty) {
       return SizedBox();
     }
 

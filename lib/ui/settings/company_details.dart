@@ -277,22 +277,22 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                   CustomField(
                     controller: _custom1Controller,
-                    field: company.customFields[CustomFieldType.company1],
+                    field: CustomFieldType.company1,
                     value: settings.customValue1,
                   ),
                   CustomField(
                     controller: _custom2Controller,
-                    field: company.customFields[CustomFieldType.company2],
+                    field: CustomFieldType.company2,
                     value: settings.customValue2,
                   ),
                   CustomField(
                     controller: _custom3Controller,
-                    field: company.customFields[CustomFieldType.company3],
+                    field: CustomFieldType.company3,
                     value: settings.customValue3,
                   ),
                   CustomField(
                     controller: _custom4Controller,
-                    field: company.customFields[CustomFieldType.company4],
+                    field: CustomFieldType.company4,
                     value: settings.customValue4,
                   ),
                 ],
