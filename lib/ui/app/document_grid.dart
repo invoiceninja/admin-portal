@@ -85,8 +85,9 @@ class DocumentGrid extends StatelessWidget {
                     iconData: Icons.insert_drive_file,
                     label: localization.uploadFile,
                     onPressed: () async {
-                      final multipartFile =
-                          await pickFile(fileIndex: 'documents[]');
+                      final multipartFile = await pickFile(
+                          fileIndex: 'documents[]',
+                          allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS);
                       onUploadDocument(multipartFile);
                     },
                   ),
