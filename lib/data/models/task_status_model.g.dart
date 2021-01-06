@@ -125,9 +125,6 @@ class _$TaskStatusEntitySerializer
       'color',
       serializers.serialize(object.color,
           specifiedType: const FullType(String)),
-      'sort_order',
-      serializers.serialize(object.sortOrder,
-          specifiedType: const FullType(int)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -140,6 +137,12 @@ class _$TaskStatusEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.statusOrder != null) {
+      result
+        ..add('status_order')
+        ..add(serializers.serialize(object.statusOrder,
+            specifiedType: const FullType(int)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -187,8 +190,8 @@ class _$TaskStatusEntitySerializer
           result.color = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'sort_order':
-          result.sortOrder = serializers.deserialize(value,
+        case 'status_order':
+          result.statusOrder = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'isChanged':
@@ -428,7 +431,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   @override
   final String color;
   @override
-  final int sortOrder;
+  final int statusOrder;
   @override
   final bool isChanged;
   @override
@@ -453,7 +456,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   _$TaskStatusEntity._(
       {this.name,
       this.color,
-      this.sortOrder,
+      this.statusOrder,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -468,9 +471,6 @@ class _$TaskStatusEntity extends TaskStatusEntity {
     }
     if (color == null) {
       throw new BuiltValueNullFieldError('TaskStatusEntity', 'color');
-    }
-    if (sortOrder == null) {
-      throw new BuiltValueNullFieldError('TaskStatusEntity', 'sortOrder');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('TaskStatusEntity', 'createdAt');
@@ -500,7 +500,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
     return other is TaskStatusEntity &&
         name == other.name &&
         color == other.color &&
-        sortOrder == other.sortOrder &&
+        statusOrder == other.statusOrder &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -525,7 +525,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
                                     $jc(
                                         $jc($jc(0, name.hashCode),
                                             color.hashCode),
-                                        sortOrder.hashCode),
+                                        statusOrder.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -541,7 +541,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
     return (newBuiltValueToStringHelper('TaskStatusEntity')
           ..add('name', name)
           ..add('color', color)
-          ..add('sortOrder', sortOrder)
+          ..add('statusOrder', statusOrder)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -566,9 +566,9 @@ class TaskStatusEntityBuilder
   String get color => _$this._color;
   set color(String color) => _$this._color = color;
 
-  int _sortOrder;
-  int get sortOrder => _$this._sortOrder;
-  set sortOrder(int sortOrder) => _$this._sortOrder = sortOrder;
+  int _statusOrder;
+  int get statusOrder => _$this._statusOrder;
+  set statusOrder(int statusOrder) => _$this._statusOrder = statusOrder;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -612,7 +612,7 @@ class TaskStatusEntityBuilder
     if (_$v != null) {
       _name = _$v.name;
       _color = _$v.color;
-      _sortOrder = _$v.sortOrder;
+      _statusOrder = _$v.statusOrder;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -645,7 +645,7 @@ class TaskStatusEntityBuilder
         new _$TaskStatusEntity._(
             name: name,
             color: color,
-            sortOrder: sortOrder,
+            statusOrder: statusOrder,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
