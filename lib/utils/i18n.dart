@@ -15,7 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'hide_blank_columns': 'Hide Blank Columns',
+      'show': 'Show',
+      'hide': 'Hide',
+      'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
           'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
@@ -52541,8 +52543,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get debugModeIsEnabledHelp =>
       _localizedValues[localeCode]['debug_mode_is_enabled_help'] ?? '';
 
-  String get hideBlankColumns =>
-      _localizedValues[localeCode]['hide_blank_columns'] ?? '';
+  String get emptyColumns =>
+      _localizedValues[localeCode]['empty_columns'] ?? '';
+
+  String get show => _localizedValues[localeCode]['show'] ?? '';
+
+  String get hide => _localizedValues[localeCode]['hide'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
