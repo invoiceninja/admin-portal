@@ -61,7 +61,6 @@ abstract class TaskStatusEntity extends Object
       id: id ?? BaseEntity.nextId,
       name: '',
       color: '',
-      sortOrder: 9999,
       createdUserId: '',
       isDeleted: false,
       isChanged: false,
@@ -125,7 +124,7 @@ abstract class TaskStatusEntity extends Object
         response = taskStatusA.name.compareTo(taskStatusB.name);
         break;
       case TaskStatusFields.sortOrder:
-        response = taskStatusA.sortOrder.compareTo(taskStatusB.sortOrder);
+        response = taskStatusA.statusOrder.compareTo(taskStatusB.statusOrder);
         break;
       default:
         print('## ERROR: sort by taskStatus.$sortField is not implemented');

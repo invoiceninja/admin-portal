@@ -186,7 +186,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                 final taskStatus = state.taskStatusState.map[selectedId];
                 viewModel.onChanged(task.rebuild((b) => b
                   ..statusId = taskStatus?.id
-                  ..statusSortOrder = 9999));
+                  ..statusOrder = null));
               },
             ),
             DecoratedFormField(
