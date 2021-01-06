@@ -46,6 +46,7 @@ abstract class TaskStatusItemResponse
 
 class TaskStatusFields {
   static const String name = 'name';
+  static const String color = 'color';
   static const String sortOrder = 'sort_order';
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
@@ -59,7 +60,7 @@ abstract class TaskStatusEntity extends Object
     return _$TaskStatusEntity._(
       id: id ?? BaseEntity.nextId,
       name: '',
-      sortOrder: 9999,
+      color: '',
       createdUserId: '',
       isDeleted: false,
       isChanged: false,
@@ -84,8 +85,11 @@ abstract class TaskStatusEntity extends Object
   @override
   String get name;
 
-  @BuiltValueField(wireName: 'sort_order')
-  int get sortOrder;
+  String get color;
+
+  @nullable
+  @BuiltValueField(wireName: 'status_order')
+  int get statusOrder;
 
   @override
   List<EntityAction> getActions(
@@ -120,7 +124,7 @@ abstract class TaskStatusEntity extends Object
         response = taskStatusA.name.compareTo(taskStatusB.name);
         break;
       case TaskStatusFields.sortOrder:
-        response = taskStatusA.sortOrder.compareTo(taskStatusB.sortOrder);
+        response = taskStatusA.statusOrder.compareTo(taskStatusB.statusOrder);
         break;
       default:
         print('## ERROR: sort by taskStatus.$sortField is not implemented');
@@ -154,6 +158,10 @@ abstract class TaskStatusEntity extends Object
   String get listDisplayName {
     return name;
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaskStatusEntityBuilder builder) =>
+      builder..color = '';
 
   static Serializer<TaskStatusEntity> get serializer =>
       _$taskStatusEntitySerializer;

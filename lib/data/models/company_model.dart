@@ -88,6 +88,7 @@ abstract class CompanyEntity extends Object
       showTasksTable: false,
       invoiceTaskDocuments: false,
       isDisabled: false,
+      calculateExpenseTaxByAmount: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -294,6 +295,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'enabled_modules')
   int get enabledModules;
 
+  @BuiltValueField(wireName: 'calculate_expense_tax_by_amount')
+  bool get calculateExpenseTaxByAmount;
+
   String get displayName => settings.name ?? '';
 
   @override
@@ -473,6 +477,7 @@ abstract class CompanyEntity extends Object
 
   // ignore: unused_element
   static void _initializeBuilder(CompanyEntityBuilder builder) => builder
+    ..calculateExpenseTaxByAmount = false
     ..enableProductDiscount = false
     ..defaultTaskIsDateBased = false;
 
@@ -1955,6 +1960,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'portal_custom_js')
   String get clientPortalCustomJs;
+
+  @nullable
+  @BuiltValueField(wireName: 'hide_empty_columns_on_pdf')
+  bool get hideEmptyColumnsOnPdf;
 
   // TODO remove this field
   @nullable

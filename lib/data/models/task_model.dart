@@ -229,7 +229,6 @@ abstract class TaskEntity extends Object
       createdAt: 0,
       createdUserId: '',
       statusId: '',
-      statusSortOrder: 0,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -495,8 +494,9 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
-  @BuiltValueField(wireName: 'status_sort_order')
-  int get statusSortOrder;
+  @nullable
+  @BuiltValueField(wireName: 'status_order')
+  int get statusOrder;
 
   BuiltList<DocumentEntity> get documents;
 

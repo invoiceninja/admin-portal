@@ -53,12 +53,21 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   @override
   void initState() {
     super.initState();
+    final settingsUIState = widget.viewModel.state.settingsUIState;
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 11);
+    _controller = TabController(
+        vsync: this, length: 11, initialIndex: settingsUIState.tabIndex);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     _focusNode.dispose();
     super.dispose();
@@ -243,6 +252,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     enabledLabel: localization.allPages,
                     disabledLabel: localization.lastPage,
                   ),
+                  BoolDropdownButton(
+                    label: localization.emptyColumns,
+                    value: settings.hideEmptyColumnsOnPdf ?? false,
+                    iconData: MdiIcons.table,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..hideEmptyColumnsOnPdf = value),
+                    ),
+                    enabledLabel: localization.hide,
+                    disabledLabel: localization.show,
+                  )
                 ],
               ),
               /*

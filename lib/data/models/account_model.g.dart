@@ -38,6 +38,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'current_version',
       serializers.serialize(object.currentVersion,
           specifiedType: const FullType(String)),
+      'debug_enabled',
+      serializers.serialize(object.debugEnabled,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -83,6 +86,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.currentVersion = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'debug_enabled':
+          result.debugEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -105,6 +112,8 @@ class _$AccountEntity extends AccountEntity {
   final String latestVersion;
   @override
   final String currentVersion;
+  @override
+  final bool debugEnabled;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates)).build();
@@ -116,7 +125,8 @@ class _$AccountEntity extends AccountEntity {
       this.plan,
       this.planExpires,
       this.latestVersion,
-      this.currentVersion})
+      this.currentVersion,
+      this.debugEnabled})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'id');
@@ -139,6 +149,9 @@ class _$AccountEntity extends AccountEntity {
     if (currentVersion == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'currentVersion');
     }
+    if (debugEnabled == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'debugEnabled');
+    }
   }
 
   @override
@@ -158,7 +171,8 @@ class _$AccountEntity extends AccountEntity {
         plan == other.plan &&
         planExpires == other.planExpires &&
         latestVersion == other.latestVersion &&
-        currentVersion == other.currentVersion;
+        currentVersion == other.currentVersion &&
+        debugEnabled == other.debugEnabled;
   }
 
   int __hashCode;
@@ -168,12 +182,14 @@ class _$AccountEntity extends AccountEntity {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),
-                        reportErrors.hashCode),
-                    plan.hashCode),
-                planExpires.hashCode),
-            latestVersion.hashCode),
-        currentVersion.hashCode));
+                    $jc(
+                        $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),
+                            reportErrors.hashCode),
+                        plan.hashCode),
+                    planExpires.hashCode),
+                latestVersion.hashCode),
+            currentVersion.hashCode),
+        debugEnabled.hashCode));
   }
 
   @override
@@ -185,7 +201,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('plan', plan)
           ..add('planExpires', planExpires)
           ..add('latestVersion', latestVersion)
-          ..add('currentVersion', currentVersion))
+          ..add('currentVersion', currentVersion)
+          ..add('debugEnabled', debugEnabled))
         .toString();
   }
 }
@@ -224,7 +241,13 @@ class AccountEntityBuilder
   set currentVersion(String currentVersion) =>
       _$this._currentVersion = currentVersion;
 
-  AccountEntityBuilder();
+  bool _debugEnabled;
+  bool get debugEnabled => _$this._debugEnabled;
+  set debugEnabled(bool debugEnabled) => _$this._debugEnabled = debugEnabled;
+
+  AccountEntityBuilder() {
+    AccountEntity._initializeBuilder(this);
+  }
 
   AccountEntityBuilder get _$this {
     if (_$v != null) {
@@ -235,6 +258,7 @@ class AccountEntityBuilder
       _planExpires = _$v.planExpires;
       _latestVersion = _$v.latestVersion;
       _currentVersion = _$v.currentVersion;
+      _debugEnabled = _$v.debugEnabled;
       _$v = null;
     }
     return this;
@@ -263,7 +287,8 @@ class AccountEntityBuilder
             plan: plan,
             planExpires: planExpires,
             latestVersion: latestVersion,
-            currentVersion: currentVersion);
+            currentVersion: currentVersion,
+            debugEnabled: debugEnabled);
     replace(_$result);
     return _$result;
   }

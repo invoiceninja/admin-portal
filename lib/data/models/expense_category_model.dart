@@ -58,6 +58,7 @@ abstract class ExpenseCategoryEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
+      color: '',
       isDeleted: false,
       createdAt: 0,
       updatedAt: 0,
@@ -133,6 +134,8 @@ abstract class ExpenseCategoryEntity extends Object
 
   String get name;
 
+  String get color;
+
   int compareTo(
       {ExpenseCategoryEntity expenseCategory,
       String sortField,
@@ -157,6 +160,10 @@ abstract class ExpenseCategoryEntity extends Object
 
     return response;
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(ExpenseCategoryEntityBuilder builder) =>
+      builder..color = '';
 
   static Serializer<ExpenseCategoryEntity> get serializer =>
       _$expenseCategoryEntitySerializer;

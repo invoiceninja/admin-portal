@@ -53,6 +53,21 @@ class DocumentFields {
 abstract class DocumentEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<DocumentEntity, DocumentEntityBuilder> {
+  static const ALLOWED_EXTENSIONS = [
+    'png',
+    'svg',
+    'jpeg',
+    'gif',
+    'jpg',
+    'bmp',
+    'txt',
+    'doc',
+    'docx',
+    'xls',
+    'xlsx',
+    'pdf',
+  ];
+
   factory DocumentEntity({String id}) {
     return _$DocumentEntity._(
       id: id ?? BaseEntity.nextId,

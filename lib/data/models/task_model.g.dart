@@ -202,9 +202,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'status_id',
       serializers.serialize(object.statusId,
           specifiedType: const FullType(String)),
-      'status_sort_order',
-      serializers.serialize(object.statusSortOrder,
-          specifiedType: const FullType(int)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -221,6 +218,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.statusOrder != null) {
+      result
+        ..add('status_order')
+        ..add(serializers.serialize(object.statusOrder,
+            specifiedType: const FullType(int)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -315,8 +318,8 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           result.statusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'status_sort_order':
-          result.statusSortOrder = serializers.deserialize(value,
+        case 'status_order':
+          result.statusOrder = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'documents':
@@ -667,7 +670,7 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String statusId;
   @override
-  final int statusSortOrder;
+  final int statusOrder;
   @override
   final BuiltList<DocumentEntity> documents;
   @override
@@ -705,7 +708,7 @@ class _$TaskEntity extends TaskEntity {
       this.customValue3,
       this.customValue4,
       this.statusId,
-      this.statusSortOrder,
+      this.statusOrder,
       this.documents,
       this.isChanged,
       this.createdAt,
@@ -758,9 +761,6 @@ class _$TaskEntity extends TaskEntity {
     if (statusId == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'statusId');
     }
-    if (statusSortOrder == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'statusSortOrder');
-    }
     if (documents == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'documents');
     }
@@ -803,7 +803,7 @@ class _$TaskEntity extends TaskEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         statusId == other.statusId &&
-        statusSortOrder == other.statusSortOrder &&
+        statusOrder == other.statusOrder &&
         documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -846,7 +846,7 @@ class _$TaskEntity extends TaskEntity {
                                                         customValue3.hashCode),
                                                     customValue4.hashCode),
                                                 statusId.hashCode),
-                                            statusSortOrder.hashCode),
+                                            statusOrder.hashCode),
                                         documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -875,7 +875,7 @@ class _$TaskEntity extends TaskEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('statusId', statusId)
-          ..add('statusSortOrder', statusSortOrder)
+          ..add('statusOrder', statusOrder)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -948,10 +948,9 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get statusId => _$this._statusId;
   set statusId(String statusId) => _$this._statusId = statusId;
 
-  int _statusSortOrder;
-  int get statusSortOrder => _$this._statusSortOrder;
-  set statusSortOrder(int statusSortOrder) =>
-      _$this._statusSortOrder = statusSortOrder;
+  int _statusOrder;
+  int get statusOrder => _$this._statusOrder;
+  set statusOrder(int statusOrder) => _$this._statusOrder = statusOrder;
 
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
@@ -1011,7 +1010,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _statusId = _$v.statusId;
-      _statusSortOrder = _$v.statusSortOrder;
+      _statusOrder = _$v.statusOrder;
       _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -1059,7 +1058,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               customValue3: customValue3,
               customValue4: customValue4,
               statusId: statusId,
-              statusSortOrder: statusSortOrder,
+              statusOrder: statusOrder,
               documents: documents.build(),
               isChanged: isChanged,
               createdAt: createdAt,

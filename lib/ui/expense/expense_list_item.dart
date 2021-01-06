@@ -69,12 +69,6 @@ class ExpenseListItem extends StatelessWidget {
       }
       subtitle = parts.join(' • ');
     }
-    if (expense.documents.isNotEmpty) {
-      if (subtitle.isNotEmpty) {
-        subtitle += '  ';
-      }
-      subtitle += '📎';
-    }
 
     return DismissibleEntity(
       showCheckbox: this.showCheckbox,
