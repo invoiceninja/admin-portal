@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/app_webview.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -17,9 +18,6 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
   const TemplatesAndReminders({
@@ -579,11 +577,7 @@ class EmailPreview extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: kIsWeb
-                    ? WebTemplatePreview(html: body)
-                    : TemplatePreview(
-                        html: body,
-                      ),
+                child: AppWebView(html: body),
               ),
             ],
           ),
@@ -593,64 +587,6 @@ class EmailPreview extends StatelessWidget {
             ),
         ],
       ),
-    );
-  }
-}
-
-class WebTemplatePreview extends StatelessWidget {
-  const WebTemplatePreview({this.html});
-
-  final String html;
-
-  @override
-  Widget build(BuildContext context) {
-    final encodedHtml =
-        'data:text/html;charset=utf-8,' + Uri.encodeComponent(html);
-    WebUtils.registerWebView(encodedHtml);
-    return AbsorbPointer(
-      child: HtmlElementView(viewType: encodedHtml),
-    );
-  }
-}
-
-class TemplatePreview extends StatefulWidget {
-  const TemplatePreview({Key key, this.html}) : super(key: key);
-
-  final String html;
-
-  @override
-  _TemplatePreviewState createState() => _TemplatePreviewState();
-}
-
-class _TemplatePreviewState extends State<TemplatePreview>
-    with AutomaticKeepAliveClientMixin<TemplatePreview> {
-  WebViewController _webViewController;
-
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
-  void didUpdateWidget(oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (widget.html != oldWidget.html) {
-      _webViewController.loadUrl(
-          Uri.dataFromString(widget.html, mimeType: 'text/html').toString());
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-
-    return WebView(
-      //debuggingEnabled: true,
-      initialUrl:
-          Uri.dataFromString(widget.html, mimeType: 'text/html').toString(),
-      onWebViewCreated: (WebViewController webViewController) {
-        _webViewController = webViewController;
-      },
-      javascriptMode: JavascriptMode.disabled,
     );
   }
 }
