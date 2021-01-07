@@ -547,7 +547,7 @@ class ExpenseStatusColors {
 class TaskStatusColors {
   static var colors = {
     kTaskStatusLogged: convertHexStringToColor('#444444'),
-    kTaskStatusRunning: Colors.blue,
+    kTaskStatusRunning: convertHexStringToColor('#505F73'),
     kTaskStatusInvoiced: kColorGreen,
   };
 }
