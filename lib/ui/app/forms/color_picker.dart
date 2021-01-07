@@ -82,7 +82,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
 
     Color color = Colors.black;
     if (widget.initialValue != null && widget.initialValue.isNotEmpty) {
-      color = convertHexStringToColor(widget.initialValue);
+      color = convertHexStringToColor(widget.initialValue) ?? Colors.black;
     }
 
     showDialog<AlertDialog>(
@@ -123,7 +123,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
       children: <Widget>[
         DecoratedFormField(
           controller: _textController,
-          label: widget.labelText,
+          label: widget.labelText ?? AppLocalization.of(context).color,
           hint: '#000000',
         ),
         Row(

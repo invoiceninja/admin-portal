@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -104,6 +105,11 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
                       autocorrect: false,
                       autovalidate: _autoValidate,
                       label: localization.name,
+                    ),
+                    FormColorPicker(
+                      initialValue: expenseCategory.color,
+                      onSelected: (value) => viewModel.onChanged(
+                          expenseCategory.rebuild((b) => b..color = value)),
                     ),
                   ],
                 ),
