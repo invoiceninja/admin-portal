@@ -209,9 +209,11 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'enabled_item_tax_rates')
   int get numberOfItemTaxRates;
 
+  @nullable
   @BuiltValueField(wireName: 'expense_inclusive_taxes')
   int get expenseInclusiveTaxes;
 
+  @nullable
   @BuiltValueField(wireName: 'expense_amount_is_pretax')
   int get expenseAmountIsPretax;
 

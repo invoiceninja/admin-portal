@@ -245,18 +245,23 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
+  @nullable
   @BuiltValueField(wireName: 'tax_amount1')
   double get taxAmount1;
 
+  @nullable
   @BuiltValueField(wireName: 'tax_amount1')
   double get taxAmount2;
 
+  @nullable
   @BuiltValueField(wireName: 'tax_amount1')
   double get taxAmount3;
 
+  @nullable
   @BuiltValueField(wireName: 'uses_inclusive_taxes')
   bool get usesInclusiveTaxes;
 
+  @nullable
   @BuiltValueField(wireName: 'amount_is_pretax')
   bool get amountIsPretax;
 
