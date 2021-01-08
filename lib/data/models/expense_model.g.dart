@@ -237,13 +237,13 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
     }
     if (object.taxAmount2 != null) {
       result
-        ..add('tax_amount1')
+        ..add('tax_amount2')
         ..add(serializers.serialize(object.taxAmount2,
             specifiedType: const FullType(double)));
     }
     if (object.taxAmount3 != null) {
       result
-        ..add('tax_amount1')
+        ..add('tax_amount3')
         ..add(serializers.serialize(object.taxAmount3,
             specifiedType: const FullType(double)));
     }
@@ -418,11 +418,11 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.taxAmount1 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'tax_amount1':
+        case 'tax_amount2':
           result.taxAmount2 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'tax_amount1':
+        case 'tax_amount3':
           result.taxAmount3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
