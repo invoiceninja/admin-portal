@@ -264,13 +264,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       result
         ..add('expense_inclusive_taxes')
         ..add(serializers.serialize(object.expenseInclusiveTaxes,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(bool)));
     }
     if (object.expenseAmountIsPretax != null) {
       result
         ..add('expense_amount_is_pretax')
         ..add(serializers.serialize(object.expenseAmountIsPretax,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(bool)));
     }
     if (object.isChanged != null) {
       result
@@ -427,11 +427,11 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'expense_inclusive_taxes':
           result.expenseInclusiveTaxes = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'expense_amount_is_pretax':
           result.expenseAmountIsPretax = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
           result.groups.replace(serializers.deserialize(value,
@@ -2968,9 +2968,9 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final int numberOfItemTaxRates;
   @override
-  final int expenseInclusiveTaxes;
+  final bool expenseInclusiveTaxes;
   @override
-  final int expenseAmountIsPretax;
+  final bool expenseAmountIsPretax;
   @override
   final BuiltList<GroupEntity> groups;
   @override
@@ -3699,14 +3699,14 @@ class CompanyEntityBuilder
   set numberOfItemTaxRates(int numberOfItemTaxRates) =>
       _$this._numberOfItemTaxRates = numberOfItemTaxRates;
 
-  int _expenseInclusiveTaxes;
-  int get expenseInclusiveTaxes => _$this._expenseInclusiveTaxes;
-  set expenseInclusiveTaxes(int expenseInclusiveTaxes) =>
+  bool _expenseInclusiveTaxes;
+  bool get expenseInclusiveTaxes => _$this._expenseInclusiveTaxes;
+  set expenseInclusiveTaxes(bool expenseInclusiveTaxes) =>
       _$this._expenseInclusiveTaxes = expenseInclusiveTaxes;
 
-  int _expenseAmountIsPretax;
-  int get expenseAmountIsPretax => _$this._expenseAmountIsPretax;
-  set expenseAmountIsPretax(int expenseAmountIsPretax) =>
+  bool _expenseAmountIsPretax;
+  bool get expenseAmountIsPretax => _$this._expenseAmountIsPretax;
+  set expenseAmountIsPretax(bool expenseAmountIsPretax) =>
       _$this._expenseAmountIsPretax = expenseAmountIsPretax;
 
   ListBuilder<GroupEntity> _groups;
