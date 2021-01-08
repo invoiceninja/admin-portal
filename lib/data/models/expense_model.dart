@@ -220,20 +220,16 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_rate3')
   double get taxRate3;
 
-  @nullable
   @override
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
-  @nullable
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
 
@@ -243,13 +239,26 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value3')
   String get customValue3;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @BuiltValueField(wireName: 'tax_amount1')
+  double get taxAmount1;
+
+  @BuiltValueField(wireName: 'tax_amount1')
+  double get taxAmount2;
+
+  @BuiltValueField(wireName: 'tax_amount1')
+  double get taxAmount3;
+
+  @BuiltValueField(wireName: 'uses_inclusive_taxes')
+  bool get usesInclusiveTaxes;
+
+  @BuiltValueField(wireName: 'amount_is_pretax')
+  bool get amountIsPretax;
 
   BuiltList<DocumentEntity> get documents;
 
