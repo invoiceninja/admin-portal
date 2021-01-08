@@ -180,18 +180,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'tax_rate3',
       serializers.serialize(object.taxRate3,
           specifiedType: const FullType(double)),
-      'client_id',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(String)),
-      'invoice_id',
-      serializers.serialize(object.invoiceId,
-          specifiedType: const FullType(String)),
-      'vendor_id',
-      serializers.serialize(object.vendorId,
-          specifiedType: const FullType(String)),
-      'project_id',
-      serializers.serialize(object.projectId,
-          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -227,6 +215,30 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       result
         ..add('date')
         ..add(serializers.serialize(object.date,
+            specifiedType: const FullType(String)));
+    }
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.invoiceId != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
             specifiedType: const FullType(String)));
     }
     if (object.taxAmount1 != null) {
@@ -924,18 +936,6 @@ class _$ExpenseEntity extends ExpenseEntity {
     }
     if (taxRate3 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate3');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'clientId');
-    }
-    if (invoiceId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceId');
-    }
-    if (vendorId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'vendorId');
-    }
-    if (projectId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'projectId');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue1');
