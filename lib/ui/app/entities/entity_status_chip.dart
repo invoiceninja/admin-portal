@@ -57,8 +57,11 @@ class EntityStatusChip extends StatelessWidget {
         break;
       case EntityType.expense:
         final expense = entity as ExpenseEntity;
+        final category = state.expenseCategoryState.get(expense.categoryId);
         label = kExpenseStatuses[expense.statusId];
-        color = ExpenseStatusColors.colors[expense.statusId];
+        color = category.color.isNotEmpty
+            ? convertHexStringToColor(category.color)
+            : ExpenseStatusColors.colors[expense.statusId];
         break;
       case EntityType.task:
         final task = entity as TaskEntity;
@@ -67,8 +70,12 @@ class EntityStatusChip extends StatelessWidget {
             : task.statusId.isNotEmpty
                 ? state.taskStatusState.get(task.statusId).name
                 : localization.logged;
-        color = TaskStatusColors.colors[task.calculateStatusId] ??
-            convertHexStringToColor('#505F73');
+        color = task.isInvoiced
+            ? kColorGreen
+            : state.taskStatusState.get(task.statusId).color.isNotEmpty
+                ? convertHexStringToColor(
+                    state.taskStatusState.get(task.statusId).color)
+                : TaskStatusColors.colors[task.calculateStatusId];
         break;
       default:
         print(
