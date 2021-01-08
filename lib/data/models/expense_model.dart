@@ -250,11 +250,11 @@ abstract class ExpenseEntity extends Object
   double get taxAmount1;
 
   @nullable
-  @BuiltValueField(wireName: 'tax_amount1')
+  @BuiltValueField(wireName: 'tax_amount2')
   double get taxAmount2;
 
   @nullable
-  @BuiltValueField(wireName: 'tax_amount1')
+  @BuiltValueField(wireName: 'tax_amount3')
   double get taxAmount3;
 
   @nullable
