@@ -211,11 +211,11 @@ abstract class CompanyEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'expense_inclusive_taxes')
-  int get expenseInclusiveTaxes;
+  bool get expenseInclusiveTaxes;
 
   @nullable
   @BuiltValueField(wireName: 'expense_amount_is_pretax')
-  int get expenseAmountIsPretax;
+  bool get expenseAmountIsPretax;
 
   BuiltList<GroupEntity> get groups;
 
