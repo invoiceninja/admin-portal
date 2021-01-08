@@ -220,16 +220,20 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_rate3')
   double get taxRate3;
 
+  @nullable
   @override
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
+  @nullable
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
+  @nullable
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
 
