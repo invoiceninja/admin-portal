@@ -180,11 +180,29 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'tax_rate3',
       serializers.serialize(object.taxRate3,
           specifiedType: const FullType(double)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(String)),
+      'invoice_id',
+      serializers.serialize(object.invoiceId,
+          specifiedType: const FullType(String)),
+      'vendor_id',
+      serializers.serialize(object.vendorId,
+          specifiedType: const FullType(String)),
+      'project_id',
+      serializers.serialize(object.projectId,
+          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
       'custom_value2',
       serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
       'documents',
       serializers.serialize(object.documents,
@@ -211,41 +229,35 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(object.date,
             specifiedType: const FullType(String)));
     }
-    if (object.clientId != null) {
+    if (object.taxAmount1 != null) {
       result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(String)));
+        ..add('tax_amount1')
+        ..add(serializers.serialize(object.taxAmount1,
+            specifiedType: const FullType(double)));
     }
-    if (object.invoiceId != null) {
+    if (object.taxAmount2 != null) {
       result
-        ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(String)));
+        ..add('tax_amount1')
+        ..add(serializers.serialize(object.taxAmount2,
+            specifiedType: const FullType(double)));
     }
-    if (object.vendorId != null) {
+    if (object.taxAmount3 != null) {
       result
-        ..add('vendor_id')
-        ..add(serializers.serialize(object.vendorId,
-            specifiedType: const FullType(String)));
+        ..add('tax_amount1')
+        ..add(serializers.serialize(object.taxAmount3,
+            specifiedType: const FullType(double)));
     }
-    if (object.projectId != null) {
+    if (object.usesInclusiveTaxes != null) {
       result
-        ..add('project_id')
-        ..add(serializers.serialize(object.projectId,
-            specifiedType: const FullType(String)));
+        ..add('uses_inclusive_taxes')
+        ..add(serializers.serialize(object.usesInclusiveTaxes,
+            specifiedType: const FullType(bool)));
     }
-    if (object.customValue3 != null) {
+    if (object.amountIsPretax != null) {
       result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
-            specifiedType: const FullType(String)));
+        ..add('amount_is_pretax')
+        ..add(serializers.serialize(object.amountIsPretax,
+            specifiedType: const FullType(bool)));
     }
     if (object.isChanged != null) {
       result
@@ -401,6 +413,26 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'tax_amount1':
+          result.taxAmount1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'tax_amount1':
+          result.taxAmount2 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'tax_amount1':
+          result.taxAmount3 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'uses_inclusive_taxes':
+          result.usesInclusiveTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'amount_is_pretax':
+          result.amountIsPretax = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
@@ -753,6 +785,16 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String customValue4;
   @override
+  final double taxAmount1;
+  @override
+  final double taxAmount2;
+  @override
+  final double taxAmount3;
+  @override
+  final bool usesInclusiveTaxes;
+  @override
+  final bool amountIsPretax;
+  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final String number;
@@ -806,6 +848,11 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.taxAmount1,
+      this.taxAmount2,
+      this.taxAmount3,
+      this.usesInclusiveTaxes,
+      this.amountIsPretax,
       this.documents,
       this.number,
       this.isChanged,
@@ -878,11 +925,29 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (taxRate3 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate3');
     }
+    if (clientId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'clientId');
+    }
+    if (invoiceId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceId');
+    }
+    if (vendorId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'vendorId');
+    }
+    if (projectId == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'projectId');
+    }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue1');
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue4');
     }
     if (documents == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'documents');
@@ -944,6 +1009,11 @@ class _$ExpenseEntity extends ExpenseEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        taxAmount1 == other.taxAmount1 &&
+        taxAmount2 == other.taxAmount2 &&
+        taxAmount3 == other.taxAmount3 &&
+        usesInclusiveTaxes == other.usesInclusiveTaxes &&
+        amountIsPretax == other.amountIsPretax &&
         documents == other.documents &&
         number == other.number &&
         isChanged == other.isChanged &&
@@ -977,16 +1047,16 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode),
-                                                                                taxRate3.hashCode),
-                                                                            clientId.hashCode),
-                                                                        invoiceId.hashCode),
-                                                                    vendorId.hashCode),
-                                                                projectId.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode),
+                                                                                customValue1.hashCode),
+                                                                            customValue2.hashCode),
+                                                                        customValue3.hashCode),
+                                                                    customValue4.hashCode),
+                                                                taxAmount1.hashCode),
+                                                            taxAmount2.hashCode),
+                                                        taxAmount3.hashCode),
+                                                    usesInclusiveTaxes.hashCode),
+                                                amountIsPretax.hashCode),
                                             documents.hashCode),
                                         number.hashCode),
                                     isChanged.hashCode),
@@ -1031,6 +1101,11 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('taxAmount1', taxAmount1)
+          ..add('taxAmount2', taxAmount2)
+          ..add('taxAmount3', taxAmount3)
+          ..add('usesInclusiveTaxes', usesInclusiveTaxes)
+          ..add('amountIsPretax', amountIsPretax)
           ..add('documents', documents)
           ..add('number', number)
           ..add('isChanged', isChanged)
@@ -1171,6 +1246,28 @@ class ExpenseEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  double _taxAmount1;
+  double get taxAmount1 => _$this._taxAmount1;
+  set taxAmount1(double taxAmount1) => _$this._taxAmount1 = taxAmount1;
+
+  double _taxAmount2;
+  double get taxAmount2 => _$this._taxAmount2;
+  set taxAmount2(double taxAmount2) => _$this._taxAmount2 = taxAmount2;
+
+  double _taxAmount3;
+  double get taxAmount3 => _$this._taxAmount3;
+  set taxAmount3(double taxAmount3) => _$this._taxAmount3 = taxAmount3;
+
+  bool _usesInclusiveTaxes;
+  bool get usesInclusiveTaxes => _$this._usesInclusiveTaxes;
+  set usesInclusiveTaxes(bool usesInclusiveTaxes) =>
+      _$this._usesInclusiveTaxes = usesInclusiveTaxes;
+
+  bool _amountIsPretax;
+  bool get amountIsPretax => _$this._amountIsPretax;
+  set amountIsPretax(bool amountIsPretax) =>
+      _$this._amountIsPretax = amountIsPretax;
+
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -1248,6 +1345,11 @@ class ExpenseEntityBuilder
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
+      _taxAmount1 = _$v.taxAmount1;
+      _taxAmount2 = _$v.taxAmount2;
+      _taxAmount3 = _$v.taxAmount3;
+      _usesInclusiveTaxes = _$v.usesInclusiveTaxes;
+      _amountIsPretax = _$v.amountIsPretax;
       _documents = _$v.documents?.toBuilder();
       _number = _$v.number;
       _isChanged = _$v.isChanged;
@@ -1311,6 +1413,11 @@ class ExpenseEntityBuilder
               customValue2: customValue2,
               customValue3: customValue3,
               customValue4: customValue4,
+              taxAmount1: taxAmount1,
+              taxAmount2: taxAmount2,
+              taxAmount3: taxAmount3,
+              usesInclusiveTaxes: usesInclusiveTaxes,
+              amountIsPretax: amountIsPretax,
               documents: documents.build(),
               number: number,
               isChanged: isChanged,
