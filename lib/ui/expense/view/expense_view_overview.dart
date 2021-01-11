@@ -65,6 +65,13 @@ class ExpenseOverview extends StatelessWidget {
             ' ' +
             expense.taxName2;
       }
+      if (expense.taxName3.isNotEmpty) {
+        tax += ' ' +
+            formatNumber(expense.taxRate3, context,
+                formatNumberType: FormatNumberType.percent) +
+            ' ' +
+            expense.taxName3;
+      }
 
       final fields = <String, String>{
         localization.date: formatDate(expense.date, context),

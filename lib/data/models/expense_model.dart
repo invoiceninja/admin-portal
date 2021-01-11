@@ -267,6 +267,10 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'uses_inclusive_taxes')
   bool get usesInclusiveTaxes;
 
+  @nullable
+  @BuiltValueField(wireName: 'calculate_tax_by_amount')
+  bool get calculateTaxByAmount;
+
   BuiltList<DocumentEntity> get documents;
 
   String get number;
@@ -596,6 +600,8 @@ abstract class ExpenseEntity extends Object
   double get convertedExchangeRate => exchangeRate == 0 ? 1 : exchangeRate;
 
   double get convertedAmount => round(grossAmount * convertedExchangeRate, 2);
+
+  double get convertedNetAmount => round(netAmount * convertedExchangeRate, 2);
 
   double get convertedAmountWithTax =>
       round(grossAmount * convertedExchangeRate, 2);

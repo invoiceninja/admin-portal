@@ -16,11 +16,13 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..notes = expense.publicNotes
     ..quantity =
         company.defaultQuantity || !company.enableProductQuantity ? 1 : null
-    ..cost = expense.convertedAmount
+    ..cost = expense.convertedNetAmount
     ..taxName1 = expense.taxName1
     ..taxRate1 = expense.taxRate1
     ..taxName2 = expense.taxName2
-    ..taxRate2 = expense.taxRate2);
+    ..taxRate2 = expense.taxRate2
+    ..taxName3 = expense.taxName2
+    ..taxRate3 = expense.taxRate2);
 }
 
 var memoizedDropdownExpenseList = memo9(
