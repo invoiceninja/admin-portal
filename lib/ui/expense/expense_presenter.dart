@@ -24,6 +24,8 @@ class ExpensePresenter extends EntityPresenter {
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
       ExpenseFields.number,
+      ExpenseFields.netAmount,
+      ExpenseFields.taxAmount,
       ExpenseFields.privateNotes,
       ExpenseFields.shouldBeInvoiced,
       ExpenseFields.transactionId,
@@ -71,8 +73,15 @@ class ExpensePresenter extends EntityPresenter {
             .listDisplayName);
       case ExpenseFields.expenseDate:
         return Text(formatDate(expense.paymentDate, context));
+      case ExpenseFields.netAmount:
+        return Text(formatNumber(expense.netAmount, context,
+            currencyId: expense.currencyId));
       case ExpenseFields.amount:
-        return Text(formatNumber(expense.amount, context));
+        return Text(formatNumber(expense.amount, context,
+            currencyId: expense.currencyId));
+      case ExpenseFields.taxAmount:
+        return Text(formatNumber(expense.taxAmount, context,
+            currencyId: expense.currencyId));
       case ExpenseFields.publicNotes:
         return Text(expense.publicNotes);
       case ExpenseFields.number:

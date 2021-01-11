@@ -56,7 +56,9 @@ class ExpenseFields {
   static const String currencyId = 'currency_id';
   static const String categoryId = 'category_id';
   static const String category = 'category';
+  static const String netAmount = 'net_amount';
   static const String amount = 'amount';
+  static const String taxAmount = 'tax_amount';
   static const String expenseDate = 'date';
   static const String paymentDate = 'payment_date';
   static const String exchangeRate = 'exchange_rate';
@@ -317,6 +319,9 @@ abstract class ExpenseEntity extends Object
     final ExpenseEntity expenseB = sortAscending ? expense : this;
 
     switch (sortField) {
+      case ExpenseFields.netAmount:
+        response = expenseA.netAmount.compareTo(expenseB.netAmount);
+        break;
       case ExpenseFields.amount:
         response = expenseA.amount.compareTo(expenseB.amount);
         break;
@@ -590,7 +595,7 @@ abstract class ExpenseEntity extends Object
 
   double get convertedExchangeRate => exchangeRate == 0 ? 1 : exchangeRate;
 
-  double get convertedAmount => round(amount * convertedExchangeRate, 2);
+  double get convertedAmount => round(grossAmount * convertedExchangeRate, 2);
 
   double get convertedAmountWithTax =>
       round(grossAmount * convertedExchangeRate, 2);
