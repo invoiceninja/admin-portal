@@ -192,6 +192,18 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'tax_amount1',
+      serializers.serialize(object.taxAmount1,
+          specifiedType: const FullType(double)),
+      'tax_amount2',
+      serializers.serialize(object.taxAmount2,
+          specifiedType: const FullType(double)),
+      'tax_amount3',
+      serializers.serialize(object.taxAmount3,
+          specifiedType: const FullType(double)),
+      'amount_is_pretax',
+      serializers.serialize(object.amountIsPretax,
+          specifiedType: const FullType(bool)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -240,36 +252,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add('project_id')
         ..add(serializers.serialize(object.projectId,
             specifiedType: const FullType(String)));
-    }
-    if (object.taxAmount1 != null) {
-      result
-        ..add('tax_amount1')
-        ..add(serializers.serialize(object.taxAmount1,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxAmount2 != null) {
-      result
-        ..add('tax_amount2')
-        ..add(serializers.serialize(object.taxAmount2,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxAmount3 != null) {
-      result
-        ..add('tax_amount3')
-        ..add(serializers.serialize(object.taxAmount3,
-            specifiedType: const FullType(double)));
-    }
-    if (object.usesInclusiveTaxes != null) {
-      result
-        ..add('uses_inclusive_taxes')
-        ..add(serializers.serialize(object.usesInclusiveTaxes,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.amountIsPretax != null) {
-      result
-        ..add('amount_is_pretax')
-        ..add(serializers.serialize(object.amountIsPretax,
-            specifiedType: const FullType(bool)));
     }
     if (object.isChanged != null) {
       result
@@ -437,10 +419,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         case 'tax_amount3':
           result.taxAmount3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
-          break;
-        case 'uses_inclusive_taxes':
-          result.usesInclusiveTaxes = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'amount_is_pretax':
           result.amountIsPretax = serializers.deserialize(value,
@@ -803,8 +781,6 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final double taxAmount3;
   @override
-  final bool usesInclusiveTaxes;
-  @override
   final bool amountIsPretax;
   @override
   final BuiltList<DocumentEntity> documents;
@@ -863,7 +839,6 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.taxAmount1,
       this.taxAmount2,
       this.taxAmount3,
-      this.usesInclusiveTaxes,
       this.amountIsPretax,
       this.documents,
       this.number,
@@ -949,6 +924,18 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue4');
     }
+    if (taxAmount1 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxAmount1');
+    }
+    if (taxAmount2 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxAmount2');
+    }
+    if (taxAmount3 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxAmount3');
+    }
+    if (amountIsPretax == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'amountIsPretax');
+    }
     if (documents == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'documents');
     }
@@ -1012,7 +999,6 @@ class _$ExpenseEntity extends ExpenseEntity {
         taxAmount1 == other.taxAmount1 &&
         taxAmount2 == other.taxAmount2 &&
         taxAmount3 == other.taxAmount3 &&
-        usesInclusiveTaxes == other.usesInclusiveTaxes &&
         amountIsPretax == other.amountIsPretax &&
         documents == other.documents &&
         number == other.number &&
@@ -1047,15 +1033,15 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode),
-                                                                                customValue1.hashCode),
-                                                                            customValue2.hashCode),
-                                                                        customValue3.hashCode),
-                                                                    customValue4.hashCode),
-                                                                taxAmount1.hashCode),
-                                                            taxAmount2.hashCode),
-                                                        taxAmount3.hashCode),
-                                                    usesInclusiveTaxes.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode),
+                                                                                projectId.hashCode),
+                                                                            customValue1.hashCode),
+                                                                        customValue2.hashCode),
+                                                                    customValue3.hashCode),
+                                                                customValue4.hashCode),
+                                                            taxAmount1.hashCode),
+                                                        taxAmount2.hashCode),
+                                                    taxAmount3.hashCode),
                                                 amountIsPretax.hashCode),
                                             documents.hashCode),
                                         number.hashCode),
@@ -1104,7 +1090,6 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('taxAmount1', taxAmount1)
           ..add('taxAmount2', taxAmount2)
           ..add('taxAmount3', taxAmount3)
-          ..add('usesInclusiveTaxes', usesInclusiveTaxes)
           ..add('amountIsPretax', amountIsPretax)
           ..add('documents', documents)
           ..add('number', number)
@@ -1258,11 +1243,6 @@ class ExpenseEntityBuilder
   double get taxAmount3 => _$this._taxAmount3;
   set taxAmount3(double taxAmount3) => _$this._taxAmount3 = taxAmount3;
 
-  bool _usesInclusiveTaxes;
-  bool get usesInclusiveTaxes => _$this._usesInclusiveTaxes;
-  set usesInclusiveTaxes(bool usesInclusiveTaxes) =>
-      _$this._usesInclusiveTaxes = usesInclusiveTaxes;
-
   bool _amountIsPretax;
   bool get amountIsPretax => _$this._amountIsPretax;
   set amountIsPretax(bool amountIsPretax) =>
@@ -1348,7 +1328,6 @@ class ExpenseEntityBuilder
       _taxAmount1 = _$v.taxAmount1;
       _taxAmount2 = _$v.taxAmount2;
       _taxAmount3 = _$v.taxAmount3;
-      _usesInclusiveTaxes = _$v.usesInclusiveTaxes;
       _amountIsPretax = _$v.amountIsPretax;
       _documents = _$v.documents?.toBuilder();
       _number = _$v.number;
@@ -1416,7 +1395,6 @@ class ExpenseEntityBuilder
               taxAmount1: taxAmount1,
               taxAmount2: taxAmount2,
               taxAmount3: taxAmount3,
-              usesInclusiveTaxes: usesInclusiveTaxes,
               amountIsPretax: amountIsPretax,
               documents: documents.build(),
               number: number,
