@@ -113,37 +113,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            if (company.enableFirstItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate1 = taxRate.rate
-                      ..taxName1 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName1,
-                initialTaxRate: expense.taxRate1,
-              ),
-            if (company.enableSecondItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate2 = taxRate.rate
-                      ..taxName2 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName2,
-                initialTaxRate: expense.taxRate2,
-              ),
-            if (company.enableThirdItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate3 = taxRate.rate
-                      ..taxName3 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName3,
-                initialTaxRate: expense.taxRate3,
-              ),
-            SizedBox(height: 16),
             expense.isInvoiced
                 ? SizedBox()
                 : SwitchListTile(
