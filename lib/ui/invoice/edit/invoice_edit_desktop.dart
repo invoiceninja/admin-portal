@@ -515,8 +515,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     isScrollable: true,
                     controller: _optionTabController,
                     tabs: [
-                      Tab(text: localization.publicNotes),
-                      Tab(text: localization.privateNotes),
                       Tab(
                           text: entityType == EntityType.credit
                               ? localization.creditTerms
@@ -529,6 +527,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               : entityType == EntityType.quote
                                   ? localization.quoteFooter
                                   : localization.invoiceFooter),
+                      Tab(text: localization.publicNotes),
+                      Tab(text: localization.privateNotes),
                       Tab(text: localization.settings),
                     ],
                   ),
@@ -539,18 +539,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       children: <Widget>[
                         DecoratedFormField(
                           maxLines: 6,
-                          controller: _publicNotesController,
-                          keyboardType: TextInputType.multiline,
-                          label: '',
-                        ),
-                        DecoratedFormField(
-                          maxLines: 6,
-                          controller: _privateNotesController,
-                          keyboardType: TextInputType.multiline,
-                          label: '',
-                        ),
-                        DecoratedFormField(
-                          maxLines: 6,
                           controller: _termsController,
                           keyboardType: TextInputType.multiline,
                           label: '',
@@ -558,6 +546,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         DecoratedFormField(
                           maxLines: 6,
                           controller: _footerController,
+                          keyboardType: TextInputType.multiline,
+                          label: '',
+                        ),
+                        DecoratedFormField(
+                          maxLines: 6,
+                          controller: _publicNotesController,
+                          keyboardType: TextInputType.multiline,
+                          label: '',
+                        ),
+                        DecoratedFormField(
+                          maxLines: 6,
+                          controller: _privateNotesController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
