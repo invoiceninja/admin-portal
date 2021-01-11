@@ -138,7 +138,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
                       child: Text(
                           localization.expenseTotal +
                               ': ' +
-                              formatNumber(expense.amountWithTax, context,
+                              formatNumber(expense.grossAmount, context,
                                   currencyId: expense.currencyId),
                           style: TextStyle(
                             color: viewModel.state.prefState.enableDarkMode

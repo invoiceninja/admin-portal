@@ -542,29 +542,41 @@ abstract class ExpenseEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  double get amountWithTax {
-    var total = amount;
-
-    if (usesInclusiveTaxes) {
-      return total;
-    }
+  double get taxAmount {
+    var total = 0.0;
 
     if (taxAmount1 != 0 || taxAmount2 != 0 || taxAmount3 != 0) {
       total += taxAmount1 + taxAmount2 + taxAmount3;
     } else {
-      if (taxRate1 != 0) {
-        total += amount * taxRate1 / 100;
-      }
-      if (taxRate2 != 0) {
-        total += amount * taxRate2 / 100;
-      }
-      if (taxRate3 != 0) {
-        total += amount * taxRate3 / 100;
+      if (usesInclusiveTaxes) {
+        if (taxRate1 != 0) {
+          total += amount - (amount / (1 + (taxRate1 / 100)));
+        }
+        if (taxRate2 != 0) {
+          total += amount - (amount / (1 + (taxRate2 / 100)));
+        }
+        if (taxRate3 != 0) {
+          total += amount - (amount / (1 + (taxRate3 / 100)));
+        }
+      } else {
+        if (taxRate1 != 0) {
+          total += amount * taxRate1 / 100;
+        }
+        if (taxRate2 != 0) {
+          total += amount * taxRate2 / 100;
+        }
+        if (taxRate3 != 0) {
+          total += amount * taxRate3 / 100;
+        }
       }
     }
 
     return total;
   }
+
+  double get netAmount => usesInclusiveTaxes ? amount - taxAmount : amount;
+
+  double get grossAmount => usesInclusiveTaxes ? amount : amount + taxAmount;
 
   String get statusId {
     if (isInvoiced) {
@@ -581,7 +593,7 @@ abstract class ExpenseEntity extends Object
   double get convertedAmount => round(amount * convertedExchangeRate, 2);
 
   double get convertedAmountWithTax =>
-      round(amountWithTax * convertedExchangeRate, 2);
+      round(grossAmount * convertedExchangeRate, 2);
 
   bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 

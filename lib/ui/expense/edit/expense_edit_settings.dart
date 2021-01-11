@@ -245,7 +245,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 label: localization.enterTaxes,
                 enabledLabel: localization.byAmount,
                 disabledLabel: localization.byRate,
-                value: company.calculateExpenseTaxByAmount ?? false,
+                value: false,
                 onChanged: (value) => viewModel.onChanged(expense
                     .rebuild((b) => b..calculateExpenseTaxByAmount = value)),
               ),
