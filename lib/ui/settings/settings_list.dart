@@ -148,14 +148,14 @@ class _SettingsListState extends State<SettingsList> {
               section: kSettingsImportExport,
               viewModel: widget.viewModel,
             ),
-          if (showAll && state.userCompany.isOwner)
-            SettingsListTile(
-              section: kSettingsAccountManagement,
-              viewModel: widget.viewModel,
-            ),
           if (showAll)
             SettingsListTile(
               section: kSettingsDeviceSettings,
+              viewModel: widget.viewModel,
+            ),
+          if (showAll && state.userCompany.isOwner)
+            SettingsListTile(
+              section: kSettingsAccountManagement,
               viewModel: widget.viewModel,
             ),
           Container(
@@ -376,6 +376,15 @@ class SettingsSearch extends StatelessWidget {
         'export',
       ],
     ],
+    kSettingsDeviceSettings: [
+      [
+        'rows_per_page',
+        'dark_mode',
+        'long_press_multiselect',
+        'biometric_authentication',
+        'refresh_data',
+      ],
+    ],
     kSettingsAccountManagement: [
       [
         'api_tokens',
@@ -385,15 +394,6 @@ class SettingsSearch extends StatelessWidget {
       ],
       [
         'enabeled_modules',
-      ],
-    ],
-    kSettingsDeviceSettings: [
-      [
-        'rows_per_page',
-        'dark_mode',
-        'long_press_multiselect',
-        'biometric_authentication',
-        'refresh_data',
       ],
     ],
     kSettingsGroupSettings: [

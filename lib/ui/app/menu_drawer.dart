@@ -49,6 +49,7 @@ class MenuDrawer extends StatelessWidget {
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
+    final account = state.account;
     final company = viewModel.selectedCompany;
 
     if (company == null) {
@@ -60,7 +61,7 @@ class MenuDrawer extends StatelessWidget {
                 company.settings.companyLogo.isNotEmpty
             ? CachedImage(
                 width: 32,
-                url: company.settings.companyLogo,
+                url: account.defaultUrl + company.settings.companyLogo,
               )
             : Image.asset('assets/images/logo.png', width: 32);
 
