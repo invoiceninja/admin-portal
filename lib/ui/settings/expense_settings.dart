@@ -92,8 +92,8 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 ),
                 BoolDropdownButton(
                   label: localization.enterAmount,
-                  enabledLabel: localization.afterTaxes,
-                  disabledLabel: localization.beforeTaxes,
+                  enabledLabel: localization.beforeTaxes,
+                  disabledLabel: localization.afterTaxes,
                   value: company.expenseAmountIsPretax ?? false,
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..expenseAmountIsPretax = value)),
