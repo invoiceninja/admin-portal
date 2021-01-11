@@ -183,7 +183,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                         ? localization.pleaseEnterAName
                         : null,
                     autovalidate: _autoValidate,
-                    label: localization.name,
+                    label: localization.projectName,
                   ),
                   UserPicker(
                     userId: project.assignedUserId,

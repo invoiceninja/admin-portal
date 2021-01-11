@@ -78,6 +78,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expense_number': 'Expense Number',
       'task_number': 'Task Number',
       'project_number': 'Project Number',
+      'project_name': 'Project Name',
       'warning': 'Warning',
       'view_settings': 'View Settings',
       'company_disabled_warning':
@@ -52428,6 +52429,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get projectNumber =>
       _localizedValues[localeCode]['project_number'] ?? '';
+
+  String get projectName =>
+      _localizedValues[localeCode]['project_name'] ?? '';
 
   String get taskNumber => _localizedValues[localeCode]['task_number'] ?? '';
 
