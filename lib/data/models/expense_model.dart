@@ -122,7 +122,6 @@ abstract class ExpenseEntity extends Object
       taxAmount2: 0,
       taxAmount3: 0,
       usesInclusiveTaxes: company?.expenseInclusiveTaxes ?? false,
-      amountIsPretax: company?.expenseAmountIsPretax ?? true,
       clientId: client?.id,
       vendorId: vendor?.id,
       invoiceId: '',
@@ -254,23 +253,15 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_amount1')
   double get taxAmount1;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_amount2')
   double get taxAmount2;
 
-  @nullable
   @BuiltValueField(wireName: 'tax_amount3')
   double get taxAmount3;
 
-  @nullable
-  @BuiltValueField(wireName: 'uses_inclusive_taxes')
-  bool get usesInclusiveTaxes;
-
-  @nullable
   @BuiltValueField(wireName: 'amount_is_pretax')
   bool get amountIsPretax;
 
@@ -554,7 +545,7 @@ abstract class ExpenseEntity extends Object
   double get amountWithTax {
     var total = amount;
 
-    if (usesInclusiveTaxes || !amountIsPretax) {
+    if (usesInclusiveTaxes) {
       return total;
     }
 
