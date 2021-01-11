@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -236,6 +237,31 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 })
           ],
         ),
+        if (company.numberOfItemTaxRates > 0)
+          FormCard(
+            children: [
+              /*
+              BoolDropdownButton(
+                label: localization.enterTaxes,
+                enabledLabel: localization.byAmount,
+                disabledLabel: localization.byRate,
+                value: company.calculateExpenseTaxByAmount ?? false,
+                onChanged: (value) => viewModel.onChanged(expense
+                    .rebuild((b) => b..calculateExpenseTaxByAmount = value)),
+              ),
+              */
+              SizedBox(height: 16),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.inclusiveTaxes),
+                value: expense.usesInclusiveTaxes,
+                subtitle: Text(
+                    '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
+                onChanged: (value) => viewModel.onChanged(
+                    expense.rebuild((b) => b..usesInclusiveTaxes = value)),
+              ),
+            ],
+          ),
       ],
     );
   }
