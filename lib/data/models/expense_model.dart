@@ -124,6 +124,7 @@ abstract class ExpenseEntity extends Object
       taxAmount2: 0,
       taxAmount3: 0,
       usesInclusiveTaxes: company?.expenseInclusiveTaxes ?? false,
+      calculateTaxByAmount: company?.calculateExpenseTaxByAmount ?? false,
       clientId: client?.id,
       vendorId: vendor?.id,
       invoiceId: '',
@@ -554,7 +555,7 @@ abstract class ExpenseEntity extends Object
   double get taxAmount {
     var total = 0.0;
 
-    if (taxAmount1 != 0 || taxAmount2 != 0 || taxAmount3 != 0) {
+    if (calculateTaxByAmount == true) {
       total += taxAmount1 + taxAmount2 + taxAmount3;
     } else {
       if (usesInclusiveTaxes) {

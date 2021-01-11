@@ -240,16 +240,14 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
         if (company.numberOfItemTaxRates > 0)
           FormCard(
             children: [
-              /*
               BoolDropdownButton(
                 label: localization.enterTaxes,
                 enabledLabel: localization.byAmount,
                 disabledLabel: localization.byRate,
-                value: false,
-                onChanged: (value) => viewModel.onChanged(expense
-                    .rebuild((b) => b..calculateExpenseTaxByAmount = value)),
+                value: expense.calculateTaxByAmount ?? false,
+                onChanged: (value) => viewModel.onChanged(
+                    expense.rebuild((b) => b..calculateTaxByAmount = value)),
               ),
-              */
               SizedBox(height: 16),
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,

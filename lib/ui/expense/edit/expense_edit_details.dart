@@ -198,7 +198,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
             if (!expense.usesInclusiveTaxes) amountField,
             if (company.enableFirstItemTaxRate)
-              if (company.calculateExpenseTaxByAmount)
+              if (expense.calculateTaxByAmount == true)
                 TaxRateField(
                   initialTaxAmount: expense.taxAmount1,
                   initialTaxName: expense.taxName1,
@@ -218,7 +218,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   initialTaxRate: expense.taxRate1,
                 ),
             if (company.enableSecondItemTaxRate)
-              if (company.calculateExpenseTaxByAmount)
+              if (expense.calculateTaxByAmount == true)
                 TaxRateField(
                   initialTaxAmount: expense.taxAmount2,
                   initialTaxName: expense.taxName2,
@@ -238,7 +238,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   initialTaxRate: expense.taxRate3,
                 ),
             if (company.enableThirdItemTaxRate)
-              if (company.calculateExpenseTaxByAmount)
+              if (expense.calculateTaxByAmount == true)
                 TaxRateField(
                   initialTaxAmount: expense.taxAmount1,
                   initialTaxName: expense.taxName1,
