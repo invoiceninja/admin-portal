@@ -196,7 +196,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               onChanged: (userId) => viewModel.onChanged(
                   expense.rebuild((b) => b..assignedUserId = userId)),
             ),
-            if (expense.amountIsPretax) amountField,
+            if (!expense.usesInclusiveTaxes) amountField,
             if (company.enableFirstItemTaxRate)
               if (company.calculateExpenseTaxByAmount)
                 TaxRateField(
@@ -257,7 +257,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   initialTaxName: expense.taxName3,
                   initialTaxRate: expense.taxRate3,
                 ),
-            if (!expense.amountIsPretax) amountField,
+            if (expense.usesInclusiveTaxes) amountField,
             EntityDropdown(
               key: ValueKey('__expense_currency_${expense.currencyId}__'),
               entityType: EntityType.currency,
