@@ -553,13 +553,26 @@ abstract class ExpenseEntity extends Object
 
   double get amountWithTax {
     var total = amount;
-    if (taxRate1 != 0) {
-      total += amount * taxRate1 / 100;
+
+    if (usesInclusiveTaxes || !amountIsPretax) {
+      return total;
     }
-    if (taxRate2 != 0) {
-      total += amount * taxRate2 / 100;
+
+    if (taxAmount1 != 0 || taxAmount2 != 0 || taxAmount3 != 0) {
+      total += taxAmount1 + taxAmount2 + taxAmount3;
+    } else {
+      if (taxRate1 != 0) {
+        total += amount * taxRate1 / 100;
+      }
+      if (taxRate2 != 0) {
+        total += amount * taxRate2 / 100;
+      }
+      if (taxRate3 != 0) {
+        total += amount * taxRate3 / 100;
+      }
     }
-    return round(total, 2);
+
+    return total;
   }
 
   String get statusId {
