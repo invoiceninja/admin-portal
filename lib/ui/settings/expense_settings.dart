@@ -90,14 +90,6 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(company
                       .rebuild((b) => b..calculateExpenseTaxByAmount = value)),
                 ),
-                BoolDropdownButton(
-                  label: localization.enterAmount,
-                  enabledLabel: localization.beforeTaxes,
-                  disabledLabel: localization.afterTaxes,
-                  value: company.expenseAmountIsPretax ?? false,
-                  onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..expenseAmountIsPretax = value)),
-                ),
                 SizedBox(height: 16),
                 SwitchListTile(
                   activeColor: Theme.of(context).accentColor,

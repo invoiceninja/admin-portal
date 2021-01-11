@@ -262,8 +262,8 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_amount3')
   double get taxAmount3;
 
-  @BuiltValueField(wireName: 'amount_is_pretax')
-  bool get amountIsPretax;
+  @BuiltValueField(wireName: 'uses_inclusive_taxes')
+  bool get usesInclusiveTaxes;
 
   BuiltList<DocumentEntity> get documents;
 
