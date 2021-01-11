@@ -77,7 +77,7 @@ class ExpensePresenter extends EntityPresenter {
         return Text(formatNumber(expense.netAmount, context,
             currencyId: expense.currencyId));
       case ExpenseFields.amount:
-        return Text(formatNumber(expense.amount, context,
+        return Text(formatNumber(expense.grossAmount, context,
             currencyId: expense.currencyId));
       case ExpenseFields.taxAmount:
         return Text(formatNumber(expense.taxAmount, context,
