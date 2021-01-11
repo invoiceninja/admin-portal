@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'expense_total': 'Expense Total',
       'enter_taxes': 'Enter Taxes',
       'by_rate': 'By Rate',
       'by_amount': 'By Amount',
@@ -51248,6 +51249,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get searchTaskStatus =>
       _localizedValues[localeCode]['search_task_status'];
+
+  String get expenseTotal =>
+      _localizedValues[localeCode]['expense_total'];
 
   String get expenseCategory =>
       _localizedValues[localeCode]['expense_category'];
