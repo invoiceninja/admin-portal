@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_field.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -197,35 +198,65 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
             if (expense.amountIsPretax) amountField,
             if (company.enableFirstItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate1 = taxRate.rate
-                      ..taxName1 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName1,
-                initialTaxRate: expense.taxRate1,
-              ),
+              if (company.calculateExpenseTaxByAmount)
+                TaxRateField(
+                  initialTaxAmount: expense.taxAmount1,
+                  initialTaxName: expense.taxName1,
+                  onNameChanged: (name) => viewModel
+                      .onChanged(expense.rebuild((b) => b..taxName1 = name)),
+                  onAmountChanged: (amount) => viewModel.onChanged(
+                      expense.rebuild((b) => b..taxAmount1 = amount)),
+                )
+              else
+                TaxRateDropdown(
+                  onSelected: (taxRate) =>
+                      viewModel.onChanged(expense.rebuild((b) => b
+                        ..taxRate1 = taxRate.rate
+                        ..taxName1 = taxRate.name)),
+                  labelText: localization.tax,
+                  initialTaxName: expense.taxName1,
+                  initialTaxRate: expense.taxRate1,
+                ),
             if (company.enableSecondItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate2 = taxRate.rate
-                      ..taxName2 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName2,
-                initialTaxRate: expense.taxRate2,
-              ),
+              if (company.calculateExpenseTaxByAmount)
+                TaxRateField(
+                  initialTaxAmount: expense.taxAmount2,
+                  initialTaxName: expense.taxName2,
+                  onNameChanged: (name) => viewModel
+                      .onChanged(expense.rebuild((b) => b..taxName2 = name)),
+                  onAmountChanged: (amount) => viewModel.onChanged(
+                      expense.rebuild((b) => b..taxAmount2 = amount)),
+                )
+              else
+                TaxRateDropdown(
+                  onSelected: (taxRate) =>
+                      viewModel.onChanged(expense.rebuild((b) => b
+                        ..taxRate3 = taxRate.rate
+                        ..taxName3 = taxRate.name)),
+                  labelText: localization.tax,
+                  initialTaxName: expense.taxName3,
+                  initialTaxRate: expense.taxRate3,
+                ),
             if (company.enableThirdItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate3 = taxRate.rate
-                      ..taxName3 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName3,
-                initialTaxRate: expense.taxRate3,
-              ),
+              if (company.calculateExpenseTaxByAmount)
+                TaxRateField(
+                  initialTaxAmount: expense.taxAmount1,
+                  initialTaxName: expense.taxName1,
+                  onNameChanged: (name) => viewModel
+                      .onChanged(expense.rebuild((b) => b..taxName3 = name)),
+                  onAmountChanged: (amount) => viewModel.onChanged(
+                      expense.rebuild((b) => b..taxAmount3 = amount)),
+                )
+              else
+                TaxRateDropdown(
+                  onSelected: (taxRate) =>
+                      viewModel.onChanged(expense.rebuild((b) => b
+                        ..taxRate3 = taxRate.rate
+                        ..taxName3 = taxRate.name)),
+                  labelText: localization.tax,
+                  initialTaxName: expense.taxName3,
+                  initialTaxRate: expense.taxRate3,
+                ),
             if (!expense.amountIsPretax) amountField,
             EntityDropdown(
               key: ValueKey('__expense_currency_${expense.currencyId}__'),
