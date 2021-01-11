@@ -552,6 +552,15 @@ abstract class ExpenseEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  double get calculatetaxRate1 =>
+      calculateTaxByAmount == true ? taxAmount1 / amount : taxRate1;
+
+  double get calculatetaxRate2 =>
+      calculateTaxByAmount == true ? taxAmount2 / amount : taxRate2;
+
+  double get calculatetaxRate3 =>
+      calculateTaxByAmount == true ? taxAmount3 / amount : taxRate3;
+
   double get taxAmount {
     var total = 0.0;
 
