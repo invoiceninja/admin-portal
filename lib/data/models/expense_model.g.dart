@@ -253,6 +253,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(object.projectId,
             specifiedType: const FullType(String)));
     }
+    if (object.calculateTaxByAmount != null) {
+      result
+        ..add('calculate_tax_by_amount')
+        ..add(serializers.serialize(object.calculateTaxByAmount,
+            specifiedType: const FullType(bool)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -422,6 +428,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'uses_inclusive_taxes':
           result.usesInclusiveTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'calculate_tax_by_amount':
+          result.calculateTaxByAmount = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'documents':
@@ -783,6 +793,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final bool usesInclusiveTaxes;
   @override
+  final bool calculateTaxByAmount;
+  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final String number;
@@ -840,6 +852,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.taxAmount2,
       this.taxAmount3,
       this.usesInclusiveTaxes,
+      this.calculateTaxByAmount,
       this.documents,
       this.number,
       this.isChanged,
@@ -1000,6 +1013,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         taxAmount2 == other.taxAmount2 &&
         taxAmount3 == other.taxAmount3 &&
         usesInclusiveTaxes == other.usesInclusiveTaxes &&
+        calculateTaxByAmount == other.calculateTaxByAmount &&
         documents == other.documents &&
         number == other.number &&
         isChanged == other.isChanged &&
@@ -1033,16 +1047,16 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode),
-                                                                                projectId.hashCode),
-                                                                            customValue1.hashCode),
-                                                                        customValue2.hashCode),
-                                                                    customValue3.hashCode),
-                                                                customValue4.hashCode),
-                                                            taxAmount1.hashCode),
-                                                        taxAmount2.hashCode),
-                                                    taxAmount3.hashCode),
-                                                usesInclusiveTaxes.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode),
+                                                                                customValue1.hashCode),
+                                                                            customValue2.hashCode),
+                                                                        customValue3.hashCode),
+                                                                    customValue4.hashCode),
+                                                                taxAmount1.hashCode),
+                                                            taxAmount2.hashCode),
+                                                        taxAmount3.hashCode),
+                                                    usesInclusiveTaxes.hashCode),
+                                                calculateTaxByAmount.hashCode),
                                             documents.hashCode),
                                         number.hashCode),
                                     isChanged.hashCode),
@@ -1091,6 +1105,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('taxAmount2', taxAmount2)
           ..add('taxAmount3', taxAmount3)
           ..add('usesInclusiveTaxes', usesInclusiveTaxes)
+          ..add('calculateTaxByAmount', calculateTaxByAmount)
           ..add('documents', documents)
           ..add('number', number)
           ..add('isChanged', isChanged)
@@ -1248,6 +1263,11 @@ class ExpenseEntityBuilder
   set usesInclusiveTaxes(bool usesInclusiveTaxes) =>
       _$this._usesInclusiveTaxes = usesInclusiveTaxes;
 
+  bool _calculateTaxByAmount;
+  bool get calculateTaxByAmount => _$this._calculateTaxByAmount;
+  set calculateTaxByAmount(bool calculateTaxByAmount) =>
+      _$this._calculateTaxByAmount = calculateTaxByAmount;
+
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -1329,6 +1349,7 @@ class ExpenseEntityBuilder
       _taxAmount2 = _$v.taxAmount2;
       _taxAmount3 = _$v.taxAmount3;
       _usesInclusiveTaxes = _$v.usesInclusiveTaxes;
+      _calculateTaxByAmount = _$v.calculateTaxByAmount;
       _documents = _$v.documents?.toBuilder();
       _number = _$v.number;
       _isChanged = _$v.isChanged;
@@ -1396,6 +1417,7 @@ class ExpenseEntityBuilder
               taxAmount2: taxAmount2,
               taxAmount3: taxAmount3,
               usesInclusiveTaxes: usesInclusiveTaxes,
+              calculateTaxByAmount: calculateTaxByAmount,
               documents: documents.build(),
               number: number,
               isChanged: isChanged,
