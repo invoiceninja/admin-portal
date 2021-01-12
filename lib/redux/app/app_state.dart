@@ -619,11 +619,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case TaskStatusEditScreen.route:
         return hasTaskStatusChanges(
             taskStatusUIState.editing, taskStatusState.map);
-
       case ExpenseCategoryEditScreen.route:
         return hasExpenseCategoryChanges(
             expenseCategoryUIState.editing, expenseCategoryState.map);
-
       case RecurringInvoiceEditScreen.route:
         return hasRecurringInvoiceChanges(
             recurringInvoiceUIState.editing, recurringInvoiceState.map);
@@ -638,7 +636,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return hasDesignChanges(designUIState.editing, designState.map);
     }
 
-    if (uiState.currentRoute.startsWith('/settings')) {
+    if (uiState.isInSettings) {
       return settingsUIState.isChanged;
     }
 
