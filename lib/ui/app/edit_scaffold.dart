@@ -50,7 +50,9 @@ class EditScaffold extends StatelessWidget {
           automaticallyImplyLeading: isMobile(context),
           title: Text(title),
           actions: <Widget>[
-            if (state.uiState.isEditing || state.settingsUIState.isChanged)
+            if (isMobile(context) ||
+                state.uiState.isEditing ||
+                state.settingsUIState.isChanged)
               SaveCancelButtons(
                 saveLabel: saveLabel,
                 isSaving: state.isSaving,
