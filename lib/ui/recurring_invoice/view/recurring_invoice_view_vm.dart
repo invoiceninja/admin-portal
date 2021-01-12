@@ -125,9 +125,12 @@ class RecurringInvoiceViewVM extends EntityViewVM {
       },
       onDeleteDocument:
           (BuildContext context, DocumentEntity document, String password) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>((value) => store
+            .dispatch(LoadRecurringInvoice(recurringInvoiceId: invoice.id)));
         store.dispatch(DeleteDocumentRequest(
-          completer: snackBarCompleter<Null>(
-              context, AppLocalization.of(context).deletedDocument),
+          completer: completer,
           documentIds: [document.id],
           password: password,
         ));
