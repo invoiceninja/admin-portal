@@ -38,13 +38,6 @@ class EditScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    bool showButtons = true;
-    if (state.uiState.isInSettings &&
-        !state.uiState.isEditing &&
-        !state.settingsUIState.isChanged) {
-      showButtons = false;
-    }
-
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -57,7 +50,7 @@ class EditScaffold extends StatelessWidget {
           automaticallyImplyLeading: isMobile(context),
           title: Text(title),
           actions: <Widget>[
-            if (showButtons)
+            if (state.uiState.isEditing || state.settingsUIState.isChanged)
               SaveCancelButtons(
                 saveLabel: saveLabel,
                 isSaving: state.isSaving,
