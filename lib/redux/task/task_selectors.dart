@@ -34,7 +34,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   return InvoiceItemEntity().rebuild((b) => b
     ..taskId = task.id
     ..typeId = InvoiceItemEntity.TYPE_TASK
-    ..notes = notes
+    ..notes = '<span class="task-time-details">$notes</span>'
     ..cost = taskRateSelector(
       company: state.company,
       project: project,
