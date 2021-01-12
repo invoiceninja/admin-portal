@@ -15,10 +15,26 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   final client = state.clientState.get(task.clientId);
   final group = state.groupState.get(client.groupId);
 
+  var notes = task.description;
+
+  if (state.company.invoiceTaskTimelog) {
+    notes += '\n';
+    task
+        .getTaskTimes(sort: true)
+        .where((time) => time.startDate != null && time.endDate != null)
+        .forEach((time) {
+      final start =
+          formatDate(time.startDate.toIso8601String(), context, showTime: true);
+      final end = formatDate(time.endDate.toIso8601String(), context,
+          showTime: true, showDate: false, showSeconds: false);
+      notes += '\n$start - $end';
+    });
+  }
+
   return InvoiceItemEntity().rebuild((b) => b
     ..taskId = task.id
     ..typeId = InvoiceItemEntity.TYPE_TASK
-    ..notes = task.description
+    ..notes = notes
     ..cost = taskRateSelector(
       company: state.company,
       project: project,

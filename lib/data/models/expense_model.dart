@@ -552,14 +552,25 @@ abstract class ExpenseEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  double get calculatetaxRate1 =>
-      calculateTaxByAmount == true ? taxAmount1 / amount : taxRate1;
+  double get calculatetaxRate1 {
+    if (calculateTaxByAmount == true) {
+      if (usesInclusiveTaxes) {
+        return taxAmount1 / (amount - taxAmount1) * 100;
+      } else {
+        return taxAmount1 / amount * 100;
+      }
+    } else {
+      return taxRate1;
+    }
+  }
 
-  double get calculatetaxRate2 =>
-      calculateTaxByAmount == true ? taxAmount2 / amount : taxRate2;
+  double get calculatetaxRate2 => calculateTaxByAmount == true
+      ? taxAmount2 / (amount - taxAmount2) * 100
+      : taxRate2;
 
-  double get calculatetaxRate3 =>
-      calculateTaxByAmount == true ? taxAmount3 / amount : taxRate3;
+  double get calculatetaxRate3 => calculateTaxByAmount == true
+      ? taxAmount3 / (amount - taxAmount3) * 100
+      : taxRate3;
 
   double get taxAmount {
     var total = 0.0;
@@ -609,9 +620,9 @@ abstract class ExpenseEntity extends Object
 
   double get convertedExchangeRate => exchangeRate == 0 ? 1 : exchangeRate;
 
-  double get convertedAmount => round(grossAmount * convertedExchangeRate, 2);
+  double get convertedAmount => grossAmount * convertedExchangeRate;
 
-  double get convertedNetAmount => round(netAmount * convertedExchangeRate, 2);
+  double get convertedNetAmount => netAmount * convertedExchangeRate;
 
   double get convertedAmountWithTax =>
       round(grossAmount * convertedExchangeRate, 2);
