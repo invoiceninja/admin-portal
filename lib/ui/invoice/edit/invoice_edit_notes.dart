@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
@@ -76,12 +77,33 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    //final viewModel = widget.viewModel;
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
 
     return ListView(
       children: <Widget>[
         FormCard(
           children: <Widget>[
+            DecoratedFormField(
+              maxLines: 4,
+              controller: _termsController,
+              keyboardType: TextInputType.multiline,
+              label: invoice.entityType == EntityType.credit
+                  ? localization.creditTerms
+                  : invoice.entityType == EntityType.quote
+                      ? localization.quoteTerms
+                      : localization.invoiceTerms,
+            ),
+            DecoratedFormField(
+              maxLines: 4,
+              controller: _footerController,
+              keyboardType: TextInputType.multiline,
+              label: invoice.entityType == EntityType.credit
+                  ? localization.creditFooter
+                  : invoice.entityType == EntityType.quote
+                      ? localization.quoteFooter
+                      : localization.invoiceFooter,
+            ),
             DecoratedFormField(
               maxLines: 4,
               controller: _publicNotesController,
@@ -93,18 +115,6 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
               label: localization.privateNotes,
-            ),
-            DecoratedFormField(
-              maxLines: 4,
-              controller: _termsController,
-              keyboardType: TextInputType.multiline,
-              label: localization.terms,
-            ),
-            DecoratedFormField(
-              maxLines: 4,
-              controller: _footerController,
-              keyboardType: TextInputType.multiline,
-              label: localization.notes,
             ),
           ],
         ),

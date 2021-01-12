@@ -110,7 +110,7 @@ double calculateVendorBalance(String vendorId, String currencyId,
     if (expense.vendorId == vendorId &&
         expense.isActive &&
         (currencyId == null || expense.currencyId == currencyId)) {
-      total += expense.amountWithTax;
+      total += expense.grossAmount;
     }
   });
 

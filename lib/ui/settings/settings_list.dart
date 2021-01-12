@@ -148,14 +148,14 @@ class _SettingsListState extends State<SettingsList> {
               section: kSettingsImportExport,
               viewModel: widget.viewModel,
             ),
-          if (showAll && state.userCompany.isOwner)
-            SettingsListTile(
-              section: kSettingsAccountManagement,
-              viewModel: widget.viewModel,
-            ),
           if (showAll)
             SettingsListTile(
               section: kSettingsDeviceSettings,
+              viewModel: widget.viewModel,
+            ),
+          if (showAll && state.userCompany.isOwner)
+            SettingsListTile(
+              section: kSettingsAccountManagement,
               viewModel: widget.viewModel,
             ),
           Container(
@@ -166,12 +166,9 @@ class _SettingsListState extends State<SettingsList> {
               style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
+
           SettingsListTile(
-            section: kSettingsGroupSettings,
-            viewModel: widget.viewModel,
-          ),
-          SettingsListTile(
-            section: kSettingsGeneratedNumbers,
+            section: kSettingsInvoiceDesign,
             viewModel: widget.viewModel,
           ),
           if (showAll)
@@ -180,15 +177,27 @@ class _SettingsListState extends State<SettingsList> {
               viewModel: widget.viewModel,
             ),
           SettingsListTile(
-            section: kSettingsInvoiceDesign,
+            section: kSettingsGeneratedNumbers,
             viewModel: widget.viewModel,
           ),
           SettingsListTile(
-            section: kSettingsWorkflowSettings,
+            section: kSettingsEmailSettings,
             viewModel: widget.viewModel,
           ),
           SettingsListTile(
             section: kSettingsClientPortal,
+            viewModel: widget.viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsTemplatesAndReminders,
+            viewModel: widget.viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsGroupSettings,
+            viewModel: widget.viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsWorkflowSettings,
             viewModel: widget.viewModel,
           ),
           /*
@@ -198,14 +207,6 @@ class _SettingsListState extends State<SettingsList> {
               viewModel: viewModel,
             ),
            */
-          SettingsListTile(
-            section: kSettingsEmailSettings,
-            viewModel: widget.viewModel,
-          ),
-          SettingsListTile(
-            section: kSettingsTemplatesAndReminders,
-            viewModel: widget.viewModel,
-          ),
           /*
           SettingsListTile(
             section: kSettingsCreditCardsAndBanks,
@@ -376,17 +377,6 @@ class SettingsSearch extends StatelessWidget {
         'export',
       ],
     ],
-    kSettingsAccountManagement: [
-      [
-        'api_tokens',
-        'api_webhooks',
-        'purge_data',
-        'delete_company',
-      ],
-      [
-        'enabeled_modules',
-      ],
-    ],
     kSettingsDeviceSettings: [
       [
         'rows_per_page',
@@ -396,26 +386,15 @@ class SettingsSearch extends StatelessWidget {
         'refresh_data',
       ],
     ],
-    kSettingsGroupSettings: [
+    kSettingsAccountManagement: [
       [
-        'groups',
+        'api_tokens',
+        'api_webhooks',
+        'purge_data',
+        'delete_company',
       ],
-    ],
-    kSettingsGeneratedNumbers: [
       [
-        'number_padding',
-        'number_counter',
-        'recurring_prefix',
-        'reset_counter',
-        'invoice_number',
-        'client_number',
-        'credit_number',
-        'payment_number',
-      ],
-    ],
-    kSettingsCustomFields: [
-      [
-        'custom_fields',
+        'enabeled_modules',
       ],
     ],
     kSettingsInvoiceDesign: [
@@ -441,14 +420,21 @@ class SettingsSearch extends StatelessWidget {
         'custom_designs',
       ],
     ],
-    kSettingsWorkflowSettings: [
+    kSettingsCustomFields: [
       [
-        'auto_email_invoice',
-        'auto_archive_invoice',
-        'lock_invoices',
+        'custom_fields',
       ],
+    ],
+    kSettingsGeneratedNumbers: [
       [
-        'auto_convert',
+        'number_padding',
+        'number_counter',
+        'recurring_prefix',
+        'reset_counter',
+        'invoice_number',
+        'client_number',
+        'credit_number',
+        'payment_number',
       ],
     ],
     kSettingsClientPortal: [
@@ -492,6 +478,21 @@ class SettingsSearch extends StatelessWidget {
         'send_reminders',
         'late_fees',
       ]
+    ],
+    kSettingsGroupSettings: [
+      [
+        'groups',
+      ],
+    ],
+    kSettingsWorkflowSettings: [
+      [
+        'auto_email_invoice',
+        'auto_archive_invoice',
+        'lock_invoices',
+      ],
+      [
+        'auto_convert',
+      ],
     ],
     kSettingsUserManagement: [
       [

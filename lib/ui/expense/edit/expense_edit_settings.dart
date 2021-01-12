@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -113,37 +114,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            if (company.enableFirstItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate1 = taxRate.rate
-                      ..taxName1 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName1,
-                initialTaxRate: expense.taxRate1,
-              ),
-            if (company.enableSecondItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate2 = taxRate.rate
-                      ..taxName2 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName2,
-                initialTaxRate: expense.taxRate2,
-              ),
-            if (company.enableThirdItemTaxRate)
-              TaxRateDropdown(
-                onSelected: (taxRate) =>
-                    viewModel.onChanged(expense.rebuild((b) => b
-                      ..taxRate3 = taxRate.rate
-                      ..taxName3 = taxRate.name)),
-                labelText: localization.tax,
-                initialTaxName: expense.taxName3,
-                initialTaxRate: expense.taxRate3,
-              ),
-            SizedBox(height: 16),
             expense.isInvoiced
                 ? SizedBox()
                 : SwitchListTile(
@@ -267,6 +237,29 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 })
           ],
         ),
+        if (company.numberOfItemTaxRates > 0)
+          FormCard(
+            children: [
+              BoolDropdownButton(
+                label: localization.enterTaxes,
+                enabledLabel: localization.byAmount,
+                disabledLabel: localization.byRate,
+                value: expense.calculateTaxByAmount ?? false,
+                onChanged: (value) => viewModel.onChanged(
+                    expense.rebuild((b) => b..calculateTaxByAmount = value)),
+              ),
+              SizedBox(height: 16),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.inclusiveTaxes),
+                value: expense.usesInclusiveTaxes,
+                subtitle: Text(
+                    '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
+                onChanged: (value) => viewModel.onChanged(
+                    expense.rebuild((b) => b..usesInclusiveTaxes = value)),
+              ),
+            ],
+          ),
       ],
     );
   }

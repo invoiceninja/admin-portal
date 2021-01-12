@@ -197,7 +197,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   bool get isViewing => !isEditing && !isEmailing;
 
-  bool get isInSettings => currentRoute.contains('settings');
+  bool get isInSettings => currentRoute.startsWith('/settings');
 
   bool get isPreviewing => previewStack.isNotEmpty;
 }

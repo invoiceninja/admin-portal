@@ -8,7 +8,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.37';
+const String kClientVersion = '5.0.38';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -547,7 +547,7 @@ class ExpenseStatusColors {
 class TaskStatusColors {
   static var colors = {
     kTaskStatusLogged: convertHexStringToColor('#444444'),
-    kTaskStatusRunning: Colors.blue,
+    kTaskStatusRunning: convertHexStringToColor('#505F73'),
     kTaskStatusInvoiced: kColorGreen,
   };
 }

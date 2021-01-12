@@ -114,6 +114,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'enabled_item_tax_rates',
       serializers.serialize(object.numberOfItemTaxRates,
           specifiedType: const FullType(int)),
+      'expense_inclusive_taxes',
+      serializers.serialize(object.expenseInclusiveTaxes,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -412,6 +415,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'enabled_item_tax_rates':
           result.numberOfItemTaxRates = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'expense_inclusive_taxes':
+          result.expenseInclusiveTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
           result.groups.replace(serializers.deserialize(value,
@@ -2948,6 +2955,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final int numberOfItemTaxRates;
   @override
+  final bool expenseInclusiveTaxes;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -3069,6 +3078,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.firstMonthOfYear,
       this.numberOfInvoiceTaxRates,
       this.numberOfItemTaxRates,
+      this.expenseInclusiveTaxes,
       this.groups,
       this.activities,
       this.taxRates,
@@ -3205,6 +3215,10 @@ class _$CompanyEntity extends CompanyEntity {
     if (numberOfItemTaxRates == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'numberOfItemTaxRates');
+    }
+    if (expenseInclusiveTaxes == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'expenseInclusiveTaxes');
     }
     if (groups == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'groups');
@@ -3370,6 +3384,7 @@ class _$CompanyEntity extends CompanyEntity {
         firstMonthOfYear == other.firstMonthOfYear &&
         numberOfInvoiceTaxRates == other.numberOfInvoiceTaxRates &&
         numberOfItemTaxRates == other.numberOfItemTaxRates &&
+        expenseInclusiveTaxes == other.expenseInclusiveTaxes &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -3438,7 +3453,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode),
                                                                                 markExpensesInvoiceable.hashCode),
                                                                             markExpensesPaid.hashCode),
                                                                         invoiceExpenseDocuments.hashCode),
@@ -3490,6 +3505,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('firstMonthOfYear', firstMonthOfYear)
           ..add('numberOfInvoiceTaxRates', numberOfInvoiceTaxRates)
           ..add('numberOfItemTaxRates', numberOfItemTaxRates)
+          ..add('expenseInclusiveTaxes', expenseInclusiveTaxes)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -3668,6 +3684,11 @@ class CompanyEntityBuilder
   int get numberOfItemTaxRates => _$this._numberOfItemTaxRates;
   set numberOfItemTaxRates(int numberOfItemTaxRates) =>
       _$this._numberOfItemTaxRates = numberOfItemTaxRates;
+
+  bool _expenseInclusiveTaxes;
+  bool get expenseInclusiveTaxes => _$this._expenseInclusiveTaxes;
+  set expenseInclusiveTaxes(bool expenseInclusiveTaxes) =>
+      _$this._expenseInclusiveTaxes = expenseInclusiveTaxes;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -3935,6 +3956,7 @@ class CompanyEntityBuilder
       _firstMonthOfYear = _$v.firstMonthOfYear;
       _numberOfInvoiceTaxRates = _$v.numberOfInvoiceTaxRates;
       _numberOfItemTaxRates = _$v.numberOfItemTaxRates;
+      _expenseInclusiveTaxes = _$v.expenseInclusiveTaxes;
       _groups = _$v.groups?.toBuilder();
       _activities = _$v.activities?.toBuilder();
       _taxRates = _$v.taxRates?.toBuilder();
@@ -4031,6 +4053,7 @@ class CompanyEntityBuilder
               firstMonthOfYear: firstMonthOfYear,
               numberOfInvoiceTaxRates: numberOfInvoiceTaxRates,
               numberOfItemTaxRates: numberOfItemTaxRates,
+              expenseInclusiveTaxes: expenseInclusiveTaxes,
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),

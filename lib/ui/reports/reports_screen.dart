@@ -655,10 +655,8 @@ class ReportResult {
               userCompany: userCompany)) {
             return false;
           }
-        } else {
-          if (!ReportResult.matchString(filter: filter, value: value)) {
-            return false;
-          }
+        } else if (!ReportResult.matchString(filter: filter, value: value)) {
+          return false;
         }
       }
     }
@@ -671,7 +669,7 @@ class ReportResult {
       return true;
     }
 
-    return value.toLowerCase().contains(filter.toLowerCase());
+    return (value ?? '').toLowerCase().contains(filter.toLowerCase());
   }
 
   static bool matchAmount({String filter, num amount}) {

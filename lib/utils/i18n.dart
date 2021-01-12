@@ -15,6 +15,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'expense_total': 'Expense Total',
+      'enter_taxes': 'Enter Taxes',
+      'by_rate': 'By Rate',
+      'by_amount': 'By Amount',
+      'enter_amount': 'Enter Amount',
+      'before_taxes': 'Before Taxes',
+      'after_taxes': 'After Taxes',
+      'color': 'Color',
       'show': 'Show',
       'hide': 'Hide',
       'empty_columns': 'Empty Columns',
@@ -71,6 +79,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expense_number': 'Expense Number',
       'task_number': 'Task Number',
       'project_number': 'Project Number',
+      'project_name': 'Project Name',
       'warning': 'Warning',
       'view_settings': 'View Settings',
       'company_disabled_warning':
@@ -51241,6 +51250,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchTaskStatus =>
       _localizedValues[localeCode]['search_task_status'];
 
+  String get expenseTotal => _localizedValues[localeCode]['expense_total'];
+
   String get expenseCategory =>
       _localizedValues[localeCode]['expense_category'];
 
@@ -52422,6 +52433,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get projectNumber =>
       _localizedValues[localeCode]['project_number'] ?? '';
 
+  String get projectName => _localizedValues[localeCode]['project_name'] ?? '';
+
   String get taskNumber => _localizedValues[localeCode]['task_number'] ?? '';
 
   String get expenseNumber =>
@@ -52549,6 +52562,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get show => _localizedValues[localeCode]['show'] ?? '';
 
   String get hide => _localizedValues[localeCode]['hide'] ?? '';
+
+  String get color => _localizedValues[localeCode]['color'] ?? '';
+
+  String get enterTaxes => _localizedValues[localeCode]['enter_taxes'] ?? '';
+  String get byRate => _localizedValues[localeCode]['by_rate'] ?? '';
+  String get byAmount => _localizedValues[localeCode]['by_amount'] ?? '';
+  String get enterAmount => _localizedValues[localeCode]['enter_amount'] ?? '';
+  String get beforeTaxes => _localizedValues[localeCode]['before_taxes'] ?? '';
+  String get afterTaxes => _localizedValues[localeCode]['after_taxes'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

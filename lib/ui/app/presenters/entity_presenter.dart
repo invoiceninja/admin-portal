@@ -83,10 +83,10 @@ class EntityPresenter {
         'tax_amount',
         'tax_paid',
         'payment_amount',
-        'net_amount',
         'net_balance',
         'rate',
         'calculated_rate',
         'duration',
+        'net_amount',
       ].contains(field);
 }

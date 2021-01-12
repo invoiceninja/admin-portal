@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ExpenseSettings extends StatefulWidget {
   const ExpenseSettings({
@@ -77,6 +79,29 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
               ),
             ],
           ),
+          if (company.numberOfItemTaxRates > 0)
+            FormCard(
+              children: [
+                BoolDropdownButton(
+                  label: localization.enterTaxes,
+                  enabledLabel: localization.byAmount,
+                  disabledLabel: localization.byRate,
+                  value: company.calculateExpenseTaxByAmount ?? false,
+                  onChanged: (value) => viewModel.onCompanyChanged(company
+                      .rebuild((b) => b..calculateExpenseTaxByAmount = value)),
+                ),
+                SizedBox(height: 16),
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.inclusiveTaxes),
+                  value: company.expenseInclusiveTaxes ?? false,
+                  subtitle: Text(
+                      '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..expenseInclusiveTaxes = value)),
+                ),
+              ],
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: AppButton(

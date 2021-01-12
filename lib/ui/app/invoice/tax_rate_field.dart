@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+
+class TaxRateField extends StatelessWidget {
+  const TaxRateField({
+    Key key,
+    @required this.onNameChanged,
+    @required this.onAmountChanged,
+    @required this.initialTaxName = '',
+    @required this.initialTaxAmount = 0.0,
+  }) : super(key: key);
+
+  final Function(String) onNameChanged;
+  final Function(double) onAmountChanged;
+  final String initialTaxName;
+  final double initialTaxAmount;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return Row(
+      children: [
+        Expanded(
+          child: DecoratedFormField(
+            label: localization.taxName,
+            initialValue: initialTaxName,
+            onChanged: (value) => onNameChanged(value),
+          ),
+        ),
+        SizedBox(
+          width: kTableColumnGap,
+        ),
+        Expanded(
+          child: DecoratedFormField(
+            label: localization.taxAmount,
+            initialValue: formatNumber(
+              initialTaxAmount,
+              context,
+              formatNumberType: FormatNumberType.inputMoney,
+            ),
+            onChanged: (value) => onAmountChanged(parseDouble(value)),
+            //textAlign: TextAlign.end,
+          ),
+        ),
+      ],
+    );
+  }
+}

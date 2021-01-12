@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
+import 'package:invoiceninja_flutter/ui/app/app_webview.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -395,14 +396,13 @@ class _DesignSettingsState extends State<DesignSettings> {
                 },
                 initialValue: _selectedDesign?.id),
             SizedBox(height: 16),
-            if (false)
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.draftMode),
-                subtitle: Text(localization.draftModeHelp),
-                value: widget.draftMode,
-                onChanged: widget.onDraftModeChanged,
-              ),
+            SwitchListTile(
+              activeColor: Theme.of(context).accentColor,
+              title: Text(localization.draftMode),
+              subtitle: Text(localization.draftModeHelp),
+              value: widget.draftMode,
+              onChanged: widget.onDraftModeChanged,
+            ),
           ],
         ),
         VariablesHelp(),
@@ -507,12 +507,12 @@ class HtmlDesignPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey,
+      color: Colors.white,
       alignment: Alignment.center,
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Text(html),
+          AppWebView(html: html),
           if (isLoading)
             Column(
               mainAxisSize: MainAxisSize.max,

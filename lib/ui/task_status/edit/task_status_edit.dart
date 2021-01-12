@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -104,6 +105,11 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
                       validator: (val) => val.isEmpty || val.trim().isEmpty
                           ? localization.pleaseEnterAName
                           : null,
+                    ),
+                    FormColorPicker(
+                      initialValue: taskStatus.color,
+                      onSelected: (value) => viewModel.onChanged(
+                          taskStatus.rebuild((b) => b..color = value)),
                     ),
                   ],
                 ),

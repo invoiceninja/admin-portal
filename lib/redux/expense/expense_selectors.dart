@@ -16,11 +16,15 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..notes = expense.publicNotes
     ..quantity =
         company.defaultQuantity || !company.enableProductQuantity ? 1 : null
-    ..cost = expense.convertedAmount
+    ..cost = company.settings.enableInclusiveTaxes
+        ? expense.convertedAmount
+        : expense.convertedNetAmount
     ..taxName1 = expense.taxName1
-    ..taxRate1 = expense.taxRate1
+    ..taxRate1 = expense.calculatetaxRate1
     ..taxName2 = expense.taxName2
-    ..taxRate2 = expense.taxRate2);
+    ..taxRate2 = expense.calculatetaxRate2
+    ..taxName3 = expense.taxName3
+    ..taxRate3 = expense.calculatetaxRate3);
 }
 
 var memoizedDropdownExpenseList = memo9(

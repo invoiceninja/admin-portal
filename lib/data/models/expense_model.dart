@@ -56,7 +56,9 @@ class ExpenseFields {
   static const String currencyId = 'currency_id';
   static const String categoryId = 'category_id';
   static const String category = 'category';
+  static const String netAmount = 'net_amount';
   static const String amount = 'amount';
+  static const String taxAmount = 'tax_amount';
   static const String expenseDate = 'date';
   static const String paymentDate = 'payment_date';
   static const String exchangeRate = 'exchange_rate';
@@ -114,10 +116,15 @@ abstract class ExpenseEntity extends Object
       documents: BuiltList<DocumentEntity>(),
       taxName1: '',
       taxName2: '',
+      taxName3: '',
       taxRate1: 0,
       taxRate2: 0,
-      taxName3: '',
       taxRate3: 0,
+      taxAmount1: 0,
+      taxAmount2: 0,
+      taxAmount3: 0,
+      usesInclusiveTaxes: company?.expenseInclusiveTaxes ?? false,
+      calculateTaxByAmount: company?.calculateExpenseTaxByAmount ?? false,
       clientId: client?.id,
       vendorId: vendor?.id,
       invoiceId: '',
@@ -243,13 +250,27 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value3')
   String get customValue3;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @BuiltValueField(wireName: 'tax_amount1')
+  double get taxAmount1;
+
+  @BuiltValueField(wireName: 'tax_amount2')
+  double get taxAmount2;
+
+  @BuiltValueField(wireName: 'tax_amount3')
+  double get taxAmount3;
+
+  @BuiltValueField(wireName: 'uses_inclusive_taxes')
+  bool get usesInclusiveTaxes;
+
+  @nullable
+  @BuiltValueField(wireName: 'calculate_tax_by_amount')
+  bool get calculateTaxByAmount;
 
   BuiltList<DocumentEntity> get documents;
 
@@ -303,6 +324,9 @@ abstract class ExpenseEntity extends Object
     final ExpenseEntity expenseB = sortAscending ? expense : this;
 
     switch (sortField) {
+      case ExpenseFields.netAmount:
+        response = expenseA.netAmount.compareTo(expenseB.netAmount);
+        break;
       case ExpenseFields.amount:
         response = expenseA.amount.compareTo(expenseB.amount);
         break;
@@ -528,16 +552,61 @@ abstract class ExpenseEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  double get amountWithTax {
-    var total = amount;
-    if (taxRate1 != 0) {
-      total += amount * taxRate1 / 100;
+  double get calculatetaxRate1 {
+    if (calculateTaxByAmount == true) {
+      if (usesInclusiveTaxes) {
+        return taxAmount1 / (amount - taxAmount1) * 100;
+      } else {
+        return taxAmount1 / amount * 100;
+      }
+    } else {
+      return taxRate1;
     }
-    if (taxRate2 != 0) {
-      total += amount * taxRate2 / 100;
-    }
-    return round(total, 2);
   }
+
+  double get calculatetaxRate2 => calculateTaxByAmount == true
+      ? taxAmount2 / (amount - taxAmount2) * 100
+      : taxRate2;
+
+  double get calculatetaxRate3 => calculateTaxByAmount == true
+      ? taxAmount3 / (amount - taxAmount3) * 100
+      : taxRate3;
+
+  double get taxAmount {
+    var total = 0.0;
+
+    if (calculateTaxByAmount == true) {
+      total += taxAmount1 + taxAmount2 + taxAmount3;
+    } else {
+      if (usesInclusiveTaxes) {
+        if (taxRate1 != 0) {
+          total += amount - (amount / (1 + (taxRate1 / 100)));
+        }
+        if (taxRate2 != 0) {
+          total += amount - (amount / (1 + (taxRate2 / 100)));
+        }
+        if (taxRate3 != 0) {
+          total += amount - (amount / (1 + (taxRate3 / 100)));
+        }
+      } else {
+        if (taxRate1 != 0) {
+          total += amount * taxRate1 / 100;
+        }
+        if (taxRate2 != 0) {
+          total += amount * taxRate2 / 100;
+        }
+        if (taxRate3 != 0) {
+          total += amount * taxRate3 / 100;
+        }
+      }
+    }
+
+    return total;
+  }
+
+  double get netAmount => usesInclusiveTaxes ? amount - taxAmount : amount;
+
+  double get grossAmount => usesInclusiveTaxes ? amount : amount + taxAmount;
 
   String get statusId {
     if (isInvoiced) {
@@ -551,10 +620,12 @@ abstract class ExpenseEntity extends Object
 
   double get convertedExchangeRate => exchangeRate == 0 ? 1 : exchangeRate;
 
-  double get convertedAmount => round(amount * convertedExchangeRate, 2);
+  double get convertedAmount => grossAmount * convertedExchangeRate;
+
+  double get convertedNetAmount => netAmount * convertedExchangeRate;
 
   double get convertedAmountWithTax =>
-      round(amountWithTax * convertedExchangeRate, 2);
+      round(grossAmount * convertedExchangeRate, 2);
 
   bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 

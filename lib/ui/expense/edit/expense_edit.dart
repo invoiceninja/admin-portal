@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEdit extends StatefulWidget {
   const ExpenseEdit({
@@ -93,6 +97,61 @@ class _ExpenseEditState extends State<ExpenseEdit>
               viewModel: widget.viewModel,
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0,
+        color: Theme.of(context).cardColor,
+        shape: CircularNotchedRectangle(),
+        child: SizedBox(
+          height: kTopBottomBarHeight,
+          child: AppBorder(
+            isTop: true,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                /*
+                if (isDesktop(context))
+                  Tooltip(
+                    message: useSidebarEditor
+                        ? localization.fullscreenEditor
+                        : localization.sidebarEditor,
+                    child: InkWell(
+                      onTap: () =>
+                          store.dispatch(ToggleEditorLayout(EntityType.task)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Icon(useSidebarEditor
+                            ? Icons.chevron_left
+                            : Icons.chevron_right),
+                      ),
+                    ),
+                  ),
+                  */
+                AppBorder(
+                  //isLeft: isDesktop(context),
+                  isLeft: false,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                          localization.expenseTotal +
+                              ': ' +
+                              formatNumber(expense.grossAmount, context,
+                                  currencyId: expense.currencyId),
+                          style: TextStyle(
+                            color: viewModel.state.prefState.enableDarkMode
+                                ? Colors.white
+                                : Colors.black,
+                            fontSize: 20.0,
+                          )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

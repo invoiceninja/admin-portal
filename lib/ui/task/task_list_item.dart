@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -51,9 +52,14 @@ class TaskListItem extends StatelessWidget {
         ? (isInMultiselect && listUIState.isSelected(task.id))
         : this.isChecked;
     final textStyle = TextStyle(fontSize: 16);
-    final subtitle = client.displayName;
     final textColor = Theme.of(context).textTheme.bodyText1.color;
     final localization = AppLocalization.of(context);
+
+    String subtitle = client.displayName;
+    if (task.projectId.isNotEmpty) {
+      subtitle +=
+          ' • ' + state.projectState.get(task.projectId).listDisplayName;
+    }
 
     final duration = LiveText(() {
       return formatNumber(task.listDisplayAmount, context,
@@ -247,7 +253,23 @@ class TaskListItem extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Text(localization.logged),
+                    Text(
+                      task.isRunning
+                          ? localization.running
+                          : task.isInvoiced
+                              ? localization.invoiced
+                              : task.statusId.isNotEmpty
+                                  ? state.taskStatusState
+                                      .get(task.statusId)
+                                      .name
+                                  : localization.logged,
+                      style: TextStyle(
+                          color: task.isInvoiced
+                              ? kColorGreen
+                              : convertHexStringToColor(state.taskStatusState
+                                  .get(task.statusId)
+                                  .color)),
+                    ),
                   ],
                 ),
               );

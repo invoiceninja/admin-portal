@@ -89,6 +89,7 @@ abstract class CompanyEntity extends Object
       invoiceTaskDocuments: false,
       isDisabled: false,
       calculateExpenseTaxByAmount: false,
+      expenseInclusiveTaxes: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -206,6 +207,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'enabled_item_tax_rates')
   int get numberOfItemTaxRates;
+
+  @BuiltValueField(wireName: 'expense_inclusive_taxes')
+  bool get expenseInclusiveTaxes;
 
   BuiltList<GroupEntity> get groups;
 

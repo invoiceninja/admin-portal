@@ -11,6 +11,8 @@ import 'package:memoize/memoize.dart';
 
 enum ExpenseReportFields {
   amount,
+  net_amount,
+  tax_amount,
   transaction_reference,
   currency,
   date,
@@ -100,7 +102,13 @@ ReportResult expenseReport(
 
       switch (column) {
         case ExpenseReportFields.amount:
-          value = expense.amount;
+          value = expense.grossAmount;
+          break;
+        case ExpenseReportFields.net_amount:
+          value = expense.netAmount;
+          break;
+        case ExpenseReportFields.tax_amount:
+          value = expense.taxAmount;
           break;
         case ExpenseReportFields.transaction_reference:
           value = expense.transactionReference;
