@@ -287,6 +287,13 @@ class _ClientPortalState extends State<ClientPortal>
                           company.rebuild((b) => b..clientCanRegister = value)),
                     ),
                   BoolDropdownButton(
+                      label: localization.documentUpload,
+                      helpLabel: localization.documentUploadHelp,
+                      value: settings.enablePortalUploads,
+                      iconData: MdiIcons.upload,
+                      onChanged: (value) => viewModel.onSettingsChanged(settings
+                          .rebuild((b) => b..enablePortalUploads = value))),
+                  BoolDropdownButton(
                     label: localization.storefront,
                     helpLabel: localization.storefrontHelp,
                     value: company.enableShopApi,

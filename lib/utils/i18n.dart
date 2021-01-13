@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'document_upload': 'Document Upload',
+      'document_upload_help': 'Enable clients to upload documents',
       'expense_total': 'Expense Total',
       'enter_taxes': 'Enter Taxes',
       'by_rate': 'By Rate',
@@ -51944,6 +51946,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get clientRegistrationHelp =>
       _localizedValues[localeCode]['client_registration_help'] ?? '';
+
+  String get documentUpload =>
+      _localizedValues[localeCode]['document_upload'] ?? '';
+
+  String get documentUploadHelp =>
+      _localizedValues[localeCode]['document_upload_help'] ?? '';
 
   String get subtotal => _localizedValues[localeCode]['subtotal'] ?? '';
 
