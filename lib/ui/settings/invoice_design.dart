@@ -522,7 +522,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           FormCard(
             child: MultiSelectList(
               options: [
-                ProductItemFields.productKey,
+                ProductItemFields.item,
                 ProductItemFields.description,
                 ProductItemFields.quantity,
                 ProductItemFields.unitCost,
@@ -535,10 +535,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ProductItemFields.custom4,
               ].map((field) => '\$product.$field').toList(),
               defaultSelected: [
-                ProductItemFields.productKey,
+                ProductItemFields.item,
                 ProductItemFields.description,
                 ProductItemFields.unitCost,
                 ProductItemFields.quantity,
+                ProductItemFields.discount,
                 ProductItemFields.tax,
                 ProductItemFields.lineTotal,
               ].map((field) => '\$product.$field').toList(),
@@ -572,6 +573,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 TaskItemFields.description,
                 TaskItemFields.rate,
                 TaskItemFields.hours,
+                TaskItemFields.discount,
                 TaskItemFields.tax,
                 TaskItemFields.lineTotal,
               ].map((field) => '\$task.$field').toList(),

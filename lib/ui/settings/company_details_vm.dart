@@ -1,16 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -45,6 +52,8 @@ class CompanyDetailsVM {
     @required this.onUploadLogo,
     @required this.onDeleteLogo,
     @required this.onConfigurePaymentTermsPressed,
+    @required this.onUploadDocument,
+    @required this.onDeleteDocument,
   });
 
   static CompanyDetailsVM fromStore(Store<AppState> store) {
@@ -131,6 +140,31 @@ class CompanyDetailsVM {
               section: kSettingsPaymentTerms));
         }
       },
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SaveCompanyDocumentRequest(
+            multipartFile: multipartFile, completer: completer));
+        completer.future.then((client) {
+          showToast(AppLocalization.of(context).uploadedDocument);
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
+      onDeleteDocument:
+          (BuildContext context, DocumentEntity document, String password) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>((value) => store.dispatch(RefreshData()));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+        ));
+      },
     );
   }
 
@@ -143,4 +177,6 @@ class CompanyDetailsVM {
   final Function(BuildContext, MultipartFile) onUploadLogo;
   final Function(BuildContext) onDeleteLogo;
   final Function(BuildContext) onConfigurePaymentTermsPressed;
+  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
 }

@@ -114,6 +114,7 @@ abstract class CompanyEntity extends Object
       paymentTerms: BuiltList<PaymentTermEntity>(),
       tokens: BuiltList<TokenEntity>(),
       webhooks: BuiltList<WebhookEntity>(),
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -255,6 +256,8 @@ abstract class CompanyEntity extends Object
   BuiltList<VendorEntity> get vendors;
 
   BuiltList<DesignEntity> get designs;
+
+  BuiltList<DocumentEntity> get documents;
 
   @BuiltValueField(wireName: 'tokens_hashed')
   BuiltList<TokenEntity> get tokens;

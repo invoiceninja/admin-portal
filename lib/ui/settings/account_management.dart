@@ -230,7 +230,7 @@ class _AccountOverview extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
           child: ListDivider(),
         ),
         Padding(
@@ -282,7 +282,7 @@ class _AccountOverview extends StatelessWidget {
               ),
             ])),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
           child: ListDivider(),
         ),
         Padding(

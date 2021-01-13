@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -92,4 +93,26 @@ class UpdateCompanyLanguage {
   UpdateCompanyLanguage({this.languageId});
 
   final String languageId;
+}
+
+class SaveCompanyDocumentRequest implements StartSaving {
+  SaveCompanyDocumentRequest({
+    @required this.completer,
+    @required this.multipartFile,
+  });
+
+  final Completer completer;
+  final MultipartFile multipartFile;
+}
+
+class SaveCompanyDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveCompanyDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveCompanyDocumentFailure implements StopSaving {
+  SaveCompanyDocumentFailure(this.error);
+
+  final Object error;
 }

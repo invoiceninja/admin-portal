@@ -122,11 +122,4 @@ class ClientViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-
-  @override
-  bool operator ==(dynamic other) =>
-      client == other.client && company == other.company;
-
-  @override
-  int get hashCode => client.hashCode ^ company.hashCode;
 }

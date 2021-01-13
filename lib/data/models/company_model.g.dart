@@ -199,6 +199,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.designs,
           specifiedType:
               const FullType(BuiltList, const [const FullType(DesignEntity)])),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'tokens_hashed',
       serializers.serialize(object.tokens,
           specifiedType:
@@ -539,6 +543,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.designs.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DesignEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
           break;
         case 'tokens_hashed':
@@ -2997,6 +3007,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<DesignEntity> designs;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final BuiltList<TokenEntity> tokens;
   @override
   final BuiltList<WebhookEntity> webhooks;
@@ -3099,6 +3111,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.expenses,
       this.vendors,
       this.designs,
+      this.documents,
       this.tokens,
       this.webhooks,
       this.paymentTerms,
@@ -3280,6 +3293,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (designs == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'designs');
     }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'documents');
+    }
     if (tokens == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'tokens');
     }
@@ -3405,6 +3421,7 @@ class _$CompanyEntity extends CompanyEntity {
         expenses == other.expenses &&
         vendors == other.vendors &&
         designs == other.designs &&
+        documents == other.documents &&
         tokens == other.tokens &&
         webhooks == other.webhooks &&
         paymentTerms == other.paymentTerms &&
@@ -3453,7 +3470,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode),
                                                                                 markExpensesInvoiceable.hashCode),
                                                                             markExpensesPaid.hashCode),
                                                                         invoiceExpenseDocuments.hashCode),
@@ -3526,6 +3543,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('expenses', expenses)
           ..add('vendors', vendors)
           ..add('designs', designs)
+          ..add('documents', documents)
           ..add('tokens', tokens)
           ..add('webhooks', webhooks)
           ..add('paymentTerms', paymentTerms)
@@ -3802,6 +3820,12 @@ class CompanyEntityBuilder
       _$this._designs ??= new ListBuilder<DesignEntity>();
   set designs(ListBuilder<DesignEntity> designs) => _$this._designs = designs;
 
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
+
   ListBuilder<TokenEntity> _tokens;
   ListBuilder<TokenEntity> get tokens =>
       _$this._tokens ??= new ListBuilder<TokenEntity>();
@@ -3977,6 +4001,7 @@ class CompanyEntityBuilder
       _expenses = _$v.expenses?.toBuilder();
       _vendors = _$v.vendors?.toBuilder();
       _designs = _$v.designs?.toBuilder();
+      _documents = _$v.documents?.toBuilder();
       _tokens = _$v.tokens?.toBuilder();
       _webhooks = _$v.webhooks?.toBuilder();
       _paymentTerms = _$v.paymentTerms?.toBuilder();
@@ -4074,6 +4099,7 @@ class CompanyEntityBuilder
               expenses: expenses.build(),
               vendors: vendors.build(),
               designs: designs.build(),
+              documents: documents.build(),
               tokens: tokens.build(),
               webhooks: webhooks.build(),
               paymentTerms: paymentTerms.build(),
@@ -4142,6 +4168,8 @@ class CompanyEntityBuilder
         vendors.build();
         _$failedField = 'designs';
         designs.build();
+        _$failedField = 'documents';
+        documents.build();
         _$failedField = 'tokens';
         tokens.build();
         _$failedField = 'webhooks';
