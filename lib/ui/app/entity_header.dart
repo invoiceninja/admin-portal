@@ -42,7 +42,7 @@ class EntityHeader extends StatelessWidget {
             height: 8,
           ),
           FittedBox(
-            child: Text(
+            child: SelectableText(
               (value ?? '').isEmpty ? ' ' : value,
               style: TextStyle(
                 fontSize: 30,
@@ -67,7 +67,7 @@ class EntityHeader extends StatelessWidget {
             height: 8,
           ),
           FittedBox(
-            child: Text(
+            child: SelectableText(
               (secondValue ?? '').isEmpty ? ' ' : secondValue,
               style: TextStyle(
                 fontSize: 30,
