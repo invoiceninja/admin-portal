@@ -1022,7 +1022,7 @@ abstract class InvoiceEntity extends Object
 }
 
 class ProductItemFields {
-  static const String productKey = 'product_key';
+  static const String item = 'item';
   static const String description = 'description';
   static const String unitCost = 'unit_cost';
   static const String tax = 'tax';
