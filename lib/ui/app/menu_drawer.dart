@@ -42,6 +42,7 @@ class MenuDrawer extends StatelessWidget {
   }) : super(key: key);
 
   final MenuDrawerVM viewModel;
+  static const LOGO_WIDTH = 38.0;
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +61,10 @@ class MenuDrawer extends StatelessWidget {
         company.settings.companyLogo != null &&
                 company.settings.companyLogo.isNotEmpty
             ? CachedImage(
-                width: 32,
+                width: LOGO_WIDTH,
                 url: account.defaultUrl + company.settings.companyLogo,
               )
-            : Image.asset('assets/images/logo.png', width: 32);
+            : Image.asset('assets/images/logo.png', width: LOGO_WIDTH);
 
     Widget _companyListItem(CompanyEntity company) {
       final userCompany = state.userCompanyStates
@@ -75,7 +76,7 @@ class MenuDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           _companyLogo(company),
-          SizedBox(width: 28, height: kTopBottomBarHeight),
+          SizedBox(width: 16, height: kTopBottomBarHeight),
           Expanded(
             child: Text(
               company.displayName.isEmpty
@@ -103,17 +104,10 @@ class MenuDrawer extends StatelessWidget {
 
     final _collapsedCompanySelector = PopupMenuButton<String>(
       tooltip: localization.selectCompany,
-      child: Row(
-        children: [
-          SizedBox(
-            height: 48,
-            width: 32,
-            child: _companyLogo(viewModel.selectedCompany),
-          ),
-          SizedBox(
-            width: 4,
-          )
-        ],
+      child: SizedBox(
+        height: 48,
+        width: LOGO_WIDTH,
+        child: _companyLogo(viewModel.selectedCompany),
       ),
       color: Theme.of(context).cardColor,
       itemBuilder: (BuildContext context) => [
@@ -130,7 +124,7 @@ class MenuDrawer extends StatelessWidget {
               children: <Widget>[
                 SizedBox(width: 2),
                 Icon(Icons.add_circle, size: 32),
-                SizedBox(width: 28),
+                SizedBox(width: 20),
                 Text(localization.addCompany),
               ],
             ),
@@ -141,7 +135,7 @@ class MenuDrawer extends StatelessWidget {
             children: <Widget>[
               SizedBox(width: 2),
               Icon(Icons.logout, size: 32),
-              SizedBox(width: 28),
+              SizedBox(width: 20),
               Text(localization.logout),
             ],
           ),
@@ -176,8 +170,9 @@ class MenuDrawer extends StatelessWidget {
                   value: 'company',
                   child: Row(
                     children: <Widget>[
+                      SizedBox(width: 2),
                       Icon(Icons.add_circle, size: 32),
-                      SizedBox(width: 28),
+                      SizedBox(width: 20),
                       Text(localization.addCompany),
                     ],
                   ),
@@ -188,7 +183,7 @@ class MenuDrawer extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(width: 2),
                     Icon(Icons.logout, size: 32),
-                    SizedBox(width: 28),
+                    SizedBox(width: 20),
                     Text(localization.logout),
                   ],
                 ),
@@ -494,10 +489,13 @@ class _DrawerTileState extends State<DrawerTile> {
           : Colors.transparent,
       child: ListTile(
         dense: true,
-        leading: Icon(
-          widget.icon,
-          size: 24,
-          color: textColor,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Icon(
+            widget.icon,
+            size: 24,
+            color: textColor,
+          ),
         ),
         title: Text(
           widget.title,
