@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   final saveAuthUser = _saveAuthUser(repository);
   final saveSettings = _saveSettings(repository);
   final uploadLogo = _uploadLogo(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
@@ -32,6 +33,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
     TypedMiddleware<AppState, SaveAuthUserRequest>(saveAuthUser),
     TypedMiddleware<AppState, SaveUserSettingsRequest>(saveSettings),
     TypedMiddleware<AppState, UploadLogoRequest>(uploadLogo),
+    TypedMiddleware<AppState, SaveCompanyDocumentRequest>(saveDocument),
   ];
 }
 
@@ -164,6 +166,32 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
       store.dispatch(UploadLogoFailure(error));
       action.completer.completeError(error);
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(SettingsRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveClientDocumentRequest;
+    final state = store.state;
+    if (state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+              store.state.credentials, state.company, action.multipartFile)
+          .then((company) {
+        store.dispatch(SaveCompanySuccess(company));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveCompanyDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveCompanyDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

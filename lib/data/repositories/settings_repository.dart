@@ -93,4 +93,20 @@ class SettingsRepository {
           .data;
     }
   }
+
+  Future<CompanyEntity> uploadDocument(Credentials credentials,
+      CompanyEntity company, MultipartFile multipartFile) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/companies/${company.id}', credentials.token,
+        data: fields, multipartFile: multipartFile);
+
+    final CompanyItemResponse companyResponse =
+        serializers.deserializeWith(CompanyItemResponse.serializer, response);
+
+    return companyResponse.data;
+  }
 }
