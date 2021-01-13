@@ -78,9 +78,13 @@ class _CompanyDetailsState extends State<CompanyDetails>
   void initState() {
     super.initState();
 
-    final settingsUIState = widget.viewModel.state.settingsUIState;
+    final state = widget.viewModel.state;
+    final settingsUIState = state.settingsUIState;
+
     _controller = TabController(
-        vsync: this, length: 5, initialIndex: settingsUIState.tabIndex);
+        vsync: this,
+        length: state.settingsUIState.isFiltered ? 4 : 5,
+        initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -223,9 +227,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
           Tab(
             text: localization.defaults,
           ),
-          Tab(
-            text: localization.documents,
-          ),
+          if (!state.settingsUIState.isFiltered)
+            Tab(
+              text: localization.documents,
+            ),
         ],
       ),
       body: AppTabForm(
@@ -597,13 +602,14 @@ class _CompanyDetailsState extends State<CompanyDetails>
               )
             ],
           ),
-          DocumentGrid(
-            documents: company.documents.toList(),
-            onUploadDocument: (path) =>
-                viewModel.onUploadDocument(context, path),
-            onDeleteDocument: (document, password) =>
-                viewModel.onDeleteDocument(context, document, password),
-          ),
+          if (!state.settingsUIState.isFiltered)
+            DocumentGrid(
+              documents: company.documents.toList(),
+              onUploadDocument: (path) =>
+                  viewModel.onUploadDocument(context, path),
+              onDeleteDocument: (document, password) =>
+                  viewModel.onDeleteDocument(context, document, password),
+            ),
         ],
       ),
     );
