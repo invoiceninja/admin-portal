@@ -76,7 +76,7 @@ class MenuDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           _companyLogo(company),
-          SizedBox(width: 16, height: kTopBottomBarHeight),
+          SizedBox(width: 15, height: kTopBottomBarHeight),
           Expanded(
             child: Text(
               company.displayName.isEmpty
