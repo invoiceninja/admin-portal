@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'default_documents': 'Default Documents',
       'document_upload': 'Document Upload',
       'document_upload_help': 'Enable clients to upload documents',
       'expense_total': 'Expense Total',
@@ -52579,6 +52580,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enterAmount => _localizedValues[localeCode]['enter_amount'] ?? '';
   String get beforeTaxes => _localizedValues[localeCode]['before_taxes'] ?? '';
   String get afterTaxes => _localizedValues[localeCode]['after_taxes'] ?? '';
+  String get defaultDocuments => _localizedValues[localeCode]['default_documents'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

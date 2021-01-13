@@ -307,7 +307,7 @@ class SettingsSearch extends StatelessWidget {
         'credit_footer',
       ],
       [
-        'documents',
+        'default_documents',
       ]
     ],
     kSettingsUserDetails: [
@@ -449,6 +449,7 @@ class SettingsSearch extends StatelessWidget {
         'subdomain',
         'domain',
         'client_registration',
+        'document_upload',
       ],
       [
         'enable_portal_password',
