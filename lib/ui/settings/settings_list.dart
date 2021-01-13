@@ -306,6 +306,9 @@ class SettingsSearch extends StatelessWidget {
         'credit_terms',
         'credit_footer',
       ],
+      [
+        'documents',
+      ]
     ],
     kSettingsUserDetails: [
       [
