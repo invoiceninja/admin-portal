@@ -517,16 +517,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             numDays == null ? null : '$numDays'));
                     },
                   ),
-                  if (!state.uiState.settingsUIState.isFiltered)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25, bottom: 10),
-                      child: AppButton(
-                        iconData: Icons.settings,
-                        label: localization.configurePaymentTerms.toUpperCase(),
-                        onPressed: () =>
-                            viewModel.onConfigurePaymentTermsPressed(context),
-                      ),
-                    ),
                   /* TODO Re-enable with tasks
                   DecoratedFormField(
                     label: localization.taskRate,
@@ -537,6 +527,17 @@ class _CompanyDetailsState extends State<CompanyDetails>
                    */
                 ],
               ),
+              if (!state.uiState.settingsUIState.isFiltered)
+                Padding(
+                  padding:
+                      const EdgeInsets.only(bottom: 10, left: 16, right: 16),
+                  child: AppButton(
+                    iconData: Icons.settings,
+                    label: localization.configurePaymentTerms.toUpperCase(),
+                    onPressed: () =>
+                        viewModel.onConfigurePaymentTermsPressed(context),
+                  ),
+                ),
               FormCard(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
