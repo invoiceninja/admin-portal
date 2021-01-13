@@ -345,7 +345,8 @@ class InvoiceOverview extends StatelessWidget {
           localization.subtotal,
           invoice.calculateSubtotal(
               precision: precisionForInvoice(state, invoice))),
-      surchargeRow(localization.paidToDate, invoice.paidToDate),
+      if (!invoice.isQuote)
+        surchargeRow(localization.paidToDate, invoice.paidToDate),
     ]);
 
     if (invoice.customSurcharge1 != 0 && company.enableCustomSurchargeTaxes1) {
@@ -402,7 +403,10 @@ class InvoiceOverview extends StatelessWidget {
           invoice.customSurcharge4));
     }
 
-    widgets.add(surchargeRow(localization.balanceDue, invoice.balance));
+    if (invoice.isQuote || !invoice.isSent)
+      widgets.add(surchargeRow(localization.amount, invoice.amount));
+    else
+      widgets.add(surchargeRow(localization.balanceDue, invoice.balance));
 
     if (invoice.partial != 0) {
       widgets.add(surchargeRow(localization.partialDue, invoice.partial));
