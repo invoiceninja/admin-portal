@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.d
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -79,7 +80,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 4, initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: 5, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -221,6 +222,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           Tab(
             text: localization.defaults,
+          ),
+          Tab(
+            text: localization.documents,
           ),
         ],
       ),
@@ -593,6 +597,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
               )
             ],
           ),
+          DocumentGrid(
+              //documents: company.,
+              //onUploadDocument: onUploadDocument,
+              //onDeleteDocument: onDeleteDocument,
+              ),
         ],
       ),
     );
