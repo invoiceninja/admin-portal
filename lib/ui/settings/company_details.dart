@@ -598,10 +598,12 @@ class _CompanyDetailsState extends State<CompanyDetails>
             ],
           ),
           DocumentGrid(
-              //documents: company.,
-              //onUploadDocument: onUploadDocument,
-              //onDeleteDocument: onDeleteDocument,
-              ),
+            documents: company.documents.toList(),
+            onUploadDocument: (path) =>
+                viewModel.onUploadDocument(context, path),
+            onDeleteDocument: (document, password) =>
+                viewModel.onDeleteDocument(context, document, password),
+          ),
         ],
       ),
     );
