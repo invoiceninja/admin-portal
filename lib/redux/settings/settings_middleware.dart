@@ -173,7 +173,7 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
 
 Middleware<AppState> _saveDocument(SettingsRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveClientDocumentRequest;
+    final action = dynamicAction as SaveCompanyDocumentRequest;
     final state = store.state;
     if (state.isEnterprisePlan) {
       repository
