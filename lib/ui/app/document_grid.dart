@@ -45,7 +45,7 @@ class DocumentGrid extends StatelessWidget {
       children: [
         if (state.isEnterprisePlan)
           Padding(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
             child: Row(
               children: <Widget>[
                 if (!kIsWeb)
