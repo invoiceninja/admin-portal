@@ -243,7 +243,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             DecoratedFormField(
               controller: _bodyController,
               label: localization.body,
-              maxLines: 8,
+              maxLines: 6,
               keyboardType: TextInputType.multiline,
               onChanged: (_) => _onChanged(),
             ),
