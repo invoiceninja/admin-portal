@@ -1470,11 +1470,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_45': ':user deleted task :task',
       'activity_46': ':user restored task :task',
       'activity_47': ':user updated expense :expense',
-      'activity_48': ':user created task :user',
-      'activity_49': ':user updated task :user',
-      'activity_50': ':user archived task :user',
-      'activity_51': ':user deleted task :user',
-      'activity_52': ':user restored task :user',
+      'activity_48': ':user created user',
+      'activity_49': ':user updated user',
+      'activity_50': ':user archived user',
+      'activity_51': ':user deleted user',
+      'activity_52': ':user restored user',
       'activity_53': ':user marked invoice :invoice as sent',
       'activity_54': ':user applied payment :payment to invoice :invoice',
       'activity_55': '',
@@ -52580,7 +52580,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enterAmount => _localizedValues[localeCode]['enter_amount'] ?? '';
   String get beforeTaxes => _localizedValues[localeCode]['before_taxes'] ?? '';
   String get afterTaxes => _localizedValues[localeCode]['after_taxes'] ?? '';
-  String get defaultDocuments => _localizedValues[localeCode]['default_documents'] ?? '';
+  String get defaultDocuments =>
+      _localizedValues[localeCode]['default_documents'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

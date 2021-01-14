@@ -58,7 +58,6 @@ class QuoteFields {
   static const String partialDueDate = 'partial_due_date';
   static const String publicNotes = 'public_notes';
   static const String privateNotes = 'private_notes';
-  static const String invoiceTypeId = 'invoice_type_id';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
