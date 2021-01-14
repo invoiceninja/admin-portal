@@ -139,54 +139,72 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   Widget _buildTemplateDropdown(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
     final invoice = widget.viewModel.invoice;
+    final client = viewModel.client;
+    final contacts = invoice.invitations
+        .map((invitation) => client.contacts.firstWhere(
+            (contact) => contact.id == invitation.contactId,
+            orElse: () => null))
+        .toList();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<EmailTemplate>(
-          value: selectedTemplate,
-          onChanged: (template) {
-            setState(() {
-              _subjectController.text = '';
-              _bodyController.text = '';
-              selectedTemplate = template;
-              _loadTemplate();
-            });
-          },
-          items: [
-            DropdownMenuItem<EmailTemplate>(
-              child: Text(localization.initialEmail),
-              value: invoice.emailTemplate,
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+      child: Row(
+        children: [
+          Expanded(
+              child: Text(localization.to +
+                  ': ' +
+                  contacts
+                      .where((contact) => contact != null)
+                      .map((contact) => contact.fullNameWithEmail)
+                      .join(', '))),
+          DropdownButtonHideUnderline(
+            child: DropdownButton<EmailTemplate>(
+              value: selectedTemplate,
+              onChanged: (template) {
+                setState(() {
+                  _subjectController.text = '';
+                  _bodyController.text = '';
+                  selectedTemplate = template;
+                  _loadTemplate();
+                });
+              },
+              items: [
+                DropdownMenuItem<EmailTemplate>(
+                  child: Text(localization.initialEmail),
+                  value: invoice.emailTemplate,
+                ),
+                if (invoice.isInvoice) ...[
+                  DropdownMenuItem<EmailTemplate>(
+                    child: Text(localization.firstReminder),
+                    value: EmailTemplate.reminder1,
+                  ),
+                  DropdownMenuItem<EmailTemplate>(
+                    child: Text(localization.secondReminder),
+                    value: EmailTemplate.reminder2,
+                  ),
+                  DropdownMenuItem<EmailTemplate>(
+                    child: Text(localization.thirdReminder),
+                    value: EmailTemplate.reminder3,
+                  ),
+                ],
+                DropdownMenuItem<EmailTemplate>(
+                  child: Text(localization.firstCustom),
+                  value: EmailTemplate.custom1,
+                ),
+                DropdownMenuItem<EmailTemplate>(
+                  child: Text(localization.secondCustom),
+                  value: EmailTemplate.custom2,
+                ),
+                DropdownMenuItem<EmailTemplate>(
+                  child: Text(localization.thirdCustom),
+                  value: EmailTemplate.custom3,
+                ),
+              ],
             ),
-            if (invoice.isInvoice) ...[
-              DropdownMenuItem<EmailTemplate>(
-                child: Text(localization.firstReminder),
-                value: EmailTemplate.reminder1,
-              ),
-              DropdownMenuItem<EmailTemplate>(
-                child: Text(localization.secondReminder),
-                value: EmailTemplate.reminder2,
-              ),
-              DropdownMenuItem<EmailTemplate>(
-                child: Text(localization.thirdReminder),
-                value: EmailTemplate.reminder3,
-              ),
-            ],
-            DropdownMenuItem<EmailTemplate>(
-              child: Text(localization.firstCustom),
-              value: EmailTemplate.custom1,
-            ),
-            DropdownMenuItem<EmailTemplate>(
-              child: Text(localization.secondCustom),
-              value: EmailTemplate.custom2,
-            ),
-            DropdownMenuItem<EmailTemplate>(
-              child: Text(localization.thirdCustom),
-              value: EmailTemplate.custom3,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -207,28 +225,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   Widget _buildEdit(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
-    final client = viewModel.client;
-    final contacts = invoice.invitations
-        .map((invitation) => client.contacts.firstWhere(
-            (contact) => contact.id == invitation.contactId,
-            orElse: () => null))
-        .toList();
 
     return SingleChildScrollView(
       child: FormCard(
         children: <Widget>[
-          DecoratedFormField(
-            enabled: false,
-            label: localization.to,
-            initialValue: contacts
-                .where((contact) => contact != null)
-                .map((contact) => contact.fullNameWithEmail)
-                .join(', '),
-            minLines: 1,
-            maxLines: 4,
-          ),
           if (_isLoading &&
               _subjectController.text.isEmpty &&
               _bodyController.text.isEmpty)
@@ -242,7 +242,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             DecoratedFormField(
               controller: _bodyController,
               label: localization.body,
-              maxLines: 12,
+              maxLines: 8,
               keyboardType: TextInputType.multiline,
               onChanged: (_) => _onChanged(),
             ),
@@ -293,56 +293,51 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTemplateDropdown(context),
+                  _buildEdit(context),
+                  Expanded(
+                    child: Container(
+                      child: _buildPreview(context),
+                      color: Colors.white,
+                      height: double.infinity,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
               child: DefaultTabController(
-                length: 3,
+                length: 2,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AppTabBar(
                       tabs: [
                         Tab(
-                          child: Text(localization.customize),
+                          child: Text(localization.pdf),
                         ),
                         Tab(
                           child: Text(localization.history),
-                        ),
-                        Tab(
-                          child: Text(localization.pdf),
                         ),
                       ],
                     ),
                     Expanded(
                       child: TabBarView(
                         children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildTemplateDropdown(context),
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: _buildEdit(context),
-                                ),
-                              ),
-                            ],
-                          ),
-                          _buildHistory(context),
                           PDFScaffold(
                             invoice: invoice,
                             showAppBar: false,
                           ),
+                          _buildHistory(context),
                         ],
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: _buildPreview(context),
-                color: Colors.white,
-                height: double.infinity,
               ),
             ),
           ],
