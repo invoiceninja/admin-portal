@@ -149,7 +149,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         .toList();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+      padding: const EdgeInsets.only(left: 18, right: 18, top: 2),
       child: Row(
         children: [
           Expanded(
@@ -228,11 +228,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
     return SingleChildScrollView(
       child: FormCard(
+        padding: const EdgeInsets.only(left: 12, bottom: 12, right: 12),
         children: <Widget>[
           if (_isLoading &&
               _subjectController.text.isEmpty &&
               _bodyController.text.isEmpty)
-            LoadingIndicator(height: 300)
+            LoadingIndicator(height: 250)
           else ...[
             DecoratedFormField(
               controller: _subjectController,
