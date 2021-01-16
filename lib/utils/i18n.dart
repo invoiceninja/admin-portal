@@ -51218,126 +51218,130 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
 // STARTER: lang field - do not remove comment
-  String get taskStatus => _localizedValues[localeCode]['task_status'];
+  String get taskStatus => _localizedValues[localeCode]['task_status'] ?? '';
 
-  String get taskStatuses => _localizedValues[localeCode]['task_statuses'];
+  String get taskStatuses =>
+      _localizedValues[localeCode]['task_statuses'] ?? '';
 
-  String get newTaskStatus => _localizedValues[localeCode]['new_task_status'];
+  String get newTaskStatus =>
+      _localizedValues[localeCode]['new_task_status'] ?? '';
 
   String get createdTaskStatus =>
-      _localizedValues[localeCode]['created_task_status'];
+      _localizedValues[localeCode]['created_task_status'] ?? '';
 
   String get updatedTaskStatus =>
-      _localizedValues[localeCode]['updated_task_status'];
+      _localizedValues[localeCode]['updated_task_status'] ?? '';
 
   String get archivedTaskStatus =>
-      _localizedValues[localeCode]['archived_task_status'];
+      _localizedValues[localeCode]['archived_task_status'] ?? '';
 
   String get deletedTaskStatus =>
-      _localizedValues[localeCode]['deleted_task_status'];
+      _localizedValues[localeCode]['deleted_task_status'] ?? '';
 
   String get restoredTaskStatus =>
-      _localizedValues[localeCode]['restored_task_status'];
+      _localizedValues[localeCode]['restored_task_status'] ?? '';
 
   String get archivedTaskStatuses =>
-      _localizedValues[localeCode]['archived_task_statuses'];
+      _localizedValues[localeCode]['archived_task_statuses'] ?? '';
 
   String get deletedTaskStatuses =>
-      _localizedValues[localeCode]['deleted_task_statuses'];
+      _localizedValues[localeCode]['deleted_task_statuses'] ?? '';
 
   String get restoredTaskStatuses =>
-      _localizedValues[localeCode]['restored_task_statuses'];
+      _localizedValues[localeCode]['restored_task_statuses'] ?? '';
 
-  String get editTaskStatus => _localizedValues[localeCode]['edit_task_status'];
+  String get editTaskStatus =>
+      _localizedValues[localeCode]['edit_task_status'] ?? '';
 
   String get searchTaskStatus =>
-      _localizedValues[localeCode]['search_task_status'];
+      _localizedValues[localeCode]['search_task_status'] ?? '';
 
-  String get expenseTotal => _localizedValues[localeCode]['expense_total'];
+  String get expenseTotal =>
+      _localizedValues[localeCode]['expense_total'] ?? '';
 
   String get expenseCategory =>
-      _localizedValues[localeCode]['expense_category'];
+      _localizedValues[localeCode]['expense_category'] ?? '';
 
   String get expenseCategories =>
-      _localizedValues[localeCode]['expense_categories'];
+      _localizedValues[localeCode]['expense_categories'] ?? '';
 
   String get newExpenseCategory =>
-      _localizedValues[localeCode]['new_expense_category'];
+      _localizedValues[localeCode]['new_expense_category'] ?? '';
 
   String get createdExpenseCategory =>
-      _localizedValues[localeCode]['created_expense_category'];
+      _localizedValues[localeCode]['created_expense_category'] ?? '';
 
   String get updatedExpenseCategory =>
-      _localizedValues[localeCode]['updated_expense_category'];
+      _localizedValues[localeCode]['updated_expense_category'] ?? '';
 
   String get archivedExpenseCategory =>
-      _localizedValues[localeCode]['archived_expense_category'];
+      _localizedValues[localeCode]['archived_expense_category'] ?? '';
 
   String get deletedExpenseCategory =>
-      _localizedValues[localeCode]['deleted_expense_category'];
+      _localizedValues[localeCode]['deleted_expense_category'] ?? '';
 
   String get restoredExpenseCategory =>
-      _localizedValues[localeCode]['restored_expense_category'];
+      _localizedValues[localeCode]['restored_expense_category'] ?? '';
 
   String get archivedExpenseCategories =>
-      _localizedValues[localeCode]['archived_expense_categories'];
+      _localizedValues[localeCode]['archived_expense_categories'] ?? '';
 
   String get deletedExpenseCategories =>
-      _localizedValues[localeCode]['deleted_expense_categories'];
+      _localizedValues[localeCode]['deleted_expense_categories'] ?? '';
 
   String get restoredExpenseCategories =>
-      _localizedValues[localeCode]['restored_expense_categories'];
+      _localizedValues[localeCode]['restored_expense_categories'] ?? '';
 
   String get editExpenseCategory =>
-      _localizedValues[localeCode]['edit_expense_category'];
+      _localizedValues[localeCode]['edit_expense_category'] ?? '';
 
   String get searchExpenseCategory =>
-      _localizedValues[localeCode]['search_expense_category'];
+      _localizedValues[localeCode]['search_expense_category'] ?? '';
 
   String get recurringInvoice =>
-      _localizedValues[localeCode]['recurring_invoice'];
+      _localizedValues[localeCode]['recurring_invoice'] ?? '';
 
   String get recurringInvoices =>
-      _localizedValues[localeCode]['recurring_invoices'];
+      _localizedValues[localeCode]['recurring_invoices'] ?? '';
 
   String get newRecurringInvoice =>
-      _localizedValues[localeCode]['new_recurring_invoice'];
+      _localizedValues[localeCode]['new_recurring_invoice'] ?? '';
 
   String get createdRecurringInvoice =>
-      _localizedValues[localeCode]['created_recurring_invoice'];
+      _localizedValues[localeCode]['created_recurring_invoice'] ?? '';
 
   String get updatedRecurringInvoice =>
-      _localizedValues[localeCode]['updated_recurring_invoice'];
+      _localizedValues[localeCode]['updated_recurring_invoice'] ?? '';
 
   String get archivedRecurringInvoice =>
-      _localizedValues[localeCode]['archived_recurring_invoice'];
+      _localizedValues[localeCode]['archived_recurring_invoice'] ?? '';
 
   String get deletedRecurringInvoice =>
-      _localizedValues[localeCode]['deleted_recurring_invoice'];
+      _localizedValues[localeCode]['deleted_recurring_invoice'] ?? '';
 
   String get restoredRecurringInvoice =>
-      _localizedValues[localeCode]['restored_recurring_invoice'];
+      _localizedValues[localeCode]['restored_recurring_invoice'] ?? '';
 
   String get archivedRecurringInvoices =>
-      _localizedValues[localeCode]['archived_recurring_invoices'];
+      _localizedValues[localeCode]['archived_recurring_invoices'] ?? '';
 
   String get deletedRecurringInvoices =>
-      _localizedValues[localeCode]['deleted_recurring_invoices'];
+      _localizedValues[localeCode]['deleted_recurring_invoices'] ?? '';
 
   String get restoredRecurringInvoices =>
-      _localizedValues[localeCode]['restored_recurring_invoices'];
+      _localizedValues[localeCode]['restored_recurring_invoices'] ?? '';
 
   String get stoppedRecurringInvoice =>
-      _localizedValues[localeCode]['stopped_recurring_invoice'];
+      _localizedValues[localeCode]['stopped_recurring_invoice'] ?? '';
 
   String get startedRecurringInvoice =>
-      _localizedValues[localeCode]['started_recurring_invoice'];
+      _localizedValues[localeCode]['started_recurring_invoice'] ?? '';
 
   String get resumedRecurringInvoice =>
-      _localizedValues[localeCode]['resumed_recurring_invoice'];
+      _localizedValues[localeCode]['resumed_recurring_invoice'] ?? '';
 
   String get searchRecurringInvoice =>
-      _localizedValues[localeCode]['search_recurring_invoice'];
+      _localizedValues[localeCode]['search_recurring_invoice'] ?? '';
 
   String get webhook => _localizedValues[localeCode]['webhook'] ?? '';
 
@@ -52601,7 +52605,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     if (value.isEmpty) {
       print('ERROR: localization key not found - $key');
 
-      final englishValue = _localizedValues['en'][lookupKey];
+      final englishValue = _localizedValues['en'][lookupKey] ?? '';
 
       return englishValue.isEmpty ? key : englishValue;
     }
