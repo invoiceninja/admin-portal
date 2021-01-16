@@ -73,6 +73,17 @@ class AppShortcutsState extends State<AppShortcuts> {
 
     return widget.child;
 
+    return Shortcuts(
+      shortcuts: _shortcuts,
+      child: Actions(
+        actions: _actions,
+        child: Focus(
+          autofocus: true,
+          child: widget.child,
+        ),
+      ),
+    );
+
     return FocusableActionDetector(
       child: widget.child,
       actions: _actions,
