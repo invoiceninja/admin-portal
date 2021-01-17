@@ -184,9 +184,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'time_log',
       serializers.serialize(object.timeLog,
           specifiedType: const FullType(String)),
-      'is_running',
-      serializers.serialize(object.isRunning,
-          specifiedType: const FullType(bool)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -293,10 +290,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'time_log':
           result.timeLog = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'is_running':
-          result.isRunning = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -658,8 +651,6 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String timeLog;
   @override
-  final bool isRunning;
-  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -702,7 +693,6 @@ class _$TaskEntity extends TaskEntity {
       this.rate,
       this.projectId,
       this.timeLog,
-      this.isRunning,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -742,9 +732,6 @@ class _$TaskEntity extends TaskEntity {
     }
     if (timeLog == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'timeLog');
-    }
-    if (isRunning == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'isRunning');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue1');
@@ -797,7 +784,6 @@ class _$TaskEntity extends TaskEntity {
         rate == other.rate &&
         projectId == other.projectId &&
         timeLog == other.timeLog &&
-        isRunning == other.isRunning &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -836,11 +822,11 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
-                                                                                rate.hashCode),
-                                                                            projectId.hashCode),
-                                                                        timeLog.hashCode),
-                                                                    isRunning.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode),
+                                                                                clientId.hashCode),
+                                                                            rate.hashCode),
+                                                                        projectId.hashCode),
+                                                                    timeLog.hashCode),
                                                                 customValue1.hashCode),
                                                             customValue2.hashCode),
                                                         customValue3.hashCode),
@@ -869,7 +855,6 @@ class _$TaskEntity extends TaskEntity {
           ..add('rate', rate)
           ..add('projectId', projectId)
           ..add('timeLog', timeLog)
-          ..add('isRunning', isRunning)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -923,10 +908,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String _timeLog;
   String get timeLog => _$this._timeLog;
   set timeLog(String timeLog) => _$this._timeLog = timeLog;
-
-  bool _isRunning;
-  bool get isRunning => _$this._isRunning;
-  set isRunning(bool isRunning) => _$this._isRunning = isRunning;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1004,7 +985,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _rate = _$v.rate;
       _projectId = _$v.projectId;
       _timeLog = _$v.timeLog;
-      _isRunning = _$v.isRunning;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -1052,7 +1032,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               rate: rate,
               projectId: projectId,
               timeLog: timeLog,
-              isRunning: isRunning,
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,
