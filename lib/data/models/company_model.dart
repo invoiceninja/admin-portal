@@ -634,6 +634,9 @@ abstract class GatewayOptionsEntity
   @BuiltValueField(wireName: 'token_billing')
   bool get supportTokenBilling;
 
+  @nullable
+  BuiltList<String> get webhooks;
+
   static Serializer<GatewayOptionsEntity> get serializer =>
       _$gatewayOptionsEntitySerializer;
 }
