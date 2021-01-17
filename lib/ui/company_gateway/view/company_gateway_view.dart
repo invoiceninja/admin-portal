@@ -87,10 +87,19 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
         ListTile(
           contentPadding: const EdgeInsets.all(22),
           title: Text(localization.webhookUrl),
-          subtitle: Text(
-            webhookUrl,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          subtitle: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                webhookUrl,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                '\n${localization.supportedEvents}:\n${gateway.supportedEvents().map((e) => ' - $e').join('\n')}',
+              ),
+            ],
           ),
           trailing: Icon(Icons.content_copy),
           onTap: () {

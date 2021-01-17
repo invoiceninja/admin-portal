@@ -609,6 +609,16 @@ abstract class GatewayEntity extends Object
     }
   }
 
+  List<String> supportedEvents() {
+    final events = <String>[];
+
+    options.forEach((key, option) {
+      events.addAll((option.webhooks ?? <String>[]).toList());
+    });
+
+    return events.toSet().toList();
+  }
+
   @override
   FormatNumberType get listDisplayAmountType => null;
 }
