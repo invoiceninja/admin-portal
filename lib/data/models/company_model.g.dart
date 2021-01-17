@@ -781,7 +781,13 @@ class _$GatewayOptionsEntitySerializer
       serializers.serialize(object.supportTokenBilling,
           specifiedType: const FullType(bool)),
     ];
-
+    if (object.webhooks != null) {
+      result
+        ..add('webhooks')
+        ..add(serializers.serialize(object.webhooks,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
     return result;
   }
 
@@ -804,6 +810,12 @@ class _$GatewayOptionsEntitySerializer
         case 'token_billing':
           result.supportTokenBilling = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'webhooks':
+          result.webhooks.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(String)]))
+              as BuiltList<Object>);
           break;
       }
     }
@@ -4417,12 +4429,15 @@ class _$GatewayOptionsEntity extends GatewayOptionsEntity {
   final bool supportRefunds;
   @override
   final bool supportTokenBilling;
+  @override
+  final BuiltList<String> webhooks;
 
   factory _$GatewayOptionsEntity(
           [void Function(GatewayOptionsEntityBuilder) updates]) =>
       (new GatewayOptionsEntityBuilder()..update(updates)).build();
 
-  _$GatewayOptionsEntity._({this.supportRefunds, this.supportTokenBilling})
+  _$GatewayOptionsEntity._(
+      {this.supportRefunds, this.supportTokenBilling, this.webhooks})
       : super._() {
     if (supportRefunds == null) {
       throw new BuiltValueNullFieldError(
@@ -4448,21 +4463,24 @@ class _$GatewayOptionsEntity extends GatewayOptionsEntity {
     if (identical(other, this)) return true;
     return other is GatewayOptionsEntity &&
         supportRefunds == other.supportRefunds &&
-        supportTokenBilling == other.supportTokenBilling;
+        supportTokenBilling == other.supportTokenBilling &&
+        webhooks == other.webhooks;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??=
-        $jf($jc($jc(0, supportRefunds.hashCode), supportTokenBilling.hashCode));
+    return __hashCode ??= $jf($jc(
+        $jc($jc(0, supportRefunds.hashCode), supportTokenBilling.hashCode),
+        webhooks.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GatewayOptionsEntity')
           ..add('supportRefunds', supportRefunds)
-          ..add('supportTokenBilling', supportTokenBilling))
+          ..add('supportTokenBilling', supportTokenBilling)
+          ..add('webhooks', webhooks))
         .toString();
   }
 }
@@ -4481,12 +4499,18 @@ class GatewayOptionsEntityBuilder
   set supportTokenBilling(bool supportTokenBilling) =>
       _$this._supportTokenBilling = supportTokenBilling;
 
+  ListBuilder<String> _webhooks;
+  ListBuilder<String> get webhooks =>
+      _$this._webhooks ??= new ListBuilder<String>();
+  set webhooks(ListBuilder<String> webhooks) => _$this._webhooks = webhooks;
+
   GatewayOptionsEntityBuilder();
 
   GatewayOptionsEntityBuilder get _$this {
     if (_$v != null) {
       _supportRefunds = _$v.supportRefunds;
       _supportTokenBilling = _$v.supportTokenBilling;
+      _webhooks = _$v.webhooks?.toBuilder();
       _$v = null;
     }
     return this;
@@ -4507,10 +4531,24 @@ class GatewayOptionsEntityBuilder
 
   @override
   _$GatewayOptionsEntity build() {
-    final _$result = _$v ??
-        new _$GatewayOptionsEntity._(
-            supportRefunds: supportRefunds,
-            supportTokenBilling: supportTokenBilling);
+    _$GatewayOptionsEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$GatewayOptionsEntity._(
+              supportRefunds: supportRefunds,
+              supportTokenBilling: supportTokenBilling,
+              webhooks: _webhooks?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'webhooks';
+        _webhooks?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'GatewayOptionsEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
