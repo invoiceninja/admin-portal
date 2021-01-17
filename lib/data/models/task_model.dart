@@ -299,13 +299,17 @@ abstract class TaskEntity extends Object
     return isValid && countRunning <= 1;
   }
 
-  bool isBetween(String startDate, String endDate) {
-    final times = getTaskTimes();
+  bool get isRunning {
+    final taskTimes = getTaskTimes();
 
-    if (times.isEmpty) {
+    if (taskTimes.isEmpty) {
       return false;
     }
 
+    return taskTimes.any((taskTime) => taskTime.isRunning);
+  }
+
+  bool isBetween(String startDate, String endDate) {
     final taskTimes = getTaskTimes();
 
     if (taskTimes.isEmpty) {
@@ -475,9 +479,6 @@ abstract class TaskEntity extends Object
 
   @BuiltValueField(wireName: 'time_log')
   String get timeLog;
-
-  @BuiltValueField(wireName: 'is_running')
-  bool get isRunning;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
