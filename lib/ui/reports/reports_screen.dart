@@ -1122,7 +1122,7 @@ class ReportResult {
           )
     ];
 
-    print('## Total Columns: ${totalColumns.length}');
+    //print('## Total Columns: ${totalColumns.length}');
 
     return totalColumns;
   }
@@ -1239,7 +1239,7 @@ class ReportResult {
         }
       });
 
-      print('## Total Rows: ${cells.length}');
+      //print('## Total Rows: ${cells.length}');
       rows.add(DataRow(cells: cells));
     });
 
