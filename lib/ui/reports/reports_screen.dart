@@ -1202,9 +1202,6 @@ class ReportResult {
       });
     }
 
-    print('## TOTALS: $totals');
-    print('## Keys: $keys');
-
     List<String> allFields = [];
     keys.forEach((currencyId) {
       final values = totals[currencyId];
@@ -1222,7 +1219,6 @@ class ReportResult {
         DataCell(Text(values['count'].toInt().toString())),
       ];
 
-      print('## FIELDs: $allFields');
       allFields.forEach((field) {
         final amount = values[field];
         if (field != 'count') {
@@ -1243,7 +1239,7 @@ class ReportResult {
         }
       });
 
-      print('## Add row with cells: ${cells.length}');
+      print('## Total Rows: ${cells.length}');
       rows.add(DataRow(cells: cells));
     });
 

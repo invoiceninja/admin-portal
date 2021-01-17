@@ -122,10 +122,10 @@ ReportResult invoiceReport(
           value = invoice.balance;
           break;
         case InvoiceReportFields.converted_amount:
-          value = invoice.amount * invoice.exchangeRate;
+          value = invoice.amount * 1 / invoice.exchangeRate;
           break;
         case InvoiceReportFields.converted_balance:
-          value = invoice.balance * invoice.exchangeRate;
+          value = invoice.balance * 1 / invoice.exchangeRate;
           break;
         case InvoiceReportFields.client:
           value = client?.displayName ?? '';

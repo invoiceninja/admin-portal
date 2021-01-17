@@ -114,10 +114,10 @@ ReportResult creditReport(
           value = credit.balance;
           break;
         case CreditReportFields.converted_amount:
-          value = credit.amount * credit.exchangeRate;
+          value = credit.amount * 1 / credit.exchangeRate;
           break;
         case CreditReportFields.converted_balance:
-          value = credit.balance * credit.exchangeRate;
+          value = credit.balance * 1 / credit.exchangeRate;
           break;
         case CreditReportFields.client:
           value = client?.listDisplayName ?? '';

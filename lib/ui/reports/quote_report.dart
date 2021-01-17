@@ -112,7 +112,7 @@ ReportResult quoteReport(
           value = quote.amount;
           break;
         case QuoteReportFields.converted_amount:
-          value = quote.amount * quote.exchangeRate;
+          value = quote.amount * 1 / quote.exchangeRate;
           break;
         case QuoteReportFields.number:
           value = quote.number;
