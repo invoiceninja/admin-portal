@@ -1097,7 +1097,7 @@ class ReportResult {
     final sortedColumns = columns.toList()
       ..sort((String str1, String str2) => str1.compareTo(str2));
 
-    return [
+    final totalColumns = [
       DataColumn(
         label: Text(localization.currency),
         onSort: onSortCallback,
@@ -1121,6 +1121,10 @@ class ReportResult {
             onSort: onSortCallback,
           )
     ];
+
+    //print('## Total Columns: ${totalColumns.length}');
+
+    return totalColumns;
   }
 
   List<DataRow> totalRows(BuildContext context) {
@@ -1198,6 +1202,14 @@ class ReportResult {
       });
     }
 
+    List<String> allFields = [];
+    keys.forEach((currencyId) {
+      final values = totals[currencyId];
+      allFields.addAll(values.keys);
+    });
+    allFields = allFields.toSet().toList()
+      ..sort((String str1, String str2) => str1.compareTo(str2));
+
     keys.forEach((currencyId) {
       final values = totals[currencyId];
       final cells = <DataCell>[
@@ -1207,9 +1219,7 @@ class ReportResult {
         DataCell(Text(values['count'].toInt().toString())),
       ];
 
-      final List<String> fields = values.keys.toList()
-        ..sort((String str1, String str2) => str1.compareTo(str2));
-      fields.forEach((field) {
+      allFields.forEach((field) {
         final amount = values[field];
         if (field != 'count') {
           String value;
@@ -1229,6 +1239,7 @@ class ReportResult {
         }
       });
 
+      //print('## Total Rows: ${cells.length}');
       rows.add(DataRow(cells: cells));
     });
 
@@ -1364,11 +1375,13 @@ class ReportNumberValue extends ReportElement {
     EntityType entityType,
     String entityId,
     this.currencyId,
+    this.exchangeRate,
     this.formatNumberType = FormatNumberType.money,
   }) : super(value: value, entityType: entityType, entityId: entityId);
 
   final FormatNumberType formatNumberType;
   final String currencyId;
+  final double exchangeRate;
 
   @override
   Widget renderWidget(BuildContext context, String column) {

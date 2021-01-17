@@ -343,12 +343,14 @@ abstract class BaseEntity implements SelectableEntity {
   ReportNumberValue getReportDouble(
           {double value,
           String currencyId,
+          double exchangeRate,
           FormatNumberType formatNumberType}) =>
       ReportNumberValue(
           entityId: id,
           entityType: entityType,
           value: value,
           currencyId: currencyId,
+          exchangeRate: exchangeRate,
           formatNumberType: formatNumberType);
 
   ReportIntValue getReportInt(

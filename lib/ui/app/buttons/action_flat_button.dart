@@ -48,7 +48,9 @@ class ActionFlatButton extends StatelessWidget {
     return FlatButton(
       child: Text(
         tooltip,
-        style: isHeader ? TextStyle(color: store.state.headerTextColor) : null,
+        style: isHeader && onPressed != null
+            ? TextStyle(color: store.state.headerTextColor)
+            : null,
       ),
       onPressed: onPressed,
     );

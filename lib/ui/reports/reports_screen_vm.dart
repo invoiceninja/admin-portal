@@ -496,9 +496,13 @@ GroupTotals calculateReportTotals({
         if (cell is ReportNumberValue &&
             cell.currencyId != company.currencyId) {
           double cellValue = cell.value;
-          cellValue *= getExchangeRate(currencyMap,
-              fromCurrencyId: cell.currencyId,
-              toCurrencyId: company.currencyId);
+          var rate = cell.exchangeRate;
+          if (rate == null || rate == 0 || rate == 1) {
+            rate = getExchangeRate(currencyMap,
+                fromCurrencyId: cell.currencyId,
+                toCurrencyId: company.currencyId);
+          }
+          cellValue = cellValue * 1 / cell.exchangeRate;
           totals['$group'][column] += cellValue;
         } else {
           totals['$group'][column] += cell.value;

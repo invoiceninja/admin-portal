@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'supported_events': 'Supported Events',
+      'converted_amount': 'Converted Amount',
+      'converted_balance': 'Converted Balance',
+      'is_sent': 'Is Sent',
       'default_documents': 'Default Documents',
       'document_upload': 'Document Upload',
       'document_upload_help': 'Enable clients to upload documents',
@@ -52579,13 +52583,30 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get color => _localizedValues[localeCode]['color'] ?? '';
 
   String get enterTaxes => _localizedValues[localeCode]['enter_taxes'] ?? '';
+
   String get byRate => _localizedValues[localeCode]['by_rate'] ?? '';
+
   String get byAmount => _localizedValues[localeCode]['by_amount'] ?? '';
+
   String get enterAmount => _localizedValues[localeCode]['enter_amount'] ?? '';
+
   String get beforeTaxes => _localizedValues[localeCode]['before_taxes'] ?? '';
+
   String get afterTaxes => _localizedValues[localeCode]['after_taxes'] ?? '';
+
+  String get isSent => _localizedValues[localeCode]['is_sent'] ?? '';
+
   String get defaultDocuments =>
       _localizedValues[localeCode]['default_documents'] ?? '';
+
+  String get convertedAmount =>
+      _localizedValues[localeCode]['converted_amount'] ?? '';
+
+  String get convertedBalance =>
+      _localizedValues[localeCode]['converted_balance'] ?? '';
+
+  String get supportedEvents =>
+      _localizedValues[localeCode]['supported_events'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

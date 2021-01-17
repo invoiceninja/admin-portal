@@ -12,6 +12,8 @@ import 'package:memoize/memoize.dart';
 enum CreditReportFields {
   amount,
   balance,
+  converted_amount,
+  converted_balance,
   client,
   client_balance,
   client_address1,
@@ -110,6 +112,12 @@ ReportResult creditReport(
           break;
         case CreditReportFields.balance:
           value = credit.balance;
+          break;
+        case CreditReportFields.converted_amount:
+          value = credit.amount * 1 / credit.exchangeRate;
+          break;
+        case CreditReportFields.converted_balance:
+          value = credit.balance * 1 / credit.exchangeRate;
           break;
         case CreditReportFields.client:
           value = client?.listDisplayName ?? '';
@@ -218,8 +226,18 @@ ReportResult creditReport(
       if (value.runtimeType == bool) {
         row.add(credit.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
+        String currencyId = client.currencyId;
+        if ([
+          CreditReportFields.converted_amount,
+          CreditReportFields.converted_balance
+        ].contains(column)) {
+          currencyId = userCompany.company.currencyId;
+        }
         row.add(credit.getReportDouble(
-            value: value, currencyId: client.settings.currencyId));
+          value: value,
+          currencyId: currencyId,
+          exchangeRate: credit.exchangeRate,
+        ));
       } else {
         row.add(credit.getReportString(value: value));
       }

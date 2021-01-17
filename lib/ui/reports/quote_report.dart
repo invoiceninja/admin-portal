@@ -10,6 +10,7 @@ import 'package:memoize/memoize.dart';
 
 enum QuoteReportFields {
   amount,
+  converted_amount,
   client,
   client_balance,
   client_address1,
@@ -109,6 +110,9 @@ ReportResult quoteReport(
       switch (column) {
         case QuoteReportFields.amount:
           value = quote.amount;
+          break;
+        case QuoteReportFields.converted_amount:
+          value = quote.amount * 1 / quote.exchangeRate;
           break;
         case QuoteReportFields.number:
           value = quote.number;
@@ -220,8 +224,17 @@ ReportResult quoteReport(
       if (value.runtimeType == bool) {
         row.add(quote.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
+        String currencyId = client.currencyId;
+        if ([
+          QuoteReportFields.converted_amount,
+        ].contains(column)) {
+          currencyId = userCompany.company.currencyId;
+        }
         row.add(quote.getReportDouble(
-            value: value, currencyId: client.settings.currencyId));
+          value: value,
+          currencyId: currencyId,
+          exchangeRate: quote.exchangeRate,
+        ));
       } else {
         row.add(quote.getReportString(value: value));
       }

@@ -217,7 +217,6 @@ abstract class TaskEntity extends Object
       timeLog: isRunning
           ? '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]'
           : '[]',
-      isRunning: isRunning,
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -245,7 +244,6 @@ abstract class TaskEntity extends Object
     ..isChanged = false
     ..isDeleted = false
     ..invoiceId = ''
-    ..isRunning = false
     ..duration = 0
     ..timeLog = '[]');
 
@@ -299,13 +297,17 @@ abstract class TaskEntity extends Object
     return isValid && countRunning <= 1;
   }
 
-  bool isBetween(String startDate, String endDate) {
-    final times = getTaskTimes();
+  bool get isRunning {
+    final taskTimes = getTaskTimes();
 
-    if (times.isEmpty) {
+    if (taskTimes.isEmpty) {
       return false;
     }
 
+    return taskTimes.any((taskTime) => taskTime.isRunning);
+  }
+
+  bool isBetween(String startDate, String endDate) {
     final taskTimes = getTaskTimes();
 
     if (taskTimes.isEmpty) {
@@ -404,8 +406,7 @@ abstract class TaskEntity extends Object
 
     return rebuild((b) => b
       ..isChanged = true
-      ..timeLog = jsonEncode(taskTimes)
-      ..isRunning = time.isRunning);
+      ..timeLog = jsonEncode(taskTimes));
   }
 
   TaskEntity updateTaskTime(TaskTime time, int index) {
@@ -414,18 +415,9 @@ abstract class TaskEntity extends Object
 
     taskTimes[index] = time.asList;
 
-    bool isRunning = false;
-    if (taskTimes.isNotEmpty) {
-      final last = taskTimes.last as List;
-      if (last.length == 1 || (last.length == 2 && last[1] == 0)) {
-        isRunning = true;
-      }
-    }
-
     return rebuild((b) => b
       ..isChanged = true
-      ..timeLog = jsonEncode(taskTimes)
-      ..isRunning = isRunning);
+      ..timeLog = jsonEncode(taskTimes));
   }
 
   TaskEntity deleteTaskTime(int index) {
@@ -434,18 +426,9 @@ abstract class TaskEntity extends Object
 
     taskTimes.removeAt(index);
 
-    bool isRunning = false;
-    if (taskTimes.isNotEmpty) {
-      final last = taskTimes.last as List;
-      if (last.length == 1 || (last.length == 2 && last[1] == 0)) {
-        isRunning = true;
-      }
-    }
-
     return rebuild((b) => b
       ..isChanged = true
-      ..timeLog = jsonEncode(taskTimes)
-      ..isRunning = isRunning);
+      ..timeLog = jsonEncode(taskTimes));
   }
 
   double calculateAmount(double taskRate) =>
@@ -475,9 +458,6 @@ abstract class TaskEntity extends Object
 
   @BuiltValueField(wireName: 'time_log')
   String get timeLog;
-
-  @BuiltValueField(wireName: 'is_running')
-  bool get isRunning;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;

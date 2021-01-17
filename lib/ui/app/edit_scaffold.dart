@@ -50,24 +50,24 @@ class EditScaffold extends StatelessWidget {
           automaticallyImplyLeading: isMobile(context),
           title: Text(title),
           actions: <Widget>[
-            if (isMobile(context) ||
-                !state.uiState.isInSettings ||
-                state.uiState.isEditing ||
-                state.isLoading ||
-                state.isSaving ||
-                state.settingsUIState.isChanged)
-              SaveCancelButtons(
-                saveLabel: saveLabel,
-                isSaving: state.isSaving,
-                onSavePressed: (context) {
-                  // Clear focus now to prevent un-focus after save from
-                  // marking the form as changed and to hide the keyboard
-                  FocusScope.of(context).unfocus(
-                      disposition: UnfocusDisposition.previouslyFocusedChild);
+            SaveCancelButtons(
+              isEnabled: isMobile(context) ||
+                  !state.uiState.isInSettings ||
+                  state.uiState.isEditing ||
+                  state.isLoading ||
+                  state.isSaving ||
+                  state.settingsUIState.isChanged,
+              saveLabel: saveLabel,
+              isSaving: state.isSaving,
+              onSavePressed: (context) {
+                // Clear focus now to prevent un-focus after save from
+                // marking the form as changed and to hide the keyboard
+                FocusScope.of(context).unfocus(
+                    disposition: UnfocusDisposition.previouslyFocusedChild);
 
-                  onSavePressed(context);
+                onSavePressed(context);
 
-                  /* The debouncer has been disabled b/c if you click
+                /* The debouncer has been disabled b/c if you click
                    save too quickly the changes are lost
                 if (Debouncer.isDebouncing) {
                   Timer(Duration(milliseconds: kDebounceDelay), () {
@@ -77,17 +77,17 @@ class EditScaffold extends StatelessWidget {
                   onSavePressed(context);
                 }
                  */
-                },
-                onCancelPressed: isMobile(context)
-                    ? null
-                    : (context) {
-                        if (onCancelPressed != null) {
-                          onCancelPressed(context);
-                        } else {
-                          store.dispatch(ResetSettings());
-                        }
-                      },
-              ),
+              },
+              onCancelPressed: isMobile(context)
+                  ? null
+                  : (context) {
+                      if (onCancelPressed != null) {
+                        onCancelPressed(context);
+                      } else {
+                        store.dispatch(ResetSettings());
+                      }
+                    },
+            ),
           ],
           bottom: appBarBottom,
         ),

@@ -13,6 +13,8 @@ import 'package:memoize/memoize.dart';
 enum InvoiceReportFields {
   amount,
   balance,
+  converted_amount,
+  converted_balance,
   client,
   client_balance,
   client_address1,
@@ -118,6 +120,12 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.balance:
           value = invoice.balance;
+          break;
+        case InvoiceReportFields.converted_amount:
+          value = invoice.amount * 1 / invoice.exchangeRate;
+          break;
+        case InvoiceReportFields.converted_balance:
+          value = invoice.balance * 1 / invoice.exchangeRate;
           break;
         case InvoiceReportFields.client:
           value = client?.displayName ?? '';
@@ -247,8 +255,18 @@ ReportResult invoiceReport(
         row.add(
             invoice.getReportAge(value: value, currencyId: client.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
+        String currencyId = client.currencyId;
+        if ([
+          InvoiceReportFields.converted_amount,
+          InvoiceReportFields.converted_balance
+        ].contains(column)) {
+          currencyId = userCompany.company.currencyId;
+        }
         row.add(invoice.getReportDouble(
-            value: value, currencyId: client.currencyId));
+          value: value,
+          currencyId: currencyId,
+          exchangeRate: invoice.exchangeRate,
+        ));
       } else {
         row.add(invoice.getReportString(value: value));
       }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
@@ -78,7 +79,15 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
+    final client = state.clientState.get(invoice.clientId);
+
+    final settings = SettingsEntity(
+      clientSettings: client.settings,
+      groupSettings: state.groupState.get(client.groupId).settings,
+      companySettings: state.company.settings,
+    );
 
     return ListView(
       children: <Widget>[
@@ -93,6 +102,11 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
                   : invoice.entityType == EntityType.quote
                       ? localization.quoteTerms
                       : localization.invoiceTerms,
+              hint: invoice.isCredit
+                  ? settings.defaultCreditTerms
+                  : invoice.isQuote
+                      ? settings.defaultQuoteTerms
+                      : settings.defaultInvoiceTerms,
             ),
             DecoratedFormField(
               maxLines: 4,
@@ -103,12 +117,18 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
                   : invoice.entityType == EntityType.quote
                       ? localization.quoteFooter
                       : localization.invoiceFooter,
+              hint: invoice.isCredit
+                  ? settings.defaultCreditFooter
+                  : invoice.isQuote
+                      ? settings.defaultQuoteFooter
+                      : settings.defaultInvoiceFooter,
             ),
             DecoratedFormField(
               maxLines: 4,
               controller: _publicNotesController,
               keyboardType: TextInputType.multiline,
               label: localization.publicNotes,
+              hint: client.publicNotes,
             ),
             DecoratedFormField(
               maxLines: 4,

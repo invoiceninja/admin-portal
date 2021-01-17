@@ -84,21 +84,31 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             label: localization.processed,
             value: formatNumber(processed, context)),
         ListDivider(),
-        ListTile(
-          contentPadding: const EdgeInsets.all(22),
-          title: Text(localization.webhookUrl),
-          subtitle: Text(
-            webhookUrl,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+        if (gateway.supportedEvents().isNotEmpty)
+          ListTile(
+            contentPadding: const EdgeInsets.all(22),
+            title: Text(localization.webhookUrl),
+            subtitle: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  webhookUrl,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  '\n${localization.supportedEvents}:\n${gateway.supportedEvents().map((e) => ' - $e').join('\n')}',
+                ),
+              ],
+            ),
+            trailing: Icon(Icons.content_copy),
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: webhookUrl));
+              showToast(localization.copiedToClipboard
+                  .replaceFirst(':value ', webhookUrl));
+            },
           ),
-          trailing: Icon(Icons.content_copy),
-          onTap: () {
-            Clipboard.setData(ClipboardData(text: webhookUrl));
-            showToast(localization.copiedToClipboard
-                .replaceFirst(':value ', webhookUrl));
-          },
-        ),
         ListDivider(),
         if (gateway?.supportsTokenBilling == true) ...[
           EntitiesListTile(
