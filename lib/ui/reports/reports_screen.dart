@@ -1097,7 +1097,7 @@ class ReportResult {
     final sortedColumns = columns.toList()
       ..sort((String str1, String str2) => str1.compareTo(str2));
 
-    return [
+    final totalColumns = [
       DataColumn(
         label: Text(localization.currency),
         onSort: onSortCallback,
@@ -1121,6 +1121,10 @@ class ReportResult {
             onSort: onSortCallback,
           )
     ];
+
+    print('## Total Columns: ${totalColumns.length}');
+
+    return totalColumns;
   }
 
   List<DataRow> totalRows(BuildContext context) {
@@ -1198,6 +1202,17 @@ class ReportResult {
       });
     }
 
+    print('## TOTALS: $totals');
+    print('## Keys: $keys');
+
+    List<String> allFields = [];
+    keys.forEach((currencyId) {
+      final values = totals[currencyId];
+      allFields.addAll(values.keys);
+    });
+    allFields = allFields.toSet().toList()
+      ..sort((String str1, String str2) => str1.compareTo(str2));
+
     keys.forEach((currencyId) {
       final values = totals[currencyId];
       final cells = <DataCell>[
@@ -1207,9 +1222,8 @@ class ReportResult {
         DataCell(Text(values['count'].toInt().toString())),
       ];
 
-      final List<String> fields = values.keys.toList()
-        ..sort((String str1, String str2) => str1.compareTo(str2));
-      fields.forEach((field) {
+      print('## FIELDs: $allFields');
+      allFields.forEach((field) {
         final amount = values[field];
         if (field != 'count') {
           String value;
@@ -1229,6 +1243,7 @@ class ReportResult {
         }
       });
 
+      print('## Add row with cells: ${cells.length}');
       rows.add(DataRow(cells: cells));
     });
 

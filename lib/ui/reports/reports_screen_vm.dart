@@ -533,5 +533,8 @@ GroupTotals calculateReportTotals({
     return 0;
   });
 
+  print('## totals: $totals');
+  print('## rows: $rows');
+
   return GroupTotals(totals: totals, rows: rows);
 }
