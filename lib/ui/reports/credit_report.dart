@@ -233,7 +233,11 @@ ReportResult creditReport(
         ].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        row.add(credit.getReportDouble(value: value, currencyId: currencyId));
+        row.add(credit.getReportDouble(
+          value: value,
+          currencyId: currencyId,
+          exchangeRate: credit.exchangeRate,
+        ));
       } else {
         row.add(credit.getReportString(value: value));
       }

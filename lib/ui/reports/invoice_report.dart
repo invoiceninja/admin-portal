@@ -262,7 +262,11 @@ ReportResult invoiceReport(
         ].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        row.add(invoice.getReportDouble(value: value, currencyId: currencyId));
+        row.add(invoice.getReportDouble(
+          value: value,
+          currencyId: currencyId,
+          exchangeRate: invoice.exchangeRate,
+        ));
       } else {
         row.add(invoice.getReportString(value: value));
       }

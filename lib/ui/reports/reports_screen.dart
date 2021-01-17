@@ -1375,11 +1375,13 @@ class ReportNumberValue extends ReportElement {
     EntityType entityType,
     String entityId,
     this.currencyId,
+    this.exchangeRate,
     this.formatNumberType = FormatNumberType.money,
   }) : super(value: value, entityType: entityType, entityId: entityId);
 
   final FormatNumberType formatNumberType;
   final String currencyId;
+  final double exchangeRate;
 
   @override
   Widget renderWidget(BuildContext context, String column) {

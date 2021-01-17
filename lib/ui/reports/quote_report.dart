@@ -230,7 +230,11 @@ ReportResult quoteReport(
         ].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        row.add(quote.getReportDouble(value: value, currencyId: currencyId));
+        row.add(quote.getReportDouble(
+          value: value,
+          currencyId: currencyId,
+          exchangeRate: quote.exchangeRate,
+        ));
       } else {
         row.add(quote.getReportString(value: value));
       }
