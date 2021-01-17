@@ -198,6 +198,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             !item.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
         .length;
 
+    final settings = SettingsEntity(
+      clientSettings: client.settings,
+      groupSettings: state.groupState.get(client.groupId).settings,
+      companySettings: state.company.settings,
+    );
+
     return ListView(
       key: ValueKey('__invoice_${invoice.id}__'),
       children: <Widget>[
@@ -542,18 +548,29 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           controller: _termsController,
                           keyboardType: TextInputType.multiline,
                           label: '',
+                          hint: invoice.isCredit
+                              ? settings.defaultCreditTerms
+                              : invoice.isQuote
+                                  ? settings.defaultQuoteTerms
+                                  : settings.defaultInvoiceTerms,
                         ),
                         DecoratedFormField(
                           maxLines: 6,
                           controller: _footerController,
                           keyboardType: TextInputType.multiline,
                           label: '',
+                          hint: invoice.isCredit
+                              ? settings.defaultCreditFooter
+                              : invoice.isQuote
+                                  ? settings.defaultQuoteFooter
+                                  : settings.defaultInvoiceFooter,
                         ),
                         DecoratedFormField(
                           maxLines: 6,
                           controller: _publicNotesController,
                           keyboardType: TextInputType.multiline,
                           label: '',
+                          hint: client.publicNotes,
                         ),
                         DecoratedFormField(
                           maxLines: 6,

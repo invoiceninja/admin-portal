@@ -27,11 +27,13 @@ class InvoiceEditNotesScreen extends StatelessWidget {
 
 class EntityEditNotesVM {
   EntityEditNotesVM({
+    @required this.state,
     @required this.company,
     @required this.invoice,
     @required this.onChanged,
   });
 
+  final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
@@ -39,13 +41,15 @@ class EntityEditNotesVM {
 
 class InvoiceEditNotesVM extends EntityEditNotesVM {
   InvoiceEditNotesVM({
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    Function(InvoiceEntity) onChanged,
+    @required CompanyEntity company,
+    @required InvoiceEntity invoice,
+    @required Function(InvoiceEntity) onChanged,
+    @required AppState state,
   }) : super(
           company: company,
           invoice: invoice,
           onChanged: onChanged,
+          state: state,
         );
 
   factory InvoiceEditNotesVM.fromStore(Store<AppState> store) {
@@ -57,6 +61,7 @@ class InvoiceEditNotesVM extends EntityEditNotesVM {
       invoice: invoice,
       onChanged: (InvoiceEntity invoice) =>
           store.dispatch(UpdateInvoice(invoice)),
+          state: state,
     );
   }
 }
