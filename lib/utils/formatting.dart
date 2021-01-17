@@ -109,8 +109,14 @@ String formatNumber(
   }
 
   final CurrencyEntity currency = state.staticState.currencyMap[currencyId];
+  final CurrencyEntity companyCurrency =
+      state.staticState.currencyMap[company.currencyId];
+
   final CountryEntity country =
       state.staticState.countryMap[countryId] ?? CountryEntity();
+  final CountryEntity companyCountry =
+      state.staticState.countryMap[company.settings.countryId] ??
+          CountryEntity();
 
   if (currency == null) {
     return '';
@@ -122,10 +128,10 @@ String formatNumber(
 
   String thousandSeparator = currency.thousandSeparator;
   String decimalSeparator = currency.decimalSeparator;
-  bool swapCurrencySymbol = currency.swapCurrencySymbol;
+  bool swapCurrencySymbol = companyCurrency.swapCurrencySymbol;
 
   if (currency.id == kCurrencyEuro) {
-    swapCurrencySymbol = country.swapCurrencySymbol;
+    swapCurrencySymbol = companyCountry.swapCurrencySymbol;
     if (country.thousandSeparator != null &&
         country.thousandSeparator.isNotEmpty) {
       thousandSeparator = country.thousandSeparator;
@@ -195,12 +201,13 @@ String formatNumber(
   } else if ((showCurrencyCode ?? company.settings.showCurrencyCode ?? false) ||
       currency.symbol.isEmpty) {
     return '$formatted ${currency.code}';
-  } else if (swapCurrencySymbol) {
-    return '$formatted ${currency.symbol.trim()}';
-  } else if (value < 0) {
-    return '−${currency.symbol}$formatted';
   } else {
-    return '${currency.symbol}$formatted';
+    final prefix = value < 0 ? '-' : '';
+    if (swapCurrencySymbol) {
+      return '$prefix$formatted ${currency.symbol.trim()}';
+    } else {
+      return '$prefix${currency.symbol}$formatted';
+    }
   }
 }
 
