@@ -18,7 +18,10 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   var notes = task.description;
 
   if (state.company.invoiceTaskTimelog) {
-    notes += '\n';
+    if (notes.trim().isNotEmpty) {
+      notes += '\n';
+    }
+    notes += '<span class="task-time-details">';
     task
         .getTaskTimes(sort: true)
         .where((time) => time.startDate != null && time.endDate != null)
@@ -29,12 +32,13 @@ InvoiceItemEntity convertTaskToInvoiceItem(
           showTime: true, showDate: false, showSeconds: false);
       notes += '\n$start - $end';
     });
+    notes += '\n</span>';
   }
 
   return InvoiceItemEntity().rebuild((b) => b
     ..taskId = task.id
     ..typeId = InvoiceItemEntity.TYPE_TASK
-    ..notes = '<span class="task-time-details">$notes</span>'
+    ..notes = notes
     ..cost = taskRateSelector(
       company: state.company,
       project: project,
