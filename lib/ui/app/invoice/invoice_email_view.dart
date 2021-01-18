@@ -212,7 +212,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   Widget _buildPreview(BuildContext context) {
     if (widget.viewModel.isLoading) {
       return LoadingIndicator(
-        height: 300,
+        height: 210,
       );
     }
 
@@ -233,7 +233,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           if (_isLoading &&
               _subjectController.text.isEmpty &&
               _bodyController.text.isEmpty)
-            LoadingIndicator(height: 250)
+            LoadingIndicator(height: 210)
           else ...[
             DecoratedFormField(
               controller: _subjectController,
