@@ -63,14 +63,6 @@ class ViewScaffold extends StatelessWidget {
             tooltip: localization.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
-      } else if (isSettings) {
-        leading = IconButton(
-          tooltip: localization.back,
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => onBackPressed != null
-              ? onBackPressed()
-              : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
-        );
       }
     }
 
@@ -83,12 +75,21 @@ class ViewScaffold extends StatelessWidget {
         appBar: AppBar(
           centerTitle: false,
           leading: leading,
-          automaticallyImplyLeading: isMobile(context) || isSettings,
+          automaticallyImplyLeading: isMobile(context),
           title: Text(title),
           bottom: appBarBottom,
           actions: entity.isNew
               ? []
               : [
+                  if (isSettings)
+                    FlatButton(
+                        onPressed: () {
+                          onBackPressed != null
+                              ? onBackPressed()
+                              : store.dispatch(UpdateCurrentRoute(
+                                  state.uiState.previousRoute));
+                        },
+                        child: Text(localization.cancel)),
                   userCompany.canEditEntity(entity)
                       ? Builder(builder: (context) {
                           return EditIconButton(
