@@ -216,14 +216,16 @@ CompanyGatewayState _addCompanyGateway(
 
 CompanyGatewayState _updateCompanyGateway(
     CompanyGatewayState companyGatewayState, SaveCompanyGatewaySuccess action) {
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+  return companyGatewayState.rebuild((b) => b
+    ..map[action.companyGateway.id] = action.companyGateway
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 CompanyGatewayState _setLoadedCompanyGateway(
     CompanyGatewayState companyGatewayState, LoadCompanyGatewaySuccess action) {
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+  return companyGatewayState.rebuild((b) => b
+    ..map[action.companyGateway.id] = action.companyGateway
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 CompanyGatewayState _setLoadedCompany(

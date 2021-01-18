@@ -19,7 +19,8 @@ class CompanyGatewayRepository {
   Future<CompanyGatewayEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/company_gateways/$entityId', credentials.token);
+        '${credentials.url}/company_gateways/$entityId?include=system_logs',
+        credentials.token);
 
     final CompanyGatewayItemResponse companyGatewayResponse = serializers
         .deserializeWith(CompanyGatewayItemResponse.serializer, response);

@@ -202,7 +202,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
   }
 }
 
-class _CompanyGatewaySystemLog extends StatelessWidget {
+class _CompanyGatewaySystemLog extends StatefulWidget {
   const _CompanyGatewaySystemLog({
     Key key,
     @required this.viewModel,
@@ -211,8 +211,22 @@ class _CompanyGatewaySystemLog extends StatelessWidget {
   final CompanyGatewayViewVM viewModel;
 
   @override
+  __CompanyGatewaySystemLogState createState() =>
+      __CompanyGatewaySystemLogState();
+}
+
+class __CompanyGatewaySystemLogState extends State<_CompanyGatewaySystemLog> {
+  @override
+  void didChangeDependencies() {
+    if (widget.viewModel.companyGateway.isStale) {
+      widget.viewModel.onRefreshed(context);
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final companyGateway = viewModel.companyGateway;
+    final companyGateway = widget.viewModel.companyGateway;
 
     if (companyGateway.isStale) {
       return LoadingIndicator();
