@@ -52,7 +52,7 @@ class EntityEditVM {
   final InvoiceEntity invoice;
   final int invoiceItemIndex;
   final InvoiceEntity origInvoice;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext, [EntityAction]) onSavePressed;
   final Function(List<InvoiceItemEntity>, String) onItemsAdded;
   final bool isSaving;
   final Function(BuildContext) onCancelPressed;
@@ -65,7 +65,7 @@ class InvoiceEditVM extends EntityEditVM {
     InvoiceEntity invoice,
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
-    Function(BuildContext) onSavePressed,
+    Function(BuildContext, [EntityAction]) onSavePressed,
     Function(List<InvoiceItemEntity>, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
@@ -92,7 +92,7 @@ class InvoiceEditVM extends EntityEditVM {
       invoice: invoice,
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       origInvoice: store.state.invoiceState.map[invoice.id],
-      onSavePressed: (BuildContext context) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         if (invoice.clientId.isEmpty) {
           showDialog<ErrorDialog>(
               context: context,
@@ -115,7 +115,11 @@ class InvoiceEditVM extends EntityEditVM {
               Navigator.of(context).pop(savedInvoice);
             }
           } else {
-            viewEntity(context: context, entity: savedInvoice, force: true);
+            if (action != null) {
+              handleEntityAction(context, savedInvoice, action);
+            } else {
+              viewEntity(context: context, entity: savedInvoice, force: true);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EditScaffold extends StatelessWidget {
@@ -20,12 +23,16 @@ class EditScaffold extends StatelessWidget {
     this.appBarBottom,
     this.saveLabel,
     this.isFullscreen = false,
+    this.onActionPressed,
+    this.actions,
   }) : super(key: key);
 
   final BaseEntity entity;
   final String title;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
+  final Function(BuildContext, EntityAction) onActionPressed;
+  final List<EntityAction> actions;
   final Widget appBarBottom;
   final Widget floatingActionButton;
   final Widget body;
@@ -37,6 +44,13 @@ class EditScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+
+    final isEnabled = isMobile(context) ||
+        !state.uiState.isInSettings ||
+        state.uiState.isEditing ||
+        state.isLoading ||
+        state.isSaving ||
+        state.settingsUIState.isChanged;
 
     return WillPopScope(
       onWillPop: () async {
@@ -51,12 +65,7 @@ class EditScaffold extends StatelessWidget {
           title: Text(title),
           actions: <Widget>[
             SaveCancelButtons(
-              isEnabled: isMobile(context) ||
-                  !state.uiState.isInSettings ||
-                  state.uiState.isEditing ||
-                  state.isLoading ||
-                  state.isSaving ||
-                  state.settingsUIState.isChanged,
+              isEnabled: isEnabled,
               saveLabel: saveLabel,
               isSaving: state.isSaving,
               onSavePressed: (context) {
@@ -88,6 +97,32 @@ class EditScaffold extends StatelessWidget {
                       }
                     },
             ),
+            if (isDesktop(context) && actions != null && !state.isSaving)
+              PopupMenuButton<EntityAction>(
+                icon: Icon(
+                  Icons.more_vert,
+                  //size: iconSize,
+                  //color: color,
+                ),
+                itemBuilder: (BuildContext context) => actions
+                    .map((action) => PopupMenuItem<EntityAction>(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                getEntityActionIcon(action),
+                                color: Theme.of(context).accentColor,
+                              ),
+                              SizedBox(width: 16.0),
+                              Text(AppLocalization.of(context)
+                                  .lookup(action.toString())),
+                            ],
+                          ),
+                          value: action,
+                        ))
+                    .toList(),
+                onSelected: (action) => onActionPressed(context, action),
+                enabled: isEnabled,
+              )
           ],
           bottom: appBarBottom,
         ),
