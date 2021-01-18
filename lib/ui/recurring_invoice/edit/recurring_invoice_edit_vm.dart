@@ -69,7 +69,7 @@ class RecurringInvoiceEditVM extends EntityEditVM {
       invoice: recurringInvoice,
       invoiceItemIndex: state.recurringInvoiceUIState.editingItemIndex,
       origInvoice: store.state.recurringInvoiceState.map[recurringInvoice.id],
-      onSavePressed: (BuildContext context) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         if (recurringInvoice.clientId.isEmpty) {
           showDialog<ErrorDialog>(
               context: context,
@@ -93,8 +93,12 @@ class RecurringInvoiceEditVM extends EntityEditVM {
               Navigator.of(context).pop(savedRecurringInvoice);
             }
           } else {
-            viewEntity(
-                context: context, entity: savedRecurringInvoice, force: true);
+            if (action != null) {
+              handleEntityAction(context, savedRecurringInvoice, action);
+            } else {
+              viewEntity(
+                  context: context, entity: savedRecurringInvoice, force: true);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

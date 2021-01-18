@@ -69,7 +69,7 @@ class CreditEditVM extends EntityEditVM {
       invoice: credit,
       invoiceItemIndex: state.creditUIState.editingItemIndex,
       origInvoice: store.state.creditState.map[credit.id],
-      onSavePressed: (BuildContext context) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         if (credit.clientId.isEmpty) {
           showDialog<ErrorDialog>(
               context: context,
@@ -91,7 +91,11 @@ class CreditEditVM extends EntityEditVM {
               Navigator.of(context).pop(savedCredit);
             }
           } else {
-            viewEntity(context: context, entity: savedCredit, force: true);
+            if (action != null) {
+              handleEntityAction(context, savedCredit, action);
+            } else {
+              viewEntity(context: context, entity: savedCredit, force: true);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

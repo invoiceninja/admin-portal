@@ -69,7 +69,7 @@ class QuoteEditVM extends EntityEditVM {
       invoice: quote,
       invoiceItemIndex: state.quoteUIState.editingItemIndex,
       origInvoice: store.state.quoteState.map[quote.id],
-      onSavePressed: (BuildContext context) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         if (quote.clientId.isEmpty) {
           showDialog<ErrorDialog>(
               context: context,
@@ -90,7 +90,11 @@ class QuoteEditVM extends EntityEditVM {
               Navigator.of(context).pop(savedQuote);
             }
           } else {
-            viewEntity(context: context, entity: savedQuote, force: true);
+            if (action != null) {
+              handleEntityAction(context, savedQuote, action);
+            } else {
+              viewEntity(context: context, entity: savedQuote, force: true);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
