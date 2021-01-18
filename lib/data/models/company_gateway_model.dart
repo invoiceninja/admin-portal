@@ -103,6 +103,20 @@ abstract class CompanyGatewayEntity extends Object
   @memoized
   int get hashCode;
 
+  @nullable
+  int get loadedAt;
+
+  bool get isLoaded => loadedAt != null && loadedAt > 0;
+
+  bool get isStale {
+    if (!isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - loadedAt >
+        kMillisecondsToRefreshActivities;
+  }
+
   @override
   EntityType get entityType {
     return EntityType.companyGateway;
