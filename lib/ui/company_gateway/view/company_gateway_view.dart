@@ -72,8 +72,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView>
         children: [
           _CompanyGatewayOverview(
               viewModel: widget.viewModel, isFilter: widget.isFilter),
-          _CompanyGatewayOverview(
-              viewModel: widget.viewModel, isFilter: widget.isFilter),
+          _CompanyGatewaySystemLog(viewModel: widget.viewModel),
         ],
       ),
     );
@@ -220,7 +219,7 @@ class _CompanyGatewaySystemLog extends StatelessWidget {
     }
 
     return SystemLogsViewer(
-        //systemLogs: companyGateway.systemLogs,
-        );
+      systemLogs: companyGateway.systemLogs,
+    );
   }
 }

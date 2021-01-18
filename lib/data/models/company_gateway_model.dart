@@ -78,6 +78,7 @@ abstract class CompanyGatewayEntity extends Object
       updateDetails: true,
       config: '',
       feesAndLimitsMap: BuiltMap<String, FeesAndLimitsSettings>(),
+      systemLogs: BuiltList<SystemLogEntity>(),
       customValue1: '',
       customValue2: '',
       customValue3: '',
