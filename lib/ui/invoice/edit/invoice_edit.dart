@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
@@ -63,6 +64,22 @@ class _InvoiceEditState extends State<InvoiceEdit>
     super.dispose();
   }
 
+  void _onSavePressed(BuildContext context, [EntityAction action]) {
+    final bool isValid = _formKey.currentState.validate();
+
+    /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context, action);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -77,21 +94,12 @@ class _InvoiceEditState extends State<InvoiceEdit>
       entity: invoice,
       title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        /*
-        setState(() {
-          autoValidate = !isValid ?? false;
-        });
-         */
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context) => _onSavePressed(context),
+      actions: [
+        EntityAction.viewPdf,
+        EntityAction.emailInvoice,
+      ],
+      onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: isFullscreen
           ? null
           : TabBar(

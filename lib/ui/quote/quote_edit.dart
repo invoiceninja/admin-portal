@@ -61,6 +61,22 @@ class _QuoteEditState extends State<QuoteEdit>
     super.dispose();
   }
 
+  void _onSavePressed(BuildContext context, [EntityAction action]) {
+    final bool isValid = _formKey.currentState.validate();
+
+    /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context, action);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -75,21 +91,12 @@ class _QuoteEditState extends State<QuoteEdit>
       entity: invoice,
       title: invoice.isNew ? localization.newQuote : localization.editQuote,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        /*
-        setState(() {
-          autoValidate = !isValid ?? false;
-        });
-         */
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context) => _onSavePressed(context),
+      actions: [
+        EntityAction.viewPdf,
+        EntityAction.emailQuote,
+      ],
+      onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: isFullscreen
           ? null
           : TabBar(
