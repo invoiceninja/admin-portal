@@ -162,6 +162,10 @@ class _$CompanyGatewayEntitySerializer
             const FullType(String),
             const FullType(FeesAndLimitsSettings)
           ])),
+      'system_logs',
+      serializers.serialize(object.systemLogs,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(SystemLogEntity)])),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -303,6 +307,12 @@ class _$CompanyGatewayEntitySerializer
                 const FullType(String),
                 const FullType(FeesAndLimitsSettings)
               ])));
+          break;
+        case 'system_logs':
+          result.systemLogs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(SystemLogEntity)]))
+              as BuiltList<Object>);
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -720,6 +730,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final BuiltMap<String, FeesAndLimitsSettings> feesAndLimitsMap;
   @override
+  final BuiltList<SystemLogEntity> systemLogs;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -770,6 +782,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.requireCvv,
       this.updateDetails,
       this.feesAndLimitsMap,
+      this.systemLogs,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -828,6 +841,9 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     if (feesAndLimitsMap == null) {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'feesAndLimitsMap');
+    }
+    if (systemLogs == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'systemLogs');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError(
@@ -898,6 +914,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         requireCvv == other.requireCvv &&
         updateDetails == other.updateDetails &&
         feesAndLimitsMap == other.feesAndLimitsMap &&
+        systemLogs == other.systemLogs &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -937,10 +954,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, loadedAt.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode),
-                                                                                requireCvv.hashCode),
-                                                                            updateDetails.hashCode),
-                                                                        feesAndLimitsMap.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, loadedAt.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode), requireCvv.hashCode),
+                                                                                updateDetails.hashCode),
+                                                                            feesAndLimitsMap.hashCode),
+                                                                        systemLogs.hashCode),
                                                                     customValue1.hashCode),
                                                                 customValue2.hashCode),
                                                             customValue3.hashCode),
@@ -975,6 +992,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('requireCvv', requireCvv)
           ..add('updateDetails', updateDetails)
           ..add('feesAndLimitsMap', feesAndLimitsMap)
+          ..add('systemLogs', systemLogs)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -1064,6 +1082,12 @@ class CompanyGatewayEntityBuilder
           MapBuilder<String, FeesAndLimitsSettings> feesAndLimitsMap) =>
       _$this._feesAndLimitsMap = feesAndLimitsMap;
 
+  ListBuilder<SystemLogEntity> _systemLogs;
+  ListBuilder<SystemLogEntity> get systemLogs =>
+      _$this._systemLogs ??= new ListBuilder<SystemLogEntity>();
+  set systemLogs(ListBuilder<SystemLogEntity> systemLogs) =>
+      _$this._systemLogs = systemLogs;
+
   String _customValue1;
   String get customValue1 => _$this._customValue1;
   set customValue1(String customValue1) => _$this._customValue1 = customValue1;
@@ -1147,6 +1171,7 @@ class CompanyGatewayEntityBuilder
       _requireCvv = _$v.requireCvv;
       _updateDetails = _$v.updateDetails;
       _feesAndLimitsMap = _$v.feesAndLimitsMap?.toBuilder();
+      _systemLogs = _$v.systemLogs?.toBuilder();
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -1200,6 +1225,7 @@ class CompanyGatewayEntityBuilder
               requireCvv: requireCvv,
               updateDetails: updateDetails,
               feesAndLimitsMap: feesAndLimitsMap.build(),
+              systemLogs: systemLogs.build(),
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,
@@ -1221,6 +1247,8 @@ class CompanyGatewayEntityBuilder
       try {
         _$failedField = 'feesAndLimitsMap';
         feesAndLimitsMap.build();
+        _$failedField = 'systemLogs';
+        systemLogs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyGatewayEntity', _$failedField, e.toString());
