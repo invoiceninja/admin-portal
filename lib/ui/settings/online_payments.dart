@@ -144,6 +144,7 @@ class _OnlinePaymentsState extends State<OnlinePayments> {
                 child: DecoratedFormField(
                   label: localization.minimumUnderPaymentAmount,
                   controller: _minimumAmountController,
+                  isMoney: true,
                 ),
               ),
           ]),

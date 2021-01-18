@@ -173,7 +173,9 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               key: ValueKey('__rate__'),
               controller: _rateController,
               label: rateLabel,
-              keyboardType: TextInputType.number,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
+              autocorrect: false,
             ),
             DynamicSelector(
               key: ValueKey('__task_status_${task.statusId}__'),

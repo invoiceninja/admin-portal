@@ -626,7 +626,9 @@ class _LimitEditorState extends State<LimitEditor> {
                     label: localization.minLimit,
                     enabled: _enableMin,
                     controller: _minController,
-                    keyboardType: TextInputType.numberWithOptions(),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
+                    autocorrect: false,
                   ),
                   SizedBox(height: 10),
                   CheckboxListTile(
@@ -656,7 +658,9 @@ class _LimitEditorState extends State<LimitEditor> {
                     label: localization.maxLimit,
                     enabled: _enableMax,
                     controller: _maxController,
-                    keyboardType: TextInputType.numberWithOptions(),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
+                    autocorrect: false,
                   ),
                   SizedBox(height: 10),
                   CheckboxListTile(
@@ -779,22 +783,19 @@ class _FeesEditorState extends State<FeesEditor> {
     return FormCard(
       children: <Widget>[
         DecoratedFormField(
-          label: localization.feeAmount,
-          controller: _amountController,
-          autocorrect: false,
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
-        ),
-        DecoratedFormField(
           label: localization.feePercent,
           controller: _percentController,
-          autocorrect: false,
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
+          isPercent: true,
+        ),
+        DecoratedFormField(
+          label: localization.feeAmount,
+          controller: _amountController,
+          isMoney: true,
         ),
         DecoratedFormField(
           label: localization.feeCap,
           controller: _capController,
-          autocorrect: false,
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
+          isMoney: true,
         ),
         if (company.enableFirstItemTaxRate)
           TaxRateDropdown(

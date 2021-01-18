@@ -104,11 +104,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
               DecoratedFormField(
                 label: localization.rate,
                 controller: _rateController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                suffixIcon: Icon(
-                  MdiIcons.percent,
-                  size: 16,
-                ),
+                isPercent: true,
               ),
             ],
           )

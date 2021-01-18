@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DecoratedFormField extends StatelessWidget {
   const DecoratedFormField({
@@ -28,6 +32,8 @@ class DecoratedFormField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.decoration,
     this.focusNode,
+    this.isMoney = false,
+    this.isPercent = false,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -53,6 +59,8 @@ class DecoratedFormField extends StatelessWidget {
   final TextAlign textAlign;
   final InputDecoration decoration;
   final FocusNode focusNode;
+  final bool isMoney;
+  final bool isPercent;
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +83,25 @@ class DecoratedFormField extends StatelessWidget {
     } else if (label == null) {
       inputDecoration = null;
     } else {
+      var icon = suffixIcon ?? suffixIconButton;
+      if (icon == null) {
+        if (isMoney) {
+          final state = StoreProvider.of<AppState>(context).state;
+          icon = Icon(state.company.currencyId == kCurrencyEuro
+              ? Icons.euro
+              : Icons.attach_money);
+        } else if (isPercent) {
+          icon = Icon(
+            MdiIcons.percent,
+            size: 16,
+          );
+        }
+      }
+
       inputDecoration = InputDecoration(
         labelText: label,
         hintText: hint,
-        suffixIcon: suffixIcon ?? suffixIconButton,
+        suffixIcon: icon,
       );
     }
 
@@ -89,14 +112,16 @@ class DecoratedFormField extends StatelessWidget {
       autofocus: autofocus,
       decoration: inputDecoration,
       validator: validator,
-      keyboardType: keyboardType ?? TextInputType.text,
+      keyboardType: isMoney || isPercent
+          ? TextInputType.numberWithOptions(decimal: true, signed: true)
+          : keyboardType ?? TextInputType.text,
       maxLines: expands ? null : maxLines ?? 1,
       minLines: expands ? null : minLines,
       expands: expands,
       autovalidateMode: autovalidate
           ? AutovalidateMode.onUserInteraction
           : AutovalidateMode.disabled,
-      autocorrect: autocorrect,
+      autocorrect: isMoney || isPercent ? false : autocorrect,
       obscureText: obscureText,
       initialValue: initialValue,
       textInputAction: textInputAction ??

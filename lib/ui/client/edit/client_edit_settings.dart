@@ -130,7 +130,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             ),
             DecoratedFormField(
               controller: _taskRateController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              isMoney: true,
               label: localization.taskRate,
               onSavePressed: viewModel.onSavePressed,
             ),

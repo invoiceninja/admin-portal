@@ -530,12 +530,12 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             DecoratedFormField(
               label: localization.lateFeeAmount,
               controller: _feeAmountController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              isMoney: true,
             ),
             DecoratedFormField(
               label: localization.lateFeePercent,
               controller: _feePercentController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              isPercent: true,
             ),
           ],
         ),
