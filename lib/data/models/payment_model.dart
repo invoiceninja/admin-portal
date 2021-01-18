@@ -202,6 +202,8 @@ abstract class PaymentEntity extends Object
   @nullable
   bool get gatewayRefund;
 
+  bool get hasExchangeRate => exchangeRate != 1 && exchangeRate != 0;
+
   String get transactionReferenceOrNumber =>
       transactionReference.isNotEmpty ? transactionReference : number;
 
