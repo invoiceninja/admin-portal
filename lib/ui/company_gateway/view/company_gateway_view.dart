@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_vie
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class CompanyGatewayView extends StatefulWidget {
+class CompanyGatewayView extends StatelessWidget {
   const CompanyGatewayView({
     Key key,
     @required this.viewModel,
@@ -26,13 +26,7 @@ class CompanyGatewayView extends StatefulWidget {
   final bool isFilter;
 
   @override
-  _CompanyGatewayViewState createState() => new _CompanyGatewayViewState();
-}
-
-class _CompanyGatewayViewState extends State<CompanyGatewayView> {
-  @override
   Widget build(BuildContext context) {
-    final viewModel = widget.viewModel;
     final state = viewModel.state;
     final companyGateway = viewModel.companyGateway;
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
@@ -75,7 +69,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     }
 
     return ViewScaffold(
-      isFilter: widget.isFilter,
+      isFilter: isFilter,
       entity: companyGateway,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(children: <Widget>[
@@ -114,7 +108,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
           EntitiesListTile(
             hideNew: true,
             entity: companyGateway,
-            isFilter: widget.isFilter,
+            isFilter: isFilter,
             entityType: EntityType.client,
             title: localization.clients,
             subtitle: memoizedClientStatsForCompanyGateway(
@@ -126,7 +120,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
         EntitiesListTile(
           hideNew: true,
           entity: companyGateway,
-          isFilter: widget.isFilter,
+          isFilter: isFilter,
           entityType: EntityType.payment,
           title: localization.payments,
           subtitle: memoizedPaymentStatsForCompanyGateway(
