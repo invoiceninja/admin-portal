@@ -83,8 +83,8 @@ class _ClientViewSystemLogsState extends State<ClientViewSystemLogs> {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: JsonViewerWidget(
-                      jsonDecode(systemLog.log)['server_response']),
+                  child:
+                      JsonViewerWidget(jsonDecode(systemLog.log)['response']),
                 ),
               ),
             );
