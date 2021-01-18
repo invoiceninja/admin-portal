@@ -39,7 +39,7 @@ class PaymentTermScreen extends StatelessWidget {
       appBarTitle: ListFilter(
         entityType: EntityType.paymentTerm,
         entityIds: viewModel.paymentTermList,
-        filter: state.taxRateListState.filter,
+        filter: state.paymentTermListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterPaymentTerms(value));
         },
