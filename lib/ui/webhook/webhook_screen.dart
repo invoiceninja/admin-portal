@@ -34,6 +34,7 @@ class WebhookScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.webhook,
       onHamburgerLongPress: () => store.dispatch(StartWebhookMultiselect()),
+      onCancelSettingsSection: kSettingsAccountManagement,
       appBarTitle: ListFilter(
         entityType: EntityType.webhook,
         entityIds: viewModel.webhookList,

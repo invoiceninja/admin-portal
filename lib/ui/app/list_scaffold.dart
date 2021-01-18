@@ -23,7 +23,7 @@ class ListScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.onHamburgerLongPress,
     this.onCancelSettingsSection,
-    this.onCancelSettingsIndex,
+    this.onCancelSettingsIndex = 0,
   });
 
   final EntityType entityType;

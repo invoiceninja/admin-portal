@@ -34,6 +34,7 @@ class TaskStatusScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.taskStatus,
       onHamburgerLongPress: () => store.dispatch(StartTaskStatusMultiselect()),
+      onCancelSettingsSection: kSettingsTasks,
       appBarTitle: ListFilter(
         entityType: EntityType.taskStatus,
         entityIds: viewModel.taskStatusList,
