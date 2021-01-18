@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_json_widget/flutter_json_widget.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -21,6 +23,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
 
     return ListView(
       shrinkWrap: true,
@@ -35,9 +38,9 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
           children: widget.systemLogs
               .where((systemLog) => systemLog.isVisible)
               .map((systemLog) {
+            final client = state.clientState.get(systemLog.clientId);
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
-                //return Text(systemLog.log);
                 return ListTile(
                   leading: Icon(
                       systemLog.categoryId == SystemLogEntity.CATEGORY_EMAIL
@@ -48,7 +51,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                       localization.lookup(systemLog.type)),
                   isThreeLine: true,
                   subtitle: Text(localization.lookup(systemLog.event) +
-                      '\n' +
+                      ' • ${client.displayName}\n' +
                       formatDate(
                           convertTimestampToDateString(systemLog.createdAt),
                           context,
