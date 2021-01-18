@@ -7,15 +7,15 @@ import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class SystemLogsViewer extends StatefulWidget {
-  const SystemLogsViewer({this.systemLogs});
+class SystemLogViewer extends StatefulWidget {
+  const SystemLogViewer({this.systemLogs});
   final BuiltList<SystemLogEntity> systemLogs;
 
   @override
-  _SystemLogsViewerState createState() => _SystemLogsViewerState();
+  _SystemLogViewerState createState() => _SystemLogViewerState();
 }
 
-class _SystemLogsViewerState extends State<SystemLogsViewer> {
+class _SystemLogViewerState extends State<SystemLogViewer> {
   final Map<String, bool> _isExpanded = {};
 
   @override

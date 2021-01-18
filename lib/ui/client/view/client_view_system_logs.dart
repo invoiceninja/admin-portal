@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/app/system_logs.dart';
+import 'package:invoiceninja_flutter/ui/app/system_log_viewer.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 
 class ClientViewSystemLogs extends StatefulWidget {
@@ -30,7 +30,7 @@ class _ClientViewSystemLogsState extends State<ClientViewSystemLogs> {
       return LoadingIndicator();
     }
 
-    return SystemLogsViewer(
+    return SystemLogViewer(
       systemLogs: client.systemLogs,
     );
   }
