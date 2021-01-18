@@ -10,6 +10,8 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/system_logs.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -202,8 +204,23 @@ class _CompanyGatewayOverview extends StatelessWidget {
 }
 
 class _CompanyGatewaySystemLog extends StatelessWidget {
+  const _CompanyGatewaySystemLog({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  final CompanyGatewayViewVM viewModel;
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final companyGateway = viewModel.companyGateway;
+
+    if (companyGateway.isStale) {
+      return LoadingIndicator();
+    }
+
+    return SystemLogsViewer(
+        //systemLogs: companyGateway.systemLogs,
+        );
   }
 }

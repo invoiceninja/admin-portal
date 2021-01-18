@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -158,6 +159,9 @@ abstract class CompanyGatewayEntity extends Object
 
   @BuiltValueField(wireName: 'fees_and_limits')
   BuiltMap<String, FeesAndLimitsSettings> get feesAndLimitsMap;
+
+  @BuiltValueField(wireName: 'system_logs')
+  BuiltList<SystemLogEntity> get systemLogs;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
