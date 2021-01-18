@@ -36,6 +36,8 @@ class PaymentTermScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.paymentTerm,
       onHamburgerLongPress: () => store.dispatch(StartPaymentTermMultiselect()),
+      onCancelSettingsSection: kSettingsCompanyDetails,
+      onCancelSettingsIndex: 3,
       appBarTitle: ListFilter(
         entityType: EntityType.paymentTerm,
         entityIds: viewModel.paymentTermList,
