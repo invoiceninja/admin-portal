@@ -104,7 +104,7 @@ class EntityHeader extends StatelessWidget {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: EntityStatusChip(
                         entity: entity,
-                        width: 120,
+                        width: null,
                       ),
                     ),
                   if (!entity.isActive)

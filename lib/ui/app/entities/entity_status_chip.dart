@@ -98,11 +98,11 @@ class EntityStatusChip extends StatelessWidget {
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            minWidth: width,
-            maxWidth: width,
+            minWidth: width ?? 100,
+            maxWidth: width ?? 200,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
             child: Text(
               label.toUpperCase(),
               style: TextStyle(fontSize: 14, color: Colors.white),
