@@ -50,7 +50,8 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final companyGateway = widget.viewModel.companyGateway;
+    final viewModel = widget.viewModel;
+    final companyGateway = viewModel.companyGateway;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -70,9 +71,14 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView>
       body: TabBarView(
         controller: _controller,
         children: [
-          _CompanyGatewayOverview(
-              viewModel: widget.viewModel, isFilter: widget.isFilter),
-          _CompanyGatewaySystemLog(viewModel: widget.viewModel),
+          RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context),
+            child: _CompanyGatewayOverview(
+                viewModel: widget.viewModel, isFilter: widget.isFilter),
+          ),
+          RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: _CompanyGatewaySystemLog(viewModel: widget.viewModel)),
         ],
       ),
     );
