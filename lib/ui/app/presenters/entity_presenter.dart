@@ -22,7 +22,7 @@ class EntityPresenter {
     final type = localization.lookup('${entity.entityType}');
     final name = entity.listDisplayName;
 
-    return isMobile(context) ? '$type $name' : '$type  ›  $name';
+    return isMobile(context) ? '$type: $name' : '$type  ›  $name';
   }
 
   static List<String> getBaseFields() {
