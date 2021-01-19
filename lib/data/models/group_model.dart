@@ -172,7 +172,7 @@ abstract class GroupEntity extends Object
   FormatNumberType get listDisplayAmountType => null;
 
   // ignore: unused_element
-  static void _initializeBuilder(CompanyEntityBuilder builder) =>
+  static void _initializeBuilder(GroupEntityBuilder builder) =>
       builder..documents.replace(BuiltList<DocumentEntity>());
 
   static Serializer<GroupEntity> get serializer => _$groupEntitySerializer;

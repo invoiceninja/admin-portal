@@ -106,8 +106,10 @@ class _GroupViewState extends State<GroupView>
           ),
           DocumentGrid(
             documents: documents.toList(),
-            //onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
-            //onDeleteDocument: (document, password) => viewModel.onDeleteDocument(context, document, password),
+            onUploadDocument: (path) =>
+                viewModel.onUploadDocument(context, path),
+            onDeleteDocument: (document, password) =>
+                viewModel.onDeleteDocument(context, document, password),
           ),
         ],
       ),

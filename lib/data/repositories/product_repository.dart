@@ -82,7 +82,6 @@ class ProductRepository {
       '_method': 'put',
     };
 
-    // TODO remove this include
     final dynamic response = await webClient.post(
         '${credentials.url}/products/${entity.id}', credentials.token,
         data: fields, multipartFile: multipartFile);
