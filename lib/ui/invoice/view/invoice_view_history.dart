@@ -58,7 +58,8 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
               ' • ' +
               timeago.format(convertTimestampToDate(history.createdAt))),
           trailing: Icon(Icons.chevron_right),
-          onTap: () => viewModel.onViewPdf(context, invoice, history.id),
+          onTap: () =>
+              viewModel.onViewPdf(context, invoice, history.activityId),
         );
       },
       separatorBuilder: (context, index) => ListDivider(),

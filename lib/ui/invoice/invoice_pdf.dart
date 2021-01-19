@@ -140,7 +140,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                       )
                   : null,
             ),
-            Spacer(),
           ];
 
     final activitySelector = _activityId == null || kIsWeb
@@ -172,7 +171,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                         .toList()),
               ),
             ),
-            Spacer(),
           ];
 
     final deliveryNote = Theme(
@@ -208,18 +206,20 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                 centerTitle: false,
                 automaticallyImplyLeading: isMobile(context),
                 title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(localization.lookup('${invoice.entityType}') +
-                        '  ›  ' +
-                        invoice.number),
-                    Spacer(),
+                    Expanded(
+                      child: Text(localization.lookup('${invoice.entityType}') +
+                          '  ›  ' +
+                          invoice.number),
+                    ),
                     if (isDesktop(context)) ...activitySelector,
                     if (isDesktop(context)) ...pageSelector,
-                    if (isDesktop(context)) deliveryNote,
+                    if (isDesktop(context) && _activityId == null) deliveryNote,
                   ],
                 ),
                 actions: <Widget>[
-                  if (isDesktop(context))
+                  if (isDesktop(context) && _activityId == null)
                     FlatButton(
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
