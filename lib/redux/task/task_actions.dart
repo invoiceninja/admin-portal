@@ -337,12 +337,6 @@ void handleTaskAction(
               ..lineItems.addAll(items)));
       }
       break;
-    case EntityAction.viewInvoice:
-      viewEntityById(
-          context: context,
-          entityType: EntityType.invoice,
-          entityId: task.invoiceId);
-      break;
     case EntityAction.clone:
       createEntity(context: context, entity: task.clone);
       break;

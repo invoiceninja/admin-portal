@@ -294,10 +294,6 @@ abstract class ExpenseEntity extends Object
       }
     }
 
-    if (isInvoiced && !multiselect) {
-      actions.add(EntityAction.viewInvoice);
-    }
-
     if (userCompany.canCreate(EntityType.task) && !multiselect) {
       actions.add(EntityAction.clone);
     }

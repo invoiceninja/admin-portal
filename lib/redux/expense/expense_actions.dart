@@ -288,12 +288,6 @@ void handleExpenseAction(
               ..lineItems.addAll(items)));
       }
       break;
-    case EntityAction.viewInvoice:
-      viewEntityById(
-          context: context,
-          entityType: EntityType.invoice,
-          entityId: expense.invoiceId);
-      break;
     case EntityAction.restore:
       final message = expenseIds.length > 1
           ? localization.restoredExpenses

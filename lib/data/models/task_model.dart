@@ -516,10 +516,6 @@ abstract class TaskEntity extends Object
     }
 
     if (!multiselect) {
-      if (isInvoiced) {
-        actions.add(EntityAction.viewInvoice);
-      }
-
       if (userCompany.canCreate(EntityType.task)) {
         actions.add(EntityAction.clone);
       }

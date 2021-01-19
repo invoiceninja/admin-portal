@@ -39,8 +39,6 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.content_copy;
     case EntityAction.approve:
       return Icons.check_circle_outline;
-    case EntityAction.viewInvoice:
-      return Icons.insert_drive_file;
     case EntityAction.newInvoice:
     case EntityAction.newExpense:
     case EntityAction.newTask:

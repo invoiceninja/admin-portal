@@ -424,13 +424,6 @@ Future handleCreditAction(
             forceSafariVC: false, forceWebView: false);
       }
       break;
-    case EntityAction.viewInvoice:
-      viewEntityById(
-          context: context,
-          // TODO fix this
-          // entityId: credit.creditInvoiceId,
-          entityType: EntityType.invoice);
-      break;
     case EntityAction.markSent:
       store.dispatch(MarkSentCreditRequest(
           snackBarCompleter<Null>(context, localization.markedCreditAsSent),
