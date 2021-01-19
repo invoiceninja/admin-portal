@@ -26,6 +26,7 @@ import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
@@ -73,6 +74,7 @@ class MainScreen extends StatelessWidget {
       bool isFullScreen = false;
       final isEdit = subRoute == '/edit';
       final isEmail = subRoute == '/email';
+      final isPdf = subRoute == '/pdf';
 
       if ([
         InvoiceScreen.route,
@@ -81,7 +83,7 @@ class MainScreen extends StatelessWidget {
         RecurringInvoiceScreen.route,
         TaskScreen.route,
       ].contains(mainRoute)) {
-        if (isEmail) {
+        if (isEmail || isPdf) {
           isFullScreen = true;
         } else if (isEdit) {
           if (mainRoute == TaskScreen.route) {
@@ -99,16 +101,28 @@ class MainScreen extends StatelessWidget {
       if (isFullScreen) {
         switch (mainRoute) {
           case InvoiceScreen.route:
-            screen = isEmail ? InvoiceEmailScreen() : InvoiceEditScreen();
+            screen = isPdf
+                ? InvoicePdfScreen()
+                : isEmail
+                    ? InvoiceEmailScreen()
+                    : InvoiceEditScreen();
             break;
           case QuoteScreen.route:
-            screen = isEmail ? QuoteEmailScreen() : QuoteEditScreen();
+            screen = isPdf
+                ? Placeholder()
+                : isEmail
+                    ? QuoteEmailScreen()
+                    : QuoteEditScreen();
             break;
           case CreditScreen.route:
-            screen = isEmail ? CreditEmailScreen() : CreditEditScreen();
+            screen = isPdf
+                ? Placeholder()
+                : isEmail
+                    ? CreditEmailScreen()
+                    : CreditEditScreen();
             break;
           case RecurringInvoiceScreen.route:
-            screen = RecurringInvoiceEditScreen();
+            screen = isPdf ? Placeholder() : RecurringInvoiceEditScreen();
             break;
           case TaskScreen.route:
             screen = TaskEditScreen();

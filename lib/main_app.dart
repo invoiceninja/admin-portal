@@ -29,6 +29,7 @@ import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
@@ -298,6 +299,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
                     InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
                     InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
+                    InvoicePdfScreen.route: (context) => InvoicePdfScreen(),
                     DocumentScreen.route: (context) => DocumentScreenBuilder(),
                     DocumentViewScreen.route: (context) => DocumentViewScreen(),
                     DocumentEditScreen.route: (context) => DocumentEditScreen(),
