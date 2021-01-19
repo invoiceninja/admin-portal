@@ -193,10 +193,12 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final action = dynamicAction as RefreshData;
     final state = store.state;
 
-    if (state.isSaving ||
-        state.isLoading ||
-        (state.company.isLarge && !state.isLoaded)) {
-      print('Skipping refresh request');
+    if (state.isSaving || state.isLoading) {
+      print('Skipping refresh request - pending request');
+      next(action);
+      return;
+    } else if (state.company.isLarge && !state.isLoaded) {
+      print('Skipping refresh request - not loaded');
       next(action);
       return;
     }
