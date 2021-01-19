@@ -226,7 +226,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {
-                        Navigator.of(context).pop();
                         handleEntityAction(context, invoice,
                             EntityAction.emailEntityType(invoice.entityType));
                       },
@@ -255,6 +254,14 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                             }
                           },
                   ),
+                  if (isDesktop(context))
+                    FlatButton(
+                      child: Text(localization.close,
+                          style: TextStyle(color: state.headerTextColor)),
+                      onPressed: () {
+                        viewEntity(context: context, entity: invoice);
+                      },
+                    ),
                 ],
               )
             : null,
