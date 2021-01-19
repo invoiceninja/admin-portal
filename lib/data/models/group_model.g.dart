@@ -114,6 +114,10 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -126,13 +130,6 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.documents != null) {
-      result
-        ..add('documents')
-        ..add(serializers.serialize(object.documents,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(DocumentEntity)])));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -457,6 +454,9 @@ class _$GroupEntity extends GroupEntity {
     if (settings == null) {
       throw new BuiltValueNullFieldError('GroupEntity', 'settings');
     }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('GroupEntity', 'documents');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('GroupEntity', 'createdAt');
     }
@@ -590,7 +590,9 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  GroupEntityBuilder();
+  GroupEntityBuilder() {
+    GroupEntity._initializeBuilder(this);
+  }
 
   GroupEntityBuilder get _$this {
     if (_$v != null) {
@@ -631,7 +633,7 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
           new _$GroupEntity._(
               name: name,
               settings: settings.build(),
-              documents: _documents?.build(),
+              documents: documents.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -646,7 +648,7 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
         _$failedField = 'settings';
         settings.build();
         _$failedField = 'documents';
-        _documents?.build();
+        documents.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'GroupEntity', _$failedField, e.toString());
