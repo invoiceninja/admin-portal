@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
@@ -234,7 +235,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
-                        localization.client + '  ›  ' + client.name,
+                        EntityPresenter().initialize(client, context).title,
                         style: Theme.of(context).textTheme.headline6,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

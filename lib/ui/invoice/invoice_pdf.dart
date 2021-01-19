@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -209,9 +210,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(localization.lookup('${invoice.entityType}') +
-                          '  ›  ' +
-                          invoice.number),
+                      child: Text(
+                          EntityPresenter().initialize(invoice, context).title),
                     ),
                     if (isDesktop(context)) ...activitySelector,
                     if (isDesktop(context)) ...pageSelector,

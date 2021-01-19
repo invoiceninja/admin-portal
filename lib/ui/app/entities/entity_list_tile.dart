@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -120,9 +121,7 @@ class _EntityListTileState extends State<EntityListTile> {
               onLongPress: () => inspectEntity(
                   context: context, entity: widget.entity, longPress: true),
               title: Text(
-                localization.lookup('${widget.entity.entityType}') +
-                    '  ›  ' +
-                    widget.entity.listDisplayName,
+                EntityPresenter().initialize(widget.entity, context).title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

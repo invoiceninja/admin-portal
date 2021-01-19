@@ -47,7 +47,7 @@ class EntityDataTableSource extends AppDataTableSource {
   DataRow getRow(int index) {
     final state = StoreProvider.of<AppState>(context).state;
     final entity = entityMap[entityList[index]];
-    entityPresenter.initialize(entity: entity, context: context);
+    entityPresenter.initialize(entity, context);
 
     final listState = state.getListState(entityType);
     final uIState = state.getUIState(entityType);

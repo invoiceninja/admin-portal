@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
@@ -864,7 +865,9 @@ class _EntityFilter extends StatelessWidget {
                       child: FlatButton(
                         visualDensity: VisualDensity.compact,
                         child: Text(
-                          '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
+                          EntityPresenter()
+                              .initialize(filterEntity, context)
+                              .title,
                           style: TextStyle(
                               fontSize: 17, color: state.headerTextColor),
                           overflow: TextOverflow.ellipsis,

@@ -4,14 +4,25 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityPresenter {
+  EntityPresenter initialize(BaseEntity entity, BuildContext context) {
+    this.entity = entity;
+    this.context = context;
+
+    return this;
+  }
+
   BaseEntity entity;
   BuildContext context;
 
-  void initialize({BaseEntity entity, BuildContext context}) {
-    this.entity = entity;
-    this.context = context;
+  String get title {
+    final localization = AppLocalization.of(context);
+    final type = localization.lookup('${entity.entityType}');
+    final name = entity.listDisplayName;
+
+    return isMobile(context) ? '$type $name' : '$type  ›  $name';
   }
 
   static List<String> getBaseFields() {

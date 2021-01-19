@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityStateTitle extends StatelessWidget {
@@ -9,13 +10,9 @@ class EntityStateTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-
     String titleText = '';
     if (entity.isOld) {
-      titleText = localization.lookup('${entity.entityType}') +
-          '  ›  ' +
-          entity.listDisplayName;
+      titleText = EntityPresenter().initialize(entity, context).title;
     }
 
     return Text(
