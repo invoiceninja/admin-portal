@@ -228,7 +228,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
     return SingleChildScrollView(
       child: FormCard(
-        padding: const EdgeInsets.only(left: 12, bottom: 12, right: 12),
+        padding: EdgeInsets.only(
+            left: 16, bottom: 16, right: 16, top: isMobile(context) ? 16 : 0),
         children: <Widget>[
           if (_isLoading &&
               _subjectController.text.isEmpty &&
@@ -359,8 +360,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           tabs: [
             Tab(text: localization.preview),
             Tab(text: localization.customize),
-            Tab(text: localization.history),
             Tab(text: localization.pdf),
+            Tab(text: localization.history),
           ],
         ),
         saveLabel: localization.send,
@@ -379,11 +380,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               ],
             ),
             _buildEdit(context),
-            _buildHistory(context),
             PDFScaffold(
               invoice: invoice,
               showAppBar: false,
             ),
+            _buildHistory(context),
           ],
         ),
       ),
