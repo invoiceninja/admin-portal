@@ -75,6 +75,10 @@ abstract class InvoiceUIState extends Object
   @BuiltValueField(serialize: false)
   int get editingItemIndex;
 
+  @nullable
+  @BuiltValueField(serialize: false)
+  String get historyActivityId;
+
   @override
   bool get isCreatingNew => editing.isNew;
 
