@@ -201,7 +201,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         template: '$_template',
         body: body,
         subject: subject,
-        onComplete: (subject, body, wrapper) {
+        onComplete: (subject, body, rawSubject, rawBody) {
           if (!mounted) {
             return;
           }
@@ -209,7 +209,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();
-            _bodyPreview = wrapper.replaceFirst('\$body', body).trim();
+            _bodyPreview = body.trim();
           });
         });
   }

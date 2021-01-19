@@ -122,7 +122,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         body: origBody,
         template: '$selectedTemplate',
         invoice: widget.viewModel.invoice,
-        onComplete: (subject, body, wrapper) {
+        onComplete: (subject, body, rawSubject, rawBody) {
           if (!mounted) {
             return;
           }
@@ -130,11 +130,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();
-            _bodyPreview = wrapper.replaceFirst('\$body', body).trim();
+            _bodyPreview = body.trim();
 
             if (origSubject.isEmpty && origBody.isEmpty) {
-              _subjectController.text = subject.trim();
-              _bodyController.text = body.trim();
+              _subjectController.text = rawSubject.trim();
+              _bodyController.text = rawBody.trim();
             }
           });
         });

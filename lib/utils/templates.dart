@@ -9,14 +9,14 @@ import 'dialogs.dart';
 
 void loadEmailTemplate({
   @required BuildContext context,
-  @required Function(String, String, String) onComplete,
+  @required Function(String, String, String, String) onComplete,
   String template,
   String subject,
   String body,
   InvoiceEntity invoice,
 }) {
   if (Config.DEMO_MODE) {
-    onComplete(subject, body, '');
+    onComplete(subject, body, '', '');
     return;
   }
 
@@ -50,9 +50,14 @@ void loadEmailTemplate({
             'body': body,
           }))
       .then((dynamic response) {
-    onComplete(response['subject'], response['body'], response['wrapper']);
+    onComplete(
+      response['subject'],
+      response['wrapper'].replaceFirst('\$body', response['body']),
+      response['raw_subject'],
+      response['raw_body'],
+    );
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
-    onComplete(subject, body, '');
+    onComplete(subject, body, subject, body);
   });
 }
