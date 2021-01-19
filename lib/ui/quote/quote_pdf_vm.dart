@@ -35,19 +35,23 @@ class QuotePdfVM extends EntityPdfVM {
   QuotePdfVM({
     AppState state,
     InvoiceEntity invoice,
+    String activityId,
   }) : super(
           state: state,
           invoice: invoice,
+          activityId: activityId,
         );
 
   factory QuotePdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final invoiceId = state.uiState.quoteUIState.selectedId;
+    final quoteUIState = state.uiState.quoteUIState;
+    final invoiceId = quoteUIState.selectedId;
     final invoice = state.quoteState.get(invoiceId);
 
     return QuotePdfVM(
       state: state,
       invoice: invoice,
+      activityId: quoteUIState.historyActivityId,
     );
   }
 }

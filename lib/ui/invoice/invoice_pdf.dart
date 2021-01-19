@@ -29,12 +29,10 @@ class InvoicePdfView extends StatefulWidget {
   const InvoicePdfView({
     Key key,
     @required this.viewModel,
-    this.activityId,
     this.showAppBar = true,
   }) : super(key: key);
 
   final EntityPdfVM viewModel;
-  final String activityId;
   final bool showAppBar;
 
   @override
@@ -54,7 +52,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   void initState() {
     super.initState();
 
-    _activityId = widget.activityId;
+    _activityId = widget.viewModel.activityId;
   }
 
   @override

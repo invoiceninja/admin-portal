@@ -56,10 +56,11 @@ class ShowEmailInvoice {
 }
 
 class ShowPdfInvoice {
-  ShowPdfInvoice({this.invoice, this.context});
+  ShowPdfInvoice({this.invoice, this.context, this.activityId});
 
   final InvoiceEntity invoice;
   final BuildContext context;
+  final String activityId;
 }
 
 class EditInvoiceItem implements PersistUI {

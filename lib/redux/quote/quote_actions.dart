@@ -59,10 +59,11 @@ class ShowEmailQuote {
 }
 
 class ShowPdfQuote {
-  ShowPdfQuote({this.quote, this.context});
+  ShowPdfQuote({this.quote, this.context, this.activityId});
 
   final InvoiceEntity quote;
   final BuildContext context;
+  final String activityId;
 }
 
 class EditQuoteItem implements PersistUI {

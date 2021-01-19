@@ -35,19 +35,23 @@ class CreditPdfVM extends EntityPdfVM {
   CreditPdfVM({
     AppState state,
     InvoiceEntity invoice,
+    String activityId,
   }) : super(
           state: state,
           invoice: invoice,
+          activityId: activityId,
         );
 
   factory CreditPdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final invoiceId = state.uiState.creditUIState.selectedId;
+    final creditUIState = state.uiState.creditUIState;
+    final invoiceId = creditUIState.selectedId;
     final invoice = state.creditState.get(invoiceId);
 
     return CreditPdfVM(
       state: state,
       invoice: invoice,
+      activityId: creditUIState.historyActivityId,
     );
   }
 }

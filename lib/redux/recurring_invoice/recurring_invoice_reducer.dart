@@ -16,8 +16,15 @@ EntityUIState recurringInvoiceUIReducer(
         .replace(recurringInvoiceListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemIndexReducer(state.editingItemIndex, action)
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..historyActivityId =
+        historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final historyActivityIdReducer = combineReducers<String>([
+  TypedReducer<String, ShowPdfRecurringInvoice>(
+      (index, action) => action.activityId),
+]);
 
 final editingItemIndexReducer = combineReducers<int>([
   TypedReducer<int, EditRecurringInvoice>((index, action) => action.itemIndex),

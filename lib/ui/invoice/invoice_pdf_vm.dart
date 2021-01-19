@@ -34,29 +34,35 @@ abstract class EntityPdfVM {
   EntityPdfVM({
     @required this.state,
     @required this.invoice,
+    @required this.activityId,
   });
 
   final AppState state;
   final InvoiceEntity invoice;
+  final String activityId;
 }
 
 class InvoicePdfVM extends EntityPdfVM {
   InvoicePdfVM({
     AppState state,
     InvoiceEntity invoice,
+    String activityId,
   }) : super(
           state: state,
           invoice: invoice,
+          activityId: activityId,
         );
 
   factory InvoicePdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final invoiceId = state.uiState.invoiceUIState.selectedId;
+    final invoiceUIState = state.uiState.invoiceUIState;
+    final invoiceId = invoiceUIState.selectedId;
     final invoice = state.invoiceState.get(invoiceId);
 
     return InvoicePdfVM(
       state: state,
       invoice: invoice,
+      activityId: invoiceUIState.historyActivityId,
     );
   }
 }

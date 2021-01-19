@@ -61,10 +61,11 @@ class ShowEmailRecurringInvoice {
 }
 
 class ShowPdfRecurringInvoice {
-  ShowPdfRecurringInvoice({this.invoice, this.context});
+  ShowPdfRecurringInvoice({this.invoice, this.context, this.activityId});
 
   final InvoiceEntity invoice;
   final BuildContext context;
+  final String activityId;
 }
 
 class EditRecurringInvoiceItem implements PersistUI {

@@ -59,10 +59,11 @@ class ShowEmailCredit {
 }
 
 class ShowPdfCredit {
-  ShowPdfCredit({this.credit, this.context});
+  ShowPdfCredit({this.credit, this.context, this.activityId});
 
   final InvoiceEntity credit;
   final BuildContext context;
+  final String activityId;
 }
 
 class EditCreditItem implements PersistUI {

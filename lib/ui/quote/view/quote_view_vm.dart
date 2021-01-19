@@ -58,6 +58,7 @@ class QuoteViewVM extends EntityViewVM {
     Function(BuildContext, MultipartFile) onUploadDocument,
     Function(BuildContext, DocumentEntity, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
   }) : super(
           state: state,
           company: company,
@@ -72,6 +73,7 @@ class QuoteViewVM extends EntityViewVM {
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
+          onViewPdf: onViewPdf,
         );
 
   factory QuoteViewVM.fromStore(Store<AppState> store) {
@@ -131,6 +133,10 @@ class QuoteViewVM extends EntityViewVM {
           documentIds: [document.id],
           password: password,
         ));
+      },
+      onViewPdf: (context, quote, [activityId]) {
+        store.dispatch(ShowPdfQuote(
+            context: context, quote: quote, activityId: activityId));
       },
     );
   }

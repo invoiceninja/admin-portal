@@ -36,19 +36,23 @@ class RecurringInvoicePdfVM extends EntityPdfVM {
   RecurringInvoicePdfVM({
     AppState state,
     InvoiceEntity invoice,
+    String activityId,
   }) : super(
           state: state,
           invoice: invoice,
+          activityId: activityId,
         );
 
   factory RecurringInvoicePdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final invoiceId = state.uiState.recurringInvoiceUIState.selectedId;
+    final recurringInvoiceUIState = state.uiState.recurringInvoiceUIState;
+    final invoiceId = recurringInvoiceUIState.selectedId;
     final invoice = state.recurringInvoiceState.get(invoiceId);
 
     return RecurringInvoicePdfVM(
       state: state,
       invoice: invoice,
+      activityId: recurringInvoiceUIState.historyActivityId,
     );
   }
 }
