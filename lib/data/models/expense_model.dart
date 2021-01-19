@@ -290,7 +290,7 @@ abstract class ExpenseEntity extends Object
       }
 
       if (!isInvoiced && userCompany.canCreate(EntityType.invoice)) {
-        actions.add(EntityAction.newInvoice);
+        actions.add(EntityAction.invoiceExpense);
       }
     }
 

@@ -321,7 +321,7 @@ void handleTaskAction(
       });
 
       break;
-    case EntityAction.newInvoice:
+    case EntityAction.invoiceTask:
       final items = tasks
           .where((entity) {
             final task = entity as TaskEntity;

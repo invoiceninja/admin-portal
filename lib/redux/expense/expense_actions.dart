@@ -268,7 +268,7 @@ void handleExpenseAction(
     case EntityAction.clone:
       createEntity(context: context, entity: expense.clone);
       break;
-    case EntityAction.newInvoice:
+    case EntityAction.invoiceExpense:
       final items = expenses
           .where((entity) {
             final expense = entity as ExpenseEntity;
