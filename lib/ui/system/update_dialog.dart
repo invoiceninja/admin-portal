@@ -81,12 +81,13 @@ class _UpdateDialogState extends State<UpdateDialog> {
               onPressed: () => launch(kGitHubDiffUrl.replaceFirst(
                   'VERSION', account.currentVersion)),
             ),
-          FlatButton(
-            child: Text(localization.updateNow.toUpperCase()),
-            onPressed: () {
-              updateApp(context);
-            },
-          ),
+          if (!account.isDocker)
+            FlatButton(
+              child: Text(localization.updateNow.toUpperCase()),
+              onPressed: () {
+                updateApp(context);
+              },
+            ),
         ] else if (updateState == UpdateState.done)
           FlatButton(
             child: Text(localization.close.toUpperCase()),
