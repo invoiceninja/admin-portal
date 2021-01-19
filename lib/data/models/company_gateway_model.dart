@@ -345,7 +345,7 @@ abstract class FeesAndLimitsSettings
   bool get isEnabled;
 
   // ignore: unused_element
-  static void _initializeBuilder(CompanyGatewayEntityBuilder builder) =>
+  static void _initializeBuilder(FeesAndLimitsSettingsBuilder builder) =>
       builder..isEnabled = false;
 
   static Serializer<FeesAndLimitsSettings> get serializer =>
