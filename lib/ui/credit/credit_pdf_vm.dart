@@ -8,7 +8,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CreditPdfScreen extends StatelessWidget {
-  const CreditPdfScreen({Key key}) : super(key: key);
+  const CreditPdfScreen({Key key, this.showAppBar = true}) : super(key: key);
+
+  final bool showAppBar;
 
   static const String route = '/credit/pdf';
 
@@ -22,6 +24,7 @@ class CreditPdfScreen extends StatelessWidget {
         return InvoicePdfView(
           key: ValueKey('__credit_pdf_${vm.invoice.id}__'),
           viewModel: vm,
+          showAppBar: showAppBar,
         );
       },
     );

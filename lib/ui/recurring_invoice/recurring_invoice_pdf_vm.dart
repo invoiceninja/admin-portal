@@ -8,7 +8,10 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class RecurringInvoicePdfScreen extends StatelessWidget {
-  const RecurringInvoicePdfScreen({Key key}) : super(key: key);
+  const RecurringInvoicePdfScreen({Key key, this.showAppBar = true})
+      : super(key: key);
+
+  final bool showAppBar;
 
   static const String route = '/recurring_invoice/pdf';
 
@@ -22,6 +25,7 @@ class RecurringInvoicePdfScreen extends StatelessWidget {
         return InvoicePdfView(
           key: ValueKey('__recurring_invoice_pdf_${vm.invoice.id}__'),
           viewModel: vm,
+          showAppBar: showAppBar,
         );
       },
     );
