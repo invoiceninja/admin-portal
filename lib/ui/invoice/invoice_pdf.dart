@@ -177,6 +177,32 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             Spacer(),
           ];
 
+    final deliveryNote = Theme(
+      data: ThemeData(
+        unselectedWidgetColor: state.headerTextColor,
+      ),
+      child: Container(
+        width: 200,
+        child: CheckboxListTile(
+          title: Text(
+            localization.deliveryNote,
+            style: TextStyle(
+              color: state.headerTextColor,
+            ),
+          ),
+          value: _isDeliveryNote,
+          onChanged: (value) {
+            setState(() {
+              _isDeliveryNote = !_isDeliveryNote;
+              loadPdf();
+            });
+          },
+          controlAffinity: ListTileControlAffinity.leading,
+          activeColor: state.accentColor,
+        ),
+      ),
+    );
+
     return Scaffold(
         backgroundColor: Colors.grey,
         appBar: widget.showAppBar
@@ -185,39 +211,13 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                 automaticallyImplyLeading: isMobile(context),
                 title: Row(
                   children: [
-                    if (isDesktop(context)) ...[
-                      Text(localization.lookup('${invoice.entityType}') +
-                          ' ' +
-                          (invoice.number ?? '')),
-                      Spacer(),
-                    ],
+                    Text(localization.lookup('${invoice.entityType}') +
+                        '  ›  ' +
+                        invoice.number),
+                    Spacer(),
                     if (isDesktop(context)) ...activitySelector,
                     if (isDesktop(context)) ...pageSelector,
-                    Theme(
-                      data: ThemeData(
-                        unselectedWidgetColor: state.headerTextColor,
-                      ),
-                      child: Container(
-                        width: 200,
-                        child: CheckboxListTile(
-                          title: Text(
-                            localization.deliveryNote,
-                            style: TextStyle(
-                              color: state.headerTextColor,
-                            ),
-                          ),
-                          value: _isDeliveryNote,
-                          onChanged: (value) {
-                            setState(() {
-                              _isDeliveryNote = !_isDeliveryNote;
-                              loadPdf();
-                            });
-                          },
-                          controlAffinity: ListTileControlAffinity.leading,
-                          activeColor: state.accentColor,
-                        ),
-                      ),
-                    ),
+                    if (isDesktop(context)) deliveryNote,
                   ],
                 ),
                 actions: <Widget>[
