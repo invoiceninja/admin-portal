@@ -3,13 +3,17 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -52,6 +56,8 @@ class GroupViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
+    @required this.onUploadDocument,
+    @required this.onDeleteDocument,
   });
 
   factory GroupViewVM.fromStore(Store<AppState> store) {
@@ -67,28 +73,55 @@ class GroupViewVM {
     }
 
     return GroupViewVM(
-        state: state,
-        company: state.company,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: group.isNew,
-        group: group,
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
-        },
-        onEntityAction: (BuildContext context, EntityAction action) =>
-            handleEntitiesActions(context, [group], action, autoPop: true),
-        onClientsPressed: (context, [longPress = false]) {
-          if (longPress) {
-            handleGroupAction(context, [group], EntityAction.newClient);
-          } else {
-            viewEntitiesByType(
-                context: context,
-                entityType: EntityType.client,
-                filterEntity: group);
-          }
+      state: state,
+      company: state.company,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: group.isNew,
+      group: group,
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
+      },
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handleEntitiesActions(context, [group], action, autoPop: true),
+      onClientsPressed: (context, [longPress = false]) {
+        if (longPress) {
+          handleGroupAction(context, [group], EntityAction.newClient);
+        } else {
+          viewEntitiesByType(
+              context: context,
+              entityType: EntityType.client,
+              filterEntity: group);
+        }
+      },
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SaveGroupDocumentRequest(
+            multipartFile: multipartFile, group: group, completer: completer));
+        completer.future.then((client) {
+          showToast(AppLocalization.of(context).uploadedDocument);
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
+      },
+      onDeleteDocument:
+          (BuildContext context, DocumentEntity document, String password) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>(
+            (value) => store.dispatch(LoadGroup(groupId: group.id)));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+        ));
+      },
+    );
   }
 
   final AppState state;
@@ -98,6 +131,8 @@ class GroupViewVM {
   final Function(BuildContext, [bool]) onClientsPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
