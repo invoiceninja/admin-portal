@@ -29,7 +29,21 @@ class GroupView extends StatefulWidget {
   _GroupViewState createState() => new _GroupViewState();
 }
 
-class _GroupViewState extends State<GroupView> {
+class _GroupViewState extends State<GroupView> with SingleTickerProviderStateMixin {
+  TabController _controller;
+
+    @override
+  void initState() {
+    super.initState();
+    _controller = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
