@@ -143,7 +143,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             Spacer(),
           ];
 
-    final activitySelector = _activityId == null
+    final activitySelector = _activityId == null || kIsWeb
         ? <Widget>[]
         : [
             Flexible(
