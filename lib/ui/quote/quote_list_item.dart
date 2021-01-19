@@ -147,7 +147,7 @@ class QuoteListItem extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          formatNumber(quote.balance, context,
+                          formatNumber(quote.amount, context,
                               clientId: client.id),
                           style: textStyle,
                           textAlign: TextAlign.end,
@@ -190,11 +190,7 @@ class QuoteListItem extends StatelessWidget {
                         ),
                         SizedBox(width: 4),
                         Text(
-                            formatNumber(
-                                quote.balance > 0
-                                    ? quote.balance
-                                    : quote.amount,
-                                context,
+                            formatNumber(quote.amount, context,
                                 clientId: quote.clientId),
                             style: Theme.of(context).textTheme.headline6),
                       ],
