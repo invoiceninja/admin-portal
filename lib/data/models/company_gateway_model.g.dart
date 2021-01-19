@@ -436,6 +436,9 @@ class _$FeesAndLimitsSettingsSerializer
       'adjust_fee_percent',
       serializers.serialize(object.adjustFeePercent,
           specifiedType: const FullType(bool)),
+      'is_enabled',
+      serializers.serialize(object.isEnabled,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -499,6 +502,10 @@ class _$FeesAndLimitsSettingsSerializer
           break;
         case 'adjust_fee_percent':
           result.adjustFeePercent = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_enabled':
+          result.isEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -1285,6 +1292,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
   final String taxName3;
   @override
   final bool adjustFeePercent;
+  @override
+  final bool isEnabled;
 
   factory _$FeesAndLimitsSettings(
           [void Function(FeesAndLimitsSettingsBuilder) updates]) =>
@@ -1302,7 +1311,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       this.taxName2,
       this.taxRate3,
       this.taxName3,
-      this.adjustFeePercent})
+      this.adjustFeePercent,
+      this.isEnabled})
       : super._() {
     if (minLimit == null) {
       throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'minLimit');
@@ -1341,6 +1351,9 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       throw new BuiltValueNullFieldError(
           'FeesAndLimitsSettings', 'adjustFeePercent');
     }
+    if (isEnabled == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'isEnabled');
+    }
   }
 
   @override
@@ -1367,7 +1380,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
         taxName2 == other.taxName2 &&
         taxRate3 == other.taxRate3 &&
         taxName3 == other.taxName3 &&
-        adjustFeePercent == other.adjustFeePercent;
+        adjustFeePercent == other.adjustFeePercent &&
+        isEnabled == other.isEnabled;
   }
 
   int __hashCode;
@@ -1383,18 +1397,20 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, minLimit.hashCode),
-                                                maxLimit.hashCode),
-                                            feeAmount.hashCode),
-                                        feePercent.hashCode),
-                                    feeCap.hashCode),
-                                taxRate1.hashCode),
-                            taxName1.hashCode),
-                        taxRate2.hashCode),
-                    taxName2.hashCode),
-                taxRate3.hashCode),
-            taxName3.hashCode),
-        adjustFeePercent.hashCode));
+                                            $jc(
+                                                $jc($jc(0, minLimit.hashCode),
+                                                    maxLimit.hashCode),
+                                                feeAmount.hashCode),
+                                            feePercent.hashCode),
+                                        feeCap.hashCode),
+                                    taxRate1.hashCode),
+                                taxName1.hashCode),
+                            taxRate2.hashCode),
+                        taxName2.hashCode),
+                    taxRate3.hashCode),
+                taxName3.hashCode),
+            adjustFeePercent.hashCode),
+        isEnabled.hashCode));
   }
 
   @override
@@ -1411,7 +1427,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
           ..add('taxName2', taxName2)
           ..add('taxRate3', taxRate3)
           ..add('taxName3', taxName3)
-          ..add('adjustFeePercent', adjustFeePercent))
+          ..add('adjustFeePercent', adjustFeePercent)
+          ..add('isEnabled', isEnabled))
         .toString();
   }
 }
@@ -1469,7 +1486,13 @@ class FeesAndLimitsSettingsBuilder
   set adjustFeePercent(bool adjustFeePercent) =>
       _$this._adjustFeePercent = adjustFeePercent;
 
-  FeesAndLimitsSettingsBuilder();
+  bool _isEnabled;
+  bool get isEnabled => _$this._isEnabled;
+  set isEnabled(bool isEnabled) => _$this._isEnabled = isEnabled;
+
+  FeesAndLimitsSettingsBuilder() {
+    FeesAndLimitsSettings._initializeBuilder(this);
+  }
 
   FeesAndLimitsSettingsBuilder get _$this {
     if (_$v != null) {
@@ -1485,6 +1508,7 @@ class FeesAndLimitsSettingsBuilder
       _taxRate3 = _$v.taxRate3;
       _taxName3 = _$v.taxName3;
       _adjustFeePercent = _$v.adjustFeePercent;
+      _isEnabled = _$v.isEnabled;
       _$v = null;
     }
     return this;
@@ -1518,7 +1542,8 @@ class FeesAndLimitsSettingsBuilder
             taxName2: taxName2,
             taxRate3: taxRate3,
             taxName3: taxName3,
-            adjustFeePercent: adjustFeePercent);
+            adjustFeePercent: adjustFeePercent,
+            isEnabled: isEnabled);
     replace(_$result);
     return _$result;
   }
