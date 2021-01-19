@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
@@ -29,44 +30,86 @@ class GroupView extends StatefulWidget {
   _GroupViewState createState() => new _GroupViewState();
 }
 
-class _GroupViewState extends State<GroupView> {
+class _GroupViewState extends State<GroupView>
+    with SingleTickerProviderStateMixin {
+  TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final group = viewModel.group;
+    final documents = group.documents;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: group,
       onBackPressed: () => viewModel.onBackPressed(),
-      body: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: AppButton(
-              label: localization.configureSettings.toUpperCase(),
-              iconData: Icons.settings,
-              onPressed: () =>
-                  handleGroupAction(context, [group], EntityAction.settings),
-            ),
+      appBarBottom: TabBar(
+        controller: _controller,
+        isScrollable: false,
+        tabs: [
+          Tab(
+            text: localization.overview,
           ),
-          ListDivider(),
-          EntitiesListTile(
-            entity: group,
-            isFilter: widget.isFilter,
-            entityType: EntityType.client,
-            title: localization.clients,
-            subtitle:
-                memoizedClientStatsForGroup(state.clientState.map, group.id)
-                    .present(localization.active, localization.archived),
+          Tab(
+            text: documents.isEmpty
+                ? localization.documents
+                : '${localization.documents} (${documents.length})',
           ),
-          ListDivider(),
-          SettingsViewer(
-            settings: group.settings,
-            state: state,
+        ],
+      ),
+      body: TabBarView(
+        controller: _controller,
+        children: [
+          ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+                child: AppButton(
+                  label: localization.configureSettings.toUpperCase(),
+                  iconData: Icons.settings,
+                  onPressed: () => handleGroupAction(
+                      context, [group], EntityAction.settings),
+                ),
+              ),
+              ListDivider(),
+              EntitiesListTile(
+                entity: group,
+                isFilter: widget.isFilter,
+                entityType: EntityType.client,
+                title: localization.clients,
+                subtitle:
+                    memoizedClientStatsForGroup(state.clientState.map, group.id)
+                        .present(localization.active, localization.archived),
+              ),
+              ListDivider(),
+              SettingsViewer(
+                settings: group.settings,
+                state: state,
+              ),
+            ],
+          ),
+          DocumentGrid(
+            documents: documents.toList(),
+            onUploadDocument: (path) =>
+                viewModel.onUploadDocument(context, path),
+            onDeleteDocument: (document, password) =>
+                viewModel.onDeleteDocument(context, document, password),
           ),
         ],
       ),

@@ -41,6 +41,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'debug_enabled',
       serializers.serialize(object.debugEnabled,
           specifiedType: const FullType(bool)),
+      'is_docker',
+      serializers.serialize(object.isDocker,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -90,6 +93,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.debugEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'is_docker':
+          result.isDocker = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -114,6 +121,8 @@ class _$AccountEntity extends AccountEntity {
   final String currentVersion;
   @override
   final bool debugEnabled;
+  @override
+  final bool isDocker;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates)).build();
@@ -126,7 +135,8 @@ class _$AccountEntity extends AccountEntity {
       this.planExpires,
       this.latestVersion,
       this.currentVersion,
-      this.debugEnabled})
+      this.debugEnabled,
+      this.isDocker})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'id');
@@ -152,6 +162,9 @@ class _$AccountEntity extends AccountEntity {
     if (debugEnabled == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'debugEnabled');
     }
+    if (isDocker == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'isDocker');
+    }
   }
 
   @override
@@ -172,7 +185,8 @@ class _$AccountEntity extends AccountEntity {
         planExpires == other.planExpires &&
         latestVersion == other.latestVersion &&
         currentVersion == other.currentVersion &&
-        debugEnabled == other.debugEnabled;
+        debugEnabled == other.debugEnabled &&
+        isDocker == other.isDocker;
   }
 
   int __hashCode;
@@ -183,13 +197,15 @@ class _$AccountEntity extends AccountEntity {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),
-                            reportErrors.hashCode),
-                        plan.hashCode),
-                    planExpires.hashCode),
-                latestVersion.hashCode),
-            currentVersion.hashCode),
-        debugEnabled.hashCode));
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),
+                                reportErrors.hashCode),
+                            plan.hashCode),
+                        planExpires.hashCode),
+                    latestVersion.hashCode),
+                currentVersion.hashCode),
+            debugEnabled.hashCode),
+        isDocker.hashCode));
   }
 
   @override
@@ -202,7 +218,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('planExpires', planExpires)
           ..add('latestVersion', latestVersion)
           ..add('currentVersion', currentVersion)
-          ..add('debugEnabled', debugEnabled))
+          ..add('debugEnabled', debugEnabled)
+          ..add('isDocker', isDocker))
         .toString();
   }
 }
@@ -245,6 +262,10 @@ class AccountEntityBuilder
   bool get debugEnabled => _$this._debugEnabled;
   set debugEnabled(bool debugEnabled) => _$this._debugEnabled = debugEnabled;
 
+  bool _isDocker;
+  bool get isDocker => _$this._isDocker;
+  set isDocker(bool isDocker) => _$this._isDocker = isDocker;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -259,6 +280,7 @@ class AccountEntityBuilder
       _latestVersion = _$v.latestVersion;
       _currentVersion = _$v.currentVersion;
       _debugEnabled = _$v.debugEnabled;
+      _isDocker = _$v.isDocker;
       _$v = null;
     }
     return this;
@@ -288,7 +310,8 @@ class AccountEntityBuilder
             planExpires: planExpires,
             latestVersion: latestVersion,
             currentVersion: currentVersion,
-            debugEnabled: debugEnabled);
+            debugEnabled: debugEnabled,
+            isDocker: isDocker);
     replace(_$result);
     return _$result;
   }

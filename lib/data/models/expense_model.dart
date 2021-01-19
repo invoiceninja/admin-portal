@@ -290,12 +290,8 @@ abstract class ExpenseEntity extends Object
       }
 
       if (!isInvoiced && userCompany.canCreate(EntityType.invoice)) {
-        actions.add(EntityAction.newInvoice);
+        actions.add(EntityAction.invoiceExpense);
       }
-    }
-
-    if (isInvoiced && !multiselect) {
-      actions.add(EntityAction.viewInvoice);
     }
 
     if (userCompany.canCreate(EntityType.task) && !multiselect) {
@@ -632,6 +628,8 @@ abstract class ExpenseEntity extends Object
   bool get isPending => !isInvoiced && shouldBeInvoiced;
 
   bool get isConverted => exchangeRate != 1 && exchangeRate != 0;
+
+  bool get hasExchangeRate => exchangeRate != 1 && exchangeRate != 0;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }

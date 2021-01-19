@@ -118,8 +118,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           viewModel.onChanged(
                         companyGateway.rebuild((b) => b
                           ..feesAndLimitsMap[(gateway as GatewayEntity)
-                                  .defaultGatewayTypeId ??
-                              kGatewayTypeCreditCard] = FeesAndLimitsSettings()
+                                      .defaultGatewayTypeId ??
+                                  kGatewayTypeCreditCard] =
+                              FeesAndLimitsSettings(isEnabled: true)
                           ..gatewayId = gateway.id
                           ..config = '{}'
                           ..label = gateway.listDisplayName),
@@ -314,6 +315,20 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         });
                       },
                     ),
+                    SizedBox(height: 16),
+                    SwitchListTile(
+                        title: Text(localization.enabled),
+                        activeColor: Theme.of(context).accentColor,
+                        value: companyGateway
+                            .getSettingsForGatewayTypeId(_gatewayTypeId)
+                            .isEnabled,
+                        onChanged: (value) {
+                          final settings = companyGateway
+                              .getSettingsForGatewayTypeId(_gatewayTypeId);
+                          viewModel.onChanged(companyGateway.rebuild((b) => b
+                            ..feesAndLimitsMap[_gatewayTypeId] =
+                                settings.rebuild((b) => b..isEnabled = value)));
+                        }),
                   ],
                 ),
               LimitEditor(
@@ -586,7 +601,6 @@ class _LimitEditorState extends State<LimitEditor> {
   }
 
   void _onChanged() {
-    print('_onChanged');
     final viewModel = widget.viewModel;
     final companyGateway = viewModel.companyGateway;
     final settings =
@@ -597,14 +611,12 @@ class _LimitEditorState extends State<LimitEditor> {
       ..maxLimit = _enableMax ? parseDouble(_maxController.text.trim()) : -1);
 
     if (settings != updatedSettings) {
-      print('_onChanged: updating...');
       viewModel.onChanged(companyGateway.rebuild(
           (b) => b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings));
     }
   }
 
   void _onTextChange() {
-    print('_onTextChanged');
     _debouncer.run(() {
       _onChanged();
     });
@@ -626,7 +638,9 @@ class _LimitEditorState extends State<LimitEditor> {
                     label: localization.minLimit,
                     enabled: _enableMin,
                     controller: _minController,
-                    keyboardType: TextInputType.numberWithOptions(),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
+                    autocorrect: false,
                   ),
                   SizedBox(height: 10),
                   CheckboxListTile(
@@ -656,7 +670,9 @@ class _LimitEditorState extends State<LimitEditor> {
                     label: localization.maxLimit,
                     enabled: _enableMax,
                     controller: _maxController,
-                    keyboardType: TextInputType.numberWithOptions(),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
+                    autocorrect: false,
                   ),
                   SizedBox(height: 10),
                   CheckboxListTile(
@@ -779,22 +795,19 @@ class _FeesEditorState extends State<FeesEditor> {
     return FormCard(
       children: <Widget>[
         DecoratedFormField(
-          label: localization.feeAmount,
-          controller: _amountController,
-          autocorrect: false,
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
-        ),
-        DecoratedFormField(
           label: localization.feePercent,
           controller: _percentController,
-          autocorrect: false,
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
+          isPercent: true,
+        ),
+        DecoratedFormField(
+          label: localization.feeAmount,
+          controller: _amountController,
+          isMoney: true,
         ),
         DecoratedFormField(
           label: localization.feeCap,
           controller: _capController,
-          autocorrect: false,
-          keyboardType: TextInputType.numberWithOptions(decimal: true),
+          isMoney: true,
         ),
         if (company.enableFirstItemTaxRate)
           TaxRateDropdown(

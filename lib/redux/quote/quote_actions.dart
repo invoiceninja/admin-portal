@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewQuoteList extends AbstractNavigatorAction
@@ -57,6 +56,14 @@ class ShowEmailQuote {
   final InvoiceEntity quote;
   final BuildContext context;
   final Completer completer;
+}
+
+class ShowPdfQuote {
+  ShowPdfQuote({this.quote, this.context, this.activityId});
+
+  final InvoiceEntity quote;
+  final BuildContext context;
+  final String activityId;
 }
 
 class EditQuoteItem implements PersistUI {
@@ -428,19 +435,13 @@ Future handleQuoteAction(
       editEntity(context: context, entity: quote);
       break;
     case EntityAction.viewPdf:
-      viewPdf(quote, context);
+      store.dispatch(ShowPdfQuote(quote: quote, context: context));
       break;
     case EntityAction.clientPortal:
       if (await canLaunch(quote.invitationSilentLink)) {
         await launch(quote.invitationSilentLink,
             forceSafariVC: false, forceWebView: false);
       }
-      break;
-    case EntityAction.viewInvoice:
-      viewEntityById(
-          context: context,
-          entityId: quote.invoiceId,
-          entityType: EntityType.invoice);
       break;
     case EntityAction.convert:
       store.dispatch(ConvertQuotes(

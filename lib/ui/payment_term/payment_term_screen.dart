@@ -6,10 +6,13 @@ import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'payment_term_screen_vm.dart';
 
@@ -33,7 +36,16 @@ class PaymentTermScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.paymentTerm,
       onHamburgerLongPress: () => store.dispatch(StartPaymentTermMultiselect()),
-      appBarTitle: Text(localization.paymentTerms),
+      onCancelSettingsSection: kSettingsCompanyDetails,
+      onCancelSettingsIndex: 3,
+      appBarTitle: ListFilter(
+        entityType: EntityType.paymentTerm,
+        entityIds: viewModel.paymentTermList,
+        filter: state.paymentTermListState.filter,
+        onFilterChanged: (value) {
+          store.dispatch(FilterPaymentTerms(value));
+        },
+      ),
       body: PaymentTermListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.paymentTerm,

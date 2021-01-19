@@ -234,3 +234,28 @@ Middleware<AppState> _loadGroups(GroupRepository repository) {
     next(action);
   };
 }
+
+Middleware<AppState> _saveDocument(GroupRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveGroupDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+              store.state.credentials, action.group, action.multipartFile)
+          .then((group) {
+        store.dispatch(SaveGroupSuccess(group));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveGroupDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveGroupDocumentFailure(error));
+      action.completer.completeError(error);
+    }
+
+    next(action);
+  };
+}

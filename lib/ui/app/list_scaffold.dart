@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
@@ -21,6 +22,8 @@ class ListScaffold extends StatelessWidget {
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.onHamburgerLongPress,
+    this.onCancelSettingsSection,
+    this.onCancelSettingsIndex = 0,
   });
 
   final EntityType entityType;
@@ -30,6 +33,8 @@ class ListScaffold extends StatelessWidget {
   final Widget appBarTitle;
   final List<Widget> appBarActions;
   final Function() onHamburgerLongPress;
+  final String onCancelSettingsSection;
+  final int onCancelSettingsIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +98,16 @@ class ListScaffold extends StatelessWidget {
             title: appBarTitle,
             actions: [
               ...appBarActions ?? <Widget>[],
+              if (isDesktop(context) && onCancelSettingsSection != null)
+                FlatButton(
+                    onPressed: () {
+                      store.dispatch(ViewSettings(
+                        navigator: Navigator.of(context),
+                        section: onCancelSettingsSection,
+                        tabIndex: onCancelSettingsIndex,
+                      ));
+                    },
+                    child: Text(localization.cancel)),
               if (!isSettings &&
                   (isMobile(context) || !state.prefState.isHistoryVisible))
                 Builder(

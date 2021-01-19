@@ -43,6 +43,7 @@ class MessageDialog extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: FlatButton(
+                              autofocus: true,
                               child: Text(
                                   localization.discardChanges.toUpperCase()),
                               onPressed: () {

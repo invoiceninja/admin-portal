@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewCreditList extends AbstractNavigatorAction
@@ -57,6 +56,14 @@ class ShowEmailCredit {
   final InvoiceEntity credit;
   final BuildContext context;
   final Completer completer;
+}
+
+class ShowPdfCredit {
+  ShowPdfCredit({this.credit, this.context, this.activityId});
+
+  final InvoiceEntity credit;
+  final BuildContext context;
+  final String activityId;
 }
 
 class EditCreditItem implements PersistUI {
@@ -409,20 +416,13 @@ Future handleCreditAction(
       editEntity(context: context, entity: credit);
       break;
     case EntityAction.viewPdf:
-      viewPdf(credit, context);
+      store.dispatch(ShowPdfCredit(credit: credit, context: context));
       break;
     case EntityAction.clientPortal:
       if (await canLaunch(credit.invitationSilentLink)) {
         await launch(credit.invitationSilentLink,
             forceSafariVC: false, forceWebView: false);
       }
-      break;
-    case EntityAction.viewInvoice:
-      viewEntityById(
-          context: context,
-          // TODO fix this
-          // entityId: credit.creditInvoiceId,
-          entityType: EntityType.invoice);
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentCreditRequest(

@@ -17,6 +17,7 @@ abstract class AccountEntity
       currentVersion: '',
       reportErrors: reportErrors,
       debugEnabled: false,
+      isDocker: false,
     );
   }
 
@@ -48,6 +49,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'debug_enabled')
   bool get debugEnabled;
 
+  @BuiltValueField(wireName: 'is_docker')
+  bool get isDocker;
+
   bool get isUpdateAvailable =>
       Version.parse(currentVersion) < Version.parse(latestVersion) &&
       isCronEnabled;
@@ -55,8 +59,9 @@ abstract class AccountEntity
   bool get isCronEnabled => latestVersion != '0.0.0';
 
   // ignore: unused_element
-  static void _initializeBuilder(AccountEntityBuilder builder) =>
-      builder..debugEnabled = false;
+  static void _initializeBuilder(AccountEntityBuilder builder) => builder
+    ..debugEnabled = false
+    ..isDocker = false;
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }

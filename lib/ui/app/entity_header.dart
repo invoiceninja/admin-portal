@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
@@ -104,7 +105,7 @@ class EntityHeader extends StatelessWidget {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: EntityStatusChip(
                         entity: entity,
-                        width: 120,
+                        width: null,
                       ),
                     ),
                   if (!entity.isActive)

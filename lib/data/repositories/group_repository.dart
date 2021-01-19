@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -62,6 +63,22 @@ class GroupRepository {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
+
+    final GroupItemResponse groupResponse =
+        serializers.deserializeWith(GroupItemResponse.serializer, response);
+
+    return groupResponse.data;
+  }
+
+  Future<GroupEntity> uploadDocument(Credentials credentials, BaseEntity entity,
+      MultipartFile multipartFile) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/groups/${entity.id}', credentials.token,
+        data: fields, multipartFile: multipartFile);
 
     final GroupItemResponse groupResponse =
         serializers.deserializeWith(GroupItemResponse.serializer, response);

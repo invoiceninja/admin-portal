@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -98,11 +99,11 @@ class EntityStatusChip extends StatelessWidget {
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            minWidth: width,
-            maxWidth: width,
+            minWidth: width ?? 100,
+            maxWidth: width ?? 200,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
             child: Text(
               label.toUpperCase(),
               style: TextStyle(fontSize: 14, color: Colors.white),

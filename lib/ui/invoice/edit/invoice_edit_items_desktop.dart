@@ -230,8 +230,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               client.currencyId != company.currencyId) {
                             cost = round(
                                 cost * invoice.exchangeRate,
-                                state.staticState
-                                    .currencyMap[client?.currencyId].precision);
+                                state
+                                    .staticState
+                                    .currencyMap[client?.currencyId ??
+                                        company.currencyId]
+                                    .precision);
                           }
 
                           final updatedItem = item.rebuild((b) => b

@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'payment_term_model.g.dart';
 
@@ -95,6 +96,26 @@ abstract class PaymentTermEntity extends Object
   int compareTo(PaymentTermEntity paymentTerm, String sortField,
           bool sortAscending) =>
       numDays.compareTo(paymentTerm.numDays);
+
+  @override
+  bool matchesFilter(String filter) {
+    return matchesStrings(
+      haystacks: [
+        '$numDays',
+      ],
+      needle: filter,
+    );
+  }
+
+  @override
+  String matchesFilterValue(String filter) {
+    return matchesStringsValue(
+      haystacks: [
+        //
+      ],
+      needle: filter,
+    );
+  }
 
   @override
   String get listDisplayName => name;

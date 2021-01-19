@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_a
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -21,6 +22,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final viewInvoice = _viewInvoice();
   final editInvoice = _editInvoice();
   final showEmailInvoice = _showEmailInvoice();
+  final showPdfInvoice = _showPdfInvoice();
   final loadInvoices = _loadInvoices(repository);
   final loadInvoice = _loadInvoice(repository);
   final saveInvoice = _saveInvoice(repository);
@@ -40,6 +42,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, ViewInvoice>(viewInvoice),
     TypedMiddleware<AppState, EditInvoice>(editInvoice),
     TypedMiddleware<AppState, ShowEmailInvoice>(showEmailInvoice),
+    TypedMiddleware<AppState, ShowPdfInvoice>(showPdfInvoice),
     TypedMiddleware<AppState, LoadInvoices>(loadInvoices),
     TypedMiddleware<AppState, LoadInvoice>(loadInvoice),
     TypedMiddleware<AppState, SaveInvoiceRequest>(saveInvoice),
@@ -120,6 +123,21 @@ Middleware<AppState> _showEmailInvoice() {
       if (action.completer != null && emailWasSent != null && emailWasSent) {
         action.completer.complete(null);
       }
+    }
+  };
+}
+
+Middleware<AppState> _showPdfInvoice() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ShowPdfInvoice;
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(InvoicePdfScreen.route));
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(InvoicePdfScreen.route);
     }
   };
 }

@@ -162,6 +162,10 @@ class _$CompanyGatewayEntitySerializer
             const FullType(String),
             const FullType(FeesAndLimitsSettings)
           ])),
+      'system_logs',
+      serializers.serialize(object.systemLogs,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(SystemLogEntity)])),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -198,6 +202,12 @@ class _$CompanyGatewayEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.loadedAt != null) {
+      result
+        ..add('loadedAt')
+        ..add(serializers.serialize(object.loadedAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.requirePostalCode != null) {
       result
         ..add('require_postal_code')
@@ -243,6 +253,10 @@ class _$CompanyGatewayEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'loadedAt':
+          result.loadedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'gateway_key':
           result.gatewayId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -293,6 +307,12 @@ class _$CompanyGatewayEntitySerializer
                 const FullType(String),
                 const FullType(FeesAndLimitsSettings)
               ])));
+          break;
+        case 'system_logs':
+          result.systemLogs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(SystemLogEntity)]))
+              as BuiltList<Object>);
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -416,6 +436,9 @@ class _$FeesAndLimitsSettingsSerializer
       'adjust_fee_percent',
       serializers.serialize(object.adjustFeePercent,
           specifiedType: const FullType(bool)),
+      'is_enabled',
+      serializers.serialize(object.isEnabled,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -479,6 +502,10 @@ class _$FeesAndLimitsSettingsSerializer
           break;
         case 'adjust_fee_percent':
           result.adjustFeePercent = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_enabled':
+          result.isEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -684,6 +711,8 @@ class CompanyGatewayItemResponseBuilder
 
 class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
+  final int loadedAt;
+  @override
   final String gatewayId;
   @override
   final int acceptedCreditCards;
@@ -707,6 +736,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   final bool updateDetails;
   @override
   final BuiltMap<String, FeesAndLimitsSettings> feesAndLimitsMap;
+  @override
+  final BuiltList<SystemLogEntity> systemLogs;
   @override
   final String customValue1;
   @override
@@ -745,7 +776,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       (new CompanyGatewayEntityBuilder()..update(updates)).build();
 
   _$CompanyGatewayEntity._(
-      {this.gatewayId,
+      {this.loadedAt,
+      this.gatewayId,
       this.acceptedCreditCards,
       this.requireShippingAddress,
       this.requireBillingAddress,
@@ -757,6 +789,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.requireCvv,
       this.updateDetails,
       this.feesAndLimitsMap,
+      this.systemLogs,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -816,6 +849,9 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'feesAndLimitsMap');
     }
+    if (systemLogs == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'systemLogs');
+    }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'customValue1');
@@ -872,6 +908,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyGatewayEntity &&
+        loadedAt == other.loadedAt &&
         gatewayId == other.gatewayId &&
         acceptedCreditCards == other.acceptedCreditCards &&
         requireShippingAddress == other.requireShippingAddress &&
@@ -884,6 +921,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         requireCvv == other.requireCvv &&
         updateDetails == other.updateDetails &&
         feesAndLimitsMap == other.feesAndLimitsMap &&
+        systemLogs == other.systemLogs &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -923,10 +961,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode),
-                                                                                requireCvv.hashCode),
-                                                                            updateDetails.hashCode),
-                                                                        feesAndLimitsMap.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, loadedAt.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode), requireCvv.hashCode),
+                                                                                updateDetails.hashCode),
+                                                                            feesAndLimitsMap.hashCode),
+                                                                        systemLogs.hashCode),
                                                                     customValue1.hashCode),
                                                                 customValue2.hashCode),
                                                             customValue3.hashCode),
@@ -948,6 +986,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyGatewayEntity')
+          ..add('loadedAt', loadedAt)
           ..add('gatewayId', gatewayId)
           ..add('acceptedCreditCards', acceptedCreditCards)
           ..add('requireShippingAddress', requireShippingAddress)
@@ -960,6 +999,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('requireCvv', requireCvv)
           ..add('updateDetails', updateDetails)
           ..add('feesAndLimitsMap', feesAndLimitsMap)
+          ..add('systemLogs', systemLogs)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -983,6 +1023,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
 class CompanyGatewayEntityBuilder
     implements Builder<CompanyGatewayEntity, CompanyGatewayEntityBuilder> {
   _$CompanyGatewayEntity _$v;
+
+  int _loadedAt;
+  int get loadedAt => _$this._loadedAt;
+  set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
 
   String _gatewayId;
   String get gatewayId => _$this._gatewayId;
@@ -1044,6 +1088,12 @@ class CompanyGatewayEntityBuilder
   set feesAndLimitsMap(
           MapBuilder<String, FeesAndLimitsSettings> feesAndLimitsMap) =>
       _$this._feesAndLimitsMap = feesAndLimitsMap;
+
+  ListBuilder<SystemLogEntity> _systemLogs;
+  ListBuilder<SystemLogEntity> get systemLogs =>
+      _$this._systemLogs ??= new ListBuilder<SystemLogEntity>();
+  set systemLogs(ListBuilder<SystemLogEntity> systemLogs) =>
+      _$this._systemLogs = systemLogs;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1115,6 +1165,7 @@ class CompanyGatewayEntityBuilder
 
   CompanyGatewayEntityBuilder get _$this {
     if (_$v != null) {
+      _loadedAt = _$v.loadedAt;
       _gatewayId = _$v.gatewayId;
       _acceptedCreditCards = _$v.acceptedCreditCards;
       _requireShippingAddress = _$v.requireShippingAddress;
@@ -1127,6 +1178,7 @@ class CompanyGatewayEntityBuilder
       _requireCvv = _$v.requireCvv;
       _updateDetails = _$v.updateDetails;
       _feesAndLimitsMap = _$v.feesAndLimitsMap?.toBuilder();
+      _systemLogs = _$v.systemLogs?.toBuilder();
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -1167,6 +1219,7 @@ class CompanyGatewayEntityBuilder
     try {
       _$result = _$v ??
           new _$CompanyGatewayEntity._(
+              loadedAt: loadedAt,
               gatewayId: gatewayId,
               acceptedCreditCards: acceptedCreditCards,
               requireShippingAddress: requireShippingAddress,
@@ -1179,6 +1232,7 @@ class CompanyGatewayEntityBuilder
               requireCvv: requireCvv,
               updateDetails: updateDetails,
               feesAndLimitsMap: feesAndLimitsMap.build(),
+              systemLogs: systemLogs.build(),
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,
@@ -1200,6 +1254,8 @@ class CompanyGatewayEntityBuilder
       try {
         _$failedField = 'feesAndLimitsMap';
         feesAndLimitsMap.build();
+        _$failedField = 'systemLogs';
+        systemLogs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyGatewayEntity', _$failedField, e.toString());
@@ -1236,6 +1292,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
   final String taxName3;
   @override
   final bool adjustFeePercent;
+  @override
+  final bool isEnabled;
 
   factory _$FeesAndLimitsSettings(
           [void Function(FeesAndLimitsSettingsBuilder) updates]) =>
@@ -1253,7 +1311,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       this.taxName2,
       this.taxRate3,
       this.taxName3,
-      this.adjustFeePercent})
+      this.adjustFeePercent,
+      this.isEnabled})
       : super._() {
     if (minLimit == null) {
       throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'minLimit');
@@ -1292,6 +1351,9 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       throw new BuiltValueNullFieldError(
           'FeesAndLimitsSettings', 'adjustFeePercent');
     }
+    if (isEnabled == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'isEnabled');
+    }
   }
 
   @override
@@ -1318,7 +1380,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
         taxName2 == other.taxName2 &&
         taxRate3 == other.taxRate3 &&
         taxName3 == other.taxName3 &&
-        adjustFeePercent == other.adjustFeePercent;
+        adjustFeePercent == other.adjustFeePercent &&
+        isEnabled == other.isEnabled;
   }
 
   int __hashCode;
@@ -1334,18 +1397,20 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, minLimit.hashCode),
-                                                maxLimit.hashCode),
-                                            feeAmount.hashCode),
-                                        feePercent.hashCode),
-                                    feeCap.hashCode),
-                                taxRate1.hashCode),
-                            taxName1.hashCode),
-                        taxRate2.hashCode),
-                    taxName2.hashCode),
-                taxRate3.hashCode),
-            taxName3.hashCode),
-        adjustFeePercent.hashCode));
+                                            $jc(
+                                                $jc($jc(0, minLimit.hashCode),
+                                                    maxLimit.hashCode),
+                                                feeAmount.hashCode),
+                                            feePercent.hashCode),
+                                        feeCap.hashCode),
+                                    taxRate1.hashCode),
+                                taxName1.hashCode),
+                            taxRate2.hashCode),
+                        taxName2.hashCode),
+                    taxRate3.hashCode),
+                taxName3.hashCode),
+            adjustFeePercent.hashCode),
+        isEnabled.hashCode));
   }
 
   @override
@@ -1362,7 +1427,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
           ..add('taxName2', taxName2)
           ..add('taxRate3', taxRate3)
           ..add('taxName3', taxName3)
-          ..add('adjustFeePercent', adjustFeePercent))
+          ..add('adjustFeePercent', adjustFeePercent)
+          ..add('isEnabled', isEnabled))
         .toString();
   }
 }
@@ -1420,7 +1486,13 @@ class FeesAndLimitsSettingsBuilder
   set adjustFeePercent(bool adjustFeePercent) =>
       _$this._adjustFeePercent = adjustFeePercent;
 
-  FeesAndLimitsSettingsBuilder();
+  bool _isEnabled;
+  bool get isEnabled => _$this._isEnabled;
+  set isEnabled(bool isEnabled) => _$this._isEnabled = isEnabled;
+
+  FeesAndLimitsSettingsBuilder() {
+    FeesAndLimitsSettings._initializeBuilder(this);
+  }
 
   FeesAndLimitsSettingsBuilder get _$this {
     if (_$v != null) {
@@ -1436,6 +1508,7 @@ class FeesAndLimitsSettingsBuilder
       _taxRate3 = _$v.taxRate3;
       _taxName3 = _$v.taxName3;
       _adjustFeePercent = _$v.adjustFeePercent;
+      _isEnabled = _$v.isEnabled;
       _$v = null;
     }
     return this;
@@ -1469,7 +1542,8 @@ class FeesAndLimitsSettingsBuilder
             taxName2: taxName2,
             taxRate3: taxRate3,
             taxName3: taxName3,
-            adjustFeePercent: adjustFeePercent);
+            adjustFeePercent: adjustFeePercent,
+            isEnabled: isEnabled);
     replace(_$result);
     return _$result;
   }

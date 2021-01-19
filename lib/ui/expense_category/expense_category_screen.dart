@@ -35,6 +35,7 @@ class ExpenseCategoryScreen extends StatelessWidget {
       entityType: EntityType.expenseCategory,
       onHamburgerLongPress: () =>
           store.dispatch(StartExpenseCategoryMultiselect()),
+      onCancelSettingsSection: kSettingsExpenses,
       appBarTitle: ListFilter(
         entityType: EntityType.expenseCategory,
         entityIds: viewModel.expenseCategoryList,

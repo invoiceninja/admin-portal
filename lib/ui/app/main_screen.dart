@@ -14,8 +14,10 @@ import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
@@ -26,10 +28,13 @@ import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
@@ -73,6 +78,7 @@ class MainScreen extends StatelessWidget {
       bool isFullScreen = false;
       final isEdit = subRoute == '/edit';
       final isEmail = subRoute == '/email';
+      final isPdf = subRoute == '/pdf';
 
       if ([
         InvoiceScreen.route,
@@ -81,7 +87,7 @@ class MainScreen extends StatelessWidget {
         RecurringInvoiceScreen.route,
         TaskScreen.route,
       ].contains(mainRoute)) {
-        if (isEmail) {
+        if (isEmail || isPdf) {
           isFullScreen = true;
         } else if (isEdit) {
           if (mainRoute == TaskScreen.route) {
@@ -99,16 +105,30 @@ class MainScreen extends StatelessWidget {
       if (isFullScreen) {
         switch (mainRoute) {
           case InvoiceScreen.route:
-            screen = isEmail ? InvoiceEmailScreen() : InvoiceEditScreen();
+            screen = isPdf
+                ? InvoicePdfScreen()
+                : isEmail
+                    ? InvoiceEmailScreen()
+                    : InvoiceEditScreen();
             break;
           case QuoteScreen.route:
-            screen = isEmail ? QuoteEmailScreen() : QuoteEditScreen();
+            screen = isPdf
+                ? QuotePdfScreen()
+                : isEmail
+                    ? QuoteEmailScreen()
+                    : QuoteEditScreen();
             break;
           case CreditScreen.route:
-            screen = isEmail ? CreditEmailScreen() : CreditEditScreen();
+            screen = isPdf
+                ? CreditPdfScreen()
+                : isEmail
+                    ? CreditEmailScreen()
+                    : CreditEditScreen();
             break;
           case RecurringInvoiceScreen.route:
-            screen = RecurringInvoiceEditScreen();
+            screen = isPdf
+                ? RecurringInvoicePdfScreen()
+                : RecurringInvoiceEditScreen();
             break;
           case TaskScreen.route:
             screen = TaskEditScreen();
@@ -845,7 +865,9 @@ class _EntityFilter extends StatelessWidget {
                       child: FlatButton(
                         visualDensity: VisualDensity.compact,
                         child: Text(
-                          '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
+                          EntityPresenter()
+                              .initialize(filterEntity, context)
+                              .title,
                           style: TextStyle(
                               fontSize: 17, color: state.headerTextColor),
                           overflow: TextOverflow.ellipsis,

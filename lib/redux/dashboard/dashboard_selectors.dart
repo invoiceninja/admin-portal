@@ -110,12 +110,13 @@ List<ChartDataGroup> _chartInvoices({
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
-        amount *= getExchangeRate(currencyMap,
-            fromCurrencyId: client.currencyId,
-            toCurrencyId: company.currencyId);
-        balance *= getExchangeRate(currencyMap,
-            fromCurrencyId: client.currencyId,
-            toCurrencyId: company.currencyId);
+        final exchangeRate = invoice.hasExchangeRate
+            ? (1 / invoice.exchangeRate)
+            : getExchangeRate(currencyMap,
+                fromCurrencyId: client.currencyId,
+                toCurrencyId: company.currencyId);
+        amount *= exchangeRate;
+        balance *= exchangeRate;
       }
 
       totals[STATUS_ACTIVE][date] += amount;
@@ -250,9 +251,12 @@ List<ChartDataGroup> chartQuotes({
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
-        amount *= getExchangeRate(currencyMap,
-            fromCurrencyId: client.currencyId,
-            toCurrencyId: company.currencyId);
+        final exchangeRate = quote.hasExchangeRate
+            ? (1 / quote.exchangeRate)
+            : getExchangeRate(currencyMap,
+                fromCurrencyId: client.currencyId,
+                toCurrencyId: company.currencyId);
+        amount *= exchangeRate;
       }
 
       totals[STATUS_ACTIVE][quote.date] += amount;
@@ -398,12 +402,13 @@ List<ChartDataGroup> chartPayments(
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
-        completedAmount *= getExchangeRate(currencyMap,
-            fromCurrencyId: client.currencyId,
-            toCurrencyId: company.currencyId);
-        refunded *= getExchangeRate(currencyMap,
-            fromCurrencyId: client.currencyId,
-            toCurrencyId: company.currencyId);
+        final exchangeRate = payment.hasExchangeRate
+            ? (1 / payment.exchangeRate)
+            : getExchangeRate(currencyMap,
+                fromCurrencyId: client.currencyId,
+                toCurrencyId: company.currencyId);
+        completedAmount *= exchangeRate;
+        refunded *= exchangeRate;
       }
 
       totals[STATUS_ACTIVE][payment.date] += completedAmount;
@@ -527,6 +532,8 @@ List<ChartDataGroup> chartTasks(
 
   taskMap.forEach((int, task) {
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
+    final invoice =
+        invoiceMap[task.invoiceId] ?? InvoiceEntity(id: task.clientId);
     final project =
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
     final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
@@ -563,9 +570,12 @@ List<ChartDataGroup> chartTasks(
           // Handle "All"
           if (settings.currencyId == kCurrencyAll &&
               client.currencyId != company.currencyId) {
-            amount *= getExchangeRate(currencyMap,
-                fromCurrencyId: client.currencyId,
-                toCurrencyId: company.currencyId);
+            final exchangeRate = invoice.hasExchangeRate
+                ? (1 / invoice.exchangeRate)
+                : getExchangeRate(currencyMap,
+                    fromCurrencyId: client.currencyId,
+                    toCurrencyId: company.currencyId);
+            amount *= exchangeRate;
           }
 
           if (task.isInvoiced) {
@@ -688,8 +698,11 @@ List<ChartDataGroup> chartExpenses(
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           currencyId != company.currencyId) {
-        amount *= getExchangeRate(currencyMap,
-            fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
+        final exchangeRate = expense.hasExchangeRate
+            ? (1 / expense.exchangeRate)
+            : getExchangeRate(currencyMap,
+                fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
+        amount *= exchangeRate;
       }
 
       if (expense.isInvoiced) {

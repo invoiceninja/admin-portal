@@ -321,7 +321,7 @@ void handleTaskAction(
       });
 
       break;
-    case EntityAction.newInvoice:
+    case EntityAction.invoiceTask:
       final items = tasks
           .where((entity) {
             final task = entity as TaskEntity;
@@ -336,12 +336,6 @@ void handleTaskAction(
               ..hasTasks = true
               ..lineItems.addAll(items)));
       }
-      break;
-    case EntityAction.viewInvoice:
-      viewEntityById(
-          context: context,
-          entityType: EntityType.invoice,
-          entityId: task.invoiceId);
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: task.clone);

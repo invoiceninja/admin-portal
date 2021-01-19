@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -325,3 +326,27 @@ class RemoveFromGroupMultiselect {
 }
 
 class ClearGroupMultiselect {}
+
+class SaveGroupDocumentRequest implements StartSaving {
+  SaveGroupDocumentRequest({
+    @required this.completer,
+    @required this.multipartFile,
+    @required this.group,
+  });
+
+  final Completer completer;
+  final MultipartFile multipartFile;
+  final GroupEntity group;
+}
+
+class SaveGroupDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveGroupDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveGroupDocumentFailure implements StopSaving {
+  SaveGroupDocumentFailure(this.error);
+
+  final Object error;
+}

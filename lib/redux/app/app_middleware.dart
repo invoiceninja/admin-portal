@@ -252,7 +252,7 @@ Middleware<AppState> _createLoadState(
               ViewMainScreen(navigator: Navigator.of(action.context)));
         }
       } else {
-        throw 'Unknown page';
+        throw 'Unknown page: ${uiState.currentRoute}';
       }
     } catch (error) {
       print('Error (app_middleware - load state): $error');

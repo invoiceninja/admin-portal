@@ -94,7 +94,7 @@ class _TaskViewState extends State<TaskView>
                       ? EntityAction.start
                       : EntityAction.resume,
               action2: task.isInvoiced
-                  ? EntityAction.viewInvoice
+                  ? EntityAction.archive
                   : EntityAction.newInvoice,
               action1Enabled: !task.isInvoiced,
             ),

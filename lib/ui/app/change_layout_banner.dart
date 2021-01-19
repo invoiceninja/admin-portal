@@ -73,7 +73,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                     ),
                     FlatButton(
                       child: Text(
-                        localization.dismiss.toUpperCase(),
+                        localization.dismiss,
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
@@ -82,7 +82,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                     ),
                     FlatButton(
                       child: Text(
-                        localization.change.toUpperCase(),
+                        localization.change,
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {

@@ -21,6 +21,8 @@ import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.d
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
@@ -29,11 +31,14 @@ import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -58,12 +63,10 @@ import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
 import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
-
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
-
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
@@ -298,6 +301,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
                     InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
                     InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
+                    InvoicePdfScreen.route: (context) => InvoicePdfScreen(),
                     DocumentScreen.route: (context) => DocumentScreenBuilder(),
                     DocumentViewScreen.route: (context) => DocumentViewScreen(),
                     DocumentEditScreen.route: (context) => DocumentEditScreen(),
@@ -322,6 +326,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     QuoteViewScreen.route: (context) => QuoteViewScreen(),
                     QuoteEditScreen.route: (context) => QuoteEditScreen(),
                     QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
+                    QuotePdfScreen.route: (context) => QuotePdfScreen(),
                     // STARTER: routes - do not remove comment
                     TaskStatusScreen.route: (context) =>
                         TaskStatusScreenBuilder(),
@@ -341,6 +346,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         RecurringInvoiceViewScreen(),
                     RecurringInvoiceEditScreen.route: (context) =>
                         RecurringInvoiceEditScreen(),
+                    RecurringInvoicePdfScreen.route: (context) =>
+                        RecurringInvoicePdfScreen(),
                     WebhookScreen.route: (context) => WebhookScreenBuilder(),
                     WebhookViewScreen.route: (context) => WebhookViewScreen(),
                     WebhookEditScreen.route: (context) => WebhookEditScreen(),
@@ -359,6 +366,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     CreditScreen.route: (context) => CreditScreenBuilder(),
                     CreditViewScreen.route: (context) => CreditViewScreen(),
                     CreditEditScreen.route: (context) => CreditEditScreen(),
+                    CreditEmailScreen.route: (context) => CreditEmailScreen(),
+                    CreditPdfScreen.route: (context) => CreditPdfScreen(),
                     UserScreen.route: (context) => UserScreenBuilder(),
                     UserViewScreen.route: (context) => UserViewScreen(),
                     UserEditScreen.route: (context) => UserEditScreen(),

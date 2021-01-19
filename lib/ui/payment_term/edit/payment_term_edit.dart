@@ -73,7 +73,9 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
     final localization = AppLocalization.of(context);
 
     return EditScaffold(
-      title: localization.editPaymentTerm,
+      title: viewModel.paymentTerm.isNew
+          ? localization.newPaymentTerm
+          : localization.editPaymentTerm,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();

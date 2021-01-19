@@ -91,9 +91,9 @@ class _TaskSettingsState extends State<TaskSettings> {
             children: <Widget>[
               DecoratedFormField(
                 controller: _taskRateController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
                 label: localization.defaultTaskRate,
                 onSavePressed: viewModel.onSavePressed,
+                isMoney: true,
               ),
               if (!viewModel.state.settingsUIState.isFiltered) ...[
                 SizedBox(height: 32),

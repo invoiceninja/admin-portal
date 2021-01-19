@@ -15,8 +15,14 @@ EntityUIState quoteUIReducer(QuoteUIState state, dynamic action) {
     ..listUIState.replace(quoteListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..historyActivityId =
+        historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final historyActivityIdReducer = combineReducers<String>([
+  TypedReducer<String, ShowPdfQuote>((index, action) => action.activityId),
+]);
 
 final editingItemReducer = combineReducers<int>([
   TypedReducer<int, EditQuote>((index, action) => action.quoteItemIndex),
@@ -39,6 +45,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddQuoteSuccess>(
       (selectedId, action) => action.quote.id),
   TypedReducer<String, ShowEmailQuote>((selectedId, action) => action.quote.id),
+  TypedReducer<String, ShowPdfQuote>((selectedId, action) => action.quote.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),

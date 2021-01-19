@@ -14,8 +14,14 @@ EntityUIState creditUIReducer(CreditUIState state, dynamic action) {
     ..listUIState.replace(creditListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..historyActivityId =
+        historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final historyActivityIdReducer = combineReducers<String>([
+  TypedReducer<String, ShowPdfCredit>((index, action) => action.activityId),
+]);
 
 final editingItemReducer = combineReducers<int>([
   TypedReducer<int, EditCredit>((index, action) => action.creditItemIndex),
@@ -39,6 +45,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.credit.id),
   TypedReducer<String, ShowEmailCredit>(
       (selectedId, action) => action.credit.id),
+  TypedReducer<String, ShowPdfCredit>((selectedId, action) => action.credit.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),

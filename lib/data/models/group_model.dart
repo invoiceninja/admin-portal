@@ -46,8 +46,7 @@ abstract class GroupItemResponse
 
 class GroupFields {
   static const String name = 'name';
-  static const String custom1 = 'custom1';
-  static const String custom2 = 'custom2';
+  static const String documents = 'documents';
 }
 
 abstract class GroupEntity extends Object
@@ -65,6 +64,7 @@ abstract class GroupEntity extends Object
       createdAt: 0,
       assignedUserId: '',
       createdUserId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -82,6 +82,8 @@ abstract class GroupEntity extends Object
   String get name;
 
   SettingsEntity get settings;
+
+  BuiltList<DocumentEntity> get documents;
 
   @override
   String get listDisplayName {
@@ -168,6 +170,10 @@ abstract class GroupEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+
+  // ignore: unused_element
+  static void _initializeBuilder(GroupEntityBuilder builder) =>
+      builder..documents.replace(BuiltList<DocumentEntity>());
 
   static Serializer<GroupEntity> get serializer => _$groupEntitySerializer;
 }

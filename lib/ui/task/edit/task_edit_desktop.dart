@@ -216,13 +216,15 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   DecoratedFormField(
                     controller: _numberController,
                     label: localization.taskNumber,
-                    autocorrect: false,
+                    isMoney: false,
                   ),
                   DecoratedFormField(
                     key: ValueKey('__rate__'),
                     controller: _rateController,
                     label: rateLabel,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
+                    autocorrect: false,
                   ),
                   DynamicSelector(
                     key: ValueKey('__task_status_${task.statusId}__'),

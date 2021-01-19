@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
@@ -43,7 +44,7 @@ class ViewScaffold extends StatelessWidget {
           ? localization.pending
           : entity.listDisplayName;
       if (!(isFilter ?? false)) {
-        title = localization.lookup('${entity.entityType}') + '  ›  ' + title;
+        title = EntityPresenter().initialize(entity, context).title;
       }
     }
 
@@ -63,14 +64,6 @@ class ViewScaffold extends StatelessWidget {
             tooltip: localization.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
-      } else if (isSettings) {
-        leading = IconButton(
-          tooltip: localization.back,
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => onBackPressed != null
-              ? onBackPressed()
-              : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
-        );
       }
     }
 
@@ -83,12 +76,21 @@ class ViewScaffold extends StatelessWidget {
         appBar: AppBar(
           centerTitle: false,
           leading: leading,
-          automaticallyImplyLeading: isMobile(context) || isSettings,
+          automaticallyImplyLeading: isMobile(context),
           title: Text(title),
           bottom: appBarBottom,
           actions: entity.isNew
               ? []
               : [
+                  if (isSettings)
+                    FlatButton(
+                        onPressed: () {
+                          onBackPressed != null
+                              ? onBackPressed()
+                              : store.dispatch(UpdateCurrentRoute(
+                                  state.uiState.previousRoute));
+                        },
+                        child: Text(localization.cancel)),
                   userCompany.canEditEntity(entity)
                       ? Builder(builder: (context) {
                           return EditIconButton(

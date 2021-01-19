@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -23,32 +24,23 @@ import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
-Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context,
-    {String activityId}) async {
-  showDialog<Scaffold>(
-      context: context,
-      builder: (BuildContext context) {
-        return PDFScaffold(
-          invoice: invoice,
-          activityId: activityId,
-        );
-      });
-}
+class InvoicePdfView extends StatefulWidget {
+  const InvoicePdfView({
+    Key key,
+    @required this.viewModel,
+    this.showAppBar = true,
+  }) : super(key: key);
 
-class PDFScaffold extends StatefulWidget {
-  const PDFScaffold(
-      {@required this.invoice, this.activityId, this.showAppBar = true});
-
-  final InvoiceEntity invoice;
-  final String activityId;
+  final EntityPdfVM viewModel;
   final bool showAppBar;
 
   @override
-  _PDFScaffoldState createState() => _PDFScaffoldState();
+  _InvoicePdfViewState createState() => _InvoicePdfViewState();
 }
 
-class _PDFScaffoldState extends State<PDFScaffold> {
+class _InvoicePdfViewState extends State<InvoicePdfView> {
   bool _isLoading = true;
   bool _isDeliveryNote = false;
   String _activityId;
@@ -61,7 +53,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
   void initState() {
     super.initState();
 
-    _activityId = widget.activityId;
+    _activityId = widget.viewModel.activityId;
   }
 
   @override
@@ -77,7 +69,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 
     _loadPDF(
       context,
-      widget.invoice,
+      widget.viewModel.invoice,
       _isDeliveryNote,
       _activityId,
     ).then((response) {
@@ -118,118 +110,120 @@ class _PDFScaffoldState extends State<PDFScaffold> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final localization = AppLocalization.of(context);
-    final invoice = widget.invoice;
+    final invoice = widget.viewModel.invoice;
+
+    final pageSelector = _pageCount == 1
+        ? <Widget>[]
+        : [
+            IconButton(
+              icon: Icon(Icons.navigate_before),
+              onPressed: _pageNumber > 1
+                  ? () => _pdfController.previousPage(
+                        duration:
+                            Duration(milliseconds: kDefaultAnimationDuration),
+                        curve: Curves.easeInOutCubic,
+                      )
+                  : null,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(localization.pdfPageInfo
+                  .replaceFirst(':current', '$_pageNumber')
+                  .replaceFirst(':total', '$_pageCount')),
+            ),
+            IconButton(
+              icon: Icon(Icons.navigate_next),
+              onPressed: _pageNumber < _pageCount
+                  ? () => _pdfController.nextPage(
+                        duration:
+                            Duration(milliseconds: kDefaultAnimationDuration),
+                        curve: Curves.easeInOutCubic,
+                      )
+                  : null,
+            ),
+          ];
+
+    final activitySelector = _activityId == null || kIsWeb
+        ? <Widget>[]
+        : [
+            Flexible(
+              child: IgnorePointer(
+                ignoring: _isLoading,
+                child: AppDropdownButton<String>(
+                    value: _activityId,
+                    onChanged: (dynamic activityId) {
+                      setState(() {
+                        _activityId = activityId;
+                        loadPdf();
+                      });
+                    },
+                    items: invoice.history
+                        .map((history) => DropdownMenuItem(
+                              child: Text(formatNumber(history.amount, context,
+                                      clientId: invoice.clientId) +
+                                  ' • ' +
+                                  formatDate(
+                                      convertTimestampToDateString(
+                                          history.createdAt),
+                                      context,
+                                      showTime: true)),
+                              value: history.activityId,
+                            ))
+                        .toList()),
+              ),
+            ),
+          ];
+
+    final deliveryNote = Theme(
+      data: ThemeData(
+        unselectedWidgetColor: state.headerTextColor,
+      ),
+      child: Container(
+        width: 200,
+        child: CheckboxListTile(
+          title: Text(
+            localization.deliveryNote,
+            style: TextStyle(
+              color: state.headerTextColor,
+            ),
+          ),
+          value: _isDeliveryNote,
+          onChanged: (value) {
+            setState(() {
+              _isDeliveryNote = !_isDeliveryNote;
+              loadPdf();
+            });
+          },
+          controlAffinity: ListTileControlAffinity.leading,
+          activeColor: state.accentColor,
+        ),
+      ),
+    );
 
     return Scaffold(
         backgroundColor: Colors.grey,
         appBar: widget.showAppBar
             ? AppBar(
                 centerTitle: false,
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
+                automaticallyImplyLeading: isMobile(context),
                 title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (isDesktop(context)) ...[
-                      Text(localization.lookup('${invoice.entityType}') +
-                          ' ' +
-                          (invoice.number ?? '')),
-                      Spacer(),
-                    ],
-                    if (_activityId != null && isDesktop(context)) ...[
-                      Flexible(
-                        child: IgnorePointer(
-                          ignoring: _isLoading,
-                          child: AppDropdownButton<String>(
-                              value: _activityId,
-                              onChanged: (dynamic activityId) {
-                                setState(() {
-                                  _activityId = activityId;
-                                  loadPdf();
-                                });
-                              },
-                              items: invoice.history
-                                  .map((history) => DropdownMenuItem(
-                                        child: Text(formatNumber(
-                                                history.amount, context,
-                                                clientId: invoice.clientId) +
-                                            ' • ' +
-                                            formatDate(
-                                                convertTimestampToDateString(
-                                                    history.createdAt),
-                                                context,
-                                                showTime: true)),
-                                        value: history.activityId,
-                                      ))
-                                  .toList()),
-                        ),
-                      ),
-                      Spacer(),
-                    ],
-                    if (!kIsWeb && _pageCount > 1) ...[
-                      IconButton(
-                        icon: Icon(Icons.navigate_before),
-                        onPressed: _pageNumber > 1
-                            ? () => _pdfController.previousPage(
-                                  duration: Duration(
-                                      milliseconds: kDefaultAnimationDuration),
-                                  curve: Curves.easeInOutCubic,
-                                )
-                            : null,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(localization.pdfPageInfo
-                            .replaceFirst(':current', '$_pageNumber')
-                            .replaceFirst(':total', '$_pageCount')),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.navigate_next),
-                        onPressed: _pageNumber < _pageCount
-                            ? () => _pdfController.nextPage(
-                                  duration: Duration(
-                                      milliseconds: kDefaultAnimationDuration),
-                                  curve: Curves.easeInOutCubic,
-                                )
-                            : null,
-                      ),
-                      Spacer(),
-                    ],
-                    Theme(
-                      data: ThemeData(
-                        unselectedWidgetColor: state.headerTextColor,
-                      ),
-                      child: Container(
-                        width: 200,
-                        child: CheckboxListTile(
-                          title: Text(
-                            localization.deliveryNote,
-                            style: TextStyle(
-                              color: state.headerTextColor,
-                            ),
-                          ),
-                          value: _isDeliveryNote,
-                          onChanged: (value) {
-                            setState(() {
-                              _isDeliveryNote = !_isDeliveryNote;
-                              loadPdf();
-                            });
-                          },
-                          controlAffinity: ListTileControlAffinity.leading,
-                          activeColor: state.accentColor,
-                        ),
-                      ),
+                    Expanded(
+                      child: Text(
+                          EntityPresenter().initialize(invoice, context).title),
                     ),
+                    if (isDesktop(context)) ...activitySelector,
+                    if (isDesktop(context)) ...pageSelector,
+                    if (isDesktop(context) && _activityId == null) deliveryNote,
                   ],
                 ),
                 actions: <Widget>[
-                  if (isDesktop(context))
+                  if (isDesktop(context) && _activityId == null)
                     FlatButton(
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {
-                        Navigator.of(context).pop();
                         handleEntityAction(context, invoice,
                             EntityAction.emailEntityType(invoice.entityType));
                       },
@@ -258,6 +252,14 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                             }
                           },
                   ),
+                  if (isDesktop(context))
+                    FlatButton(
+                      child: Text(localization.close,
+                          style: TextStyle(color: state.headerTextColor)),
+                      onPressed: () {
+                        viewEntity(context: context, entity: invoice);
+                      },
+                    ),
                 ],
               )
             : null,

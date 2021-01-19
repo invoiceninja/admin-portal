@@ -32,6 +32,7 @@ class DesignScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.design,
       onHamburgerLongPress: () => store.dispatch(StartDesignMultiselect()),
+      onCancelSettingsSection: kSettingsInvoiceDesign,
       appBarTitle: ListFilter(
         entityType: EntityType.design,
         entityIds: viewModel.designList,

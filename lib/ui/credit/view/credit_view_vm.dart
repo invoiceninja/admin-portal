@@ -60,6 +60,7 @@ class CreditViewVM extends EntityViewVM {
     Function(BuildContext, MultipartFile) onUploadDocument,
     Function(BuildContext, DocumentEntity, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
   }) : super(
           state: state,
           company: company,
@@ -74,6 +75,7 @@ class CreditViewVM extends EntityViewVM {
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
+          onViewPdf: onViewPdf,
         );
 
   factory CreditViewVM.fromStore(Store<AppState> store) {
@@ -135,6 +137,10 @@ class CreditViewVM extends EntityViewVM {
           documentIds: [document.id],
           password: password,
         ));
+      },
+      onViewPdf: (context, credit, [activityId]) {
+        store.dispatch(ShowPdfCredit(
+            context: context, credit: credit, activityId: activityId));
       },
     );
   }

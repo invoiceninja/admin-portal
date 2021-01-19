@@ -37,8 +37,6 @@ const EntityAction _$newCredit = const EntityAction._('newCredit');
 const EntityAction _$newExpense = const EntityAction._('newExpense');
 const EntityAction _$newProject = const EntityAction._('newProject');
 const EntityAction _$newTask = const EntityAction._('newTask');
-const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
-const EntityAction _$viewQuote = const EntityAction._('viewQuote');
 const EntityAction _$clientPortal = const EntityAction._('clientPortal');
 const EntityAction _$newPayment = const EntityAction._('newPayment');
 const EntityAction _$settings = const EntityAction._('settings');
@@ -53,6 +51,8 @@ const EntityAction _$toggleMultiselect =
 const EntityAction _$reverse = const EntityAction._('reverse');
 const EntityAction _$cancel = const EntityAction._('cancel');
 const EntityAction _$copy = const EntityAction._('copy');
+const EntityAction _$invoiceTask = const EntityAction._('invoiceTask');
+const EntityAction _$invoiceExpense = const EntityAction._('invoiceExpense');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -114,10 +114,6 @@ EntityAction _$valueOf(String name) {
       return _$newProject;
     case 'newTask':
       return _$newTask;
-    case 'viewInvoice':
-      return _$viewInvoice;
-    case 'viewQuote':
-      return _$viewQuote;
     case 'clientPortal':
       return _$clientPortal;
     case 'newPayment':
@@ -144,6 +140,10 @@ EntityAction _$valueOf(String name) {
       return _$cancel;
     case 'copy':
       return _$copy;
+    case 'invoiceTask':
+      return _$invoiceTask;
+    case 'invoiceExpense':
+      return _$invoiceExpense;
     default:
       throw new ArgumentError(name);
   }
@@ -180,8 +180,6 @@ final BuiltSet<EntityAction> _$values =
   _$newExpense,
   _$newProject,
   _$newTask,
-  _$viewInvoice,
-  _$viewQuote,
   _$clientPortal,
   _$newPayment,
   _$settings,
@@ -195,6 +193,8 @@ final BuiltSet<EntityAction> _$values =
   _$reverse,
   _$cancel,
   _$copy,
+  _$invoiceTask,
+  _$invoiceExpense,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

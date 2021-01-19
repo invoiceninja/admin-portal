@@ -239,6 +239,8 @@ class _$InvoiceUIState extends InvoiceUIState {
   @override
   final int editingItemIndex;
   @override
+  final String historyActivityId;
+  @override
   final ListUIState listUIState;
   @override
   final String selectedId;
@@ -253,6 +255,7 @@ class _$InvoiceUIState extends InvoiceUIState {
   _$InvoiceUIState._(
       {this.editing,
       this.editingItemIndex,
+      this.historyActivityId,
       this.listUIState,
       this.selectedId,
       this.saveCompleter,
@@ -277,6 +280,7 @@ class _$InvoiceUIState extends InvoiceUIState {
     return other is InvoiceUIState &&
         editing == other.editing &&
         editingItemIndex == other.editingItemIndex &&
+        historyActivityId == other.historyActivityId &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
         saveCompleter == other.saveCompleter &&
@@ -289,7 +293,11 @@ class _$InvoiceUIState extends InvoiceUIState {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, editing.hashCode), editingItemIndex.hashCode),
+                $jc(
+                    $jc(
+                        $jc($jc(0, editing.hashCode),
+                            editingItemIndex.hashCode),
+                        historyActivityId.hashCode),
                     listUIState.hashCode),
                 selectedId.hashCode),
             saveCompleter.hashCode),
@@ -301,6 +309,7 @@ class _$InvoiceUIState extends InvoiceUIState {
     return (newBuiltValueToStringHelper('InvoiceUIState')
           ..add('editing', editing)
           ..add('editingItemIndex', editingItemIndex)
+          ..add('historyActivityId', historyActivityId)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
           ..add('saveCompleter', saveCompleter)
@@ -322,6 +331,11 @@ class InvoiceUIStateBuilder
   int get editingItemIndex => _$this._editingItemIndex;
   set editingItemIndex(int editingItemIndex) =>
       _$this._editingItemIndex = editingItemIndex;
+
+  String _historyActivityId;
+  String get historyActivityId => _$this._historyActivityId;
+  set historyActivityId(String historyActivityId) =>
+      _$this._historyActivityId = historyActivityId;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -349,6 +363,7 @@ class InvoiceUIStateBuilder
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
       _editingItemIndex = _$v.editingItemIndex;
+      _historyActivityId = _$v.historyActivityId;
       _listUIState = _$v.listUIState?.toBuilder();
       _selectedId = _$v.selectedId;
       _saveCompleter = _$v.saveCompleter;
@@ -379,6 +394,7 @@ class InvoiceUIStateBuilder
           new _$InvoiceUIState._(
               editing: _editing?.build(),
               editingItemIndex: editingItemIndex,
+              historyActivityId: historyActivityId,
               listUIState: listUIState.build(),
               selectedId: selectedId,
               saveCompleter: saveCompleter,

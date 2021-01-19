@@ -201,7 +201,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         template: '$_template',
         body: body,
         subject: subject,
-        onComplete: (subject, body, wrapper) {
+        onComplete: (subject, body, rawSubject, rawBody) {
           if (!mounted) {
             return;
           }
@@ -209,7 +209,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();
-            _bodyPreview = wrapper.replaceFirst('\$body', body).trim();
+            _bodyPreview = body.trim();
           });
         });
   }
@@ -530,12 +530,12 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             DecoratedFormField(
               label: localization.lateFeeAmount,
               controller: _feeAmountController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              isMoney: true,
             ),
             DecoratedFormField(
               label: localization.lateFeePercent,
               controller: _feePercentController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              isPercent: true,
             ),
           ],
         ),

@@ -6,15 +6,18 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
@@ -119,7 +122,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         body: origBody,
         template: '$selectedTemplate',
         invoice: widget.viewModel.invoice,
-        onComplete: (subject, body, wrapper) {
+        onComplete: (subject, body, rawSubject, rawBody) {
           if (!mounted) {
             return;
           }
@@ -127,11 +130,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();
-            _bodyPreview = wrapper.replaceFirst('\$body', body).trim();
+            _bodyPreview = body.trim();
 
             if (origSubject.isEmpty && origBody.isEmpty) {
-              _subjectController.text = subject.trim();
-              _bodyController.text = body.trim();
+              _subjectController.text = rawSubject.trim();
+              _bodyController.text = rawBody.trim();
             }
           });
         });
@@ -228,7 +231,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
     return SingleChildScrollView(
       child: FormCard(
-        padding: const EdgeInsets.only(left: 12, bottom: 12, right: 12),
+        padding: EdgeInsets.only(
+            left: 16, bottom: 16, right: 16, top: isMobile(context) ? 16 : 0),
         children: <Widget>[
           if (_isLoading &&
               _subjectController.text.isEmpty &&
@@ -329,10 +333,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     Expanded(
                       child: TabBarView(
                         children: [
-                          PDFScaffold(
-                            invoice: invoice,
-                            showAppBar: false,
-                          ),
+                          invoice.isCredit
+                              ? CreditPdfScreen(showAppBar: false)
+                              : invoice.isQuote
+                                  ? QuotePdfScreen(showAppBar: false)
+                                  : InvoicePdfScreen(showAppBar: false),
                           _buildHistory(context),
                         ],
                       ),
@@ -359,8 +364,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           tabs: [
             Tab(text: localization.preview),
             Tab(text: localization.customize),
-            Tab(text: localization.history),
             Tab(text: localization.pdf),
+            Tab(text: localization.history),
           ],
         ),
         saveLabel: localization.send,
@@ -379,11 +384,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               ],
             ),
             _buildEdit(context),
+            invoice.isCredit
+                ? CreditPdfScreen(showAppBar: false)
+                : invoice.isQuote
+                    ? QuotePdfScreen(showAppBar: false)
+                    : InvoicePdfScreen(showAppBar: false),
             _buildHistory(context),
-            PDFScaffold(
-              invoice: invoice,
-              showAppBar: false,
-            ),
           ],
         ),
       ),

@@ -31,6 +31,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.taxRate,
       onHamburgerLongPress: () => store.dispatch(StartTaxRateMultiselect()),
+      onCancelSettingsSection: kSettingsTaxSettings,
       appBarTitle: ListFilter(
         entityType: EntityType.taxRate,
         entityIds: viewModel.taxRateList,

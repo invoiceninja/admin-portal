@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewInvoiceList extends AbstractNavigatorAction
@@ -54,6 +53,14 @@ class ShowEmailInvoice {
   final InvoiceEntity invoice;
   final BuildContext context;
   final Completer completer;
+}
+
+class ShowPdfInvoice {
+  ShowPdfInvoice({this.invoice, this.context, this.activityId});
+
+  final InvoiceEntity invoice;
+  final BuildContext context;
+  final String activityId;
 }
 
 class EditInvoiceItem implements PersistUI {
@@ -484,7 +491,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       editEntity(context: context, entity: invoice);
       break;
     case EntityAction.viewPdf:
-      viewPdf(invoice, context);
+      store.dispatch(ShowPdfInvoice(invoice: invoice, context: context));
       break;
     case EntityAction.clientPortal:
       if (await canLaunch(invoice.invitationSilentLink)) {

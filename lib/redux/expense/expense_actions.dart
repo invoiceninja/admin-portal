@@ -268,7 +268,7 @@ void handleExpenseAction(
     case EntityAction.clone:
       createEntity(context: context, entity: expense.clone);
       break;
-    case EntityAction.newInvoice:
+    case EntityAction.invoiceExpense:
       final items = expenses
           .where((entity) {
             final expense = entity as ExpenseEntity;
@@ -287,12 +287,6 @@ void handleExpenseAction(
               ..hasExpenses = true
               ..lineItems.addAll(items)));
       }
-      break;
-    case EntityAction.viewInvoice:
-      viewEntityById(
-          context: context,
-          entityType: EntityType.invoice,
-          entityId: expense.invoiceId);
       break;
     case EntityAction.restore:
       final message = expenseIds.length > 1

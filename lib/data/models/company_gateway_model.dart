@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -77,6 +78,7 @@ abstract class CompanyGatewayEntity extends Object
       updateDetails: true,
       config: '',
       feesAndLimitsMap: BuiltMap<String, FeesAndLimitsSettings>(),
+      systemLogs: BuiltList<SystemLogEntity>(),
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -102,6 +104,20 @@ abstract class CompanyGatewayEntity extends Object
   @override
   @memoized
   int get hashCode;
+
+  @nullable
+  int get loadedAt;
+
+  bool get isLoaded => loadedAt != null && loadedAt > 0;
+
+  bool get isStale {
+    if (!isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - loadedAt >
+        kMillisecondsToRefreshActivities;
+  }
 
   @override
   EntityType get entityType {
@@ -144,6 +160,9 @@ abstract class CompanyGatewayEntity extends Object
 
   @BuiltValueField(wireName: 'fees_and_limits')
   BuiltMap<String, FeesAndLimitsSettings> get feesAndLimitsMap;
+
+  @BuiltValueField(wireName: 'system_logs')
+  BuiltList<SystemLogEntity> get systemLogs;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -262,7 +281,7 @@ abstract class CompanyGatewayEntity extends Object
 
 abstract class FeesAndLimitsSettings
     implements Built<FeesAndLimitsSettings, FeesAndLimitsSettingsBuilder> {
-  factory FeesAndLimitsSettings({String id}) {
+  factory FeesAndLimitsSettings({String id, bool isEnabled}) {
     return _$FeesAndLimitsSettings._(
       maxLimit: -1,
       minLimit: -1,
@@ -276,6 +295,7 @@ abstract class FeesAndLimitsSettings
       taxRate1: 0,
       taxRate2: 0,
       taxRate3: 0,
+      isEnabled: isEnabled ?? false,
     );
   }
 
@@ -320,6 +340,13 @@ abstract class FeesAndLimitsSettings
 
   @BuiltValueField(wireName: 'adjust_fee_percent')
   bool get adjustFeePercent;
+
+  @BuiltValueField(wireName: 'is_enabled')
+  bool get isEnabled;
+
+  // ignore: unused_element
+  static void _initializeBuilder(FeesAndLimitsSettingsBuilder builder) =>
+      builder..isEnabled = false;
 
   static Serializer<FeesAndLimitsSettings> get serializer =>
       _$feesAndLimitsSettingsSerializer;

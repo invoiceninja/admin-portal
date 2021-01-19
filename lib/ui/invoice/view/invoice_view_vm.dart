@@ -55,6 +55,7 @@ class EntityViewVM {
     @required this.onPaymentsPressed,
     @required this.onRefreshed,
     @required this.onViewExpense,
+    @required this.onViewPdf,
   });
 
   final AppState state;
@@ -70,40 +71,44 @@ class EntityViewVM {
   final Function(BuildContext, MultipartFile) onUploadDocument;
   final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
   final Function(BuildContext, DocumentEntity) onViewExpense;
+  final Function(BuildContext, InvoiceEntity, [String]) onViewPdf;
 }
 
 class InvoiceViewVM extends EntityViewVM {
-  InvoiceViewVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    bool isSaving,
-    bool isDirty,
-    Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, [int]) onEditPressed,
-    Function(BuildContext, [bool]) onClientPressed,
-    Function(BuildContext, [bool]) onUserPressed,
-    Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
-    Function(BuildContext) onPaymentsPressed,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, MultipartFile) onUploadDocument,
-    Function(BuildContext, DocumentEntity, String) onDeleteDocument,
-    Function(BuildContext, DocumentEntity) onViewExpense,
-  }) : super(
-            state: state,
-            company: company,
-            invoice: invoice,
-            client: client,
-            isSaving: isSaving,
-            isDirty: isDirty,
-            onActionSelected: onEntityAction,
-            onEditPressed: onEditPressed,
-            onPaymentsPressed: onPaymentsPressed,
-            onRefreshed: onRefreshed,
-            onUploadDocument: onUploadDocument,
-            onDeleteDocument: onDeleteDocument,
-            onViewExpense: onViewExpense);
+  InvoiceViewVM(
+      {AppState state,
+      CompanyEntity company,
+      InvoiceEntity invoice,
+      ClientEntity client,
+      bool isSaving,
+      bool isDirty,
+      Function(BuildContext, EntityAction) onEntityAction,
+      Function(BuildContext, [int]) onEditPressed,
+      Function(BuildContext, [bool]) onClientPressed,
+      Function(BuildContext, [bool]) onUserPressed,
+      Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
+      Function(BuildContext) onPaymentsPressed,
+      Function(BuildContext) onRefreshed,
+      Function(BuildContext, MultipartFile) onUploadDocument,
+      Function(BuildContext, DocumentEntity, String) onDeleteDocument,
+      Function(BuildContext, DocumentEntity) onViewExpense,
+      Function(BuildContext, InvoiceEntity, [String]) onViewPdf})
+      : super(
+          state: state,
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onEntityAction,
+          onEditPressed: onEditPressed,
+          onPaymentsPressed: onPaymentsPressed,
+          onRefreshed: onRefreshed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
+          onViewExpense: onViewExpense,
+          onViewPdf: onViewPdf,
+        );
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -176,6 +181,10 @@ class InvoiceViewVM extends EntityViewVM {
             entityId: document.expenseId,
             entityType: EntityType.expense);
          */
+      },
+      onViewPdf: (context, invoice, [activityId]) {
+        store.dispatch(ShowPdfInvoice(
+            context: context, invoice: invoice, activityId: activityId));
       },
     );
   }

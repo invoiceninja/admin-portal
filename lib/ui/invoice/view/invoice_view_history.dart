@@ -3,7 +3,6 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class InvoiceViewHistory extends StatefulWidget {
@@ -59,7 +58,8 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
               ' • ' +
               timeago.format(convertTimestampToDate(history.createdAt))),
           trailing: Icon(Icons.chevron_right),
-          onTap: () => viewPdf(invoice, context, activityId: history.id),
+          onTap: () =>
+              viewModel.onViewPdf(context, invoice, history.activityId),
         );
       },
       separatorBuilder: (context, index) => ListDivider(),

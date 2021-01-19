@@ -57,6 +57,7 @@ class RecurringInvoiceViewVM extends EntityViewVM {
     Function(BuildContext, MultipartFile) onUploadDocument,
     Function(BuildContext, DocumentEntity, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
   }) : super(
           state: state,
           company: company,
@@ -71,6 +72,7 @@ class RecurringInvoiceViewVM extends EntityViewVM {
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
+          onViewPdf: onViewPdf,
         );
 
   factory RecurringInvoiceViewVM.fromStore(Store<AppState> store) {
@@ -134,6 +136,10 @@ class RecurringInvoiceViewVM extends EntityViewVM {
           documentIds: [document.id],
           password: password,
         ));
+      },
+      onViewPdf: (context, invoice, [activityId]) {
+        store.dispatch(ShowPdfRecurringInvoice(
+            context: context, invoice: invoice, activityId: activityId));
       },
     );
   }
