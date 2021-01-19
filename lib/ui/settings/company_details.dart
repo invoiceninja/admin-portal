@@ -213,7 +213,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
-        isScrollable: isMobile(context),
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.details,
@@ -229,7 +229,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           if (!state.settingsUIState.isFiltered)
             Tab(
-              text: localization.documents,
+              text: company.documents.isEmpty
+                  ? localization.documents
+                  : '${localization.documents} (${company.documents.length})',
             ),
         ],
       ),
