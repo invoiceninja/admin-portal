@@ -14,9 +14,9 @@ class QuotePdfScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, InvoicePdfVM>(
+    return StoreConnector<AppState, QuotePdfVM>(
       converter: (Store<AppState> store) {
-        return InvoicePdfVM.fromStore(store);
+        return QuotePdfVM.fromStore(store);
       },
       builder: (context, vm) {
         return InvoicePdfView(

@@ -40,6 +40,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, EditQuote>(editQuote),
     TypedMiddleware<AppState, ConvertQuotes>(convertQuote),
     TypedMiddleware<AppState, ShowEmailQuote>(showEmailQuote),
+    TypedMiddleware<AppState, ShowPdfQuote>(showPdfQuote),
     TypedMiddleware<AppState, LoadQuotes>(loadQuotes),
     TypedMiddleware<AppState, LoadQuote>(loadQuote),
     TypedMiddleware<AppState, SaveQuoteRequest>(saveQuote),

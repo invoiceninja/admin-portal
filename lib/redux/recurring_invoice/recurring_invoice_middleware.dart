@@ -37,6 +37,7 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
     TypedMiddleware<AppState, EditRecurringInvoice>(editRecurringInvoice),
     TypedMiddleware<AppState, LoadRecurringInvoices>(loadRecurringInvoices),
     TypedMiddleware<AppState, LoadRecurringInvoice>(loadRecurringInvoice),
+    TypedMiddleware<AppState, ShowPdfRecurringInvoice>(showPdfRecurringInvoice),
     TypedMiddleware<AppState, SaveRecurringInvoiceRequest>(
         saveRecurringInvoice),
     TypedMiddleware<AppState, ArchiveRecurringInvoicesRequest>(

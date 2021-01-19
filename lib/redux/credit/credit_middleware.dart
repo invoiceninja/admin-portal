@@ -38,6 +38,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
     TypedMiddleware<AppState, ViewCredit>(viewCredit),
     TypedMiddleware<AppState, EditCredit>(editCredit),
     TypedMiddleware<AppState, ShowEmailCredit>(showEmailCredit),
+    TypedMiddleware<AppState, ShowPdfCredit>(showPdfCredit),
     TypedMiddleware<AppState, LoadCredits>(loadCredits),
     TypedMiddleware<AppState, LoadCredit>(loadCredit),
     TypedMiddleware<AppState, SaveCreditRequest>(saveCredit),
