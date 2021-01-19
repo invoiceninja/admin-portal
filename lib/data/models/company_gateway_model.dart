@@ -295,6 +295,7 @@ abstract class FeesAndLimitsSettings
       taxRate1: 0,
       taxRate2: 0,
       taxRate3: 0,
+      isEnabled: false,
     );
   }
 
@@ -339,6 +340,13 @@ abstract class FeesAndLimitsSettings
 
   @BuiltValueField(wireName: 'adjust_fee_percent')
   bool get adjustFeePercent;
+
+  @BuiltValueField(wireName: 'is_enabled')
+  bool get isEnabled;
+
+  // ignore: unused_element
+  static void _initializeBuilder(CompanyGatewayEntityBuilder builder) =>
+      builder..isEnabled = false;
 
   static Serializer<FeesAndLimitsSettings> get serializer =>
       _$feesAndLimitsSettingsSerializer;
