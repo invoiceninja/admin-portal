@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -19,6 +20,7 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
   final viewRecurringInvoiceList = _viewRecurringInvoiceList();
   final viewRecurringInvoice = _viewRecurringInvoice();
   final editRecurringInvoice = _editRecurringInvoice();
+  final showPdfRecurringInvoice = _showPdfRecurringInvoice();
   final loadRecurringInvoices = _loadRecurringInvoices(repository);
   final loadRecurringInvoice = _loadRecurringInvoice(repository);
   final saveRecurringInvoice = _saveRecurringInvoice(repository);
@@ -94,6 +96,21 @@ Middleware<AppState> _viewRecurringInvoiceList() {
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           RecurringInvoiceScreen.route, (Route<dynamic> route) => false);
+    }
+  };
+}
+
+Middleware<AppState> _showPdfRecurringInvoice() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ShowPdfRecurringInvoice;
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(RecurringInvoicePdfScreen.route));
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(RecurringInvoicePdfScreen.route);
     }
   };
 }

@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
@@ -20,6 +21,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
   final viewCredit = _viewCredit();
   final editCredit = _editCredit();
   final showEmailCredit = _showEmailCredit();
+  final showPdfCredit = _showPdfCredit();
   final loadCredits = _loadCredits(repository);
   final loadCredit = _loadCredit(repository);
   final saveCredit = _saveCredit(repository);
@@ -113,6 +115,21 @@ Middleware<AppState> _showEmailCredit() {
       if (action.completer != null && emailWasSent != null && emailWasSent) {
         action.completer.complete(null);
       }
+    }
+  };
+}
+
+Middleware<AppState> _showPdfCredit() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ShowPdfCredit;
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(CreditPdfScreen.route));
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(CreditPdfScreen.route);
     }
   };
 }

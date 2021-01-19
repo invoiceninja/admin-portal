@@ -59,6 +59,13 @@ class ShowEmailQuote {
   final Completer completer;
 }
 
+class ShowPdfQuote {
+  ShowPdfQuote({this.quote, this.context});
+
+  final InvoiceEntity quote;
+  final BuildContext context;
+}
+
 class EditQuoteItem implements PersistUI {
   EditQuoteItem([this.quoteItemIndex]);
 
@@ -428,7 +435,7 @@ Future handleQuoteAction(
       editEntity(context: context, entity: quote);
       break;
     case EntityAction.viewPdf:
-      viewPdf(quote, context);
+      store.dispatch(ShowPdfQuote(quote: quote, context: context));
       break;
     case EntityAction.clientPortal:
       if (await canLaunch(quote.invitationSilentLink)) {

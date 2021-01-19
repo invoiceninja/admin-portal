@@ -61,6 +61,13 @@ class ShowEmailRecurringInvoice {
   final Completer completer;
 }
 
+class ShowPdfRecurringInvoice {
+  ShowPdfRecurringInvoice({this.invoice, this.context});
+
+  final InvoiceEntity invoice;
+  final BuildContext context;
+}
+
 class EditRecurringInvoiceItem implements PersistUI {
   EditRecurringInvoiceItem([this.itemIndex]);
 
@@ -427,7 +434,8 @@ void handleRecurringInvoiceAction(BuildContext context,
       editEntity(context: context, entity: recurringInvoice);
       break;
     case EntityAction.viewPdf:
-      viewPdf(recurringInvoice, context);
+      store.dispatch(
+          ShowPdfRecurringInvoice(invoice: recurringInvoice, context: context));
       break;
     case EntityAction.clientPortal:
       if (await canLaunch(recurringInvoice.invitationSilentLink)) {

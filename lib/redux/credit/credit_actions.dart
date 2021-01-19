@@ -59,6 +59,13 @@ class ShowEmailCredit {
   final Completer completer;
 }
 
+class ShowPdfCredit {
+  ShowPdfCredit({this.credit, this.context});
+
+  final InvoiceEntity credit;
+  final BuildContext context;
+}
+
 class EditCreditItem implements PersistUI {
   EditCreditItem([this.creditItemIndex]);
 
@@ -409,7 +416,7 @@ Future handleCreditAction(
       editEntity(context: context, entity: credit);
       break;
     case EntityAction.viewPdf:
-      viewPdf(credit, context);
+      store.dispatch(ShowPdfCredit(credit: credit, context: context));
       break;
     case EntityAction.clientPortal:
       if (await canLaunch(credit.invitationSilentLink)) {

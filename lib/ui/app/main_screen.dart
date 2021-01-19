@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
@@ -30,7 +31,9 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
@@ -109,20 +112,22 @@ class MainScreen extends StatelessWidget {
             break;
           case QuoteScreen.route:
             screen = isPdf
-                ? Placeholder()
+                ? QuotePdfScreen()
                 : isEmail
                     ? QuoteEmailScreen()
                     : QuoteEditScreen();
             break;
           case CreditScreen.route:
             screen = isPdf
-                ? Placeholder()
+                ? CreditPdfScreen()
                 : isEmail
                     ? CreditEmailScreen()
                     : CreditEditScreen();
             break;
           case RecurringInvoiceScreen.route:
-            screen = isPdf ? Placeholder() : RecurringInvoiceEditScreen();
+            screen = isPdf
+                ? RecurringInvoicePdfScreen()
+                : RecurringInvoiceEditScreen();
             break;
           case TaskScreen.route:
             screen = TaskEditScreen();

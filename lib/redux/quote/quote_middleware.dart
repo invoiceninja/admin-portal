@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -20,6 +21,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
   final viewQuote = _viewQuote();
   final editQuote = _editQuote();
   final showEmailQuote = _showEmailQuote();
+  final showPdfQuote = _showPdfQuote();
   final convertQuote = _convertQuote(repository);
   final loadQuotes = _loadQuotes(repository);
   final loadQuote = _loadQuote(repository);
@@ -115,6 +117,21 @@ Middleware<AppState> _showEmailQuote() {
       if (action.completer != null && emailWasSent != null && emailWasSent) {
         action.completer.complete(null);
       }
+    }
+  };
+}
+
+Middleware<AppState> _showPdfQuote() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ShowPdfQuote;
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(QuotePdfScreen.route));
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(QuotePdfScreen.route);
     }
   };
 }

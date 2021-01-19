@@ -46,6 +46,8 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.recurringInvoice.id),
   TypedReducer<String, ShowEmailRecurringInvoice>(
       (selectedId, action) => action.invoice.id),
+  TypedReducer<String, ShowPdfRecurringInvoice>(
+      (selectedId, action) => action.invoice.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
