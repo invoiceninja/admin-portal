@@ -83,7 +83,6 @@ abstract class GroupEntity extends Object
 
   SettingsEntity get settings;
 
-  @nullable
   BuiltList<DocumentEntity> get documents;
 
   @override
@@ -171,6 +170,11 @@ abstract class GroupEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+
+    // ignore: unused_element
+  static void _initializeBuilder(CompanyEntityBuilder builder) => builder
+    ..documents = BuiltList<DocumentEntity>();
+
 
   static Serializer<GroupEntity> get serializer => _$groupEntitySerializer;
 }
