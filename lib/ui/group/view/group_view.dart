@@ -79,7 +79,7 @@ class _GroupViewState extends State<GroupView>
             shrinkWrap: true,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
                 child: AppButton(
                   label: localization.configureSettings.toUpperCase(),
                   iconData: Icons.settings,
