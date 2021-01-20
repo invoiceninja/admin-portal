@@ -90,7 +90,10 @@ class ViewScaffold extends StatelessWidget {
                               : store.dispatch(UpdateCurrentRoute(
                                   state.uiState.previousRoute));
                         },
-                        child: Text(localization.cancel)),
+                        child: Text(
+                          localization.cancel,
+                          style: TextStyle(color: state.headerTextColor),
+                        )),
                   userCompany.canEditEntity(entity)
                       ? Builder(builder: (context) {
                           return EditIconButton(

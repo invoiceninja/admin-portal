@@ -442,7 +442,7 @@ abstract class InvoiceEntity extends Object
 
   double get netBalance => balance - (taxAmount * balance / amount);
 
-  double get paidToDate => amount - (isSent ? balance : amount);
+  double get paidToDate => amount - (isSent && !isCancelled ? balance : amount);
 
   @nullable
   int get loadedAt;
