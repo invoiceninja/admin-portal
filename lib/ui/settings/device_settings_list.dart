@@ -186,9 +186,11 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   return ListTile(
                     leading: Icon(Icons.refresh),
                     title: Text(AppLocalization.of(context).refreshData),
-                    onTap: () {
-                      viewModel.onRefreshTap(context);
-                    },
+                    onTap: state.isSaving || state.isLoading
+                        ? null
+                        : () {
+                            viewModel.onRefreshTap(context);
+                          },
                   );
                 }),
               ],
