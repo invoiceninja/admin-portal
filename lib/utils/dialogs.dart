@@ -68,6 +68,7 @@ void confirmCallback({
                   SizedBox(width: 16),
                   Expanded(
                     child: DecoratedFormField(
+                      autofocus: true,
                       onChanged: (value) => _typed = value,
                       hint: typeToConfirm,
                     ),

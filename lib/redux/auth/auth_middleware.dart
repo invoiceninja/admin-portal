@@ -331,12 +331,12 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
             password: action.password,
             companyId: state.company.id)
         .then((dynamic value) {
+      store.dispatch(PurgeDataSuccess());
       store.dispatch(RefreshData(
           clearData: true,
           completer: Completer<Null>()
             ..future.then((value) {
               action.completer.complete(null);
-              store.dispatch(PurgeDataSuccess());
             })));
     }).catchError((Object error) {
       store.dispatch(PurgeDataFailure(error));
