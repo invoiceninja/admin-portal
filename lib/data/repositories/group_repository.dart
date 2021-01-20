@@ -77,7 +77,7 @@ class GroupRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/groups/${entity.id}', credentials.token,
+        '${credentials.url}/group_settings/${entity.id}', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final GroupItemResponse groupResponse =

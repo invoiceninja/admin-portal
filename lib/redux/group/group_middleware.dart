@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreGroupsMiddleware([
   final archiveGroup = _archiveGroup(repository);
   final deleteGroup = _deleteGroup(repository);
   final restoreGroup = _restoreGroup(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewGroupList>(viewGroupList),
@@ -36,6 +37,7 @@ List<Middleware<AppState>> createStoreGroupsMiddleware([
     TypedMiddleware<AppState, ArchiveGroupRequest>(archiveGroup),
     TypedMiddleware<AppState, DeleteGroupRequest>(deleteGroup),
     TypedMiddleware<AppState, RestoreGroupRequest>(restoreGroup),
+    TypedMiddleware<AppState, SaveGroupDocumentRequest>(saveDocument),
   ];
 }
 
