@@ -41,7 +41,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -1630,7 +1630,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -3230,7 +3230,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -4830,7 +4830,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -6400,7 +6400,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -7995,7 +7995,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -9588,7 +9588,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -11180,7 +11180,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -12781,7 +12781,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -14373,7 +14373,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -15965,7 +15965,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -17558,7 +17558,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -19162,7 +19162,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -20776,7 +20776,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -22409,7 +22409,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -24046,7 +24046,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -25645,7 +25645,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -27236,7 +27236,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -28828,7 +28828,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -30423,7 +30423,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -32014,7 +32014,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -33606,7 +33606,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -35213,7 +35213,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -36806,7 +36806,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -38401,7 +38401,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -39996,7 +39996,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -41592,7 +41592,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -43193,7 +43193,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -44797,7 +44797,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -46391,7 +46391,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -47982,7 +47982,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
