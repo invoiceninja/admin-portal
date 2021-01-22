@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "Invoice Ninja")
+set(BINARY_NAME "Invoice_Ninja")
 set(APPLICATION_ID "com.invoiceninja.app")
 
 cmake_policy(SET CMP0063 NEW)
