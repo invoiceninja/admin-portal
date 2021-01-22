@@ -19,7 +19,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_redux: ^0.6.0
+  flutter_redux: ^0.7.0
   redux_logging: ^0.4.0
   http: ^0.12.0+4
   in_app_purchase: ^0.3.1+1
