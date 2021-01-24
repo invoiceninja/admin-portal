@@ -37,9 +37,6 @@ class TaskPresenter extends EntityPresenter {
       TaskFields.customValue3,
       TaskFields.customValue4,
       TaskFields.documents,
-      TaskFields.updatedAt,
-      TaskFields.archivedAt,
-      TaskFields.isDeleted,
     ];
   }
 
@@ -96,14 +93,6 @@ class TaskPresenter extends EntityPresenter {
         return Text(task.customValue4);
       case TaskFields.documents:
         return Text('${task.documents.length}');
-      case TaskFields.updatedAt:
-        return Text(
-            formatDate(convertTimestampToDateString(task.updatedAt), context));
-      case TaskFields.archivedAt:
-        return Text(
-            formatDate(convertTimestampToDateString(task.archivedAt), context));
-      case TaskFields.isDeleted:
-        return Text(task.isDeleted.toString());
     }
 
     return super.getField(field: field, context: context);

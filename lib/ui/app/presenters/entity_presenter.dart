@@ -33,6 +33,7 @@ class EntityPresenter {
       EntityFields.assignedTo,
       EntityFields.createdBy,
       EntityFields.state,
+      EntityFields.isDeleted,
     ];
   }
 
@@ -47,13 +48,17 @@ class EntityPresenter {
             convertTimestampToDateString(entity.createdAt), context,
             showTime: true));
       case EntityFields.updatedAt:
-        return Text(formatDate(
-            convertTimestampToDateString(entity.updatedAt), context,
-            showTime: true));
+        return Text(entity.updatedAt == 0
+            ? ''
+            : formatDate(
+                convertTimestampToDateString(entity.updatedAt), context,
+                showTime: true));
       case EntityFields.archivedAt:
-        return Text(formatDate(
-            convertTimestampToDateString(entity.archivedAt), context,
-            showTime: true));
+        return Text(entity.archivedAt == 0
+            ? ''
+            : formatDate(
+                convertTimestampToDateString(entity.archivedAt), context,
+                showTime: true));
       case EntityFields.state:
         return Text(entity.isActive
             ? localization.active
@@ -66,6 +71,8 @@ class EntityPresenter {
       case EntityFields.assignedTo:
         return Text(
             state.userState.map[entity.assignedUserId]?.listDisplayName ?? '');
+      case EntityFields.isDeleted:
+        return Text(entity.isDeleted ? localization.yes : localization.no);
     }
 
     return Text('Error: $field not found');

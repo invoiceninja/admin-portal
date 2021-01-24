@@ -629,6 +629,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Client ID',
       'assigned_to': 'Assigned To',
       'created_by': 'Created By',
@@ -51796,6 +51802,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get shippingCountry =>
       _localizedValues[localeCode]['shipping_country'] ?? '';
+
+  String get billingAddress1 =>
+      _localizedValues[localeCode]['billing_address1'] ?? '';
+
+  String get billingAddress2 =>
+      _localizedValues[localeCode]['billing_address2'] ?? '';
+
+  String get billingCity => _localizedValues[localeCode]['billing_city'] ?? '';
+
+  String get billingState =>
+      _localizedValues[localeCode]['billing_state'] ?? '';
+
+  String get billingPostalCode =>
+      _localizedValues[localeCode]['billing_postal_code'] ?? '';
+
+  String get billingCountry =>
+      _localizedValues[localeCode]['billing_country'] ?? '';
 
   String get contactFullName =>
       _localizedValues[localeCode]['contact_full_name'] ?? '';

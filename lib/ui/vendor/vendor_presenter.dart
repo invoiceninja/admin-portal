@@ -35,7 +35,6 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.customValue4,
       VendorFields.updatedAt,
       VendorFields.archivedAt,
-      VendorFields.isDeleted,
       VendorFields.documents,
     ];
   }

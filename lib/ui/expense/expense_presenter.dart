@@ -48,9 +48,6 @@ class ExpensePresenter extends EntityPresenter {
       ExpenseFields.customValue2,
       ExpenseFields.customValue3,
       ExpenseFields.customValue4,
-      ExpenseFields.updatedAt,
-      ExpenseFields.archivedAt,
-      ExpenseFields.isDeleted,
       ExpenseFields.documents,
     ];
   }
@@ -135,14 +132,6 @@ class ExpensePresenter extends EntityPresenter {
         return Text(expense.customValue3);
       case ExpenseFields.customValue4:
         return Text(expense.customValue4);
-      case ExpenseFields.updatedAt:
-        return Text(formatDate(
-            convertTimestampToDateString(expense.updatedAt), context));
-      case ExpenseFields.archivedAt:
-        return Text(formatDate(
-            convertTimestampToDateString(expense.archivedAt), context));
-      case ExpenseFields.isDeleted:
-        return Text(expense.isDeleted.toString());
       case ExpenseFields.documents:
         return Text('${expense.documents.length}');
     }
