@@ -665,7 +665,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             context,
                             clientId: invoice.clientId),
                       ),
-                      if (invoice.isOld)
+                      if (invoice.isOld &&
+                          (invoice.isInvoice || invoice.isQuote))
                         TextFormField(
                           enabled: false,
                           decoration: InputDecoration(
@@ -721,7 +722,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       TextFormField(
                         enabled: false,
                         decoration: InputDecoration(
-                          labelText: localization.balanceDue,
+                          labelText: invoice.isQuote
+                              ? localization.total
+                              : localization.balanceDue,
                         ),
                         textAlign: TextAlign.end,
                         key: ValueKey(
