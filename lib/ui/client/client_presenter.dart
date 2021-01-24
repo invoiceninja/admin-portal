@@ -63,8 +63,10 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.idNumber:
         return Text(client.idNumber);
       case ClientFields.lastLoginAt:
-        return Text(formatDate(
-            convertTimestampToDateString(client.lastLogin), context));
+        return Text(client.lastLogin == 0
+            ? ''
+            : formatDate(
+                convertTimestampToDateString(client.lastLogin), context));
       case ClientFields.balance:
         return Align(
             alignment: Alignment.centerRight,

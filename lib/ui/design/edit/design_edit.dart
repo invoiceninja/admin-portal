@@ -339,14 +339,13 @@ class DesignSection extends StatelessWidget {
           child: TextField(
             controller: textController,
             keyboardType: TextInputType.multiline,
+            minLines: 16,
+            maxLines: null,
             decoration: InputDecoration(
               border: InputBorder.none,
             ),
-            maxLines: null,
-            minLines: 16,
             style: TextStyle(
               fontFeatures: [FontFeature.tabularFigures()],
-              //fontSize: 30,
             ),
           ),
         ),

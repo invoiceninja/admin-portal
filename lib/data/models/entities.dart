@@ -263,6 +263,7 @@ class EntityFields {
   static const String assignedTo = 'assigned_to';
   static const String createdBy = 'created_by';
   static const String state = 'entity_state';
+  static const String isDeleted = 'is_deleted';
 }
 
 abstract class BaseEntity implements SelectableEntity {

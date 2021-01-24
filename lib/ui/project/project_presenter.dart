@@ -29,9 +29,6 @@ class ProjectPresenter extends EntityPresenter {
       ProjectFields.customValue2,
       ProjectFields.customValue3,
       ProjectFields.customValue4,
-      ProjectFields.updatedAt,
-      ProjectFields.archivedAt,
-      ProjectFields.isDeleted,
       ProjectFields.documents,
     ];
   }
@@ -68,14 +65,6 @@ class ProjectPresenter extends EntityPresenter {
         return Text(project.customValue3);
       case ProjectFields.customValue4:
         return Text(project.customValue4);
-      case ProjectFields.updatedAt:
-        return Text(formatDate(
-            convertTimestampToDateString(project.updatedAt), context));
-      case ProjectFields.archivedAt:
-        return Text(formatDate(
-            convertTimestampToDateString(project.archivedAt), context));
-      case ProjectFields.isDeleted:
-        return Text(project.isDeleted.toString());
       case ProjectFields.documents:
         return Text('${project.documents.length}');
     }
