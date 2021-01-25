@@ -173,6 +173,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'id_number',
       serializers.serialize(object.idNumber,
           specifiedType: const FullType(String)),
+      'number',
+      serializers.serialize(object.number,
+          specifiedType: const FullType(String)),
       'shipping_address1',
       serializers.serialize(object.shippingAddress1,
           specifiedType: const FullType(String)),
@@ -375,6 +378,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'id_number':
           result.idNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'number':
+          result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'shipping_address1':
@@ -934,6 +941,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String idNumber;
   @override
+  final String number;
+  @override
   final String shippingAddress1;
   @override
   final String shippingAddress2;
@@ -1012,6 +1021,7 @@ class _$ClientEntity extends ClientEntity {
       this.sizeId,
       this.vatNumber,
       this.idNumber,
+      this.number,
       this.shippingAddress1,
       this.shippingAddress2,
       this.shippingCity,
@@ -1101,6 +1111,9 @@ class _$ClientEntity extends ClientEntity {
     }
     if (idNumber == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'idNumber');
+    }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'number');
     }
     if (shippingAddress1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress1');
@@ -1203,6 +1216,7 @@ class _$ClientEntity extends ClientEntity {
         sizeId == other.sizeId &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
+        number == other.number &&
         shippingAddress1 == other.shippingAddress1 &&
         shippingAddress2 == other.shippingAddress2 &&
         shippingCity == other.shippingCity &&
@@ -1252,7 +1266,7 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), loadedAt.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), clientHash.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), loadedAt.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), clientHash.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), number.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
                                                                                 lastLogin.hashCode),
                                                                             customValue1.hashCode),
                                                                         customValue2.hashCode),
@@ -1299,6 +1313,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('sizeId', sizeId)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
+          ..add('number', number)
           ..add('shippingAddress1', shippingAddress1)
           ..add('shippingAddress2', shippingAddress2)
           ..add('shippingCity', shippingCity)
@@ -1421,6 +1436,10 @@ class ClientEntityBuilder
   String _idNumber;
   String get idNumber => _$this._idNumber;
   set idNumber(String idNumber) => _$this._idNumber = idNumber;
+
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
 
   String _shippingAddress1;
   String get shippingAddress1 => _$this._shippingAddress1;
@@ -1545,7 +1564,9 @@ class ClientEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  ClientEntityBuilder();
+  ClientEntityBuilder() {
+    ClientEntity._initializeBuilder(this);
+  }
 
   ClientEntityBuilder get _$this {
     if (_$v != null) {
@@ -1571,6 +1592,7 @@ class ClientEntityBuilder
       _sizeId = _$v.sizeId;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
+      _number = _$v.number;
       _shippingAddress1 = _$v.shippingAddress1;
       _shippingAddress2 = _$v.shippingAddress2;
       _shippingCity = _$v.shippingCity;
@@ -1643,6 +1665,7 @@ class ClientEntityBuilder
               sizeId: sizeId,
               vatNumber: vatNumber,
               idNumber: idNumber,
+              number: number,
               shippingAddress1: shippingAddress1,
               shippingAddress2: shippingAddress2,
               shippingCity: shippingCity,
