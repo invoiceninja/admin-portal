@@ -60,6 +60,8 @@ class VendorPresenter extends EntityPresenter {
         return Text(vendor.address2);
       case VendorFields.idNumber:
         return Text(vendor.idNumber);
+      case VendorFields.number:
+        return Text(vendor.number);
       case VendorFields.postalCode:
         return Text(vendor.postalCode);
       case VendorFields.countryId:

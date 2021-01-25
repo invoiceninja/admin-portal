@@ -42,6 +42,7 @@ enum ClientReportFields {
   credit_balance,
   paid_to_date,
   total,
+  number,
   id_number,
   vat_number,
   contact_full_name,
@@ -196,6 +197,9 @@ ReportResult clientReport(
           break;
         case ClientReportFields.phone:
           value = client.phone;
+          break;
+        case ClientReportFields.number:
+          value = client.number;
           break;
         case ClientReportFields.id_number:
           value = client.idNumber;

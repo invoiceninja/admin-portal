@@ -123,6 +123,7 @@ abstract class ClientEntity extends Object
       sizeId: '',
       vatNumber: '',
       idNumber: '',
+      number: '',
       shippingAddress1: '',
       shippingAddress2: '',
       shippingCity: '',

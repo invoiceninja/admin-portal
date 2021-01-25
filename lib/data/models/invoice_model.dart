@@ -122,6 +122,7 @@ abstract class InvoiceEntity extends Object
       isChanged: false,
       amount: 0,
       balance: 0,
+      paidToDate: 0,
       clientId: client?.id ?? '',
       statusId: '',
       number: '',

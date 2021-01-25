@@ -104,7 +104,7 @@ class ClientListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              client.idNumber,
+                              client.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),

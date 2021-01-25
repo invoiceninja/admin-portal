@@ -105,7 +105,7 @@ class VendorListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              vendor.idNumber,
+                              vendor.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
