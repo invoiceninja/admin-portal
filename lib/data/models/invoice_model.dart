@@ -194,10 +194,6 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity._();
 
-  // ignore: unused_element
-  static void _initializeBuilder(InvoiceEntityBuilder builder) =>
-      builder..hasTasks = false;
-
   @override
   @memoized
   int get hashCode;
@@ -1023,8 +1019,9 @@ abstract class InvoiceEntity extends Object
       invitations.isEmpty ? '' : invitations.first.downloadLink;
 
   // ignore: unused_element
-  static void _initializeBuilder(InvoiceEntityBuilder builder) =>
-      builder..paidToDate = 0;
+  static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
+    ..paidToDate = 0
+    ..hasTasks = false;
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }

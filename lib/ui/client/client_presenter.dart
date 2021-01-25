@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 class ClientPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
-      ClientFields.idNumber,
+      ClientFields.number,
       ClientFields.name,
       ClientFields.balance,
       ClientFields.paidToDate,
@@ -25,7 +25,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.address1,
       ClientFields.address2,
       ClientFields.country,
-      ClientFields.vatNumber,
+      ClientFields.idNumber,
       ClientFields.vatNumber,
       ClientFields.state,
       ClientFields.phone,
@@ -60,6 +60,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.address1);
       case ClientFields.address2:
         return Text(client.address2);
+      case ClientFields.number:
+        return Text(client.number);
       case ClientFields.idNumber:
         return Text(client.idNumber);
       case ClientFields.lastLoginAt:

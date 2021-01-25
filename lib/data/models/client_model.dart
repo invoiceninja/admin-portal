@@ -60,6 +60,7 @@ class ClientFields {
   static const String creditBalance = 'credit_balance';
   static const String vatNumber = 'vat_number';
   static const String idNumber = 'id_number';
+  static const String number = 'number';
   static const String paidToDate = 'paid_to_date';
   static const String lastLoginAt = 'last_login_at';
   static const String createdAt = 'created_at';
@@ -238,6 +239,9 @@ abstract class ClientEntity extends Object
 
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
+
+  @BuiltValueField(wireName: 'number')
+  String get number;
 
   @BuiltValueField(wireName: 'shipping_address1')
   String get shippingAddress1;
@@ -524,6 +528,7 @@ abstract class ClientEntity extends Object
         displayName,
         vatNumber,
         idNumber,
+        number,
         phone,
         address1,
         city,
@@ -550,6 +555,7 @@ abstract class ClientEntity extends Object
       haystacks: [
         vatNumber,
         idNumber,
+        number,
         phone,
         address1,
         city,
@@ -669,6 +675,10 @@ abstract class ClientEntity extends Object
     return displayName;
   }
   */
+
+  // ignore: unused_element
+  static void _initializeBuilder(ClientEntityBuilder builder) =>
+      builder..number = '';
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
