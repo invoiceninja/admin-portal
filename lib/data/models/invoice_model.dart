@@ -209,6 +209,7 @@ abstract class InvoiceEntity extends Object
     ..statusId = kInvoiceStatusDraft
     ..balance = 0
     ..amount = 0
+    ..paidToDate = 0
     ..invoiceId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
@@ -224,6 +225,9 @@ abstract class InvoiceEntity extends Object
   double get amount;
 
   double get balance;
+
+  @BuiltValueField(wireName: 'paid_to_date')
+  double get paidToDate;
 
   double get balanceOrAmount => isSent ? balance : amount;
 
@@ -441,9 +445,6 @@ abstract class InvoiceEntity extends Object
   double get netAmount => amount - taxAmount;
 
   double get netBalance => balance - (taxAmount * balance / amount);
-
-  double get paidToDate =>
-      amount - (isSent && !isCancelledOrReversed ? balance : amount);
 
   @nullable
   int get loadedAt;
@@ -1020,6 +1021,10 @@ abstract class InvoiceEntity extends Object
 
   String get invitationDownloadLink =>
       invitations.isEmpty ? '' : invitations.first.downloadLink;
+
+  // ignore: unused_element
+  static void _initializeBuilder(InvoiceEntityBuilder builder) =>
+      builder..paidToDate = 0;
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
