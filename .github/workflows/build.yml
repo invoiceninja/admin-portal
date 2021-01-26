@@ -29,7 +29,7 @@ jobs:
           sed -i 's/dns/${{secrets.app_sentry}}/g' lib/.env.dart
       - run: flutter upgrade
       - run: flutter config --enable-web
-      - run: flutter build web --release
+      - run: flutter build web --web-renderer html --release
       - run: |
           sed -i '/index.html/d' build/web/flutter_service_worker.js
 

@@ -58,9 +58,7 @@ abstract class AccountEntity
 
   bool get isUpdateAvailable =>
       Version.parse(currentVersion) < Version.parse(latestVersion) &&
-      isCronEnabled;
-
-  bool get isCronEnabled => latestVersion != '0.0.0';
+      isSchedulerRunning;
 
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
