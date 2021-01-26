@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 class VendorPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      VendorFields.number,
       VendorFields.name,
       VendorFields.city,
       VendorFields.phone,
@@ -19,7 +20,6 @@ class VendorPresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
-      VendorFields.number,
       VendorFields.address1,
       VendorFields.address2,
       VendorFields.postalCode,
@@ -60,6 +60,8 @@ class VendorPresenter extends EntityPresenter {
         return Text(vendor.address2);
       case VendorFields.idNumber:
         return Text(vendor.idNumber);
+      case VendorFields.number:
+        return Text(vendor.number);
       case VendorFields.postalCode:
         return Text(vendor.postalCode);
       case VendorFields.countryId:

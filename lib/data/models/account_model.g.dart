@@ -44,6 +44,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'is_docker',
       serializers.serialize(object.isDocker,
           specifiedType: const FullType(bool)),
+      'is_scheduler_running',
+      serializers.serialize(object.isSchedulerRunning,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -97,6 +100,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.isDocker = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'is_scheduler_running':
+          result.isSchedulerRunning = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -123,6 +130,8 @@ class _$AccountEntity extends AccountEntity {
   final bool debugEnabled;
   @override
   final bool isDocker;
+  @override
+  final bool isSchedulerRunning;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates)).build();
@@ -136,7 +145,8 @@ class _$AccountEntity extends AccountEntity {
       this.latestVersion,
       this.currentVersion,
       this.debugEnabled,
-      this.isDocker})
+      this.isDocker,
+      this.isSchedulerRunning})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'id');
@@ -165,6 +175,9 @@ class _$AccountEntity extends AccountEntity {
     if (isDocker == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'isDocker');
     }
+    if (isSchedulerRunning == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'isSchedulerRunning');
+    }
   }
 
   @override
@@ -186,7 +199,8 @@ class _$AccountEntity extends AccountEntity {
         latestVersion == other.latestVersion &&
         currentVersion == other.currentVersion &&
         debugEnabled == other.debugEnabled &&
-        isDocker == other.isDocker;
+        isDocker == other.isDocker &&
+        isSchedulerRunning == other.isSchedulerRunning;
   }
 
   int __hashCode;
@@ -198,14 +212,18 @@ class _$AccountEntity extends AccountEntity {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),
-                                reportErrors.hashCode),
-                            plan.hashCode),
-                        planExpires.hashCode),
-                    latestVersion.hashCode),
-                currentVersion.hashCode),
-            debugEnabled.hashCode),
-        isDocker.hashCode));
+                            $jc(
+                                $jc(
+                                    $jc($jc(0, id.hashCode),
+                                        defaultUrl.hashCode),
+                                    reportErrors.hashCode),
+                                plan.hashCode),
+                            planExpires.hashCode),
+                        latestVersion.hashCode),
+                    currentVersion.hashCode),
+                debugEnabled.hashCode),
+            isDocker.hashCode),
+        isSchedulerRunning.hashCode));
   }
 
   @override
@@ -219,7 +237,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('latestVersion', latestVersion)
           ..add('currentVersion', currentVersion)
           ..add('debugEnabled', debugEnabled)
-          ..add('isDocker', isDocker))
+          ..add('isDocker', isDocker)
+          ..add('isSchedulerRunning', isSchedulerRunning))
         .toString();
   }
 }
@@ -266,6 +285,11 @@ class AccountEntityBuilder
   bool get isDocker => _$this._isDocker;
   set isDocker(bool isDocker) => _$this._isDocker = isDocker;
 
+  bool _isSchedulerRunning;
+  bool get isSchedulerRunning => _$this._isSchedulerRunning;
+  set isSchedulerRunning(bool isSchedulerRunning) =>
+      _$this._isSchedulerRunning = isSchedulerRunning;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -281,6 +305,7 @@ class AccountEntityBuilder
       _currentVersion = _$v.currentVersion;
       _debugEnabled = _$v.debugEnabled;
       _isDocker = _$v.isDocker;
+      _isSchedulerRunning = _$v.isSchedulerRunning;
       _$v = null;
     }
     return this;
@@ -311,7 +336,8 @@ class AccountEntityBuilder
             latestVersion: latestVersion,
             currentVersion: currentVersion,
             debugEnabled: debugEnabled,
-            isDocker: isDocker);
+            isDocker: isDocker,
+            isSchedulerRunning: isSchedulerRunning);
     replace(_$result);
     return _$result;
   }

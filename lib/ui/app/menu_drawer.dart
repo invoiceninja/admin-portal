@@ -563,7 +563,7 @@ class SidebarFooter extends StatelessWidget {
             Expanded(child: SizedBox())
           ] else ...[
             if (!Config.DEMO_MODE && !state.isDemo)
-              if (!account.isCronEnabled)
+              if (!account.isSchedulerRunning)
                 IconButton(
                   tooltip: localization.error,
                   icon: Icon(
