@@ -27,6 +27,7 @@ class VendorEditDetails extends StatefulWidget {
 }
 
 class VendorEditDetailsState extends State<VendorEditDetails> {
+  final _numberController = TextEditingController();
   final _nameController = TextEditingController();
   final _idNumberController = TextEditingController();
   final _vatNumberController = TextEditingController();
@@ -43,6 +44,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   @override
   void didChangeDependencies() {
     _controllers = [
+      _numberController,
       _nameController,
       _idNumberController,
       _vatNumberController,
@@ -58,6 +60,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final vendor = widget.viewModel.vendor;
+    _numberController.text = vendor.number;
     _nameController.text = vendor.name;
     _idNumberController.text = vendor.idNumber;
     _vatNumberController.text = vendor.vatNumber;
@@ -88,6 +91,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     _debouncer.run(() {
       final viewModel = widget.viewModel;
       final vendor = viewModel.vendor.rebuild((b) => b
+        ..number = _numberController.text.trim()
         ..name = _nameController.text.trim()
         ..idNumber = _idNumberController.text.trim()
         ..vatNumber = _vatNumberController.text.trim()
@@ -123,6 +127,11 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
+            if (vendor.isOld)
+              DecoratedFormField(
+                label: localization.number,
+                controller: _numberController,
+              ),
             DecoratedFormField(
               autofocus: true,
               controller: _nameController,
