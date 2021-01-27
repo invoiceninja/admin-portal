@@ -1,5 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
@@ -189,7 +191,7 @@ Reducer<int> lastUpdatedReducer = combineReducers([
         ? state
         : DateTime.now().millisecondsSinceEpoch;
   }),
-  TypedReducer<int, LoadCreditsSuccess>((state, action) {
+  TypedReducer<int, LoadExpensesSuccess>((state, action) {
     return DateTime.now().millisecondsSinceEpoch;
   }),
 ]);

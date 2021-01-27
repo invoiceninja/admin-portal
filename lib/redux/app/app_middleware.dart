@@ -296,7 +296,7 @@ Middleware<AppState> _createLoadState(
           print('Error (app_middleware - refresh): $error');
           store.dispatch(UserLogout(action.context));
         });
-        store.dispatch(RefreshData(completer: completer));
+        store.dispatch(RefreshData(completer: completer, clearData: true));
       } else {
         store.dispatch(UserLogout(action.context));
       }
