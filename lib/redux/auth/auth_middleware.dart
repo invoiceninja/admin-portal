@@ -192,6 +192,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as RefreshData;
     final state = store.state;
+    final company = state.company;
 
     if (state.isSaving || state.isLoading) {
       print('Skipping refresh request - pending request');
@@ -210,7 +211,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
             'TOKEN';
 
-    final updatedAt = action.clearData
+    final updatedAt = action.clearData && !company.isLarge
         ? 0
         : ((state.userCompanyState.lastUpdated - kMillisecondsToRefreshData) /
                 1000)
@@ -226,7 +227,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       includeStatic: action.includeStatic || state.staticState.isStale,
     )
         .then((data) {
-      if (action.clearData) {
+      if (action.clearData && !company.isLarge) {
         store.dispatch(ClearData());
       }
       store.dispatch(LoadAccountSuccess(

@@ -224,7 +224,6 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
     store.dispatch(LoadExpensesRequest());
     repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadExpensesSuccess(data));
-
       if (action.completer != null) {
         action.completer.complete(null);
       }
