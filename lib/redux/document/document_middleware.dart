@@ -214,7 +214,6 @@ Middleware<AppState> _loadDocuments(DocumentRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      //store.dispatch(LoadClients());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadDocumentsFailure(error));

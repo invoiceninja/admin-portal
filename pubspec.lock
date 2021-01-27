@@ -865,14 +865,14 @@ packages:
       name: sentry
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.3"
+    version: "4.0.4"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.3"
+    version: "4.0.4"
   share:
     dependency: "direct main"
     description:
@@ -1230,4 +1230,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.22.2 <2.0.0"
+  flutter: ">=1.22.2"
