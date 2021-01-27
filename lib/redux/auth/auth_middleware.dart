@@ -194,14 +194,18 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final state = store.state;
     final company = state.company;
 
-    if (state.isSaving || state.isLoading) {
-      print('Skipping refresh request - pending request');
-      next(action);
-      return;
-    } else if (state.company.isLarge && !state.isLoaded) {
-      print('Skipping refresh request - not loaded');
-      next(action);
-      return;
+    if (action.clearData) {
+      //
+    } else {
+      if (state.isSaving || state.isLoading) {
+        print('Skipping refresh request - pending request');
+        next(action);
+        return;
+      } else if (state.company.isLarge && !state.isLoaded) {
+        print('Skipping refresh request - not loaded');
+        next(action);
+        return;
+      }
     }
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
