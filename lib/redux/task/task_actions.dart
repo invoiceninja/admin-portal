@@ -110,9 +110,10 @@ class EditTaskTime implements PersistUI {
 }
 
 class AddTaskTime implements PersistUI {
-  AddTaskTime(this.taskTime);
+  AddTaskTime(this.taskTime, {this.showAsRunning = false});
 
   final TaskTime taskTime;
+  final bool showAsRunning;
 }
 
 class UpdateTaskTime implements PersistUI {
