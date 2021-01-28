@@ -80,7 +80,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreCompanyGatewaysMiddleware())
         ..addAll(createStoreGroupsMiddleware())
         ..addAll(createStorePersistenceMiddleware())
-        ..addAll(true || isTesting || kReleaseMode
+        ..addAll(isTesting || kReleaseMode
             ? []
             : [
                 LoggingMiddleware<dynamic>.printer(

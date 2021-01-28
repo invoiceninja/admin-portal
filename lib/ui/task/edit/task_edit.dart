@@ -166,7 +166,13 @@ class _TaskEditState extends State<TaskEdit>
                       child: LiveText(() {
                         return localization.duration +
                             ' ' +
-                            formatNumber(task.listDisplayAmount, context,
+                            formatNumber(
+                                task
+                                    .calculateDuration(
+                                        includeRunning: task.showAsRunning)
+                                    .inSeconds
+                                    .toDouble(),
+                                context,
                                 formatNumberType: FormatNumberType.duration);
                       },
                           style: TextStyle(

@@ -142,7 +142,7 @@ Duration taskDurationForProject(
   int total = 0;
   taskMap.forEach((index, task) {
     if (task.isActive && task.projectId == project.id) {
-      total += task.calculateDuration.inSeconds;
+      total += task.calculateDuration().inSeconds;
     }
   });
   return Duration(seconds: total);

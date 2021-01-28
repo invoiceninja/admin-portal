@@ -86,7 +86,7 @@ int calculateTaskStatusAmount({
 
   taskMap.forEach((taskId, task) {
     if (task.statusId == taskStatusId) {
-      total += task.calculateDuration.inSeconds;
+      total += task.calculateDuration().inSeconds;
     }
   });
 

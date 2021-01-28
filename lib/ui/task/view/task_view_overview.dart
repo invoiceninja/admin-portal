@@ -93,7 +93,7 @@ class _TaskOverviewState extends State<TaskOverview> {
                   ? Colors.blue
                   : null,
           label: localization.duration,
-          value: formatDuration(task.calculateDuration),
+          value: formatDuration(task.calculateDuration()),
           secondLabel: localization.amount,
           secondValue: formatNumber(
             task.calculateAmount(
