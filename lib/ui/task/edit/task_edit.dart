@@ -169,8 +169,7 @@ class _TaskEditState extends State<TaskEdit>
                             formatNumber(
                                 task
                                     .calculateDuration(
-                                        includeRunning:
-                                            state.company.autoStartTasks)
+                                        includeRunning: task.showAsRunning)
                                     .inSeconds
                                     .toDouble(),
                                 context,

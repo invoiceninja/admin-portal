@@ -229,6 +229,7 @@ abstract class TaskEntity extends Object
       createdUserId: '',
       statusId: '',
       documents: BuiltList<DocumentEntity>(),
+      showAsRunning: state?.company?.autoStartTasks ?? false,
     );
   }
 
@@ -694,6 +695,10 @@ abstract class TaskEntity extends Object
   }
 
   bool get isStopped => !isRunning;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaskEntityBuilder builder) =>
+      builder..showAsRunning = false;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }
