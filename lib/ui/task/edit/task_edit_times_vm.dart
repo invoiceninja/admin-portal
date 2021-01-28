@@ -33,6 +33,7 @@ class TaskEditTimesVM {
     @required this.onRemoveTaskTimePressed,
     @required this.onDoneTaskTimePressed,
     @required this.onUpdatedTaskTime,
+    @required this.clearSelectedTaskTime,
   });
 
   factory TaskEditTimesVM.fromStore(Store<AppState> store) {
@@ -50,6 +51,7 @@ class TaskEditTimesVM {
       onUpdatedTaskTime: (taskTime, index) {
         store.dispatch(UpdateTaskTime(taskTime: taskTime, index: index));
       },
+      clearSelectedTaskTime: () => store.dispatch(EditTaskTime()),
     );
   }
 
@@ -59,4 +61,5 @@ class TaskEditTimesVM {
   final Function(int) onRemoveTaskTimePressed;
   final Function onDoneTaskTimePressed;
   final Function(TaskTime, int) onUpdatedTaskTime;
+  final Function clearSelectedTaskTime;
 }
