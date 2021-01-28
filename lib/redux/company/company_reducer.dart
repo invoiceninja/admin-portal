@@ -187,8 +187,8 @@ UserCompanyEntity saveCompanySuccessReducer(
 
 Reducer<int> lastUpdatedReducer = combineReducers([
   TypedReducer<int, LoadCompanySuccess>((state, action) {
-    return action.userCompany.company.isLarge
-        ? state
+    return action.userCompany.company.isLarge && state == 0
+        ? 0
         : DateTime.now().millisecondsSinceEpoch;
   }),
   TypedReducer<int, LoadExpensesSuccess>((state, action) {
