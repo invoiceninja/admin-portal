@@ -127,3 +127,15 @@ String localeSelector(AppState state) {
     return locale;
   }
 }
+
+String portalRegistrationUrlSelector(AppState state) {
+  String url = state.account.defaultUrl;
+
+  url += '/client/register';
+
+  if (true || state.companies.length > 1) {
+    url += '/' + state.company.companyKey;
+  }
+
+  return url;
+}

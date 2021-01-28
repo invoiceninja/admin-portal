@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -175,6 +176,7 @@ class _ClientPortalState extends State<ClientPortal>
     final state = viewModel.state;
     final company = viewModel.company;
     final settings = viewModel.settings;
+    final registrationUrl = portalRegistrationUrlSelector(state);
 
     return EditScaffold(
       title: localization.clientPortal,
@@ -279,7 +281,7 @@ class _ClientPortalState extends State<ClientPortal>
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (!state.settingsUIState.isFiltered)
+                  if (!state.settingsUIState.isFiltered) ...[
                     BoolDropdownButton(
                       label: localization.clientRegistration,
                       helpLabel: localization.clientRegistrationHelp,
@@ -288,6 +290,27 @@ class _ClientPortalState extends State<ClientPortal>
                       onChanged: (value) => viewModel.onCompanyChanged(
                           company.rebuild((b) => b..clientCanRegister = value)),
                     ),
+                    if (state.company.clientCanRegister ?? false) ...[
+                      SizedBox(height: 16),
+                      ListDivider(),
+                      ListTile(
+                        title: Text(localization.registrationUrl),
+                        subtitle: Text(
+                          registrationUrl,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        trailing: Icon(Icons.content_copy),
+                        onTap: () {
+                          Clipboard.setData(
+                              ClipboardData(text: registrationUrl));
+                          showToast(localization.copiedToClipboard
+                              .replaceFirst(':value ', registrationUrl));
+                        },
+                      ),
+                      ListDivider(),
+                    ],
+                  ],
                   BoolDropdownButton(
                       label: localization.documentUpload,
                       helpLabel: localization.documentUploadHelp,
@@ -307,25 +330,21 @@ class _ClientPortalState extends State<ClientPortal>
                       (state.company.enableShopApi ?? false)) ...[
                     SizedBox(height: 16),
                     ListDivider(),
-                    Builder(builder: (BuildContext context) {
-                      return ListTile(
-                        title: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Text(
-                            '${localization.companyKey}: ${company.companyKey.substring(0, 16)}...',
-                            style: Theme.of(context).textTheme.headline6,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        trailing: Icon(Icons.content_copy),
-                        onTap: () {
-                          Clipboard.setData(
-                              ClipboardData(text: company.companyKey));
-                          showToast(localization.copiedToClipboard
-                              .replaceFirst(':value ', company.companyKey));
-                        },
-                      );
-                    }),
+                    ListTile(
+                      title: Text(localization.companyKey),
+                      subtitle: Text(
+                        company.companyKey,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Icon(Icons.content_copy),
+                      onTap: () {
+                        Clipboard.setData(
+                            ClipboardData(text: company.companyKey));
+                        showToast(localization.copiedToClipboard
+                            .replaceFirst(':value ', company.companyKey));
+                      },
+                    ),
                     ListDivider(),
                   ],
                   DecoratedFormField(
