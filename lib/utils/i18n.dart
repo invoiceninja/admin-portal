@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'convert_to_invoice': 'Convert to Invoice',
       'registration_url': 'Registration URL',
       'invoice_task': 'Invoice Task',
       'invoice_expense': 'Invoice Expense',
@@ -53408,6 +53409,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get registrationUrl =>
       _localizedValues[localeCode]['registration_url'] ?? '';
 
+  String get convertToInvoice =>
+      _localizedValues[localeCode]['convert_to_invoice'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

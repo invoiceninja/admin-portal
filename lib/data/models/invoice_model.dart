@@ -720,7 +720,7 @@ abstract class InvoiceEntity extends Object
         }
 
         if (isQuote && !isApproved && (invoiceId ?? '').isEmpty) {
-          actions.add(EntityAction.convert);
+          actions.add(EntityAction.convertToInvoice);
         }
       }
 

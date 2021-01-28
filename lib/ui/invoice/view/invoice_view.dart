@@ -62,7 +62,7 @@ class _InvoiceViewState extends State<InvoiceView>
       if (invoice.hasInvoice) {
         secondAction = EntityAction.cloneToQuote;
       } else {
-        secondAction = EntityAction.convert;
+        secondAction = EntityAction.convertToInvoice;
       }
     } else if (invoice.isRecurringInvoice) {
       secondAction = invoice.isRunning ? EntityAction.stop : EntityAction.start;

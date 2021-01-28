@@ -443,7 +443,7 @@ Future handleQuoteAction(
             forceSafariVC: false, forceWebView: false);
       }
       break;
-    case EntityAction.convert:
+    case EntityAction.convertToInvoice:
       store.dispatch(ConvertQuotes(
           snackBarCompleter<Null>(context, localization.convertedQuote),
           quoteIds));

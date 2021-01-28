@@ -218,8 +218,8 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ConvertQuotes;
     repository
-        .bulkAction(
-            store.state.credentials, action.quoteIds, EntityAction.convert)
+        .bulkAction(store.state.credentials, action.quoteIds,
+            EntityAction.convertToInvoice)
         .then((quotes) {
       store.dispatch(ConvertQuoteSuccess(quotes: quotes));
       store.dispatch(RefreshData());
