@@ -993,7 +993,9 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  TaskEntityBuilder();
+  TaskEntityBuilder() {
+    TaskEntity._initializeBuilder(this);
+  }
 
   TaskEntityBuilder get _$this {
     if (_$v != null) {
