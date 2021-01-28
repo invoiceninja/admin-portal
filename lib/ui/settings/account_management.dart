@@ -326,7 +326,7 @@ class _AccountOverview extends StatelessWidget {
                     message = message.replaceFirst(
                         ':company',
                         company.displayName.isEmpty
-                            ? localization.untitledCompany
+                            ? localization.newCompany
                             : company.displayName);
 
                     confirmCallback(

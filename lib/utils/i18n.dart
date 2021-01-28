@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Convert to Invoice',
       'registration_url': 'Registration URL',
       'invoice_task': 'Invoice Task',
       'invoice_expense': 'Invoice Expense',
@@ -553,7 +555,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'New Company',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -711,6 +713,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -51585,6 +51588,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get showCost => _localizedValues[localeCode]['show_cost'] ?? '';
 
+  String get showProductCost =>
+      _localizedValues[localeCode]['show_product_cost'] ?? '';
+
   String get showCostHelp =>
       _localizedValues[localeCode]['show_cost_help'] ?? '';
 
@@ -51968,8 +51974,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get addedCompany =>
       _localizedValues[localeCode]['added_company'] ?? '';
 
-  String get untitledCompany =>
-      _localizedValues[localeCode]['untitled_company'] ?? '';
+  String get newCompany => _localizedValues[localeCode]['new_company'] ?? '';
 
   String get creditFooter =>
       _localizedValues[localeCode]['credit_footer'] ?? '';
@@ -53408,6 +53413,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get registrationUrl =>
       _localizedValues[localeCode]['registration_url'] ?? '';
 
+  String get convertToInvoice =>
+      _localizedValues[localeCode]['convert_to_invoice'] ?? '';
+
+  String get toUpdateRun => _localizedValues[localeCode]['to_update_run'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

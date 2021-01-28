@@ -35,7 +35,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.remove_circle_outline;
     case EntityAction.restore:
       return Icons.restore;
-    case EntityAction.convert:
+    case EntityAction.convertToInvoice:
       return Icons.content_copy;
     case EntityAction.approve:
       return Icons.check_circle_outline;
