@@ -54,7 +54,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
         : null;
 
     if (taskTime != null && taskTime != selectedTaskTime) {
-      selectedTaskTime = taskTime;
+      viewModel.clearSelectedTaskTime();
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         _showTaskTimeEditor(taskTime, context);
       });
