@@ -64,7 +64,8 @@ class CompanyGatewayScreen extends StatelessWidget {
             onCancelPressed: (context) =>
                 store.dispatch(ClearCompanyGatewayMultiselect()),
           )
-        else if (state.uiState.settingsUIState.isFiltered) ...[
+        else if (state.uiState.settingsUIState.isFiltered &&
+            !state.isSaving) ...[
           FlatButton(
             child: Text(localization.reset,
                 style: TextStyle(color: store.state.headerTextColor)),
@@ -77,6 +78,7 @@ class CompanyGatewayScreen extends StatelessWidget {
           SizedBox(width: 10),
         ],
         SaveCancelButtons(
+          isEnabled: state.uiState.settingsUIState.isChanged,
           isSaving: state.isSaving,
           onSavePressed: viewModel.onSavePressed,
           onCancelPressed: (_) => store.dispatch(ResetSettings()),
