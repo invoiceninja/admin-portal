@@ -80,7 +80,7 @@ class MenuDrawer extends StatelessWidget {
           Expanded(
             child: Text(
               company.displayName.isEmpty
-                  ? localization.untitledCompany
+                  ? localization.newCompany
                   : company.displayName,
               style: Theme.of(context).textTheme.headline6,
               overflow: TextOverflow.ellipsis,

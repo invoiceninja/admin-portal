@@ -554,7 +554,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'New Company',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -51969,8 +51969,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get addedCompany =>
       _localizedValues[localeCode]['added_company'] ?? '';
 
-  String get untitledCompany =>
-      _localizedValues[localeCode]['untitled_company'] ?? '';
+  String get newCompany => _localizedValues[localeCode]['new_company'] ?? '';
 
   String get creditFooter =>
       _localizedValues[localeCode]['credit_footer'] ?? '';
