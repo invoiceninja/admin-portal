@@ -432,13 +432,15 @@ abstract class TaskEntity extends Object
   }
 
   double calculateAmount(double taskRate) =>
-      taskRate * round(calculateDuration.inSeconds / 3600, 3);
+      taskRate * round(calculateDuration().inSeconds / 3600, 3);
 
-  Duration get calculateDuration {
+  Duration calculateDuration({bool includeRunning = true}) {
     int seconds = 0;
 
     getTaskTimes().forEach((taskTime) {
-      seconds += taskTime.duration.inSeconds;
+      if (!taskTime.isRunning || includeRunning) {
+        seconds += taskTime.duration.inSeconds;
+      }
     });
 
     return Duration(seconds: seconds);
@@ -479,6 +481,9 @@ abstract class TaskEntity extends Object
   int get statusOrder;
 
   BuiltList<DocumentEntity> get documents;
+
+  @nullable
+  bool get showAsRunning;
 
   @override
   List<EntityAction> getActions(
@@ -672,7 +677,7 @@ abstract class TaskEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => calculateDuration.inSeconds.toDouble();
+  double get listDisplayAmount => calculateDuration().inSeconds.toDouble();
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.duration;

@@ -46,7 +46,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
       task: task,
       group: group,
     )
-    ..quantity = round(task.calculateDuration.inSeconds / 3600, 3));
+    ..quantity = round(task.calculateDuration().inSeconds / 3600, 3));
 }
 
 var memoizedTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,

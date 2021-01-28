@@ -149,7 +149,7 @@ ReportResult taskReport(
           value = invoice.dueDate;
           break;
         case TaskReportFields.duration:
-          value = task.calculateDuration.inSeconds;
+          value = task.calculateDuration().inSeconds;
           break;
         case TaskReportFields.project:
           value = projectMap[task.projectId]?.name ?? '';
