@@ -52,7 +52,15 @@ class _ProductSettingsState extends State<ProductSettings> {
             children: <Widget>[
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
-                title: Text(localization.showCost),
+                title: Text(localization.showProductDiscount),
+                value: company.enableProductDiscount,
+                subtitle: Text(localization.showProductDiscountHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..enableProductDiscount = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.showProductCost),
                 value: company.enableProductCost,
                 subtitle: Text(localization.showCostHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
@@ -73,14 +81,6 @@ class _ProductSettingsState extends State<ProductSettings> {
                 subtitle: Text(localization.defaultQuantityHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..defaultQuantity = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.showProductDiscount),
-                value: company.enableProductDiscount,
-                subtitle: Text(localization.showProductDiscountHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..enableProductDiscount = value)),
               ),
             ],
           ),

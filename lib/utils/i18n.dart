@@ -712,6 +712,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -51585,6 +51586,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['email_subject_payment_partial'] ?? '';
 
   String get showCost => _localizedValues[localeCode]['show_cost'] ?? '';
+
+  String get showProductCost =>
+      _localizedValues[localeCode]['show_product_cost'] ?? '';
 
   String get showCostHelp =>
       _localizedValues[localeCode]['show_cost_help'] ?? '';
