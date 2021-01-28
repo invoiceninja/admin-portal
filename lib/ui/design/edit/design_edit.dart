@@ -238,6 +238,7 @@ class _DesignEditState extends State<DesignEdit>
                 focusNode: _focusNode,
                 children: <Widget>[
                     DesignSettings(
+                      isLoading: _isLoading,
                       nameController: _nameController,
                       onLoadDesign: _loadDesign,
                       draftMode: _isDraftMode,
@@ -285,6 +286,7 @@ class _DesignEditState extends State<DesignEdit>
                               controller: _tabController,
                               children: <Widget>[
                                 DesignSettings(
+                                  isLoading: _isLoading,
                                   nameController: _nameController,
                                   onLoadDesign: _loadDesign,
                                   draftMode: _isDraftMode,
@@ -360,11 +362,13 @@ class DesignSettings extends StatefulWidget {
     @required this.onLoadDesign,
     @required this.draftMode,
     @required this.onDraftModeChanged,
+    @required this.isLoading,
   });
 
   final Function(DesignEntity) onLoadDesign;
   final TextEditingController nameController;
   final bool draftMode;
+  final bool isLoading;
   final Function(bool) onDraftModeChanged;
 
   @override
@@ -400,7 +404,7 @@ class _DesignSettingsState extends State<DesignSettings> {
               title: Text(localization.draftMode),
               subtitle: Text(localization.draftModeHelp),
               value: widget.draftMode,
-              onChanged: widget.onDraftModeChanged,
+              onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
             ),
           ],
         ),
