@@ -221,6 +221,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add(serializers.serialize(object.statusOrder,
             specifiedType: const FullType(int)));
     }
+    if (object.showAsRunning != null) {
+      result
+        ..add('showAsRunning')
+        ..add(serializers.serialize(object.showAsRunning,
+            specifiedType: const FullType(bool)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -320,6 +326,10 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
+          break;
+        case 'showAsRunning':
+          result.showAsRunning = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -665,6 +675,8 @@ class _$TaskEntity extends TaskEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
+  final bool showAsRunning;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -700,6 +712,7 @@ class _$TaskEntity extends TaskEntity {
       this.statusId,
       this.statusOrder,
       this.documents,
+      this.showAsRunning,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -791,6 +804,7 @@ class _$TaskEntity extends TaskEntity {
         statusId == other.statusId &&
         statusOrder == other.statusOrder &&
         documents == other.documents &&
+        showAsRunning == other.showAsRunning &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -822,18 +836,18 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode),
-                                                                                clientId.hashCode),
-                                                                            rate.hashCode),
-                                                                        projectId.hashCode),
-                                                                    timeLog.hashCode),
-                                                                customValue1.hashCode),
-                                                            customValue2.hashCode),
-                                                        customValue3.hashCode),
-                                                    customValue4.hashCode),
-                                                statusId.hashCode),
-                                            statusOrder.hashCode),
-                                        documents.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
+                                                                                rate.hashCode),
+                                                                            projectId.hashCode),
+                                                                        timeLog.hashCode),
+                                                                    customValue1.hashCode),
+                                                                customValue2.hashCode),
+                                                            customValue3.hashCode),
+                                                        customValue4.hashCode),
+                                                    statusId.hashCode),
+                                                statusOrder.hashCode),
+                                            documents.hashCode),
+                                        showAsRunning.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -862,6 +876,7 @@ class _$TaskEntity extends TaskEntity {
           ..add('statusId', statusId)
           ..add('statusOrder', statusOrder)
           ..add('documents', documents)
+          ..add('showAsRunning', showAsRunning)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -939,6 +954,11 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   set documents(ListBuilder<DocumentEntity> documents) =>
       _$this._documents = documents;
 
+  bool _showAsRunning;
+  bool get showAsRunning => _$this._showAsRunning;
+  set showAsRunning(bool showAsRunning) =>
+      _$this._showAsRunning = showAsRunning;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -992,6 +1012,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _statusId = _$v.statusId;
       _statusOrder = _$v.statusOrder;
       _documents = _$v.documents?.toBuilder();
+      _showAsRunning = _$v.showAsRunning;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1039,6 +1060,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               statusId: statusId,
               statusOrder: statusOrder,
               documents: documents.build(),
+              showAsRunning: showAsRunning,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
