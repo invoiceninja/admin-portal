@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -34,6 +36,8 @@ class _UpdateDialogState extends State<UpdateDialog> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final account = state.userCompany.account;
+    const dockerCommand =
+        'docker-compose down\ndocker-compose pull\ndocker-compose up';
 
     return AlertDialog(
       title: Text(account.isUpdateAvailable
@@ -65,6 +69,20 @@ class _UpdateDialogState extends State<UpdateDialog> {
                     SizedBox(height: 6),
                     Text(
                         '• ${localization.latestVersion}: v${account.latestVersion}'),
+                    if (account.isDocker) ...[
+                      SizedBox(height: 20),
+                      Text(localization.toUpdateRun + ':'),
+                      SizedBox(height: 20),
+                      ListTile(
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(text: dockerCommand));
+                          showToast(localization.copiedToClipboard
+                              .replaceFirst(':value ', ''));
+                        },
+                        subtitle: Text(dockerCommand),
+                        trailing: Icon(Icons.copy),
+                      ),
+                    ],
                   ],
                 ),
       actions: <Widget>[
