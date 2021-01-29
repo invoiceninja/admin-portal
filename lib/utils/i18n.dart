@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'counter_pattern_error':
+          'To use \$client_counter please add either \$number or \$id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -53423,6 +53425,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get thisQuarter => _localizedValues[localeCode]['this_quarter'] ?? '';
 
   String get lastQuarter => _localizedValues[localeCode]['last_quarter'] ?? '';
+
+  String get counterPatternError =>
+      _localizedValues[localeCode]['counter_pattern_error'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

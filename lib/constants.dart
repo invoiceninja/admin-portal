@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class Constants {
   static String get hostedApiUrl =>
