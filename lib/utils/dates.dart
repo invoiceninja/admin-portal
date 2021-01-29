@@ -82,6 +82,16 @@ String calculateStartDate({
     case DateRange.lastMonth:
       final date = addMonths(firstDayOfMonth, (1 + offset) * -1);
       return convertDateTimeToSqlDate(date);
+    case DateRange.thisQuarter:
+      final monthOffset = today.month % 3 - 1;
+      final date =
+          addMonths(firstDayOfMonth, ((offset * 3) + monthOffset) * -1);
+      return convertDateTimeToSqlDate(date);
+    case DateRange.lastQuarter:
+      final monthOffset = today.month % 3 + 2;
+      final date =
+          addMonths(firstDayOfMonth, ((offset * 3) + monthOffset) * -1);
+      return convertDateTimeToSqlDate(date);
     case DateRange.thisYear:
       final date = addYears(firstDayOfYear, offset * -1);
       return convertDateTimeToSqlDate(date);
@@ -126,6 +136,16 @@ String calculateEndDate({
     case DateRange.lastMonth:
       final date =
           addMonths(firstDayOfMonth, offset * -1).subtract(Duration(days: 1));
+      return convertDateTimeToSqlDate(date);
+    case DateRange.thisQuarter:
+      final monthOffset = today.month % 3 + 2;
+      final date = addMonths(firstDayOfMonth, ((offset * 3) - monthOffset) * -1)
+          .subtract(Duration(days: 1));
+      return convertDateTimeToSqlDate(date);
+    case DateRange.lastQuarter:
+      final monthOffset = today.month % 3 - 1;
+      final date = addMonths(firstDayOfMonth, ((offset * 3) - monthOffset) * -1)
+          .subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.thisYear:
       final date = addYears(firstDayOfYear, (offset - 1) * -1)
