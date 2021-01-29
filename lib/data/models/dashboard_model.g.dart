@@ -10,6 +10,8 @@ const DateRange _$last7Days = const DateRange._('last7Days');
 const DateRange _$last30Days = const DateRange._('last30Days');
 const DateRange _$thisMonth = const DateRange._('thisMonth');
 const DateRange _$lastMonth = const DateRange._('lastMonth');
+const DateRange _$thisQuarter = const DateRange._('thisQuarter');
+const DateRange _$lastQuarter = const DateRange._('lastQuarter');
 const DateRange _$thisYear = const DateRange._('thisYear');
 const DateRange _$lastYear = const DateRange._('lastYear');
 const DateRange _$custom = const DateRange._('custom');
@@ -24,6 +26,10 @@ DateRange _$valueOf(String name) {
       return _$thisMonth;
     case 'lastMonth':
       return _$lastMonth;
+    case 'thisQuarter':
+      return _$thisQuarter;
+    case 'lastQuarter':
+      return _$lastQuarter;
     case 'thisYear':
       return _$thisYear;
     case 'lastYear':
@@ -40,6 +46,8 @@ final BuiltSet<DateRange> _$values = new BuiltSet<DateRange>(const <DateRange>[
   _$last30Days,
   _$thisMonth,
   _$lastMonth,
+  _$thisQuarter,
+  _$lastQuarter,
   _$thisYear,
   _$lastYear,
   _$custom,
