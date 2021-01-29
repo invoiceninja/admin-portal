@@ -454,9 +454,23 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
           showClientFields: widget.showClientFields,
           showVendorFields: widget.showVendorFields,
           onFieldPressed: (field) {
-            _patternController.text += field;
-            _patternController.selection = TextSelection.fromPosition(
-                TextPosition(offset: _patternController.text.length));
+            final selection = _patternController.selection;
+            final offset = selection.extent.offset;
+
+            String newValue = field;
+            int newOffset = field.length;
+
+            if (offset >= 0) {
+              final currentValue = _patternController.text;
+              newValue = currentValue.substring(0, offset) +
+                  field +
+                  currentValue.substring(offset);
+              newOffset = offset + field.length;
+            }
+
+            _patternController.text = newValue;
+            _patternController.selection =
+                TextSelection.fromPosition(TextPosition(offset: newOffset));
           },
         ),
       ],
