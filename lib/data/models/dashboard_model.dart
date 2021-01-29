@@ -14,6 +14,8 @@ class DateRange extends EnumClass {
   static const DateRange last30Days = _$last30Days;
   static const DateRange thisMonth = _$thisMonth;
   static const DateRange lastMonth = _$lastMonth;
+  static const DateRange thisQuarter = _$thisQuarter;
+  static const DateRange lastQuarter = _$lastQuarter;
   static const DateRange thisYear = _$thisYear;
   static const DateRange lastYear = _$lastYear;
   static const DateRange custom = _$custom;
