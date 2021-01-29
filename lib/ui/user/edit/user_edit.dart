@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -42,7 +41,7 @@ class _UserEditState extends State<UserEdit>
   final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  //final _passwordController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
@@ -63,7 +62,7 @@ class _UserEditState extends State<UserEdit>
       _lastNameController,
       _emailController,
       _phoneController,
-      _passwordController,
+      //_passwordController,
       _custom1Controller,
       _custom2Controller,
       _custom3Controller,
@@ -77,7 +76,7 @@ class _UserEditState extends State<UserEdit>
     _lastNameController.text = user.lastName;
     _emailController.text = user.email;
     _phoneController.text = user.phone;
-    _passwordController.text = user.password;
+    //_passwordController.text = user.password;
     _custom1Controller.text = user.customValue1;
     _custom2Controller.text = user.customValue2;
     _custom3Controller.text = user.customValue3;
@@ -106,7 +105,7 @@ class _UserEditState extends State<UserEdit>
         ..lastName = _lastNameController.text.trim()
         ..email = _emailController.text.trim()
         ..phone = _phoneController.text.trim()
-        ..password = _passwordController.text.trim()
+        //..password = _passwordController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customValue3 = _custom3Controller.text.trim()
@@ -212,10 +211,12 @@ class _UserEditState extends State<UserEdit>
                     label: localization.phone,
                     controller: _phoneController,
                   ),
+                  /*
                   PasswordFormField(
                     controller: _passwordController,
                     autoValidate: autoValidate,
                   ),
+                  */
                   CustomField(
                     controller: _custom1Controller,
                     field: CustomFieldType.user1,
