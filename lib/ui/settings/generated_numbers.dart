@@ -333,6 +333,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
             ),
           if (company.isModuleEnabled(EntityType.task))
             EntityNumberSettings(
+              showClientFields: false,
               counterValue: settings.taskNumberCounter,
               patternValue: settings.taskNumberPattern,
               onChanged: (counter, pattern) =>
@@ -352,7 +353,8 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
             ),
           if (company.isModuleEnabled(EntityType.expense))
             EntityNumberSettings(
-              showVendorFields: true,
+              showClientFields: false,
+              showVendorFields: false,
               counterValue: settings.expenseNumberCounter,
               patternValue: settings.expenseNumberPattern,
               onChanged: (counter, pattern) =>
@@ -516,7 +518,9 @@ class HelpPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: fields
             .where((field) => showVendorFields || !field.startsWith('vendor'))
-            .where((field) => showClientFields || !field.startsWith('client'))
+            .where((field) =>
+                showClientFields ||
+                (!field.startsWith('client') && !field.startsWith('group')))
             .map((field) => '\{\$$field\}')
             .map((field) => InkWell(
                   child: Padding(
