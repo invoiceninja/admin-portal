@@ -680,6 +680,9 @@ abstract class UserCompanyEntity
   @BuiltValueField(wireName: 'is_owner')
   bool get isOwner;
 
+  @BuiltValueField(wireName: 'permissions_updated_at')
+  bool get permissionsUpdatedAt;
+
   String get permissions;
 
   @nullable
@@ -746,6 +749,10 @@ abstract class UserCompanyEntity
       return canEdit(entity.entityType) || user.canEdit(entity);
     }
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(UserCompanyEntity builder) =>
+      builder..permissionsUpdatedAt = 0;
 
   static Serializer<UserCompanyEntity> get serializer =>
       _$userCompanyEntitySerializer;
