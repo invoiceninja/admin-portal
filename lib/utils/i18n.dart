@@ -4159,10 +4159,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Автоматично попълвай продукти',
       'fill_products_help':
-          'Избирането на продукт автоматично <b>ще попълни описанието и цената</b>',
+          'Избирането на продукт автоматично ще попълни описанието и цената',
       'update_products': 'Автоматично обнови продукти',
       'update_products_help':
-          'Промяната на фактура автоматично <b>ще обнови продуктовия каталог</b>',
+          'Промяната на фактура автоматично ще обнови продуктовия каталог',
       'convert_products': 'Конвертиране на продукти',
       'convert_products_help':
           'Автоматично конвертиране на цените на продуктите във валутата на клиента',
@@ -5754,9 +5754,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_tax_rates': 'Successfully deleted :value tax rates',
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': '自動填入之產品項目',
-      'fill_products_help': '選擇產品將自動<b>填寫描述和成本</b>',
+      'fill_products_help': '選擇產品將自動填寫描述和成本',
       'update_products': '自動更新產品',
-      'update_products_help': '更新發票時會自動 <b>更新產品資料庫</b>',
+      'update_products_help': '更新發票時會自動 更新產品資料庫',
       'convert_products': '轉換產品',
       'convert_products_help': '自動將產品價格轉換為用戶的貨幣',
       'fees': '費用',
@@ -7356,10 +7356,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Proizvodi sa samoispunom',
       'fill_products_help':
-          'Odabir proizvoda će automatski <b>ispuniti opis i cijenu</b>',
+          'Odabir proizvoda će automatski ispuniti opis i cijenu',
       'update_products': 'Proizvidi sa autoažuriranjem',
       'update_products_help':
-          'Ažuriranje računa automatski <b>ažurirati registar proizvoda</b>',
+          'Ažuriranje računa automatski ažurirati registar proizvoda',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -8962,11 +8962,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_tax_rates': 'Successfully deleted :value tax rates',
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Automaticky předvyplnit produkty',
-      'fill_products_help':
-          'Výběr produktu automaticky <b>vyplní popis a cenu</b>',
+      'fill_products_help': 'Výběr produktu automaticky vyplní popis a cenu',
       'update_products': 'Automaticky aktualizovat produkty',
       'update_products_help':
-          'Změna na faktuře automaticky <b>aktualizuje katalog produktů</b>',
+          'Změna na faktuře automaticky aktualizuje katalog produktů',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -10569,10 +10568,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Automatisk-udfyld produkter',
       'fill_products_help':
-          'Valg af produkt vil automatisk udfylde <b>beskrivelse og pris</b>',
+          'Valg af produkt vil automatisk udfylde beskrivelse og pris',
       'update_products': 'Automatisk opdatering af produkter',
       'update_products_help':
-          'En opdatering af en faktura vil automatisk <b>opdaterer Produkt biblioteket</b>',
+          'En opdatering af en faktura vil automatisk opdaterer Produkt biblioteket',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -12178,10 +12177,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Producten Automatisch aanvullen',
       'fill_products_help':
-          'Een product selecteren zal automatisch <b>de beschrijving en kosten instellen</b>',
+          'Een product selecteren zal automatisch de beschrijving en kosten instellen',
       'update_products': 'Producten automatisch wijzigen',
       'update_products_help':
-          'Het wijzigen van een factuur zal automatisch <b>de producten aanpassen</b>',
+          'Het wijzigen van een factuur zal automatisch de producten aanpassen',
       'convert_products': 'Producten omzetten',
       'convert_products_help':
           'Productprijzen automatisch converteren naar het valuta van de klant',
@@ -13791,10 +13790,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and price</b>',
+          'Selecting a product will automatically fill in the description and price',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+          'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the customer\'s currency',
@@ -15397,10 +15396,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+          'Selecting a product will automatically fill in the description and cost',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+          'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -17003,10 +17002,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Lisää automaattisesti tuotteita',
       'fill_products_help':
-          'Tuotteen valinta <b>täyttää kuvauksen ja hinnan</b> automaattisesti',
+          'Tuotteen valinta täyttää kuvauksen ja hinnan automaattisesti',
       'update_products': 'Päivitä automaattisesti tuotteet',
       'update_products_help':
-          'Laskun päivittäminen <b>päivittää tuotetietokannan</b> automaattisesti',
+          'Laskun päivittäminen päivittää tuotetietokannan automaattisesti',
       'convert_products': 'Convert tuotteet',
       'convert_products_help':
           'Muunna automaattisesti tuotehinnat asiakkaan valuuttaan',
@@ -18616,10 +18615,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Remplissage auto des produits',
       'fill_products_help':
-          'La sélection d’un produit entrainera la MAJ de <b>la description et du prix</b>',
+          'La sélection d’un produit entrainera la MAJ de la description et du prix',
       'update_products': 'Mise à jour auto des produits',
       'update_products_help':
-          'La mise à jour d\'une facture entraîne la <b>mise à jour des produits</b>',
+          'La mise à jour d\'une facture entraîne la mise à jour des produits',
       'convert_products': 'Convertir les produits',
       'convert_products_help':
           'Convertir automatiquement les prix des produits dans la devise du client',
@@ -20243,10 +20242,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Les :value taux de taxes ont été restaurés',
       'fill_products': 'Remplissage auto des produits',
       'fill_products_help':
-          'La sélection d\'un produit entrainera la mise à jour de <b>la description et du prix</b>',
+          'La sélection d\'un produit entrainera la mise à jour de la description et du prix',
       'update_products': 'Mise à jour auto des produits',
       'update_products_help':
-          'La mise à jour d\'une facture entraîne la <b>mise à jour des produits</b>',
+          'La mise à jour d\'une facture entraîne la mise à jour des produits',
       'convert_products': 'Convertir les produits',
       'convert_products_help':
           'Convertir automatiquement le prix des produits dans la devise du client',
@@ -23527,10 +23526,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Επιτυχής ανάκτηση :value ποσοστών φόρου',
       'fill_products': 'Αυτόματη συμπλήρωση προϊόντων',
       'fill_products_help':
-          'Επιλέγοντας ένα προϊόν, αυτόματα <b>θα συμπληρωθεί η περιγραφή και η αξία</b>',
+          'Επιλέγοντας ένα προϊόν, αυτόματα θα συμπληρωθεί η περιγραφή και η αξία',
       'update_products': 'Αυτόματη ενημέρωση προϊόντων',
       'update_products_help':
-          'Ενημερώνοντας ένα τιμολόγιο, αυτόματα <b>θα ενημερωθεί και η βιβλιοθήκη προϊόντων</b>',
+          'Ενημερώνοντας ένα τιμολόγιο, αυτόματα θα ενημερωθεί και η βιβλιοθήκη προϊόντων',
       'convert_products': 'Μετατροπή Τιμών Προϊόντων',
       'convert_products_help':
           'Αυτόματη μετατροπή τιμών προϊόντων στο νόμισμα συναλλαγών του πελάτη',
@@ -25157,10 +25156,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Riempimento automatico prodotti',
       'fill_products_help':
-          'Selezionare un prodotto farà automaticamente <b>inserire la descrizione ed il costo</b>',
+          'Selezionare un prodotto farà automaticamente inserire la descrizione ed il costo',
       'update_products': 'Aggiorna automaticamente i prodotti',
       'update_products_help':
-          'Aggiornare una fatura farà automaticamente <b>aggiornare i prodotti</b>',
+          'Aggiornare una fatura farà automaticamente aggiornare i prodotti',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -26766,10 +26765,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+          'Selecting a product will automatically fill in the description and cost',
       'update_products': '商品の自動更新',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+          'Updating an invoice will automatically update the product library',
       'convert_products': '商品の変換',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -28372,10 +28371,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+          'Selecting a product will automatically fill in the description and cost',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+          'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -29981,10 +29980,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Автоматско пополнување на продукти',
       'fill_products_help':
-          'Избирањето на продукт автоматски ќе ги <b> исполни полињата за опис и цена</b>',
+          'Избирањето на продукт автоматски ќе ги  исполни полињата за опис и цена',
       'update_products': 'Автоматско ажурирање на продукти',
       'update_products_help':
-          'Ажурирањето на факура автоматски ќе ја <b> ажурира библиотеката на продукти </b>',
+          'Ажурирањето на факура автоматски ќе ја  ажурира библиотеката на продукти ',
       'convert_products': 'Конвертирај продукти',
       'convert_products_help':
           'Автоматски конвертирај ги цените на продуктите по валутите на клиентите',
@@ -31586,10 +31585,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Automatisk-utfyll produkter',
       'fill_products_help':
-          'Valg av produkt vil automatisk fylle ut <b>beskrivelse og kostnaden</b>',
+          'Valg av produkt vil automatisk fylle ut beskrivelse og kostnaden',
       'update_products': 'Automatisk oppdater produkter',
       'update_products_help':
-          'Å endre en faktura vil automatisk <b>oppdatere produktbilioteket</b>',
+          'Å endre en faktura vil automatisk oppdatere produktbilioteket',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -33191,10 +33190,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Automatycznie uzupełniaj produkty',
       'fill_products_help':
-          'Wybieranie produktu automatycznie <b>uzupełni opis i kwotę</b>',
+          'Wybieranie produktu automatycznie uzupełni opis i kwotę',
       'update_products': 'Automatycznie aktualizuj produkty',
       'update_products_help':
-          'Zaktualizowanie faktury automatycznie <b>uaktualni produkt w bibliotece produktów</b>',
+          'Zaktualizowanie faktury automatycznie uaktualni produkt w bibliotece produktów',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatycznie zamieniaj ceny produktu na walutę klienta',
@@ -34807,10 +34806,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-preencher produtos',
       'fill_products_help':
-          'Ao selecionar um produto sua <b>descrição e preço</b> serão automaticamente preenchidos',
+          'Ao selecionar um produto sua descrição e preço serão automaticamente preenchidos',
       'update_products': 'Atualização automática dos produtos',
       'update_products_help':
-          'Atualizar uma fatura irá automaticamente<b>atualizar a biblioteca de produtos</b>',
+          'Atualizar uma fatura irá automaticamenteatualizar a biblioteca de produtos',
       'convert_products': 'Converter Produtos',
       'convert_products_help':
           'Converter automaticamente preços de produtos para a moeda do cliente',
@@ -36420,10 +36419,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Sugerir produtos',
       'fill_products_help':
-          'Selecionando o produto <b>descrição e preço</b> serão preenchidos automaticamente',
+          'Selecionando o produto descrição e preço serão preenchidos automaticamente',
       'update_products': 'Atualização automática dos produtos',
       'update_products_help':
-          'Atualizando na nota de pagamento o <b>produto também será atualizado</b>',
+          'Atualizando na nota de pagamento o produto também será atualizado',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -38027,10 +38026,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Completează automat produsele',
       'fill_products_help':
-          'Alegând un produs <b> descrierea și prețul</b> vor fi completate automat',
+          'Alegând un produs  descrierea și prețul vor fi completate automat',
       'update_products': 'Actualizare automată a produselor',
       'update_products_help':
-          'Actualizând o factură se va actualiza si <b>librăria de produse</b>',
+          'Actualizând o factură se va actualiza si librăria de produse',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -39636,10 +39635,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Proizvodi sa samoispunom',
       'fill_products_help':
-          'Odabir proizvoda će automatski <b>ispuniti opis i cijenu</b>',
+          'Odabir proizvoda će automatski ispuniti opis i cijenu',
       'update_products': 'Proizvodi sa autoažuriranjem',
       'update_products_help':
-          'Ažuriranje računa automatski <b>ažurirati registar proizvoda</b>',
+          'Ažuriranje računa automatski ažurirati registar proizvoda',
       'convert_products': 'Konvertuj proizvode',
       'convert_products_help':
           'Automatski konvertuj cene proizvoda u valutu klijenta',
@@ -41242,11 +41241,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_tax_rates': 'Successfully deleted :value tax rates',
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Samodejno vnesi izdelke',
-      'fill_products_help':
-          'Izbira izdelka bo samodejno <b>vnesla opis in ceno</b>',
+      'fill_products_help': 'Izbira izdelka bo samodejno vnesla opis in ceno',
       'update_products': 'Samodejno posodobi izdelke',
       'update_products_help':
-          'Posodobitev računa bo samodejno <b>posodobila knjižnico izdelkov</b>',
+          'Posodobitev računa bo samodejno posodobila knjižnico izdelkov',
       'convert_products': 'Pretvori izdelke',
       'convert_products_help':
           'Samodejno pretvori cene izdelkov v valuto stranke',
@@ -42857,10 +42855,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-rellenar productos',
       'fill_products_help':
-          'Seleccionar un producto automáticamente <b>configurará la descripción y coste</b>',
+          'Seleccionar un producto automáticamente configurará la descripción y coste',
       'update_products': 'Auto-actualizar productos',
       'update_products_help':
-          'Actualizar una factura automáticamente <b>actualizará los productos</b>',
+          'Actualizar una factura automáticamente actualizará los productos',
       'convert_products': 'Convertir productos',
       'convert_products_help':
           'Convertir automáticamente precios de los productos a la moneda del cliente',
@@ -44330,9 +44328,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Successfully restored :value users',
       'general_settings': 'Configuración General',
       'invoice_options': 'Opciones de Factura',
-      'hide_paid_to_date': 'Ocultar el valor <i>Pagado a la Fecha</i>',
+      'hide_paid_to_date': 'Ocultar el valor Pagado a la Fecha',
       'hide_paid_to_date_help':
-          'Solo mostrará el valor <i>Pagado a la Fecha</i> en sus Facturas cuando se ha recibido un Pago.',
+          'Solo mostrará el valor Pagado a la Fecha en sus Facturas cuando se ha recibido un Pago.',
       'invoice_embed_documents': 'Documentos anexados',
       'invoice_embed_documents_help': 'Incluye imagenes adjuntas en la factura',
       'all_pages_header': 'Mostrar Cabecera en',
@@ -44477,10 +44475,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-rellenar Productos',
       'fill_products_help':
-          'Seleccionar un producto automáticamente <b>configurará la descripción y coste</b>',
+          'Seleccionar un producto automáticamente configurará la descripción y coste',
       'update_products': 'Auto-actualizar Productos',
       'update_products_help':
-          'Actualizar una Factura automáticamente <b>actualizará los Productos</b>',
+          'Actualizar una Factura automáticamente actualizará los Productos',
       'convert_products': 'Convertir Productos',
       'convert_products_help':
           'Convertir automáticamente los precios de los productos a la divisa del cliente',
@@ -46089,10 +46087,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-ifyll produkter',
       'fill_products_help':
-          'Välj en produkt för att automatiskt <b>fylla i beskrivning och pris</b>',
+          'Välj en produkt för att automatiskt fylla i beskrivning och pris',
       'update_products': 'Auto-uppdaterade produkter',
       'update_products_help':
-          'Uppdatera en faktura för att automatiskt <b>uppdatera produktbiblioteket</b>',
+          'Uppdatera en faktura för att automatiskt uppdatera produktbiblioteket',
       'convert_products': 'Konvertera produkter',
       'convert_products_help':
           'Konvertera automatiskt produkt priser till kundens valuta',
@@ -47694,10 +47692,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'เติมข้อมูลอัตโนมัติ',
       'fill_products_help':
-          'การเลือกสินค้า <b>จะเติมคำอธิบายและค่าใช้จ่ายโดยอัตโนมัติ</b>',
+          'การเลือกสินค้า จะเติมคำอธิบายและค่าใช้จ่ายโดยอัตโนมัติ',
       'update_products': 'อัปเดตผลิตภัณฑ์โดยอัตโนมัติ',
-      'update_products_help':
-          'การอัปเดตใบแจ้งหนี้ <b>จะอัปเดตสินค้าโดยอัตโนมัติ</b>',
+      'update_products_help': 'การอัปเดตใบแจ้งหนี้ จะอัปเดตสินค้าโดยอัตโนมัติ',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -49302,10 +49299,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Otomatik doldurma ürünleri',
       'fill_products_help':
-          'Bir ürün seçmek <b>açıklama ve maliyeti</b> otomatik olarak dolduracaktır',
+          'Bir ürün seçmek açıklama ve maliyeti otomatik olarak dolduracaktır',
       'update_products': 'Ürünleri otomatik güncelle',
       'update_products_help':
-          'Faturayı güncellemek <b>ürün kütüphanesini</b> otomatik olarak dolduracaktır.',
+          'Faturayı güncellemek ürün kütüphanesini otomatik olarak dolduracaktır.',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
