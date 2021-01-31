@@ -155,7 +155,9 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       showDialog<ErrorDialog>(
           context: context,
           builder: (BuildContext context) {
-            return ErrorDialog(AppLocalization.of(context).counterPatternError);
+            return ErrorDialog(AppLocalization.of(context)
+                .counterPatternError
+                .replaceAll(':', '\$'));
           });
 
       return;
