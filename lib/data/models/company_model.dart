@@ -751,7 +751,7 @@ abstract class UserCompanyEntity
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(UserCompanyEntity builder) =>
+  static void _initializeBuilder(UserCompanyEntityBuilder builder) =>
       builder..permissionsUpdatedAt = 0;
 
   static Serializer<UserCompanyEntity> get serializer =>
