@@ -517,11 +517,16 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
                   field +
                   currentValue.substring(offset);
               newOffset = offset + field.length;
+            } else {
+              newValue = _patternController.text + newValue;
             }
 
             _patternController.text = newValue;
-            _patternController.selection =
-                TextSelection.fromPosition(TextPosition(offset: newOffset));
+
+            if (offset >= 0) {
+              _patternController.selection =
+                  TextSelection.fromPosition(TextPosition(offset: newOffset));
+            }
           },
         ),
       ],

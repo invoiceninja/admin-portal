@@ -39,6 +39,8 @@ const String kGoogleStoreUrl =
 const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
 const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
 
+const String kDocsUrl = 'https://invoiceninja.github.io/docs/getting-started/';
+const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
     'https://app.swaggerhub.com/apis/invoiceninja/invoiceninja';
 const String kZapierURL =
@@ -48,7 +50,7 @@ const String kDebugModeUrl =
     'https://www.mailgun.com/blog/a-word-of-caution-for-laravel-developers/';
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
-    'https://invoiceninja.github.io/selfhost.html#cron-configuration';
+    'https://invoiceninja.github.io/docs/self-host/#cron-configuration';
 const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 const String kGitHubLangUrl =
