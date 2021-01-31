@@ -658,6 +658,7 @@ abstract class UserCompanyEntity
       isAdmin: false,
       isOwner: false,
       permissions: '',
+      permissionsUpdatedAt: 0,
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),

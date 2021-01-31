@@ -41,15 +41,11 @@ import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
