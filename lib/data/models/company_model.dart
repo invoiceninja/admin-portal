@@ -681,7 +681,7 @@ abstract class UserCompanyEntity
   bool get isOwner;
 
   @BuiltValueField(wireName: 'permissions_updated_at')
-  bool get permissionsUpdatedAt;
+  int get permissionsUpdatedAt;
 
   String get permissions;
 
