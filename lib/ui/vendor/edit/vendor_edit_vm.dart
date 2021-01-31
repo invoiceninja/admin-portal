@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -80,9 +81,14 @@ class VendorEditVM {
               });
           return null;
         }
+        final localization = AppLocalization.of(context);
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();
         store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
         return completer.future.then((savedVendor) {
+          showToast(vendor.isNew
+              ? localization.createdVendor
+              : localization.updatedVendor);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
             if (vendor.isNew && state.vendorUIState.saveCompleter == null) {

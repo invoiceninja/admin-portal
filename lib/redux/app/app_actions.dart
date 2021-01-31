@@ -1026,63 +1026,32 @@ void editEntity(
       callback: () {
         switch (entityType) {
           case EntityType.client:
-            store.dispatch(
-              EditClient(
-                  client: entity,
-                  navigator: navigator,
-                  completer: completer ??
-                      snackBarCompleter<ClientEntity>(
-                          context,
-                          entity.isNew
-                              ? localization.createdClient
-                              : localization.updatedClient)),
-            );
+            store.dispatch(EditClient(
+              client: entity,
+              navigator: navigator,
+              completer: completer,
+            ));
             break;
           case EntityType.user:
-            store.dispatch(
-              EditUser(
-                  user: entity,
-                  navigator: navigator,
-                  completer: completer ??
-                      snackBarCompleter<UserEntity>(
-                          context,
-                          entity.isNew
-                              ? localization.createdUser
-                              : localization.updatedUser)),
-            );
+            store.dispatch(EditUser(
+              user: entity,
+              navigator: navigator,
+              completer: completer,
+            ));
             break;
           case EntityType.project:
             store.dispatch(EditProject(
-                project: entity,
-                navigator: navigator,
-                completer: completer ??
-                    snackBarCompleter<ProjectEntity>(
-                        context,
-                        entity.isNew
-                            ? localization.createdProject
-                            : localization.updatedProject)));
+                project: entity, navigator: navigator, completer: completer));
             break;
           case EntityType.taxRate:
             store.dispatch(EditTaxRate(
-                taxRate: entity,
-                navigator: navigator,
-                completer: completer ??
-                    snackBarCompleter<TaxRateEntity>(
-                        context,
-                        entity.isNew
-                            ? localization.createdTaxRate
-                            : localization.updatedTaxRate)));
+                taxRate: entity, navigator: navigator, completer: completer));
             break;
           case EntityType.companyGateway:
             store.dispatch(EditCompanyGateway(
                 companyGateway: entity,
                 navigator: navigator,
-                completer: completer ??
-                    snackBarCompleter<CompanyGatewayEntity>(
-                        context,
-                        entity.isNew
-                            ? localization.createdCompanyGateway
-                            : localization.updatedCompanyGateway)));
+                completer: completer));
             break;
           case EntityType.invoice:
             final invoice = entity as InvoiceEntity;
@@ -1108,12 +1077,7 @@ void editEntity(
               store.dispatch(EditInvoice(
                 invoice: entity,
                 navigator: navigator,
-                completer: completer ??
-                    snackBarCompleter<InvoiceEntity>(
-                        context,
-                        entity.isNew
-                            ? localization.createdInvoice
-                            : localization.updatedInvoice),
+                completer: completer,
                 invoiceItemIndex: subIndex,
               ));
             }
@@ -1122,12 +1086,7 @@ void editEntity(
             store.dispatch(EditQuote(
               quote: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<InvoiceEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdQuote
-                          : localization.updatedQuote),
+              completer: completer,
               quoteItemIndex: subIndex,
             ));
             break;
@@ -1135,24 +1094,12 @@ void editEntity(
             store.dispatch(EditVendor(
               vendor: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<VendorEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdVendor
-                          : localization.updatedVendor),
+              completer: completer,
             ));
             break;
           case EntityType.product:
             store.dispatch(EditProduct(
-                product: entity,
-                navigator: navigator,
-                completer: completer ??
-                    snackBarCompleter<ProductEntity>(
-                        context,
-                        entity.isNew
-                            ? localization.createdProduct
-                            : localization.updatedProduct)));
+                product: entity, navigator: navigator, completer: completer));
             break;
           case EntityType.task:
             store.dispatch(EditTask(
@@ -1160,54 +1107,27 @@ void editEntity(
                   (b) => b..showAsRunning = (entity as TaskEntity).isRunning),
               navigator: navigator,
               taskTimeIndex: subIndex,
-              completer: completer ??
-                  snackBarCompleter<TaskEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdTask
-                          : localization.updatedTask),
+              completer: completer,
             ));
             break;
           case EntityType.expense:
-            store.dispatch(EditExpense(
-              expense: entity,
-              navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<ExpenseEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdExpense
-                          : localization.updatedExpense),
-            ));
+            store.dispatch(
+              EditExpense(
+                  expense: entity, navigator: navigator, completer: completer),
+            );
             break;
-          //case EntityType.expenseCategory:
-          //store.dispatch(EditExpenseCategory(taxRate: entity, navigator: navigator));
-          //break;
-          //case EntityType.credit:
-          //store.dispatch(EditCredit(credit: entity, navigator: navigator));
-          //break;
           case EntityType.payment:
             store.dispatch(EditPayment(
               payment: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<PaymentEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdPayment
-                          : localization.updatedPayment),
+              completer: completer,
             ));
             break;
           case EntityType.group:
             store.dispatch(EditGroup(
               group: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<GroupEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdGroup
-                          : localization.updatedGroup),
+              completer: completer,
             ));
             break;
           // STARTER: edit - do not remove comment
@@ -1215,12 +1135,7 @@ void editEntity(
             store.dispatch(EditTaskStatus(
               taskStatus: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<TaskStatusEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdTaskStatus
-                          : localization.updatedTaskStatus),
+              completer: completer,
             ));
             break;
 
@@ -1228,12 +1143,7 @@ void editEntity(
             store.dispatch(EditExpenseCategory(
               expenseCategory: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<ExpenseCategoryEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdExpenseCategory
-                          : localization.updatedExpenseCategory),
+              completer: completer,
             ));
             break;
 
@@ -1241,12 +1151,7 @@ void editEntity(
             store.dispatch(EditRecurringInvoice(
               recurringInvoice: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<InvoiceEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdRecurringInvoice
-                          : localization.updatedRecurringInvoice),
+              completer: completer,
             ));
             break;
 
@@ -1254,12 +1159,7 @@ void editEntity(
             store.dispatch(EditWebhook(
               webhook: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<WebhookEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdWebhook
-                          : localization.updatedWebhook),
+              completer: completer,
             ));
             break;
 
@@ -1267,12 +1167,7 @@ void editEntity(
             store.dispatch(EditToken(
               token: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<TokenEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdToken
-                          : localization.updatedToken),
+              completer: completer,
             ));
             break;
 
@@ -1280,12 +1175,7 @@ void editEntity(
             store.dispatch(EditPaymentTerm(
               paymentTerm: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<PaymentTermEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdPaymentTerm
-                          : localization.updatedPaymentTerm),
+              completer: completer,
             ));
             break;
 
@@ -1293,12 +1183,7 @@ void editEntity(
             store.dispatch(EditDesign(
               design: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<DesignEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdDesign
-                          : localization.updatedDesign),
+              completer: completer,
             ));
             break;
 
@@ -1306,12 +1191,7 @@ void editEntity(
             store.dispatch(EditCredit(
               credit: entity,
               navigator: navigator,
-              completer: completer ??
-                  snackBarCompleter<InvoiceEntity>(
-                      context,
-                      entity.isNew
-                          ? localization.createdCredit
-                          : localization.updatedCredit),
+              completer: completer,
             ));
             break;
         }

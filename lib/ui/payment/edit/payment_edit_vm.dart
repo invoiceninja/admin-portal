@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -83,10 +84,14 @@ class PaymentEditVM {
               });
           return null;
         }
+        final localization = AppLocalization.of(context);
         final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
         store.dispatch(
             SavePaymentRequest(completer: completer, payment: payment));
         return completer.future.then((savedPayment) {
+          showToast(payment.isNew
+              ? localization.createdPayment
+              : localization.updatedPayment);
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
             if (payment.isNew) {

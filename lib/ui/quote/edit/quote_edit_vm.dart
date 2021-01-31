@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -79,9 +80,14 @@ class QuoteEditVM extends EntityEditVM {
               });
           return null;
         }
+        final localization = AppLocalization.of(context);
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
         return completer.future.then((savedQuote) {
+          showToast(quote.isNew
+              ? localization.createdQuote
+              : localization.updatedQuote);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
             if (quote.isNew) {

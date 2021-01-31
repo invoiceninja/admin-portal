@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -84,9 +85,13 @@ class TaskEditVM {
           return null;
         }
 
+        final localization = AppLocalization.of(context);
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(SaveTaskRequest(completer: completer, task: task));
         return completer.future.then((savedTask) {
+          showToast(
+              task.isNew ? localization.createTask : localization.updatedTask);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
             if (task.isNew) {

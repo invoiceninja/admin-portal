@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -79,10 +80,15 @@ class RecurringInvoiceEditVM extends EntityEditVM {
               });
           return null;
         }
+        final localization = AppLocalization.of(context);
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(SaveRecurringInvoiceRequest(
             completer: completer, recurringInvoice: recurringInvoice));
         return completer.future.then((savedRecurringInvoice) {
+          showToast(recurringInvoice.isNew
+              ? localization.createdRecurringInvoice
+              : localization.updatedRecurringInvoice);
+
           if (isMobile(context)) {
             store
                 .dispatch(UpdateCurrentRoute(RecurringInvoiceViewScreen.route));

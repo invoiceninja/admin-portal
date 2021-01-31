@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -9,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -88,11 +90,16 @@ class ProjectEditVM {
         });
       },
       onSavePressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
         final Completer<ProjectEntity> completer =
             new Completer<ProjectEntity>();
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((savedProject) {
+          showToast(project.isNew
+              ? localization.createdProject
+              : localization.updatedProject);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
             if (project.isNew && state.projectUIState.saveCompleter == null) {

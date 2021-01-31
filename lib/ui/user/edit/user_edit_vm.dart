@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -70,6 +72,7 @@ class UserEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
         final Completer<UserEntity> completer = new Completer<UserEntity>();
         passwordCallback(
             context: context,
@@ -78,6 +81,9 @@ class UserEditVM {
                   completer: completer, user: user, password: password));
             });
         return completer.future.then((savedUser) {
+          showToast(
+              user.isNew ? localization.createdUser : localization.updatedUser);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
             if (user.isNew) {

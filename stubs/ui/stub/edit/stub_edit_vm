@@ -13,6 +13,8 @@ import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/ui/stub/edit/stub_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class StubEditScreen extends StatelessWidget {
   const StubEditScreen({Key key}) : super(key: key);
@@ -65,9 +67,13 @@ class StubEditVM {
       createEntity(context: context, entity: StubEntity(), force: true);
     },
       onSavePressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
         final Completer<StubEntity> completer = new Completer<StubEntity>();
         store.dispatch(SaveStubRequest(completer: completer, stub: stub));
         return completer.future.then((savedStub) {
+          showToast(stub.isNew
+                ? localization.createdStub
+                : localization.updatedStub);
           if (isMobile(context)) {
                 store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
               if (stub.isNew) {
