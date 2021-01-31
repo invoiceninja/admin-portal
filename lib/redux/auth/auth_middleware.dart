@@ -231,13 +231,32 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       includeStatic: action.includeStatic || state.staticState.isStale,
     )
         .then((data) {
-      if (action.clearData && !company.isLarge) {
+      bool permissionsWereChanged = false;
+      data.userCompanies.forEach((userCompany) {
+        state.userCompanyStates.forEach((userCompanyState) {
+          if (userCompany.company.id == userCompanyState.company.id) {
+            if (userCompanyState.userCompany.permissionsUpdatedAt > 0 &&
+                userCompany.permissionsUpdatedAt !=
+                    userCompanyState.userCompany.permissionsUpdatedAt) {
+              permissionsWereChanged = true;
+            }
+          }
+        });
+      });
+
+      if (permissionsWereChanged) {
+        print('## Permissions were changed');
         store.dispatch(ClearData());
+        store.dispatch(RefreshData(completer: action.completer));
+      } else {
+        if (action.clearData && !company.isLarge) {
+          store.dispatch(ClearData());
+        }
+        store.dispatch(LoadAccountSuccess(
+          completer: action.completer,
+          loginResponse: data,
+        ));
       }
-      store.dispatch(LoadAccountSuccess(
-        completer: action.completer,
-        loginResponse: data,
-      ));
     }).catchError((Object error) {
       final message = _parseError('$error');
       if (action.completer != null) {

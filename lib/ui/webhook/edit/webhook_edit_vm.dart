@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -71,11 +73,16 @@ class WebhookEditVM {
         ));
       },
       onSavePressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
         final Completer<WebhookEntity> completer =
             new Completer<WebhookEntity>();
         store.dispatch(
             SaveWebhookRequest(completer: completer, webhook: webhook));
         return completer.future.then((savedWebhook) {
+          showToast(webhook.isNew
+              ? localization.createdWebhook
+              : localization.updatedWebhook);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
             if (webhook.isNew) {

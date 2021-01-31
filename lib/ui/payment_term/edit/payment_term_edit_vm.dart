@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -68,11 +70,16 @@ class PaymentTermEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
         final Completer<PaymentTermEntity> completer =
             new Completer<PaymentTermEntity>();
         store.dispatch(SavePaymentTermRequest(
             completer: completer, paymentTerm: paymentTerm));
         return completer.future.then((savedPaymentTerm) {
+          showToast(paymentTerm.isNew
+              ? localization.createdPaymentTerm
+              : localization.updatedPaymentTerm);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
             if (paymentTerm.isNew) {

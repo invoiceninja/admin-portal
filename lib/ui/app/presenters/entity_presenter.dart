@@ -22,6 +22,11 @@ class EntityPresenter {
     final type = localization.lookup('${entity.entityType}');
     final name = entity.listDisplayName;
 
+    // TODO replace with this: https://github.com/flutter/flutter/issues/45336
+    if (name.length > 10) {
+      return name;
+    }
+
     return isMobile(context) ? '$type: $name' : '$type  ›  $name';
   }
 

@@ -841,6 +841,9 @@ class _$UserCompanyEntitySerializer
       'is_owner',
       serializers.serialize(object.isOwner,
           specifiedType: const FullType(bool)),
+      'permissions_updated_at',
+      serializers.serialize(object.permissionsUpdatedAt,
+          specifiedType: const FullType(int)),
       'permissions',
       serializers.serialize(object.permissions,
           specifiedType: const FullType(String)),
@@ -906,6 +909,10 @@ class _$UserCompanyEntitySerializer
         case 'is_owner':
           result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'permissions_updated_at':
+          result.permissionsUpdatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'permissions':
           result.permissions = serializers.deserialize(value,
@@ -4560,6 +4567,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final bool isOwner;
   @override
+  final int permissionsUpdatedAt;
+  @override
   final String permissions;
   @override
   final BuiltMap<String, BuiltList<String>> notifications;
@@ -4581,6 +4590,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   _$UserCompanyEntity._(
       {this.isAdmin,
       this.isOwner,
+      this.permissionsUpdatedAt,
       this.permissions,
       this.notifications,
       this.company,
@@ -4594,6 +4604,10 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     }
     if (isOwner == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'isOwner');
+    }
+    if (permissionsUpdatedAt == null) {
+      throw new BuiltValueNullFieldError(
+          'UserCompanyEntity', 'permissionsUpdatedAt');
     }
     if (permissions == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'permissions');
@@ -4614,6 +4628,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     return other is UserCompanyEntity &&
         isAdmin == other.isAdmin &&
         isOwner == other.isOwner &&
+        permissionsUpdatedAt == other.permissionsUpdatedAt &&
         permissions == other.permissions &&
         notifications == other.notifications &&
         company == other.company &&
@@ -4632,7 +4647,11 @@ class _$UserCompanyEntity extends UserCompanyEntity {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
+                            $jc(
+                                $jc(
+                                    $jc($jc(0, isAdmin.hashCode),
+                                        isOwner.hashCode),
+                                    permissionsUpdatedAt.hashCode),
                                 permissions.hashCode),
                             notifications.hashCode),
                         company.hashCode),
@@ -4647,6 +4666,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     return (newBuiltValueToStringHelper('UserCompanyEntity')
           ..add('isAdmin', isAdmin)
           ..add('isOwner', isOwner)
+          ..add('permissionsUpdatedAt', permissionsUpdatedAt)
           ..add('permissions', permissions)
           ..add('notifications', notifications)
           ..add('company', company)
@@ -4669,6 +4689,11 @@ class UserCompanyEntityBuilder
   bool _isOwner;
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
+  int _permissionsUpdatedAt;
+  int get permissionsUpdatedAt => _$this._permissionsUpdatedAt;
+  set permissionsUpdatedAt(int permissionsUpdatedAt) =>
+      _$this._permissionsUpdatedAt = permissionsUpdatedAt;
 
   String _permissions;
   String get permissions => _$this._permissions;
@@ -4704,12 +4729,15 @@ class UserCompanyEntityBuilder
   set settings(UserSettingsEntityBuilder settings) =>
       _$this._settings = settings;
 
-  UserCompanyEntityBuilder();
+  UserCompanyEntityBuilder() {
+    UserCompanyEntity._initializeBuilder(this);
+  }
 
   UserCompanyEntityBuilder get _$this {
     if (_$v != null) {
       _isAdmin = _$v.isAdmin;
       _isOwner = _$v.isOwner;
+      _permissionsUpdatedAt = _$v.permissionsUpdatedAt;
       _permissions = _$v.permissions;
       _notifications = _$v.notifications?.toBuilder();
       _company = _$v.company?.toBuilder();
@@ -4743,6 +4771,7 @@ class UserCompanyEntityBuilder
           new _$UserCompanyEntity._(
               isAdmin: isAdmin,
               isOwner: isOwner,
+              permissionsUpdatedAt: permissionsUpdatedAt,
               permissions: permissions,
               notifications: _notifications?.build(),
               company: _company?.build(),

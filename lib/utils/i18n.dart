@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
       'convert_to_invoice': 'Convert to Invoice',
       'registration_url': 'Registration URL',
@@ -1614,6 +1618,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'sq': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Ktheje Ofertën në Faturë',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Faturo detyrën',
       'invoice_expense': 'Faturë shpenzimesh',
       'search_payment_term': 'Search 1 Payment Term',
@@ -1640,7 +1651,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -2159,7 +2170,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Kompani e re',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -2236,6 +2247,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'ID e klientit',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -2311,6 +2328,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -2532,10 +2550,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Plotëso-automatikisht produktet',
       'fill_products_help':
-          'Duke zgjedhur produktin, automatikisht do të plotësohen <b>fill in the description and cost</b>',
+          'Duke zgjedhur produktin, automatikisht do të plotësohen fill in the description and cost',
       'update_products': 'Perditeso-automatikisht produktet',
       'update_products_help':
-          'Perditesimi i faturës automatikisht do të <b>perditesoje librarine e produktit</b>',
+          'Perditesimi i faturës automatikisht do të perditesoje librarine e produktit',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -3214,6 +3232,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'bg': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Предишно тримесечие',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Конвертирай като Фактура',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Фактуриране на задача',
       'invoice_expense': 'Префактуриране на разход',
       'search_payment_term': 'Search 1 Payment Term',
@@ -3240,7 +3265,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -3754,7 +3779,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Нова фирма',
       'added_company': 'Successfully added company',
       'company1': 'Персонализирана Компания 1',
       'company2': 'Персонализирана Компания 2',
@@ -3831,6 +3856,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Доставка - Щат/Провинция',
       'shipping_postal_code': 'Доставка - Пощ. код',
       'shipping_country': 'Доставка - Държава',
+      'billing_address1': 'Фактура - Улица',
+      'billing_address2': 'Фактура - Ап.',
+      'billing_city': 'Фактура - Град',
+      'billing_state': 'Фактура - Щат/Провинция',
+      'billing_postal_code': 'Фактура - Пощ. код',
+      'billing_country': 'Фактура - Държава',
       'client_id': 'Client Id',
       'assigned_to': 'Присвоен на',
       'created_by': 'Създаден от :name',
@@ -3905,6 +3936,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Второ персонализиране',
       'third_custom': 'Трето персонализиране',
       'show_cost': 'Показване на цена',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Покажи цената на продуктовото поле за да проследиш печалбата',
       'show_product_quantity': 'Показване на продуктовата наличност',
@@ -4127,10 +4159,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Автоматично попълвай продукти',
       'fill_products_help':
-          'Избирането на продукт автоматично <b>ще попълни описанието и цената</b>',
+          'Избирането на продукт автоматично ще попълни описанието и цената',
       'update_products': 'Автоматично обнови продукти',
       'update_products_help':
-          'Промяната на фактура автоматично <b>ще обнови продуктовия каталог</b>',
+          'Промяната на фактура автоматично ще обнови продуктовия каталог',
       'convert_products': 'Конвертиране на продукти',
       'convert_products_help':
           'Автоматично конвертиране на цените на продуктите във валутата на клиента',
@@ -4814,6 +4846,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'zh_TW': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': '轉換至發票',
+      'registration_url': 'Registration URL',
       'invoice_task': '為任務開立發票',
       'invoice_expense': '為支出開立發票',
       'search_payment_term': 'Search 1 Payment Term',
@@ -4840,7 +4879,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -5348,7 +5387,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': '新的公司資料',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -5425,6 +5464,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': '送貨地址之州/省',
       'shipping_postal_code': '送貨地址之郵遞區號',
       'shipping_country': '送貨地址之國家',
+      'billing_address1': '帳單地址之街/路',
+      'billing_address2': '帳單地址之大樓/套房',
+      'billing_city': '帳單地址之城市',
+      'billing_state': '帳單地址之州/省',
+      'billing_postal_code': '帳單地址之郵遞區號',
+      'billing_country': '帳單地址之國家',
       'client_id': '用戶 Id',
       'assigned_to': '分配給',
       'created_by': '由 :name 建立',
@@ -5500,6 +5545,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -5708,9 +5754,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_tax_rates': 'Successfully deleted :value tax rates',
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': '自動填入之產品項目',
-      'fill_products_help': '選擇產品將自動<b>填寫描述和成本</b>',
+      'fill_products_help': '選擇產品將自動填寫描述和成本',
       'update_products': '自動更新產品',
-      'update_products_help': '更新發票時會自動 <b>更新產品資料庫</b>',
+      'update_products_help': '更新發票時會自動 更新產品資料庫',
       'convert_products': '轉換產品',
       'convert_products_help': '自動將產品價格轉換為用戶的貨幣',
       'fees': '費用',
@@ -6384,6 +6430,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'hr': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Prošlo tromjesječje',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Konverzija računa',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fakturiraj zadatak',
       'invoice_expense': 'Trošak računa',
       'search_payment_term': 'Search 1 Payment Term',
@@ -6410,7 +6463,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -6924,7 +6977,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Tvrtka bez naziva',
+      'new_company': 'Novo poduzeće',
       'added_company': 'Tvrtka je uspješno dodana',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -7001,6 +7054,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Client Id',
       'assigned_to': 'Dodijeljeno za',
       'created_by': 'Created by :name',
@@ -7077,6 +7136,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Drugi stupac',
       'third_custom': 'Treći stupac',
       'show_cost': 'Prikaži trošak',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Prikaži polje troškova proizvoda za praćenje marže / dobiti',
       'show_product_quantity': 'Prikaži količinu proizvoda',
@@ -7296,10 +7356,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Proizvodi sa samoispunom',
       'fill_products_help':
-          'Odabir proizvoda će automatski <b>ispuniti opis i cijenu</b>',
+          'Odabir proizvoda će automatski ispuniti opis i cijenu',
       'update_products': 'Proizvidi sa autoažuriranjem',
       'update_products_help':
-          'Ažuriranje računa automatski <b>ažurirati registar proizvoda</b>',
+          'Ažuriranje računa automatski ažurirati registar proizvoda',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -7979,6 +8039,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'cs': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Změnit na fakturu',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fakturační úloha',
       'invoice_expense': 'Fakturovat náklady',
       'search_payment_term': 'Search 1 Payment Term',
@@ -8005,7 +8072,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -8517,7 +8584,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nová firma',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -8594,6 +8661,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Client Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -8669,6 +8742,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -8888,11 +8962,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_tax_rates': 'Successfully deleted :value tax rates',
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Automaticky předvyplnit produkty',
-      'fill_products_help':
-          'Výběr produktu automaticky <b>vyplní popis a cenu</b>',
+      'fill_products_help': 'Výběr produktu automaticky vyplní popis a cenu',
       'update_products': 'Automaticky aktualizovat produkty',
       'update_products_help':
-          'Změna na faktuře automaticky <b>aktualizuje katalog produktů</b>',
+          'Změna na faktuře automaticky aktualizuje katalog produktů',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -9572,6 +9645,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'da': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Forrige kvartal',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Konvertér til en faktura',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fakturer opgave',
       'invoice_expense': 'Invoice Expense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -9598,7 +9678,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -10109,7 +10189,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nyt firma',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -10186,6 +10266,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Klients ID',
       'assigned_to': 'Assigned to',
       'created_by': 'Oprettet af :navn',
@@ -10261,6 +10347,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -10481,10 +10568,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Automatisk-udfyld produkter',
       'fill_products_help':
-          'Valg af produkt vil automatisk udfylde <b>beskrivelse og pris</b>',
+          'Valg af produkt vil automatisk udfylde beskrivelse og pris',
       'update_products': 'Automatisk opdatering af produkter',
       'update_products_help':
-          'En opdatering af en faktura vil automatisk <b>opdaterer Produkt biblioteket</b>',
+          'En opdatering af en faktura vil automatisk opdaterer Produkt biblioteket',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -11164,6 +11251,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'nl': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Laatste Kwartaal',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Zet om naar factuur',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Factureer taak',
       'invoice_expense': 'Factureer uitgave',
       'search_payment_term': 'Search 1 Payment Term',
@@ -11190,7 +11284,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -11702,7 +11796,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Krediet voettekst',
       'credit_terms': 'Kredietvoorwaarden',
-      'untitled_company': 'Naamloos bedrijf',
+      'new_company': 'Nieuw bedrijf',
       'added_company': 'Bedrijf toegevoegd',
       'company1': 'Aangepast bedrijf 1',
       'company2': 'Aangepast bedrijf 2',
@@ -11779,6 +11873,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Leverings Staat/Provincie',
       'shipping_postal_code': 'Leverings Postcode',
       'shipping_country': 'Leveringsland',
+      'billing_address1': 'Facturatie straat',
+      'billing_address2': 'Facturatie Apt/Suite',
+      'billing_city': 'Facturatiestad',
+      'billing_state': 'Facturatie Staat/Provincie',
+      'billing_postal_code': 'Facturatie Postcode',
+      'billing_country': 'Facturatieland',
       'client_id': 'Klantnummer',
       'assigned_to': 'Toegewezen aan',
       'created_by': 'Aangemaakt door :name',
@@ -11855,6 +11955,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Tweede aangepaste',
       'third_custom': 'Derde aangepaste',
       'show_cost': 'Toon kosten',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Toon het kostenveld van een product om de opmaak / winst te volgen',
       'show_product_quantity': 'Toon product hoeveelheid',
@@ -12076,10 +12177,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Producten Automatisch aanvullen',
       'fill_products_help':
-          'Een product selecteren zal automatisch <b>de beschrijving en kosten instellen</b>',
+          'Een product selecteren zal automatisch de beschrijving en kosten instellen',
       'update_products': 'Producten automatisch wijzigen',
       'update_products_help':
-          'Het wijzigen van een factuur zal automatisch <b>de producten aanpassen</b>',
+          'Het wijzigen van een factuur zal automatisch de producten aanpassen',
       'convert_products': 'Producten omzetten',
       'convert_products_help':
           'Productprijzen automatisch converteren naar het valuta van de klant',
@@ -12765,6 +12866,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'en_AU': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Convert to Invoice',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Invoice Task',
       'invoice_expense': 'Invoice Expense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -12791,7 +12899,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -13303,7 +13411,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'New Company',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -13380,6 +13488,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Delivery State',
       'shipping_postal_code': 'Delivery Postcode',
       'shipping_country': 'Delivery Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Unit/Suite',
+      'billing_city': 'Billing Town/Suburb',
+      'billing_state': 'Billing State',
+      'billing_postal_code': 'Billing Postcode',
+      'billing_country': 'Billing Country',
       'client_id': 'Customer Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -13455,6 +13569,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -13675,10 +13790,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and price</b>',
+          'Selecting a product will automatically fill in the description and price',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+          'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the customer\'s currency',
@@ -14357,6 +14472,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'en_GB': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Convert to Invoice',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Invoice Task',
       'invoice_expense': 'Invoice Expense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -14383,7 +14505,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -14895,7 +15017,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'New Company',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -14972,6 +15094,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Client Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -15047,6 +15175,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -15267,10 +15396,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+          'Selecting a product will automatically fill in the description and cost',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+          'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -15949,6 +16078,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'fi': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'viime Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Muuta laskuksi',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Laskuta tehtävä',
       'invoice_expense': 'Lasku kulu',
       'search_payment_term': 'Search 1 Payment Term',
@@ -15975,7 +16111,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -16487,7 +16623,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Uusi yritys',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -16564,6 +16700,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Toimitus: Maakunta',
       'shipping_postal_code': 'Toimitus: Postinumero',
       'shipping_country': 'Toimitus: Maa',
+      'billing_address1': 'Laskutus: Katu',
+      'billing_address2': 'Laskutus: Asunto/huoneisto',
+      'billing_city': 'Laskutus: Kaupunki',
+      'billing_state': 'Laskutus: Maakunta',
+      'billing_postal_code': 'Laskutus: Postinumero',
+      'billing_country': 'Laskutus: Maa',
       'client_id': 'Asiakkaan tunniste',
       'assigned_to': 'Assigned',
       'created_by': 'luotu by :name',
@@ -16639,6 +16781,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -16859,10 +17002,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Lisää automaattisesti tuotteita',
       'fill_products_help':
-          'Tuotteen valinta <b>täyttää kuvauksen ja hinnan</b> automaattisesti',
+          'Tuotteen valinta täyttää kuvauksen ja hinnan automaattisesti',
       'update_products': 'Päivitä automaattisesti tuotteet',
       'update_products_help':
-          'Laskun päivittäminen <b>päivittää tuotetietokannan</b> automaattisesti',
+          'Laskun päivittäminen päivittää tuotetietokannan automaattisesti',
       'convert_products': 'Convert tuotteet',
       'convert_products_help':
           'Muunna automaattisesti tuotehinnat asiakkaan valuuttaan',
@@ -17542,6 +17685,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'fr': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Dernier trimestre',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Convertir en facture',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Facturer la tâche',
       'invoice_expense': 'Facturer la dépense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -17568,7 +17718,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -18082,7 +18232,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nouveau compte',
       'added_company': 'L\'entreprise a été ajoutée',
       'company1': 'Champ personnalisé Entreprise 1',
       'company2': 'Champ personnalisé Entreprise 2',
@@ -18159,6 +18309,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Région/Département',
       'shipping_postal_code': 'Code postal',
       'shipping_country': 'Pays',
+      'billing_address1': 'Rue',
+      'billing_address2': 'Appt/Bâtiment',
+      'billing_city': 'Ville',
+      'billing_state': 'Région/Département',
+      'billing_postal_code': 'Code postal',
+      'billing_country': 'Pays',
       'client_id': 'ID du client',
       'assigned_to': 'Assigné à',
       'created_by': 'Créé par :name',
@@ -18235,6 +18391,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Voir le coût',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Afficher un champ coût du produit pour suivre la marge',
       'show_product_quantity': 'Voir la quantité du produit',
@@ -18458,10 +18615,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Remplissage auto des produits',
       'fill_products_help':
-          'La sélection d’un produit entrainera la MAJ de <b>la description et du prix</b>',
+          'La sélection d’un produit entrainera la MAJ de la description et du prix',
       'update_products': 'Mise à jour auto des produits',
       'update_products_help':
-          'La mise à jour d\'une facture entraîne la <b>mise à jour des produits</b>',
+          'La mise à jour d\'une facture entraîne la mise à jour des produits',
       'convert_products': 'Convertir les produits',
       'convert_products_help':
           'Convertir automatiquement les prix des produits dans la devise du client',
@@ -19146,6 +19303,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'fr_CA': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Dernier trimestre',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Convertir en facture',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Facturer la tâche',
       'invoice_expense': 'Facture de dépense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -19172,7 +19336,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -19694,7 +19858,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'URL du Webhook Slack',
       'credit_footer': 'Pied de page pour crédit',
       'credit_terms': 'Conditions d\'utilisation pour crédit',
-      'untitled_company': 'Entreprise sans nom',
+      'new_company': 'Nouvelle entreprise',
       'added_company': 'Entreprise ajoutée',
       'company1': 'Entreprise personnalisée 1',
       'company2': 'Entreprise personnalisée 2',
@@ -19771,6 +19935,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Province de livraison',
       'shipping_postal_code': 'Code postal de livraison',
       'shipping_country': 'Pays de livraison',
+      'billing_address1': 'Rue de facturation',
+      'billing_address2': 'App. de facturation',
+      'billing_city': 'Ville de facturation',
+      'billing_state': 'Province de facturation',
+      'billing_postal_code': 'Code postal de facturation',
+      'billing_country': 'Pays de facturation',
       'client_id': 'ID du client',
       'assigned_to': 'Assigné à',
       'created_by': 'Créé par :name',
@@ -19846,6 +20016,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Deuxième latéral',
       'third_custom': 'Troisième latéral',
       'show_cost': 'Afficher le coût',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Afficher un champ de coût du produit pour suivre le profit',
       'show_product_quantity': 'Afficher la quantité de produit',
@@ -20071,10 +20242,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Les :value taux de taxes ont été restaurés',
       'fill_products': 'Remplissage auto des produits',
       'fill_products_help':
-          'La sélection d\'un produit entrainera la mise à jour de <b>la description et du prix</b>',
+          'La sélection d\'un produit entrainera la mise à jour de la description et du prix',
       'update_products': 'Mise à jour auto des produits',
       'update_products_help':
-          'La mise à jour d\'une facture entraîne la <b>mise à jour des produits</b>',
+          'La mise à jour d\'une facture entraîne la mise à jour des produits',
       'convert_products': 'Convertir les produits',
       'convert_products_help':
           'Convertir automatiquement le prix des produits dans la devise du client',
@@ -20760,6 +20931,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'ID de transaction',
     },
     'de': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Letztes Quartal',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'In Rechnung umwandeln',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Aufgabe in Rechnung stellen',
       'invoice_expense': 'Ausgabe abrechnen',
       'search_payment_term': 'Search 1 Payment Term',
@@ -20786,7 +20964,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -21321,7 +21499,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack-Webhook-URL',
       'credit_footer': 'Guthaben-Fußzeile',
       'credit_terms': 'Gutschrift Bedingungen',
-      'untitled_company': 'Unbenannte FIrma',
+      'new_company': 'Neues Konto',
       'added_company': 'Erfolgreich Firma hinzugefügt',
       'company1': 'Benutzerdefinierte Firma 1',
       'company2': 'Benutzerdefinierte Firma 2',
@@ -21398,6 +21576,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Versand Bundesland',
       'shipping_postal_code': 'Postleitzahl Versandanschrift',
       'shipping_country': 'Lieferungsland',
+      'billing_address1': 'Strasse Rechnungsanschrift',
+      'billing_address2': 'Rechnung Adresszusatz',
+      'billing_city': 'Stadt Rechnungsanschrift',
+      'billing_state': 'Rechnung Bundesland',
+      'billing_postal_code': 'Postleitzahl Rechnungsanschrift',
+      'billing_country': 'Rechnungsland',
       'client_id': 'Kundennummer',
       'assigned_to': 'Zugewiesen an',
       'created_by': 'Erstellt von :name',
@@ -21473,6 +21657,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Zweite benutzerdefinierte',
       'third_custom': 'Dritte benutzerdefinierte',
       'show_cost': 'Kosten anzeigen',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Feld für Einkaufspreis anzeigen, um Gewinnspanne zu verfolgen',
       'show_product_quantity': 'Produktanzahl anzeigen',
@@ -21696,10 +21881,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': ':value Steuersätze erfolgreich wiederhergestellt',
       'fill_products': 'Produkte automatisch ausfüllen',
       'fill_products_help':
-          'Beim Auswählen eines Produktes werden automatisch <strong>Beschreibung und Kosten ausgefüllt</strong>',
+          'Beim Auswählen eines Produktes werden automatisch Beschreibung und Kosten ausgefüllt',
       'update_products': 'Produkte automatisch aktualisieren',
       'update_products_help':
-          'Beim Aktualisieren einer Rechnung werden die <strong>Produkte automatisch aktualisiert</strong>',
+          'Beim Aktualisieren einer Rechnung werden die Produkte automatisch aktualisiert',
       'convert_products': 'Produkte konvertieren',
       'convert_products_help':
           'Produktpreise automatisch in die Währung des Kunden konvertieren',
@@ -22393,6 +22578,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaktions ID',
     },
     'el': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Τελευταίο Τετράμηνο',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Μετατροπή σε Τιμολόγιο',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Τιμολόγηση Εργασίας',
       'invoice_expense': 'Τιμολόγηση Δαπάνης',
       'search_payment_term': 'Search 1 Payment Term',
@@ -22419,7 +22611,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -22951,7 +23143,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Διεύθυνση URL του Webhook για το Slack',
       'credit_footer': 'Υποσέλιδο Πίστωσης',
       'credit_terms': 'Όροι Πίστωσης',
-      'untitled_company': 'Ανώνυμη Εταιρία',
+      'new_company': 'Νέα Εταιρεία',
       'added_company': 'Επιτυχής προσθήκη επιχείρησης',
       'company1': 'Προσαρμοσμένη εταιρεία 1',
       'company2': 'Προσαρμοσμένη εταιρεία 2',
@@ -23028,6 +23220,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Περιφέρεια Αποστολής',
       'shipping_postal_code': 'Ταχυδρομικός Κώδικας Αποστολής',
       'shipping_country': 'Χώρα Αποστολής',
+      'billing_address1': 'Οδός Χρέωσης',
+      'billing_address2': 'Διαμέρισμα Χρέωσης',
+      'billing_city': 'Πόλη Χρέωσης',
+      'billing_state': 'Περιφέρεια Χρέωσης',
+      'billing_postal_code': 'Ταχυδρομικός Κωδικός Χρέωσης',
+      'billing_country': 'Χώρα Χρέωσης',
       'client_id': 'Id Πελάτη',
       'assigned_to': 'Ανατέθηκε σε',
       'created_by': 'Δημιουργήθηκε από :name',
@@ -23105,6 +23303,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Δεύτερη Προσαρμογή',
       'third_custom': 'Τρίτη Προσαρμογή',
       'show_cost': 'Εμφάνιση Κόστους',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Εμφάνιση του πεδίου κόστους προϊόντος για να είναι δυνατή η εύρεση του κέρδους',
       'show_product_quantity': 'Εμφάνισε την Ποσότητα Προϊόντος',
@@ -23327,10 +23526,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Επιτυχής ανάκτηση :value ποσοστών φόρου',
       'fill_products': 'Αυτόματη συμπλήρωση προϊόντων',
       'fill_products_help':
-          'Επιλέγοντας ένα προϊόν, αυτόματα <b>θα συμπληρωθεί η περιγραφή και η αξία</b>',
+          'Επιλέγοντας ένα προϊόν, αυτόματα θα συμπληρωθεί η περιγραφή και η αξία',
       'update_products': 'Αυτόματη ενημέρωση προϊόντων',
       'update_products_help':
-          'Ενημερώνοντας ένα τιμολόγιο, αυτόματα <b>θα ενημερωθεί και η βιβλιοθήκη προϊόντων</b>',
+          'Ενημερώνοντας ένα τιμολόγιο, αυτόματα θα ενημερωθεί και η βιβλιοθήκη προϊόντων',
       'convert_products': 'Μετατροπή Τιμών Προϊόντων',
       'convert_products_help':
           'Αυτόματη μετατροπή τιμών προϊόντων στο νόμισμα συναλλαγών του πελάτη',
@@ -24030,6 +24229,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Κωδικός Συναλλαγής',
     },
     'it': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Converti a Fattura',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fattura l\'attività',
       'invoice_expense': 'Fattura Spesa',
       'search_payment_term': 'Search 1 Payment Term',
@@ -24056,7 +24262,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -24570,7 +24776,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nuova azienda',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -24647,6 +24853,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Id Cliente',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -24722,6 +24934,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -24943,10 +25156,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Riempimento automatico prodotti',
       'fill_products_help':
-          'Selezionare un prodotto farà automaticamente <b>inserire la descrizione ed il costo</b>',
+          'Selezionare un prodotto farà automaticamente inserire la descrizione ed il costo',
       'update_products': 'Aggiorna automaticamente i prodotti',
       'update_products_help':
-          'Aggiornare una fatura farà automaticamente <b>aggiornare i prodotti</b>',
+          'Aggiornare una fatura farà automaticamente aggiornare i prodotti',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -25629,6 +25842,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'ja': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': '請求書に変換',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Invoice Task',
       'invoice_expense': 'Invoice Expense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -25655,7 +25875,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -26166,7 +26386,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'New Company',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -26243,6 +26463,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Client Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -26318,6 +26544,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -26538,10 +26765,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+          'Selecting a product will automatically fill in the description and cost',
       'update_products': '商品の自動更新',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+          'Updating an invoice will automatically update the product library',
       'convert_products': '商品の変換',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -27220,6 +27447,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'lt': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Convert to Invoice',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Išrašyti sąskaitą',
       'invoice_expense': 'Invoice Expense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -27246,7 +27480,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -27758,7 +27992,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Kredito Poraštė',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'New Company',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -27835,6 +28069,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Kliento Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -27910,6 +28150,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -28130,10 +28371,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+          'Selecting a product will automatically fill in the description and cost',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+          'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -28812,6 +29053,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'mk_MK': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Последен квартал',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Конвертирај во фактура',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Задача на фактура',
       'invoice_expense': 'Фактурирај трошок',
       'search_payment_term': 'Search 1 Payment Term',
@@ -28838,7 +29086,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -29351,7 +29599,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Нова компанија',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -29428,6 +29676,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Држава/Провинција за достава',
       'shipping_postal_code': 'Поштенски број за достава',
       'shipping_country': 'Држава за достава',
+      'billing_address1': 'Улица за наплата',
+      'billing_address2': 'Апартман за наплата',
+      'billing_city': 'Град за наплата',
+      'billing_state': 'Држава/Провинција за наплата',
+      'billing_postal_code': 'Поштенски број за наплата',
+      'billing_country': 'Држава за наплата',
       'client_id': 'Идентификација на клиент',
       'assigned_to': 'Assigned to',
       'created_by': 'Креирано по :name',
@@ -29503,6 +29757,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -29725,10 +29980,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Автоматско пополнување на продукти',
       'fill_products_help':
-          'Избирањето на продукт автоматски ќе ги <b> исполни полињата за опис и цена</b>',
+          'Избирањето на продукт автоматски ќе ги  исполни полињата за опис и цена',
       'update_products': 'Автоматско ажурирање на продукти',
       'update_products_help':
-          'Ажурирањето на факура автоматски ќе ја <b> ажурира библиотеката на продукти </b>',
+          'Ажурирањето на факура автоматски ќе ја  ажурира библиотеката на продукти ',
       'convert_products': 'Конвертирај продукти',
       'convert_products_help':
           'Автоматски конвертирај ги цените на продуктите по валутите на клиентите',
@@ -30407,6 +30662,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'nb_NO': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Konverter til en faktura',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fakturer Oppgave',
       'invoice_expense': 'Invoice Expense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -30433,7 +30695,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -30945,7 +31207,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nytt Firma',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -31022,6 +31284,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Kunde-ID',
       'assigned_to': 'Assigned to',
       'created_by': 'Laget av :name',
@@ -31097,6 +31365,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -31316,10 +31585,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Automatisk-utfyll produkter',
       'fill_products_help':
-          'Valg av produkt vil automatisk fylle ut <b>beskrivelse og kostnaden</b>',
+          'Valg av produkt vil automatisk fylle ut beskrivelse og kostnaden',
       'update_products': 'Automatisk oppdater produkter',
       'update_products_help':
-          'Å endre en faktura vil automatisk <b>oppdatere produktbilioteket</b>',
+          'Å endre en faktura vil automatisk oppdatere produktbilioteket',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -31998,6 +32267,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'pl': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Konwertuj do faktury',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fakturuj zadanie',
       'invoice_expense': 'Faktura na wydatek',
       'search_payment_term': 'Search 1 Payment Term',
@@ -32024,7 +32300,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -32535,7 +32811,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nowa firma',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -32612,6 +32888,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Numer klienta',
       'assigned_to': 'Assigned to',
       'created_by': 'Utworzono przez :name',
@@ -32687,6 +32969,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -32907,10 +33190,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Automatycznie uzupełniaj produkty',
       'fill_products_help':
-          'Wybieranie produktu automatycznie <b>uzupełni opis i kwotę</b>',
+          'Wybieranie produktu automatycznie uzupełni opis i kwotę',
       'update_products': 'Automatycznie aktualizuj produkty',
       'update_products_help':
-          'Zaktualizowanie faktury automatycznie <b>uaktualni produkt w bibliotece produktów</b>',
+          'Zaktualizowanie faktury automatycznie uaktualni produkt w bibliotece produktów',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatycznie zamieniaj ceny produktu na walutę klienta',
@@ -33590,6 +33873,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'pt_BR': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Último Quadrimestre',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Converter em Fatura',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Faturar Tarefa',
       'invoice_expense': 'Faturar Despesa',
       'search_payment_term': 'Search 1 Payment Term',
@@ -33616,7 +33906,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -34134,7 +34424,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'URL Webhook do Slack',
       'credit_footer': 'Rodapé do Crédito',
       'credit_terms': 'Termos do Crédito',
-      'untitled_company': 'Empresa Sem Nome',
+      'new_company': 'Nova Empresa',
       'added_company': 'Empresa adicionada com sucesso',
       'company1': 'Companhia 1 Personalizada',
       'company2': 'Companhia 2 Personalizada',
@@ -34211,6 +34501,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Estado/Província de envio',
       'shipping_postal_code': 'CEP de envio',
       'shipping_country': 'País de envio',
+      'billing_address1': 'Rua de cobrança',
+      'billing_address2': 'Complemento de cobrança',
+      'billing_city': 'Cidade de cobrança',
+      'billing_state': 'Estado/Província de cobrança',
+      'billing_postal_code': 'CEP de cobrança',
+      'billing_country': 'País de cobrança',
       'client_id': 'Cód Cliente',
       'assigned_to': 'Atribuído para',
       'created_by': 'Criado por :name',
@@ -34287,6 +34583,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Segundo Personalizado',
       'third_custom': 'Terceiro Personalizado',
       'show_cost': 'Mostrar Custo',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Exibir um campo de custo do produto para rastrear a marcação/lucro',
       'show_product_quantity': 'Mostrar Quantidade do Produto',
@@ -34509,10 +34806,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-preencher produtos',
       'fill_products_help':
-          'Ao selecionar um produto sua <b>descrição e preço</b> serão automaticamente preenchidos',
+          'Ao selecionar um produto sua descrição e preço serão automaticamente preenchidos',
       'update_products': 'Atualização automática dos produtos',
       'update_products_help':
-          'Atualizar uma fatura irá automaticamente<b>atualizar a biblioteca de produtos</b>',
+          'Atualizar uma fatura irá automaticamenteatualizar a biblioteca de produtos',
       'convert_products': 'Converter Produtos',
       'convert_products_help':
           'Converter automaticamente preços de produtos para a moeda do cliente',
@@ -35197,6 +35494,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'pt_PT': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Converter em Nota de Pag.',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Faturar Tarefa',
       'invoice_expense': 'Nota de Pagamento da Despesa',
       'search_payment_term': 'Search 1 Payment Term',
@@ -35223,7 +35527,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -35735,7 +36039,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nova Empresa',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -35812,6 +36116,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Client Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Criado por :nome',
@@ -35887,6 +36197,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -36108,10 +36419,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Sugerir produtos',
       'fill_products_help':
-          'Selecionando o produto <b>descrição e preço</b> serão preenchidos automaticamente',
+          'Selecionando o produto descrição e preço serão preenchidos automaticamente',
       'update_products': 'Atualização automática dos produtos',
       'update_products_help':
-          'Atualizando na nota de pagamento o <b>produto também será atualizado</b>',
+          'Atualizando na nota de pagamento o produto também será atualizado',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -36790,6 +37101,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'ro': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Transformă în Factură',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Făcturează task',
       'invoice_expense': 'Invoice Expense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -36816,7 +37134,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -37328,7 +37646,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Firmă nouă',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -37405,6 +37723,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Client Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -37480,6 +37804,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -37701,10 +38026,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Completează automat produsele',
       'fill_products_help':
-          'Alegând un produs <b> descrierea și prețul</b> vor fi completate automat',
+          'Alegând un produs  descrierea și prețul vor fi completate automat',
       'update_products': 'Actualizare automată a produselor',
       'update_products_help':
-          'Actualizând o factură se va actualiza si <b>librăria de produse</b>',
+          'Actualizând o factură se va actualiza si librăria de produse',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -38385,6 +38710,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'sr_RS': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Konvertuj u račun',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fakturiši zadatak',
       'invoice_expense': 'Trošak računa',
       'search_payment_term': 'Search 1 Payment Term',
@@ -38411,7 +38743,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -38923,7 +39255,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Novo preduzeće',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -39000,6 +39332,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Adresa za slanje - Provincija/Pokrajina',
       'shipping_postal_code': 'Adresa za slanje poštanski broj',
       'shipping_country': 'Adresa za slanje država',
+      'billing_address1': 'Adresa naplate - Ulica',
+      'billing_address2': 'Adresa računa - Stan/Spartman',
+      'billing_city': 'Adresa naplate - Grad',
+      'billing_state': 'Adresa naplate - Provincija/Pokrajina',
+      'billing_postal_code': 'Adresa naplate - Poštanski broj',
+      'billing_country': 'Adresa naplate - Država',
       'client_id': 'Client Id',
       'assigned_to': 'Dodeljeno za',
       'created_by': 'Created by :name',
@@ -39075,6 +39413,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -39296,10 +39635,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Proizvodi sa samoispunom',
       'fill_products_help':
-          'Odabir proizvoda će automatski <b>ispuniti opis i cijenu</b>',
+          'Odabir proizvoda će automatski ispuniti opis i cijenu',
       'update_products': 'Proizvodi sa autoažuriranjem',
       'update_products_help':
-          'Ažuriranje računa automatski <b>ažurirati registar proizvoda</b>',
+          'Ažuriranje računa automatski ažurirati registar proizvoda',
       'convert_products': 'Konvertuj proizvode',
       'convert_products_help':
           'Automatski konvertuj cene proizvoda u valutu klijenta',
@@ -39980,6 +40319,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'sl': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Prejšnje četrtletje',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Pretvori v račun',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fakturiraj opravilo',
       'invoice_expense': 'Strošek računa',
       'search_payment_term': 'Search 1 Payment Term',
@@ -40006,7 +40352,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -40518,7 +40864,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Novo podjetje',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -40595,6 +40941,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Regija/pokrajina (za dostavo)',
       'shipping_postal_code': 'Poštna št. (za dostavo)',
       'shipping_country': 'Država (za dostavo)',
+      'billing_address1': 'Ulica (za račun)',
+      'billing_address2': 'Hišna št./Stanovanje (za račun)',
+      'billing_city': 'Mesto (za račun)',
+      'billing_state': 'Regija/pokrajina (za račun)',
+      'billing_postal_code': 'Poštna št. (za račun)',
+      'billing_country': 'Države (za račun)',
       'client_id': 'Id stranke',
       'assigned_to': 'Assigned to',
       'created_by': 'Ustvaril :name',
@@ -40670,6 +41022,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -40888,11 +41241,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_tax_rates': 'Successfully deleted :value tax rates',
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Samodejno vnesi izdelke',
-      'fill_products_help':
-          'Izbira izdelka bo samodejno <b>vnesla opis in ceno</b>',
+      'fill_products_help': 'Izbira izdelka bo samodejno vnesla opis in ceno',
       'update_products': 'Samodejno posodobi izdelke',
       'update_products_help':
-          'Posodobitev računa bo samodejno <b>posodobila knjižnico izdelkov</b>',
+          'Posodobitev računa bo samodejno posodobila knjižnico izdelkov',
       'convert_products': 'Pretvori izdelke',
       'convert_products_help':
           'Samodejno pretvori cene izdelkov v valuto stranke',
@@ -41576,6 +41928,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'es': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Último Trimestre',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Convertir a Factura',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Tarea de Factura',
       'invoice_expense': 'Facturar Gasto',
       'search_payment_term': 'Search 1 Payment Term',
@@ -41602,7 +41961,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -42116,7 +42475,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'URL del Webhook de Slack',
       'credit_footer': 'Pie de Página del Crédito',
       'credit_terms': 'Términos del Crédito',
-      'untitled_company': 'Empresa sin Nombre',
+      'new_company': 'Nueva Empresa',
       'added_company': 'Empresa agregada con éxito',
       'company1': 'Empresa Personalizada 1',
       'company2': 'Empresa Personalizada 2',
@@ -42193,6 +42552,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Estado/Provincia de Envío',
       'shipping_postal_code': 'Código Postal de Envío',
       'shipping_country': 'País de Envío',
+      'billing_address1': 'Calle de Facturación',
+      'billing_address2': 'Apto/Suite de Facturación',
+      'billing_city': 'Ciudad de Facturación',
+      'billing_state': 'Estado/Provincia de Facturación',
+      'billing_postal_code': 'Código Postal de Facturación',
+      'billing_country': 'País de Facturación',
       'client_id': 'Client Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Creado por :name',
@@ -42268,6 +42633,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -42489,10 +42855,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-rellenar productos',
       'fill_products_help':
-          'Seleccionar un producto automáticamente <b>configurará la descripción y coste</b>',
+          'Seleccionar un producto automáticamente configurará la descripción y coste',
       'update_products': 'Auto-actualizar productos',
       'update_products_help':
-          'Actualizar una factura automáticamente <b>actualizará los productos</b>',
+          'Actualizar una factura automáticamente actualizará los productos',
       'convert_products': 'Convertir productos',
       'convert_products_help':
           'Convertir automáticamente precios de los productos a la moneda del cliente',
@@ -43177,6 +43543,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'es_ES': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Cuatrimestre Anterior',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Convertir a Factura',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Facturar tarea',
       'invoice_expense': 'Facturar Gasto',
       'search_payment_term': 'Search 1 Payment Term',
@@ -43203,7 +43576,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -43719,7 +44092,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nueva Compañía',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -43796,6 +44169,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Provincia de Envio',
       'shipping_postal_code': 'Cod. Postal de Envio',
       'shipping_country': 'Pais de Envio',
+      'billing_address1': 'Calle de Facturacion',
+      'billing_address2': 'Piso de Facturacion',
+      'billing_city': 'Ciudad de Facturacion',
+      'billing_state': 'Provincia de Facturacion',
+      'billing_postal_code': 'Cod. Postal de Facturacion',
+      'billing_country': 'Pais de Facturacion',
       'client_id': 'Id del cliente',
       'assigned_to': 'Asignado a',
       'created_by': 'Creado por :name',
@@ -43872,6 +44251,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -43948,9 +44328,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Successfully restored :value users',
       'general_settings': 'Configuración General',
       'invoice_options': 'Opciones de Factura',
-      'hide_paid_to_date': 'Ocultar el valor <i>Pagado a la Fecha</i>',
+      'hide_paid_to_date': 'Ocultar el valor Pagado a la Fecha',
       'hide_paid_to_date_help':
-          'Solo mostrará el valor <i>Pagado a la Fecha</i> en sus Facturas cuando se ha recibido un Pago.',
+          'Solo mostrará el valor Pagado a la Fecha en sus Facturas cuando se ha recibido un Pago.',
       'invoice_embed_documents': 'Documentos anexados',
       'invoice_embed_documents_help': 'Incluye imagenes adjuntas en la factura',
       'all_pages_header': 'Mostrar Cabecera en',
@@ -44095,10 +44475,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-rellenar Productos',
       'fill_products_help':
-          'Seleccionar un producto automáticamente <b>configurará la descripción y coste</b>',
+          'Seleccionar un producto automáticamente configurará la descripción y coste',
       'update_products': 'Auto-actualizar Productos',
       'update_products_help':
-          'Actualizar una Factura automáticamente <b>actualizará los Productos</b>',
+          'Actualizar una Factura automáticamente actualizará los Productos',
       'convert_products': 'Convertir Productos',
       'convert_products_help':
           'Convertir automáticamente los precios de los productos a la divisa del cliente',
@@ -44781,6 +45161,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'sv': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Omvandla till faktura',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fakturera uppgift',
       'invoice_expense': 'Faktura kostnad',
       'search_payment_term': 'Search 1 Payment Term',
@@ -44807,7 +45194,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -45322,7 +45709,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Nytt företag',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -45399,6 +45786,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Leverans län',
       'shipping_postal_code': 'Leverans postnummer',
       'shipping_country': 'Leverans land',
+      'billing_address1': 'Fakturerings gata',
+      'billing_address2': 'Fakturerings våning',
+      'billing_city': 'Fakturerings stad',
+      'billing_state': 'Fakturerings län',
+      'billing_postal_code': 'Fakturerings postnummer',
+      'billing_country': 'Fakturerings land',
       'client_id': 'Klient Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Skapad av :name',
@@ -45474,6 +45867,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -45693,10 +46087,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Auto-ifyll produkter',
       'fill_products_help':
-          'Välj en produkt för att automatiskt <b>fylla i beskrivning och pris</b>',
+          'Välj en produkt för att automatiskt fylla i beskrivning och pris',
       'update_products': 'Auto-uppdaterade produkter',
       'update_products_help':
-          'Uppdatera en faktura för att automatiskt <b>uppdatera produktbiblioteket</b>',
+          'Uppdatera en faktura för att automatiskt uppdatera produktbiblioteket',
       'convert_products': 'Konvertera produkter',
       'convert_products_help':
           'Konvertera automatiskt produkt priser till kundens valuta',
@@ -46375,6 +46769,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'th': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'แปลงเป็นใบแจ้งหนี้',
+      'registration_url': 'Registration URL',
       'invoice_task': 'งานใบแจ้งหนี้',
       'invoice_expense': 'ค่าใช้จ่ายในใบแจ้งหนี้',
       'search_payment_term': 'Search 1 Payment Term',
@@ -46401,7 +46802,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -46913,7 +47314,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'บริษัทใหม่',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -46990,6 +47391,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'รหัสลูกค้า',
       'assigned_to': 'Assigned to',
       'created_by': 'สร้างโดย :name',
@@ -47065,6 +47472,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -47284,10 +47692,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'เติมข้อมูลอัตโนมัติ',
       'fill_products_help':
-          'การเลือกสินค้า <b>จะเติมคำอธิบายและค่าใช้จ่ายโดยอัตโนมัติ</b>',
+          'การเลือกสินค้า จะเติมคำอธิบายและค่าใช้จ่ายโดยอัตโนมัติ',
       'update_products': 'อัปเดตผลิตภัณฑ์โดยอัตโนมัติ',
-      'update_products_help':
-          'การอัปเดตใบแจ้งหนี้ <b>จะอัปเดตสินค้าโดยอัตโนมัติ</b>',
+      'update_products_help': 'การอัปเดตใบแจ้งหนี้ จะอัปเดตสินค้าโดยอัตโนมัติ',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -47966,6 +48373,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'transaction_id': 'Transaction ID',
     },
     'tr_TR': {
+      'counter_pattern_error':
+          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+      'this_quarter': 'This Quarter',
+      'last_quarter': 'Last Quarter',
+      'to_update_run': 'To update run',
+      'convert_to_invoice': 'Faturaya Dönüştür',
+      'registration_url': 'Registration URL',
       'invoice_task': 'Fatura Görevi',
       'invoice_expense': 'Gider Faturası',
       'search_payment_term': 'Search 1 Payment Term',
@@ -47992,7 +48406,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'empty_columns': 'Empty Columns',
       'debug_mode_is_enabled': 'Debug mode is enabled',
       'debug_mode_is_enabled_help':
-          'Warning: it is intended for use on local machines, it can leak credentials. Click to learn more.',
+          'Warning: it is intented for use on local machines, it can leak credentials. Click to learn more.',
       'running_tasks': 'Running Tasks',
       'recent_tasks': 'Recent Tasks',
       'recent_expenses': 'Recent Expenses',
@@ -48505,7 +48919,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
-      'untitled_company': 'Untitled Company',
+      'new_company': 'Yeni Firma',
       'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
@@ -48582,6 +48996,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
+      'billing_address1': 'Billing Street',
+      'billing_address2': 'Billing Apt/Suite',
+      'billing_city': 'Billing City',
+      'billing_state': 'Billing State/Province',
+      'billing_postal_code': 'Billing Postal Code',
+      'billing_country': 'Billing Country',
       'client_id': 'Client Id',
       'assigned_to': 'Assigned to',
       'created_by': 'Created by :name',
@@ -48657,6 +49077,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
+      'show_product_cost': 'Show Product Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
@@ -48878,10 +49299,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rates': 'Successfully restored :value tax rates',
       'fill_products': 'Otomatik doldurma ürünleri',
       'fill_products_help':
-          'Bir ürün seçmek <b>açıklama ve maliyeti</b> otomatik olarak dolduracaktır',
+          'Bir ürün seçmek açıklama ve maliyeti otomatik olarak dolduracaktır',
       'update_products': 'Ürünleri otomatik güncelle',
       'update_products_help':
-          'Faturayı güncellemek <b>ürün kütüphanesini</b> otomatik olarak dolduracaktır.',
+          'Faturayı güncellemek ürün kütüphanesini otomatik olarak dolduracaktır.',
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
@@ -53417,6 +53838,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['convert_to_invoice'] ?? '';
 
   String get toUpdateRun => _localizedValues[localeCode]['to_update_run'] ?? '';
+
+  String get thisQuarter => _localizedValues[localeCode]['this_quarter'] ?? '';
+
+  String get lastQuarter => _localizedValues[localeCode]['last_quarter'] ?? '';
+
+  String get counterPatternError =>
+      _localizedValues[localeCode]['counter_pattern_error'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

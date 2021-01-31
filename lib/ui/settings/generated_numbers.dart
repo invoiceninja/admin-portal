@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -49,9 +50,11 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     super.initState();
 
     final company = widget.viewModel.state.company;
-    int tabs = 4;
+    int tabs = 2;
 
     [
+      EntityType.invoice,
+      EntityType.payment,
       EntityType.quote,
       EntityType.credit,
       EntityType.recurringInvoice,
@@ -119,6 +122,50 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     });
   }
 
+  void _onSavePressed(BuildContext context) {
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
+
+    final values = [
+      settings.clientNumberPattern,
+      settings.invoiceNumberPattern,
+      settings.paymentNumberPattern,
+      settings.quoteNumberPattern,
+      settings.creditNumberPattern,
+      settings.recurringInvoiceNumberPattern,
+      settings.taskNumberPattern,
+      settings.vendorNumberPattern,
+      settings.expenseNumberPattern,
+      settings.projectNumberPattern,
+    ];
+
+    bool isValid = true;
+    values.forEach((value) {
+      final containsCounter = value.contains('\$client_counter') ||
+          value.contains('\$group_counter');
+      final containsId =
+          value.contains('\$id_number') || value.contains('\$number');
+
+      if (containsCounter && !containsId) {
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      showDialog<ErrorDialog>(
+          context: context,
+          builder: (BuildContext context) {
+            return ErrorDialog(AppLocalization.of(context)
+                .counterPatternError
+                .replaceAll(':', '\$'));
+          });
+
+      return;
+    }
+
+    viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -129,7 +176,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 
     return EditScaffold(
       title: localization.generatedNumbers,
-      onSavePressed: viewModel.onSavePressed,
+      onSavePressed: _onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
@@ -141,16 +188,18 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           Tab(
             text: localization.clients,
           ),
-          Tab(
-            text: localization.invoices,
-          ),
+          if (company.isModuleEnabled(EntityType.invoice))
+            Tab(
+              text: localization.invoices,
+            ),
           if (company.isModuleEnabled(EntityType.recurringInvoice))
             Tab(
               text: localization.recurringInvoices,
             ),
-          Tab(
-            text: localization.payments,
-          ),
+          if (company.isModuleEnabled(EntityType.payment))
+            Tab(
+              text: localization.payments,
+            ),
           if (company.isModuleEnabled(EntityType.quote))
             Tab(
               text: localization.quotes,
@@ -295,7 +344,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     ..recurringInvoiceNumberCounter = counter
                     ..recurringInvoiceNumberPattern = pattern)),
             ),
-          if (company.isModuleEnabled(EntityType.invoice))
+          if (company.isModuleEnabled(EntityType.payment))
             EntityNumberSettings(
               counterValue: settings.paymentNumberCounter,
               patternValue: settings.paymentNumberPattern,
@@ -333,6 +382,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
             ),
           if (company.isModuleEnabled(EntityType.task))
             EntityNumberSettings(
+              showClientFields: false,
               counterValue: settings.taskNumberCounter,
               patternValue: settings.taskNumberPattern,
               onChanged: (counter, pattern) =>
@@ -352,7 +402,8 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
             ),
           if (company.isModuleEnabled(EntityType.expense))
             EntityNumberSettings(
-              showVendorFields: true,
+              showClientFields: false,
+              showVendorFields: false,
               counterValue: settings.expenseNumberCounter,
               patternValue: settings.expenseNumberPattern,
               onChanged: (counter, pattern) =>
@@ -454,9 +505,28 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
           showClientFields: widget.showClientFields,
           showVendorFields: widget.showVendorFields,
           onFieldPressed: (field) {
-            _patternController.text += field;
-            _patternController.selection = TextSelection.fromPosition(
-                TextPosition(offset: _patternController.text.length));
+            final selection = _patternController.selection;
+            final offset = selection.extent.offset;
+
+            String newValue = field;
+            int newOffset = field.length;
+
+            if (offset >= 0) {
+              final currentValue = _patternController.text;
+              newValue = currentValue.substring(0, offset) +
+                  field +
+                  currentValue.substring(offset);
+              newOffset = offset + field.length;
+            } else {
+              newValue = _patternController.text + newValue;
+            }
+
+            _patternController.text = newValue;
+
+            if (offset >= 0) {
+              _patternController.selection =
+                  TextSelection.fromPosition(TextPosition(offset: newOffset));
+            }
           },
         ),
       ],
@@ -502,7 +572,9 @@ class HelpPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: fields
             .where((field) => showVendorFields || !field.startsWith('vendor'))
-            .where((field) => showClientFields || !field.startsWith('client'))
+            .where((field) =>
+                showClientFields ||
+                (!field.startsWith('client') && !field.startsWith('group')))
             .map((field) => '\{\$$field\}')
             .map((field) => InkWell(
                   child: Padding(

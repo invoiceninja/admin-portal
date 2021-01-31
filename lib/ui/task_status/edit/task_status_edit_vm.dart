@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -67,11 +69,16 @@ class TaskStatusEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
         final Completer<TaskStatusEntity> completer =
             new Completer<TaskStatusEntity>();
         store.dispatch(SaveTaskStatusRequest(
             completer: completer, taskStatus: taskStatus));
         return completer.future.then((savedTaskStatus) {
+          showToast(taskStatus.isNew
+              ? localization.createdTaskStatus
+              : localization.updatedTaskStatus);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(TaskStatusViewScreen.route));
             if (taskStatus.isNew) {

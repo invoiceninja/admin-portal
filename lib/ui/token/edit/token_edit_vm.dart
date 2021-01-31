@@ -2,11 +2,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -74,11 +76,16 @@ class TokenEditVM {
         passwordCallback(
             context: context,
             callback: (password) {
+              final localization = AppLocalization.of(context);
               final Completer<TokenEntity> completer =
                   new Completer<TokenEntity>();
               store.dispatch(SaveTokenRequest(
                   completer: completer, token: token, password: password));
               return completer.future.then((savedToken) {
+                showToast(token.isNew
+                    ? localization.createdToken
+                    : localization.updatedToken);
+
                 if (isMobile(context)) {
                   store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
                   if (token.isNew) {

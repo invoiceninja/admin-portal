@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -102,10 +103,15 @@ class InvoiceEditVM extends EntityEditVM {
               });
           return null;
         }
+        final localization = AppLocalization.of(context);
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(
             SaveInvoiceRequest(completer: completer, invoice: invoice));
         return completer.future.then((savedInvoice) {
+          showToast(invoice.isNew
+              ? localization.createdInvoice
+              : localization.updatedInvoice);
+
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
             if (invoice.isNew) {
