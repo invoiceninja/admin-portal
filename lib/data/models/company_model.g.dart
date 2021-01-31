@@ -843,7 +843,7 @@ class _$UserCompanyEntitySerializer
           specifiedType: const FullType(bool)),
       'permissions_updated_at',
       serializers.serialize(object.permissionsUpdatedAt,
-          specifiedType: const FullType(bool)),
+          specifiedType: const FullType(int)),
       'permissions',
       serializers.serialize(object.permissions,
           specifiedType: const FullType(String)),
@@ -912,7 +912,7 @@ class _$UserCompanyEntitySerializer
           break;
         case 'permissions_updated_at':
           result.permissionsUpdatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(int)) as int;
           break;
         case 'permissions':
           result.permissions = serializers.deserialize(value,
@@ -4567,7 +4567,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final bool isOwner;
   @override
-  final bool permissionsUpdatedAt;
+  final int permissionsUpdatedAt;
   @override
   final String permissions;
   @override
@@ -4690,9 +4690,9 @@ class UserCompanyEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  bool _permissionsUpdatedAt;
-  bool get permissionsUpdatedAt => _$this._permissionsUpdatedAt;
-  set permissionsUpdatedAt(bool permissionsUpdatedAt) =>
+  int _permissionsUpdatedAt;
+  int get permissionsUpdatedAt => _$this._permissionsUpdatedAt;
+  set permissionsUpdatedAt(int permissionsUpdatedAt) =>
       _$this._permissionsUpdatedAt = permissionsUpdatedAt;
 
   String _permissions;
