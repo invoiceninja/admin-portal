@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'constants.dart';
 
-Color kColorBlue = convertHexStringToColor('#007BFF');
-Color kColorTeal = convertHexStringToColor('#17A2B8');
-Color kColorGreen = convertHexStringToColor('#28A745');
-Color kColorYellow = convertHexStringToColor('#FFC107');
-Color kColorRed = convertHexStringToColor('#DC3545');
+Color kColorBlue = convertHexStringToColor('#0275d8');
+Color kColorTeal = convertHexStringToColor('#5bc0de');
+Color kColorGreen = convertHexStringToColor('#5cb85c');
+Color kColorYellow = convertHexStringToColor('#f0ad4e');
+Color kColorRed = convertHexStringToColor('#d9534f');
 Color kColorGray = convertHexStringToColor('#6C757D');
 Color kColorDarkGray = convertHexStringToColor('#343A40');
 
