@@ -27,7 +27,18 @@ class EntityPresenter {
       return name;
     }
 
-    return isMobile(context) ? '$type: $name' : '$type  ›  $name';
+    if ([
+      EntityType.client,
+      EntityType.vendor,
+      EntityType.project,
+      EntityType.user,
+    ].contains(entity.entityType)) {
+      return name;
+    } else if (isMobile(context)) {
+      return '$type $name';
+    } else {
+      return '$type  ›  $name';
+    }
   }
 
   static List<String> getBaseFields() {
