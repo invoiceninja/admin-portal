@@ -219,7 +219,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                   ],
                 ),
                 actions: <Widget>[
-                  if (isDesktop(context) && _activityId == null)
+                  if (isDesktop(context) &&
+                      _activityId == null &&
+                      !invoice.isRecurring)
                     FlatButton(
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
