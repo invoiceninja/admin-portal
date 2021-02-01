@@ -82,7 +82,7 @@ class ViewScaffold extends StatelessWidget {
           actions: entity.isNew
               ? []
               : [
-                  if (isSettings)
+                  if (isSettings && isDesktop(context))
                     FlatButton(
                         onPressed: () {
                           onBackPressed != null
