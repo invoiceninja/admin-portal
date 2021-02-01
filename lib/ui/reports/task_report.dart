@@ -34,6 +34,7 @@ enum TaskReportFields {
   custom_value2,
   custom_value3,
   custom_value4,
+  status,
 }
 
 var memoizedTaskReport = memo10((
@@ -43,13 +44,23 @@ var memoizedTaskReport = memo10((
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, GroupEntity> groupMap,
   BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, TaskStatusEntity> taskStatusMap,
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) =>
-    taskReport(userCompany, reportsUIState, taskMap, invoiceMap, groupMap,
-        clientMap, vendorMap, userMap, projectMap, staticState));
+    taskReport(
+      userCompany,
+      reportsUIState,
+      taskMap,
+      invoiceMap,
+      groupMap,
+      clientMap,
+      taskStatusMap,
+      userMap,
+      projectMap,
+      staticState,
+    ));
 
 ReportResult taskReport(
   UserCompanyEntity userCompany,
@@ -58,7 +69,7 @@ ReportResult taskReport(
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, GroupEntity> groupMap,
   BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, TaskStatusEntity> taskStatusMap,
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
@@ -80,6 +91,7 @@ ReportResult taskReport(
     TaskReportFields.client,
     TaskReportFields.project,
     TaskReportFields.invoice,
+    TaskReportFields.status,
   ];
 
   if (taskReportSettings.columns.isNotEmpty) {
@@ -183,6 +195,9 @@ ReportResult taskReport(
           break;
         case TaskReportFields.custom_value4:
           value = task.customValue4;
+          break;
+        case TaskReportFields.status:
+          value = taskStatusMap[task.statusId]?.name ?? '';
           break;
       }
 
