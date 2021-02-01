@@ -665,11 +665,19 @@ class ReportResult {
   }
 
   static bool matchString({String filter, String value}) {
+    filter = filter.trim();
+
     if (filter == null || filter.isEmpty) {
       return true;
     }
 
-    return (value ?? '').toLowerCase().contains(filter.toLowerCase());
+    value = (value ?? '').toLowerCase();
+
+    if (filter == 'null' && value.isEmpty) {
+      return true;
+    }
+
+    return value.contains(filter.toLowerCase());
   }
 
   static bool matchAmount({String filter, num amount}) {
@@ -1032,7 +1040,7 @@ class ReportResult {
               EntityPresenter.isFieldLocalized(column)) {
             value = localization.lookup(group);
           } else {
-            value = group;
+            value = group == 'null' ? localization.blank : group;
           }
           value = value + ' (' + values['count'].floor().toString() + ')';
         } else if (columnType == ReportColumnType.number) {
