@@ -33,25 +33,37 @@ enum ExpenseReportFields {
   custom_value2,
   custom_value3,
   custom_value4,
+  category,
 }
 
-var memoizedExpenseReport = memo8((
+var memoizedExpenseReport = memo9((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    expenseReport(userCompany, reportsUIState, expenseMap, invoiceMap,
-        clientMap, vendorMap, userMap, staticState));
+    expenseReport(
+      userCompany,
+      reportsUIState,
+      expenseMap,
+      expenseCategoryMap,
+      invoiceMap,
+      clientMap,
+      vendorMap,
+      userMap,
+      staticState,
+    ));
 
 ReportResult expenseReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
@@ -73,6 +85,7 @@ ReportResult expenseReport(
     ExpenseReportFields.client,
     ExpenseReportFields.invoice,
     ExpenseReportFields.vendor,
+    ExpenseReportFields.category,
   ];
 
   if (expenseReportSettings.columns.isNotEmpty) {
@@ -170,6 +183,9 @@ ReportResult expenseReport(
           break;
         case ExpenseReportFields.custom_value4:
           value = expense.customValue4;
+          break;
+        case ExpenseReportFields.category:
+          value = expenseCategoryMap[expense.categoryId]?.name ?? '';
           break;
       }
 
