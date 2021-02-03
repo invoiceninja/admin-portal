@@ -21,6 +21,7 @@ enum ProfitAndLossReportFields {
   vendor_city,
   vendor_state,
   vendor_country,
+  type,
   amount,
   date
 }
@@ -58,6 +59,7 @@ ReportResult profitAndLossReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
+    ProfitAndLossReportFields.type,
     ProfitAndLossReportFields.amount,
     ProfitAndLossReportFields.client,
     ProfitAndLossReportFields.vendor,
@@ -85,6 +87,9 @@ ReportResult profitAndLossReport(
       dynamic value = '';
 
       switch (column) {
+        case ProfitAndLossReportFields.type:
+          value = EntityType.payment.toString();
+          break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
           break;
@@ -165,6 +170,9 @@ ReportResult profitAndLossReport(
       dynamic value = '';
 
       switch (column) {
+        case ProfitAndLossReportFields.type:
+          value = EntityType.expense.toString();
+          break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
           break;
@@ -174,8 +182,23 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.client_address2:
           value = client?.address2;
           break;
+        case ProfitAndLossReportFields.client_city:
+          value = client?.city;
+          break;
+        case ProfitAndLossReportFields.client_state:
+          value = client?.state;
+          break;
+        case ProfitAndLossReportFields.client_country:
+          value = staticState.countryMap[client?.countryId];
+          break;
         case ProfitAndLossReportFields.vendor:
           value = vendor?.listDisplayName;
+          break;
+        case ProfitAndLossReportFields.vendor_address1:
+          value = vendor?.address1;
+          break;
+        case ProfitAndLossReportFields.vendor_address2:
+          value = vendor?.address2;
           break;
         case ProfitAndLossReportFields.vendor_city:
           value = vendor?.city;

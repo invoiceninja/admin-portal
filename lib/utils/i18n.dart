@@ -1577,6 +1577,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_balance': 'Client Balance',
       'client_address1': 'Client Street',
       'client_address2': 'Client Apt/Suite',
+      'vendor_address1': 'Vendor Street',
+      'vendor_address2': 'Vendor Apt/Suite',
       'client_shipping_address1': 'Client Shipping Street',
       'client_shipping_address2': 'Client Shipping Apt/Suite',
       'type': 'Type',
@@ -52847,6 +52849,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get clientAddress2 =>
       _localizedValues[localeCode]['client_address2'] ?? '';
+
+  String get vendorAddress1 =>
+      _localizedValues[localeCode]['vendor_address1'] ?? '';
+
+  String get vendorAddress2 =>
+      _localizedValues[localeCode]['vendor_address2'] ?? '';
 
   String get type => _localizedValues[localeCode]['type'] ?? '';
 
