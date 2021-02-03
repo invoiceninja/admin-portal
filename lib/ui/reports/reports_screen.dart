@@ -1068,11 +1068,13 @@ class ReportResult {
               final date = DateTime.tryParse(group);
               customStartDate = group;
               if (reportState.subgroup == kReportGroupDay) {
-                customEndDate = convertDateTimeToSqlDate(addDays(date, 1));
+                customEndDate = convertDateTimeToSqlDate(date);
               } else if (reportState.subgroup == kReportGroupMonth) {
-                customEndDate = convertDateTimeToSqlDate(addMonths(date, 1));
+                customEndDate =
+                    convertDateTimeToSqlDate(addDays(addMonths(date, 1), -1));
               } else {
-                customEndDate = convertDateTimeToSqlDate(addYears(date, 1));
+                customEndDate =
+                    convertDateTimeToSqlDate(addDays(addYears(date, 1), -1));
               }
             } else if (getReportColumnType(column, context) ==
                 ReportColumnType.bool) {
