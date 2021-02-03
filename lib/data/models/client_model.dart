@@ -98,7 +98,7 @@ class ClientFields {
 abstract class ClientEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  factory ClientEntity({String id, AppState state}) {
+  factory ClientEntity({String id, AppState state, UserEntity user}) {
     return _$ClientEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -147,7 +147,7 @@ abstract class ClientEntity extends Object
       archivedAt: 0,
       isDeleted: false,
       createdUserId: '',
-      assignedUserId: '',
+      assignedUserId: user?.id ?? '',
       createdAt: 0,
       documents: BuiltList<DocumentEntity>(),
       clientHash: '',

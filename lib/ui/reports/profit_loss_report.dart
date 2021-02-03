@@ -12,28 +12,43 @@ enum ProfitAndLossReportFields {
   client,
   client_address1,
   client_address2,
-  client_shipping_address1,
-  client_shipping_address2,
+  client_city,
+  client_state,
+  client_country,
   vendor,
+  vendor_address1,
+  vendor_address2,
   vendor_city,
   vendor_state,
   vendor_country,
+  type,
   amount,
-  date
+  date,
+  category,
 }
 
-var memoizedProfitAndLossReport = memo8((
+var memoizedProfitAndLossReport = memo9((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    profitAndLossReport(userCompany, reportsUIState, clientMap, paymentMap,
-        expenseMap, vendorMap, userMap, staticState));
+    profitAndLossReport(
+      userCompany,
+      reportsUIState,
+      clientMap,
+      paymentMap,
+      expenseMap,
+      expenseCategoryMap,
+      vendorMap,
+      userMap,
+      staticState,
+    ));
 
 ReportResult profitAndLossReport(
   UserCompanyEntity userCompany,
@@ -41,6 +56,7 @@ ReportResult profitAndLossReport(
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
@@ -55,6 +71,7 @@ ReportResult profitAndLossReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
+    ProfitAndLossReportFields.type,
     ProfitAndLossReportFields.amount,
     ProfitAndLossReportFields.client,
     ProfitAndLossReportFields.vendor,
@@ -82,6 +99,9 @@ ReportResult profitAndLossReport(
       dynamic value = '';
 
       switch (column) {
+        case ProfitAndLossReportFields.type:
+          value = EntityType.payment;
+          break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
           break;
@@ -91,14 +111,23 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.client_address2:
           value = client?.address2;
           break;
-        case ProfitAndLossReportFields.client_shipping_address1:
-          value = client?.shippingAddress1;
+        case ProfitAndLossReportFields.client_city:
+          value = client?.city;
           break;
-        case ProfitAndLossReportFields.client_shipping_address2:
-          value = client?.shippingAddress2;
+        case ProfitAndLossReportFields.client_state:
+          value = client?.state;
+          break;
+        case ProfitAndLossReportFields.client_country:
+          value = staticState.countryMap[client?.countryId];
           break;
         case ProfitAndLossReportFields.vendor:
           value = vendor?.listDisplayName;
+          break;
+        case ProfitAndLossReportFields.vendor_address1:
+          value = vendor?.address1;
+          break;
+        case ProfitAndLossReportFields.vendor_address2:
+          value = vendor?.address2;
           break;
         case ProfitAndLossReportFields.vendor_city:
           value = vendor?.city;
@@ -115,6 +144,9 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.date:
           value = payment?.date;
           break;
+        case ProfitAndLossReportFields.category:
+          value = '';
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -126,7 +158,9 @@ ReportResult profitAndLossReport(
         skip = true;
       }
 
-      if (value.runtimeType == bool) {
+      if (value.runtimeType == EntityType) {
+        row.add(payment.getReportEntityType());
+      } else if (value.runtimeType == bool) {
         row.add(payment.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(payment.getReportDouble(
@@ -153,6 +187,9 @@ ReportResult profitAndLossReport(
       dynamic value = '';
 
       switch (column) {
+        case ProfitAndLossReportFields.type:
+          value = EntityType.expense;
+          break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
           break;
@@ -162,14 +199,23 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.client_address2:
           value = client?.address2;
           break;
-        case ProfitAndLossReportFields.client_shipping_address1:
-          value = client?.shippingAddress1;
+        case ProfitAndLossReportFields.client_city:
+          value = client?.city;
           break;
-        case ProfitAndLossReportFields.client_shipping_address2:
-          value = client?.shippingAddress2;
+        case ProfitAndLossReportFields.client_state:
+          value = client?.state;
+          break;
+        case ProfitAndLossReportFields.client_country:
+          value = staticState.countryMap[client?.countryId];
           break;
         case ProfitAndLossReportFields.vendor:
           value = vendor?.listDisplayName;
+          break;
+        case ProfitAndLossReportFields.vendor_address1:
+          value = vendor?.address1;
+          break;
+        case ProfitAndLossReportFields.vendor_address2:
+          value = vendor?.address2;
           break;
         case ProfitAndLossReportFields.vendor_city:
           value = vendor?.city;
@@ -186,6 +232,9 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.date:
           value = expense.date;
           break;
+        case ProfitAndLossReportFields.category:
+          value = expenseCategoryMap[expense.categoryId]?.name ?? '';
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -197,7 +246,9 @@ ReportResult profitAndLossReport(
         skip = true;
       }
 
-      if (value.runtimeType == bool) {
+      if (value.runtimeType == EntityType) {
+        row.add(expense.getReportEntityType());
+      } else if (value.runtimeType == bool) {
         row.add(expense.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(expense.getReportDouble(

@@ -1575,10 +1575,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_country': 'Client Country',
       'client_is_active': 'Client is Active',
       'client_balance': 'Client Balance',
-      'client_address1': 'Client Address 1',
-      'client_address2': 'Client Address 2',
-      'client_shipping_address1': 'Client Shipping Address 1',
-      'client_shipping_address2': 'Client Shipping Address 2',
+      'client_address1': 'Client Street',
+      'client_address2': 'Client Apt/Suite',
+      'vendor_address1': 'Vendor Street',
+      'vendor_address2': 'Vendor Apt/Suite',
+      'client_shipping_address1': 'Client Shipping Street',
+      'client_shipping_address2': 'Client Shipping Apt/Suite',
       'type': 'Type',
       'invoice_amount': 'Invoice Amount',
       'invoice_due_date': 'Invoice Due Date',
@@ -3191,8 +3193,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_balance': 'Client Balance',
       'client_address1': 'Client Address 1',
       'client_address2': 'Client Address 2',
-      'client_shipping_address1': 'Client Shipping Address 1',
-      'client_shipping_address2': 'Client Shipping Address 2',
       'type': 'Shkruaj',
       'invoice_amount': 'Shuma e faturës',
       'invoice_due_date': 'Deri më datë',
@@ -52850,11 +52850,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientAddress2 =>
       _localizedValues[localeCode]['client_address2'] ?? '';
 
-  String get clientShippingAddress1 =>
-      _localizedValues[localeCode]['client_shipping_address1'] ?? '';
+  String get vendorAddress1 =>
+      _localizedValues[localeCode]['vendor_address1'] ?? '';
 
-  String get clientShippingAddress2 =>
-      _localizedValues[localeCode]['client_shipping_address2'] ?? '';
+  String get vendorAddress2 =>
+      _localizedValues[localeCode]['vendor_address2'] ?? '';
 
   String get type => _localizedValues[localeCode]['type'] ?? '';
 

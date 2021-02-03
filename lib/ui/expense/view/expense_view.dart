@@ -91,7 +91,7 @@ class _ExpenseViewState extends State<ExpenseView>
               action1: EntityAction.clone,
               action2: expense.isInvoiced
                   ? EntityAction.archive
-                  : EntityAction.newInvoice,
+                  : EntityAction.invoiceExpense,
             )
           ],
         );

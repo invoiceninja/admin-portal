@@ -29,7 +29,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
       final start =
           formatDate(time.startDate.toIso8601String(), context, showTime: true);
       final end = formatDate(time.endDate.toIso8601String(), context,
-          showTime: true, showDate: false, showSeconds: false);
+          showTime: true, showDate: false, showSeconds: true);
       notes += '\n$start - $end';
     });
     notes += '\n</span>';

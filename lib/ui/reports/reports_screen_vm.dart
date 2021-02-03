@@ -226,6 +226,7 @@ class ReportsScreenVM {
           state.clientState.map,
           state.paymentState.map,
           state.expenseState.map,
+          state.expenseCategoryState.map,
           state.vendorState.map,
           state.userState.map,
           state.staticState,
@@ -458,22 +459,23 @@ GroupTotals calculateReportTotals({
         continue;
       }
 
-      dynamic group = row[columnIndex].value;
-      if (reportState.group == 'age') {
-        if (group < 30) {
+      final groupCell = row[columnIndex];
+      String group = groupCell.stringValue;
+
+      if (groupCell is ReportAgeValue) {
+        final age = groupCell.doubleValue;
+        if (age < 30) {
           group = kAgeGroup0;
-        } else if (group < 60) {
+        } else if (age < 60) {
           group = kAgeGroup30;
-        } else if (group < 90) {
+        } else if (age < 90) {
           group = kAgeGroup60;
-        } else if (group < 120) {
+        } else if (age < 120) {
           group = kAgeGroup90;
         } else {
           group = kAgeGroup120;
         }
-      } else if (group.runtimeType == String &&
-          (group as String).isNotEmpty &&
-          isValidDate(group)) {
+      } else if (group.isNotEmpty && isValidDate(group)) {
         group = convertDateTimeToSqlDate(DateTime.tryParse(group));
         if (reportState.subgroup == kReportGroupYear) {
           group = group.substring(0, 4) + '-01-01';
@@ -482,18 +484,19 @@ GroupTotals calculateReportTotals({
         }
       }
 
-      if (!totals.containsKey('$group')) {
-        totals['$group'] = {'count': 0};
+      if (!totals.containsKey(group)) {
+        totals[group] = {'count': 0};
       }
       if (column == reportState.group) {
-        totals['$group']['count'] += 1;
+        totals[group]['count'] += 1;
       }
       if (cell is ReportNumberValue ||
           cell is ReportAgeValue ||
           cell is ReportDurationValue) {
-        if (!totals['$group'].containsKey(column)) {
-          totals['$group'][column] = 0;
+        if (!totals[group].containsKey(column)) {
+          totals[group][column] = 0;
         }
+
         if (cell is ReportNumberValue &&
             cell.currencyId != company.currencyId) {
           double cellValue = cell.value;
@@ -503,10 +506,10 @@ GroupTotals calculateReportTotals({
                 fromCurrencyId: cell.currencyId,
                 toCurrencyId: company.currencyId);
           }
-          cellValue = cellValue * 1 / cell.exchangeRate;
-          totals['$group'][column] += cellValue;
+          cellValue = cellValue * 1 / rate;
+          totals[group][column] += cellValue;
         } else {
-          totals['$group'][column] += cell.value;
+          totals[group][column] += cell.doubleValue;
         }
       }
     }
