@@ -1003,6 +1003,7 @@ class ReportResult {
     final reportState = state.uiState.reportsUIState;
     final groupBy = reportState.group;
     final sorted = sortedColumns(reportState);
+
     if (groupBy.isEmpty || reportState.isGroupByFiltered) {
       final row = data[index - 1];
       final cells = <DataCell>[];

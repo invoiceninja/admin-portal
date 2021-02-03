@@ -494,6 +494,7 @@ GroupTotals calculateReportTotals({
         if (!totals['$group'].containsKey(column)) {
           totals['$group'][column] = 0;
         }
+
         if (cell is ReportNumberValue &&
             cell.currencyId != company.currencyId) {
           double cellValue = cell.value;
@@ -503,7 +504,7 @@ GroupTotals calculateReportTotals({
                 fromCurrencyId: cell.currencyId,
                 toCurrencyId: company.currencyId);
           }
-          cellValue = cellValue * 1 / cell.exchangeRate;
+          cellValue = cellValue * 1 / rate;
           totals['$group'][column] += cellValue;
         } else {
           totals['$group'][column] += cell.value;

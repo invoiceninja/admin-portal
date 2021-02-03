@@ -74,7 +74,7 @@ class VendorFields {
 abstract class VendorEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<VendorEntity, VendorEntityBuilder> {
-  factory VendorEntity({String id, AppState state}) {
+  factory VendorEntity({String id, AppState state, UserEntity user}) {
     return _$VendorEntity._(
       id: id ?? BaseEntity.nextId,
       number: '',
@@ -105,9 +105,9 @@ abstract class VendorEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
-      assignedUserId: '',
-      createdAt: 0,
+      assignedUserId: user?.id ?? '',
       createdUserId: '',
+      createdAt: 0,
       documents: BuiltList<DocumentEntity>(),
     );
   }

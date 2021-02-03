@@ -646,7 +646,10 @@ void createEntityByType({
         switch (entityType) {
           case EntityType.client:
             store.dispatch(EditClient(
-                client: ClientEntity(state: state),
+                client: ClientEntity(
+                  state: state,
+                  user: user,
+                ),
                 navigator: navigator,
                 force: force));
             break;
@@ -708,7 +711,10 @@ void createEntityByType({
             store.dispatch(EditVendor(
                 navigator: navigator,
                 force: force,
-                vendor: VendorEntity(state: state)));
+                vendor: VendorEntity(
+                  state: state,
+                  user: user,
+                )));
             break;
           case EntityType.product:
             store.dispatch(EditProduct(
