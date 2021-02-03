@@ -23,21 +23,32 @@ enum ProfitAndLossReportFields {
   vendor_country,
   type,
   amount,
-  date
+  date,
+  category,
 }
 
-var memoizedProfitAndLossReport = memo8((
+var memoizedProfitAndLossReport = memo9((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    profitAndLossReport(userCompany, reportsUIState, clientMap, paymentMap,
-        expenseMap, vendorMap, userMap, staticState));
+    profitAndLossReport(
+      userCompany,
+      reportsUIState,
+      clientMap,
+      paymentMap,
+      expenseMap,
+      expenseCategoryMap,
+      vendorMap,
+      userMap,
+      staticState,
+    ));
 
 ReportResult profitAndLossReport(
   UserCompanyEntity userCompany,
@@ -45,6 +56,7 @@ ReportResult profitAndLossReport(
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
@@ -132,6 +144,9 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.date:
           value = payment?.date;
           break;
+        case ProfitAndLossReportFields.category:
+          value = '';
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -216,6 +231,9 @@ ReportResult profitAndLossReport(
           break;
         case ProfitAndLossReportFields.date:
           value = expense.date;
+          break;
+        case ProfitAndLossReportFields.category:
+          value = expenseCategoryMap[expense.categoryId]?.name ?? '';
           break;
       }
 

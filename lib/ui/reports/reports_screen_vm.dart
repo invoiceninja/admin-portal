@@ -226,6 +226,7 @@ class ReportsScreenVM {
           state.clientState.map,
           state.paymentState.map,
           state.expenseState.map,
+          state.expenseCategoryState.map,
           state.vendorState.map,
           state.userState.map,
           state.staticState,
