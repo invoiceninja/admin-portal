@@ -79,9 +79,18 @@ class CompanyGatewayScreen extends StatelessWidget {
         ],
         SaveCancelButtons(
           isEnabled: state.uiState.settingsUIState.isChanged,
+          isCancelEnabled: true,
           isSaving: state.isSaving,
           onSavePressed: viewModel.onSavePressed,
-          onCancelPressed: (_) => store.dispatch(ResetSettings()),
+          onCancelPressed: (_) {
+            if (state.uiState.settingsUIState.isChanged) {
+              store.dispatch(ResetSettings());
+            } else {
+              store.dispatch(ViewSettings(
+                  navigator: Navigator.of(context),
+                  section: kSettingsOnlinePayments));
+            }
+          },
         )
       ],
       body: CompanyGatewayListBuilder(),
