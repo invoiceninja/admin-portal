@@ -1176,7 +1176,7 @@ class ReportResult {
           if (!totals[currencyId].containsKey(column)) {
             totals[currencyId][column] = 0;
           }
-          totals[currencyId][column] += cell.value;
+          totals[currencyId][column] += cell.doubleValue;
         }
       }
     }
@@ -1259,11 +1259,14 @@ class ReportResult {
 }
 
 abstract class ReportElement {
-  ReportElement({this.value, this.entityType, this.entityId});
+  ReportElement({this.entityType, this.entityId});
 
-  final dynamic value;
   final EntityType entityType;
   final String entityId;
+
+  double get doubleValue => 0;
+
+  String get stringValue => '';
 
   Widget renderWidget(BuildContext context, String column) {
     throw 'Error: need to override renderWidget()';
@@ -1276,10 +1279,15 @@ abstract class ReportElement {
 
 class ReportStringValue extends ReportElement {
   ReportStringValue({
-    dynamic value,
-    EntityType entityType,
-    String entityId,
-  }) : super(value: value, entityType: entityType, entityId: entityId);
+    @required this.value,
+    @required EntityType entityType,
+    @required String entityId,
+  }) : super(entityType: entityType, entityId: entityId);
+
+  final String value;
+
+  @override
+  String get stringValue => value;
 
   @override
   Widget renderWidget(BuildContext context, String column) {
@@ -1303,10 +1311,15 @@ class ReportStringValue extends ReportElement {
 
 class ReportEntityTypeValue extends ReportElement {
   ReportEntityTypeValue({
-    dynamic value,
-    EntityType entityType,
-    String entityId,
-  }) : super(value: value, entityType: entityType, entityId: entityId);
+    @required this.value,
+    @required EntityType entityType,
+    @required String entityId,
+  }) : super(entityType: entityType, entityId: entityId);
+
+  final EntityType value;
+
+  @override
+  String get stringValue => '$value';
 
   @override
   Widget renderWidget(BuildContext context, String column) {
@@ -1321,13 +1334,20 @@ class ReportEntityTypeValue extends ReportElement {
 
 class ReportAgeValue extends ReportElement {
   ReportAgeValue({
-    @required dynamic value,
+    @required this.value,
     @required EntityType entityType,
     @required String entityId,
     @required this.currencyId,
-  }) : super(value: value, entityType: entityType, entityId: entityId);
+  }) : super(entityType: entityType, entityId: entityId);
 
+  final int value;
   final String currencyId;
+
+  @override
+  String get stringValue => '$value';
+
+  @override
+  double get doubleValue => value.toDouble();
 
   @override
   Widget renderWidget(BuildContext context, String column) {
@@ -1342,13 +1362,20 @@ class ReportAgeValue extends ReportElement {
 
 class ReportDurationValue extends ReportElement {
   ReportDurationValue({
-    @required dynamic value,
+    @required this.value,
     @required EntityType entityType,
     @required String entityId,
     @required this.currencyId,
-  }) : super(value: value, entityType: entityType, entityId: entityId);
+  }) : super(entityType: entityType, entityId: entityId);
 
+  final int value;
   final String currencyId;
+
+  @override
+  String get stringValue => '$value';
+
+  @override
+  double get doubleValue => value.toDouble();
 
   @override
   Widget renderWidget(BuildContext context, String column) {
@@ -1363,10 +1390,18 @@ class ReportDurationValue extends ReportElement {
 
 class ReportIntValue extends ReportElement {
   ReportIntValue({
-    dynamic value,
+    this.value,
     EntityType entityType,
     String entityId,
-  }) : super(value: value, entityType: entityType, entityId: entityId);
+  }) : super(entityType: entityType, entityId: entityId);
+
+  final int value;
+
+  @override
+  String get stringValue => '$value';
+
+  @override
+  double get doubleValue => value.toDouble();
 
   @override
   Widget renderWidget(BuildContext context, String column) {
@@ -1382,17 +1417,24 @@ class ReportIntValue extends ReportElement {
 
 class ReportNumberValue extends ReportElement {
   ReportNumberValue({
-    dynamic value,
-    EntityType entityType,
-    String entityId,
-    this.currencyId,
-    this.exchangeRate,
+    @required this.value,
+    @required EntityType entityType,
+    @required String entityId,
+    @required this.currencyId,
+    @required this.exchangeRate,
     this.formatNumberType = FormatNumberType.money,
-  }) : super(value: value, entityType: entityType, entityId: entityId);
+  }) : super(entityType: entityType, entityId: entityId);
 
+  final double value;
   final FormatNumberType formatNumberType;
   final String currencyId;
   final double exchangeRate;
+
+  @override
+  double get doubleValue => value;
+
+  @override
+  String get stringValue => '$value';
 
   @override
   Widget renderWidget(BuildContext context, String column) {
@@ -1408,10 +1450,15 @@ class ReportNumberValue extends ReportElement {
 
 class ReportBoolValue extends ReportElement {
   ReportBoolValue({
-    dynamic value,
-    EntityType entityType,
-    String entityId,
-  }) : super(value: value, entityType: entityType, entityId: entityId);
+    @required this.value,
+    @required EntityType entityType,
+    @required String entityId,
+  }) : super(entityType: entityType, entityId: entityId);
+
+  final bool value;
+
+  @override
+  String get stringValue => '$value';
 
   @override
   Widget renderWidget(BuildContext context, String column) {
