@@ -12,9 +12,12 @@ enum ProfitAndLossReportFields {
   client,
   client_address1,
   client_address2,
-  client_shipping_address1,
-  client_shipping_address2,
+  client_city,
+  client_state,
+  client_country,
   vendor,
+  vendor_address1,
+  vendor_address2,
   vendor_city,
   vendor_state,
   vendor_country,
@@ -91,14 +94,23 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.client_address2:
           value = client?.address2;
           break;
-        case ProfitAndLossReportFields.client_shipping_address1:
-          value = client?.shippingAddress1;
+        case ProfitAndLossReportFields.client_city:
+          value = client?.city;
           break;
-        case ProfitAndLossReportFields.client_shipping_address2:
-          value = client?.shippingAddress2;
+        case ProfitAndLossReportFields.client_state:
+          value = client?.state;
+          break;
+        case ProfitAndLossReportFields.client_country:
+          value = staticState.countryMap[client?.countryId];
           break;
         case ProfitAndLossReportFields.vendor:
           value = vendor?.listDisplayName;
+          break;
+        case ProfitAndLossReportFields.vendor_address1:
+          value = vendor?.address1;
+          break;
+        case ProfitAndLossReportFields.vendor_address2:
+          value = vendor?.address2;
           break;
         case ProfitAndLossReportFields.vendor_city:
           value = vendor?.city;
@@ -161,12 +173,6 @@ ReportResult profitAndLossReport(
           break;
         case ProfitAndLossReportFields.client_address2:
           value = client?.address2;
-          break;
-        case ProfitAndLossReportFields.client_shipping_address1:
-          value = client?.shippingAddress1;
-          break;
-        case ProfitAndLossReportFields.client_shipping_address2:
-          value = client?.shippingAddress2;
           break;
         case ProfitAndLossReportFields.vendor:
           value = vendor?.listDisplayName;
