@@ -65,8 +65,7 @@ class ExpenseEditVM {
         store.dispatch(UpdateExpense(expense));
       },
       onCancelPressed: (BuildContext context) {
-        createEntityByType(
-            context: context, entityType: EntityType.expense, force: true);
+        createEntity(context: context, entity: ExpenseEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onAddClientPressed: (context, completer) {

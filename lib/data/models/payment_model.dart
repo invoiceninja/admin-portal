@@ -69,7 +69,7 @@ class PaymentFields {
 abstract class PaymentEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<PaymentEntity, PaymentEntityBuilder> {
-  factory PaymentEntity({String id, AppState state}) {
+  factory PaymentEntity({String id, AppState state, ClientEntity client}) {
     return _$PaymentEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -80,7 +80,7 @@ abstract class PaymentEntity extends Object
               (state.company.settings.defaultPaymentTypeId ?? '').isNotEmpty
           ? state.company.settings.defaultPaymentTypeId
           : '',
-      clientId: '',
+      clientId: client?.id ?? '',
       privateNotes: '',
       exchangeRate: 0.0,
       exchangeCurrencyId: '',

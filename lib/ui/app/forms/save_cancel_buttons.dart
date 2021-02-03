@@ -13,9 +13,11 @@ class SaveCancelButtons extends StatelessWidget {
     this.isHeader = true,
     this.isSaving = false,
     this.isEnabled = true,
+    this.isCancelEnabled = false,
   });
 
   final bool isEnabled;
+  final bool isCancelEnabled;
   final bool isSaving;
   final String saveLabel;
   final String cancelLabel;
@@ -39,7 +41,9 @@ class SaveCancelButtons extends StatelessWidget {
                     ? TextStyle(color: store.state.headerTextColor)
                     : null,
               ),
-              onPressed: isEnabled ? () => onCancelPressed(context) : null,
+              onPressed: isEnabled || isCancelEnabled
+                  ? () => onCancelPressed(context)
+                  : null,
             );
           }),
         SizedBox(width: 10),

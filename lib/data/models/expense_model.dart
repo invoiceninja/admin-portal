@@ -86,8 +86,14 @@ class ExpenseFields {
 abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
-  factory ExpenseEntity(
-      {String id, AppState state, VendorEntity vendor, ClientEntity client}) {
+  factory ExpenseEntity({
+    String id,
+    AppState state,
+    VendorEntity vendor,
+    ClientEntity client,
+    UserEntity user,
+    ProjectEntity project,
+  }) {
     final company = state?.company;
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
@@ -125,8 +131,9 @@ abstract class ExpenseEntity extends Object
       taxAmount3: 0,
       usesInclusiveTaxes: company?.expenseInclusiveTaxes ?? false,
       calculateTaxByAmount: company?.calculateExpenseTaxByAmount ?? false,
-      clientId: client?.id,
+      clientId: project?.clientId ?? client?.id,
       vendorId: vendor?.id,
+      projectId: project?.id,
       invoiceId: '',
       categoryId: '',
       customValue1: '',
@@ -135,7 +142,7 @@ abstract class ExpenseEntity extends Object
       customValue4: '',
       isDeleted: false,
       createdAt: 0,
-      assignedUserId: '',
+      assignedUserId: user?.id ?? '',
       createdUserId: '',
       archivedAt: 0,
       updatedAt: 0,
