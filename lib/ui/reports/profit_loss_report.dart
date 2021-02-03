@@ -88,7 +88,7 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.type:
-          value = EntityType.payment.toString();
+          value = EntityType.payment;
           break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
@@ -143,7 +143,9 @@ ReportResult profitAndLossReport(
         skip = true;
       }
 
-      if (value.runtimeType == bool) {
+      if (value.runtimeType == EntityType) {
+        row.add(payment.getReportEntityType());
+      } else if (value.runtimeType == bool) {
         row.add(payment.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(payment.getReportDouble(
@@ -171,7 +173,7 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.type:
-          value = EntityType.expense.toString();
+          value = EntityType.expense;
           break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
@@ -226,7 +228,9 @@ ReportResult profitAndLossReport(
         skip = true;
       }
 
-      if (value.runtimeType == bool) {
+      if (value.runtimeType == EntityType) {
+        row.add(expense.getReportEntityType());
+      } else if (value.runtimeType == bool) {
         row.add(expense.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(expense.getReportDouble(

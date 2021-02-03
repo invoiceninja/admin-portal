@@ -646,7 +646,7 @@ class ReportResult {
             return false;
           }
         } else if (value.runtimeType == EntityType) {
-          return filter == localization.lookup('$value');
+          return filter.toLowerCase() == '$value'.toLowerCase();
         } else if (isValidDate(value)) {
           if (!ReportResult.matchDateTime(
               filter: filter,
