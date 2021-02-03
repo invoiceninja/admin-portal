@@ -483,17 +483,17 @@ GroupTotals calculateReportTotals({
         }
       }
 
-      if (!totals.containsKey('$group')) {
-        totals['$group'] = {'count': 0};
+      if (!totals.containsKey(group)) {
+        totals[group] = {'count': 0};
       }
       if (column == reportState.group) {
-        totals['$group']['count'] += 1;
+        totals[group]['count'] += 1;
       }
       if (cell is ReportNumberValue ||
           cell is ReportAgeValue ||
           cell is ReportDurationValue) {
-        if (!totals['$group'].containsKey(column)) {
-          totals['$group'][column] = 0;
+        if (!totals[group].containsKey(column)) {
+          totals[group][column] = 0;
         }
 
         if (cell is ReportNumberValue &&
@@ -506,9 +506,9 @@ GroupTotals calculateReportTotals({
                 toCurrencyId: company.currencyId);
           }
           cellValue = cellValue * 1 / rate;
-          totals['$group'][column] += cellValue;
+          totals[group][column] += cellValue;
         } else {
-          totals['$group'][column] += cell.doubleValue;
+          totals[group][column] += cell.doubleValue;
         }
       }
     }
