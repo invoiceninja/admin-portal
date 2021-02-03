@@ -108,6 +108,7 @@ abstract class InvoiceEntity extends Object
     String id,
     AppState state,
     ClientEntity client,
+    UserEntity user,
     EntityType entityType,
   }) {
     final company = state?.company;
@@ -177,7 +178,7 @@ abstract class InvoiceEntity extends Object
       archivedAt: 0,
       isDeleted: false,
       createdUserId: '',
-      assignedUserId: '',
+      assignedUserId: user?.id ?? '',
       createdAt: 0,
       loadedAt: 0,
       reminder1Sent: '',

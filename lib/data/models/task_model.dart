@@ -202,7 +202,13 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 abstract class TaskEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<TaskEntity, TaskEntityBuilder> {
-  factory TaskEntity({String id, AppState state}) {
+  factory TaskEntity({
+    String id,
+    AppState state,
+    ClientEntity client,
+    UserEntity user,
+    ProjectEntity project,
+  }) {
     final isRunning = state?.company?.autoStartTasks ?? false;
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
@@ -212,8 +218,8 @@ abstract class TaskEntity extends Object
       duration: 0,
       rate: 0,
       invoiceId: '',
-      clientId: '',
-      projectId: '',
+      clientId: project?.clientId ?? client?.id ?? '',
+      projectId: project?.id ?? '',
       timeLog: isRunning
           ? '[[${(DateTime.now().millisecondsSinceEpoch / 1000).floor()},0]]'
           : '[]',
@@ -224,7 +230,7 @@ abstract class TaskEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
-      assignedUserId: '',
+      assignedUserId: user?.id ?? '',
       createdAt: 0,
       createdUserId: '',
       statusId: '',

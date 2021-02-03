@@ -595,8 +595,12 @@ void viewEntityById({
       });
 }
 
-void createEntityByType(
-    {BuildContext context, EntityType entityType, bool force = false}) {
+void createEntityByType({
+  BuildContext context,
+  EntityType entityType,
+  bool force = false,
+  bool applyFilter = true,
+}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final navigator = Navigator.of(context);
@@ -612,6 +616,31 @@ void createEntityByType(
       callback: () {
         if (state.uiState.previewStack.isNotEmpty) {
           store.dispatch(ClearPreviewStack());
+        }
+
+        final filterEntityId = state.uiState.filterEntityId;
+        final filterEntityType = state.uiState.filterEntityType;
+        ClientEntity client;
+        ProjectEntity project;
+        VendorEntity vendor;
+        UserEntity user;
+
+        if (applyFilter && filterEntityType != null) {
+          switch (filterEntityType) {
+            case EntityType.client:
+              client = state.clientState.get(filterEntityId);
+              break;
+            case EntityType.project:
+              project = state.projectState.get(filterEntityId);
+              client = state.clientState.get(project.clientId);
+              break;
+            case EntityType.vendor:
+              vendor = state.vendorState.get(filterEntityId);
+              break;
+            case EntityType.user:
+              user = state.userState.get(filterEntityId);
+              break;
+          }
         }
 
         switch (entityType) {
@@ -635,7 +664,11 @@ void createEntityByType(
             store.dispatch(EditProject(
                 navigator: navigator,
                 force: force,
-                project: ProjectEntity(state: state)));
+                project: ProjectEntity(
+                  state: state,
+                  client: client,
+                  user: user,
+                )));
             break;
           case EntityType.taxRate:
             store.dispatch(EditTaxRate(
@@ -653,7 +686,11 @@ void createEntityByType(
             store.dispatch(EditInvoice(
               navigator: navigator,
               force: force,
-              invoice: InvoiceEntity(state: state),
+              invoice: InvoiceEntity(
+                state: state,
+                client: client,
+                user: user,
+              ),
             ));
             break;
           case EntityType.quote:
@@ -663,6 +700,8 @@ void createEntityByType(
                 quote: InvoiceEntity(
                   state: state,
                   entityType: EntityType.quote,
+                  client: client,
+                  user: user,
                 )));
             break;
           case EntityType.vendor:
@@ -681,20 +720,34 @@ void createEntityByType(
             store.dispatch(EditTask(
               navigator: navigator,
               force: force,
-              task: TaskEntity(state: state),
+              task: TaskEntity(
+                state: state,
+                client: client,
+                project: project,
+                user: user,
+              ),
             ));
             break;
           case EntityType.expense:
             store.dispatch(EditExpense(
                 navigator: navigator,
                 force: force,
-                expense: ExpenseEntity(state: state)));
+                expense: ExpenseEntity(
+                  state: state,
+                  client: client,
+                  vendor: vendor,
+                  user: user,
+                  project: project,
+                )));
             break;
           case EntityType.payment:
             store.dispatch(EditPayment(
                 navigator: navigator,
                 force: force,
-                payment: PaymentEntity(state: state)));
+                payment: PaymentEntity(
+                  state: state,
+                  client: client,
+                )));
             break;
           case EntityType.group:
             store.dispatch(EditGroup(
@@ -723,7 +776,11 @@ void createEntityByType(
               navigator: navigator,
               force: force,
               recurringInvoice: InvoiceEntity(
-                  state: state, entityType: EntityType.recurringInvoice),
+                state: state,
+                entityType: EntityType.recurringInvoice,
+                client: client,
+                user: user,
+              ),
             ));
             break;
           case EntityType.webhook:
@@ -761,6 +818,8 @@ void createEntityByType(
               credit: InvoiceEntity(
                 state: state,
                 entityType: EntityType.credit,
+                user: user,
+                client: client,
               ),
             ));
             break;

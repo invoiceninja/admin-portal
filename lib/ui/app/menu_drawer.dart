@@ -475,7 +475,11 @@ class _DrawerTileState extends State<DrawerTile> {
             if (isMobile(context)) {
               navigator.pop();
             }
-            createEntityByType(context: context, entityType: widget.entityType);
+            createEntityByType(
+              context: context,
+              entityType: widget.entityType,
+              applyFilter: false,
+            );
           },
         );
       }
@@ -517,7 +521,10 @@ class _DrawerTileState extends State<DrawerTile> {
             ? widget.onLongPress()
             : widget.entityType != null
                 ? createEntityByType(
-                    context: context, entityType: widget.entityType)
+                    context: context,
+                    entityType: widget.entityType,
+                    applyFilter: false,
+                  )
                 : null,
         /*
             trailing: _isHovered ||

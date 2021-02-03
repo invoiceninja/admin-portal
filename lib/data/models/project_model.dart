@@ -67,14 +67,19 @@ class ProjectFields {
 abstract class ProjectEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ProjectEntity, ProjectEntityBuilder> {
-  factory ProjectEntity({String id, AppState state}) {
+  factory ProjectEntity({
+    String id,
+    AppState state,
+    ClientEntity client,
+    UserEntity user,
+  }) {
     return _$ProjectEntity._(
       id: id ?? BaseEntity.nextId,
       number: '',
       isChanged: false,
       name: '',
       color: '',
-      clientId: '',
+      clientId: client?.id ?? '',
       taskRate: 0.0,
       dueDate: '',
       privateNotes: '',
@@ -89,7 +94,7 @@ abstract class ProjectEntity extends Object
       isDeleted: false,
       createdUserId: '',
       createdAt: 0,
-      assignedUserId: '',
+      assignedUserId: user?.id ?? '',
       documents: BuiltList<DocumentEntity>(),
     );
   }
