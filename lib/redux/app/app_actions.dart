@@ -656,9 +656,6 @@ void createEntityByType(
               invoice: InvoiceEntity(state: state),
             ));
             break;
-          //case EntityType.recurringInvoice:
-          //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
-          //break;
           case EntityType.quote:
             store.dispatch(EditQuote(
                 navigator: navigator,
@@ -693,12 +690,6 @@ void createEntityByType(
                 force: force,
                 expense: ExpenseEntity(state: state)));
             break;
-          //case EntityType.expenseCategory:
-          //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
-          //break;
-          //case EntityType.credit:
-          //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
-          //break;
           case EntityType.payment:
             store.dispatch(EditPayment(
                 navigator: navigator,
@@ -720,7 +711,6 @@ void createEntityByType(
               taskStatus: TaskStatusEntity(state: state),
             ));
             break;
-
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
               navigator: navigator,
@@ -728,7 +718,6 @@ void createEntityByType(
               expenseCategory: ExpenseCategoryEntity(state: state),
             ));
             break;
-
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
               navigator: navigator,
@@ -737,7 +726,6 @@ void createEntityByType(
                   state: state, entityType: EntityType.recurringInvoice),
             ));
             break;
-
           case EntityType.webhook:
             store.dispatch(EditWebhook(
               navigator: navigator,
@@ -745,7 +733,6 @@ void createEntityByType(
               webhook: WebhookEntity(state: state),
             ));
             break;
-
           case EntityType.token:
             store.dispatch(EditToken(
               navigator: navigator,
@@ -753,7 +740,6 @@ void createEntityByType(
               token: TokenEntity(state: state),
             ));
             break;
-
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
               navigator: navigator,
