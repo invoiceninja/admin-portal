@@ -69,7 +69,7 @@ class ExpensePresenter extends EntityPresenter {
         return Text((state.clientState.map[expense.clientId] ?? ClientEntity())
             .listDisplayName);
       case ExpenseFields.expenseDate:
-        return Text(formatDate(expense.paymentDate, context));
+        return Text(formatDate(expense.date, context));
       case ExpenseFields.netAmount:
         return Text(formatNumber(expense.netAmount, context,
             currencyId: expense.currencyId));
