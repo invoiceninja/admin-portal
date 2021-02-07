@@ -5,14 +5,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class PasswordFormField extends StatefulWidget {
   const PasswordFormField({
     this.controller,
-    this.textInputAction,
     this.autoValidate,
     this.newPassword = true,
     this.labelText,
   });
 
   final TextEditingController controller;
-  final TextInputAction textInputAction;
   final bool autoValidate;
   final bool newPassword;
   final String labelText;
@@ -36,7 +34,6 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
 
     return DecoratedFormField(
       controller: widget.controller,
-      textInputAction: widget.textInputAction,
       autocorrect: false,
       autovalidate: widget.autoValidate,
       decoration: InputDecoration(

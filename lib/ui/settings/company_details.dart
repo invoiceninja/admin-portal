@@ -251,32 +251,27 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         ? localization.pleaseEnterAName
                         : null,
                     autovalidate: autoValidate,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
                     label: localization.idNumber,
                     controller: _idNumberController,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
                     label: localization.vatNumber,
                     controller: _vatNumberController,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
                     label: localization.website,
                     controller: _websiteController,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
                     label: localization.email,
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
@@ -352,7 +347,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.address1,
                       controller: _address1Controller,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.streetAddressLine1],
@@ -360,7 +354,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.address2,
                       controller: _address2Controller,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.streetAddressLine2],
@@ -368,7 +361,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.city,
                       controller: _cityController,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.addressCity],
@@ -376,7 +368,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.state,
                       controller: _stateController,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.addressState],
@@ -384,7 +375,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.postalCode,
                       controller: _postalCodeController,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.postalCode],

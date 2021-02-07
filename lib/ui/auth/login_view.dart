@@ -401,10 +401,6 @@ class _LoginState extends State<LoginView> {
                               DecoratedFormField(
                                 controller: _emailController,
                                 autocorrect: false,
-                                textInputAction:
-                                    _isFormComplete && !_createAccount
-                                        ? TextInputAction.done
-                                        : TextInputAction.next,
                                 label: localization.email,
                                 keyboardType: TextInputType.emailAddress,
                                 autovalidate: _autoValidate,
@@ -418,10 +414,6 @@ class _LoginState extends State<LoginView> {
                             if (_emailLogin && !_recoverPassword)
                               PasswordFormField(
                                 controller: _passwordController,
-                                textInputAction:
-                                    _isFormComplete && !_createAccount
-                                        ? TextInputAction.done
-                                        : TextInputAction.next,
                                 autoValidate: _autoValidate,
                                 newPassword: _createAccount,
                               ),
@@ -429,9 +421,6 @@ class _LoginState extends State<LoginView> {
                               DecoratedFormField(
                                 controller: _urlController,
                                 autocorrect: false,
-                                textInputAction: _isFormComplete
-                                    ? TextInputAction.done
-                                    : TextInputAction.next,
                                 label: localization.url,
                                 validator: (val) =>
                                     val.isEmpty || val.trim().isEmpty
@@ -444,7 +433,6 @@ class _LoginState extends State<LoginView> {
                                 labelText:
                                     '${localization.secret} (${localization.optional})',
                                 controller: _secretController,
-                                textInputAction: TextInputAction.done,
                                 autoValidate: _autoValidate,
                               ),
                             if (_createAccount)

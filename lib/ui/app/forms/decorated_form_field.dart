@@ -20,7 +20,6 @@ class DecoratedFormField extends StatelessWidget {
     this.keyboardType,
     this.minLines,
     this.maxLines,
-    this.textInputAction,
     this.onFieldSubmitted,
     this.initialValue,
     this.enabled = true,
@@ -50,7 +49,6 @@ class DecoratedFormField extends StatelessWidget {
   final bool obscureText;
   final bool expands;
   final bool autofocus;
-  final TextInputAction textInputAction;
   final ValueChanged<String> onFieldSubmitted;
   final ValueChanged<String> onChanged;
   final Icon suffixIcon;
@@ -65,14 +63,18 @@ class DecoratedFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget suffixIconButton;
+
     final hasValue =
         (initialValue ?? '').isNotEmpty || (controller?.text ?? '').isNotEmpty;
+    final enterShouldSubmit =
+        kIsWeb && isDesktop(context) && onSavePressed != null;
+
     if (hasValue && key == null) {
       if (suffixIcon == null && enabled) {
         suffixIconButton = IconButton(
           icon: Icon(Icons.clear),
-          onPressed: () =>
-              controller != null ? controller.text = '' : onChanged(''),
+          //onPressed: () => controller != null ? controller.text = '' : onChanged(''),
+          onPressed: () => null,
         );
       }
     }
@@ -124,17 +126,18 @@ class DecoratedFormField extends StatelessWidget {
       autocorrect: isMoney || isPercent ? false : autocorrect,
       obscureText: obscureText,
       initialValue: initialValue,
-      textInputAction: textInputAction ??
-          (keyboardType == TextInputType.multiline
-              ? TextInputAction.newline
-              : TextInputAction.next),
+      textInputAction: keyboardType == TextInputType.multiline
+          ? TextInputAction.newline
+          : enterShouldSubmit
+              ? TextInputAction.done
+              : TextInputAction.next,
       onChanged: onChanged,
       onFieldSubmitted: (value) {
         if (onFieldSubmitted != null) {
           return onFieldSubmitted(value);
         } else if (keyboardType == TextInputType.multiline) {
           return null;
-        } else if (kIsWeb && isDesktop(context) && onSavePressed != null) {
+        } else if (enterShouldSubmit) {
           onSavePressed(context);
         }
       },
