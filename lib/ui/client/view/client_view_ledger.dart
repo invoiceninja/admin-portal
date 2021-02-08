@@ -134,7 +134,8 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                 padding: const EdgeInsets.only(top: 4),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: ledger.adjustment <= 0 ? kColorGreen : kColorRed,
+                    color:
+                        ledger.adjustment <= 0 ? kColorSuccess : kColorDanger,
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: Padding(

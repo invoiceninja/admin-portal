@@ -66,8 +66,7 @@ class DecoratedFormField extends StatelessWidget {
 
     final hasValue =
         (initialValue ?? '').isNotEmpty || (controller?.text ?? '').isNotEmpty;
-    final enterShouldSubmit =
-        kIsWeb && isDesktop(context) && onSavePressed != null;
+    final enterShouldSubmit = isDesktop(context) && onSavePressed != null;
 
     if (hasValue && key == null) {
       if (suffixIcon == null && enabled) {

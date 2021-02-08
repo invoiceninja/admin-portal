@@ -111,7 +111,7 @@ class EntityHeader extends StatelessWidget {
                   if (!entity.isActive)
                     DecoratedBox(
                       decoration: BoxDecoration(
-                        color: entity.isArchived ? Colors.orange : kColorRed,
+                        color: entity.isArchived ? Colors.orange : kColorDanger,
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       child: ConstrainedBox(

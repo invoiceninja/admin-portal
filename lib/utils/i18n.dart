@@ -31,6 +31,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'supported_events': 'Supported Events',
       'converted_amount': 'Converted Amount',
       'converted_balance': 'Converted Balance',
+      'converted_paid_to_date': 'Converted Paid to Date',
+      'converted_credit_balance': 'Converted Credit Balance',
+      'converted_total': 'Converted Total',
       'is_sent': 'Is Sent',
       'default_documents': 'Default Documents',
       'document_upload': 'Document Upload',
@@ -158,8 +161,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'search_expense_categories': 'Search :count Expense Categories',
       'use_available_credits': 'Use Available Credits',
       'show_option': 'Show Option',
-      'negative_payment_error':
-          'The credit amount cannot exceed the payment amount',
+      'negative_payment_error': 'The payment amount can not be negative',
       'view_changes': 'View Changes',
       'force_update': 'Force Update',
       'force_update_help':
@@ -53914,6 +53916,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get counterPatternError =>
       _localizedValues[localeCode]['counter_pattern_error'] ?? '';
+
+  String get convertedPaidToDate => _localizedValues[localeCode]['converted_paid_to_date'] ?? '';
+  
+  String get convertedCreditBalance => _localizedValues[localeCode]['converted_credit_balance'] ?? '';
+  
+  String get convertedTotal => _localizedValues[localeCode]['converted_total'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -530,6 +530,8 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
 
   if (company.hasCustomField(column)) {
     return convertCustomFieldType(company.getCustomFieldType(column));
+  } else if (EntityPresenter.isFieldNumeric(column)) {
+    return ReportColumnType.number;
   } else if (['updated_at', 'created_at', 'start_time', 'end_time']
       .contains(column)) {
     return ReportColumnType.dateTime;
@@ -540,8 +542,6 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.age;
   } else if (column == 'duration') {
     return ReportColumnType.duration;
-  } else if (EntityPresenter.isFieldNumeric(column)) {
-    return ReportColumnType.number;
   } else if (column.startsWith('is_')) {
     return ReportColumnType.bool;
   } else {
@@ -1147,6 +1147,8 @@ class ReportResult {
         ReportSettingsEntity();
     final Map<String, Map<String, double>> totals = {};
 
+    final allColumns = <String>[];
+
     for (var i = 0; i < data.length; i++) {
       final row = data[i];
       bool countedRow = false;
@@ -1159,6 +1161,10 @@ class ReportResult {
 
         String currencyId = '';
         if (canTotal) {
+          if (!allColumns.contains(column)) {
+            allColumns.add(column);
+          }
+
           if (cell is ReportNumberValue) {
             currencyId = cell.currencyId ?? '';
           } else if (cell is ReportAgeValue) {
@@ -1177,6 +1183,14 @@ class ReportResult {
             totals[currencyId][column] = 0;
           }
           totals[currencyId][column] += cell.doubleValue;
+        }
+      }
+    }
+
+    for (var currencyId in totals.keys) {
+      for (var column in allColumns) {
+        if (!totals[currencyId].containsKey(column)) {
+          totals[currencyId][column] = 0;
         }
       }
     }

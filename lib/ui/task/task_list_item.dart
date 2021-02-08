@@ -266,7 +266,7 @@ class TaskListItem extends StatelessWidget {
                                   : localization.logged,
                       style: TextStyle(
                           color: task.isInvoiced
-                              ? kColorGreen
+                              ? kColorSuccess
                               : convertHexStringToColor(state.taskStatusState
                                   .get(task.statusId)
                                   .color)),
