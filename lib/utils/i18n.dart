@@ -158,8 +158,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'search_expense_categories': 'Search :count Expense Categories',
       'use_available_credits': 'Use Available Credits',
       'show_option': 'Show Option',
-      'negative_payment_error':
-          'The credit amount cannot exceed the payment amount',
+      'negative_payment_error': 'The payment amount can not be negative',
       'view_changes': 'View Changes',
       'force_update': 'Force Update',
       'force_update_help':
