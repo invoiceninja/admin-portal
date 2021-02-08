@@ -155,7 +155,15 @@ class MultiSelectListState extends State<MultiSelectList> {
                       const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Row(
                     children: <Widget>[
-                      Icon(Icons.reorder),
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          setState(() => selected.remove(option));
+                          if (widget.liveChanges) {
+                            widget.onSelected(selected);
+                          }
+                        },
+                      ),
                       SizedBox(width: 20),
                       Expanded(
                         child: Text(
@@ -166,15 +174,6 @@ class MultiSelectListState extends State<MultiSelectList> {
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.close),
-                        onPressed: () {
-                          setState(() => selected.remove(option));
-                          if (widget.liveChanges) {
-                            widget.onSelected(selected);
-                          }
-                        },
-                      )
                     ],
                   ),
                 );
