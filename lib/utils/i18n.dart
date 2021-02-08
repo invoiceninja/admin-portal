@@ -31,6 +31,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'supported_events': 'Supported Events',
       'converted_amount': 'Converted Amount',
       'converted_balance': 'Converted Balance',
+      'converted_paid_to_date': 'Converted Paid to Date',
+      'converted_credit_balance': 'Converted Credit Balance',
+      'converted_total': 'Converted Total',
       'is_sent': 'Is Sent',
       'default_documents': 'Default Documents',
       'document_upload': 'Document Upload',
@@ -53913,6 +53916,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get counterPatternError =>
       _localizedValues[localeCode]['counter_pattern_error'] ?? '';
+
+  String get convertedPaidToDate => _localizedValues[localeCode]['converted_paid_to_date'] ?? '';
+  
+  String get convertedCreditBalance => _localizedValues[localeCode]['converted_credit_balance'] ?? '';
+  
+  String get convertedTotal => _localizedValues[localeCode]['converted_total'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
