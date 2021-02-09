@@ -582,14 +582,14 @@ class SidebarFooter extends StatelessWidget {
                       context: context,
                       message: localization.cronsNotEnabled,
                       secondaryActions: [
-                        FlatButton(
+                        TextButton(
                           child: Text(localization.learnMore.toUpperCase()),
                           onPressed: () {
                             launch(kCronsHelpUrl,
                                 forceSafariVC: false, forceWebView: false);
                           },
                         ),
-                        FlatButton(
+                        TextButton(
                           child: Text(localization.refreshData.toUpperCase()),
                           onPressed: () {
                             store.dispatch(RefreshData());
@@ -609,7 +609,7 @@ class SidebarFooter extends StatelessWidget {
                       context: context,
                       message: localization.companyDisabledWarning,
                       secondaryActions: [
-                        FlatButton(
+                        TextButton(
                           child: Text(localization.viewSettings.toUpperCase()),
                           onPressed: () {
                             store.dispatch(ViewSettings(
@@ -699,7 +699,7 @@ class SidebarFooter extends StatelessWidget {
           if (isHosted(context) &&
               !isPaidAccount(context)) ...[
             Spacer(),
-            FlatButton(
+            TextButton(
               child: Text(localization.upgrade),
               color: Colors.green,
               onPressed: () => showDialog<UpgradeDialog>(
@@ -857,7 +857,7 @@ void _showAbout(BuildContext context) async {
       builder: (BuildContext context) {
         return AlertDialog(
           actions: [
-            FlatButton(
+            TextButton(
               child: Text(localization.viewLicenses.toUpperCase()),
               onPressed: () => showLicensePage(
                 context: context,
@@ -867,7 +867,7 @@ void _showAbout(BuildContext context) async {
                 applicationVersion: state.appVersion,
               ),
             ),
-            FlatButton(
+            TextButton(
               child: Text(localization.close.toUpperCase()),
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -938,7 +938,7 @@ void _showAbout(BuildContext context) async {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             actions: [
-                              FlatButton(
+                              TextButton(
                                 child:
                                     Text(localization.sourceCode.toUpperCase()),
                                 onPressed: () {
@@ -947,7 +947,7 @@ void _showAbout(BuildContext context) async {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         actions: [
-                                          FlatButton(
+                                          TextButton(
                                             child: Text(localization.close
                                                 .toUpperCase()),
                                             onPressed: () =>
@@ -990,7 +990,7 @@ void _showAbout(BuildContext context) async {
                                   );
                                 },
                               ),
-                              FlatButton(
+                              TextButton(
                                 child: Text(localization.close.toUpperCase()),
                                 onPressed: () => Navigator.of(context).pop(),
                               ),
@@ -1120,12 +1120,12 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
             child: CircularProgressIndicator(),
           ),
         if (!_isSaving)
-          FlatButton(
+          TextButton(
             child: Text(localization.cancel.toUpperCase()),
             onPressed: () => Navigator.pop(context),
           ),
         if (!_isSaving)
-          FlatButton(
+          TextButton(
             child: Text(localization.send.toUpperCase()),
             onPressed: () => _sendMessage(),
           ),

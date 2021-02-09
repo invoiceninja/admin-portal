@@ -98,11 +98,11 @@ class _FormColorPickerState extends State<FormColorPicker> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(localization.cancel.toUpperCase()),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            FlatButton(
+            TextButton(
               child: Text(localization.done.toUpperCase()),
               onPressed: () {
                 _selectColor(_pendingColor);

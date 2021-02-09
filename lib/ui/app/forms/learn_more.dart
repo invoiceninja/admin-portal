@@ -27,7 +27,7 @@ class LearnMoreUrl extends StatelessWidget {
         SizedBox(
           width: 10,
         ),
-        FlatButton(
+        TextButton(
           child: Text(localization.learnMore),
           onPressed: () async {
             if (await canLaunch(url)) {
@@ -63,7 +63,7 @@ class LearnMoreDialog extends StatelessWidget {
         SizedBox(
           width: 10,
         ),
-        FlatButton(
+        TextButton(
           child: Text(label ?? localization.learnMore),
           onPressed: () {
             showDialog<AlertDialog>(

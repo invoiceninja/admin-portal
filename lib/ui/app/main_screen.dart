@@ -849,7 +849,7 @@ class _EntityFilter extends StatelessWidget {
                 )
               : Row(
                   children: [
-                    SizedBox(width: 4),
+                    SizedBox(width: 8),
                     if (!state.prefState.showFilterSidebar)
                       IconButton(
                         tooltip: localization.showSidebar,
@@ -860,10 +860,10 @@ class _EntityFilter extends StatelessWidget {
                         onPressed: () => store.dispatch(
                             UpdateUserPreferences(showFilterSidebar: true)),
                       ),
+                    SizedBox(width: 4),
                     ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: 220),
-                      child: FlatButton(
-                        visualDensity: VisualDensity.compact,
+                      child: TextButton(
                         child: Text(
                           EntityPresenter()
                               .initialize(filterEntity, context)
@@ -887,9 +887,7 @@ class _EntityFilter extends StatelessWidget {
                           children: <Widget>[
                             for (int i = 0; i < relatedTypes.length; i++)
                               DecoratedBox(
-                                child: FlatButton(
-                                  minWidth: 0,
-                                  visualDensity: VisualDensity.compact,
+                                child: TextButton(
                                   child: Text(
                                     localization
                                         .lookup('${relatedTypes[i].plural}'),

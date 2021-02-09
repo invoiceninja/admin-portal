@@ -371,7 +371,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
         ? AlertDialog(
             content: SingleChildScrollView(child: column),
             actions: [
-              FlatButton(
+              TextButton(
                 child: Text(localization.remove.toUpperCase()),
                 onPressed: () => confirmCallback(
                     context: context,
@@ -380,7 +380,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                       Navigator.pop(context);
                     }),
               ),
-              FlatButton(
+              TextButton(
                 child: Text(localization.done.toUpperCase()),
                 onPressed: () => _onDoneContactPressed(),
               )

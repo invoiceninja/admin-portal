@@ -181,14 +181,14 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
         ),
       ),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text(localization.remove.toUpperCase()),
           onPressed: () {
             widget.viewModel.onRemoveTaskTimePressed(widget.index);
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text(localization.done.toUpperCase()),
           onPressed: () {
             widget.viewModel.onDoneTaskTimePressed();

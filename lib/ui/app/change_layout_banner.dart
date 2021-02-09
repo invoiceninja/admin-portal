@@ -71,7 +71,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                         text: message,
                       ),
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         localization.dismiss,
                         style: TextStyle(color: Colors.white),
@@ -80,7 +80,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                         setState(() => _dismissedChange = true);
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         localization.change,
                         style: TextStyle(color: Colors.white),

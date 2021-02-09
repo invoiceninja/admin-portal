@@ -212,11 +212,11 @@ class _PaymentRefundState extends State<PaymentRefund> {
                 ),
               )
             else ...[
-              FlatButton(
+              TextButton(
                 child: Text(localization.cancel.toUpperCase()),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              FlatButton(
+              TextButton(
                 child: Text(localization.refund.toUpperCase()),
                 onPressed: () => onSavePressed(context),
               ),

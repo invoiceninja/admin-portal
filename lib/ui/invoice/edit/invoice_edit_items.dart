@@ -234,7 +234,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
     return AlertDialog(
       actions: [
-        FlatButton(
+        TextButton(
           child: Text(localization.remove.toUpperCase()),
           onPressed: () => confirmCallback(
               context: context,
@@ -243,7 +243,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 Navigator.of(context).pop();
               }),
         ),
-        FlatButton(
+        TextButton(
           child: Text(localization.done.toUpperCase()),
           onPressed: () {
             viewModel.clearSelectedInvoiceItem();

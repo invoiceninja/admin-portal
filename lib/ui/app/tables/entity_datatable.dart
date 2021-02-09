@@ -154,7 +154,7 @@ class DatatableHeader extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text(localization.refresh),
           onPressed: onRefreshPressed,
         ),

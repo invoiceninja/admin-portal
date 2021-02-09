@@ -87,27 +87,27 @@ class _UpdateDialogState extends State<UpdateDialog> {
                 ),
       actions: <Widget>[
         if (updateState == UpdateState.initial) ...[
-          FlatButton(
+          TextButton(
             child: Text(localization.close.toUpperCase()),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           if (!account.isUpdateAvailable)
-            FlatButton(
+            TextButton(
               child: Text(localization.viewChanges.toUpperCase()),
               onPressed: () => launch(kGitHubDiffUrl.replaceFirst(
                   'VERSION', account.currentVersion)),
             ),
           if (!account.isDocker)
-            FlatButton(
+            TextButton(
               child: Text(localization.updateNow.toUpperCase()),
               onPressed: () {
                 updateApp(context);
               },
             ),
         ] else if (updateState == UpdateState.done)
-          FlatButton(
+          TextButton(
             child: Text(localization.close.toUpperCase()),
             onPressed: () {
               Navigator.of(context).pop();

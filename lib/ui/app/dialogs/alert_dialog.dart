@@ -12,7 +12,7 @@ class MessageDialog extends StatelessWidget {
 
   final String message;
   final String dismissLabel;
-  final List<FlatButton> secondaryActions;
+  final List<TextButton> secondaryActions;
   final Function onDismiss;
   final Function onDiscard;
 
@@ -42,7 +42,7 @@ class MessageDialog extends StatelessWidget {
                       if (onDiscard != null)
                         Padding(
                           padding: const EdgeInsets.only(right: 10),
-                          child: FlatButton(
+                          child: TextButton(
                               autofocus: true,
                               child: Text(
                                   localization.discardChanges.toUpperCase()),
@@ -60,7 +60,7 @@ class MessageDialog extends StatelessWidget {
                                   ))
                               .toList(),
                         ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                           if (onDismiss != null) {

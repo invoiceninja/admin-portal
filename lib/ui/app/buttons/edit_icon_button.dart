@@ -21,7 +21,7 @@ class EditIconButton extends StatelessWidget {
       return Container();
     }
 
-    return FlatButton(
+    return TextButton(
       child: Text(
         localization.edit,
         style: TextStyle(color: store.state.headerTextColor),

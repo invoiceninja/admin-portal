@@ -268,7 +268,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         ),
                       ),
                       SizedBox(width: 8),
-                      FlatButton(
+                      TextButton(
                         child: Text(localization.addCustom),
                         onPressed: () {
                           fieldCallback(
@@ -280,7 +280,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                               field: localization.label,
                               title: localization.addCustom,
                               secondaryActions: [
-                                FlatButton(
+                                TextButton(
                                   child:
                                       Text(localization.labels.toUpperCase()),
                                   onPressed: () => launch(kGitHubLangUrl),

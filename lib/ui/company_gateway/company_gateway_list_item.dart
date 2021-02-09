@@ -53,7 +53,7 @@ class CompanyGatewayListItem extends StatelessWidget {
         onTap: () => selectEntity(entity: companyGateway, context: context),
         trailing: onRemovePressed == null
             ? null
-            : FlatButton(
+            : TextButton(
                 child: Text(AppLocalization.of(context).remove),
                 onPressed: onRemovePressed,
               ),

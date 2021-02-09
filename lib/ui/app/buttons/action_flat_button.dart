@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class ActionFlatButton extends StatelessWidget {
-  const ActionFlatButton({
+class ActionTextButton extends StatelessWidget {
+  const ActionTextButton({
     this.onPressed,
     this.tooltip,
     this.isSaving = false,
@@ -45,7 +45,7 @@ class ActionFlatButton extends StatelessWidget {
       );
     }
 
-    return FlatButton(
+    return TextButton(
       child: Text(
         tooltip,
         style: isHeader && onPressed != null

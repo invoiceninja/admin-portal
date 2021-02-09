@@ -27,7 +27,7 @@ void showErrorDialog({
 void showMessageDialog({
   @required BuildContext context,
   @required String message,
-  List<FlatButton> secondaryActions,
+  List<TextButton> secondaryActions,
 }) {
   showDialog<MessageDialog>(
       context: context,
@@ -79,12 +79,12 @@ void confirmCallback({
                 ? null
                 : Text(content),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
               child: Text(localization.cancel.toUpperCase()),
               onPressed: () {
                 Navigator.pop(context);
               }),
-          FlatButton(
+          TextButton(
               child: Text(localization.ok.toUpperCase()),
               onPressed: () {
                 if (typeToConfirm == null ||
@@ -192,7 +192,7 @@ void fieldCallback({
   String field,
   Function(String) callback,
   int maxLength,
-  List<FlatButton> secondaryActions,
+  List<TextButton> secondaryActions,
 }) {
   showDialog<AlertDialog>(
     context: context,
@@ -222,7 +222,7 @@ class FieldConfirmation extends StatefulWidget {
   final String title;
   final String field;
   final int maxLength;
-  final List<FlatButton> secondaryActions;
+  final List<TextButton> secondaryActions;
 
   @override
   _FieldConfirmationState createState() => _FieldConfirmationState();
@@ -335,7 +335,7 @@ void cloneToDialog({
             ],
           ),
           actions: [
-            FlatButton(
+            TextButton(
               child: Text(localization.close.toUpperCase()),
               onPressed: () => Navigator.of(context).pop(),
             )
