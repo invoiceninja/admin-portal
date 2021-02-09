@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/flutter_version.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -889,6 +890,14 @@ void _showAbout(BuildContext context) async {
                   Clipboard.setData(ClipboardData(text: state.appVersion));
                   showToast(localization.copiedToClipboard
                       .replaceFirst(':value', state.appVersion));
+                },
+                onLongPress: () {
+                  showMessageDialog(
+                    context: context,
+                    message: FLUTTER_VERSION['channel'].toUpperCase() +
+                        ' • ' +
+                        FLUTTER_VERSION['frameworkVersion'],
+                  );
                 },
               ),
               Padding(
