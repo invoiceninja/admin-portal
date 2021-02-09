@@ -28,7 +28,7 @@ jobs:
           sed -i 's/secret/${{secrets.api_secret}}/g' lib/.env.dart
           sed -i 's/dns/${{secrets.app_sentry}}/g' lib/.env.dart
       - run: |
-          echo "const version = const <String, String>" > lib/flutter_version.dart
+          echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
           flutter --version --machine >> lib/flutter_version.dart
           echo ";" >> lib/flutter_version.dart
       - run: flutter upgrade
