@@ -222,7 +222,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                   if (isDesktop(context) &&
                       _activityId == null &&
                       !invoice.isRecurring)
-                    FlatButton(
+                    TextButton(
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {
@@ -230,7 +230,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                             EntityAction.emailEntityType(invoice.entityType));
                       },
                     ),
-                  FlatButton(
+                  TextButton(
                     child: Text(
                       localization.download,
                       style: TextStyle(color: state.headerTextColor),
@@ -255,7 +255,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                           },
                   ),
                   if (isDesktop(context))
-                    FlatButton(
+                    TextButton(
                       child: Text(localization.close,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {

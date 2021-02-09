@@ -206,7 +206,7 @@ class ReportsScreen extends StatelessWidget {
           actions: <Widget>[
             if (isDesktop(context)) ...[
               Builder(builder: (BuildContext context) {
-                return FlatButton(
+                return TextButton(
                   child: Text(
                     localization.columns,
                     style: TextStyle(color: store.state.headerTextColor),
@@ -224,7 +224,7 @@ class ReportsScreen extends StatelessWidget {
                   },
                 );
               }),
-              FlatButton(
+              TextButton(
                 child: Text(
                   localization.export,
                   style: TextStyle(color: store.state.headerTextColor),
@@ -1424,7 +1424,7 @@ class ReportIntValue extends ReportElement {
 
   @override
   String renderText(BuildContext context, String column) {
-    return formatNumber((value as int).toDouble(), context,
+    return formatNumber(value.toDouble(), context,
         formatNumberType: FormatNumberType.int);
   }
 }

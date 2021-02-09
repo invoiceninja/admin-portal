@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TaxRateEdit extends StatefulWidget {
   const TaxRateEdit({

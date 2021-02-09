@@ -305,11 +305,11 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
               )
             else ...[
-              FlatButton(
+              TextButton(
                 child: Text(localization.cancel.toUpperCase()),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              FlatButton(
+              TextButton(
                 child: Text(localization.apply.toUpperCase()),
                 onPressed: () => onSavePressed(context),
               ),

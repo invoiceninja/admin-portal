@@ -99,7 +99,7 @@ class ListScaffold extends StatelessWidget {
             actions: [
               ...appBarActions ?? <Widget>[],
               if (isDesktop(context) && onCancelSettingsSection != null)
-                FlatButton(
+                TextButton(
                     onPressed: () {
                       store.dispatch(ViewSettings(
                         navigator: Navigator.of(context),

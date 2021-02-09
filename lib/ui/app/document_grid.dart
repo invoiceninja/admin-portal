@@ -149,14 +149,14 @@ class DocumentTile extends StatelessWidget {
             title: Text(document.name),
             actions: [
               isFromExpense && onViewExpense != null
-                  ? FlatButton(
+                  ? TextButton(
                       child: Text(localization.expense.toUpperCase()),
                       onPressed: () {
                         Navigator.of(context).pop();
                         onViewExpense(document);
                       },
                     )
-                  : FlatButton(
+                  : TextButton(
                       child: Text(localization.delete.toUpperCase()),
                       onPressed: () {
                         confirmCallback(
@@ -171,7 +171,7 @@ class DocumentTile extends StatelessWidget {
                             });
                       },
                     ),
-              FlatButton(
+              TextButton(
                 child: Text(localization.download.toUpperCase()),
                 onPressed: () async {
                   final store = StoreProvider.of<AppState>(context);
@@ -202,7 +202,7 @@ class DocumentTile extends StatelessWidget {
                   }
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text(localization.close.toUpperCase()),
                 onPressed: () {
                   Navigator.of(context).pop();

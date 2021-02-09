@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';

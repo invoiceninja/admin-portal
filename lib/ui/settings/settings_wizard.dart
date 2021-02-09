@@ -187,7 +187,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
         ),
       ),
       actions: [
-        FlatButton(
+        TextButton(
             onPressed: _onSavePressed,
             child: Text(localization.save.toUpperCase()))
       ],

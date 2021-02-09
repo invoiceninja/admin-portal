@@ -200,11 +200,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Terms', style: TextStyle(fontSize: 12)),
                 onPressed: () => launch(kTermsOfServiceURL),
               ),
-              FlatButton(
+              TextButton(
                 child: Text('Privacy', style: TextStyle(fontSize: 12)),
                 onPressed: () => launch(kPrivacyPolicyURL),
               ),

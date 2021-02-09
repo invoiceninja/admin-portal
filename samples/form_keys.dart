@@ -23,7 +23,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_appState');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_appState');
 
   static final GlobalKey<ClientPageState> _clientKey =
       GlobalKey<ClientPageState>();
@@ -234,7 +235,7 @@ class ContactsPageState extends State<ContactsPage>
   }
 }
 
-// Displays an individual contact 
+// Displays an individual contact
 class ContactForm extends StatefulWidget {
   const ContactForm({
     Key key,
@@ -273,7 +274,7 @@ class ContactFormState extends State<ContactForm> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () => widget.onRemovePressed(widget.key),
                 child: Text(
                   'Delete',

@@ -188,7 +188,7 @@ class _LoginState extends State<LoginView> {
               actions: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text(AppLocalization.of(context).close),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
@@ -575,7 +575,7 @@ class _LoginState extends State<LoginView> {
                                     children: <Widget>[
                                       if (!_recoverPassword)
                                         Icon(MdiIcons.lock, size: 16),
-                                      FlatButton(
+                                      TextButton(
                                           child: Text(_recoverPassword
                                               ? localization.cancel
                                               : localization.recoverPassword),

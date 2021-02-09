@@ -466,7 +466,7 @@ Future handleQuoteAction(
             context: context,
             message: localization.clientEmailNotSet,
             secondaryActions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     editEntity(

@@ -548,7 +548,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
             context: context,
             message: localization.clientEmailNotSet,
             secondaryActions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     editEntity(

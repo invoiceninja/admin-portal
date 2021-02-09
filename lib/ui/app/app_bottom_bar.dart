@@ -484,7 +484,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (!state.prefState.isMenuFloated) Spacer(),
                 if (!widget.entityType.isSetting && !isList)
                   if (state.prefState.isDesktop)
-                    FlatButton(
+                    TextButton(
                       onPressed: _onColumnsPressed,
                       child: Text(
                         localization.columns,

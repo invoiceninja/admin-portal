@@ -119,7 +119,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_appState');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_appState');
 
   TabController _controller;
 
@@ -327,7 +328,7 @@ class _ContactFormState extends State<ContactForm> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () => store.dispatch(DeleteContact(widget.index)),
                 child: Text(
                   'Delete',

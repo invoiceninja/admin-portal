@@ -206,7 +206,7 @@ class MultiSelectListState extends State<MultiSelectList> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  FlatButton(
+                  TextButton(
                       child: Text(localization.reset.toUpperCase()),
                       onPressed: () {
                         setState(
@@ -228,7 +228,7 @@ class MultiSelectListState extends State<MultiSelectList> {
             title: Text(localization.editColumns),
             content: column,
             actions: [
-              FlatButton(
+              TextButton(
                   child: Text(localization.reset.toUpperCase()),
                   onPressed: () {
                     setState(() => selected = widget.defaultSelected.toList());
@@ -236,12 +236,12 @@ class MultiSelectListState extends State<MultiSelectList> {
                       widget.onSelected(selected);
                     }
                   }),
-              FlatButton(
+              TextButton(
                   child: Text(localization.cancel.toUpperCase()),
                   onPressed: () {
                     Navigator.pop(context);
                   }),
-              FlatButton(
+              TextButton(
                   child: Text(localization.save.toUpperCase()),
                   onPressed: () {
                     Navigator.pop(context);

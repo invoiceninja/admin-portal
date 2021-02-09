@@ -34,7 +34,7 @@ class SaveCancelButtons extends StatelessWidget {
       children: <Widget>[
         if (onCancelPressed != null && !isSaving)
           Builder(builder: (BuildContext context) {
-            return FlatButton(
+            return TextButton(
               child: Text(
                 cancelLabel ?? localization.cancel,
                 style: isHeader && isEnabled
@@ -48,7 +48,7 @@ class SaveCancelButtons extends StatelessWidget {
           }),
         SizedBox(width: 10),
         Builder(builder: (BuildContext context) {
-          return ActionFlatButton(
+          return ActionTextButton(
             tooltip: saveLabel ?? localization.save,
             isVisible: true,
             isSaving: isSaving,

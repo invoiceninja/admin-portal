@@ -187,7 +187,7 @@ class DashboardPanels extends StatelessWidget {
                             key: ValueKey(
                                 '__${settings.includeTaxes}_${settings.currencyId}__'),
                             actions: [
-                              FlatButton(
+                              TextButton(
                                 child: Text(localization.close.toUpperCase()),
                                 onPressed: () => Navigator.of(context).pop(),
                               )
