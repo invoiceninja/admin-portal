@@ -1424,7 +1424,7 @@ class ReportIntValue extends ReportElement {
 
   @override
   String renderText(BuildContext context, String column) {
-    return formatNumber((value as int).toDouble(), context,
+    return formatNumber(value.toDouble(), context,
         formatNumberType: FormatNumberType.int);
   }
 }

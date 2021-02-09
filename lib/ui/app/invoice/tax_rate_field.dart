@@ -9,8 +9,8 @@ class TaxRateField extends StatelessWidget {
     Key key,
     @required this.onNameChanged,
     @required this.onAmountChanged,
-    @required this.initialTaxName = '',
-    @required this.initialTaxAmount = 0.0,
+    @required this.initialTaxName,
+    @required this.initialTaxAmount,
   }) : super(key: key);
 
   final Function(String) onNameChanged;

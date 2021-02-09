@@ -45,7 +45,6 @@ class _EntityListTileState extends State<EntityListTile> {
       return SizedBox();
     }
 
-    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final isFilteredBy = state.uiState.filterEntityId == widget.entity.id &&
