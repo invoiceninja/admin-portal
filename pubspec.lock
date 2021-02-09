@@ -477,16 +477,20 @@ packages:
   google_sign_in:
     dependency: "direct main"
     description:
-      name: google_sign_in
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.5.9"
+      path: "packages/google_sign_in/google_sign_in"
+      ref: master
+      resolved-ref: "2412a3b2c71ae2be5668c4362e5193aa833bcd72"
+      url: "https://github.com/aseef17/plugins.git"
+    source: git
+    version: "4.5.4"
   google_sign_in_platform_interface:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: google_sign_in_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/google_sign_in/google_sign_in_platform_interface"
+      ref: HEAD
+      resolved-ref: "2412a3b2c71ae2be5668c4362e5193aa833bcd72"
+      url: "https://github.com/aseef17/plugins.git"
+    source: git
     version: "1.1.2"
   google_sign_in_web:
     dependency: transitive
