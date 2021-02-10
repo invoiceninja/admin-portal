@@ -175,11 +175,18 @@ class _EntityDropdownState extends State<EntityDropdown> {
             focusNode: _focusNode,
             textEditingController: _textController,
             optionsBuilder: (TextEditingValue textEditingValue) {
-              return (widget.entityList ?? widget.entityMap.keys.toList())
-                  .map((entityId) => _entityMap[entityId])
-                  .where((entity) =>
-                      entity?.matchesFilter(textEditingValue.text) ?? false)
-                  .toList();
+              final options =
+                  (widget.entityList ?? widget.entityMap.keys.toList())
+                      .map((entityId) => _entityMap[entityId])
+                      .where((entity) =>
+                          entity?.matchesFilter(textEditingValue.text) ?? false)
+                      .toList();
+
+              if (options.length == 1 && options[0].id == widget.entityId) {
+                return <SelectableEntity>[];
+              }
+
+              return options;
             },
             displayStringForOption: (entity) => entity.listDisplayName,
             onSelected: (entity) {
