@@ -87,7 +87,7 @@ class LoginVM {
         'email',
         'openid',
         'profile',
-        //'https://www.googleapis.com/auth/gmail.send',
+        'https://www.googleapis.com/auth/gmail.send',
       ],
     );
 
@@ -126,7 +126,7 @@ class LoginVM {
 
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
-                /*
+/*
                 store.dispatch(OAuthLoginRequest(
                   completer: completer,
                   idToken: value.idToken,
@@ -154,7 +154,7 @@ class LoginVM {
 
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
-                /*
+/*
                 store.dispatch(OAuthSignUpRequest(
                   completer: completer,
                   idToken: value.idToken,
