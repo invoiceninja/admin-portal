@@ -139,7 +139,7 @@ class LoginVM {
                 ));
                 completer.future.then((_) => _handleLogin(context: context));
                  */
-                completer.completeError('grantOfflineAccess is done');
+                completer.completeError('grantOfflineAccess is done: ${value.serverAuthCode}');
               });
             }
           } catch (error) {
@@ -164,7 +164,7 @@ class LoginVM {
                 completer.future.then(
                     (_) => _handleLogin(context: context, isSignUp: true));
                  */
-                completer.completeError('sign is done');
+                completer.completeError('sign is done: ${value.serverAuthCode}');
               });
             }
           } catch (error) {
@@ -196,7 +196,10 @@ class LoginVM {
           @required String email,
           @required String url,
           @required String secret,
-        }) {
+        }) async {
+          await _googleSignIn.signOut();
+          return;
+
           if (store.state.isLoading) {
             return;
           }
