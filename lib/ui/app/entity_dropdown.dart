@@ -239,7 +239,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   elevation: 4,
                   child: Container(
                     color: Theme.of(context).cardColor,
-                    height: 300,
                     width: 350,
                     child: ListView.builder(
                       shrinkWrap: true,
