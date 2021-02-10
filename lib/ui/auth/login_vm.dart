@@ -122,8 +122,15 @@ class LoginVM {
           @required String oneTimePassword,
         }) async {
           try {
-            final account = await _googleSignIn.signIn();
+            final isSignedIn = await _googleSignIn.isSignedIn();
 
+            if (!isSignedIn) {
+              _googleSignIn.signIn();
+              completer.completeError('Click again');
+              return;
+            }
+
+            final account = await _googleSignIn.grantOfflineAccess();
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
                 store.dispatch(OAuthLoginRequest(
