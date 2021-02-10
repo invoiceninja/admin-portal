@@ -472,7 +472,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     }
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         if (widget.entityType == EntityType.invoice)
           Expanded(

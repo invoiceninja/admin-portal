@@ -311,7 +311,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     final hasMultipleInvoices = payment.invoicePaymentables.length > 1;
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
           child: EntityDropdown(
