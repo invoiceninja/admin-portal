@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -55,6 +56,7 @@ class EntityDropdown extends StatefulWidget {
 class _EntityDropdownState extends State<EntityDropdown> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
+  String _filter = '';
   BuiltMap<String, SelectableEntity> _entityMap;
 
   @override
@@ -143,83 +145,76 @@ class _EntityDropdownState extends State<EntityDropdown> {
       return Stack(
         alignment: Alignment.centerRight,
         children: <Widget>[
-          TypeAheadFormField<String>(
-            validator: widget.validator,
-            noItemsFoundBuilder: (context) => SizedBox(),
-            suggestionsBoxDecoration: SuggestionsBoxDecoration(
-              constraints: BoxConstraints(
-                minWidth: 300,
-              ),
-            ),
-            suggestionsCallback: (filter) {
+          Autocomplete<SelectableEntity>(
+            optionsBuilder: (TextEditingValue textEditingValue) {
+              if (textEditingValue.text == '') {
+                return const Iterable<SelectableEntity>.empty();
+              }
               return (widget.entityList ?? widget.entityMap.keys.toList())
-                  .where((entityId) =>
-                      _entityMap[entityId]?.matchesFilter(filter) ?? false)
+                  .map((entityId) => _entityMap[entityId])
+                  .where((entity) =>
+                      entity?.matchesFilter(textEditingValue.text) ?? false)
                   .toList();
             },
-            itemBuilder: (context, entityId) {
-              // TODO remove this
-              /*
-              return _EntityListTile(
-                  entity: _entityMap[entityId],
-                  filter: _textController.text,
-                );
-              */
-              return Listener(
-                child: Container(
-                  color: Theme.of(context).cardColor,
-                  child: _EntityListTile(
-                    entity: _entityMap[entityId],
-                    filter: _textController.text,
-                    overrideSuggestedAmount: widget.overrideSuggestedAmount,
-                    overrideSuggestedLabel: widget.overrideSuggestedLabel,
-                  ),
-                ),
-                onPointerDown: (_) {
-                  if (!kIsWeb) {
-                    return;
-                  }
-                  final entity = _entityMap[entityId];
-
-                  _textController.text = widget.overrideSuggestedLabel != null
-                      ? widget.overrideSuggestedLabel(entity)
-                      : entity?.listDisplayName;
-
-                  if (entity?.id == widget.entityId) {
-                    return;
-                  }
-
-                  widget.onSelected(entity);
+            displayStringForOption: (entity) => entity.listDisplayName,
+            onSelected: (value) {
+              print('## selected: $value');
+            },
+            fieldViewBuilder: (BuildContext context,
+                TextEditingController textEditingController,
+                FocusNode focusNode,
+                VoidCallback onFieldSubmitted) {
+              return DecoratedFormField(
+                validator: widget.validator,
+                showClear: false,
+                label: widget.labelText,
+                autofocus: widget.autofocus ?? false,
+                controller: textEditingController,
+                focusNode: focusNode,
+                onFieldSubmitted: (String value) {
+                  onFieldSubmitted();
                 },
+                onChanged: (value) => _filter = value,
               );
             },
-            onSuggestionSelected: (entityId) {
-              if (kIsWeb) {
-                return;
-              }
-
-              final entity = _entityMap[entityId];
-              _textController.text = widget.overrideSuggestedLabel != null
-                  ? widget.overrideSuggestedLabel(entity)
-                  : entity?.listDisplayName;
-
-              if (entity?.id == widget.entityId) {
-                return;
-              }
-
-              widget.onSelected(entity);
+            optionsViewBuilder: (BuildContext context,
+                AutocompleteOnSelected<SelectableEntity> onSelected,
+                Iterable<SelectableEntity> options) {
+              return Align(
+                alignment: Alignment.topLeft,
+                child: Material(
+                  elevation: 4,
+                  child: Container(
+                    color: Theme.of(context).cardColor,
+                    height: 300,
+                    width: 350,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: options.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final option = options.elementAt(index);
+                        return GestureDetector(
+                          onTap: () {
+                            onSelected(option);
+                          },
+                          child: Container(
+                            color: Theme.of(context).cardColor,
+                            child: _EntityListTile(
+                              entity: option,
+                              filter: _filter,
+                              overrideSuggestedAmount:
+                                  widget.overrideSuggestedAmount,
+                              overrideSuggestedLabel:
+                                  widget.overrideSuggestedLabel,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              );
             },
-            textFieldConfiguration: TextFieldConfiguration(
-              controller: _textController,
-              //autofocus: widget.autofocus ?? false,
-              decoration: InputDecoration(
-                labelText: widget.labelText,
-              ),
-            ),
-            //direction: AxisDirection.up,
-            autoFlipDirection: true,
-            animationStart: 1,
-            debounceDuration: Duration(seconds: 0),
           ),
           showClear
               ? IconButton(
