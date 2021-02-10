@@ -245,21 +245,16 @@ class _EntityDropdownState extends State<EntityDropdown> {
                       shrinkWrap: true,
                       itemCount: options.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final option = options.elementAt(index);
-                        return GestureDetector(
-                          onTap: () {
-                            onSelected(option);
-                          },
-                          child: Container(
-                            color: Theme.of(context).cardColor,
-                            child: _EntityListTile(
-                              entity: option,
-                              filter: _filter,
-                              overrideSuggestedAmount:
-                                  widget.overrideSuggestedAmount,
-                              overrideSuggestedLabel:
-                                  widget.overrideSuggestedLabel,
-                            ),
+                        return Container(
+                          color: Theme.of(context).cardColor,
+                          child: _EntityListTile(
+                            onTap: (entity) => onSelected(entity),
+                            entity: options.elementAt(index),
+                            filter: _filter,
+                            overrideSuggestedAmount:
+                                widget.overrideSuggestedAmount,
+                            overrideSuggestedLabel:
+                                widget.overrideSuggestedLabel,
                           ),
                         );
                       },
