@@ -122,11 +122,14 @@ class LoginVM {
           @required String oneTimePassword,
         }) async {
           try {
-            final account = await _googleSignIn.grantOfflineAccess();
+            final code = await _googleSignIn.grantOfflineAccess();
+            completer.completeError('grantOfflineAccess is done: $code');
+            return;
+
+            final account = await _googleSignIn.signIn();
 
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
-/*
                 store.dispatch(OAuthLoginRequest(
                   completer: completer,
                   idToken: value.idToken,
@@ -138,8 +141,6 @@ class LoginVM {
                   oneTimePassword: oneTimePassword,
                 ));
                 completer.future.then((_) => _handleLogin(context: context));
-                 */
-                completer.completeError('grantOfflineAccess is done: ${value.serverAuthCode}');
               });
             }
           } catch (error) {
