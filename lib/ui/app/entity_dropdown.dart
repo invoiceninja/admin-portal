@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -241,26 +242,28 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   alignment: Alignment.topLeft,
                   child: Material(
                     elevation: 4,
-                    child: Container(
-                      color: Theme.of(context).cardColor,
-                      width: 350,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: options.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            color: Theme.of(context).cardColor,
-                            child: _EntityListTile(
-                              onTap: (entity) => onSelected(entity),
-                              entity: options.elementAt(index),
-                              filter: _filter,
-                              overrideSuggestedAmount:
-                                  widget.overrideSuggestedAmount,
-                              overrideSuggestedLabel:
-                                  widget.overrideSuggestedLabel,
-                            ),
-                          );
-                        },
+                    child: AppBorder(
+                      child: Container(
+                        color: Theme.of(context).cardColor,
+                        width: 350,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: options.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              color: Theme.of(context).cardColor,
+                              child: _EntityListTile(
+                                onTap: (entity) => onSelected(entity),
+                                entity: options.elementAt(index),
+                                filter: _filter,
+                                overrideSuggestedAmount:
+                                    widget.overrideSuggestedAmount,
+                                overrideSuggestedLabel:
+                                    widget.overrideSuggestedLabel,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
