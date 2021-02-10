@@ -166,6 +166,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
       return Stack(
@@ -233,30 +235,33 @@ class _EntityDropdownState extends State<EntityDropdown> {
             optionsViewBuilder: (BuildContext context,
                 AutocompleteOnSelected<SelectableEntity> onSelected,
                 Iterable<SelectableEntity> options) {
-              return Align(
-                alignment: Alignment.topLeft,
-                child: Material(
-                  elevation: 4,
-                  child: Container(
-                    color: Theme.of(context).cardColor,
-                    width: 350,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: options.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          color: Theme.of(context).cardColor,
-                          child: _EntityListTile(
-                            onTap: (entity) => onSelected(entity),
-                            entity: options.elementAt(index),
-                            filter: _filter,
-                            overrideSuggestedAmount:
-                                widget.overrideSuggestedAmount,
-                            overrideSuggestedLabel:
-                                widget.overrideSuggestedLabel,
-                          ),
-                        );
-                      },
+              return Theme(
+                data: theme,
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Material(
+                    elevation: 4,
+                    child: Container(
+                      color: Theme.of(context).cardColor,
+                      width: 350,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: options.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            color: Theme.of(context).cardColor,
+                            child: _EntityListTile(
+                              onTap: (entity) => onSelected(entity),
+                              entity: options.elementAt(index),
+                              filter: _filter,
+                              overrideSuggestedAmount:
+                                  widget.overrideSuggestedAmount,
+                              overrideSuggestedLabel:
+                                  widget.overrideSuggestedLabel,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
