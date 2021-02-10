@@ -132,17 +132,15 @@ class _EntityDropdownState extends State<EntityDropdown> {
         });
   }
 
-  bool get showClear =>
-      widget.allowClearing &&
+  bool get hasValue =>
       widget.entityId != null &&
       widget.entityId != '0' &&
       widget.entityId.isNotEmpty;
 
+  bool get showClear => widget.allowClearing && hasValue;
+
   @override
   Widget build(BuildContext context) {
-    print('## allow clearing: ${widget.allowClearing}');
-    print('## entityId: ${widget.entityId}');
-
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
       return Stack(
@@ -175,6 +173,17 @@ class _EntityDropdownState extends State<EntityDropdown> {
                 TextEditingController textEditingController,
                 FocusNode focusNode,
                 VoidCallback onFieldSubmitted) {
+              /*
+              final entity = widget.entityMap[widget.entityId];
+              if (hasValue) {
+                if (widget.overrideSuggestedLabel != null) {
+                  textEditingController.text =
+                      widget.overrideSuggestedLabel(entity);
+                } else {
+                  textEditingController.text = entity?.listDisplayName ?? '';
+                }
+              }
+              */
               return DecoratedFormField(
                 validator: widget.validator,
                 showClear: showClear,
