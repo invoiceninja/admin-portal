@@ -140,6 +140,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    print('## allow clearing: ${widget.allowClearing}');
+    print('## entityId: ${widget.entityId}');
+
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
       return Stack(
@@ -157,8 +160,16 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   .toList();
             },
             displayStringForOption: (entity) => entity.listDisplayName,
-            onSelected: (value) {
-              print('## selected: $value');
+            onSelected: (entity) {
+              _textController.text = widget.overrideSuggestedLabel != null
+                  ? widget.overrideSuggestedLabel(entity)
+                  : entity?.listDisplayName;
+
+              if (entity?.id == widget.entityId) {
+                return;
+              }
+
+              widget.onSelected(entity);
             },
             fieldViewBuilder: (BuildContext context,
                 TextEditingController textEditingController,
@@ -166,7 +177,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                 VoidCallback onFieldSubmitted) {
               return DecoratedFormField(
                 validator: widget.validator,
-                showClear: false,
+                showClear: showClear,
                 label: widget.labelText,
                 autofocus: widget.autofocus ?? false,
                 controller: textEditingController,
