@@ -175,9 +175,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
             focusNode: _focusNode,
             textEditingController: _textController,
             optionsBuilder: (TextEditingValue textEditingValue) {
-              if (textEditingValue.text == '') {
-                return const Iterable<SelectableEntity>.empty();
-              }
               return (widget.entityList ?? widget.entityMap.keys.toList())
                   .map((entityId) => _entityMap[entityId])
                   .where((entity) =>
