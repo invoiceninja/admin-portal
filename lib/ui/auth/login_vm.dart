@@ -87,7 +87,7 @@ class LoginVM {
         'email',
         'openid',
         'profile',
-        'https://www.googleapis.com/auth/gmail.send',
+        //'https://www.googleapis.com/auth/gmail.send',
       ],
     );
 
