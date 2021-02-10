@@ -121,13 +121,12 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
             onSavePressed: viewModel.onSavePressed,
           ),
           EntityDropdown(
-            key: ValueKey('__billing_country_${client.countryId}__'),
             entityType: EntityType.country,
             entityList: memoizedCountryList(viewModel.staticState.countryMap),
             labelText: localization.country,
             entityId: client.countryId,
-            onSelected: (SelectableEntity country) => viewModel
-                .onChanged(client.rebuild((b) => b..countryId = country?.id)),
+            onSelected: (SelectableEntity country) => viewModel.onChanged(
+                client.rebuild((b) => b..countryId = country?.id ?? '')),
           ),
         ],
       ),

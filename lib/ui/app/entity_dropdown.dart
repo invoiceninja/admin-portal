@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/.env.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
-    @required Key key,
     @required this.entityType,
     @required this.labelText,
     @required this.onSelected,
@@ -31,7 +30,7 @@ class EntityDropdown extends StatefulWidget {
     this.onFieldSubmitted,
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
-  }) : super(key: key);
+  });
 
   final EntityType entityType;
   final List<String> entityList;
@@ -63,7 +62,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   void initState() {
     super.initState();
     _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
+      if (_focusNode.hasFocus && isMobile(context)) {
         _showOptions();
       }
     });
@@ -89,6 +88,32 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
     super.didChangeDependencies();
   }
+
+/*
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.entityId == widget.entityId) {
+      return;
+    }
+
+    final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
+    _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
+
+    if (_entityMap == null) {
+      print('ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
+    } else {
+      final entity = _entityMap[widget.entityId];
+      if (widget.overrideSuggestedLabel != null) {
+        _textController.text = widget.overrideSuggestedLabel(entity);
+      } else {
+        _textController.text = entity?.listDisplayName ??
+            (widget.showUseDefault ? localization.useDefault : '');
+      }
+    }
+  }
+  */
 
   @override
   void dispose() {
@@ -146,7 +171,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
       return Stack(
         alignment: Alignment.centerRight,
         children: <Widget>[
-          Autocomplete<SelectableEntity>(
+          RawAutocomplete<SelectableEntity>(
+            focusNode: _focusNode,
+            textEditingController: _textController,
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text == '') {
                 return const Iterable<SelectableEntity>.empty();
@@ -159,9 +186,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
             },
             displayStringForOption: (entity) => entity.listDisplayName,
             onSelected: (entity) {
+              /*
               _textController.text = widget.overrideSuggestedLabel != null
                   ? widget.overrideSuggestedLabel(entity)
                   : entity?.listDisplayName;
+                  */
 
               if (entity?.id == widget.entityId) {
                 return;

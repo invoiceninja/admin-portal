@@ -83,7 +83,6 @@ class VendorEditNotesState extends State<VendorEditNotes> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
-              key: ValueKey('__currency_${vendor.currencyId}__'),
               entityType: EntityType.currency,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
