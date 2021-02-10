@@ -123,7 +123,7 @@ class LoginVM {
         }) async {
           try {
             final isSignedIn = await _googleSignIn.isSignedIn();
-
+            print('## Is signed in: $isSignedIn');
             if (!isSignedIn) {
               _googleSignIn.signIn();
               completer.completeError('Click again');
@@ -133,6 +133,7 @@ class LoginVM {
             final account = await _googleSignIn.grantOfflineAccess();
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
+                /*
                 store.dispatch(OAuthLoginRequest(
                   completer: completer,
                   idToken: value.idToken,
@@ -144,6 +145,8 @@ class LoginVM {
                   oneTimePassword: oneTimePassword,
                 ));
                 completer.future.then((_) => _handleLogin(context: context));
+                 */
+                completer.completeError('AUTH: ${value.serverAuthCode}');
               });
             }
           } catch (error) {
