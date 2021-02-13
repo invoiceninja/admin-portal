@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'import_model.g.dart';
 
@@ -19,9 +20,26 @@ abstract class PreImportResponse
 
   String get hash;
 
-  BuiltList<BuiltList<String>> get headers;
+  BuiltMap<String,PreImportResponseEntityDetails> get mappings;
+
+  static Serializer<PreImportResponse> get serializer =>
+      _$preImportResponseSerializer;
+}
+
+abstract class PreImportResponseEntityDetails
+    implements Built<PreImportResponseEntityDetails, PreImportResponseEntityDetailsBuilder> {
+  factory PreImportResponseEntityDetails() {
+    return _$PreImportResponseEntityDetails._();
+  }
+
+  PreImportResponseEntityDetails._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   BuiltList<String> get available;
+  BuiltList<BuiltList<String>> get headers;
 
   BuiltList<String> get fields1 =>
       headers.isEmpty ? BuiltList<String>() : headers[0];
@@ -29,21 +47,21 @@ abstract class PreImportResponse
   BuiltList<String> get fields2 =>
       headers.length < 2 ? BuiltList<String>() : headers[1];
 
-  static Serializer<PreImportResponse> get serializer =>
-      _$preImportResponseSerializer;
+  static Serializer<PreImportResponseEntityDetails> get serializer =>
+      _$preImportResponseEntityDetailsSerializer;
 }
 
 abstract class ImportRequest
     implements Built<ImportRequest, ImportRequestBuilder> {
   factory ImportRequest({
     @required String hash,
-    @required String entityType,
+    @required String importType,
     @required bool skipHeader,
-    @required BuiltMap<int, String> columnMap,
+    @required BuiltMap<String, BuiltMap<int, String>> columnMap,
   }) {
     return _$ImportRequest._(
       hash: hash,
-      entityType: entityType,
+      importType: importType,
       skipHeader: skipHeader,
       columnMap: columnMap,
     );
@@ -57,14 +75,58 @@ abstract class ImportRequest
 
   String get hash;
 
-  @BuiltValueField(wireName: 'entity_type')
-  String get entityType;
+  @BuiltValueField(wireName: 'import_type')
+  String get importType;
 
   @BuiltValueField(wireName: 'skip_header')
   bool get skipHeader;
 
   @BuiltValueField(wireName: 'column_map')
-  BuiltMap<int, String> get columnMap;
+  BuiltMap<String, BuiltMap<int, String>> get columnMap;
+
+  // This needed so the builder factory for BuiltMap<int, String> is auto-created.
+  @nullable
+  @BuiltValueField(wireName: 'dummy_field')
+  BuiltMap<int, String> get dummy;
 
   static Serializer<ImportRequest> get serializer => _$importRequestSerializer;
+}
+
+class ImportType extends EnumClass {
+  const ImportType._(String name) : super(name);
+
+  static Serializer<ImportType> get serializer => _$importTypeSerializer;
+
+  static const ImportType csv = _$csv;
+  static const ImportType freshbooks = _$freshbooks;
+  static const ImportType invoice2go = _$invoice2go;
+
+  static const ImportType invoicely = _$invoicely;
+  static const ImportType waveaccounting = _$waveaccounting;
+  static const ImportType zoho = _$zoho;
+
+  static BuiltSet<ImportType> get values => _$typeValues;
+
+  List<String> get uploadParts {
+    switch (this) {
+      case ImportType.csv:
+        return [
+          EntityType.client.toString(),
+          EntityType.invoice.toString(),
+          EntityType.payment.toString(),
+          EntityType.product.toString(),
+          EntityType.vendor.toString(),
+          EntityType.expense.toString(),
+        ];
+      case ImportType.freshbooks:
+        return [
+          EntityType.client.toString(),
+          EntityType.payment.toString(),
+        ];
+      default:
+        return [];
+    }
+  }
+
+  static ImportType valueOf(String name) => _$typeValueOf(name);
 }
