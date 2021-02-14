@@ -39,6 +39,7 @@ class _ProjectViewState extends State<ProjectView>
         vsync: this,
         length: 2,
         initialIndex: state.projectUIState.tabIndex ?? 0);
+    _controller.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
