@@ -54,6 +54,7 @@ const EntityAction _$cancel = const EntityAction._('cancel');
 const EntityAction _$copy = const EntityAction._('copy');
 const EntityAction _$invoiceTask = const EntityAction._('invoiceTask');
 const EntityAction _$invoiceExpense = const EntityAction._('invoiceExpense');
+const EntityAction _$invoiceProject = const EntityAction._('invoiceProject');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -145,6 +146,8 @@ EntityAction _$valueOf(String name) {
       return _$invoiceTask;
     case 'invoiceExpense':
       return _$invoiceExpense;
+    case 'invoiceProject':
+      return _$invoiceProject;
     default:
       throw new ArgumentError(name);
   }
@@ -196,6 +199,7 @@ final BuiltSet<EntityAction> _$values =
   _$copy,
   _$invoiceTask,
   _$invoiceExpense,
+  _$invoiceProject,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =
