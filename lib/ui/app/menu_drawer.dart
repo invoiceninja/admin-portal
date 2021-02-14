@@ -658,7 +658,10 @@ class SidebarFooter extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.info_outline),
-              onPressed: () => _showAbout(context),
+              // prevent the modal from being stuck over the pdf
+              onPressed: state.uiState.isInPdf && kIsWeb
+                  ? null
+                  : () => _showAbout(context),
               tooltip: localization.about,
             ),
             /*
