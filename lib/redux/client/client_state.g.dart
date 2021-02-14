@@ -96,6 +96,18 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
         ..add(serializers.serialize(object.selectedId,
             specifiedType: const FullType(String)));
     }
+    if (object.tabIndex != null) {
+      result
+        ..add('tabIndex')
+        ..add(serializers.serialize(object.tabIndex,
+            specifiedType: const FullType(int)));
+    }
+    if (object.tablePage != null) {
+      result
+        ..add('tablePage')
+        ..add(serializers.serialize(object.tablePage,
+            specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -126,6 +138,14 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'tabIndex':
+          result.tabIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'tablePage':
+          result.tablePage = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -250,6 +270,10 @@ class _$ClientUIState extends ClientUIState {
   @override
   final String selectedId;
   @override
+  final int tabIndex;
+  @override
+  final int tablePage;
+  @override
   final Completer<SelectableEntity> saveCompleter;
   @override
   final Completer<Null> cancelCompleter;
@@ -262,6 +286,8 @@ class _$ClientUIState extends ClientUIState {
       this.editingContact,
       this.listUIState,
       this.selectedId,
+      this.tabIndex,
+      this.tablePage,
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
@@ -285,6 +311,8 @@ class _$ClientUIState extends ClientUIState {
         editingContact == other.editingContact &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
+        tabIndex == other.tabIndex &&
+        tablePage == other.tablePage &&
         saveCompleter == other.saveCompleter &&
         cancelCompleter == other.cancelCompleter;
   }
@@ -295,9 +323,15 @@ class _$ClientUIState extends ClientUIState {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, editing.hashCode), editingContact.hashCode),
-                    listUIState.hashCode),
-                selectedId.hashCode),
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc(0, editing.hashCode),
+                                editingContact.hashCode),
+                            listUIState.hashCode),
+                        selectedId.hashCode),
+                    tabIndex.hashCode),
+                tablePage.hashCode),
             saveCompleter.hashCode),
         cancelCompleter.hashCode));
   }
@@ -309,6 +343,8 @@ class _$ClientUIState extends ClientUIState {
           ..add('editingContact', editingContact)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
+          ..add('tabIndex', tabIndex)
+          ..add('tablePage', tablePage)
           ..add('saveCompleter', saveCompleter)
           ..add('cancelCompleter', cancelCompleter))
         .toString();
@@ -340,6 +376,14 @@ class ClientUIStateBuilder
   String get selectedId => _$this._selectedId;
   set selectedId(String selectedId) => _$this._selectedId = selectedId;
 
+  int _tabIndex;
+  int get tabIndex => _$this._tabIndex;
+  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+
+  int _tablePage;
+  int get tablePage => _$this._tablePage;
+  set tablePage(int tablePage) => _$this._tablePage = tablePage;
+
   Completer<SelectableEntity> _saveCompleter;
   Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
   set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
@@ -358,6 +402,8 @@ class ClientUIStateBuilder
       _editingContact = _$v.editingContact?.toBuilder();
       _listUIState = _$v.listUIState?.toBuilder();
       _selectedId = _$v.selectedId;
+      _tabIndex = _$v.tabIndex;
+      _tablePage = _$v.tablePage;
       _saveCompleter = _$v.saveCompleter;
       _cancelCompleter = _$v.cancelCompleter;
       _$v = null;
@@ -388,6 +434,8 @@ class ClientUIStateBuilder
               editingContact: _editingContact?.build(),
               listUIState: listUIState.build(),
               selectedId: selectedId,
+              tabIndex: tabIndex,
+              tablePage: tablePage,
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
