@@ -191,7 +191,9 @@ class _EntityListState extends State<EntityList> {
 
         final tablePageIndex = state.getUIState(entityType).tablePage;
         final initialFirstRowIndex =
-            tablePageIndex > dataTableSource.rowCount ? 0 : tablePageIndex;
+            tablePageIndex != null && tablePageIndex > dataTableSource.rowCount
+                ? 0
+                : tablePageIndex;
 
         return Column(
           mainAxisSize: MainAxisSize.max,
