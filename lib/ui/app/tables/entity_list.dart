@@ -189,11 +189,21 @@ class _EntityListState extends State<EntityList> {
           return SizedBox();
         }
 
-        final tablePageIndex = state.getUIState(entityType).tablePage;
-        final initialFirstRowIndex =
-            tablePageIndex != null && tablePageIndex > dataTableSource.rowCount
-                ? 0
-                : tablePageIndex;
+        // make sure the initial page shows the selected record
+        final entityUIState = state.getUIState(entityType);
+        final selectedIndex =
+            widget.entityList.indexOf(entityUIState.selectedId);
+        final rowsPerPage = state.prefState.rowsPerPage;
+        final tablePageIndex = entityUIState.tablePage;
+        int initialFirstRowIndex = tablePageIndex;
+
+        if (tablePageIndex != null &&
+            tablePageIndex > dataTableSource.rowCount) {
+          initialFirstRowIndex = 0;
+        } else if (selectedIndex >= 0) {
+          initialFirstRowIndex =
+              (selectedIndex / rowsPerPage).floor() * rowsPerPage;
+        }
 
         return Column(
           mainAxisSize: MainAxisSize.max,
