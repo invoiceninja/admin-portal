@@ -32,6 +32,7 @@ class EntityList extends StatefulWidget {
     @required this.onSortColumn,
     @required this.itemBuilder,
     @required this.onClearMultiselect,
+    this.onPageChanged,
     this.presenter,
     this.tableColumns,
   }) : super(key: ValueKey('__${entityType}_${tableColumns}__'));
@@ -43,6 +44,7 @@ class EntityList extends StatefulWidget {
   final Function(BuildContext) onRefreshed;
   final EntityPresenter presenter;
   final Function(String) onSortColumn;
+  final Function(int) onPageChanged;
   final Function(BuildContext, int) itemBuilder;
   final Function onClearMultiselect;
 
@@ -187,6 +189,10 @@ class _EntityListState extends State<EntityList> {
           return SizedBox();
         }
 
+        final tablePageIndex = state.getUIState(entityType).tablePage;
+        final initialFirstRowIndex =
+            tablePageIndex > dataTableSource.rowCount ? 0 : tablePageIndex;
+
         return Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -210,7 +216,7 @@ class _EntityListState extends State<EntityList> {
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   child: AppPaginatedDataTable(
                     key: ValueKey(
-                        '__${uiState.filterEntityId}_${uiState.filterEntityType}__'),
+                        '__${uiState.filterEntityId}_${uiState.filterEntityType}_${listUIState.hashCode}_'),
                     onSelectAll: (value) {
                       final entities = entityList
                           .map((String entityId) => entityMap[entityId])
@@ -246,6 +252,8 @@ class _EntityListState extends State<EntityList> {
                             : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
+                    onPageChanged: widget.onPageChanged,
+                    initialFirstRowIndex: initialFirstRowIndex,
                   ),
                 ),
               ),
