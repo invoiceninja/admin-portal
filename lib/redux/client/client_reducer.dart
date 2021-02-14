@@ -18,7 +18,6 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
         .replace(editingContactReducer(state.editingContact, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..tablePage = tablePageIndexReducer(state.tablePage, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
     ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
@@ -29,12 +28,6 @@ final tabIndexReducer = combineReducers<int>([
   }),
   TypedReducer<int, PreviewEntity>((completer, action) {
     return null;
-  }),
-]);
-
-final tablePageIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateClientTablePage>((completer, action) {
-    return action.tableIndex;
   }),
 ]);
 

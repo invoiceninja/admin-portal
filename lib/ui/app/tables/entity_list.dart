@@ -194,13 +194,9 @@ class _EntityListState extends State<EntityList> {
         final selectedIndex =
             widget.entityList.indexOf(entityUIState.selectedId);
         final rowsPerPage = state.prefState.rowsPerPage;
-        final tablePageIndex = entityUIState.tablePage;
-        int initialFirstRowIndex = tablePageIndex;
 
-        if (tablePageIndex != null &&
-            tablePageIndex > dataTableSource.rowCount) {
-          initialFirstRowIndex = 0;
-        } else if (selectedIndex >= 0) {
+        int initialFirstRowIndex = 0;
+        if (selectedIndex >= 0) {
           initialFirstRowIndex =
               (selectedIndex / rowsPerPage).floor() * rowsPerPage;
         }

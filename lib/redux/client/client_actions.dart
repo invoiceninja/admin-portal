@@ -461,9 +461,3 @@ class UpdateClientTab implements PersistUI {
 
   final int tabIndex;
 }
-
-class UpdateClientTablePage implements PersistUI {
-  UpdateClientTablePage({this.tableIndex});
-
-  final int tableIndex;
-}
