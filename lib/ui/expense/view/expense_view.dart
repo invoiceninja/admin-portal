@@ -41,7 +41,7 @@ class _ExpenseViewState extends State<ExpenseView>
     final state = widget.viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: 6,
+        length: 2,
         initialIndex: state.expenseUIState.tabIndex ?? 0);
     _controller.addListener(_onTabChanged);
   }

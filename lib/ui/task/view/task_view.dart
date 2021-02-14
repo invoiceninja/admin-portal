@@ -36,7 +36,7 @@ class _TaskViewState extends State<TaskView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this, length: 6, initialIndex: state.taskUIState.tabIndex ?? 0);
+        vsync: this, length: 2, initialIndex: state.taskUIState.tabIndex ?? 0);
     _controller.addListener(_onTabChanged);
   }
 

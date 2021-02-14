@@ -36,7 +36,7 @@ class _VendorViewState extends State<VendorView>
     final state = widget.viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: 6,
+        length: 3,
         initialIndex: state.vendorUIState.tabIndex ?? 0);
     _controller.addListener(_onTabChanged);
   }

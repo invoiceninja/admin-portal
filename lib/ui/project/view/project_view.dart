@@ -38,7 +38,7 @@ class _ProjectViewState extends State<ProjectView>
     _controller = TabController(
         vsync: this,
         length: 2,
-        initialIndex: state.productUIState.tabIndex ?? 0);
+        initialIndex: state.projectUIState.tabIndex ?? 0);
   }
 
   void _onTabChanged() {
