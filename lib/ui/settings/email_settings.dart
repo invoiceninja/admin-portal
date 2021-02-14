@@ -37,6 +37,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   bool autoValidate = false;
 
   final _replyToEmailController = TextEditingController();
+  final _replyToNameController = TextEditingController();
   final _bccEmailController = TextEditingController();
   final _emailStyleCustomController = TextEditingController();
   final _emailSignatureController = TextEditingController();
@@ -64,6 +65,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   void didChangeDependencies() {
     _controllers = [
       _replyToEmailController,
+      _replyToNameController,
       _bccEmailController,
       _emailStyleCustomController,
       _emailSignatureController,
@@ -74,6 +76,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
     final settings = widget.viewModel.settings;
     _replyToEmailController.text = settings.replyToEmail;
+    _replyToNameController.text = settings.replyToName;
     _bccEmailController.text = settings.bccEmail;
     _emailStyleCustomController.text = settings.emailStyleCustom;
     _emailSignatureController.text = settings.emailSignature;
@@ -87,6 +90,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   void _onChanged() {
     final settings = widget.viewModel.settings.rebuild((b) => b
       ..replyToEmail = _replyToEmailController.text.trim()
+      ..replyToName = _replyToNameController.text.trim()
       ..bccEmail = _bccEmailController.text.trim()
       ..emailStyleCustom = _emailStyleCustomController.text.trim()
       ..emailSignature = _emailSignatureController.text.trim());
@@ -142,6 +146,10 @@ class _EmailSettingsState extends State<EmailSettings> {
           ],
           FormCard(
             children: <Widget>[
+              DecoratedFormField(
+                label: localization.replyToName,
+                controller: _replyToNameController,
+              ),
               DecoratedFormField(
                 label: localization.replyToEmail,
                 controller: _replyToEmailController,

@@ -479,7 +479,7 @@ packages:
     description:
       path: "packages/google_sign_in/google_sign_in"
       ref: master
-      resolved-ref: "83bc921856fa3a5e12f1fc5e872e23430fa205b8"
+      resolved-ref: b9b7e1eabc2da8e669ea1b452d310ecce454741e
       url: "https://github.com/invoiceninja/plugins.git"
     source: git
     version: "4.5.4"
@@ -488,7 +488,7 @@ packages:
     description:
       path: "packages/google_sign_in/google_sign_in_platform_interface"
       ref: HEAD
-      resolved-ref: "83bc921856fa3a5e12f1fc5e872e23430fa205b8"
+      resolved-ref: b9b7e1eabc2da8e669ea1b452d310ecce454741e
       url: "https://github.com/invoiceninja/plugins.git"
     source: git
     version: "1.1.2"
@@ -497,7 +497,7 @@ packages:
     description:
       path: "packages/google_sign_in/google_sign_in_web"
       ref: master
-      resolved-ref: "83bc921856fa3a5e12f1fc5e872e23430fa205b8"
+      resolved-ref: b9b7e1eabc2da8e669ea1b452d310ecce454741e
       url: "https://github.com/invoiceninja/plugins.git"
     source: git
     version: "0.9.2"
