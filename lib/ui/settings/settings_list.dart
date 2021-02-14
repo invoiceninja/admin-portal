@@ -469,6 +469,7 @@ class SettingsSearch extends StatelessWidget {
       [
         'email_design',
         'reply_to_email',
+        'reply_to_name',
         'bcc_email',
         'attach_pdf',
         'attach_documents',
