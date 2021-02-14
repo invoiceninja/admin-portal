@@ -209,17 +209,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
                 TextEditingController textEditingController,
                 FocusNode focusNode,
                 VoidCallback onFieldSubmitted) {
-              /*
-              final entity = widget.entityMap[widget.entityId];
-              if (hasValue) {
-                if (widget.overrideSuggestedLabel != null) {
-                  textEditingController.text =
-                      widget.overrideSuggestedLabel(entity);
-                } else {
-                  textEditingController.text = entity?.listDisplayName ?? '';
-                }
-              }
-              */
               return DecoratedFormField(
                 validator: widget.validator,
                 showClear: showClear,
