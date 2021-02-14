@@ -37,11 +37,23 @@ class _ClientViewState extends State<ClientView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 6);
+
+    final state = widget.viewModel.state;
+    _controller = TabController(
+        vsync: this,
+        length: 6,
+        initialIndex: state.clientUIState.tabIndex ?? 0);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateClientTab(tabIndex: _controller.index));
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     super.dispose();
   }

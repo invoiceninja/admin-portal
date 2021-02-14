@@ -34,6 +34,7 @@ class ClientListBuilder extends StatelessWidget {
             onRefreshed: viewModel.onRefreshed,
             onSortColumn: viewModel.onSortColumn,
             onClearMultiselect: viewModel.onClearMultielsect,
+            onPageChanged: viewModel.onPageChanged,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final clientId = viewModel.clientList[index];
@@ -65,6 +66,7 @@ class ClientListVM {
     @required this.onEntityAction,
     @required this.onSortColumn,
     @required this.onClearMultielsect,
+    @required this.onPageChanged,
   });
 
   final AppState state;
@@ -77,6 +79,7 @@ class ClientListVM {
   final List<String> tableColumns;
   final Function(String) onSortColumn;
   final Function onClearMultielsect;
+  final Function(int) onPageChanged;
 
   static ClientListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -114,6 +117,8 @@ class ClientListVM {
               ClientPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
       onClearMultielsect: () => store.dispatch(ClearClientMultiselect()),
+      onPageChanged: (index) =>
+          store.dispatch(UpdateClientTablePage(tableIndex: index)),
     );
   } //
 }
