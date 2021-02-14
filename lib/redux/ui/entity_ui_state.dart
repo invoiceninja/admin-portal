@@ -16,9 +16,6 @@ abstract class EntityUIState {
   int get tabIndex;
 
   @nullable
-  int get tablePage;
-
-  @nullable
   @BuiltValueField(serialize: false)
   Completer<SelectableEntity> get saveCompleter;
 
