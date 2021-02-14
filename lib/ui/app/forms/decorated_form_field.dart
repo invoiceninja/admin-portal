@@ -33,6 +33,7 @@ class DecoratedFormField extends StatelessWidget {
     this.focusNode,
     this.isMoney = false,
     this.isPercent = false,
+    this.showClear = true,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -59,6 +60,7 @@ class DecoratedFormField extends StatelessWidget {
   final FocusNode focusNode;
   final bool isMoney;
   final bool isPercent;
+  final bool showClear;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class DecoratedFormField extends StatelessWidget {
         (initialValue ?? '').isNotEmpty || (controller?.text ?? '').isNotEmpty;
     final enterShouldSubmit = isDesktop(context) && onSavePressed != null;
 
-    if (hasValue && key == null) {
+    if (showClear && hasValue && key == null) {
       if (suffixIcon == null && enabled) {
         suffixIconButton = IconButton(
           icon: Icon(Icons.clear),

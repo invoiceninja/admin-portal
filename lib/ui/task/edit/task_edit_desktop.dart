@@ -151,7 +151,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                 children: [
                   if (!task.isInvoiced) ...[
                     EntityDropdown(
-                      key: Key('__client_${task.clientId}__'),
                       entityType: EntityType.client,
                       labelText: localization.client,
                       entityId: task.clientId,

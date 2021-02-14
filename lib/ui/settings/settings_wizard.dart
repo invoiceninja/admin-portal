@@ -95,7 +95,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
     );
 
     final currency = EntityDropdown(
-      key: ValueKey('__currency_${_currencyId}__'),
       entityType: EntityType.currency,
       entityList: memoizedCurrencyList(state.staticState.currencyMap),
       labelText: localization.currency,
@@ -107,7 +106,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
     );
 
     final language = EntityDropdown(
-      key: ValueKey('__language_${_languageId}__'),
       entityType: EntityType.language,
       entityList: memoizedLanguageList(state.staticState.languageMap),
       labelText: localization.language,

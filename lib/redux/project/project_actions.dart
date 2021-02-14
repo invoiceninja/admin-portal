@@ -281,7 +281,7 @@ void handleProjectAction(
             ..projectId = project.id
             ..clientId = project.clientId));
       break;
-    case EntityAction.newInvoice:
+    case EntityAction.invoiceProject:
       final items =
           convertProjectToInvoiceItem(project: project, context: context);
       createEntity(

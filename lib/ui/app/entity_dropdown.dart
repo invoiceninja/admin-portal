@@ -6,6 +6,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -14,7 +16,6 @@ import 'package:invoiceninja_flutter/.env.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
-    @required Key key,
     @required this.entityType,
     @required this.labelText,
     @required this.onSelected,
@@ -30,7 +31,7 @@ class EntityDropdown extends StatefulWidget {
     this.onFieldSubmitted,
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
-  }) : super(key: key);
+  });
 
   final EntityType entityType;
   final List<String> entityList;
@@ -55,13 +56,14 @@ class EntityDropdown extends StatefulWidget {
 class _EntityDropdownState extends State<EntityDropdown> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
+  String _filter = '';
   BuiltMap<String, SelectableEntity> _entityMap;
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
+      if (_focusNode.hasFocus && isMobile(context)) {
         _showOptions();
       }
     });
@@ -87,6 +89,32 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
     super.didChangeDependencies();
   }
+
+/*
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.entityId == widget.entityId) {
+      return;
+    }
+
+    final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
+    _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
+
+    if (_entityMap == null) {
+      print('ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
+    } else {
+      final entity = _entityMap[widget.entityId];
+      if (widget.overrideSuggestedLabel != null) {
+        _textController.text = widget.overrideSuggestedLabel(entity);
+      } else {
+        _textController.text = entity?.listDisplayName ??
+            (widget.showUseDefault ? localization.useDefault : '');
+      }
+    }
+  }
+  */
 
   @override
   void dispose() {
@@ -130,78 +158,46 @@ class _EntityDropdownState extends State<EntityDropdown> {
         });
   }
 
-  bool get showClear =>
-      widget.allowClearing &&
+  bool get hasValue =>
       widget.entityId != null &&
       widget.entityId != '0' &&
       widget.entityId.isNotEmpty;
 
+  bool get showClear => widget.allowClearing && hasValue;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
       return Stack(
         alignment: Alignment.centerRight,
         children: <Widget>[
-          TypeAheadFormField<String>(
-            validator: widget.validator,
-            noItemsFoundBuilder: (context) => SizedBox(),
-            suggestionsBoxDecoration: SuggestionsBoxDecoration(
-              constraints: BoxConstraints(
-                minWidth: 300,
-              ),
-            ),
-            suggestionsCallback: (filter) {
-              return (widget.entityList ?? widget.entityMap.keys.toList())
-                  .where((entityId) =>
-                      _entityMap[entityId]?.matchesFilter(filter) ?? false)
-                  .toList();
-            },
-            itemBuilder: (context, entityId) {
-              // TODO remove this
-              /*
-              return _EntityListTile(
-                  entity: _entityMap[entityId],
-                  filter: _textController.text,
-                );
-              */
-              return Listener(
-                child: Container(
-                  color: Theme.of(context).cardColor,
-                  child: _EntityListTile(
-                    entity: _entityMap[entityId],
-                    filter: _textController.text,
-                    overrideSuggestedAmount: widget.overrideSuggestedAmount,
-                    overrideSuggestedLabel: widget.overrideSuggestedLabel,
-                  ),
-                ),
-                onPointerDown: (_) {
-                  if (!kIsWeb) {
-                    return;
-                  }
-                  final entity = _entityMap[entityId];
+          RawAutocomplete<SelectableEntity>(
+            focusNode: _focusNode,
+            textEditingController: _textController,
+            optionsBuilder: (TextEditingValue textEditingValue) {
+              final options =
+                  (widget.entityList ?? widget.entityMap.keys.toList())
+                      .map((entityId) => _entityMap[entityId])
+                      .where((entity) =>
+                          entity?.matchesFilter(textEditingValue.text) ?? false)
+                      .toList();
 
-                  _textController.text = widget.overrideSuggestedLabel != null
-                      ? widget.overrideSuggestedLabel(entity)
-                      : entity?.listDisplayName;
-
-                  if (entity?.id == widget.entityId) {
-                    return;
-                  }
-
-                  widget.onSelected(entity);
-                },
-              );
-            },
-            onSuggestionSelected: (entityId) {
-              if (kIsWeb) {
-                return;
+              if (options.length == 1 && options[0].id == widget.entityId) {
+                return <SelectableEntity>[];
               }
 
-              final entity = _entityMap[entityId];
+              return options;
+            },
+            displayStringForOption: (entity) => entity.listDisplayName,
+            onSelected: (entity) {
+              /*
               _textController.text = widget.overrideSuggestedLabel != null
                   ? widget.overrideSuggestedLabel(entity)
                   : entity?.listDisplayName;
+                  */
 
               if (entity?.id == widget.entityId) {
                 return;
@@ -209,17 +205,60 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
               widget.onSelected(entity);
             },
-            textFieldConfiguration: TextFieldConfiguration(
-              controller: _textController,
-              //autofocus: widget.autofocus ?? false,
-              decoration: InputDecoration(
-                labelText: widget.labelText,
-              ),
-            ),
-            //direction: AxisDirection.up,
-            autoFlipDirection: true,
-            animationStart: 1,
-            debounceDuration: Duration(seconds: 0),
+            fieldViewBuilder: (BuildContext context,
+                TextEditingController textEditingController,
+                FocusNode focusNode,
+                VoidCallback onFieldSubmitted) {
+              return DecoratedFormField(
+                validator: widget.validator,
+                showClear: showClear,
+                label: widget.labelText,
+                autofocus: widget.autofocus ?? false,
+                controller: textEditingController,
+                focusNode: focusNode,
+                onFieldSubmitted: (String value) {
+                  onFieldSubmitted();
+                },
+                onChanged: (value) => _filter = value,
+              );
+            },
+            optionsViewBuilder: (BuildContext context,
+                AutocompleteOnSelected<SelectableEntity> onSelected,
+                Iterable<SelectableEntity> options) {
+              return Theme(
+                data: theme,
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Material(
+                    elevation: 4,
+                    child: AppBorder(
+                      child: Container(
+                        color: Theme.of(context).cardColor,
+                        width: 350,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: options.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              color: Theme.of(context).cardColor,
+                              child: _EntityListTile(
+                                onTap: (entity) => onSelected(entity),
+                                entity: options.elementAt(index),
+                                filter: _filter,
+                                overrideSuggestedAmount:
+                                    widget.overrideSuggestedAmount,
+                                overrideSuggestedLabel:
+                                    widget.overrideSuggestedLabel,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
           showClear
               ? IconButton(

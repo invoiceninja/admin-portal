@@ -110,14 +110,13 @@ class ClientEditNotesState extends State<ClientEditNotes> {
               showBlank: true,
             ),
             EntityDropdown(
-              key: ValueKey('__industry_${client.industryId}__'),
               entityType: EntityType.industry,
               entityList:
                   memoizedIndustryList(viewModel.staticState.industryMap),
               labelText: localization.industry,
               entityId: client.industryId,
               onSelected: (SelectableEntity industry) => viewModel.onChanged(
-                  client.rebuild((b) => b..industryId = industry?.id)),
+                  client.rebuild((b) => b..industryId = industry?.id ?? '')),
             ),
           ],
         ),

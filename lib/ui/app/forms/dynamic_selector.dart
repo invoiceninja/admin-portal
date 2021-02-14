@@ -55,7 +55,6 @@ class DynamicSelector extends StatelessWidget {
       );
     } else {
       return EntityDropdown(
-        key: ValueKey('__${entityType}_${entityId}__'),
         labelText: labelText ?? localization.lookup('$entityType'),
         entityType: entityType,
         onSelected: (entity) => onChanged(entity.id),

@@ -95,7 +95,9 @@ class ProjectListItem extends StatelessWidget {
                               )
                             : ActionMenuButton(
                                 entityActions: project.getActions(
-                                    userCompany: state.userCompany),
+                                  userCompany: state.userCompany,
+                                  client: client,
+                                ),
                                 isSaving: false,
                                 entity: project,
                                 onSelected: (context, action) =>

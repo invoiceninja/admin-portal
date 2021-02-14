@@ -208,6 +208,7 @@ abstract class InvoiceEntity extends Object
     ..balance = 0
     ..amount = 0
     ..paidToDate = 0
+    ..remainingCycles = -1
     ..invoiceId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()

@@ -311,11 +311,10 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     final hasMultipleInvoices = payment.invoicePaymentables.length > 1;
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
           child: EntityDropdown(
-            key: Key('__invoice_${payment.clientId}__'),
             allowClearing: false,
             entityType: EntityType.invoice,
             labelText: AppLocalization.of(context).invoice,
@@ -347,6 +346,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           ),
           Expanded(
             child: DecoratedFormField(
+              showClear: false,
               enabled: (_invoiceId ?? '').isNotEmpty,
               controller: _amountController,
               autocorrect: false,

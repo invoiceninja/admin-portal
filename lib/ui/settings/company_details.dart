@@ -322,7 +322,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       showBlank: true,
                     ),
                     EntityDropdown(
-                      key: ValueKey('__industry_${company.industryId}__'),
                       entityType: EntityType.industry,
                       entityList:
                           memoizedIndustryList(state.staticState.industryMap),
@@ -379,7 +378,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       autofillHints: [AutofillHints.postalCode],
                     ),
                     EntityDropdown(
-                      key: ValueKey('__country_${settings.countryId}__'),
                       entityType: EntityType.country,
                       entityList:
                           memoizedCountryList(state.staticState.countryMap),
@@ -474,8 +472,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               ))
                           .toList()),
                   EntityDropdown(
-                    key: ValueKey(
-                        '__payment_type_${settings.defaultPaymentTypeId}__'),
                     entityType: EntityType.paymentType,
                     entityList: memoizedPaymentTypeList(
                         state.staticState.paymentTypeMap),

@@ -22,6 +22,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'to_update_run': 'To update run',
       'convert_to_invoice': 'Convert to Invoice',
       'registration_url': 'Registration URL',
+      'invoice_project': 'Invoice Project',
       'invoice_task': 'Invoice Task',
       'invoice_expense': 'Invoice Expense',
       'search_payment_term': 'Search 1 Payment Term',
@@ -53898,6 +53899,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['search_payment_terms'] ?? '';
 
   String get invoiceTask => _localizedValues[localeCode]['invoice_task'] ?? '';
+
+  String get invoiceProject => _localizedValues[localeCode]['invoice_project'] ?? '';
 
   String get invoiceExpense =>
       _localizedValues[localeCode]['invoice_expense'] ?? '';
