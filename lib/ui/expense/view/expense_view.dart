@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
@@ -33,11 +37,23 @@ class _ExpenseViewState extends State<ExpenseView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+
+    final state = widget.viewModel.state;
+    _controller = TabController(
+        vsync: this,
+        length: 6,
+        initialIndex: state.expenseUIState.tabIndex ?? 0);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateExpenseTab(tabIndex: _controller.index));
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     super.dispose();
   }

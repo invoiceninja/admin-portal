@@ -313,6 +313,12 @@ class RemoveFromPaymentMultiselect {
 
 class ClearPaymentMultiselect {}
 
+class UpdatePaymentTab implements PersistUI {
+  UpdatePaymentTab({this.tabIndex});
+
+  final int tabIndex;
+}
+
 void handlePaymentAction(
     BuildContext context, List<BaseEntity> payments, EntityAction action) {
   if (payments.isEmpty) {

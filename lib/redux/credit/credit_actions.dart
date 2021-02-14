@@ -564,3 +564,9 @@ class RemoveFromCreditMultiselect {
 }
 
 class ClearCreditMultiselect {}
+
+class UpdateCreditTab implements PersistUI {
+  UpdateCreditTab({this.tabIndex});
+
+  final int tabIndex;
+}

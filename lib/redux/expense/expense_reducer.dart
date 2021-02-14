@@ -12,8 +12,18 @@ EntityUIState expenseUIReducer(ExpenseUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(expenseListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
+
+final tabIndexReducer = combineReducers<int>([
+  TypedReducer<int, UpdateExpenseTab>((completer, action) {
+    return action.tabIndex;
+  }),
+  TypedReducer<int, PreviewEntity>((completer, action) {
+    return null;
+  }),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>

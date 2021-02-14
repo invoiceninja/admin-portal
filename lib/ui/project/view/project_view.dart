@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_documents.dart';
@@ -29,11 +33,22 @@ class _ProjectViewState extends State<ProjectView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+
+    final state = widget.viewModel.state;
+    _controller = TabController(
+        vsync: this,
+        length: 2,
+        initialIndex: state.productUIState.tabIndex ?? 0);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateProjectTab(tabIndex: _controller.index));
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     super.dispose();
   }

@@ -577,3 +577,9 @@ class RemoveFromQuoteMultiselect {
 }
 
 class ClearQuoteMultiselect {}
+
+class UpdateQuoteTab implements PersistUI {
+  UpdateQuoteTab({this.tabIndex});
+
+  final int tabIndex;
+}
