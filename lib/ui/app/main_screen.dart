@@ -294,38 +294,16 @@ class EntityScreens extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final prefState = state.prefState;
+    final mainRoute = '/' + uiState.mainRoute;
     final subRoute = uiState.subRoute;
-    final isPreviewVisible = prefState.isPreviewVisible;
-    final isPreviewShown =
-        isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
-
-    String mainRoute = '/' + uiState.mainRoute;
-    bool isFullScreen = false;
     final isEdit = subRoute == 'edit';
     final isEmail = subRoute == 'email';
     final isPdf = subRoute == 'pdf';
 
-    if ([
-      InvoiceScreen.route,
-      QuoteScreen.route,
-      CreditScreen.route,
-      RecurringInvoiceScreen.route,
-      TaskScreen.route,
-    ].contains(mainRoute)) {
-      if (isEmail || isPdf) {
-        isFullScreen = true;
-      } else if (isEdit) {
-        if (mainRoute == TaskScreen.route) {
-          isFullScreen = prefState.isEditorFullScreen(EntityType.task);
-        } else {
-          isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);
-        }
-      }
-    }
-
-    if (DesignEditScreen.route == uiState.currentRoute) {
-      isFullScreen = true;
-    }
+    final isFullScreen = state.isFullScreen;
+    final isPreviewVisible = prefState.isPreviewVisible;
+    final isPreviewShown =
+        isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
 
     int listFlex = 3;
     int previewFlex = 2;
