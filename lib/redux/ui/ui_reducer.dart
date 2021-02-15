@@ -198,7 +198,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origUser.replace(action.user ?? state.origUser)
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..section = action.section ?? state.section
-      ..tabIndex = action.tabIndex
+      ..tabIndex = action.tabIndex ?? state.tabIndex
       ..isChanged = false
       ..entityType = action.client != null
           ? EntityType.client
