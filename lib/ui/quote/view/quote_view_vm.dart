@@ -36,6 +36,7 @@ class QuoteViewScreen extends StatelessWidget {
         return InvoiceView(
           viewModel: viewModel,
           isFilter: isFilter,
+          tabIndex: viewModel.state.quoteUIState.tabIndex,
         );
       },
     );

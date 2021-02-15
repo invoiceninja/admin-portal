@@ -36,6 +36,7 @@ class ClientViewScreen extends StatelessWidget {
         return ClientView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.clientUIState.tabIndex,
         );
       },
     );

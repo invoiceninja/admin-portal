@@ -16,10 +16,12 @@ class VendorView extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.tabIndex,
   }) : super(key: key);
 
   final VendorViewVM viewModel;
   final bool isFilter;
+  final int tabIndex;
 
   @override
   _VendorViewState createState() => _VendorViewState();
@@ -44,6 +46,15 @@ class _VendorViewState extends State<VendorView>
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(UpdateVendorTab(tabIndex: _controller.index));
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.tabIndex != widget.tabIndex) {
+      _controller.index = widget.tabIndex ?? 0;
+    }
   }
 
   @override

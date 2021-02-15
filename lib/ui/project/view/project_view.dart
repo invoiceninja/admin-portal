@@ -17,10 +17,12 @@ class ProjectView extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.tabIndex,
   }) : super(key: key);
 
   final ProjectViewVM viewModel;
   final bool isFilter;
+  final int tabIndex;
 
   @override
   _ProjectViewState createState() => new _ProjectViewState();
@@ -45,6 +47,15 @@ class _ProjectViewState extends State<ProjectView>
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(UpdateProjectTab(tabIndex: _controller.index));
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.tabIndex != widget.tabIndex) {
+      _controller.index = widget.tabIndex ?? 0;
+    }
   }
 
   @override

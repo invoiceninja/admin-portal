@@ -35,6 +35,7 @@ class TaskViewScreen extends StatelessWidget {
         return TaskView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.taskUIState.tabIndex,
         );
       },
     );

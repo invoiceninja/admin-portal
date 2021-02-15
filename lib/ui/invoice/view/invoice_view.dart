@@ -23,10 +23,12 @@ class InvoiceView extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.tabIndex,
   }) : super(key: key);
 
   final EntityViewVM viewModel;
   final bool isFilter;
+  final int tabIndex;
 
   @override
   _InvoiceViewState createState() => new _InvoiceViewState();
@@ -73,6 +75,15 @@ class _InvoiceViewState extends State<InvoiceView>
       store.dispatch(UpdateCreditTab(tabIndex: _controller.index));
     } else {
       store.dispatch(UpdateInvoiceTab(tabIndex: _controller.index));
+    }
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.tabIndex != widget.tabIndex) {
+      _controller.index = widget.tabIndex ?? 0;
     }
   }
 
