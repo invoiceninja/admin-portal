@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 
 part 'pref_state.g.dart';
 
@@ -20,6 +21,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isHistoryVisible: false,
       enableDarkMode: false,
       requireAuthentication: false,
+      colorTheme: 'default',
       showFilterSidebar: false,
       longPressSelectionIsDefault: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
@@ -57,6 +59,12 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get requireAuthentication;
 
   int get rowsPerPage;
+
+  String get colorTheme;
+
+  ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
+      ? colorThemesMap[colorTheme]
+      : colorThemesMap['default'];
 
   BuiltMap<String, CompanyPrefState> get companyPrefs;
 

@@ -1622,6 +1622,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_name2': 'Tax Name 2',
       'tax_name3': 'Tax Name 3',
       'transaction_id': 'Transaction ID',
+      'color_theme': 'Color Theme',
     },
     'sq': {
       'counter_pattern_error':
@@ -53932,6 +53933,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get convertedTotal =>
       _localizedValues[localeCode]['converted_total'] ?? '';
+
+  String get colorTheme =>
+      _localizedValues[localeCode]['color_theme'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

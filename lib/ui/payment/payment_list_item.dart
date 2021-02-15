@@ -207,7 +207,8 @@ class PaymentListItem extends StatelessWidget {
                             localization.lookup(
                                 'payment_status_${payment.calculatedStatusId}'),
                             style: TextStyle(
-                              color: PaymentStatusColors
+                              color: PaymentStatusColors(
+                                      state.prefState.colorThemeModel)
                                   .colors[payment.calculatedStatusId],
                             )),
                       ],
