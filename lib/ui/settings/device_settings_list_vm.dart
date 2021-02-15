@@ -42,6 +42,7 @@ class DeviceSettingsVM {
     @required this.authenticationSupported,
     @required this.onMenuModeChanged,
     @required this.onHistoryModeChanged,
+    @required this.onColorThemeChanged,
     @required this.onRowsPerPageChanged,
   });
 
@@ -91,6 +92,11 @@ class DeviceSettingsVM {
         }
 
         store.dispatch(UpdateUserPreferences(historyMode: value));
+      },
+      onColorThemeChanged: (context, value) async {
+        if(store.state.prefState.colorTheme != value) {
+          store.dispatch(UpdateUserPreferences(colorTheme: value));
+        }
       },
       onRowsPerPageChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(rowsPerPage: value));
@@ -150,6 +156,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
   final Function(BuildContext, AppSidebarMode) onHistoryModeChanged;
+  final Function(BuildContext, String) onColorThemeChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onAlwaysShowSidebarChanged;

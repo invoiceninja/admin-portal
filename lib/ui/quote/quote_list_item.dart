@@ -228,7 +228,8 @@ class QuoteListItem extends StatelessWidget {
                               style: TextStyle(
                                 color: !quote.isSent
                                     ? textColor
-                                    : QuoteStatusColors
+                                    : QuoteStatusColors(
+                                            state.prefState.colorThemeModel)
                                         .colors[quote.calculatedStatusId],
                               )),
                         ],

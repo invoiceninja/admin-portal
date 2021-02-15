@@ -908,6 +908,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_style': 'Email Style',
       'enable_email_markup': 'Enable Markup',
       'reply_to_email': 'Reply-To Email',
+      'reply_to_name': 'Reply-To Name',
       'bcc_email': 'BCC Email',
       'processed': 'Processed',
       'credit_card': 'Credit Card',
@@ -1621,6 +1622,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_name2': 'Tax Name 2',
       'tax_name3': 'Tax Name 3',
       'transaction_id': 'Transaction ID',
+      'color_theme': 'Color Theme',
     },
     'sq': {
       'counter_pattern_error':
@@ -51532,6 +51534,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get replyToEmail =>
       _localizedValues[localeCode]['reply_to_email'] ?? '';
 
+  String get replyToName => _localizedValues[localeCode]['reply_to_name'] ?? '';
+
   String get bccEmail => _localizedValues[localeCode]['bcc_email'] ?? '';
 
   String get attachPdf => _localizedValues[localeCode]['attach_pdf'] ?? '';
@@ -53900,7 +53904,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get invoiceTask => _localizedValues[localeCode]['invoice_task'] ?? '';
 
-  String get invoiceProject => _localizedValues[localeCode]['invoice_project'] ?? '';
+  String get invoiceProject =>
+      _localizedValues[localeCode]['invoice_project'] ?? '';
 
   String get invoiceExpense =>
       _localizedValues[localeCode]['invoice_expense'] ?? '';
@@ -53920,11 +53925,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get counterPatternError =>
       _localizedValues[localeCode]['counter_pattern_error'] ?? '';
 
-  String get convertedPaidToDate => _localizedValues[localeCode]['converted_paid_to_date'] ?? '';
-  
-  String get convertedCreditBalance => _localizedValues[localeCode]['converted_credit_balance'] ?? '';
-  
-  String get convertedTotal => _localizedValues[localeCode]['converted_total'] ?? '';
+  String get convertedPaidToDate =>
+      _localizedValues[localeCode]['converted_paid_to_date'] ?? '';
+
+  String get convertedCreditBalance =>
+      _localizedValues[localeCode]['converted_credit_balance'] ?? '';
+
+  String get convertedTotal =>
+      _localizedValues[localeCode]['converted_total'] ?? '';
+
+  String get colorTheme =>
+      _localizedValues[localeCode]['color_theme'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

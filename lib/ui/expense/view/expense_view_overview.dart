@@ -121,7 +121,9 @@ class ExpenseOverview extends StatelessWidget {
         expense.isConverted
             ? EntityHeader(
                 entity: expense,
-                statusColor: ExpenseStatusColors.colors[expense.statusId],
+                statusColor:
+                    ExpenseStatusColors(state.prefState.colorThemeModel)
+                        .colors[expense.statusId],
                 statusLabel:
                     localization.lookup('expense_status_${expense.statusId}'),
                 label: localization.amount,
@@ -134,7 +136,9 @@ class ExpenseOverview extends StatelessWidget {
               )
             : EntityHeader(
                 entity: expense,
-                statusColor: ExpenseStatusColors.colors[expense.statusId],
+                statusColor:
+                    ExpenseStatusColors(state.prefState.colorThemeModel)
+                        .colors[expense.statusId],
                 statusLabel:
                     localization.lookup('expense_status_${expense.statusId}'),
                 label: localization.amount,

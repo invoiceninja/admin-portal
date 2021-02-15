@@ -455,3 +455,9 @@ class SaveClientDocumentFailure implements StopSaving {
 
   final Object error;
 }
+
+class UpdateClientTab implements PersistUI {
+  UpdateClientTab({this.tabIndex});
+
+  final int tabIndex;
+}

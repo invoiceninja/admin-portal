@@ -15,9 +15,19 @@ EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
     ..listUIState.replace(projectListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
     ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
+
+final tabIndexReducer = combineReducers<int>([
+  TypedReducer<int, UpdateProjectTab>((completer, action) {
+    return action.tabIndex;
+  }),
+  TypedReducer<int, PreviewEntity>((completer, action) {
+    return null;
+  }),
+]);
 
 final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
   TypedReducer<Completer<SelectableEntity>, EditProject>((completer, action) {

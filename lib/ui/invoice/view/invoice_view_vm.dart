@@ -34,6 +34,7 @@ class InvoiceViewScreen extends StatelessWidget {
         return InvoiceView(
           viewModel: viewModel,
           isFilter: isFilter,
+          tabIndex: viewModel.state.invoiceUIState.tabIndex,
         );
       },
     );

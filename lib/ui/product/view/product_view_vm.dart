@@ -35,6 +35,7 @@ class ProductViewScreen extends StatelessWidget {
         return ProductView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.productUIState.tabIndex,
         );
       },
     );

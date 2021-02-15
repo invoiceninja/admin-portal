@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_documents.dart';
@@ -13,10 +17,12 @@ class ProjectView extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.tabIndex,
   }) : super(key: key);
 
   final ProjectViewVM viewModel;
   final bool isFilter;
+  final int tabIndex;
 
   @override
   _ProjectViewState createState() => new _ProjectViewState();
@@ -29,11 +35,32 @@ class _ProjectViewState extends State<ProjectView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+
+    final state = widget.viewModel.state;
+    _controller = TabController(
+        vsync: this,
+        length: 2,
+        initialIndex: state.projectUIState.tabIndex ?? 0);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateProjectTab(tabIndex: _controller.index));
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.tabIndex != widget.tabIndex) {
+      _controller.index = widget.tabIndex ?? 0;
+    }
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     super.dispose();
   }

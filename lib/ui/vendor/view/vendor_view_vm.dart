@@ -35,6 +35,7 @@ class VendorViewScreen extends StatelessWidget {
         return VendorView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.vendorUIState.tabIndex,
         );
       },
     );

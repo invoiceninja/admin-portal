@@ -85,7 +85,8 @@ class _PaymentViewState extends State<PaymentView> {
                       EntityHeader(
                         entity: payment,
                         statusColor:
-                            PaymentStatusColors.colors[payment.statusId],
+                            PaymentStatusColors(state.prefState.colorThemeModel)
+                                .colors[payment.statusId],
                         statusLabel: localization
                             .lookup('payment_status_${payment.statusId}'),
                         label: localization.amount,

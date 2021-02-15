@@ -16,9 +16,19 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemIndexReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..historyActivityId =
         historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final tabIndexReducer = combineReducers<int>([
+  TypedReducer<int, UpdateInvoiceTab>((completer, action) {
+    return action.tabIndex;
+  }),
+  TypedReducer<int, PreviewEntity>((completer, action) {
+    return null;
+  }),
+]);
 
 final historyActivityIdReducer = combineReducers<String>([
   TypedReducer<String, ShowPdfInvoice>((index, action) => action.activityId),

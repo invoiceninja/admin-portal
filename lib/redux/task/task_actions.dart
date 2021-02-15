@@ -430,3 +430,9 @@ class SaveTaskDocumentFailure implements StopSaving {
 
   final Object error;
 }
+
+class UpdateTaskTab implements PersistUI {
+  UpdateTaskTab({this.tabIndex});
+
+  final int tabIndex;
+}

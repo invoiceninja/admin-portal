@@ -474,6 +474,12 @@ class SaveInvoiceDocumentFailure implements StopSaving {
   final Object error;
 }
 
+class UpdateInvoiceTab implements PersistUI {
+  UpdateInvoiceTab({this.tabIndex});
+
+  final int tabIndex;
+}
+
 void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     EntityAction action) async {
   if (invoices.isEmpty) {

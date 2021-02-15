@@ -377,3 +377,9 @@ class SaveExpenseDocumentFailure implements StopSaving {
 
   final Object error;
 }
+
+class UpdateExpenseTab implements PersistUI {
+  UpdateExpenseTab({this.tabIndex});
+
+  final int tabIndex;
+}

@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_contacts.dart';
@@ -10,16 +14,21 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_overview.dart'
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_schedule.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 
 class InvoiceView extends StatefulWidget {
   const InvoiceView({
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.tabIndex,
   }) : super(key: key);
 
   final EntityViewVM viewModel;
   final bool isFilter;
+  final int tabIndex;
 
   @override
   _InvoiceViewState createState() => new _InvoiceViewState();
@@ -34,12 +43,53 @@ class _InvoiceViewState extends State<InvoiceView>
     super.initState();
 
     final invoice = widget.viewModel.invoice;
-    _controller =
-        TabController(vsync: this, length: invoice.isRecurring ? 5 : 4);
+    final state = widget.viewModel.state;
+    int tabIndex = 0;
+
+    if (invoice.isRecurring) {
+      tabIndex = state.recurringInvoiceUIState.tabIndex;
+    } else if (invoice.isQuote) {
+      tabIndex = state.quoteUIState.tabIndex;
+    } else if (invoice.isCredit) {
+      tabIndex = state.creditUIState.tabIndex;
+    } else {
+      tabIndex = state.invoiceUIState.tabIndex;
+    }
+
+    _controller = TabController(
+        vsync: this,
+        length: invoice.isRecurring ? 5 : 4,
+        initialIndex: tabIndex ?? 0);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    final invoice = widget.viewModel.invoice;
+
+    if (invoice.isRecurring) {
+      store.dispatch(UpdateRecurringInvoiceTab(tabIndex: _controller.index));
+    } else if (invoice.isQuote) {
+      store.dispatch(UpdateQuoteTab(tabIndex: _controller.index));
+    } else if (invoice.isCredit) {
+      store.dispatch(UpdateCreditTab(tabIndex: _controller.index));
+    } else {
+      store.dispatch(UpdateInvoiceTab(tabIndex: _controller.index));
+    }
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.tabIndex != widget.tabIndex) {
+      _controller.index = widget.tabIndex ?? 0;
+    }
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     super.dispose();
   }

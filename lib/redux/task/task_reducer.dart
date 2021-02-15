@@ -13,8 +13,18 @@ EntityUIState taskUIReducer(TaskUIState state, dynamic action) {
     ..listUIState.replace(taskListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..editingTimeIndex = editingTimeReducer(state.editingTimeIndex, action)
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
+
+final tabIndexReducer = combineReducers<int>([
+  TypedReducer<int, UpdateTaskTab>((completer, action) {
+    return action.tabIndex;
+  }),
+  TypedReducer<int, PreviewEntity>((completer, action) {
+    return null;
+  }),
+]);
 
 final editingTimeReducer = combineReducers<int>([
   TypedReducer<int, EditTask>((index, action) => action.taskTimeIndex),

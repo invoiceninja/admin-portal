@@ -388,3 +388,9 @@ class SaveProjectDocumentFailure implements StopSaving {
 
   final Object error;
 }
+
+class UpdateProjectTab implements PersistUI {
+  UpdateProjectTab({this.tabIndex});
+
+  final int tabIndex;
+}

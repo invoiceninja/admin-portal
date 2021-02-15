@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DeviceSettings extends StatefulWidget {
@@ -94,6 +96,21 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     ],
                     onChanged: (dynamic value) =>
                         viewModel.onHistoryModeChanged(context, value),
+                  ),
+                  AppDropdownButton<String>(
+                    showUseDefault: true,
+                    labelText: localization.colorTheme,
+                    value: state.prefState.colorTheme,
+                    items: [
+                      ...colorThemesMap.keys.map((key) =>
+                          DropdownMenuItem(
+                            child: Text(toTitleCase(key)),
+                            value: key,
+                          )
+                      ).toList()
+                    ],
+                    onChanged: (dynamic value) =>
+                        viewModel.onColorThemeChanged(context, value),
                   ),
                 ],
                 AppDropdownButton<int>(

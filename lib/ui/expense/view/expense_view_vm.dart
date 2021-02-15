@@ -37,6 +37,7 @@ class ExpenseViewScreen extends StatelessWidget {
         return ExpenseView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.expenseCategoryUIState.tabIndex,
         );
       },
     );

@@ -35,6 +35,7 @@ class ProjectViewScreen extends StatelessWidget {
         return ProjectView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.projectUIState.tabIndex,
         );
       },
     );

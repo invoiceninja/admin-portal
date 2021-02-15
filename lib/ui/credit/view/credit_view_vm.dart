@@ -36,6 +36,7 @@ class CreditViewScreen extends StatelessWidget {
         return InvoiceView(
           viewModel: viewModel,
           isFilter: isFilter,
+          tabIndex: viewModel.state.creditUIState.tabIndex,
         );
       },
     );

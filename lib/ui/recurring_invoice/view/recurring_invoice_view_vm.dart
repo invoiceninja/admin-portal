@@ -35,6 +35,7 @@ class RecurringInvoiceViewScreen extends StatelessWidget {
         return InvoiceView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.recurringInvoiceUIState.tabIndex,
         );
       },
     );
