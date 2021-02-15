@@ -289,6 +289,10 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
 
 Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
   TypedReducer<BuiltList<EntityType>, PreviewEntity>((previewStack, action) {
+    if (action.entityType == null) {
+      return previewStack;
+    }
+
     if (previewStack.isNotEmpty && previewStack.last == action.entityType) {
       return BuiltList(<EntityType>[]);
     }
