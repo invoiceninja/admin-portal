@@ -116,6 +116,9 @@ const String kPlanPro = 'pro';
 const String kPlanEnterprise = 'enterprise';
 const String kPlanWhiteLabel = 'white_label';
 
+const String kColorThemeLight = 'light';
+const String kColorThemeDark = 'dark';
+
 const double kGutterWidth = 16;
 const double kLighterOpacity = .6;
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'constants.dart';
 import 'data/models/static/color_theme_model.dart';
 

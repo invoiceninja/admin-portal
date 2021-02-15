@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 
@@ -21,7 +22,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isHistoryVisible: false,
       enableDarkMode: false,
       requireAuthentication: false,
-      colorTheme: 'default',
+      colorTheme: kColorThemeLight,
       showFilterSidebar: false,
       longPressSelectionIsDefault: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
@@ -64,7 +65,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
       ? colorThemesMap[colorTheme]
-      : colorThemesMap['default'];
+      : colorThemesMap[kColorThemeLight];
 
   BuiltMap<String, CompanyPrefState> get companyPrefs;
 
@@ -105,7 +106,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
-    ..colorTheme = 'default';
+    ..colorTheme = kColorThemeLight;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

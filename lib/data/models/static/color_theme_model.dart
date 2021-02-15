@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 import 'package:invoiceninja_flutter/utils/colors.dart';
 
@@ -24,13 +25,23 @@ class ColorTheme {
 }
 
 Map<String, ColorTheme> colorThemesMap = {
-  'default': ColorTheme(
+  kColorThemeLight: ColorTheme(
     colorPrimary: convertHexStringToColor('#1266F1'),
     colorSecondary: convertHexStringToColor('#B23CFD'),
     colorInfo: convertHexStringToColor('#39C0ED'),
     colorSuccess: convertHexStringToColor('#00B74A'),
     colorWarning: convertHexStringToColor('#FFA900'),
     colorDanger: convertHexStringToColor('#F93154'),
+    colorLightGray: convertHexStringToColor('#6C757D'),
+    colorDarkGray: convertHexStringToColor('#262626'),
+  ),
+  kColorThemeDark: ColorTheme(
+    colorPrimary: convertHexStringToColor('#1266F1'),
+    colorSecondary: convertHexStringToColor('#B23CFD'),
+    colorInfo: convertHexStringToColor('#505f73'),
+    colorSuccess: convertHexStringToColor('#407535'),
+    colorWarning: convertHexStringToColor('#dd5600'),
+    colorDanger: convertHexStringToColor('#8b3d40'),
     colorLightGray: convertHexStringToColor('#6C757D'),
     colorDarkGray: convertHexStringToColor('#262626'),
   ),
