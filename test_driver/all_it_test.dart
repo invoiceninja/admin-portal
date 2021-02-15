@@ -1,3 +1,4 @@
+/*
 import 'clients_it_test.dart' as clients;
 import 'invoices_it_test.dart' as invoices;
 import 'login_it_test.dart' as login;
@@ -13,3 +14,4 @@ void main() {
   //quotes.runTestSuite(batchMode: true);
   //vendors.runTestSuite(batchMode: true);
 }
+*/

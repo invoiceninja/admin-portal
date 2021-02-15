@@ -1,3 +1,4 @@
+/*
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -108,3 +109,4 @@ void runTestSuite({bool batchMode = false}) {
     });
   });
 }
+*/
