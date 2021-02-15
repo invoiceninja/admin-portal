@@ -225,7 +225,7 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitLoginForm() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = true;
     final viewModel = widget.viewModel;
 
     setState(() {
@@ -414,7 +414,7 @@ class _LoginState extends State<LoginView> {
                             if (_emailLogin && !_recoverPassword)
                               PasswordFormField(
                                 controller: _passwordController,
-                                autoValidate: _autoValidate,
+                                autoValidate: false,
                                 newPassword: _createAccount,
                               ),
                             if (_isSelfHosted || viewModel.state.isDemo)

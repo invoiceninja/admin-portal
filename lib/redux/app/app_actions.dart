@@ -122,6 +122,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.showFilterSidebar,
     this.alwaysShowFilterSidebar,
     this.rowsPerPage,
+    this.colorTheme,
   });
 
   final AppLayout appLayout;
@@ -137,6 +138,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool alwaysShowFilterSidebar;
   final String accentColor;
   final int rowsPerPage;
+  final String colorTheme;
 }
 
 class LoadAccountSuccess implements StopLoading {

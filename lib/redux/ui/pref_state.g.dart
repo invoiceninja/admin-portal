@@ -151,6 +151,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'rowsPerPage',
       serializers.serialize(object.rowsPerPage,
           specifiedType: const FullType(int)),
+      'colorTheme',
+      serializers.serialize(object.colorTheme,
+          specifiedType: const FullType(String)),
       'companyPrefs',
       serializers.serialize(object.companyPrefs,
           specifiedType: const FullType(BuiltMap, const [
@@ -225,6 +228,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'rowsPerPage':
           result.rowsPerPage = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'colorTheme':
+          result.colorTheme = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'companyPrefs':
           result.companyPrefs.replace(serializers.deserialize(value,
@@ -439,6 +446,8 @@ class _$PrefState extends PrefState {
   @override
   final int rowsPerPage;
   @override
+  final String colorTheme;
+  @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
 
   factory _$PrefState([void Function(PrefStateBuilder) updates]) =>
@@ -458,6 +467,7 @@ class _$PrefState extends PrefState {
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
       this.rowsPerPage,
+      this.colorTheme,
       this.companyPrefs})
       : super._() {
     if (appLayout == null) {
@@ -500,6 +510,9 @@ class _$PrefState extends PrefState {
     if (rowsPerPage == null) {
       throw new BuiltValueNullFieldError('PrefState', 'rowsPerPage');
     }
+    if (colorTheme == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'colorTheme');
+    }
     if (companyPrefs == null) {
       throw new BuiltValueNullFieldError('PrefState', 'companyPrefs');
     }
@@ -529,6 +542,7 @@ class _$PrefState extends PrefState {
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
         rowsPerPage == other.rowsPerPage &&
+        colorTheme == other.colorTheme &&
         companyPrefs == other.companyPrefs;
   }
 
@@ -548,20 +562,27 @@ class _$PrefState extends PrefState {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc(0,
-                                                            appLayout.hashCode),
-                                                        moduleLayout.hashCode),
-                                                    menuSidebarMode.hashCode),
-                                                historySidebarMode.hashCode),
-                                            useSidebarEditor.hashCode),
-                                        isPreviewVisible.hashCode),
-                                    isMenuVisible.hashCode),
-                                isHistoryVisible.hashCode),
-                            enableDarkMode.hashCode),
-                        showFilterSidebar.hashCode),
-                    longPressSelectionIsDefault.hashCode),
-                requireAuthentication.hashCode),
-            rowsPerPage.hashCode),
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                appLayout
+                                                                    .hashCode),
+                                                            moduleLayout
+                                                                .hashCode),
+                                                        menuSidebarMode
+                                                            .hashCode),
+                                                    historySidebarMode
+                                                        .hashCode),
+                                                useSidebarEditor.hashCode),
+                                            isPreviewVisible.hashCode),
+                                        isMenuVisible.hashCode),
+                                    isHistoryVisible.hashCode),
+                                enableDarkMode.hashCode),
+                            showFilterSidebar.hashCode),
+                        longPressSelectionIsDefault.hashCode),
+                    requireAuthentication.hashCode),
+                rowsPerPage.hashCode),
+            colorTheme.hashCode),
         companyPrefs.hashCode));
   }
 
@@ -581,6 +602,7 @@ class _$PrefState extends PrefState {
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
           ..add('rowsPerPage', rowsPerPage)
+          ..add('colorTheme', colorTheme)
           ..add('companyPrefs', companyPrefs))
         .toString();
   }
@@ -653,6 +675,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   int get rowsPerPage => _$this._rowsPerPage;
   set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
 
+  String _colorTheme;
+  String get colorTheme => _$this._colorTheme;
+  set colorTheme(String colorTheme) => _$this._colorTheme = colorTheme;
+
   MapBuilder<String, CompanyPrefState> _companyPrefs;
   MapBuilder<String, CompanyPrefState> get companyPrefs =>
       _$this._companyPrefs ??= new MapBuilder<String, CompanyPrefState>();
@@ -678,6 +704,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
       _requireAuthentication = _$v.requireAuthentication;
       _rowsPerPage = _$v.rowsPerPage;
+      _colorTheme = _$v.colorTheme;
       _companyPrefs = _$v.companyPrefs?.toBuilder();
       _$v = null;
     }
@@ -716,6 +743,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               longPressSelectionIsDefault: longPressSelectionIsDefault,
               requireAuthentication: requireAuthentication,
               rowsPerPage: rowsPerPage,
+              colorTheme: colorTheme,
               companyPrefs: companyPrefs.build());
     } catch (_) {
       String _$failedField;

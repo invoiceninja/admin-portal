@@ -56,6 +56,7 @@ PrefState prefReducer(
           longPressReducer(state.longPressSelectionIsDefault, action)
       ..requireAuthentication =
           requireAuthenticationReducer(state.requireAuthentication, action)
+      ..colorTheme = colorThemeReducer(state.colorTheme, action)
       ..useSidebarEditor
           .replace(sidebarEditorReducer(state.useSidebarEditor, action)),
   );
@@ -181,6 +182,12 @@ Reducer<bool> isPreviewVisibleReducer = combineReducers([
 Reducer<bool> requireAuthenticationReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((requireAuthentication, action) {
     return action.requireAuthentication ?? requireAuthentication;
+  }),
+]);
+
+Reducer<String> colorThemeReducer = combineReducers([
+  TypedReducer<String, UpdateUserPreferences>((currentColorTheme, action) {
+    return action.colorTheme ?? currentColorTheme;
   }),
 ]);
 
