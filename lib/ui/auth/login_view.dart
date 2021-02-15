@@ -525,7 +525,7 @@ class _LoginState extends State<LoginView> {
                         padding: EdgeInsets.only(top: 30, bottom: 10),
                         child: RoundedLoadingButton(
                           height: 42,
-                          width: _createAccount ? 220 : 214,
+                          width: _createAccount ? 224 : 210,
                           controller: _buttonController,
                           color: convertHexStringToColor('#4285F4'),
                           onPressed: () => _createAccount
