@@ -112,13 +112,13 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                                     ),
                                     Expanded(
                                       child: Container(
-                                        color: colorThemesMap[key].colorPrimary,
+                                        color: colorThemesMap[key].colorInfo,
                                         height: 50,
                                       ),
                                     ),
                                     Expanded(
                                       child: Container(
-                                        color: colorThemesMap[key].colorInfo,
+                                        color: colorThemesMap[key].colorPrimary,
                                         height: 50,
                                       ),
                                     ),
