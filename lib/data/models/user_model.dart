@@ -127,6 +127,10 @@ abstract class UserEntity extends Object
   @nullable
   String get password;
 
+  @nullable
+  @BuiltValueField(wireName: 'email_verified_at')
+  int get emailVerifiedAt;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 

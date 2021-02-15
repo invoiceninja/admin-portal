@@ -203,6 +203,12 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         ..add(serializers.serialize(object.password,
             specifiedType: const FullType(String)));
     }
+    if (object.emailVerifiedAt != null) {
+      result
+        ..add('email_verified_at')
+        ..add(serializers.serialize(object.emailVerifiedAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.userCompany != null) {
       result
         ..add('company_user')
@@ -266,6 +272,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'password':
           result.password = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_verified_at':
+          result.emailVerifiedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -627,6 +637,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String password;
   @override
+  final int emailVerifiedAt;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -664,6 +676,7 @@ class _$UserEntity extends UserEntity {
       this.email,
       this.phone,
       this.password,
+      this.emailVerifiedAt,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -736,6 +749,7 @@ class _$UserEntity extends UserEntity {
         email == other.email &&
         phone == other.phone &&
         password == other.password &&
+        emailVerifiedAt == other.emailVerifiedAt &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -773,20 +787,13 @@ class _$UserEntity extends UserEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                firstName
-                                                                                    .hashCode),
-                                                                            lastName
-                                                                                .hashCode),
-                                                                        email
-                                                                            .hashCode),
-                                                                    phone
-                                                                        .hashCode),
-                                                                password
-                                                                    .hashCode),
-                                                            customValue1
-                                                                .hashCode),
+                                                                            $jc($jc(0, firstName.hashCode),
+                                                                                lastName.hashCode),
+                                                                            email.hashCode),
+                                                                        phone.hashCode),
+                                                                    password.hashCode),
+                                                                emailVerifiedAt.hashCode),
+                                                            customValue1.hashCode),
                                                         customValue2.hashCode),
                                                     customValue3.hashCode),
                                                 customValue4.hashCode),
@@ -810,6 +817,7 @@ class _$UserEntity extends UserEntity {
           ..add('email', email)
           ..add('phone', phone)
           ..add('password', password)
+          ..add('emailVerifiedAt', emailVerifiedAt)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -850,6 +858,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String _password;
   String get password => _$this._password;
   set password(String password) => _$this._password = password;
+
+  int _emailVerifiedAt;
+  int get emailVerifiedAt => _$this._emailVerifiedAt;
+  set emailVerifiedAt(int emailVerifiedAt) =>
+      _$this._emailVerifiedAt = emailVerifiedAt;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -921,6 +934,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _email = _$v.email;
       _phone = _$v.phone;
       _password = _$v.password;
+      _emailVerifiedAt = _$v.emailVerifiedAt;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -964,6 +978,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               email: email,
               phone: phone,
               password: password,
+              emailVerifiedAt: emailVerifiedAt,
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,
