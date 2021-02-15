@@ -296,7 +296,6 @@ class EntityScreens extends StatelessWidget {
     final prefState = state.prefState;
     final mainRoute = '/' + uiState.mainRoute;
     final subRoute = uiState.subRoute;
-    final isEdit = subRoute == 'edit';
     final isEmail = subRoute == 'email';
     final isPdf = subRoute == 'pdf';
 
@@ -801,10 +800,11 @@ class SettingsScreens extends StatelessWidget {
     }
 
     return Row(children: <Widget>[
-      Expanded(
-        child: SettingsScreenBuilder(),
-        flex: 2,
-      ),
+      if (!state.isFullScreen)
+        Expanded(
+          child: SettingsScreenBuilder(),
+          flex: 2,
+        ),
       Expanded(
         flex: 3,
         child: AppBorder(
