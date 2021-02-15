@@ -74,8 +74,8 @@ class DecoratedFormField extends StatelessWidget {
       if (suffixIcon == null && enabled) {
         suffixIconButton = IconButton(
           icon: Icon(Icons.clear),
-          //onPressed: () => controller != null ? controller.text = '' : onChanged(''),
-          onPressed: () => null,
+          onPressed: () =>
+              controller != null ? controller.text = '' : onChanged(''),
         );
       }
     }
