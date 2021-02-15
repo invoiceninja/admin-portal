@@ -42,9 +42,7 @@ class _ExpenseViewState extends State<ExpenseView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: 2,
-        initialIndex: state.expenseUIState.tabIndex ?? 0);
+        vsync: this, length: 2, initialIndex: state.expenseUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -58,7 +56,7 @@ class _ExpenseViewState extends State<ExpenseView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex ?? 0;
+      _controller.index = widget.tabIndex;
     }
   }
 

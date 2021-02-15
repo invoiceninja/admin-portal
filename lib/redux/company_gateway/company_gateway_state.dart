@@ -46,6 +46,7 @@ abstract class CompanyGatewayUIState extends Object
       listUIState: ListUIState(CompanyGatewayFields.name),
       editing: CompanyGatewayEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   CompanyGatewayUIState._();

@@ -37,9 +37,7 @@ class _VendorViewState extends State<VendorView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: 3,
-        initialIndex: state.vendorUIState.tabIndex ?? 0);
+        vsync: this, length: 3, initialIndex: state.vendorUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -53,7 +51,7 @@ class _VendorViewState extends State<VendorView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex ?? 0;
+      _controller.index = widget.tabIndex;
     }
   }
 

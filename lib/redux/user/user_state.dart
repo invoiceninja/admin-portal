@@ -44,6 +44,7 @@ abstract class UserUIState extends Object
       listUIState: ListUIState(UserFields.firstName),
       editing: UserEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   UserUIState._();

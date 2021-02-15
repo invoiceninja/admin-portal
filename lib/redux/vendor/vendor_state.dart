@@ -60,6 +60,7 @@ abstract class VendorUIState extends Object
       editing: VendorEntity(),
       editingContact: VendorContactEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
 

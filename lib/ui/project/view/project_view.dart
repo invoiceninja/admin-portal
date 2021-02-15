@@ -38,9 +38,7 @@ class _ProjectViewState extends State<ProjectView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: 2,
-        initialIndex: state.projectUIState.tabIndex ?? 0);
+        vsync: this, length: 2, initialIndex: state.projectUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -54,7 +52,7 @@ class _ProjectViewState extends State<ProjectView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex ?? 0;
+      _controller.index = widget.tabIndex;
     }
   }
 

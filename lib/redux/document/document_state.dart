@@ -38,6 +38,7 @@ abstract class DocumentUIState extends Object
       listUIState: ListUIState(DocumentFields.name),
       editing: DocumentEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   DocumentUIState._();

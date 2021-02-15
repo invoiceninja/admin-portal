@@ -37,6 +37,7 @@ abstract class TaxRateUIState extends Object
       listUIState: ListUIState(TaxRateFields.name),
       editing: TaxRateEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   TaxRateUIState._();

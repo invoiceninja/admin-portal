@@ -12,7 +12,6 @@ abstract class EntityUIState {
   @nullable
   String get selectedId;
 
-  @nullable
   int get tabIndex;
 
   @nullable

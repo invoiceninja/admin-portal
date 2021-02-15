@@ -59,7 +59,7 @@ class _InvoiceViewState extends State<InvoiceView>
     _controller = TabController(
         vsync: this,
         length: invoice.isRecurring ? 5 : 4,
-        initialIndex: tabIndex ?? 0);
+        initialIndex: tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -83,7 +83,7 @@ class _InvoiceViewState extends State<InvoiceView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex ?? 0;
+      _controller.index = widget.tabIndex;
     }
   }
 

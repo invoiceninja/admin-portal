@@ -103,8 +103,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       !isMenuVisible;
 
   // ignore: unused_element
-  static void _initializeBuilder(PrefStateBuilder builder) =>
-      builder..useSidebarEditor.replace(BuiltMap<EntityType, bool>());
+  static void _initializeBuilder(PrefStateBuilder builder) => builder
+    ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
+    ..colorTheme = 'default';
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

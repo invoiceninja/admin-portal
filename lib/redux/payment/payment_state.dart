@@ -60,6 +60,7 @@ abstract class PaymentUIState extends Object
       listUIState: ListUIState(PaymentFields.number, sortAscending: false),
       editing: PaymentEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
 

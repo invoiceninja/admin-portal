@@ -23,14 +23,10 @@ class ColorTheme {
   Color colorDarkGray;
 }
 
-// Color themes
-
 Map<String, ColorTheme> colorThemesMap = {
   'default': ColorTheme(
     colorPrimary: convertHexStringToColor('#1266F1'),
-    // blue
     colorSecondary: convertHexStringToColor('#B23CFD'),
-    // purple
     colorInfo: convertHexStringToColor('#39C0ED'),
     colorSuccess: convertHexStringToColor('#00B74A'),
     colorWarning: convertHexStringToColor('#FFA900'),

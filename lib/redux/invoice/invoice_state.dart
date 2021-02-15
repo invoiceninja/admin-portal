@@ -59,6 +59,7 @@ abstract class InvoiceUIState extends Object
       listUIState: ListUIState(InvoiceFields.number, sortAscending: false),
       editing: InvoiceEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
 

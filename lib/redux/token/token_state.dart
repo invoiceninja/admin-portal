@@ -48,6 +48,7 @@ abstract class TokenUIState extends Object
       listUIState: ListUIState(TokenFields.name),
       editing: TokenEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   TokenUIState._();

@@ -57,6 +57,7 @@ abstract class TaskUIState extends Object
       listUIState: ListUIState(TaskFields.number, sortAscending: false),
       editing: TaskEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   TaskUIState._();

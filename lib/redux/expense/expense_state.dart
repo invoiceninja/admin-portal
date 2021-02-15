@@ -58,6 +58,7 @@ abstract class ExpenseUIState extends Object
       listUIState: ListUIState(ExpenseFields.number, sortAscending: false),
       editing: ExpenseEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   ExpenseUIState._();

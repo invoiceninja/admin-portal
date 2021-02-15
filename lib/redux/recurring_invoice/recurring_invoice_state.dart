@@ -61,6 +61,7 @@ abstract class RecurringInvoiceUIState extends Object
       listUIState: ListUIState(InvoiceFields.number),
       editing: InvoiceEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
 
