@@ -74,10 +74,13 @@ class MenuDrawerVM {
             message: AppLocalization.of(context).logout,
             context: context,
             callback: () async {
+              // TODO re-enable this code
+              /*
               if (store.state.user.oauthProvider ==
                   UserEntity.OAUTH_PROVIDER_GOOGLE) {
                 await _googleSignIn.signOut();
               }
+              */
               store.dispatch(UserLogout(context));
             });
       },
