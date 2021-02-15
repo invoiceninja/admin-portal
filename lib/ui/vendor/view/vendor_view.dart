@@ -37,11 +37,17 @@ class _VendorViewState extends State<VendorView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this, length: 3, initialIndex: state.vendorUIState.tabIndex);
+        vsync: this,
+        length: 3,
+        initialIndex: widget.isFilter ? 0 : state.vendorUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
+    if (widget.isFilter) {
+      return;
+    }
+
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(UpdateVendorTab(tabIndex: _controller.index));
   }

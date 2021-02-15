@@ -44,6 +44,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
@@ -51,6 +52,7 @@ import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 
@@ -711,6 +713,39 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
           !uiState.isInSettings &&
           uiState.filterEntityType != null) ||
       prefState.isMenuCollapsed;
+
+  bool get isFullScreen {
+    bool isFullScreen = false;
+    final mainRoute = '/' + uiState.mainRoute;
+    final subRoute = uiState.subRoute;
+    final isEdit = subRoute == 'edit';
+    final isEmail = subRoute == 'email';
+    final isPdf = subRoute == 'pdf';
+
+    if (<String>[
+      InvoiceScreen.route,
+      QuoteScreen.route,
+      CreditScreen.route,
+      RecurringInvoiceScreen.route,
+      TaskScreen.route,
+    ].contains(mainRoute)) {
+      if (isEmail || isPdf) {
+        isFullScreen = true;
+      } else if (isEdit) {
+        if (mainRoute == TaskScreen.route) {
+          isFullScreen = prefState.isEditorFullScreen(EntityType.task);
+        } else {
+          isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);
+        }
+      }
+    }
+
+    if (DesignEditScreen.route == uiState.currentRoute) {
+      isFullScreen = true;
+    }
+
+    return isFullScreen;
+  }
 
   @override
   String toString() {
