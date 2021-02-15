@@ -74,6 +74,9 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
+      'tabIndex',
+      serializers.serialize(object.tabIndex,
+          specifiedType: const FullType(int)),
     ];
     if (object.editing != null) {
       result
@@ -86,12 +89,6 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         ..add('selectedId')
         ..add(serializers.serialize(object.selectedId,
             specifiedType: const FullType(String)));
-    }
-    if (object.tabIndex != null) {
-      result
-        ..add('tabIndex')
-        ..add(serializers.serialize(object.tabIndex,
-            specifiedType: const FullType(int)));
     }
     return result;
   }
@@ -265,6 +262,9 @@ class _$TaskUIState extends TaskUIState {
       : super._() {
     if (listUIState == null) {
       throw new BuiltValueNullFieldError('TaskUIState', 'listUIState');
+    }
+    if (tabIndex == null) {
+      throw new BuiltValueNullFieldError('TaskUIState', 'tabIndex');
     }
   }
 

@@ -79,6 +79,9 @@ class _$ProductUIStateSerializer
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
+      'tabIndex',
+      serializers.serialize(object.tabIndex,
+          specifiedType: const FullType(int)),
     ];
     if (object.editing != null) {
       result
@@ -91,12 +94,6 @@ class _$ProductUIStateSerializer
         ..add('selectedId')
         ..add(serializers.serialize(object.selectedId,
             specifiedType: const FullType(String)));
-    }
-    if (object.tabIndex != null) {
-      result
-        ..add('tabIndex')
-        ..add(serializers.serialize(object.tabIndex,
-            specifiedType: const FullType(int)));
     }
     return result;
   }
@@ -270,6 +267,9 @@ class _$ProductUIState extends ProductUIState {
       : super._() {
     if (listUIState == null) {
       throw new BuiltValueNullFieldError('ProductUIState', 'listUIState');
+    }
+    if (tabIndex == null) {
+      throw new BuiltValueNullFieldError('ProductUIState', 'tabIndex');
     }
   }
 
