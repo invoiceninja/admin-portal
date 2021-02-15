@@ -137,12 +137,24 @@ abstract class InvoiceEntity extends Object
       terms: '',
       footer: '',
       designId: '',
-      taxName1: company?.settings?.defaultTaxName1 ?? '',
-      taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
-      taxName2: company?.settings?.defaultTaxName2 ?? '',
-      taxRate2: company?.settings?.defaultTaxRate2 ?? 0.0,
-      taxName3: company?.settings?.defaultTaxName3 ?? '',
-      taxRate3: company?.settings?.defaultTaxRate3 ?? 0.0,
+      taxName1: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxName1 ?? ''
+          : '',
+      taxRate1: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxRate1 ?? 0.0
+          : 0,
+      taxName2: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxName2 ?? ''
+          : '',
+      taxRate2: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxRate2 ?? 0.0
+          : 0,
+      taxName3: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxName3 ?? ''
+          : '',
+      taxRate3: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxRate3 ?? 0.0
+          : 0,
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',

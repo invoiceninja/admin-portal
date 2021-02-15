@@ -15,10 +15,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'list_long_press': 'List Long Press',
+      'show_actions': 'Show Actions',
+      'start_multiselect': 'Start Multiselect',
       'email_sent_to_confirm_email':
           'An email has been sent to confirm the email address',
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -1628,7 +1631,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'sq': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -3244,7 +3247,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'bg': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Предишно тримесечие',
       'to_update_run': 'To update run',
@@ -4860,7 +4863,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'zh_TW': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -6446,7 +6449,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'hr': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Prošlo tromjesječje',
       'to_update_run': 'To update run',
@@ -8057,7 +8060,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'cs': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -9665,7 +9668,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'da': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Forrige kvartal',
       'to_update_run': 'To update run',
@@ -11273,7 +11276,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'nl': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Laatste Kwartaal',
       'to_update_run': 'To update run',
@@ -12894,7 +12897,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'en_AU': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -14502,7 +14505,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'en_GB': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -16110,7 +16113,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'fi': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'viime Quarter',
       'to_update_run': 'To update run',
@@ -17719,7 +17722,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'fr': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Dernier trimestre',
       'to_update_run': 'To update run',
@@ -20970,7 +20973,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'de': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Letztes Quartal',
       'to_update_run': 'To update run',
@@ -22619,7 +22622,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'el': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Τελευταίο Τετράμηνο',
       'to_update_run': 'To update run',
@@ -24274,7 +24277,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'it': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -25889,7 +25892,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'ja': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -27496,7 +27499,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'lt': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -29104,7 +29107,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'mk_MK': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Последен квартал',
       'to_update_run': 'To update run',
@@ -30715,7 +30718,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'nb_NO': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -32322,7 +32325,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'pl': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -33930,7 +33933,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'pt_BR': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Último Quadrimestre',
       'to_update_run': 'To update run',
@@ -35553,7 +35556,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'pt_PT': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -37162,7 +37165,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'ro': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -38773,7 +38776,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'sr_RS': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -40384,7 +40387,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'sl': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Prejšnje četrtletje',
       'to_update_run': 'To update run',
@@ -41995,7 +41998,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'es': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Último Trimestre',
       'to_update_run': 'To update run',
@@ -43612,7 +43615,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'es_ES': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Cuatrimestre Anterior',
       'to_update_run': 'To update run',
@@ -45232,7 +45235,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'sv': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -46842,7 +46845,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'th': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -48448,7 +48451,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'tr_TR': {
       'counter_pattern_error':
-          'To use :client_counter please add either :number or :id_number to prevent conflicts',
+          'To use :client_counter please add either :client_number or :client_id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
       'last_quarter': 'Last Quarter',
       'to_update_run': 'To update run',
@@ -53938,7 +53941,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get colorTheme => _localizedValues[localeCode]['color_theme'] ?? '';
 
-  String get emailSentToConfirmEmail => _localizedValues[localeCode]['email_sent_to_confirm_email'] ?? '';
+  String get emailSentToConfirmEmail =>
+      _localizedValues[localeCode]['email_sent_to_confirm_email'] ?? '';
+
+  String get listLongPress =>
+      _localizedValues[localeCode]['list_long_press'] ?? '';
+
+  String get showActions => _localizedValues[localeCode]['show_actions'] ?? '';
+
+  String get startMultiselect =>
+      _localizedValues[localeCode]['start_multiselect'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

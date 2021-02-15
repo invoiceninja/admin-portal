@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -97,58 +98,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     onChanged: (dynamic value) =>
                         viewModel.onHistoryModeChanged(context, value),
                   ),
-                  AppDropdownButton<String>(
-                    showUseDefault: true,
-                    labelText: localization.colorTheme,
-                    value: state.prefState.colorTheme,
-                    items: [
-                      ...colorThemesMap.keys
-                          .map((key) => DropdownMenuItem(
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      child: Text(toTitleCase(key)),
-                                      width: 120,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        color: colorThemesMap[key].colorInfo,
-                                        height: 50,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        color: colorThemesMap[key].colorPrimary,
-                                        height: 50,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        color: colorThemesMap[key].colorSuccess,
-                                        height: 50,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        color: colorThemesMap[key].colorWarning,
-                                        height: 50,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        color: colorThemesMap[key].colorDanger,
-                                        height: 50,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                value: key,
-                              ))
-                          .toList()
-                    ],
-                    onChanged: (dynamic value) =>
-                        viewModel.onColorThemeChanged(context, value),
-                  ),
                 ],
                 AppDropdownButton<int>(
                   labelText: localization.rowsPerPage,
@@ -169,6 +118,15 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       )
                       .toList(),
                 ),
+                BoolDropdownButton(
+                  label: localization.listLongPress,
+                  value: prefState.longPressSelectionIsDefault,
+                  onChanged: (value) {
+                    viewModel.onLongPressSelectionIsDefault(context, value);
+                  },
+                  enabledLabel: localization.startMultiselect,
+                  disabledLabel: localization.showActions,
+                ),
               ],
             ),
             FormCard(
@@ -183,25 +141,58 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       : MdiIcons.themeLightDark),
                   activeColor: Theme.of(context).accentColor,
                 ),
-                SwitchListTile(
-                  title: Text(localization.longPressSelectionIsDefault),
-                  value: prefState.longPressSelectionIsDefault,
-                  onChanged: (value) =>
-                      viewModel.onLongPressSelectionIsDefault(context, value),
-                  secondary:
-                      Icon(kIsWeb ? Icons.check_box : MdiIcons.checkBoxOutline),
-                  activeColor: Theme.of(context).accentColor,
+                AppDropdownButton<String>(
+                  showUseDefault: true,
+                  labelText: localization.colorTheme,
+                  value: state.prefState.colorTheme,
+                  items: [
+                    ...colorThemesMap.keys
+                        .map((key) => DropdownMenuItem(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    child: Text(toTitleCase(key)),
+                                    width: 120,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      color: colorThemesMap[key].colorInfo,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      color: colorThemesMap[key].colorPrimary,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      color: colorThemesMap[key].colorSuccess,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      color: colorThemesMap[key].colorWarning,
+                                      height: 50,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      color: colorThemesMap[key].colorDanger,
+                                      height: 50,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              value: key,
+                            ))
+                        .toList()
+                  ],
+                  onChanged: (dynamic value) =>
+                      viewModel.onColorThemeChanged(context, value),
                 ),
-                /*
-                SwitchListTile(
-                  title: Text(localization.alwaysShowSidebar),
-                  value: prefState.alwaysShowFilterSidebar,
-                  onChanged: (value) =>
-                      viewModel.onAlwaysShowSidebarChanged(context, value),
-                  secondary: Icon(Icons.chrome_reader_mode),
-                  activeColor: Theme.of(context).accentColor,
-                ),
-                 */
                 FutureBuilder(
                   future: viewModel.authenticationSupported,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
