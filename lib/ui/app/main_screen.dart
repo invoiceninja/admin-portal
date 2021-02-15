@@ -304,14 +304,11 @@ class EntityScreens extends StatelessWidget {
     final isPreviewShown =
         isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
 
+    const previewFlex = 2;
     int listFlex = 3;
-    int previewFlex = 2;
 
     if (prefState.isModuleTable && !isPreviewShown) {
       listFlex = 5;
-    } else if (subRoute == 'email') {
-      listFlex = 2;
-      previewFlex = 3;
     } else if (prefState.isMenuCollapsed) {
       listFlex += 1;
     }
