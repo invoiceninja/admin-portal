@@ -38,9 +38,7 @@ class _ProductViewState extends State<ProductView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: 2,
-        initialIndex: state.productUIState.tabIndex ?? 0);
+        vsync: this, length: 2, initialIndex: state.productUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -54,7 +52,7 @@ class _ProductViewState extends State<ProductView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex ?? 0;
+      _controller.index = widget.tabIndex;
     }
   }
 

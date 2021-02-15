@@ -1407,7 +1407,7 @@ void selectEntity({
       !entity.entityType.isSetting &&
       entityUIState.selectedId == entity.id &&
       state.prefState.isPreviewVisible) {
-    if ((entityUIState.tabIndex ?? 0) > 0) {
+    if (entityUIState.tabIndex > 0) {
       store.dispatch(PreviewEntity());
     } else {
       editEntity(context: context, entity: entity);

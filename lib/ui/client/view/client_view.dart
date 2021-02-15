@@ -42,9 +42,7 @@ class _ClientViewState extends State<ClientView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: 6,
-        initialIndex: state.clientUIState.tabIndex ?? 0);
+        vsync: this, length: 6, initialIndex: state.clientUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -58,7 +56,7 @@ class _ClientViewState extends State<ClientView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex ?? 0;
+      _controller.index = widget.tabIndex;
     }
   }
 

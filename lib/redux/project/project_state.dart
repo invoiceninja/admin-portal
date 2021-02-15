@@ -59,6 +59,7 @@ abstract class ProjectUIState extends Object
       listUIState: ListUIState(ProjectFields.number, sortAscending: false),
       editing: ProjectEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   ProjectUIState._();

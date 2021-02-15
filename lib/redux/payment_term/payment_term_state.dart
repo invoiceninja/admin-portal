@@ -50,6 +50,7 @@ abstract class PaymentTermUIState extends Object
       listUIState: ListUIState(PaymentTermFields.name),
       editing: PaymentTermEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   PaymentTermUIState._();

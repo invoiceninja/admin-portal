@@ -26,7 +26,7 @@ final tabIndexReducer = combineReducers<int>([
     return action.tabIndex;
   }),
   TypedReducer<int, PreviewEntity>((completer, action) {
-    return null;
+    return 0;
   }),
 ]);
 

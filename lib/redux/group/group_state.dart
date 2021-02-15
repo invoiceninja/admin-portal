@@ -44,6 +44,7 @@ abstract class GroupUIState extends Object
       listUIState: ListUIState(GroupFields.name),
       editing: GroupEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   GroupUIState._();

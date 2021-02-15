@@ -57,6 +57,7 @@ abstract class StubUIState extends Object with EntityUIState implements Built<St
       listUIState: ListUIState(StubFields.name),
       editing: StubEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   StubUIState._();

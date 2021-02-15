@@ -60,6 +60,7 @@ abstract class DesignUIState extends Object
       listUIState: ListUIState(DesignFields.name),
       editing: DesignEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
 

@@ -38,7 +38,7 @@ class _TaskViewState extends State<TaskView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: state.taskUIState.tabIndex ?? 0);
+        vsync: this, length: 2, initialIndex: state.taskUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -52,7 +52,7 @@ class _TaskViewState extends State<TaskView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex ?? 0;
+      _controller.index = widget.tabIndex;
     }
   }
 
