@@ -15,7 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'on_list_long_press': 'On List Long Press',
+      'list_long_press': 'List Long Press',
       'show_actions': 'Show Actions',
       'start_multiselect': 'Start Multiselect',
       'email_sent_to_confirm_email':
@@ -53944,8 +53944,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get emailSentToConfirmEmail =>
       _localizedValues[localeCode]['email_sent_to_confirm_email'] ?? '';
 
-  String get onListLongPress =>
-      _localizedValues[localeCode]['on_list_long_press'] ?? '';
+  String get listLongPress =>
+      _localizedValues[localeCode]['list_long_press'] ?? '';
 
   String get showActions => _localizedValues[localeCode]['show_actions'] ?? '';
 

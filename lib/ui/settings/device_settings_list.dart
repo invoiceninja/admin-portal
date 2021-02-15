@@ -119,7 +119,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       .toList(),
                 ),
                 BoolDropdownButton(
-                  label: localization.onListLongPress,
+                  label: localization.listLongPress,
                   value: prefState.longPressSelectionIsDefault,
                   onChanged: (value) {
                     viewModel.onLongPressSelectionIsDefault(context, value);
