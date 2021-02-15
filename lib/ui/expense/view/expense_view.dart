@@ -42,11 +42,17 @@ class _ExpenseViewState extends State<ExpenseView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: state.expenseUIState.tabIndex);
+        vsync: this,
+        length: 2,
+        initialIndex: widget.isFilter ? 0 : state.expenseUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
+    if (widget.isFilter) {
+      return;
+    }
+
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(UpdateExpenseTab(tabIndex: _controller.index));
   }

@@ -59,11 +59,15 @@ class _InvoiceViewState extends State<InvoiceView>
     _controller = TabController(
         vsync: this,
         length: invoice.isRecurring ? 5 : 4,
-        initialIndex: tabIndex);
+        initialIndex: widget.isFilter ? 0 : tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
+    if (widget.isFilter) {
+      return;
+    }
+
     final store = StoreProvider.of<AppState>(context);
     final invoice = widget.viewModel.invoice;
 

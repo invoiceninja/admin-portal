@@ -42,11 +42,17 @@ class _ClientViewState extends State<ClientView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this, length: 6, initialIndex: state.clientUIState.tabIndex);
+        vsync: this,
+        length: 6,
+        initialIndex: widget.isFilter ? 0 : state.clientUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
+    if (widget.isFilter) {
+      return;
+    }
+
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(UpdateClientTab(tabIndex: _controller.index));
   }
