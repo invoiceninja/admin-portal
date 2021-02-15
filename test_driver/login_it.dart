@@ -1,3 +1,4 @@
+/*
 // This is the instrumented flutter app!
 
 import 'package:flutter_driver/driver_extension.dart';
@@ -8,3 +9,4 @@ void main() {
   enableFlutterDriverExtension();
   app.main(isTesting: true);
 }
+*/

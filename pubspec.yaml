@@ -29,7 +29,8 @@ dependencies:
   built_value: ^7.0.9
   built_collection: ^4.3.2
   memoize: ^2.0.0
-  cached_network_image: 2.3.0-beta.1 #https://github.com/Baseflow/flutter_cached_network_image/issues/395#issuecomment-635413976
+  #cached_network_image: 2.3.0-beta.1 #https://github.com/Baseflow/flutter_cached_network_image/issues/395#issuecomment-635413976
+  cached_network_image: ^2.5.0
   url_launcher: ^5.4.2
   share: ^0.6.3+6
   intl: ^0.16.1
@@ -49,13 +50,13 @@ dependencies:
       path: packages/google_sign_in/google_sign_in_web
       ref: master
   local_auth: ^0.6.1+3
-  sentry_flutter: ^4.0.1
+  sentry_flutter: ^4.0.4
   image_picker: ^0.6.3+4
   flutter_colorpicker: ^0.3.2
   flutter_json_widget: ^1.0.2
   webview_flutter: ^0.3.19+8
   timeago: ^2.0.26
-  native_pdf_view: ^3.8.0
+  native_pdf_view: ^3.9.0
   #flutter_typeahead: 1.8.0
   flutter_typeahead:
     git:
@@ -66,7 +67,7 @@ dependencies:
   # quick_actions: ^0.2.1
   version: ^1.0.0
   # idb_shim: ^1.11.1+1
-  flutter_launcher_icons: ^0.8.0
+  flutter_launcher_icons: ^0.8.1
   overflow_view: ^0.2.1
   flutter_styled_toast: ^1.5.1+1
   permission_handler: ^5.0.1+1
@@ -85,13 +86,13 @@ dependency_overrides:
       path: packages/google_sign_in/google_sign_in_platform_interface
 
 dev_dependencies:
-  flutter_driver:
-    sdk: flutter
+  #flutter_driver: # TODO Re-enable
+  #  sdk: flutter
   test: ^1.6.3
   #flutter_test:
   #  sdk: flutter
   build_runner: ^1.7.4
-  built_value_generator: ^7.0.9
+  built_value_generator: ^7.1.0
   faker: ^1.1.1
 
 flutter:
