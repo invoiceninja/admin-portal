@@ -19,12 +19,15 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..cost = company.settings.enableInclusiveTaxes
         ? expense.convertedAmount
         : expense.convertedNetAmount
-    ..taxName1 = expense.taxName1
-    ..taxRate1 = expense.calculatetaxRate1
-    ..taxName2 = expense.taxName2
-    ..taxRate2 = expense.calculatetaxRate2
-    ..taxName3 = expense.taxName3
-    ..taxRate3 = expense.calculatetaxRate3);
+    ..taxName1 = company.numberOfItemTaxRates >= 1 ? expense.taxName1 : ''
+    ..taxRate1 =
+        company.numberOfItemTaxRates >= 1 ? expense.calculatetaxRate1 : 0
+    ..taxName2 = company.numberOfItemTaxRates >= 2 ? expense.taxName2 : ''
+    ..taxRate2 =
+        company.numberOfItemTaxRates >= 2 ? expense.calculatetaxRate2 : 0
+    ..taxName3 = company.numberOfItemTaxRates >= 3 ? expense.taxName3 : ''
+    ..taxRate3 =
+        company.numberOfItemTaxRates >= 3 ? expense.calculatetaxRate3 : 0);
 }
 
 var memoizedDropdownExpenseList = memo9(
