@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'email_sent_to_confirm_email':
+          'An email has been sent to confirm the email address',
       'counter_pattern_error':
           'To use :client_counter please add either :number or :id_number to prevent conflicts',
       'this_quarter': 'This Quarter',
@@ -53935,6 +53937,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['converted_total'] ?? '';
 
   String get colorTheme => _localizedValues[localeCode]['color_theme'] ?? '';
+
+  String get emailSentToConfirmEmail => _localizedValues[localeCode]['email_sent_to_confirm_email'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
