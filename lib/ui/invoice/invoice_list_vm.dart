@@ -123,8 +123,7 @@ class InvoiceListVM extends EntityListVM {
     return InvoiceListVM(
       state: state,
       invoiceList: memoizedFilteredInvoiceList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.invoice),
           state.invoiceState.map,
           state.invoiceState.list,
           state.clientState.map,
