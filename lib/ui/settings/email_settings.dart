@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -99,6 +100,23 @@ class _EmailSettingsState extends State<EmailSettings> {
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
+    final sendingUserId = settings.gmailSendingUserId ?? '';
+    final sendingMethod = settings.emailSendingMethod;
+
+    if (sendingMethod == SettingsEntity.EMAIL_SENDING_METHOD_GMAIL &&
+        sendingUserId.isEmpty) {
+      showErrorDialog(
+          context: context,
+          message: AppLocalization.of(context).selectAGmailUser);
+      return;
+    }
+
+    viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -108,7 +126,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
     return EditScaffold(
       title: localization.emailSettings,
-      onSavePressed: viewModel.onSavePressed,
+      onSavePressed: _onSavePressed,
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,

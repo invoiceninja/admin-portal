@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'select_a_gmail_user': 'Please select a user authenticated with Gmail',
       'list_long_press': 'List Long Press',
       'show_actions': 'Show Actions',
       'start_multiselect': 'Start Multiselect',
@@ -53951,6 +53952,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get startMultiselect =>
       _localizedValues[localeCode]['start_multiselect'] ?? '';
+
+  String get selectAGmailUser =>
+      _localizedValues[localeCode]['select_a_gmail_user'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
