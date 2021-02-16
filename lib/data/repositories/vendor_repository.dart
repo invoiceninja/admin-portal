@@ -81,7 +81,7 @@ class VendorRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/vendors/${entity.id}', credentials.token,
+        '${credentials.url}/vendors/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final VendorItemResponse vendorResponse =

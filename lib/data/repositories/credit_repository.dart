@@ -106,7 +106,7 @@ class CreditRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/credits/${entity.id}', credentials.token,
+        '${credentials.url}/credits/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final InvoiceItemResponse invoiceResponse =

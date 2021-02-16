@@ -101,7 +101,7 @@ class SettingsRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/companies/${company.id}', credentials.token,
+        '${credentials.url}/companies/${company.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final CompanyItemResponse companyResponse =
