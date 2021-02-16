@@ -127,11 +127,6 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            if (vendor.isOld)
-              DecoratedFormField(
-                label: localization.number,
-                controller: _numberController,
-              ),
             DecoratedFormField(
               autofocus: true,
               controller: _nameController,
@@ -159,6 +154,11 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
                     : null,
               ),
             ),
+            if (vendor.isOld)
+              DecoratedFormField(
+                label: localization.number,
+                controller: _numberController,
+              ),
             UserPicker(
               userId: vendor.assignedUserId,
               onChanged: (userId) => viewModel
