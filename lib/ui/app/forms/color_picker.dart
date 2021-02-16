@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 //import 'package:flutter_colorpicker/block_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -31,6 +34,29 @@ class _FormColorPickerState extends State<FormColorPicker> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers;
+
+  final _defaultColors = [
+    Colors.red,
+    Colors.pink,
+    Colors.purple,
+    Colors.deepPurple,
+    Colors.indigo,
+    Colors.blue,
+    Colors.lightBlue,
+    Colors.cyan,
+    Colors.teal,
+    Colors.green,
+    Colors.lightGreen,
+    Colors.lime,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.deepOrange,
+    //Colors.brown,
+    Colors.grey,
+    Colors.blueGrey,
+    Colors.black,
+  ];
 
   @override
   void initState() {
@@ -85,12 +111,25 @@ class _FormColorPickerState extends State<FormColorPicker> {
       color = convertHexStringToColor(widget.initialValue) ?? Colors.black;
     }
 
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final theme = state.prefState.colorTheme;
+    final colors = colorThemesMap[theme];
+
     showDialog<AlertDialog>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           content: SingleChildScrollView(
             child: BlockPicker(
+              availableColors: [
+                ..._defaultColors,
+                colors.colorInfo,
+                colors.colorPrimary,
+                colors.colorSuccess,
+                colors.colorWarning,
+                colors.colorDanger,
+              ],
               pickerColor: color,
               onColorChanged: (color) {
                 _pendingColor = convertColorToHexString(color);

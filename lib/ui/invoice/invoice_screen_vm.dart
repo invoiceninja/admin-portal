@@ -45,8 +45,7 @@ class InvoiceScreenVM {
     return InvoiceScreenVM(
       invoiceMap: state.invoiceState.map,
       invoiceList: memoizedFilteredInvoiceList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.invoice),
           state.invoiceState.map,
           state.invoiceState.list,
           state.clientState.map,

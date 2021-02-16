@@ -93,6 +93,7 @@ class EntityStatusChip extends StatelessWidget {
     }
 
     label = localization.lookup(label) ?? '';
+
     if (label.isEmpty) {
       label = localization.logged;
     }

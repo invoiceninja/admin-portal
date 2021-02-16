@@ -81,6 +81,7 @@ class PaymentStatusColors {
       kPaymentStatusPartiallyRefunded: _colorTheme.colorPrimary,
       kPaymentStatusRefunded: _colorTheme.colorLightGray,
       kPaymentStatusUnapplied: _colorTheme.colorDarkGray,
+      kPaymentStatusPartiallyUnapplied: _colorTheme.colorDarkGray,
     };
   }
 }

@@ -387,6 +387,16 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
+  SelectionState getUISelection(EntityType type) {
+    final entityUIState = getUIState(type);
+
+    return SelectionState(
+      selectedId: entityUIState.selectedId,
+      filterEntityId: uiState.filterEntityId,
+      filterEntityType: uiState.filterEntityType,
+    );
+  }
+
   EntityUIState getUIState(EntityType type) {
     switch (type) {
       case EntityType.product:
@@ -796,8 +806,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 }
 
 class Credentials {
-  Credentials({this.url, this.token});
+  const Credentials({this.url, this.token});
 
-  String url;
-  String token;
+  final String url;
+  final String token;
+}
+
+class SelectionState {
+  const SelectionState(
+      {this.selectedId, this.filterEntityId, this.filterEntityType});
+
+  final String selectedId;
+  final String filterEntityId;
+  final EntityType filterEntityType;
 }

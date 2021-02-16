@@ -260,10 +260,6 @@ class InvoiceOverview extends StatelessWidget {
           ),
         );
       });
-
-      widgets.addAll([
-        ListDivider(),
-      ]);
     }
 
     if (creditMap.isNotEmpty) {
@@ -312,10 +308,6 @@ class InvoiceOverview extends StatelessWidget {
           ),
         ]);
       });
-
-      widgets.addAll([
-        ListDivider(),
-      ]);
     }
 
     Widget surchargeRow(String label, double amount) {
