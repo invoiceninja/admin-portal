@@ -111,6 +111,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     final state = store.state;
     final localization = AppLocalization.of(context);
     final invoice = widget.viewModel.invoice;
+    final client = state.clientState.get(invoice.clientId);
 
     final pageSelector = _pageCount == 1
         ? <Widget>[]
@@ -200,6 +201,15 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       ),
     );
 
+    bool showEmail =
+        isDesktop(context) && _activityId == null && !invoice.isRecurring;
+
+    // TODO: remove this code
+    // hide email option on web to prevent dialog problem
+    if (kIsWeb && !client.hasEmailAddress) {
+      showEmail = false;
+    }
+
     return Scaffold(
         backgroundColor: Colors.grey,
         appBar: widget.showAppBar
@@ -219,9 +229,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                   ],
                 ),
                 actions: <Widget>[
-                  if (isDesktop(context) &&
-                      _activityId == null &&
-                      !invoice.isRecurring)
+                  if (showEmail)
                     TextButton(
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
