@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -484,15 +485,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (!state.prefState.isMenuFloated) Spacer(),
                 if (!widget.entityType.isSetting && !isList)
                   if (state.prefState.isDesktop)
-                    TextButton(
+                    AppTextButton(
+                      label: localization.columns,
                       onPressed: _onColumnsPressed,
-                      child: Text(
-                        localization.columns,
-                        style: TextStyle(
-                            color: state.prefState.enableDarkMode
-                                ? Colors.white
-                                : Colors.black),
-                      ),
                     )
                   else
                     IconButton(
