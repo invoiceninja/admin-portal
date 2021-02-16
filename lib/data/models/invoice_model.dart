@@ -1049,10 +1049,10 @@ class ProductItemFields {
   static const String quantity = 'quantity';
   static const String lineTotal = 'line_total';
   static const String discount = 'discount';
-  static const String custom1 = 'custom1';
-  static const String custom2 = 'custom2';
-  static const String custom3 = 'custom3';
-  static const String custom4 = 'custom4';
+  static const String custom1 = 'product1';
+  static const String custom2 = 'product2';
+  static const String custom3 = 'product3';
+  static const String custom4 = 'product4';
 }
 
 class TaskItemFields {
@@ -1063,10 +1063,10 @@ class TaskItemFields {
   static const String hours = 'hours';
   static const String lineTotal = 'line_total';
   static const String discount = 'discount';
-  static const String custom1 = 'custom1';
-  static const String custom2 = 'custom2';
-  static const String custom3 = 'custom3';
-  static const String custom4 = 'custom4';
+  static const String custom1 = 'task1';
+  static const String custom2 = 'task2';
+  static const String custom3 = 'task3';
+  static const String custom4 = 'task4';
 }
 
 abstract class InvoiceItemEntity

@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -238,11 +239,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                             EntityAction.emailEntityType(invoice.entityType));
                       },
                     ),
-                  TextButton(
-                    child: Text(
-                      localization.download,
-                      style: TextStyle(color: state.headerTextColor),
-                    ),
+                  AppTextButton(
+                    isInHeader: true,
+                    label: localization.download,
                     onPressed: _response == null
                         ? null
                         : () async {

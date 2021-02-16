@@ -6,10 +6,12 @@ class AppTextButton extends StatelessWidget {
   const AppTextButton({
     this.label,
     this.onPressed,
+    this.isInHeader = false,
   });
 
   final String label;
   final Function onPressed;
+  final bool isInHeader;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,15 @@ class AppTextButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text(
           label,
           style: TextStyle(
-            color: state.prefState.enableDarkMode ? Colors.white : Colors.black,
+            color: isInHeader
+                ? state.headerTextColor
+                : state.prefState.enableDarkMode
+                    ? Colors.white
+                    : Colors.black,
           ),
         ),
       ),
