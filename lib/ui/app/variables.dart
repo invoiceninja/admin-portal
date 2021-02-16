@@ -209,7 +209,7 @@ class _VariableGrid extends StatelessWidget {
         childAspectRatio: 4,
         children: fields
             .map(
-              (field) => FlatButton(
+              (field) => TextButton(
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/colors.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -86,7 +85,8 @@ class _PaymentViewState extends State<PaymentView> {
                       EntityHeader(
                         entity: payment,
                         statusColor:
-                            PaymentStatusColors.colors[payment.statusId],
+                            PaymentStatusColors(state.prefState.colorThemeModel)
+                                .colors[payment.statusId],
                         statusLabel: localization
                             .lookup('payment_status_${payment.statusId}'),
                         label: localization.amount,

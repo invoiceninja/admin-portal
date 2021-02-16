@@ -198,7 +198,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origUser.replace(action.user ?? state.origUser)
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..section = action.section ?? state.section
-      ..tabIndex = action.tabIndex ?? 0
+      ..tabIndex = action.tabIndex ?? state.tabIndex
       ..isChanged = false
       ..entityType = action.client != null
           ? EntityType.client
@@ -289,6 +289,10 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
 
 Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
   TypedReducer<BuiltList<EntityType>, PreviewEntity>((previewStack, action) {
+    if (action.entityType == null) {
+      return previewStack;
+    }
+
     if (previewStack.isNotEmpty && previewStack.last == action.entityType) {
       return BuiltList(<EntityType>[]);
     }

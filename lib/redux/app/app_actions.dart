@@ -122,6 +122,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.showFilterSidebar,
     this.alwaysShowFilterSidebar,
     this.rowsPerPage,
+    this.colorTheme,
   });
 
   final AppLayout appLayout;
@@ -137,6 +138,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool alwaysShowFilterSidebar;
   final String accentColor;
   final int rowsPerPage;
+  final String colorTheme;
 }
 
 class LoadAccountSuccess implements StopLoading {
@@ -1379,6 +1381,7 @@ void selectEntity({
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final uiState = state.uiState;
+  final entityUIState = state.getUIState(entity.entityType);
   final isInMultiselect =
       state.getListState(entity.entityType).isInMultiselect();
 
@@ -1402,9 +1405,13 @@ void selectEntity({
       !forceView &&
       uiState.isViewing &&
       !entity.entityType.isSetting &&
-      (state.getUIState(entity.entityType).selectedId == entity.id &&
-          state.prefState.isPreviewVisible)) {
-    editEntity(context: context, entity: entity);
+      entityUIState.selectedId == entity.id &&
+      state.prefState.isPreviewVisible) {
+    if (entityUIState.tabIndex > 0) {
+      store.dispatch(PreviewEntity());
+    } else {
+      editEntity(context: context, entity: entity);
+    }
   } else {
     ClientEntity client;
     if (forceView && entity is BelongsToClient) {

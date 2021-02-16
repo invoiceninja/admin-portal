@@ -223,7 +223,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 children: <Widget>[
                   if (invoice.isNew)
                     ClientPicker(
-                      //autofocus: kIsWeb,
+                      //autofocus: true,
                       clientId: invoice.clientId,
                       clientState: state.clientState,
                       onSelected: (client) =>

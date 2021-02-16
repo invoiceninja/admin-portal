@@ -110,7 +110,6 @@ class VendorEditAddressState extends State<VendorEditAddress> {
             label: localization.postalCode,
           ),
           EntityDropdown(
-            key: ValueKey(vendor.countryId),
             entityType: EntityType.country,
             entityList:
                 memoizedCountryList(viewModel.state.staticState.countryMap),

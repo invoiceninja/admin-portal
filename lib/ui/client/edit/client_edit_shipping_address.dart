@@ -118,13 +118,12 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
             onSavePressed: viewModel.onSavePressed,
           ),
           EntityDropdown(
-            key: ValueKey(client.shippingCountryId),
             entityType: EntityType.country,
             entityList: memoizedCountryList(viewModel.staticState.countryMap),
             labelText: localization.country,
             entityId: client.shippingCountryId,
-            onSelected: (SelectableEntity country) => viewModel.onChanged(
-                client.rebuild((b) => b..shippingCountryId = country?.id)),
+            onSelected: (SelectableEntity country) => viewModel.onChanged(client
+                .rebuild((b) => b..shippingCountryId = country?.id ?? '')),
           ),
         ],
       ),

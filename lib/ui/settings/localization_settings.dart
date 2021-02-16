@@ -132,7 +132,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
               FormCard(
                 children: <Widget>[
                   EntityDropdown(
-                    key: ValueKey('__currency_${settings.currencyId}'),
                     entityType: EntityType.currency,
                     entityList:
                         memoizedCurrencyList(state.staticState.currencyMap),
@@ -158,7 +157,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   ),
                   EntityDropdown(
                     showUseDefault: state.settingsUIState.isFiltered,
-                    key: ValueKey('__language_${settings.languageId}'),
                     entityType: EntityType.language,
                     entityList:
                         memoizedLanguageList(state.staticState.languageMap),
@@ -170,7 +168,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   ),
                   EntityDropdown(
                     showUseDefault: state.settingsUIState.isFiltered,
-                    key: ValueKey('__timezone_${settings.timezoneId}'),
                     entityType: EntityType.timezone,
                     entityList:
                         memoizedTimezoneList(state.staticState.timezoneMap),
@@ -182,7 +179,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   ),
                   EntityDropdown(
                     showUseDefault: state.settingsUIState.isFiltered,
-                    key: ValueKey('__date_format_${settings.dateFormatId}'),
                     entityType: EntityType.dateFormat,
                     entityList:
                         memoizedDateFormatList(state.staticState.dateFormatMap),
@@ -268,7 +264,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         ),
                       ),
                       SizedBox(width: 8),
-                      FlatButton(
+                      TextButton(
                         child: Text(localization.addCustom),
                         onPressed: () {
                           fieldCallback(
@@ -280,7 +276,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                               field: localization.label,
                               title: localization.addCustom,
                               secondaryActions: [
-                                FlatButton(
+                                TextButton(
                                   child:
                                       Text(localization.labels.toUpperCase()),
                                   onPressed: () => launch(kGitHubLangUrl),

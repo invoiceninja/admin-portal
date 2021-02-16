@@ -107,7 +107,7 @@ class InvoiceRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/invoices/${entity.id}', credentials.token,
+        '${credentials.url}/invoices/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final InvoiceItemResponse invoiceResponse =

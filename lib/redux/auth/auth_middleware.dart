@@ -78,7 +78,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print('Login error: $error');
+      print('## Login error: $error');
       final message = _parseError('$error');
       if (action.completer != null) {
         action.completer.completeError(message);
@@ -108,7 +108,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print('Signup error: $error');
+      print('## Signup error: $error');
       final message = _parseError('$error');
       if (action.completer != null) {
         action.completer.completeError(message);
@@ -141,7 +141,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print('Oauth login error: $error');
+      print('## Oauth login error: $error');
       final message = _parseError('$error');
       if (action.completer != null) {
         action.completer.completeError(message);
@@ -172,7 +172,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print('OAuth signup error: $error');
+      print('## OAuth signup error: $error');
       final message = _parseError('$error');
       if (action.completer != null) {
         action.completer.completeError(message);
@@ -198,11 +198,11 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       //
     } else {
       if (state.isSaving || state.isLoading) {
-        print('Skipping refresh request - pending request');
+        print('## Skipping refresh request - pending request');
         next(action);
         return;
       } else if (state.company.isLarge && !state.isLoaded) {
-        print('Skipping refresh request - not loaded');
+        print('## Skipping refresh request - not loaded');
         next(action);
         return;
       }
@@ -244,10 +244,10 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         });
       });
 
-      if (false && permissionsWereChanged) {
-        print('## Permissions were changed');
+      if (permissionsWereChanged) {
         store.dispatch(ClearData());
-        store.dispatch(RefreshData(completer: action.completer));
+        store.dispatch(
+            RefreshData(completer: action.completer, clearData: true));
       } else {
         if (action.clearData && !company.isLarge) {
           store.dispatch(ClearData());

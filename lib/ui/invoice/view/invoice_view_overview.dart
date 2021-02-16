@@ -66,16 +66,17 @@ class InvoiceOverview extends StatelessWidget {
     Map<String, Color> colors;
     if (invoice.entityType == EntityType.quote) {
       statuses = kQuoteStatuses;
-      colors = QuoteStatusColors.colors;
+      colors = QuoteStatusColors(state.prefState.colorThemeModel).colors;
     } else if (invoice.entityType == EntityType.credit) {
       statuses = kCreditStatuses;
-      colors = CreditStatusColors.colors;
+      colors = CreditStatusColors(state.prefState.colorThemeModel).colors;
     } else if (invoice.entityType == EntityType.recurringInvoice) {
       statuses = kRecurringInvoiceStatuses;
-      colors = RecurringInvoiceStatusColors.colors;
+      colors =
+          RecurringInvoiceStatusColors(state.prefState.colorThemeModel).colors;
     } else {
       statuses = kInvoiceStatuses;
-      colors = InvoiceStatusColors.colors;
+      colors = InvoiceStatusColors(state.prefState.colorThemeModel).colors;
     }
 
     final userCompany = state.userCompany;
@@ -259,10 +260,6 @@ class InvoiceOverview extends StatelessWidget {
           ),
         );
       });
-
-      widgets.addAll([
-        ListDivider(),
-      ]);
     }
 
     if (creditMap.isNotEmpty) {
@@ -311,10 +308,6 @@ class InvoiceOverview extends StatelessWidget {
           ),
         ]);
       });
-
-      widgets.addAll([
-        ListDivider(),
-      ]);
     }
 
     Widget surchargeRow(String label, double amount) {

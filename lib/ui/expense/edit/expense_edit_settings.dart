@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -152,8 +151,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     children: <Widget>[
                       SizedBox(height: 8),
                       EntityDropdown(
-                        key: ValueKey(
-                            '__payment_type_${expense.paymentTypeId}__'),
                         entityType: EntityType.paymentType,
                         entityList:
                             memoizedPaymentTypeList(staticState.paymentTypeMap),
@@ -205,8 +202,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     children: <Widget>[
                       SizedBox(height: 8),
                       EntityDropdown(
-                        key: ValueKey(
-                            '__invoice_currency_${expense.invoiceCurrencyId}__'),
                         entityType: EntityType.currency,
                         entityList:
                             memoizedCurrencyList(staticState.currencyMap),

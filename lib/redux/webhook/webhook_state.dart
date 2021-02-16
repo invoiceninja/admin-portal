@@ -49,6 +49,7 @@ abstract class WebhookUIState extends Object
       listUIState: ListUIState(WebhookFields.targetUrl),
       editing: WebhookEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   WebhookUIState._();

@@ -12,7 +12,10 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem(
   final List<InvoiceItemEntity> items = [];
   final state = StoreProvider.of<AppState>(context).state;
   state.taskState.map.forEach((index, task) {
-    if (task.isStopped && !task.isInvoiced && task.projectId == project.id) {
+    if (task.isActive &&
+        task.isStopped &&
+        !task.isInvoiced &&
+        task.projectId == project.id) {
       final item = convertTaskToInvoiceItem(task: task, context: context);
       items.add(item);
     }

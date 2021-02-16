@@ -285,7 +285,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
         ? AlertDialog(
             content: SingleChildScrollView(child: column),
             actions: [
-              FlatButton(
+              TextButton(
                 child: Text(localization.remove.toUpperCase()),
                 onPressed: () => confirmCallback(
                     context: context,
@@ -294,7 +294,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
                       Navigator.pop(context);
                     }),
               ),
-              FlatButton(
+              TextButton(
                   child: Text(localization.done.toUpperCase()),
                   onPressed: () {
                     viewModel.onDoneContactPressed();

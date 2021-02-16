@@ -80,7 +80,7 @@ class TaskRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/tasks/${entity.id}', credentials.token,
+        '${credentials.url}/tasks/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final TaskItemResponse taskResponse =

@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -37,6 +38,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   bool autoValidate = false;
 
   final _replyToEmailController = TextEditingController();
+  final _replyToNameController = TextEditingController();
   final _bccEmailController = TextEditingController();
   final _emailStyleCustomController = TextEditingController();
   final _emailSignatureController = TextEditingController();
@@ -64,6 +66,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   void didChangeDependencies() {
     _controllers = [
       _replyToEmailController,
+      _replyToNameController,
       _bccEmailController,
       _emailStyleCustomController,
       _emailSignatureController,
@@ -74,6 +77,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
     final settings = widget.viewModel.settings;
     _replyToEmailController.text = settings.replyToEmail;
+    _replyToNameController.text = settings.replyToName;
     _bccEmailController.text = settings.bccEmail;
     _emailStyleCustomController.text = settings.emailStyleCustom;
     _emailSignatureController.text = settings.emailSignature;
@@ -87,12 +91,30 @@ class _EmailSettingsState extends State<EmailSettings> {
   void _onChanged() {
     final settings = widget.viewModel.settings.rebuild((b) => b
       ..replyToEmail = _replyToEmailController.text.trim()
+      ..replyToName = _replyToNameController.text.trim()
       ..bccEmail = _bccEmailController.text.trim()
       ..emailStyleCustom = _emailStyleCustomController.text.trim()
       ..emailSignature = _emailSignatureController.text.trim());
     if (settings != widget.viewModel.settings) {
       widget.viewModel.onSettingsChanged(settings);
     }
+  }
+
+  void _onSavePressed(BuildContext context) {
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
+    final sendingUserId = settings.gmailSendingUserId ?? '';
+    final sendingMethod = settings.emailSendingMethod;
+
+    if (sendingMethod == SettingsEntity.EMAIL_SENDING_METHOD_GMAIL &&
+        sendingUserId.isEmpty) {
+      showErrorDialog(
+          context: context,
+          message: AppLocalization.of(context).selectAGmailUser);
+      return;
+    }
+
+    viewModel.onSavePressed(context);
   }
 
   @override
@@ -104,7 +126,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
     return EditScaffold(
       title: localization.emailSettings,
-      onSavePressed: viewModel.onSavePressed,
+      onSavePressed: _onSavePressed,
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
@@ -142,6 +164,10 @@ class _EmailSettingsState extends State<EmailSettings> {
           ],
           FormCard(
             children: <Widget>[
+              DecoratedFormField(
+                label: localization.replyToName,
+                controller: _replyToNameController,
+              ),
               DecoratedFormField(
                 label: localization.replyToEmail,
                 controller: _replyToEmailController,

@@ -466,7 +466,7 @@ Future handleQuoteAction(
             context: context,
             message: localization.clientEmailNotSet,
             secondaryActions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     editEntity(
@@ -577,3 +577,9 @@ class RemoveFromQuoteMultiselect {
 }
 
 class ClearQuoteMultiselect {}
+
+class UpdateQuoteTab implements PersistUI {
+  UpdateQuoteTab({this.tabIndex});
+
+  final int tabIndex;
+}

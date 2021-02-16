@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
@@ -17,10 +21,12 @@ class ExpenseView extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.tabIndex,
   }) : super(key: key);
 
   final ExpenseViewVM viewModel;
   final bool isFilter;
+  final int tabIndex;
 
   @override
   _ExpenseViewState createState() => _ExpenseViewState();
@@ -33,11 +39,36 @@ class _ExpenseViewState extends State<ExpenseView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+
+    final state = widget.viewModel.state;
+    _controller = TabController(
+        vsync: this,
+        length: 2,
+        initialIndex: widget.isFilter ? 0 : state.expenseUIState.tabIndex);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    if (widget.isFilter) {
+      return;
+    }
+
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateExpenseTab(tabIndex: _controller.index));
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.tabIndex != widget.tabIndex) {
+      _controller.index = widget.tabIndex;
+    }
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     super.dispose();
   }

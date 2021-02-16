@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/flutter_version.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -581,14 +582,14 @@ class SidebarFooter extends StatelessWidget {
                       context: context,
                       message: localization.cronsNotEnabled,
                       secondaryActions: [
-                        FlatButton(
+                        TextButton(
                           child: Text(localization.learnMore.toUpperCase()),
                           onPressed: () {
                             launch(kCronsHelpUrl,
                                 forceSafariVC: false, forceWebView: false);
                           },
                         ),
-                        FlatButton(
+                        TextButton(
                           child: Text(localization.refreshData.toUpperCase()),
                           onPressed: () {
                             store.dispatch(RefreshData());
@@ -608,7 +609,7 @@ class SidebarFooter extends StatelessWidget {
                       context: context,
                       message: localization.companyDisabledWarning,
                       secondaryActions: [
-                        FlatButton(
+                        TextButton(
                           child: Text(localization.viewSettings.toUpperCase()),
                           onPressed: () {
                             store.dispatch(ViewSettings(
@@ -657,7 +658,10 @@ class SidebarFooter extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.info_outline),
-              onPressed: () => _showAbout(context),
+              // prevent the modal from being stuck over the pdf
+              onPressed: state.uiState.isInPdf && kIsWeb
+                  ? null
+                  : () => _showAbout(context),
               tooltip: localization.about,
             ),
             /*
@@ -698,7 +702,7 @@ class SidebarFooter extends StatelessWidget {
           if (isHosted(context) &&
               !isPaidAccount(context)) ...[
             Spacer(),
-            FlatButton(
+            TextButton(
               child: Text(localization.upgrade),
               color: Colors.green,
               onPressed: () => showDialog<UpgradeDialog>(
@@ -856,7 +860,7 @@ void _showAbout(BuildContext context) async {
       builder: (BuildContext context) {
         return AlertDialog(
           actions: [
-            FlatButton(
+            TextButton(
               child: Text(localization.viewLicenses.toUpperCase()),
               onPressed: () => showLicensePage(
                 context: context,
@@ -866,189 +870,200 @@ void _showAbout(BuildContext context) async {
                 applicationVersion: state.appVersion,
               ),
             ),
-            FlatButton(
+            TextButton(
               child: Text(localization.close.toUpperCase()),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: apppIcon,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ListTile(
+                  leading: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: apppIcon,
+                  ),
+                  title: Text(
+                    'Invoice Ninja',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  subtitle: Text(state.appVersion),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: state.appVersion));
+                    showToast(localization.copiedToClipboard
+                        .replaceFirst(':value', state.appVersion));
+                  },
+                  onLongPress: () {
+                    showMessageDialog(
+                      context: context,
+                      message: FLUTTER_VERSION['channel'].toUpperCase() +
+                          ' • ' +
+                          FLUTTER_VERSION['frameworkVersion'],
+                    );
+                  },
                 ),
-                title: Text(
-                  'Invoice Ninja',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                subtitle: Text(state.appVersion),
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: state.appVersion));
-                  showToast(localization.copiedToClipboard
-                      .replaceFirst(':value', state.appVersion));
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        style: aboutTextStyle,
-                        text: localization.thankYouForUsingOurApp +
-                            '\n\n' +
-                            localization.ifYouLikeIt,
-                      ),
-                      TextSpan(
-                        style: linkStyle,
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            launch(getAppURL(context), forceSafariVC: false);
-                          },
-                        text: ' ' + localization.clickHere + ' ',
-                      ),
-                      TextSpan(
-                        style: aboutTextStyle,
-                        text: localization.toRateIt,
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 24),
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          style: aboutTextStyle,
+                          text: localization.thankYouForUsingOurApp +
+                              '\n\n' +
+                              localization.ifYouLikeIt,
+                        ),
+                        TextSpan(
+                          style: linkStyle,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              launch(getAppURL(context), forceSafariVC: false);
+                            },
+                          text: ' ' + localization.clickHere + ' ',
+                        ),
+                        TextSpan(
+                          style: aboutTextStyle,
+                          text: localization.toRateIt,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: AppButton(
-                  label: localization.appPlatforms.toUpperCase(),
-                  iconData: MdiIcons.desktopMac,
-                  onPressed: () {
-                    showDialog<AlertDialog>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            actions: [
-                              FlatButton(
-                                child:
-                                    Text(localization.sourceCode.toUpperCase()),
-                                onPressed: () {
-                                  showDialog<AlertDialog>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        actions: [
-                                          FlatButton(
-                                            child: Text(localization.close
-                                                .toUpperCase()),
-                                            onPressed: () =>
-                                                Navigator.of(context).pop(),
-                                          ),
-                                        ],
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Text('Backend'),
-                                            AppButton(
-                                              label: 'Laravel/PHP',
-                                              iconData: MdiIcons.server,
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: AppButton(
+                    label: localization.appPlatforms.toUpperCase(),
+                    iconData: MdiIcons.desktopMac,
+                    onPressed: () {
+                      showDialog<AlertDialog>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              actions: [
+                                TextButton(
+                                  child: Text(
+                                      localization.sourceCode.toUpperCase()),
+                                  onPressed: () {
+                                    showDialog<AlertDialog>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          actions: [
+                                            TextButton(
+                                              child: Text(localization.close
+                                                  .toUpperCase()),
                                               onPressed: () =>
-                                                  launch(kSourceCodeBackend),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 30),
-                                              child: Text('Frontend'),
-                                            ),
-                                            AppButton(
-                                              label: 'Flutter/Dart',
-                                              iconData: MdiIcons.desktopClassic,
-                                              onPressed: () =>
-                                                  launch(kSourceCodeFrontend),
-                                            ),
-                                            AppButton(
-                                              label: 'Storefront SDK',
-                                              iconData: MdiIcons.tools,
-                                              onPressed: () => launch(
-                                                  kSourceCodeFrontendSDK),
+                                                  Navigator.of(context).pop(),
                                             ),
                                           ],
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
-                              FlatButton(
-                                child: Text(localization.close.toUpperCase()),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                            ],
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Text(localization.desktop + ' | BETA'),
-                                AppButton(
-                                  label: 'macOS',
-                                  iconData: MdiIcons.apple,
-                                  onPressed: () => launch(kMacOSUrl),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              Text('Backend'),
+                                              AppButton(
+                                                label: 'Laravel/PHP',
+                                                iconData: MdiIcons.server,
+                                                onPressed: () =>
+                                                    launch(kSourceCodeBackend),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 30),
+                                                child: Text('Frontend'),
+                                              ),
+                                              AppButton(
+                                                label: 'Flutter/Dart',
+                                                iconData:
+                                                    MdiIcons.desktopClassic,
+                                                onPressed: () =>
+                                                    launch(kSourceCodeFrontend),
+                                              ),
+                                              AppButton(
+                                                label: 'Storefront SDK',
+                                                iconData: MdiIcons.tools,
+                                                onPressed: () => launch(
+                                                    kSourceCodeFrontendSDK),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
-                                AppButton(
-                                  label: 'Linux',
-                                  iconData: MdiIcons.linux,
-                                  onPressed: () => launch(kLinuxUrl),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: Text('Windows coming soon...'),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 30),
-                                  child: Text(localization.mobile),
-                                ),
-                                AppButton(
-                                  label: 'iOS',
-                                  iconData: MdiIcons.apple,
-                                  onPressed: () => launch(kAppleStoreUrl),
-                                ),
-                                AppButton(
-                                  label: 'Android',
-                                  iconData: MdiIcons.android,
-                                  onPressed: () => launch(kGoogleStoreUrl),
+                                TextButton(
+                                  child: Text(localization.close.toUpperCase()),
+                                  onPressed: () => Navigator.of(context).pop(),
                                 ),
                               ],
-                            ),
-                          );
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(localization.desktop + ' • BETA'),
+                                  AppButton(
+                                    label: 'macOS',
+                                    iconData: MdiIcons.apple,
+                                    onPressed: () => launch(kMacOSUrl),
+                                  ),
+                                  AppButton(
+                                    label: 'Linux',
+                                    iconData: MdiIcons.linux,
+                                    onPressed: () => launch(kLinuxUrl),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: Text('Windows coming soon...'),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 30),
+                                    child: Text(localization.mobile),
+                                  ),
+                                  AppButton(
+                                    label: 'iOS',
+                                    iconData: MdiIcons.apple,
+                                    onPressed: () => launch(kAppleStoreUrl),
+                                  ),
+                                  AppButton(
+                                    label: 'Android',
+                                    iconData: MdiIcons.android,
+                                    onPressed: () => launch(kGoogleStoreUrl),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                    },
+                  ),
+                ),
+                //if (!state.isProduction) // TODO enable this check
+                AppButton(
+                  label: localization.healthCheck.toUpperCase(),
+                  iconData: MdiIcons.shieldHalfFull,
+                  color: Colors.green,
+                  onPressed: () {
+                    showDialog<HealthCheckDialog>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return HealthCheckDialog();
                         });
                   },
                 ),
-              ),
-              //if (!state.isProduction) // TODO enable this check
-              AppButton(
-                label: localization.healthCheck.toUpperCase(),
-                iconData: MdiIcons.shieldHalfFull,
-                color: Colors.green,
-                onPressed: () {
-                  showDialog<HealthCheckDialog>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return HealthCheckDialog();
-                      });
-                },
-              ),
-              AppButton(
-                label: (state.account.isUpdateAvailable
-                        ? localization.updateApp
-                        : localization.forceUpdate)
-                    .toUpperCase(),
-                iconData: MdiIcons.cloudDownload,
-                color: Colors.orange,
-                onPressed: () => _showUpdate(context),
-              ),
-            ],
+                AppButton(
+                  label: (state.account.isUpdateAvailable
+                          ? localization.updateApp
+                          : localization.forceUpdate)
+                      .toUpperCase(),
+                  iconData: MdiIcons.cloudDownload,
+                  color: Colors.orange,
+                  onPressed: () => _showUpdate(context),
+                ),
+              ],
+            ),
           ),
         );
       });
@@ -1111,12 +1126,12 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
             child: CircularProgressIndicator(),
           ),
         if (!_isSaving)
-          FlatButton(
+          TextButton(
             child: Text(localization.cancel.toUpperCase()),
             onPressed: () => Navigator.pop(context),
           ),
         if (!_isSaving)
-          FlatButton(
+          TextButton(
             child: Text(localization.send.toUpperCase()),
             onPressed: () => _sendMessage(),
           ),

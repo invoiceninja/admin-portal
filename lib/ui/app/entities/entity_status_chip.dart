@@ -31,30 +31,35 @@ class EntityStatusChip extends StatelessWidget {
       case EntityType.payment:
         final payment = entity as PaymentEntity;
         label = kPaymentStatuses[payment.calculatedStatusId];
-        color = PaymentStatusColors.colors[payment.calculatedStatusId];
+        color = PaymentStatusColors(state.prefState.colorThemeModel)
+            .colors[payment.calculatedStatusId];
         break;
       case EntityType.invoice:
         final invoice = entity as InvoiceEntity;
         final statusId = invoice.calculatedStatusId;
         label = kInvoiceStatuses[statusId];
-        color = InvoiceStatusColors.colors[statusId];
+        color = InvoiceStatusColors(state.prefState.colorThemeModel)
+            .colors[statusId];
         break;
       case EntityType.recurringInvoice:
         final invoice = entity as InvoiceEntity;
         final statusId = invoice.calculatedStatusId;
         label = kRecurringInvoiceStatuses[statusId];
-        color = RecurringInvoiceStatusColors.colors[statusId];
+        color = RecurringInvoiceStatusColors(state.prefState.colorThemeModel)
+            .colors[statusId];
         break;
       case EntityType.quote:
         final quote = entity as InvoiceEntity;
         final statusId = quote.calculatedStatusId;
         label = kQuoteStatuses[statusId];
-        color = QuoteStatusColors.colors[statusId];
+        color =
+            QuoteStatusColors(state.prefState.colorThemeModel).colors[statusId];
         break;
       case EntityType.credit:
         final credit = entity as InvoiceEntity;
         label = kCreditStatuses[credit.statusId];
-        color = CreditStatusColors.colors[credit.statusId];
+        color = CreditStatusColors(state.prefState.colorThemeModel)
+            .colors[credit.statusId];
         break;
       case EntityType.expense:
         final expense = entity as ExpenseEntity;
@@ -62,7 +67,8 @@ class EntityStatusChip extends StatelessWidget {
         label = kExpenseStatuses[expense.statusId];
         color = category.color.isNotEmpty
             ? convertHexStringToColor(category.color)
-            : ExpenseStatusColors.colors[expense.statusId];
+            : ExpenseStatusColors(state.prefState.colorThemeModel)
+                .colors[expense.statusId];
         break;
       case EntityType.task:
         final task = entity as TaskEntity;
@@ -73,10 +79,11 @@ class EntityStatusChip extends StatelessWidget {
                 ? state.taskStatusState.get(task.statusId).name
                 : localization.logged;
         color = task.isInvoiced
-            ? kColorGreen
+            ? state.prefState.colorThemeModel.colorSuccess
             : statusColor.isNotEmpty && statusColor != '#fff'
                 ? convertHexStringToColor(statusColor)
-                : TaskStatusColors.colors[task.calculateStatusId];
+                : TaskStatusColors(state.prefState.colorThemeModel)
+                    .colors[task.calculateStatusId];
         break;
       default:
         print(
@@ -86,6 +93,7 @@ class EntityStatusChip extends StatelessWidget {
     }
 
     label = localization.lookup(label) ?? '';
+
     if (label.isEmpty) {
       label = localization.logged;
     }

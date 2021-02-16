@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AppListTile extends StatelessWidget {
   const AppListTile({
@@ -22,12 +23,23 @@ class AppListTile extends StatelessWidget {
   final String copyValue;
   final List<Widget> buttons;
 
+  void _onLongPress(BuildContext context) {
+    if ((copyValue ?? title ?? '').isEmpty) {
+      return;
+    }
+
+    Clipboard.setData(ClipboardData(text: copyValue ?? title));
+    showToast(AppLocalization.of(context)
+        .copiedToClipboard
+        .replaceFirst(':value', copyValue ?? title));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Theme.of(context).cardColor,
       child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
         leading: Icon(icon),
         title: Text(title),
         subtitle: buttons != null || subtitle != null
@@ -47,17 +59,8 @@ class AppListTile extends StatelessWidget {
               )
             : null,
         dense: dense,
-        onTap: onTap,
-        onLongPress: () {
-          if ((copyValue ?? title ?? '').isEmpty) {
-            return;
-          }
-
-          Clipboard.setData(ClipboardData(text: copyValue ?? title));
-          showToast(AppLocalization.of(context)
-              .copiedToClipboard
-              .replaceFirst(':value', copyValue ?? title));
-        },
+        onTap: () => isDesktop(context) ? _onLongPress(context) : onTap(),
+        onLongPress: () => _onLongPress(context),
       ),
     );
   }

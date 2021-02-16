@@ -145,7 +145,6 @@ class _PaymentEditState extends State<PaymentEdit> {
             children: <Widget>[
               if (payment.isNew) ...[
                 EntityDropdown(
-                  key: Key('__client_${payment.clientId}__'),
                   entityType: EntityType.client,
                   labelText: AppLocalization.of(context).client,
                   entityId: payment.clientId,
@@ -213,7 +212,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
               if (payment.isApplying != true)
                 EntityDropdown(
-                  key: ValueKey('__payment_type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
                   entityList: memoizedPaymentTypeList(
                       viewModel.staticState.paymentTypeMap),
@@ -305,11 +303,11 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
               )
             else ...[
-              FlatButton(
+              TextButton(
                 child: Text(localization.cancel.toUpperCase()),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              FlatButton(
+              TextButton(
                 child: Text(localization.apply.toUpperCase()),
                 onPressed: () => onSavePressed(context),
               ),
@@ -474,12 +472,11 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     }
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         if (widget.entityType == EntityType.invoice)
           Expanded(
             child: EntityDropdown(
-              key: Key('__invoice_${payment.clientId}__'),
               allowClearing: false,
               entityType: EntityType.invoice,
               labelText: AppLocalization.of(context).invoice,
@@ -500,7 +497,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         if (widget.entityType == EntityType.credit)
           Expanded(
             child: EntityDropdown(
-              key: Key('__credit_${payment.clientId}__'),
               allowClearing: false,
               entityType: EntityType.credit,
               labelText: AppLocalization.of(context).credit,
@@ -521,6 +517,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           ),
           Expanded(
             child: DecoratedFormField(
+              showClear: false,
               controller: _amountController,
               autocorrect: false,
               keyboardType: TextInputType.numberWithOptions(decimal: true),

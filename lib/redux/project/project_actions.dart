@@ -281,7 +281,7 @@ void handleProjectAction(
             ..projectId = project.id
             ..clientId = project.clientId));
       break;
-    case EntityAction.newInvoice:
+    case EntityAction.invoiceProject:
       final items =
           convertProjectToInvoiceItem(project: project, context: context);
       createEntity(
@@ -387,4 +387,10 @@ class SaveProjectDocumentFailure implements StopSaving {
   SaveProjectDocumentFailure(this.error);
 
   final Object error;
+}
+
+class UpdateProjectTab implements PersistUI {
+  UpdateProjectTab({this.tabIndex});
+
+  final int tabIndex;
 }

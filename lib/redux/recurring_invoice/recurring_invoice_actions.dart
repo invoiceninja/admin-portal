@@ -556,3 +556,9 @@ class RemoveFromRecurringInvoiceMultiselect {
 class ClearRecurringInvoiceMultiselect {
   ClearRecurringInvoiceMultiselect();
 }
+
+class UpdateRecurringInvoiceTab implements PersistUI {
+  UpdateRecurringInvoiceTab({this.tabIndex});
+
+  final int tabIndex;
+}

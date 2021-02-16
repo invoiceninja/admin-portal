@@ -60,6 +60,7 @@ abstract class QuoteUIState extends Object
       listUIState: ListUIState(QuoteFields.number, sortAscending: false),
       editing: InvoiceEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
@@ -82,6 +83,7 @@ class PaymentRefundVM {
         store.dispatch(
             RefundPaymentRequest(completer: completer, payment: payment));
         return completer.future.then((savedPayment) {
+          showToast(AppLocalization.of(context).refundedPayment);
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
             if (payment.isNew) {

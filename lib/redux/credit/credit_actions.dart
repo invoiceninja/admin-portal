@@ -442,7 +442,7 @@ Future handleCreditAction(
             context: context,
             message: localization.clientEmailNotSet,
             secondaryActions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     editEntity(
@@ -564,3 +564,9 @@ class RemoveFromCreditMultiselect {
 }
 
 class ClearCreditMultiselect {}
+
+class UpdateCreditTab implements PersistUI {
+  UpdateCreditTab({this.tabIndex});
+
+  final int tabIndex;
+}

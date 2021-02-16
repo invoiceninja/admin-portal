@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -90,24 +89,24 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
-              key: ValueKey('__currency_${client.currencyId}__'),
               entityType: EntityType.currency,
               entityList:
                   memoizedCurrencyList(viewModel.staticState.currencyMap),
               labelText: localization.currency,
               entityId: client.currencyId,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  client.rebuild((b) => b..settings.currencyId = currency?.id)),
+                  client.rebuild(
+                      (b) => b..settings.currencyId = currency?.id ?? '')),
             ),
             EntityDropdown(
-              key: ValueKey('__language_${client.languageId}__'),
               entityType: EntityType.language,
               entityList:
                   memoizedLanguageList(viewModel.staticState.languageMap),
               labelText: localization.language,
               entityId: client.languageId,
               onSelected: (SelectableEntity language) => viewModel.onChanged(
-                  client.rebuild((b) => b..settings.languageId = language?.id)),
+                  client.rebuild(
+                      (b) => b..settings.languageId = language?.id ?? '')),
             ),
             AppDropdownButton<String>(
               showBlank: true,

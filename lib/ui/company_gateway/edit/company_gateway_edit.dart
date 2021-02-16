@@ -107,24 +107,24 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 children: <Widget>[
                   if (companyGateway.isNew)
                     EntityDropdown(
-                      allowClearing: false,
-                      key: ValueKey('__gateway_${companyGateway.gatewayId}__'),
                       entityType: EntityType.gateway,
                       entityList:
                           memoizedGatewayList(state.staticState.gatewayMap),
                       labelText: localization.provider,
                       entityId: companyGateway.gatewayId,
-                      onSelected: (SelectableEntity gateway) =>
-                          viewModel.onChanged(
-                        companyGateway.rebuild((b) => b
-                          ..feesAndLimitsMap[(gateway as GatewayEntity)
-                                      .defaultGatewayTypeId ??
-                                  kGatewayTypeCreditCard] =
-                              FeesAndLimitsSettings(isEnabled: true)
-                          ..gatewayId = gateway.id
-                          ..config = '{}'
-                          ..label = gateway.listDisplayName),
-                      ),
+                      onSelected: (SelectableEntity gateway) {
+                        gateway ??= GatewayEntity();
+                        viewModel.onChanged(
+                          companyGateway.rebuild((b) => b
+                            ..feesAndLimitsMap[(gateway as GatewayEntity)
+                                        .defaultGatewayTypeId ??
+                                    kGatewayTypeCreditCard] =
+                                FeesAndLimitsSettings(isEnabled: true)
+                            ..gatewayId = gateway.id
+                            ..config = '{}'
+                            ..label = gateway.listDisplayName),
+                        );
+                      },
                       //onFieldSubmitted: (String value) => _node.nextFocus(),
                     ),
                   GatewayConfigSettings(

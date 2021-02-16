@@ -123,7 +123,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 autocorrect: false,
               ),
             EntityDropdown(
-              key: ValueKey('__vendor_${expense.vendorId}__'),
               entityType: EntityType.vendor,
               labelText: localization.vendor,
               entityId: expense.vendorId,
@@ -139,7 +138,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
             if (!expense.isInvoiced) ...[
               EntityDropdown(
-                key: ValueKey('__client_${expense.clientId}__'),
                 entityType: EntityType.client,
                 labelText: localization.client,
                 entityId: expense.clientId,
@@ -259,7 +257,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 ),
             if (expense.usesInclusiveTaxes) amountField,
             EntityDropdown(
-              key: ValueKey('__expense_currency_${expense.currencyId}__'),
               entityType: EntityType.currency,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,

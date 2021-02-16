@@ -147,7 +147,7 @@ class LoginVM {
         onGoogleSignUpPressed:
             (BuildContext context, Completer<Null> completer) async {
           try {
-            final account = await _googleSignIn.signIn();
+            final account = await _googleSignIn.grantOfflineAccess();
 
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
@@ -190,7 +190,7 @@ class LoginVM {
           @required String email,
           @required String url,
           @required String secret,
-        }) {
+        }) async {
           if (store.state.isLoading) {
             return;
           }

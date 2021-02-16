@@ -137,12 +137,24 @@ abstract class InvoiceEntity extends Object
       terms: '',
       footer: '',
       designId: '',
-      taxName1: company?.settings?.defaultTaxName1 ?? '',
-      taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
-      taxName2: company?.settings?.defaultTaxName2 ?? '',
-      taxRate2: company?.settings?.defaultTaxRate2 ?? 0.0,
-      taxName3: company?.settings?.defaultTaxName3 ?? '',
-      taxRate3: company?.settings?.defaultTaxRate3 ?? 0.0,
+      taxName1: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxName1 ?? ''
+          : '',
+      taxRate1: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxRate1 ?? 0.0
+          : 0,
+      taxName2: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxName2 ?? ''
+          : '',
+      taxRate2: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxRate2 ?? 0.0
+          : 0,
+      taxName3: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxName3 ?? ''
+          : '',
+      taxRate3: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
+          ? company?.settings?.defaultTaxRate3 ?? 0.0
+          : 0,
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',
@@ -208,6 +220,7 @@ abstract class InvoiceEntity extends Object
     ..balance = 0
     ..amount = 0
     ..paidToDate = 0
+    ..remainingCycles = -1
     ..invoiceId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
@@ -1036,10 +1049,10 @@ class ProductItemFields {
   static const String quantity = 'quantity';
   static const String lineTotal = 'line_total';
   static const String discount = 'discount';
-  static const String custom1 = 'custom1';
-  static const String custom2 = 'custom2';
-  static const String custom3 = 'custom3';
-  static const String custom4 = 'custom4';
+  static const String custom1 = 'product1';
+  static const String custom2 = 'product2';
+  static const String custom3 = 'product3';
+  static const String custom4 = 'product4';
 }
 
 class TaskItemFields {
@@ -1050,10 +1063,10 @@ class TaskItemFields {
   static const String hours = 'hours';
   static const String lineTotal = 'line_total';
   static const String discount = 'discount';
-  static const String custom1 = 'custom1';
-  static const String custom2 = 'custom2';
-  static const String custom3 = 'custom3';
-  static const String custom4 = 'custom4';
+  static const String custom1 = 'task1';
+  static const String custom2 = 'task2';
+  static const String custom3 = 'task3';
+  static const String custom4 = 'task4';
 }
 
 abstract class InvoiceItemEntity

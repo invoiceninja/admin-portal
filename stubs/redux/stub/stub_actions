@@ -266,6 +266,12 @@ class ClearStubMultiselect {
   ClearStubMultiselect();
 }
 
+class UpdateStubTab implements PersistUI {
+  UpdateStubTab({this.tabIndex});
+
+  final int tabIndex;
+}
+
 void handleStubAction(
     BuildContext context, List<BaseEntity> stubs, EntityAction action) {
 

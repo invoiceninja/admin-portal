@@ -45,7 +45,6 @@ class _EntityListTileState extends State<EntityListTile> {
       return SizedBox();
     }
 
-    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final isFilteredBy = state.uiState.filterEntityId == widget.entity.id &&
@@ -179,8 +178,13 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
       entityType: widget.entityType,
       filterEntity: widget.entity);
 
-  void _onLongPress() => handleEntityAction(
-      context, widget.entity, EntityAction.newEntityType(widget.entityType));
+  void _onLongPress() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(FilterByEntity(
+        entityId: widget.entity.id, entityType: widget.entity.entityType));
+    handleEntityAction(
+        context, widget.entity, EntityAction.newEntityType(widget.entityType));
+  }
 
   @override
   Widget build(BuildContext context) {

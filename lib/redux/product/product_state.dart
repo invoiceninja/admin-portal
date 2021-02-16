@@ -49,6 +49,7 @@ abstract class ProductUIState extends Object
       listUIState: ListUIState(ProductFields.productKey),
       editing: ProductEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
   ProductUIState._();

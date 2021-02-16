@@ -6,14 +6,12 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.41';
+const String kClientVersion = '5.0.42';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
-//const String kAppProductionUrl = 'https://invoicing.co';
-const String kAppProductionUrl =
-    'https://staging.invoicing.co'; // TODO remove staging
+const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kAppDemoUrl = 'https://demo.invoiceninja.com';
 const String kWhiteLabelUrl =
@@ -117,6 +115,9 @@ const String kPlanFree = '';
 const String kPlanPro = 'pro';
 const String kPlanEnterprise = 'enterprise';
 const String kPlanWhiteLabel = 'white_label';
+
+const String kColorThemeLight = 'light';
+const String kColorThemeDark = 'dark';
 
 const double kGutterWidth = 16;
 const double kLighterOpacity = .6;
@@ -402,6 +403,7 @@ const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 
+const String kPaymentStatusPartiallyUnapplied = '-2';
 const String kPaymentStatusUnapplied = '-1';
 const String kPaymentStatusPending = '1';
 const String kPaymentStatusCancelled = '2';
@@ -411,6 +413,7 @@ const String kPaymentStatusPartiallyRefunded = '5';
 const String kPaymentStatusRefunded = '6';
 
 const kPaymentStatuses = {
+  kPaymentStatusPartiallyUnapplied: 'partially_unapplied',
   kPaymentStatusUnapplied: 'unapplied',
   kPaymentStatusPending: 'pending',
   kPaymentStatusCancelled: 'cancelled',
@@ -438,7 +441,7 @@ const String kDefaultDarkSelectedColor = '#253750';
 const String kDefaultDarkBorderColor = '#393A3C';
 const String kDefaultLightSelectedColorMenu = '#f2faff';
 const String kDefaultLightSelectedColor = '#e5f5ff';
-const String kDefaultLightBorderColor = '#E7EBEE';
+const String kDefaultLightBorderColor = '#dfdfdf';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupMonth = 'month';

@@ -58,8 +58,7 @@ List<String> dropdownInvoiceSelector(
   return list;
 }
 
-var memoizedFilteredInvoiceList = memo9((String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredInvoiceList = memo8((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltList<String> invoiceList,
         BuiltMap<String, ClientEntity> clientMap,
@@ -67,20 +66,11 @@ var memoizedFilteredInvoiceList = memo9((String filterEntityId,
         ListUIState invoiceListState,
         StaticState staticState,
         BuiltMap<String, UserEntity> userMap) =>
-    filteredInvoicesSelector(
-        filterEntityId,
-        filterEntityType,
-        invoiceMap,
-        invoiceList,
-        clientMap,
-        paymentMap,
-        invoiceListState,
-        staticState,
-        userMap));
+    filteredInvoicesSelector(selectionState, invoiceMap, invoiceList, clientMap,
+        paymentMap, invoiceListState, staticState, userMap));
 
 List<String> filteredInvoicesSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltList<String> invoiceList,
     BuiltMap<String, ClientEntity> clientMap,
@@ -88,8 +78,10 @@ List<String> filteredInvoicesSelector(
     ListUIState invoiceListState,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap) {
-  final Map<String, List<String>> invoicePaymentMap = {};
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
 
+  final Map<String, List<String>> invoicePaymentMap = {};
   if (filterEntityType == EntityType.payment) {
     paymentMap.forEach((paymentId, payment) {
       payment.invoicePaymentables.forEach((invoicePaymentable) {
@@ -105,6 +97,10 @@ List<String> filteredInvoicesSelector(
     final invoice = invoiceMap[invoiceId];
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+
+    if (invoice.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!client.isActive &&
         !client.matchesEntityFilter(filterEntityType, filterEntityId)) {

@@ -74,6 +74,9 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
+      'tabIndex',
+      serializers.serialize(object.tabIndex,
+          specifiedType: const FullType(int)),
     ];
     if (object.editing != null) {
       result
@@ -112,6 +115,10 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'tabIndex':
+          result.tabIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -235,6 +242,8 @@ class _$TaskUIState extends TaskUIState {
   @override
   final String selectedId;
   @override
+  final int tabIndex;
+  @override
   final Completer<SelectableEntity> saveCompleter;
   @override
   final Completer<Null> cancelCompleter;
@@ -247,11 +256,15 @@ class _$TaskUIState extends TaskUIState {
       this.editingTimeIndex,
       this.listUIState,
       this.selectedId,
+      this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
     if (listUIState == null) {
       throw new BuiltValueNullFieldError('TaskUIState', 'listUIState');
+    }
+    if (tabIndex == null) {
+      throw new BuiltValueNullFieldError('TaskUIState', 'tabIndex');
     }
   }
 
@@ -270,6 +283,7 @@ class _$TaskUIState extends TaskUIState {
         editingTimeIndex == other.editingTimeIndex &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
+        tabIndex == other.tabIndex &&
         saveCompleter == other.saveCompleter &&
         cancelCompleter == other.cancelCompleter;
   }
@@ -280,9 +294,13 @@ class _$TaskUIState extends TaskUIState {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, editing.hashCode), editingTimeIndex.hashCode),
-                    listUIState.hashCode),
-                selectedId.hashCode),
+                $jc(
+                    $jc(
+                        $jc($jc(0, editing.hashCode),
+                            editingTimeIndex.hashCode),
+                        listUIState.hashCode),
+                    selectedId.hashCode),
+                tabIndex.hashCode),
             saveCompleter.hashCode),
         cancelCompleter.hashCode));
   }
@@ -294,6 +312,7 @@ class _$TaskUIState extends TaskUIState {
           ..add('editingTimeIndex', editingTimeIndex)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
+          ..add('tabIndex', tabIndex)
           ..add('saveCompleter', saveCompleter)
           ..add('cancelCompleter', cancelCompleter))
         .toString();
@@ -322,6 +341,10 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   String get selectedId => _$this._selectedId;
   set selectedId(String selectedId) => _$this._selectedId = selectedId;
 
+  int _tabIndex;
+  int get tabIndex => _$this._tabIndex;
+  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+
   Completer<SelectableEntity> _saveCompleter;
   Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
   set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
@@ -340,6 +363,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
       _editingTimeIndex = _$v.editingTimeIndex;
       _listUIState = _$v.listUIState?.toBuilder();
       _selectedId = _$v.selectedId;
+      _tabIndex = _$v.tabIndex;
       _saveCompleter = _$v.saveCompleter;
       _cancelCompleter = _$v.cancelCompleter;
       _$v = null;
@@ -370,6 +394,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
               editingTimeIndex: editingTimeIndex,
               listUIState: listUIState.build(),
               selectedId: selectedId,
+              tabIndex: tabIndex,
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/colors.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -134,7 +133,9 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                 padding: const EdgeInsets.only(top: 4),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: ledger.adjustment <= 0 ? kColorGreen : kColorRed,
+                    color: ledger.adjustment <= 0
+                        ? state.prefState.colorThemeModel.colorSuccess
+                        : state.prefState.colorThemeModel.colorDanger,
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: Padding(

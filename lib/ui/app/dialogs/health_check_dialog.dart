@@ -152,15 +152,15 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
       actions: _response == null
           ? []
           : [
-              FlatButton(
+              TextButton(
                 child: Text(localization.clearCache.toUpperCase()),
                 onPressed: () => clearCache(),
               ),
-              FlatButton(
+              TextButton(
                 child: Text(localization.refresh.toUpperCase()),
                 onPressed: () => runCheck(),
               ),
-              FlatButton(
+              TextButton(
                 child: Text(localization.close.toUpperCase()),
                 onPressed: () => Navigator.of(context).pop(),
               )

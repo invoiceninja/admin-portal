@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/product_model.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -32,6 +33,7 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   int _updatedAt;
+  String _filter = '';
 
   void _updateTable() {
     setState(() {
@@ -131,110 +133,42 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   key: ValueKey(
                       '__line_item_${index}_${lineItems[index].createdAt}__'),
                   children: [
+                    /*
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: TypeAheadFormField<String>(
-                        key: ValueKey('__line_item_${index}_name__'),
-                        initialValue: lineItems[index].productKey,
-                        noItemsFoundBuilder: (context) => SizedBox(),
-                        suggestionsCallback: (pattern) {
-                          return productIds
-                              .where((productId) => productState
-                                  .map[productId].productKey
+                      child: Autocomplete<ProductEntity>(
+                        //key: ValueKey('__line_item_${index}_name__'),
+                        optionsBuilder: (TextEditingValue textEditingValue) {
+                          final options = productIds
+                              .map((productId) => productState.map[productId])
+                              .where((product) => product.productKey
                                   .toLowerCase()
-                                  .contains(pattern.toLowerCase()))
+                                  .contains(_filter.toLowerCase()))
                               .toList();
-                          /*
-                        return productIds
-                            .where((productId) => productState.map[productId]
-                                .matchesFilter(pattern))
-                            .toList();
-                         */
-                        },
-                        itemBuilder: (context, productId) {
-                          // TODO fix this
-                          /*
-                        return ListTile(
-                          title: Text(productState.map[suggestion].productKey),
-                        );
-                         */
-                          return Listener(
-                            child: Container(
-                              color: Theme.of(context).cardColor,
-                              child: ListTile(
-                                title: Text(
-                                    productState.map[productId].productKey),
-                              ),
-                            ),
-                            onPointerDown: (_) {
-                              if (!kIsWeb) {
-                                return;
-                              }
-                              final item = lineItems[index];
-                              final product = productState.map[productId];
-                              final client =
-                                  state.clientState.get(invoice.clientId);
-                              final currency = state
-                                  .staticState.currencyMap[client.currencyId];
-
-                              double cost = product.price;
-                              if (company.convertProductExchangeRate &&
-                                  invoice.clientId != null &&
-                                  client.currencyId != company.currencyId) {
-                                cost = round(cost * invoice.exchangeRate,
-                                    currency.precision);
-                              }
-
-                              final updatedItem = item.rebuild((b) => b
-                                ..productKey = product.productKey
-                                ..notes =
-                                    item.isTask ? item.notes : product.notes
-                                ..cost = item.isTask && item.cost != 0
-                                    ? item.cost
-                                    : cost
-                                ..quantity = item.isTask
-                                    ? item.quantity
-                                    : item.quantity == 0 &&
-                                            viewModel
-                                                .state.company.defaultQuantity
-                                        ? 1
-                                        : item.quantity
-                                ..customValue1 = product.customValue1
-                                ..customValue2 = product.customValue2
-                                ..customValue3 = product.customValue3
-                                ..customValue4 = product.customValue4
-                                ..taxRate1 = product.taxRate1
-                                ..taxName1 = product.taxName1
-                                ..taxRate2 = product.taxRate2
-                                ..taxName2 = product.taxName2
-                                ..taxRate3 = product.taxRate3
-                                ..taxName3 = product.taxName3);
-                              viewModel.onChangedInvoiceItem(
-                                  updatedItem, index);
-                              _updateTable();
-                            },
-                          );
-                        },
-                        onSuggestionSelected: (suggestion) {
-                          if (kIsWeb) {
-                            return;
+/*
+                          if (options.length == 1 &&
+                              options[0].productKey.toLowerCase() ==
+                                  _filter.toLowerCase()) {
+                            return <ProductEntity>[];
                           }
+                          */
+
+                          return options;
+                        },
+                        displayStringForOption: (product) => product.productKey,
+                        onSelected: (product) {
                           final item = lineItems[index];
-                          final product = productState.map[suggestion];
                           final client =
                               state.clientState.get(invoice.clientId);
+                          final currency =
+                              state.staticState.currencyMap[client.currencyId];
 
                           double cost = product.price;
                           if (company.convertProductExchangeRate &&
                               invoice.clientId != null &&
                               client.currencyId != company.currencyId) {
-                            cost = round(
-                                cost * invoice.exchangeRate,
-                                state
-                                    .staticState
-                                    .currencyMap[client?.currencyId ??
-                                        company.currencyId]
-                                    .precision);
+                            cost = round(cost * invoice.exchangeRate,
+                                currency.precision);
                           }
 
                           final updatedItem = item.rebuild((b) => b
@@ -261,18 +195,173 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           viewModel.onChangedInvoiceItem(updatedItem, index);
                           _updateTable();
                         },
-                        textFieldConfiguration:
-                            TextFieldConfiguration(onChanged: (value) {
-                          viewModel.onChangedInvoiceItem(
-                              lineItems[index]
-                                  .rebuild((b) => b..productKey = value),
-                              index);
-                        }),
-                        autoFlipDirection: true,
-                        animationStart: 1,
-                        debounceDuration: Duration(seconds: 0),
+                        fieldViewBuilder: (BuildContext context,
+                            TextEditingController textEditingController,
+                            FocusNode focusNode,
+                            VoidCallback onFieldSubmitted) {
+                          return DecoratedFormField(
+                            showClear: false,
+                            autofocus: false,
+                            controller: textEditingController,
+                            focusNode: focusNode,
+                            onFieldSubmitted: (String value) {
+                              onFieldSubmitted();
+                            },
+                            onChanged: (value) {
+                              _filter = value;
+                              viewModel.onChangedInvoiceItem(
+                                  lineItems[index]
+                                      .rebuild((b) => b..productKey = value),
+                                  index);
+                            },
+                          );
+                        },
                       ),
                     ),
+                    */
+                    Padding(
+                        padding: const EdgeInsets.only(right: kTableColumnGap),
+                        child: TypeAheadFormField<String>(
+                          key: ValueKey('__line_item_${index}_name__'),
+                          initialValue: lineItems[index].productKey,
+                          noItemsFoundBuilder: (context) => SizedBox(),
+                          suggestionsCallback: (pattern) {
+                            return productIds
+                                .where((productId) => productState
+                                    .map[productId].productKey
+                                    .toLowerCase()
+                                    .contains(pattern.toLowerCase()))
+                                .toList();
+                            /*
+                        return productIds
+                            .where((productId) => productState.map[productId]
+                                .matchesFilter(pattern))
+                            .toList();
+                         */
+                          },
+                          itemBuilder: (context, productId) {
+                            // TODO fix this
+                            /*
+                        return ListTile(
+                          title: Text(productState.map[suggestion].productKey),
+                        );
+                         */
+                            return Listener(
+                              child: Container(
+                                color: Theme.of(context).cardColor,
+                                child: ListTile(
+                                  title: Text(
+                                      productState.map[productId].productKey),
+                                ),
+                              ),
+                              onPointerDown: (_) {
+                                if (!kIsWeb) {
+                                  return;
+                                }
+                                final item = lineItems[index];
+                                final product = productState.map[productId];
+                                final client =
+                                    state.clientState.get(invoice.clientId);
+                                final currency = state
+                                    .staticState.currencyMap[client.currencyId];
+
+                                double cost = product.price;
+                                if (company.convertProductExchangeRate &&
+                                    invoice.clientId != null &&
+                                    client.currencyId != company.currencyId) {
+                                  cost = round(cost * invoice.exchangeRate,
+                                      currency.precision);
+                                }
+
+                                final updatedItem = item.rebuild((b) => b
+                                  ..productKey = product.productKey
+                                  ..notes =
+                                      item.isTask ? item.notes : product.notes
+                                  ..cost = item.isTask && item.cost != 0
+                                      ? item.cost
+                                      : cost
+                                  ..quantity = item.isTask
+                                      ? item.quantity
+                                      : item.quantity == 0 &&
+                                              viewModel
+                                                  .state.company.defaultQuantity
+                                          ? 1
+                                          : item.quantity
+                                  ..customValue1 = product.customValue1
+                                  ..customValue2 = product.customValue2
+                                  ..customValue3 = product.customValue3
+                                  ..customValue4 = product.customValue4
+                                  ..taxRate1 = product.taxRate1
+                                  ..taxName1 = product.taxName1
+                                  ..taxRate2 = product.taxRate2
+                                  ..taxName2 = product.taxName2
+                                  ..taxRate3 = product.taxRate3
+                                  ..taxName3 = product.taxName3);
+                                viewModel.onChangedInvoiceItem(
+                                    updatedItem, index);
+                                _updateTable();
+                              },
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            if (kIsWeb) {
+                              return;
+                            }
+                            final item = lineItems[index];
+                            final product = productState.map[suggestion];
+                            final client =
+                                state.clientState.get(invoice.clientId);
+
+                            double cost = product.price;
+                            if (company.convertProductExchangeRate &&
+                                invoice.clientId != null &&
+                                client.currencyId != company.currencyId) {
+                              cost = round(
+                                  cost * invoice.exchangeRate,
+                                  state
+                                      .staticState
+                                      .currencyMap[client?.currencyId ??
+                                          company.currencyId]
+                                      .precision);
+                            }
+
+                            final updatedItem = item.rebuild((b) => b
+                              ..productKey = product.productKey
+                              ..notes = item.isTask ? item.notes : product.notes
+                              ..cost = item.isTask && item.cost != 0
+                                  ? item.cost
+                                  : cost
+                              ..quantity = item.isTask
+                                  ? item.quantity
+                                  : item.quantity == 0 &&
+                                          viewModel
+                                              .state.company.defaultQuantity
+                                      ? 1
+                                      : item.quantity
+                              ..customValue1 = product.customValue1
+                              ..customValue2 = product.customValue2
+                              ..customValue3 = product.customValue3
+                              ..customValue4 = product.customValue4
+                              ..taxRate1 = product.taxRate1
+                              ..taxName1 = product.taxName1
+                              ..taxRate2 = product.taxRate2
+                              ..taxName2 = product.taxName2
+                              ..taxRate3 = product.taxRate3
+                              ..taxName3 = product.taxName3);
+                            viewModel.onChangedInvoiceItem(updatedItem, index);
+                            _updateTable();
+                          },
+                          textFieldConfiguration:
+                              TextFieldConfiguration(onChanged: (value) {
+                            viewModel.onChangedInvoiceItem(
+                                lineItems[index]
+                                    .rebuild((b) => b..productKey = value),
+                                index);
+                          }),
+                          autoFlipDirection: true,
+                          animationStart: 1,
+                          debounceDuration: Duration(seconds: 0),
+                        )),
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TextFormField(

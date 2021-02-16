@@ -24,7 +24,6 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:file_picker/file_picker.dart';
 
 class CompanyDetails extends StatefulWidget {
@@ -251,32 +250,27 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         ? localization.pleaseEnterAName
                         : null,
                     autovalidate: autoValidate,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
                     label: localization.idNumber,
                     controller: _idNumberController,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
                     label: localization.vatNumber,
                     controller: _vatNumberController,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
                     label: localization.website,
                     controller: _websiteController,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
                     label: localization.email,
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
                   ),
                   DecoratedFormField(
@@ -328,7 +322,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       showBlank: true,
                     ),
                     EntityDropdown(
-                      key: ValueKey('__industry_${company.industryId}__'),
                       entityType: EntityType.industry,
                       entityList:
                           memoizedIndustryList(state.staticState.industryMap),
@@ -352,7 +345,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.address1,
                       controller: _address1Controller,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.streetAddressLine1],
@@ -360,7 +352,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.address2,
                       controller: _address2Controller,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.streetAddressLine2],
@@ -368,7 +359,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.city,
                       controller: _cityController,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.addressCity],
@@ -376,7 +366,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.state,
                       controller: _stateController,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.addressState],
@@ -384,13 +373,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.postalCode,
                       controller: _postalCodeController,
-                      textInputAction: TextInputAction.next,
                       onFieldSubmitted: (String value) =>
                           _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.postalCode],
                     ),
                     EntityDropdown(
-                      key: ValueKey('__country_${settings.countryId}__'),
                       entityType: EntityType.country,
                       entityList:
                           memoizedCountryList(state.staticState.countryMap),
@@ -485,8 +472,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               ))
                           .toList()),
                   EntityDropdown(
-                    key: ValueKey(
-                        '__payment_type_${settings.defaultPaymentTypeId}__'),
                     entityType: EntityType.paymentType,
                     entityList: memoizedPaymentTypeList(
                         state.staticState.paymentTypeMap),

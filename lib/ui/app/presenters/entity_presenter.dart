@@ -99,6 +99,10 @@ class EntityPresenter {
       ].contains(field);
 
   static bool isFieldNumeric(String field) {
+    if (field.startsWith('converted_')) {
+      return true;
+    }
+
     final value = [
       'balance',
       'paid_to_date',
@@ -123,8 +127,6 @@ class EntityPresenter {
       'calculated_rate',
       'duration',
       'net_amount',
-      'converted_amount',
-      'converted_balance',
     ].contains(field);
 
     return value;

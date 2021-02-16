@@ -474,6 +474,12 @@ class SaveInvoiceDocumentFailure implements StopSaving {
   final Object error;
 }
 
+class UpdateInvoiceTab implements PersistUI {
+  UpdateInvoiceTab({this.tabIndex});
+
+  final int tabIndex;
+}
+
 void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     EntityAction action) async {
   if (invoices.isEmpty) {
@@ -548,7 +554,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
             context: context,
             message: localization.clientEmailNotSet,
             secondaryActions: [
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     editEntity(

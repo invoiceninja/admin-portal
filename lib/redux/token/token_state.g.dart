@@ -77,6 +77,9 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
+      'tabIndex',
+      serializers.serialize(object.tabIndex,
+          specifiedType: const FullType(int)),
     ];
     if (object.editing != null) {
       result
@@ -115,6 +118,10 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'tabIndex':
+          result.tabIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -237,6 +244,8 @@ class _$TokenUIState extends TokenUIState {
   @override
   final String selectedId;
   @override
+  final int tabIndex;
+  @override
   final Completer<SelectableEntity> saveCompleter;
   @override
   final Completer<Null> cancelCompleter;
@@ -248,11 +257,15 @@ class _$TokenUIState extends TokenUIState {
       {this.editing,
       this.listUIState,
       this.selectedId,
+      this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
     if (listUIState == null) {
       throw new BuiltValueNullFieldError('TokenUIState', 'listUIState');
+    }
+    if (tabIndex == null) {
+      throw new BuiltValueNullFieldError('TokenUIState', 'tabIndex');
     }
   }
 
@@ -270,6 +283,7 @@ class _$TokenUIState extends TokenUIState {
         editing == other.editing &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
+        tabIndex == other.tabIndex &&
         saveCompleter == other.saveCompleter &&
         cancelCompleter == other.cancelCompleter;
   }
@@ -279,8 +293,10 @@ class _$TokenUIState extends TokenUIState {
   int get hashCode {
     return __hashCode ??= $jf($jc(
         $jc(
-            $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
-                selectedId.hashCode),
+            $jc(
+                $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
+                    selectedId.hashCode),
+                tabIndex.hashCode),
             saveCompleter.hashCode),
         cancelCompleter.hashCode));
   }
@@ -291,6 +307,7 @@ class _$TokenUIState extends TokenUIState {
           ..add('editing', editing)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
+          ..add('tabIndex', tabIndex)
           ..add('saveCompleter', saveCompleter)
           ..add('cancelCompleter', cancelCompleter))
         .toString();
@@ -316,6 +333,10 @@ class TokenUIStateBuilder
   String get selectedId => _$this._selectedId;
   set selectedId(String selectedId) => _$this._selectedId = selectedId;
 
+  int _tabIndex;
+  int get tabIndex => _$this._tabIndex;
+  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+
   Completer<SelectableEntity> _saveCompleter;
   Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
   set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
@@ -333,6 +354,7 @@ class TokenUIStateBuilder
       _editing = _$v.editing?.toBuilder();
       _listUIState = _$v.listUIState?.toBuilder();
       _selectedId = _$v.selectedId;
+      _tabIndex = _$v.tabIndex;
       _saveCompleter = _$v.saveCompleter;
       _cancelCompleter = _$v.cancelCompleter;
       _$v = null;
@@ -362,6 +384,7 @@ class TokenUIStateBuilder
               editing: _editing?.build(),
               listUIState: listUIState.build(),
               selectedId: selectedId,
+              tabIndex: tabIndex,
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {

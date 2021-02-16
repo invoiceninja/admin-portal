@@ -81,7 +81,7 @@ class ExpenseRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/expenses/${entity.id}', credentials.token,
+        '${credentials.url}/expenses/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final ExpenseItemResponse expenseResponse =

@@ -130,11 +130,6 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            if (client.isOld)
-              DecoratedFormField(
-                label: localization.number,
-                controller: _numberController,
-              ),
             DecoratedFormField(
               autofocus: true,
               controller: _nameController,
@@ -163,6 +158,11 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                     : null,
               ),
             ),
+            if (client.isOld)
+              DecoratedFormField(
+                label: localization.number,
+                controller: _numberController,
+              ),
             DynamicSelector(
               entityType: EntityType.group,
               entityIds: memoizedGroupList(state.groupState.map),

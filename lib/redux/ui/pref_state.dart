@@ -2,7 +2,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 
 part 'pref_state.g.dart';
 
@@ -20,6 +22,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isHistoryVisible: false,
       enableDarkMode: false,
       requireAuthentication: false,
+      colorTheme: kColorThemeLight,
       showFilterSidebar: false,
       longPressSelectionIsDefault: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
@@ -58,6 +61,12 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   int get rowsPerPage;
 
+  String get colorTheme;
+
+  ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
+      ? colorThemesMap[colorTheme]
+      : colorThemesMap[kColorThemeLight];
+
   BuiltMap<String, CompanyPrefState> get companyPrefs;
 
   bool get isDesktop => appLayout == AppLayout.desktop;
@@ -95,8 +104,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       !isMenuVisible;
 
   // ignore: unused_element
-  static void _initializeBuilder(PrefStateBuilder builder) =>
-      builder..useSidebarEditor.replace(BuiltMap<EntityType, bool>());
+  static void _initializeBuilder(PrefStateBuilder builder) => builder
+    ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
+    ..colorTheme = kColorThemeLight;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

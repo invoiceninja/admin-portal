@@ -1,3 +1,4 @@
+/*
 // Import Flutter Driver API
 import 'dart:async';
 
@@ -18,15 +19,14 @@ void main() {
       driver = await FlutterDriver.connect(printCommunication: false);
 
       // https://github.com/flutter/flutter/issues/24703#issuecomment-526382318
-      /*
-      streamSubscription = driver.serviceClient.onIsolateRunnable
-          .asBroadcastStream()
-          .listen((isolateRef) {
-        print(
-            'Resuming isolate: ${isolateRef.numberAsString}:${isolateRef.name}');
-        isolateRef.resume();
-      });
-       */
+      //streamSubscription = driver.serviceClient.onIsolateRunnable
+      //    .asBroadcastStream()
+      //    .listen((isolateRef) {
+      //  print(
+      //      'Resuming isolate: ${isolateRef.numberAsString}:${isolateRef.name}');
+      //  isolateRef.resume();
+      //});
+      
     });
 
     tearDownAll(() async {
@@ -58,3 +58,4 @@ void main() {
     });
   });
 }
+*/

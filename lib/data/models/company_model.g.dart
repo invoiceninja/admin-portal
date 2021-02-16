@@ -1231,6 +1231,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.replyToEmail,
             specifiedType: const FullType(String)));
     }
+    if (object.replyToName != null) {
+      result
+        ..add('reply_to_name')
+        ..add(serializers.serialize(object.replyToName,
+            specifiedType: const FullType(String)));
+    }
     if (object.bccEmail != null) {
       result
         ..add('bcc_email')
@@ -2258,6 +2264,10 @@ class _$SettingsEntitySerializer
           break;
         case 'reply_to_email':
           result.replyToEmail = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'reply_to_name':
+          result.replyToName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'bcc_email':
@@ -5149,6 +5159,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String replyToEmail;
   @override
+  final String replyToName;
+  @override
   final String bccEmail;
   @override
   final bool pdfEmailAttachment;
@@ -5483,6 +5495,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.enablePortalUploads,
       this.emailStyle,
       this.replyToEmail,
+      this.replyToName,
       this.bccEmail,
       this.pdfEmailAttachment,
       this.ublEmailAttachment,
@@ -5672,6 +5685,7 @@ class _$SettingsEntity extends SettingsEntity {
         enablePortalUploads == other.enablePortalUploads &&
         emailStyle == other.emailStyle &&
         replyToEmail == other.replyToEmail &&
+        replyToName == other.replyToName &&
         bccEmail == other.bccEmail &&
         pdfEmailAttachment == other.pdfEmailAttachment &&
         ublEmailAttachment == other.ublEmailAttachment &&
@@ -5853,7 +5867,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), enablePortalUploads.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode), emailBodyReminderEndless.hashCode), clientOnlinePaymentNotification.hashCode), clientManualPaymentNotification.hashCode), counterNumberApplied.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), enablePortalUploads.hashCode), emailStyle.hashCode), replyToEmail.hashCode), replyToName.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode), emailBodyReminderEndless.hashCode), clientOnlinePaymentNotification.hashCode), clientManualPaymentNotification.hashCode), counterNumberApplied.hashCode),
                                                                                 emailSendingMethod.hashCode),
                                                                             gmailSendingUserId.hashCode),
                                                                         clientPortalTerms.hashCode),
@@ -5898,6 +5912,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('enablePortalUploads', enablePortalUploads)
           ..add('emailStyle', emailStyle)
           ..add('replyToEmail', replyToEmail)
+          ..add('replyToName', replyToName)
           ..add('bccEmail', bccEmail)
           ..add('pdfEmailAttachment', pdfEmailAttachment)
           ..add('ublEmailAttachment', ublEmailAttachment)
@@ -6152,6 +6167,10 @@ class SettingsEntityBuilder
   String _replyToEmail;
   String get replyToEmail => _$this._replyToEmail;
   set replyToEmail(String replyToEmail) => _$this._replyToEmail = replyToEmail;
+
+  String _replyToName;
+  String get replyToName => _$this._replyToName;
+  set replyToName(String replyToName) => _$this._replyToName = replyToName;
 
   String _bccEmail;
   String get bccEmail => _$this._bccEmail;
@@ -6940,6 +6959,7 @@ class SettingsEntityBuilder
       _enablePortalUploads = _$v.enablePortalUploads;
       _emailStyle = _$v.emailStyle;
       _replyToEmail = _$v.replyToEmail;
+      _replyToName = _$v.replyToName;
       _bccEmail = _$v.bccEmail;
       _pdfEmailAttachment = _$v.pdfEmailAttachment;
       _ublEmailAttachment = _$v.ublEmailAttachment;
@@ -7139,6 +7159,7 @@ class SettingsEntityBuilder
               enablePortalUploads: enablePortalUploads,
               emailStyle: emailStyle,
               replyToEmail: replyToEmail,
+              replyToName: replyToName,
               bccEmail: bccEmail,
               pdfEmailAttachment: pdfEmailAttachment,
               ublEmailAttachment: ublEmailAttachment,

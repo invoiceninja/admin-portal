@@ -1,5 +1,4 @@
 import 'package:invoiceninja_flutter/colors.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -122,7 +121,9 @@ class ExpenseOverview extends StatelessWidget {
         expense.isConverted
             ? EntityHeader(
                 entity: expense,
-                statusColor: ExpenseStatusColors.colors[expense.statusId],
+                statusColor:
+                    ExpenseStatusColors(state.prefState.colorThemeModel)
+                        .colors[expense.statusId],
                 statusLabel:
                     localization.lookup('expense_status_${expense.statusId}'),
                 label: localization.amount,
@@ -135,7 +136,9 @@ class ExpenseOverview extends StatelessWidget {
               )
             : EntityHeader(
                 entity: expense,
-                statusColor: ExpenseStatusColors.colors[expense.statusId],
+                statusColor:
+                    ExpenseStatusColors(state.prefState.colorThemeModel)
+                        .colors[expense.statusId],
                 statusLabel:
                     localization.lookup('expense_status_${expense.statusId}'),
                 label: localization.amount,

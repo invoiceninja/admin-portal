@@ -394,3 +394,9 @@ class SaveVendorDocumentFailure implements StopSaving {
 
   final Object error;
 }
+
+class UpdateVendorTab implements PersistUI {
+  UpdateVendorTab({this.tabIndex});
+
+  final int tabIndex;
+}

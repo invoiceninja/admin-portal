@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:memoize/memoize.dart';
 
 enum ClientReportFields {
@@ -42,6 +43,10 @@ enum ClientReportFields {
   credit_balance,
   paid_to_date,
   total,
+  converted_balance,
+  converted_credit_balance,
+  converted_paid_to_date,
+  converted_total,
   number,
   id_number,
   vat_number,
@@ -112,6 +117,10 @@ ReportResult clientReport(
 
     bool skip = false;
     final List<ReportElement> row = [];
+
+    final exchangeRate = getExchangeRate(staticState.currencyMap,
+        fromCurrencyId: client.currencyId,
+        toCurrencyId: userCompany.company.currencyId);
 
     for (var column in columns) {
       dynamic value = '';
@@ -249,6 +258,18 @@ ReportResult clientReport(
         case ClientReportFields.paid_to_date:
           value = client.paidToDate;
           break;
+        case ClientReportFields.converted_total:
+          value = (client.balance + client.paidToDate) * exchangeRate;
+          break;
+        case ClientReportFields.converted_balance:
+          value = client.balance * exchangeRate;
+          break;
+        case ClientReportFields.converted_credit_balance:
+          value = client.creditBalance * exchangeRate;
+          break;
+        case ClientReportFields.converted_paid_to_date:
+          value = client.paidToDate * exchangeRate;
+          break;
         case ClientReportFields.is_active:
           value = client.isActive;
           break;
@@ -272,8 +293,20 @@ ReportResult clientReport(
       if (value.runtimeType == bool) {
         row.add(client.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
+        String currencyId = client.currencyId;
+        if ([
+          ClientReportFields.converted_balance,
+          ClientReportFields.converted_credit_balance,
+          ClientReportFields.converted_paid_to_date,
+          ClientReportFields.converted_total,
+        ].contains(column)) {
+          currencyId = userCompany.company.currencyId;
+        }
         row.add(client.getReportDouble(
-            value: value, currencyId: client.settings.currencyId));
+          value: value,
+          currencyId: currencyId,
+          exchangeRate: exchangeRate,
+        ));
       } else {
         row.add(client.getReportString(value: '$value'));
       }

@@ -66,7 +66,7 @@ class CompanyGatewayScreen extends StatelessWidget {
           )
         else if (state.uiState.settingsUIState.isFiltered &&
             !state.isSaving) ...[
-          FlatButton(
+          TextButton(
             child: Text(localization.reset,
                 style: TextStyle(color: store.state.headerTextColor)),
             onPressed: () {

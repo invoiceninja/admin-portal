@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/colors.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -28,6 +29,8 @@ class EntityHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final store = StoreProvider.of<AppState>(context);
+    final prefState = store.state.prefState;
 
     Widget _value1() {
       return Column(
@@ -111,7 +114,9 @@ class EntityHeader extends StatelessWidget {
                   if (!entity.isActive)
                     DecoratedBox(
                       decoration: BoxDecoration(
-                        color: entity.isArchived ? Colors.orange : kColorRed,
+                        color: entity.isArchived
+                            ? Colors.orange
+                            : prefState.colorThemeModel.colorDanger,
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
                       child: ConstrainedBox(

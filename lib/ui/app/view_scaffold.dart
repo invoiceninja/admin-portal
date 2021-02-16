@@ -83,7 +83,7 @@ class ViewScaffold extends StatelessWidget {
               ? []
               : [
                   if (isSettings && isDesktop(context))
-                    FlatButton(
+                    TextButton(
                         onPressed: () {
                           onBackPressed != null
                               ? onBackPressed()

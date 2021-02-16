@@ -370,3 +370,15 @@ class SaveProductDocumentFailure implements StopSaving {
 
   final Object error;
 }
+
+class UpdateProductTab implements PersistUI {
+  UpdateProductTab({this.tabIndex});
+
+  final int tabIndex;
+}
+
+class UpdateClientTab implements PersistUI {
+  UpdateClientTab({this.tabIndex});
+
+  final int tabIndex;
+}

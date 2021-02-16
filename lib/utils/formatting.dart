@@ -196,13 +196,14 @@ String formatNumber(
     formatted = formatter.format(value < 0 ? value * -1 : value);
   }
 
+  final prefix = value < 0 ? '-' : '';
+
   if (formatNumberType == FormatNumberType.percent) {
     return '$formatted%';
   } else if ((showCurrencyCode ?? company.settings.showCurrencyCode ?? false) ||
       currency.symbol.isEmpty) {
-    return '$formatted ${currency.code}';
+    return '$prefix$formatted ${currency.code}';
   } else {
-    final prefix = value < 0 ? '-' : '';
     if (swapCurrencySymbol) {
       return '$prefix$formatted ${currency.symbol.trim()}';
     } else {

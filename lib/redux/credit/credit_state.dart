@@ -58,6 +58,7 @@ abstract class CreditUIState extends Object
       listUIState: ListUIState(CreditFields.number, sortAscending: false),
       editing: InvoiceEntity(),
       selectedId: '',
+      tabIndex: 0,
     );
   }
 

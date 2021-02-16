@@ -964,6 +964,10 @@ abstract class SettingsEntity
   String get replyToEmail;
 
   @nullable
+  @BuiltValueField(wireName: 'reply_to_name')
+  String get replyToName;
+
+  @nullable
   @BuiltValueField(wireName: 'bcc_email')
   String get bccEmail;
 

@@ -29,7 +29,7 @@ class ErrorDialog extends StatelessWidget {
       content: error != null ? SelectableText(errorStr.toString()) : SizedBox(),
       actions: [
         if (clearErrorOnDismiss && !Config.DEMO_MODE)
-          FlatButton(
+          TextButton(
               child: Text(localization.logout.toUpperCase()),
               onPressed: () {
                 confirmCallback(
@@ -38,12 +38,12 @@ class ErrorDialog extends StatelessWidget {
                       store.dispatch(UserLogout(context));
                     });
               }),
-        FlatButton(
+        TextButton(
             child: Text(localization.copy.toUpperCase()),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: errorStr));
             }),
-        FlatButton(
+        TextButton(
             child: Text(localization.dismiss.toUpperCase()),
             onPressed: () {
               if (clearErrorOnDismiss) {

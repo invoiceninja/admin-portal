@@ -45,12 +45,11 @@ class EditScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final isEnabled = isMobile(context) ||
-        !state.uiState.isInSettings ||
-        state.uiState.isEditing ||
-        state.isLoading ||
-        state.isSaving ||
-        state.settingsUIState.isChanged;
+    final isEnabled = (isMobile(context) ||
+            !state.uiState.isInSettings ||
+            state.uiState.isEditing ||
+            state.settingsUIState.isChanged) &&
+        (!state.isLoading && !state.isSaving);
 
     return WillPopScope(
       onWillPop: () async {

@@ -59,6 +59,7 @@ abstract class ClientUIState extends Object
       editing: ClientEntity(),
       editingContact: ContactEntity(),
       saveCompleter: null,
+      tabIndex: 0,
     );
   }
 

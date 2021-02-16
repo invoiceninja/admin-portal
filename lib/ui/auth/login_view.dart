@@ -188,7 +188,7 @@ class _LoginState extends State<LoginView> {
               actions: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: FlatButton(
+                  child: TextButton(
                     child: Text(AppLocalization.of(context).close),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
@@ -225,7 +225,7 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitLoginForm() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = true;
     final viewModel = widget.viewModel;
 
     setState(() {
@@ -401,10 +401,6 @@ class _LoginState extends State<LoginView> {
                               DecoratedFormField(
                                 controller: _emailController,
                                 autocorrect: false,
-                                textInputAction:
-                                    _isFormComplete && !_createAccount
-                                        ? TextInputAction.done
-                                        : TextInputAction.next,
                                 label: localization.email,
                                 keyboardType: TextInputType.emailAddress,
                                 autovalidate: _autoValidate,
@@ -418,20 +414,13 @@ class _LoginState extends State<LoginView> {
                             if (_emailLogin && !_recoverPassword)
                               PasswordFormField(
                                 controller: _passwordController,
-                                textInputAction:
-                                    _isFormComplete && !_createAccount
-                                        ? TextInputAction.done
-                                        : TextInputAction.next,
-                                autoValidate: _autoValidate,
+                                autoValidate: false,
                                 newPassword: _createAccount,
                               ),
                             if (_isSelfHosted || viewModel.state.isDemo)
                               DecoratedFormField(
                                 controller: _urlController,
                                 autocorrect: false,
-                                textInputAction: _isFormComplete
-                                    ? TextInputAction.done
-                                    : TextInputAction.next,
                                 label: localization.url,
                                 validator: (val) =>
                                     val.isEmpty || val.trim().isEmpty
@@ -444,7 +433,6 @@ class _LoginState extends State<LoginView> {
                                 labelText:
                                     '${localization.secret} (${localization.optional})',
                                 controller: _secretController,
-                                textInputAction: TextInputAction.done,
                                 autoValidate: _autoValidate,
                               ),
                             if (_createAccount)
@@ -536,8 +524,8 @@ class _LoginState extends State<LoginView> {
                       Padding(
                         padding: EdgeInsets.only(top: 30, bottom: 10),
                         child: RoundedLoadingButton(
-                          height: 38,
-                          width: 210,
+                          height: 42,
+                          width: _createAccount ? 224 : 210,
                           controller: _buttonController,
                           color: convertHexStringToColor('#4285F4'),
                           onPressed: () => _createAccount
@@ -587,7 +575,7 @@ class _LoginState extends State<LoginView> {
                                     children: <Widget>[
                                       if (!_recoverPassword)
                                         Icon(MdiIcons.lock, size: 16),
-                                      FlatButton(
+                                      TextButton(
                                           child: Text(_recoverPassword
                                               ? localization.cancel
                                               : localization.recoverPassword),

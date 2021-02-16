@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -111,6 +112,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     final state = store.state;
     final localization = AppLocalization.of(context);
     final invoice = widget.viewModel.invoice;
+    final client = state.clientState.get(invoice.clientId);
 
     final pageSelector = _pageCount == 1
         ? <Widget>[]
@@ -200,6 +202,15 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       ),
     );
 
+    bool showEmail =
+        isDesktop(context) && _activityId == null && !invoice.isRecurring;
+
+    // TODO: remove this code
+    // hide email option on web to prevent dialog problem
+    if (kIsWeb && !client.hasEmailAddress) {
+      showEmail = false;
+    }
+
     return Scaffold(
         backgroundColor: Colors.grey,
         appBar: widget.showAppBar
@@ -219,10 +230,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                   ],
                 ),
                 actions: <Widget>[
-                  if (isDesktop(context) &&
-                      _activityId == null &&
-                      !invoice.isRecurring)
-                    FlatButton(
+                  if (showEmail)
+                    TextButton(
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {
@@ -230,11 +239,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                             EntityAction.emailEntityType(invoice.entityType));
                       },
                     ),
-                  FlatButton(
-                    child: Text(
-                      localization.download,
-                      style: TextStyle(color: state.headerTextColor),
-                    ),
+                  AppTextButton(
+                    isInHeader: true,
+                    label: localization.download,
                     onPressed: _response == null
                         ? null
                         : () async {
@@ -255,7 +262,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                           },
                   ),
                   if (isDesktop(context))
-                    FlatButton(
+                    TextButton(
                       child: Text(localization.close,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {

@@ -13,8 +13,18 @@ EntityUIState productUIReducer(ProductUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
+    ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
+
+final tabIndexReducer = combineReducers<int>([
+  TypedReducer<int, UpdateProductTab>((completer, action) {
+    return action.tabIndex;
+  }),
+  TypedReducer<int, PreviewEntity>((completer, action) {
+    return 0;
+  }),
+]);
 
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterProductDropdown>(filterProductDropdownReducer),
