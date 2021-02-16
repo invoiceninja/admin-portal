@@ -103,7 +103,7 @@ class QuoteRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/quotes/${entity.id}', credentials.token,
+        '${credentials.url}/quotes/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final InvoiceItemResponse invoiceResponse =

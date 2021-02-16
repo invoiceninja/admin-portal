@@ -83,7 +83,7 @@ class ProductRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/products/${entity.id}', credentials.token,
+        '${credentials.url}/products/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final ProductItemResponse productResponse =

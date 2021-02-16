@@ -230,7 +230,9 @@ class CreditListItem extends StatelessWidget {
                             style: TextStyle(
                               color: !credit.isSent
                                   ? textColor
-                                  : CreditStatusColors(state.prefState.colorThemeModel).colors[credit.statusId],
+                                  : CreditStatusColors(
+                                          state.prefState.colorThemeModel)
+                                      .colors[credit.statusId],
                             )),
                       ],
                     ),

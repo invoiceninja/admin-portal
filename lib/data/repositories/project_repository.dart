@@ -81,7 +81,7 @@ class ProjectRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/projects/${entity.id}', credentials.token,
+        '${credentials.url}/projects/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final ProjectItemResponse projectResponse =

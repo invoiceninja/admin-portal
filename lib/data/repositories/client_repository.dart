@@ -88,7 +88,7 @@ class ClientRepository {
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/clients/${entity.id}', credentials.token,
+        '${credentials.url}/clients/${entity.id}/upload', credentials.token,
         data: fields, multipartFile: multipartFile);
 
     final ClientItemResponse clientResponse =
