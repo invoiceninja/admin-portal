@@ -260,10 +260,6 @@ class InvoiceOverview extends StatelessWidget {
           ),
         );
       });
-
-      widgets.addAll([
-        ListDivider(),
-      ]);
     }
 
     if (creditMap.isNotEmpty) {

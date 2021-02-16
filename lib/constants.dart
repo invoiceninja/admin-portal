@@ -439,7 +439,7 @@ const String kDefaultDarkSelectedColor = '#253750';
 const String kDefaultDarkBorderColor = '#393A3C';
 const String kDefaultLightSelectedColorMenu = '#f2faff';
 const String kDefaultLightSelectedColor = '#e5f5ff';
-const String kDefaultLightBorderColor = '#E7EBEE';
+const String kDefaultLightBorderColor = '#dfdfdf';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupMonth = 'month';

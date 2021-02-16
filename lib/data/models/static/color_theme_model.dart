@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 
-import 'package:invoiceninja_flutter/utils/colors.dart';
-
 class ColorTheme {
   ColorTheme(
       {this.colorPrimary,
@@ -11,8 +9,8 @@ class ColorTheme {
       this.colorSuccess,
       this.colorWarning,
       this.colorDanger,
-      this.colorLightGray,
-      this.colorDarkGray});
+      this.colorLightGray = const Color(0xff888888),
+      this.colorDarkGray = const Color(0xff333333)});
 
   Color colorPrimary;
   Color colorSecondary;
@@ -32,8 +30,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff00B74A),
     colorWarning: const Color(0xffffA900),
     colorDanger: const Color(0xffF93154),
-    colorLightGray: const Color(0xff6C757D),
-    colorDarkGray: const Color(0xff262626),
   ),
   kColorThemeDark: ColorTheme(
     colorPrimary: const Color(0xff1266F1),
@@ -42,8 +38,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff407535),
     colorWarning: const Color(0xffdd5600),
     colorDanger: const Color(0xff8b3d40),
-    colorLightGray: const Color(0xff6C757D),
-    colorDarkGray: const Color(0xff262626),
   ),
   'cerulean': ColorTheme(
     colorPrimary: const Color(0xff2fa4e7),
@@ -52,8 +46,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff73a839),
     colorWarning: const Color(0xffdd5600),
     colorDanger: const Color(0xffc71c22),
-    colorLightGray: const Color(0xfff8f9fa),
-    colorDarkGray: const Color(0xff343a40),
   ),
   'cosmo': ColorTheme(
     colorPrimary: const Color(0xff2780e3),
@@ -62,8 +54,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff3fb618),
     colorWarning: const Color(0xffff7518),
     colorDanger: const Color(0xffff0039),
-    colorLightGray: const Color(0xfff8f9fa),
-    colorDarkGray: const Color(0xff373a3c),
   ),
   'cyborg': ColorTheme(
     colorPrimary: const Color(0xff2a9fd6),
@@ -72,8 +62,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff77b300),
     colorWarning: const Color(0xffff8800),
     colorDanger: const Color(0xffcc0000),
-    colorLightGray: const Color(0xff222222),
-    colorDarkGray: const Color(0xffadafae),
   ),
   'darkly': ColorTheme(
     colorPrimary: const Color(0xff375a7f),
@@ -82,8 +70,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff00bc8c),
     colorWarning: const Color(0xfff39c12),
     colorDanger: const Color(0xffe74c3c),
-    colorLightGray: const Color(0xffadb5bd),
-    colorDarkGray: const Color(0xff303030),
   ),
   'flatly': ColorTheme(
     colorPrimary: const Color(0xff2c3e50),
@@ -92,8 +78,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff18bc9c),
     colorWarning: const Color(0xfff39c12),
     colorDanger: const Color(0xffe74c3c),
-    colorLightGray: const Color(0xffecf0f1),
-    colorDarkGray: const Color(0xff7b8a8b),
   ),
   'journal': ColorTheme(
     colorPrimary: const Color(0xffeb6864),
@@ -102,8 +86,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff22b24c),
     colorWarning: const Color(0xfff5e625),
     colorDanger: const Color(0xfff57a00),
-    colorLightGray: const Color(0xfff8f9fa),
-    colorDarkGray: const Color(0xff222222),
   ),
   'litera': ColorTheme(
     colorPrimary: const Color(0xff4582ec),
@@ -112,8 +94,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff02b875),
     colorWarning: const Color(0xfff0ad4e),
     colorDanger: const Color(0xffd9534f),
-    colorLightGray: const Color(0xfff8f9fa),
-    colorDarkGray: const Color(0xff343a40),
   ),
   'lumen': ColorTheme(
     colorPrimary: const Color(0xff158cba),
@@ -122,8 +102,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff28b62c),
     colorWarning: const Color(0xffff851b),
     colorDanger: const Color(0xffff4136),
-    colorLightGray: const Color(0xfff6f6f6),
-    colorDarkGray: const Color(0xff555555),
   ),
   'lux': ColorTheme(
     colorPrimary: const Color(0xff1a1a1a),
@@ -132,8 +110,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff4bbf73),
     colorWarning: const Color(0xfff0ad4e),
     colorDanger: const Color(0xffd9534f),
-    colorLightGray: const Color(0xff888888),
-    colorDarkGray: const Color(0xff343a40),
   ),
   'materia': ColorTheme(
     colorPrimary: const Color(0xff2196f3),
@@ -142,8 +118,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff4caf50),
     colorWarning: const Color(0xffff9800),
     colorDanger: const Color(0xffe51c23),
-    colorLightGray: const Color(0xff888888),
-    colorDarkGray: const Color(0xff222222),
   ),
   'minty': ColorTheme(
     colorPrimary: const Color(0xff78c2ad),
@@ -152,8 +126,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff56cc9d),
     colorWarning: const Color(0xffffce67),
     colorDanger: const Color(0xffff7851),
-    colorLightGray: const Color(0xfff8f9fa),
-    colorDarkGray: const Color(0xff343a40),
   ),
   'pulse': ColorTheme(
     colorPrimary: const Color(0xff593196),
@@ -162,8 +134,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff13b955),
     colorWarning: const Color(0xffefa31d),
     colorDanger: const Color(0xfffc3939),
-    colorLightGray: const Color(0xfff9f8fc),
-    colorDarkGray: const Color(0xff17141f),
   ),
   'sandstone': ColorTheme(
     colorPrimary: const Color(0xff325d88),
@@ -172,8 +142,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff93c54b),
     colorWarning: const Color(0xfff47c3c),
     colorDanger: const Color(0xffd9534f),
-    colorLightGray: const Color(0xfff8f5f0),
-    colorDarkGray: const Color(0xff3e3f3a),
   ),
   'simplex': ColorTheme(
     colorPrimary: const Color(0xffd9230f),
@@ -182,8 +150,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff469408),
     colorWarning: const Color(0xffd9831f),
     colorDanger: const Color(0xff9b479f),
-    colorLightGray: const Color(0xff888888),
-    colorDarkGray: const Color(0xff373a3c),
   ),
   'sketchy': ColorTheme(
     colorPrimary: const Color(0xff333333),
@@ -192,8 +158,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff28a745),
     colorWarning: const Color(0xffffc107),
     colorDanger: const Color(0xffdc3545),
-    colorLightGray: const Color(0xff888888),
-    colorDarkGray: const Color(0xff555555),
   ),
   'slate': ColorTheme(
     colorPrimary: const Color(0xff3a3f44),
@@ -202,8 +166,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff62c462),
     colorWarning: const Color(0xfff89406),
     colorDanger: const Color(0xffee5f5b),
-    colorLightGray: const Color(0xffe9ecef),
-    colorDarkGray: const Color(0xff272b30),
   ),
   'solar': ColorTheme(
     colorPrimary: const Color(0xffb58900),
@@ -212,8 +174,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff2aa198),
     colorWarning: const Color(0xffcb4b16),
     colorDanger: const Color(0xffd33682),
-    colorLightGray: const Color(0xfffdf6e3),
-    colorDarkGray: const Color(0xff073642),
   ),
   'spacelab': ColorTheme(
     colorPrimary: const Color(0xff446e9b),
@@ -222,8 +182,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff3cb521),
     colorWarning: const Color(0xffd47500),
     colorDanger: const Color(0xffcd0200),
-    colorLightGray: const Color(0xff888888),
-    colorDarkGray: const Color(0xff333333),
   ),
   'superhero': ColorTheme(
     colorPrimary: const Color(0xffdf691a),
@@ -232,8 +190,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff5cb85c),
     colorWarning: const Color(0xfff0ad4e),
     colorDanger: const Color(0xffd9534f),
-    colorLightGray: const Color(0xff2b3e50),
-    colorDarkGray: const Color(0xff4e5d6c),
   ),
   'united': ColorTheme(
     colorPrimary: const Color(0xffe95420),
@@ -242,8 +198,6 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff38b44a),
     colorWarning: const Color(0xffefb73e),
     colorDanger: const Color(0xffdf382c),
-    colorLightGray: const Color(0xffe9ecef),
-    colorDarkGray: const Color(0xff772953),
   ),
   'yeti': ColorTheme(
     colorPrimary: const Color(0xff008cba),
@@ -252,7 +206,5 @@ Map<String, ColorTheme> colorThemesMap = {
     colorSuccess: const Color(0xff43ac6a),
     colorWarning: const Color(0xffe99002),
     colorDanger: const Color(0xfff04124),
-    colorLightGray: const Color(0xff888888),
-    colorDarkGray: const Color(0xff222222),
   ),
 };

@@ -141,6 +141,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       : MdiIcons.themeLightDark),
                   activeColor: Theme.of(context).accentColor,
                 ),
+                SizedBox(height: 8),
                 AppDropdownButton<String>(
                   showUseDefault: true,
                   labelText: localization.colorTheme,
