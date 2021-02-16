@@ -94,7 +94,7 @@ class DeviceSettingsVM {
         store.dispatch(UpdateUserPreferences(historyMode: value));
       },
       onColorThemeChanged: (context, value) async {
-        if(store.state.prefState.colorTheme != value) {
+        if (store.state.prefState.colorTheme != value) {
           store.dispatch(UpdateUserPreferences(colorTheme: value));
         }
       },
