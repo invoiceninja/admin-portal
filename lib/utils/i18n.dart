@@ -72,7 +72,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoicely': 'Invoicely',
       'waveaccounting': 'Wave Accounting',
       'zoho': 'Zoho',
-      'accounting': 'accounting',
+      'accounting': 'Accounting',
       'required_files_missing': 'Please provide all CSVs.',
       'import_type': 'Import Type',
       'draft_mode': 'Draft Mode',
