@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
@@ -103,9 +104,7 @@ class InvoiceItemListTile extends StatelessWidget {
               ),
               trailing: onTap != null ? Icon(Icons.navigate_next) : null,
             ),
-            Divider(
-              height: 1.0,
-            ),
+            ListDivider(),
           ],
         ));
   }

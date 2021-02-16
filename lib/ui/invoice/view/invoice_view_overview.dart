@@ -308,10 +308,6 @@ class InvoiceOverview extends StatelessWidget {
           ),
         ]);
       });
-
-      widgets.addAll([
-        ListDivider(),
-      ]);
     }
 
     Widget surchargeRow(String label, double amount) {
