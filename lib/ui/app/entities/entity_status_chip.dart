@@ -29,6 +29,7 @@ class EntityStatusChip extends StatelessWidget {
 
     switch (entity.entityType) {
       case EntityType.payment:
+        print('## PAYMENT');
         final payment = entity as PaymentEntity;
         label = kPaymentStatuses[payment.calculatedStatusId];
         color = PaymentStatusColors(state.prefState.colorThemeModel)
@@ -91,8 +92,9 @@ class EntityStatusChip extends StatelessWidget {
         return SizedBox();
         break;
     }
-
+    print('## label: $label');
     label = localization.lookup(label) ?? '';
+
     if (label.isEmpty) {
       label = localization.logged;
     }

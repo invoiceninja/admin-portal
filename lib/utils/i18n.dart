@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'partially_unapplied': 'Partially Unapplied',
       'select_a_gmail_user': 'Please select a user authenticated with Gmail',
       'list_long_press': 'List Long Press',
       'show_actions': 'Show Actions',
@@ -1400,6 +1401,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_status_5': 'Partially Refunded',
       'payment_status_6': 'Refunded',
       'payment_status_-1': 'Unapplied',
+      'payment_status_-2': 'Partially Unapplied',
       'net': 'Net',
       'client_portal': 'Client Portal',
       'show_tasks': 'Show tasks',
@@ -53956,6 +53958,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get selectAGmailUser =>
       _localizedValues[localeCode]['select_a_gmail_user'] ?? '';
 
+  String get partiallyUnapplied =>
+      _localizedValues[localeCode]['partiallyUnapplied'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

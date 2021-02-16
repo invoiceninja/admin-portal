@@ -215,7 +215,9 @@ abstract class PaymentEntity extends Object
 
   String get calculatedStatusId {
     if (applied < amount) {
-      return kPaymentStatusUnapplied;
+      return applied == 0
+          ? kPaymentStatusUnapplied
+          : kPaymentStatusPartiallyUnapplied;
     }
 
     return statusId;
