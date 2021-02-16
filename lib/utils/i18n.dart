@@ -72,6 +72,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoicely': 'Invoicely',
       'waveaccounting': 'Wave Accounting',
       'zoho': 'Zoho',
+      'accounting': 'accounting',
+      'required_files_missing': 'Please provide all CSVs.',
       'import_type': 'Import Type',
       'draft_mode': 'Draft Mode',
       'draft_mode_help': 'Preview updates faster but is less accurate',
@@ -51128,6 +51130,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get selectFile => _localizedValues[localeCode]['select_file'] ?? '';
 
   String get uploadFile => _localizedValues[localeCode]['upload_file'] ?? '';
+
+  String get requiredFilesMissing => _localizedValues[localeCode]['required_files_missing'] ?? '';
 
   String get download => _localizedValues[localeCode]['download'] ?? '';
 

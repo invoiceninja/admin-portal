@@ -124,6 +124,18 @@ class _FileImportState extends State<_FileImport> {
   bool _isLoading = false;
 
   void uploadFile() {
+    final localization = AppLocalization.of(context);
+
+    if (widget.importType != ImportType.csv) {
+      for (MapEntry<String,String> uploadPart in widget.importType.uploadParts.entries) {
+        if (!_multipartFiles.containsKey(uploadPart.key)) {
+          showErrorDialog(
+              context: context, message: localization.requiredFilesMissing);
+          return;
+        }
+      }
+    }
+
     final webClient = WebClient();
     final state = StoreProvider
         .of<AppState>(context)
@@ -143,11 +155,18 @@ class _FileImportState extends State<_FileImport> {
         'import_type': widget.importType.toString(),
       },
     ).then((dynamic result) {
-      setState(() => _isLoading = false);
-      final response =
-      serializers.deserializeWith(PreImportResponse.serializer, result);
+      setState(() => {
+        _isLoading = false,
+        _multipartFiles.clear()
+      });
 
-      widget.onUploaded(response);
+      if (widget.importType != ImportType.csv) {
+        showToast(localization.startedImport);
+      } else {
+        final response =
+        serializers.deserializeWith(PreImportResponse.serializer, result);
+        widget.onUploaded(response);
+      }
     }).catchError((dynamic error) {
       setState(() => _isLoading = false);
       showErrorDialog(context: context, message: '$error');
@@ -185,20 +204,20 @@ class _FileImportState extends State<_FileImport> {
       )
     ];
 
-    for (String uploadPart in widget.importType.uploadParts) {
-      final multipartFile = _multipartFiles.containsKey(uploadPart)
-          ? _multipartFiles[uploadPart]
+    for (MapEntry<String,String> uploadPart in widget.importType.uploadParts.entries) {
+      final multipartFile = _multipartFiles.containsKey(uploadPart.key)
+          ? _multipartFiles[uploadPart.key]
           : null;
 
       final field = DecoratedFormField(
           enabled: false,
-          key: ValueKey(uploadPart +
+          key: ValueKey(uploadPart.key +
               (multipartFile != null ? multipartFile.filename : '')),
-          label: localization.lookup(uploadPart),
-          initialValue: !_multipartFiles.containsKey(uploadPart)
+          label: localization.lookup(uploadPart.value),
+          initialValue: !_multipartFiles.containsKey(uploadPart.key)
               ? localization.noFileSelected
-              : '${_multipartFiles[uploadPart].filename} • ${formatSize(
-              _multipartFiles[uploadPart].length)}');
+              : '${_multipartFiles[uploadPart.key].filename} • ${formatSize(
+              _multipartFiles[uploadPart.key].length)}');
 
       children.add(Row(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -210,14 +229,14 @@ class _FileImportState extends State<_FileImport> {
           child: Text(localization.selectFile),
           onPressed: () async {
             final multipartFile = await pickFile(
-              fileIndex: 'files[' + uploadPart + ']',
+              fileIndex: 'files[' + uploadPart.key + ']',
               fileType: FileType.custom,
               allowedExtensions: ['csv'],
             );
 
             if (multipartFile != null) {
               setState(() {
-                _multipartFiles[uploadPart] = multipartFile;
+                _multipartFiles[uploadPart.key] = multipartFile;
               });
             }
           },
