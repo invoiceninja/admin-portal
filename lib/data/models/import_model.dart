@@ -107,24 +107,39 @@ class ImportType extends EnumClass {
 
   static BuiltSet<ImportType> get values => _$typeValues;
 
-  List<String> get uploadParts {
+  Map<String, String> get uploadParts {
     switch (this) {
       case ImportType.csv:
-        return [
-          EntityType.client.toString(),
-          EntityType.invoice.toString(),
-          EntityType.payment.toString(),
-          EntityType.product.toString(),
-          EntityType.vendor.toString(),
-          EntityType.expense.toString(),
-        ];
+        return {
+          EntityType.client.toString(): 'clients',
+          EntityType.invoice.toString(): 'invoices',
+          EntityType.payment.toString(): 'payments',
+          EntityType.product.toString(): 'payments',
+          EntityType.vendor.toString(): 'vendors',
+          EntityType.expense.toString(): 'expenses',
+        };
       case ImportType.freshbooks:
-        return [
-          EntityType.client.toString(),
-          EntityType.payment.toString(),
-        ];
+      case ImportType.invoicely:
+        return {
+          EntityType.client.toString(): 'clients',
+          EntityType.invoice.toString(): 'invoices',
+        };
+      case ImportType.waveaccounting:
+        return {
+          EntityType.client.toString(): 'clients',
+          EntityType.invoice.toString(): 'accounting',
+        };
+      case ImportType.zoho:
+        return {
+          EntityType.client.toString(): 'contacts',
+          EntityType.invoice.toString(): 'invoices',
+        };
+      case ImportType.invoice2go:
+        return {
+          EntityType.invoice.toString(): 'invoices',
+        };
       default:
-        return [];
+        return {};
     }
   }
 
