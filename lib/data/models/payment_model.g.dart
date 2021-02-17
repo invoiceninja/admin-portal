@@ -49,7 +49,7 @@ class _$PaymentListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -97,7 +97,7 @@ class _$PaymentItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -212,52 +212,61 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isForInvoice != null) {
+    Object value;
+    value = object.isForInvoice;
+    if (value != null) {
       result
         ..add('isForInvoice')
-        ..add(serializers.serialize(object.isForInvoice,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isApplying != null) {
+    value = object.isApplying;
+    if (value != null) {
       result
         ..add('isApplying')
-        ..add(serializers.serialize(object.isApplying,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.sendEmail != null) {
+    value = object.sendEmail;
+    if (value != null) {
       result
         ..add('sendEmail')
-        ..add(serializers.serialize(object.sendEmail,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.gatewayRefund != null) {
+    value = object.gatewayRefund;
+    if (value != null) {
       result
         ..add('gatewayRefund')
-        ..add(serializers.serialize(object.gatewayRefund,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isChanged != null) {
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -273,7 +282,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'amount':
           result.amount = serializers.deserialize(value,
@@ -457,28 +466,31 @@ class _$PaymentableEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.createdAt != null) {
+    Object value;
+    value = object.createdAt;
+    if (value != null) {
       result
         ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.updatedAt != null) {
+    value = object.updatedAt;
+    if (value != null) {
       result
         ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.invoiceId != null) {
+    value = object.invoiceId;
+    if (value != null) {
       result
         ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.creditId != null) {
+    value = object.creditId;
+    if (value != null) {
       result
         ..add('credit_id')
-        ..add(serializers.serialize(object.creditId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -494,7 +506,7 @@ class _$PaymentableEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -536,9 +548,7 @@ class _$PaymentListResponse extends PaymentListResponse {
       (new PaymentListResponseBuilder()..update(updates)).build();
 
   _$PaymentListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('PaymentListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'PaymentListResponse', 'data');
   }
 
   @override
@@ -582,8 +592,9 @@ class PaymentListResponseBuilder
   PaymentListResponseBuilder();
 
   PaymentListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -591,9 +602,7 @@ class PaymentListResponseBuilder
 
   @override
   void replace(PaymentListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentListResponse;
   }
 
@@ -632,9 +641,7 @@ class _$PaymentItemResponse extends PaymentItemResponse {
       (new PaymentItemResponseBuilder()..update(updates)).build();
 
   _$PaymentItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('PaymentItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'PaymentItemResponse', 'data');
   }
 
   @override
@@ -677,8 +684,9 @@ class PaymentItemResponseBuilder
   PaymentItemResponseBuilder();
 
   PaymentItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -686,9 +694,7 @@ class PaymentItemResponseBuilder
 
   @override
   void replace(PaymentItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentItemResponse;
   }
 
@@ -839,97 +845,59 @@ class _$PaymentEntity extends PaymentEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (amount == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'amount');
-    }
-    if (applied == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'applied');
-    }
-    if (refunded == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'refunded');
-    }
-    if (number == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'number');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'clientId');
-    }
-    if (statusId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'statusId');
-    }
-    if (transactionReference == null) {
-      throw new BuiltValueNullFieldError(
-          'PaymentEntity', 'transactionReference');
-    }
-    if (date == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'date');
-    }
-    if (typeId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'typeId');
-    }
-    if (privateNotes == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'privateNotes');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'customValue4');
-    }
-    if (exchangeRate == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeRate');
-    }
-    if (exchangeCurrencyId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeCurrencyId');
-    }
-    if (isManual == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'isManual');
-    }
-    if (projectId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'projectId');
-    }
-    if (vendorId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'vendorId');
-    }
-    if (invitationId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'invitationId');
-    }
-    if (clientContactId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'clientContactId');
-    }
-    if (companyGatewayId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'companyGatewayId');
-    }
-    if (currencyId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'currencyId');
-    }
-    if (paymentables == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'paymentables');
-    }
-    if (invoices == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'invoices');
-    }
-    if (credits == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'credits');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(amount, 'PaymentEntity', 'amount');
+    BuiltValueNullFieldError.checkNotNull(applied, 'PaymentEntity', 'applied');
+    BuiltValueNullFieldError.checkNotNull(
+        refunded, 'PaymentEntity', 'refunded');
+    BuiltValueNullFieldError.checkNotNull(number, 'PaymentEntity', 'number');
+    BuiltValueNullFieldError.checkNotNull(
+        clientId, 'PaymentEntity', 'clientId');
+    BuiltValueNullFieldError.checkNotNull(
+        statusId, 'PaymentEntity', 'statusId');
+    BuiltValueNullFieldError.checkNotNull(
+        transactionReference, 'PaymentEntity', 'transactionReference');
+    BuiltValueNullFieldError.checkNotNull(date, 'PaymentEntity', 'date');
+    BuiltValueNullFieldError.checkNotNull(typeId, 'PaymentEntity', 'typeId');
+    BuiltValueNullFieldError.checkNotNull(
+        privateNotes, 'PaymentEntity', 'privateNotes');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'PaymentEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'PaymentEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'PaymentEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'PaymentEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(
+        exchangeRate, 'PaymentEntity', 'exchangeRate');
+    BuiltValueNullFieldError.checkNotNull(
+        exchangeCurrencyId, 'PaymentEntity', 'exchangeCurrencyId');
+    BuiltValueNullFieldError.checkNotNull(
+        isManual, 'PaymentEntity', 'isManual');
+    BuiltValueNullFieldError.checkNotNull(
+        projectId, 'PaymentEntity', 'projectId');
+    BuiltValueNullFieldError.checkNotNull(
+        vendorId, 'PaymentEntity', 'vendorId');
+    BuiltValueNullFieldError.checkNotNull(
+        invitationId, 'PaymentEntity', 'invitationId');
+    BuiltValueNullFieldError.checkNotNull(
+        clientContactId, 'PaymentEntity', 'clientContactId');
+    BuiltValueNullFieldError.checkNotNull(
+        companyGatewayId, 'PaymentEntity', 'companyGatewayId');
+    BuiltValueNullFieldError.checkNotNull(
+        currencyId, 'PaymentEntity', 'currencyId');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentables, 'PaymentEntity', 'paymentables');
+    BuiltValueNullFieldError.checkNotNull(
+        invoices, 'PaymentEntity', 'invoices');
+    BuiltValueNullFieldError.checkNotNull(credits, 'PaymentEntity', 'credits');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'PaymentEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'PaymentEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'PaymentEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'PaymentEntity', 'id');
   }
 
   @override
@@ -1243,45 +1211,46 @@ class PaymentEntityBuilder
   PaymentEntityBuilder();
 
   PaymentEntityBuilder get _$this {
-    if (_$v != null) {
-      _amount = _$v.amount;
-      _applied = _$v.applied;
-      _refunded = _$v.refunded;
-      _number = _$v.number;
-      _clientId = _$v.clientId;
-      _statusId = _$v.statusId;
-      _transactionReference = _$v.transactionReference;
-      _date = _$v.date;
-      _typeId = _$v.typeId;
-      _privateNotes = _$v.privateNotes;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _exchangeRate = _$v.exchangeRate;
-      _exchangeCurrencyId = _$v.exchangeCurrencyId;
-      _isManual = _$v.isManual;
-      _projectId = _$v.projectId;
-      _vendorId = _$v.vendorId;
-      _invitationId = _$v.invitationId;
-      _clientContactId = _$v.clientContactId;
-      _companyGatewayId = _$v.companyGatewayId;
-      _currencyId = _$v.currencyId;
-      _isForInvoice = _$v.isForInvoice;
-      _isApplying = _$v.isApplying;
-      _sendEmail = _$v.sendEmail;
-      _gatewayRefund = _$v.gatewayRefund;
-      _paymentables = _$v.paymentables?.toBuilder();
-      _invoices = _$v.invoices?.toBuilder();
-      _credits = _$v.credits?.toBuilder();
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _amount = $v.amount;
+      _applied = $v.applied;
+      _refunded = $v.refunded;
+      _number = $v.number;
+      _clientId = $v.clientId;
+      _statusId = $v.statusId;
+      _transactionReference = $v.transactionReference;
+      _date = $v.date;
+      _typeId = $v.typeId;
+      _privateNotes = $v.privateNotes;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _exchangeRate = $v.exchangeRate;
+      _exchangeCurrencyId = $v.exchangeCurrencyId;
+      _isManual = $v.isManual;
+      _projectId = $v.projectId;
+      _vendorId = $v.vendorId;
+      _invitationId = $v.invitationId;
+      _clientContactId = $v.clientContactId;
+      _companyGatewayId = $v.companyGatewayId;
+      _currencyId = $v.currencyId;
+      _isForInvoice = $v.isForInvoice;
+      _isApplying = $v.isApplying;
+      _sendEmail = $v.sendEmail;
+      _gatewayRefund = $v.gatewayRefund;
+      _paymentables = $v.paymentables.toBuilder();
+      _invoices = $v.invoices.toBuilder();
+      _credits = $v.credits.toBuilder();
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1289,9 +1258,7 @@ class PaymentEntityBuilder
 
   @override
   void replace(PaymentEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentEntity;
   }
 
@@ -1306,29 +1273,38 @@ class PaymentEntityBuilder
     try {
       _$result = _$v ??
           new _$PaymentEntity._(
-              amount: amount,
-              applied: applied,
-              refunded: refunded,
-              number: number,
-              clientId: clientId,
-              statusId: statusId,
-              transactionReference: transactionReference,
-              date: date,
-              typeId: typeId,
-              privateNotes: privateNotes,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
-              exchangeRate: exchangeRate,
-              exchangeCurrencyId: exchangeCurrencyId,
-              isManual: isManual,
-              projectId: projectId,
-              vendorId: vendorId,
-              invitationId: invitationId,
-              clientContactId: clientContactId,
-              companyGatewayId: companyGatewayId,
-              currencyId: currencyId,
+              amount: BuiltValueNullFieldError.checkNotNull(
+                  amount, 'PaymentEntity', 'amount'),
+              applied: BuiltValueNullFieldError.checkNotNull(
+                  applied, 'PaymentEntity', 'applied'),
+              refunded: BuiltValueNullFieldError.checkNotNull(
+                  refunded, 'PaymentEntity', 'refunded'),
+              number: BuiltValueNullFieldError.checkNotNull(
+                  number, 'PaymentEntity', 'number'),
+              clientId: BuiltValueNullFieldError.checkNotNull(
+                  clientId, 'PaymentEntity', 'clientId'),
+              statusId: BuiltValueNullFieldError.checkNotNull(
+                  statusId, 'PaymentEntity', 'statusId'),
+              transactionReference: BuiltValueNullFieldError.checkNotNull(
+                  transactionReference, 'PaymentEntity', 'transactionReference'),
+              date: BuiltValueNullFieldError.checkNotNull(
+                  date, 'PaymentEntity', 'date'),
+              typeId: BuiltValueNullFieldError.checkNotNull(
+                  typeId, 'PaymentEntity', 'typeId'),
+              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, 'PaymentEntity', 'privateNotes'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'PaymentEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'PaymentEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'PaymentEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'PaymentEntity', 'customValue4'),
+              exchangeRate: BuiltValueNullFieldError.checkNotNull(exchangeRate, 'PaymentEntity', 'exchangeRate'),
+              exchangeCurrencyId: BuiltValueNullFieldError.checkNotNull(exchangeCurrencyId, 'PaymentEntity', 'exchangeCurrencyId'),
+              isManual: BuiltValueNullFieldError.checkNotNull(isManual, 'PaymentEntity', 'isManual'),
+              projectId: BuiltValueNullFieldError.checkNotNull(projectId, 'PaymentEntity', 'projectId'),
+              vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, 'PaymentEntity', 'vendorId'),
+              invitationId: BuiltValueNullFieldError.checkNotNull(invitationId, 'PaymentEntity', 'invitationId'),
+              clientContactId: BuiltValueNullFieldError.checkNotNull(clientContactId, 'PaymentEntity', 'clientContactId'),
+              companyGatewayId: BuiltValueNullFieldError.checkNotNull(companyGatewayId, 'PaymentEntity', 'companyGatewayId'),
+              currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'PaymentEntity', 'currencyId'),
               isForInvoice: isForInvoice,
               isApplying: isApplying,
               sendEmail: sendEmail,
@@ -1337,13 +1313,13 @@ class PaymentEntityBuilder
               invoices: invoices.build(),
               credits: credits.build(),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'PaymentEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'PaymentEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'PaymentEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'PaymentEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1390,12 +1366,9 @@ class _$PaymentableEntity extends PaymentableEntity {
       this.amount,
       this.id})
       : super._() {
-    if (amount == null) {
-      throw new BuiltValueNullFieldError('PaymentableEntity', 'amount');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('PaymentableEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        amount, 'PaymentableEntity', 'amount');
+    BuiltValueNullFieldError.checkNotNull(id, 'PaymentableEntity', 'id');
   }
 
   @override
@@ -1475,13 +1448,14 @@ class PaymentableEntityBuilder
   PaymentableEntityBuilder();
 
   PaymentableEntityBuilder get _$this {
-    if (_$v != null) {
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _invoiceId = _$v.invoiceId;
-      _creditId = _$v.creditId;
-      _amount = _$v.amount;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _invoiceId = $v.invoiceId;
+      _creditId = $v.creditId;
+      _amount = $v.amount;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1489,9 +1463,7 @@ class PaymentableEntityBuilder
 
   @override
   void replace(PaymentableEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentableEntity;
   }
 
@@ -1508,8 +1480,10 @@ class PaymentableEntityBuilder
             updatedAt: updatedAt,
             invoiceId: invoiceId,
             creditId: creditId,
-            amount: amount,
-            id: id);
+            amount: BuiltValueNullFieldError.checkNotNull(
+                amount, 'PaymentableEntity', 'amount'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'PaymentableEntity', 'id'));
     replace(_$result);
     return _$result;
   }
