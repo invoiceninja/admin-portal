@@ -55,6 +55,7 @@ class WebClient {
     String token, {
     dynamic data,
     MultipartFile multipartFile,
+    List<MultipartFile> multipartFiles,
     String secret,
     String password,
     bool rawResponse = false,
@@ -74,7 +75,15 @@ class WebClient {
     http.Response response;
 
     if (multipartFile != null) {
-      response = await _uploadFile(url, token, multipartFile, data: data);
+      if (multipartFiles == null) {
+        multipartFiles = [multipartFile];
+      } else {
+        multipartFiles.add(multipartFile);
+      }
+    }
+
+    if (multipartFiles != null) {
+      response = await _uploadFiles(url, token, multipartFiles, data: data);
     } else {
       response = await http.Client()
           .post(url,
@@ -116,7 +125,7 @@ class WebClient {
     http.Response response;
 
     if (multipartFile != null) {
-      response = await _uploadFile(url, token, multipartFile,
+      response = await _uploadFiles(url, token, [multipartFile],
           fileIndex: fileIndex, data: data, method: 'PUT');
     } else {
       response = await http.Client().put(
@@ -236,13 +245,13 @@ String _parseError(int code, String response) {
   return '$code: $message';
 }
 
-Future<http.Response> _uploadFile(
-    String url, String token, MultipartFile multipartFile,
+Future<http.Response> _uploadFiles(
+    String url, String token, List<MultipartFile> multipartFiles,
     {String method = 'POST', String fileIndex = 'file', dynamic data}) async {
   final request = http.MultipartRequest(method, Uri.parse(url))
     ..fields.addAll(data ?? {})
     ..headers.addAll(_getHeaders(url, token))
-    ..files.add(multipartFile);
+    ..files.addAll(multipartFiles);
 
   return await http.Response.fromStream(await request.send())
       .timeout(const Duration(minutes: 10));
