@@ -38,7 +38,7 @@ class ImportExport extends StatefulWidget {
 
 class _ImportExportState extends State<ImportExport> {
   static final GlobalKey<FormState> _formKey =
-  GlobalKey<FormState>(debugLabel: '_importExport');
+      GlobalKey<FormState>(debugLabel: '_importExport');
   FocusScopeNode _focusNode;
   bool autoValidate = false;
   PreImportResponse _response;
@@ -75,8 +75,7 @@ class _ImportExportState extends State<ImportExport> {
             if (_response == null)
               _FileImport(
                 importType: _importType,
-                onUploaded: (response) =>
-                {
+                onUploaded: (response) => {
                   if (_importType == ImportType.csv)
                     {
                       setState(() => _response = response),
@@ -127,6 +126,7 @@ class _FileImportState extends State<_FileImport> {
     final localization = AppLocalization.of(context);
 
     if (widget.importType != ImportType.csv) {
+      /*
       for (MapEntry<String,String> uploadPart in widget.importType.uploadParts.entries) {
         if (!_multipartFiles.containsKey(uploadPart.key)) {
           showErrorDialog(
@@ -134,12 +134,11 @@ class _FileImportState extends State<_FileImport> {
           return;
         }
       }
+      */
     }
 
     final webClient = WebClient();
-    final state = StoreProvider
-        .of<AppState>(context)
-        .state;
+    final state = StoreProvider.of<AppState>(context).state;
     final credentials = state.credentials;
     final url = widget.importType == ImportType.csv
         ? '${credentials.url}/preimport'
@@ -155,16 +154,13 @@ class _FileImportState extends State<_FileImport> {
         'import_type': widget.importType.toString(),
       },
     ).then((dynamic result) {
-      setState(() => {
-        _isLoading = false,
-        _multipartFiles.clear()
-      });
+      setState(() => {_isLoading = false, _multipartFiles.clear()});
 
       if (widget.importType != ImportType.csv) {
         showToast(localization.startedImport);
       } else {
         final response =
-        serializers.deserializeWith(PreImportResponse.serializer, result);
+            serializers.deserializeWith(PreImportResponse.serializer, result);
         widget.onUploaded(response);
       }
     }).catchError((dynamic error) {
@@ -195,8 +191,7 @@ class _FileImportState extends State<_FileImport> {
                 ImportType.waveaccounting,
                 ImportType.zoho,
               ]
-                  .map((importType) =>
-                  DropdownMenuItem<ImportType>(
+                  .map((importType) => DropdownMenuItem<ImportType>(
                       value: importType,
                       child: Text(localization.lookup('$importType'))))
                   .toList()),
@@ -204,6 +199,7 @@ class _FileImportState extends State<_FileImport> {
       )
     ];
 
+    /*
     for (MapEntry<String,String> uploadPart in widget.importType.uploadParts.entries) {
       final multipartFile = _multipartFiles.containsKey(uploadPart.key)
           ? _multipartFiles[uploadPart.key]
@@ -243,6 +239,8 @@ class _FileImportState extends State<_FileImport> {
         ),
       ]));
     }
+
+  */
 
     children.add(SizedBox(height: 20));
 
@@ -291,8 +289,8 @@ class __FileMapperState extends State<_FileMapper> {
     final localization = AppLocalization.of(context);
     final response = widget.response;
 
-    for (MapEntry<String, PreImportResponseEntityDetails> entry in response
-        .mappings.entries) {
+    for (MapEntry<String, PreImportResponseEntityDetails> entry
+        in response.mappings.entries) {
       final fields = entry.value.fields1;
       if (!_mapping.containsKey(entry.key)) {
         _mapping[entry.key] = <int, String>{};
@@ -301,9 +299,7 @@ class __FileMapperState extends State<_FileMapper> {
       for (var i = 0; i < fields.length; i++) {
         final field = fields[i];
         for (var availableField in entry.value.available) {
-          final possible = availableField
-              .split('.')
-              .last;
+          final possible = availableField.split('.').last;
           final spaceCase = possible.replaceAll('_', ' ');
           final translated = localization.lookup(possible);
 
@@ -322,20 +318,15 @@ class __FileMapperState extends State<_FileMapper> {
 
     final List<Widget> children = [
       SwitchListTile(
-        activeColor: Theme
-            .of(context)
-            .accentColor,
-        title: Text(AppLocalization
-            .of(context)
-            .firstRowAsColumnNames),
+        activeColor: Theme.of(context).accentColor,
+        title: Text(AppLocalization.of(context).firstRowAsColumnNames),
         value: _useFirstRowAsHeaders,
-        onChanged: (value) =>
-            setState(() => _useFirstRowAsHeaders = value),
+        onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),
       ),
     ];
 
-    for (MapEntry<String, PreImportResponseEntityDetails> entry in response
-        .mappings.entries) {
+    for (MapEntry<String, PreImportResponseEntityDetails> entry
+        in response.mappings.entries) {
       children.addAll([
         SizedBox(height: 25),
         Text(
@@ -365,7 +356,7 @@ class __FileMapperState extends State<_FileMapper> {
           _FieldMapper(
             field1: entry.value.fields1[i],
             field2:
-            entry.value.fields2.length > i ? entry.value.fields2[i] : null,
+                entry.value.fields2.length > i ? entry.value.fields2[i] : null,
             available: entry.value.available,
             mappedTo: _mapping[entry.key][i] ?? '',
             mapping: _mapping[entry.key],
@@ -383,7 +374,8 @@ class __FileMapperState extends State<_FileMapper> {
       ]);
     }
 
-    children.addAll([ SizedBox(height: 25),
+    children.addAll([
+      SizedBox(height: 25),
       if (_isLoading)
         LinearProgressIndicator()
       else
@@ -404,22 +396,20 @@ class __FileMapperState extends State<_FileMapper> {
                     borderRadius: BorderRadius.circular(5)),
                 child: Text(localization.import),
                 onPressed: () {
-                  final bool isValid =
-                  widget.formKey.currentState.validate();
+                  final bool isValid = widget.formKey.currentState.validate();
 
                   if (!isValid) {
                     return;
                   }
 
                   final webClient = WebClient();
-                  final state = StoreProvider
-                      .of<AppState>(context)
-                      .state;
+                  final state = StoreProvider.of<AppState>(context).state;
                   final credentials = state.credentials;
                   final url = '${credentials.url}/import';
-                  final convertedMapping=<String,BuiltMap<int,String>>{};
+                  final convertedMapping = <String, BuiltMap<int, String>>{};
 
-                  for(MapEntry<String,Map<int,String>> e in _mapping.entries){
+                  for (MapEntry<String, Map<int, String>> e
+                      in _mapping.entries) {
                     convertedMapping[e.key] = BuiltMap(e.value);
                   }
 
