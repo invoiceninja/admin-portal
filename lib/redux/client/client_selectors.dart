@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -28,29 +29,35 @@ List<String> dropdownClientsSelector(
   return list;
 }
 
-var memoizedFilteredClientList = memo8((String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredClientList = memo7((SelectionState selectionState,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltList<String> clientList,
         BuiltMap<String, GroupEntity> groupMap,
         ListUIState clientListState,
         BuiltMap<String, UserEntity> userMap,
         StaticState staticState) =>
-    filteredClientsSelector(filterEntityId, filterEntityType, clientMap,
-        clientList, groupMap, clientListState, userMap, staticState));
+    filteredClientsSelector(selectionState, clientMap, clientList, groupMap,
+        clientListState, userMap, staticState));
 
 List<String> filteredClientsSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     BuiltMap<String, GroupEntity> groupMap,
     ListUIState clientListState,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState) {
+
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = clientList.where((clientId) {
     final client = clientMap[clientId];
     final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
+
+    if (client.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (filterEntityType == EntityType.group && group.id != filterEntityId) {
       return false;

@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/token_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -24,34 +25,37 @@ List<String> dropdownTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
   return list;
 }
 
-var memoizedFilteredTokenList = memo5((
-  String filterEntityId,
-  EntityType filterEntityType,
+var memoizedFilteredTokenList = memo4((
+  SelectionState selectionState,
   BuiltMap<String, TokenEntity> tokenMap,
   BuiltList<String> tokenList,
   ListUIState tokenListState,
 ) =>
     filteredTokensSelector(
-      filterEntityId,
-      filterEntityType,
+      selectionState,
       tokenMap,
       tokenList,
       tokenListState,
     ));
 
 List<String> filteredTokensSelector(
-  String filterEntityId,
-  EntityType filterEntityType,
+  SelectionState selectionState,
   BuiltMap<String, TokenEntity> tokenMap,
   BuiltList<String> tokenList,
   ListUIState tokenListState,
 ) {
+  final filterEntityId = selectionState.filterEntityId;
+
   final list = tokenList.where((tokenId) {
     final token = tokenMap[tokenId];
     if (filterEntityId != null && token.id != filterEntityId) {
       return false;
     } else {
       //
+    }
+
+    if (token.id == selectionState.selectedId) {
+      return true;
     }
 
     if (token.isSystem) {

@@ -88,8 +88,7 @@ class WebhookListVM {
       userCompany: state.userCompany,
       listState: state.webhookListState,
       webhookList: memoizedFilteredWebhookList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.webhook),
           state.webhookState.map,
           state.webhookState.list,
           state.webhookListState),

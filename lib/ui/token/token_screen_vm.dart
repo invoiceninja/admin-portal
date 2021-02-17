@@ -48,8 +48,7 @@ class TokenScreenVM {
     return TokenScreenVM(
       tokenMap: state.tokenState.map,
       tokenList: memoizedFilteredTokenList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.token),
           state.tokenState.map,
           state.tokenState.list,
           state.tokenListState),

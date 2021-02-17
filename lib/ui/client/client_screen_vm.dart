@@ -45,8 +45,7 @@ class ClientScreenVM {
     return ClientScreenVM(
       clientMap: state.clientState.map,
       clientList: memoizedFilteredClientList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.client),
           state.clientState.map,
           state.clientState.list,
           state.groupState.map,

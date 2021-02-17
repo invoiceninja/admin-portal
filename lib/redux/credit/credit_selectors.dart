@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -63,30 +64,35 @@ ClientEntity creditClientSelector(
   return clientMap[credit.clientId];
 }
 
-var memoizedFilteredCreditList = memo8((String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredCreditList = memo7((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> creditMap,
         BuiltList<String> creditList,
         BuiltMap<String, ClientEntity> clientMap,
         ListUIState creditListState,
         StaticState staticState,
         BuiltMap<String, UserEntity> userMap) =>
-    filteredCreditsSelector(filterEntityId, filterEntityType, creditMap,
-        creditList, clientMap, creditListState, staticState, userMap));
+    filteredCreditsSelector(selectionState, creditMap, creditList, clientMap,
+        creditListState, staticState, userMap));
 
 List<String> filteredCreditsSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, InvoiceEntity> creditMap,
     BuiltList<String> creditList,
     BuiltMap<String, ClientEntity> clientMap,
     ListUIState creditListState,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = creditList.where((creditId) {
     final credit = creditMap[creditId];
     final client =
         clientMap[credit.clientId] ?? ClientEntity(id: credit.clientId);
+
+    if (credit.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!client.isActive &&
         !client.matchesEntityFilter(filterEntityType, filterEntityId)) {

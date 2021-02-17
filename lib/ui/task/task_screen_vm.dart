@@ -45,8 +45,7 @@ class TaskScreenVM {
     return TaskScreenVM(
       taskMap: state.taskState.map,
       taskList: memoizedFilteredTaskList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.task),
           state.taskState.map,
           state.clientState.map,
           state.userState.map,
