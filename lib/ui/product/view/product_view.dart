@@ -121,8 +121,8 @@ class _ProductViewState extends State<ProductView>
             ),
             BottomButtons(
               entity: product,
-              action1: EntityAction.clone,
-              action2: EntityAction.newInvoice,
+              action1: EntityAction.newInvoice,
+              action2: EntityAction.clone,
             ),
           ],
         );
