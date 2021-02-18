@@ -29,6 +29,7 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
   final restoreRecurringInvoice = _restoreRecurringInvoice(repository);
   final startRecurringInvoice = _startRecurringInvoice(repository);
   final stopRecurringInvoice = _stopRecurringInvoice(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewRecurringInvoiceList>(
@@ -50,6 +51,8 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
         startRecurringInvoice),
     TypedMiddleware<AppState, StopRecurringInvoicesRequest>(
         stopRecurringInvoice),
+    TypedMiddleware<AppState, SaveRecurringInvoiceDocumentRequest>(
+        saveDocument),
   ];
 }
 
@@ -316,6 +319,31 @@ Middleware<AppState> _loadRecurringInvoices(
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(RecurringInvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveRecurringInvoiceDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+              store.state.credentials, action.invoice, action.multipartFile)
+          .then((invoice) {
+        store.dispatch(SaveRecurringInvoiceSuccess(invoice));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveRecurringInvoiceDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveRecurringInvoiceDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

@@ -104,8 +104,7 @@ List<String> dropdownTasksSelector(
   return list;
 }
 
-var memoizedFilteredTaskList = memo9((String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredTaskList = memo8((SelectionState selectionState,
         BuiltMap<String, TaskEntity> taskMap,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, UserEntity> userMap,
@@ -113,12 +112,11 @@ var memoizedFilteredTaskList = memo9((String filterEntityId,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltList<String> taskList,
         ListUIState taskListState) =>
-    filteredTasksSelector(filterEntityId, filterEntityType, taskMap, clientMap,
-        userMap, projectMap, invoiceMap, taskList, taskListState));
+    filteredTasksSelector(selectionState, taskMap, clientMap, userMap,
+        projectMap, invoiceMap, taskList, taskListState));
 
 List<String> filteredTasksSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, TaskEntity> taskMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
@@ -126,11 +124,18 @@ List<String> filteredTasksSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltList<String> taskList,
     ListUIState taskListState) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = taskList.where((taskId) {
     final task = taskMap[taskId];
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
     final project =
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
+
+    if (task.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!client.isActive &&
         !client.matchesEntityFilter(filterEntityType, filterEntityId)) {

@@ -81,8 +81,7 @@ class ExpenseListVM {
       user: state.user,
       listState: state.expenseListState,
       expenseList: memoizedFilteredExpenseList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.expense),
           state.expenseState.map,
           state.clientState.map,
           state.vendorState.map,

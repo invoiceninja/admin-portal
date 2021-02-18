@@ -77,7 +77,7 @@ class SettingsRepository {
     final url = '${credentials.url}/$route/$entityId';
 
     final dynamic response = await webClient.post(url, credentials.token,
-        data: {'_method': 'PUT'}, multipartFile: multipartFile);
+        data: {'_method': 'PUT'}, multipartFiles: [multipartFile]);
 
     if (type == EntityType.client) {
       return serializers
@@ -102,7 +102,7 @@ class SettingsRepository {
 
     final dynamic response = await webClient.post(
         '${credentials.url}/companies/${company.id}/upload', credentials.token,
-        data: fields, multipartFile: multipartFile);
+        data: fields, multipartFiles: [multipartFile]);
 
     final CompanyItemResponse companyResponse =
         serializers.deserializeWith(CompanyItemResponse.serializer, response);

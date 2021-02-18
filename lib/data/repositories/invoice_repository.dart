@@ -108,7 +108,7 @@ class InvoiceRepository {
 
     final dynamic response = await webClient.post(
         '${credentials.url}/invoices/${entity.id}/upload', credentials.token,
-        data: fields, multipartFile: multipartFile);
+        data: fields, multipartFiles: [multipartFile]);
 
     final InvoiceItemResponse invoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);

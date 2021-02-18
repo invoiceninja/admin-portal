@@ -82,7 +82,7 @@ class ExpenseRepository {
 
     final dynamic response = await webClient.post(
         '${credentials.url}/expenses/${entity.id}/upload', credentials.token,
-        data: fields, multipartFile: multipartFile);
+        data: fields, multipartFiles: [multipartFile]);
 
     final ExpenseItemResponse expenseResponse =
         serializers.deserializeWith(ExpenseItemResponse.serializer, response);

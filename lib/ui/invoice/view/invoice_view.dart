@@ -110,22 +110,15 @@ class _InvoiceViewState extends State<InvoiceView>
     final documents = invoice.documents;
 
     EntityAction secondAction;
-    if (invoice.isCredit) {
-      secondAction = EntityAction.cloneToCredit;
-    } else if (invoice.isQuote) {
-      if (invoice.hasInvoice) {
-        secondAction = EntityAction.cloneToQuote;
-      } else {
-        secondAction = EntityAction.convertToInvoice;
-      }
-    } else if (invoice.isRecurringInvoice) {
+
+    if (invoice.isRecurringInvoice) {
       secondAction = invoice.isRunning ? EntityAction.stop : EntityAction.start;
+    } else if (invoice.isCredit) {
+      secondAction = EntityAction.emailCredit;
+    } else if (invoice.isQuote) {
+      secondAction = EntityAction.emailQuote;
     } else {
-      if (invoice.isPaid) {
-        secondAction = EntityAction.cloneToInvoice;
-      } else {
-        secondAction = EntityAction.newPayment;
-      }
+      secondAction = EntityAction.emailInvoice;
     }
 
     return ViewScaffold(

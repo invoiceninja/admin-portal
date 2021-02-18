@@ -119,10 +119,9 @@ class _ExpenseViewState extends State<ExpenseView>
             ),
             BottomButtons(
               entity: expense,
-              action1: EntityAction.clone,
-              action2: expense.isInvoiced
-                  ? EntityAction.archive
-                  : EntityAction.invoiceExpense,
+              action1: EntityAction.invoiceExpense,
+              action1Enabled: !expense.isInvoiced,
+              action2: EntityAction.clone,
             )
           ],
         );

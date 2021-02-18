@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -81,8 +82,7 @@ List<String> dropdownExpensesSelector(
   return list;
 }
 
-var memoizedFilteredExpenseList = memo10((String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredExpenseList = memo9((SelectionState selectionState,
         BuiltMap<String, ExpenseEntity> expenseMap,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, VendorEntity> vendorMap,
@@ -92,8 +92,7 @@ var memoizedFilteredExpenseList = memo10((String filterEntityId,
         BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
         StaticState staticState) =>
     filteredExpensesSelector(
-        filterEntityId,
-        filterEntityType,
+        selectionState,
         expenseMap,
         clientMap,
         vendorMap,
@@ -104,8 +103,7 @@ var memoizedFilteredExpenseList = memo10((String filterEntityId,
         staticState));
 
 List<String> filteredExpensesSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, VendorEntity> vendorMap,
@@ -114,12 +112,19 @@ List<String> filteredExpensesSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     StaticState staticState) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = expenseMap.keys.where((expenseId) {
     final expense = expenseMap[expenseId];
     final vendor =
         vendorMap[expense.vendorId] ?? VendorEntity(id: expense.vendorId);
     final client =
         clientMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
+
+    if (expense.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (filterEntityType != null) {
       if (filterEntityType == EntityType.client &&

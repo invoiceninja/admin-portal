@@ -126,15 +126,14 @@ class _FileImportState extends State<_FileImport> {
     final localization = AppLocalization.of(context);
 
     if (widget.importType != ImportType.csv) {
-      /*
-      for (MapEntry<String,String> uploadPart in widget.importType.uploadParts.entries) {
+      for (MapEntry<String, String> uploadPart
+          in widget.importType.uploadParts.entries) {
         if (!_multipartFiles.containsKey(uploadPart.key)) {
           showErrorDialog(
               context: context, message: localization.requiredFilesMissing);
           return;
         }
       }
-      */
     }
 
     final webClient = WebClient();
@@ -199,8 +198,8 @@ class _FileImportState extends State<_FileImport> {
       )
     ];
 
-    /*
-    for (MapEntry<String,String> uploadPart in widget.importType.uploadParts.entries) {
+    for (MapEntry<String, String> uploadPart
+        in widget.importType.uploadParts.entries) {
       final multipartFile = _multipartFiles.containsKey(uploadPart.key)
           ? _multipartFiles[uploadPart.key]
           : null;
@@ -212,12 +211,9 @@ class _FileImportState extends State<_FileImport> {
           label: localization.lookup(uploadPart.value),
           initialValue: !_multipartFiles.containsKey(uploadPart.key)
               ? localization.noFileSelected
-              : '${_multipartFiles[uploadPart.key].filename} • ${formatSize(
-              _multipartFiles[uploadPart.key].length)}');
+              : '${_multipartFiles[uploadPart.key].filename} • ${formatSize(_multipartFiles[uploadPart.key].length)}');
 
-      children.add(Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
+      children.add(Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Expanded(child: field),
         SizedBox(width: kTableColumnGap),
         OutlineButton(
@@ -239,8 +235,6 @@ class _FileImportState extends State<_FileImport> {
         ),
       ]));
     }
-
-  */
 
     children.add(SizedBox(height: 20));
 

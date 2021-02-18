@@ -64,30 +64,35 @@ List<String> dropdownProjectsSelector(
   return list;
 }
 
-var memoizedFilteredProjectList = memo7((String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredProjectList = memo6((SelectionState selectionState,
         BuiltMap<String, ProjectEntity> projectMap,
         BuiltList<String> projectList,
         ListUIState projectListState,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, UserEntity> userMap) =>
-    filteredProjectsSelector(filterEntityId, filterEntityType, projectMap,
-        projectList, projectListState, clientMap, userMap));
+    filteredProjectsSelector(selectionState, projectMap, projectList,
+        projectListState, clientMap, userMap));
 
 List<String> filteredProjectsSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltList<String> projectList,
     ListUIState projectListState,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
     final client =
         clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
     final user = userMap[project.assignedUserId] ??
         UserEntity(id: project.assignedUserId);
+
+    if (project.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (filterEntityId != null) {
       if (filterEntityType == EntityType.client &&

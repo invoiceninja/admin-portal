@@ -88,8 +88,7 @@ class TokenListVM {
       userCompany: state.userCompany,
       listState: state.tokenListState,
       tokenList: memoizedFilteredTokenList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.token),
           state.tokenState.map,
           state.tokenState.list,
           state.tokenListState),

@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -65,26 +66,27 @@ List<String> dropdownPaymentsSelector(
   return list;
 }
 
-var memoizedFilteredPaymentList = memo8((String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredPaymentList = memo7((SelectionState selectionState,
         BuiltMap<String, PaymentEntity> paymentMap,
         BuiltList<String> paymentList,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, UserEntity> userMap,
         ListUIState paymentListState) =>
-    filteredPaymentsSelector(filterEntityId, filterEntityType, paymentMap,
-        paymentList, invoiceMap, clientMap, userMap, paymentListState));
+    filteredPaymentsSelector(selectionState, paymentMap, paymentList,
+        invoiceMap, clientMap, userMap, paymentListState));
 
 List<String> filteredPaymentsSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltList<String> paymentList,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
     ListUIState paymentListState) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = paymentList.where((paymentId) {
     final payment = paymentMap[paymentId];
     if (!payment.matchesStates(paymentListState.stateFilters)) {
@@ -93,6 +95,10 @@ List<String> filteredPaymentsSelector(
 
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
+
+    if (payment.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!client.isActive &&
         !client.matchesEntityFilter(filterEntityType, filterEntityId)) {

@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_details.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_documents.dart';
@@ -92,25 +94,34 @@ class _VendorViewState extends State<VendorView>
         ],
       ),
       body: Builder(builder: (context) {
-        return TabBarView(
-          controller: _controller,
-          children: <Widget>[
-            RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: VendorOverview(
-                viewModel: viewModel,
-                isFilter: widget.isFilter,
-              ),
+        return Column(
+          children: [
+            TabBarView(
+              controller: _controller,
+              children: <Widget>[
+                RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: VendorOverview(
+                    viewModel: viewModel,
+                    isFilter: widget.isFilter,
+                  ),
+                ),
+                RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: VendorViewDetails(vendor: viewModel.vendor),
+                ),
+                RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: VendorViewDocuments(
+                    viewModel: viewModel,
+                  ),
+                ),
+              ],
             ),
-            RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: VendorViewDetails(vendor: viewModel.vendor),
-            ),
-            RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: VendorViewDocuments(
-                viewModel: viewModel,
-              ),
+            BottomButtons(
+              entity: vendor,
+              action1: EntityAction.newExpense,
+              action2: EntityAction.archive,
             ),
           ],
         );

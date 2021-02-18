@@ -170,14 +170,14 @@ abstract class ProjectEntity extends Object
         }
 
         if (isActive && client?.isActive == true) {
-          if (userCompany.canCreate(EntityType.invoice)) {
-            actions.add(EntityAction.invoiceProject);
-          }
           if (userCompany.canCreate(EntityType.task)) {
             actions.add(EntityAction.newTask);
           }
           if (userCompany.canCreate(EntityType.expense)) {
             actions.add(EntityAction.newExpense);
+          }
+          if (userCompany.canCreate(EntityType.invoice)) {
+            actions.add(EntityAction.invoiceProject);
           }
         }
       }
