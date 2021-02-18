@@ -24,7 +24,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       requireAuthentication: false,
       colorTheme: kColorThemeLight,
       showFilterSidebar: false,
-      longPressSelectionIsDefault: false,
+      longPressSelectionIsDefault: true,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
     );
   }
