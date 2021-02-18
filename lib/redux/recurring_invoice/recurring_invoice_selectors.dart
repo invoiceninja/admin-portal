@@ -1,13 +1,13 @@
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedFilteredRecurringInvoiceList = memo8((
-  String filterEntityId,
-  EntityType filterEntityType,
+var memoizedFilteredRecurringInvoiceList = memo7((
+  SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> recurringInvoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltList<String> recurringInvoiceList,
@@ -16,8 +16,7 @@ var memoizedFilteredRecurringInvoiceList = memo8((
   BuiltMap<String, UserEntity> userMap,
 ) =>
     filteredRecurringInvoicesSelector(
-      filterEntityId,
-      filterEntityType,
+      selectionState,
       recurringInvoiceMap,
       clientMap,
       recurringInvoiceList,
@@ -27,8 +26,7 @@ var memoizedFilteredRecurringInvoiceList = memo8((
     ));
 
 List<String> filteredRecurringInvoicesSelector(
-  String filterEntityId,
-  EntityType filterEntityType,
+  SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> recurringInvoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltList<String> recurringInvoiceList,
@@ -36,10 +34,17 @@ List<String> filteredRecurringInvoicesSelector(
   StaticState staticState,
   BuiltMap<String, UserEntity> userMap,
 ) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = recurringInvoiceList.where((recurringInvoiceId) {
     final invoice = recurringInvoiceMap[recurringInvoiceId];
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+
+    if (invoice.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!client.isActive &&
         !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
