@@ -341,6 +341,22 @@ void handleUserAction(
         filterEntity: user,
       );
       break;
+    case EntityAction.newTask:
+      createEntity(
+        context: context,
+        entity:
+            TaskEntity(state: state).rebuild((b) => b.assignedUserId = user.id),
+        filterEntity: user,
+      );
+      break;
+    case EntityAction.newVendor:
+      createEntity(
+        context: context,
+        entity: VendorEntity(state: state)
+            .rebuild((b) => b.assignedUserId = user.id),
+        filterEntity: user,
+      );
+      break;
     case EntityAction.restore:
       final message = userIds.length > 1
           ? localization.restoredUsers
