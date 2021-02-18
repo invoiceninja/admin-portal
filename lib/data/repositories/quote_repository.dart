@@ -104,7 +104,7 @@ class QuoteRepository {
 
     final dynamic response = await webClient.post(
         '${credentials.url}/quotes/${entity.id}/upload', credentials.token,
-        data: fields, multipartFile: multipartFile);
+        data: fields, multipartFiles: [multipartFile]);
 
     final InvoiceItemResponse invoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);

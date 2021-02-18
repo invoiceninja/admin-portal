@@ -54,7 +54,6 @@ class WebClient {
     String url,
     String token, {
     dynamic data,
-    MultipartFile multipartFile,
     List<MultipartFile> multipartFiles,
     String secret,
     String password,
@@ -73,14 +72,6 @@ class WebClient {
       printWrapped('Data: $data');
     }
     http.Response response;
-
-    if (multipartFile != null) {
-      if (multipartFiles == null) {
-        multipartFiles = [multipartFile];
-      } else {
-        multipartFiles.add(multipartFile);
-      }
-    }
 
     if (multipartFiles != null) {
       response = await _uploadFiles(url, token, multipartFiles, data: data);
