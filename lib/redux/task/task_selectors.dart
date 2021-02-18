@@ -23,7 +23,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     }
     notes += '<span class="task-time-details">';
     task
-        .getTaskTimes(sort: true)
+        .getTaskTimes()
         .where((time) => time.startDate != null && time.endDate != null)
         .forEach((time) {
       final start =
