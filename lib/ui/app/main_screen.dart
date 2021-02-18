@@ -76,8 +76,12 @@ class MainScreen extends StatelessWidget {
       String mainRoute = '/' + uiState.mainRoute;
       Widget screen = BlankScreen();
 
+      // This can happen if the user's permissions are changed
       if (state.authState.isAuthenticated && state.companies.isEmpty) {
-        return LoadingIndicator();
+        return Container(
+          child: LoadingIndicator(),
+          color: Theme.of(context).cardColor,
+        );
       }
 
       bool editingFilterEntity = false;
