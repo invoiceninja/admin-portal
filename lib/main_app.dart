@@ -166,6 +166,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
   @override
   Widget build(BuildContext context) {
+    final state = widget.store.state;
+    if (state.authState.isAuthenticated && state.companies.isEmpty) {
+      return InitScreen();
+    }
+
     return StoreProvider<AppState>(
       store: widget.store,
       child: AppBuilder(builder: (context) {
