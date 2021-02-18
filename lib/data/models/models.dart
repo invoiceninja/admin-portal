@@ -136,6 +136,8 @@ class EntityAction extends EnumClass {
         return EntityAction.newProject;
       case EntityType.task:
         return EntityAction.newTask;
+      case EntityType.vendor:
+        return EntityAction.newVendor;
       default:
         print(
             'ERROR: entityType $entityType not defined in EntityAction.newEntityType');
