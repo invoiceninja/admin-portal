@@ -20,10 +20,12 @@ class EntityPresenter {
   String get title {
     final localization = AppLocalization.of(context);
     final type = localization.lookup('${entity.entityType}');
-    final name = entity.listDisplayName;
+    var name = entity.listDisplayName;
 
     // TODO replace with this: https://github.com/flutter/flutter/issues/45336
-    if (name.length > 10) {
+    if (name.isEmpty) {
+      name = localization.pending;
+    } else if (name.length > 10) {
       return name;
     }
 
