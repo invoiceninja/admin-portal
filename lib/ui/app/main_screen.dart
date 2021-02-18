@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/app_shortcuts.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
@@ -74,6 +75,10 @@ class MainScreen extends StatelessWidget {
       final subRoute = '/' + uiState.subRoute;
       String mainRoute = '/' + uiState.mainRoute;
       Widget screen = BlankScreen();
+
+      if (state.authState.isAuthenticated && state.companies.isEmpty) {
+        return LoadingIndicator();
+      }
 
       bool editingFilterEntity = false;
       if (prefState.showFilterSidebar &&
