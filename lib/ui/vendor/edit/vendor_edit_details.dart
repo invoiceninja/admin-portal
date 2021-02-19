@@ -133,6 +133,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
               validator: (String val) => val == null || val.isEmpty
                   ? AppLocalization.of(context).pleaseEnterAName
                   : null,
+              onSavePressed: viewModel.onSavePressed,
               decoration: InputDecoration(
                 labelText: localization.name,
                 suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
@@ -158,6 +159,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
               DecoratedFormField(
                 label: localization.number,
                 controller: _numberController,
+                onSavePressed: viewModel.onSavePressed,
               ),
             UserPicker(
               userId: vendor.assignedUserId,
@@ -167,40 +169,48 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             DecoratedFormField(
               controller: _idNumberController,
               label: localization.idNumber,
+              onSavePressed: viewModel.onSavePressed,
             ),
             DecoratedFormField(
               controller: _vatNumberController,
               label: localization.vatNumber,
+              onSavePressed: viewModel.onSavePressed,
             ),
             DecoratedFormField(
               controller: _websiteController,
               label: localization.website,
               keyboardType: TextInputType.url,
+              onSavePressed: viewModel.onSavePressed,
             ),
             DecoratedFormField(
               controller: _phoneController,
               label: localization.phone,
               keyboardType: TextInputType.phone,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom1Controller,
               field: CustomFieldType.vendor1,
               value: vendor.customValue1,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom2Controller,
               field: CustomFieldType.vendor2,
               value: vendor.customValue2,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom3Controller,
               field: CustomFieldType.vendor3,
               value: vendor.customValue3,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom4Controller,
               field: CustomFieldType.vendor4,
               value: vendor.customValue4,
+              onSavePressed: viewModel.onSavePressed,
             ),
           ],
         ),

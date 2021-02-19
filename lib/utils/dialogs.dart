@@ -134,6 +134,10 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
   bool _isPasswordObscured = true;
 
   void _submit() {
+    if ((_password ?? '').isEmpty) {
+      return;
+    }
+    Navigator.pop(context);
     widget.callback(_password);
   }
 
@@ -169,13 +173,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
         SaveCancelButtons(
           isHeader: false,
           saveLabel: localization.submit.toUpperCase(),
-          onSavePressed: (context) {
-            if ((_password ?? '').isEmpty) {
-              return;
-            }
-            Navigator.pop(context);
-            widget.callback(_password);
-          },
+          onSavePressed: (context) => _submit(),
           cancelLabel: localization.cancel.toUpperCase(),
           onCancelPressed: (context) {
             Navigator.pop(context);
@@ -232,6 +230,10 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
   String _field;
 
   void _submit() {
+    if ((_field ?? '').isEmpty) {
+      return;
+    }
+    Navigator.pop(context);
     widget.callback(_field);
   }
 
@@ -258,13 +260,7 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
         SaveCancelButtons(
           isHeader: false,
           saveLabel: localization.save.toUpperCase(),
-          onSavePressed: (context) {
-            if ((_field ?? '').isEmpty) {
-              return;
-            }
-            Navigator.pop(context);
-            widget.callback(_field);
-          },
+          onSavePressed: (context) => _submit(),
           cancelLabel: localization.cancel.toUpperCase(),
           onCancelPressed: (context) {
             Navigator.pop(context);

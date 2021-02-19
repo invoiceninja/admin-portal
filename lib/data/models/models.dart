@@ -70,6 +70,7 @@ class EntityAction extends EnumClass {
   static const EntityAction newExpense = _$newExpense;
   static const EntityAction newProject = _$newProject;
   static const EntityAction newTask = _$newTask;
+  static const EntityAction newVendor = _$newVendor;
   static const EntityAction clientPortal = _$clientPortal;
   static const EntityAction newPayment = _$newPayment;
   static const EntityAction settings = _$settings;
@@ -135,6 +136,8 @@ class EntityAction extends EnumClass {
         return EntityAction.newProject;
       case EntityType.task:
         return EntityAction.newTask;
+      case EntityType.vendor:
+        return EntityAction.newVendor;
       default:
         print(
             'ERROR: entityType $entityType not defined in EntityAction.newEntityType');

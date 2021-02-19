@@ -796,6 +796,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nRoute: ${uiState.currentRoute}'
         '\nPrevious: ${uiState.previousRoute}'
         '\nPreview: ${uiState.previewStack}'
+        '\nFilter: ${uiState.filterEntityType} ${uiState.filterEntityId}'
         '\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}'
         '\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}'
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'

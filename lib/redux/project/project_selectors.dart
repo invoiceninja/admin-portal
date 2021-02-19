@@ -11,15 +11,26 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem(
     {BuildContext context, ProjectEntity project}) {
   final List<InvoiceItemEntity> items = [];
   final state = StoreProvider.of<AppState>(context).state;
+  final tasks = <TaskEntity>[];
   state.taskState.map.forEach((index, task) {
     if (task.isActive &&
         task.isStopped &&
         !task.isInvoiced &&
         task.projectId == project.id) {
-      final item = convertTaskToInvoiceItem(task: task, context: context);
-      items.add(item);
+      tasks.add(task);
     }
   });
+
+  tasks.sort((taskA, taskB) {
+    final taskADate = taskA.getTaskTimes().first.startDate;
+    final taskBDate = taskB.getTaskTimes().first.startDate;
+    return taskADate.compareTo(taskBDate);
+  });
+
+  for (var task in tasks) {
+    final item = convertTaskToInvoiceItem(task: task, context: context);
+    items.add(item);
+  }
 
   return items;
 }
