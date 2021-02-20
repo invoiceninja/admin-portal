@@ -400,11 +400,10 @@ class __FileMapperState extends State<_FileMapper> {
                   final state = StoreProvider.of<AppState>(context).state;
                   final credentials = state.credentials;
                   final url = '${credentials.url}/import';
-                  final convertedMapping = <String, BuiltMap<int, String>>{};
+                  final convertedMapping=<String,ImportRequestMapping>{};
 
-                  for (MapEntry<String, Map<int, String>> e
-                      in _mapping.entries) {
-                    convertedMapping[e.key] = BuiltMap(e.value);
+                  for(MapEntry<String,Map<int,String>> e in _mapping.entries){
+                    convertedMapping[e.key] = new ImportRequestMapping(BuiltMap(e.value));
                   }
 
                   setState(() => _isLoading = true);
