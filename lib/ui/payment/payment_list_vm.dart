@@ -83,8 +83,7 @@ class PaymentListVM {
       state: state,
       user: state.user,
       paymentList: memoizedFilteredPaymentList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.payment),
           state.paymentState.map,
           state.paymentState.list,
           state.invoiceState.map,

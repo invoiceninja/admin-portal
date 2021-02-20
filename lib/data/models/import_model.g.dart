@@ -87,7 +87,7 @@ class _$PreImportResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final dynamic value = iterator.current;
       switch (key) {
         case 'hash':
           result.hash = serializers.deserialize(value,
@@ -146,7 +146,7 @@ class _$PreImportResponseEntityDetailsSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final dynamic value = iterator.current;
       switch (key) {
         case 'available':
           result.available.replace(serializers.deserialize(value,
@@ -206,7 +206,7 @@ class _$ImportRequestSerializer implements StructuredSerializer<ImportRequest> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final dynamic value = iterator.current;
       switch (key) {
         case 'hash':
           result.hash = serializers.deserialize(value,
@@ -310,9 +310,12 @@ class _$PreImportResponse extends PreImportResponse {
       (new PreImportResponseBuilder()..update(updates)).build();
 
   _$PreImportResponse._({this.hash, this.mappings}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(hash, 'PreImportResponse', 'hash');
-    BuiltValueNullFieldError.checkNotNull(
-        mappings, 'PreImportResponse', 'mappings');
+    if (hash == null) {
+      throw new BuiltValueNullFieldError('PreImportResponse', 'hash');
+    }
+    if (mappings == null) {
+      throw new BuiltValueNullFieldError('PreImportResponse', 'mappings');
+    }
   }
 
   @override
@@ -364,10 +367,9 @@ class PreImportResponseBuilder
   PreImportResponseBuilder();
 
   PreImportResponseBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _hash = $v.hash;
-      _mappings = $v.mappings.toBuilder();
+    if (_$v != null) {
+      _hash = _$v.hash;
+      _mappings = _$v.mappings?.toBuilder();
       _$v = null;
     }
     return this;
@@ -375,7 +377,9 @@ class PreImportResponseBuilder
 
   @override
   void replace(PreImportResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$PreImportResponse;
   }
 
@@ -389,10 +393,7 @@ class PreImportResponseBuilder
     _$PreImportResponse _$result;
     try {
       _$result = _$v ??
-          new _$PreImportResponse._(
-              hash: BuiltValueNullFieldError.checkNotNull(
-                  hash, 'PreImportResponse', 'hash'),
-              mappings: mappings.build());
+          new _$PreImportResponse._(hash: hash, mappings: mappings.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -421,10 +422,14 @@ class _$PreImportResponseEntityDetails extends PreImportResponseEntityDetails {
 
   _$PreImportResponseEntityDetails._({this.available, this.headers})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        available, 'PreImportResponseEntityDetails', 'available');
-    BuiltValueNullFieldError.checkNotNull(
-        headers, 'PreImportResponseEntityDetails', 'headers');
+    if (available == null) {
+      throw new BuiltValueNullFieldError(
+          'PreImportResponseEntityDetails', 'available');
+    }
+    if (headers == null) {
+      throw new BuiltValueNullFieldError(
+          'PreImportResponseEntityDetails', 'headers');
+    }
   }
 
   @override
@@ -480,10 +485,9 @@ class PreImportResponseEntityDetailsBuilder
   PreImportResponseEntityDetailsBuilder();
 
   PreImportResponseEntityDetailsBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _available = $v.available.toBuilder();
-      _headers = $v.headers.toBuilder();
+    if (_$v != null) {
+      _available = _$v.available?.toBuilder();
+      _headers = _$v.headers?.toBuilder();
       _$v = null;
     }
     return this;
@@ -491,7 +495,9 @@ class PreImportResponseEntityDetailsBuilder
 
   @override
   void replace(PreImportResponseEntityDetails other) {
-    ArgumentError.checkNotNull(other, 'other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$PreImportResponseEntityDetails;
   }
 
@@ -541,13 +547,18 @@ class _$ImportRequest extends ImportRequest {
   _$ImportRequest._(
       {this.hash, this.importType, this.skipHeader, this.columnMap})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(hash, 'ImportRequest', 'hash');
-    BuiltValueNullFieldError.checkNotNull(
-        importType, 'ImportRequest', 'importType');
-    BuiltValueNullFieldError.checkNotNull(
-        skipHeader, 'ImportRequest', 'skipHeader');
-    BuiltValueNullFieldError.checkNotNull(
-        columnMap, 'ImportRequest', 'columnMap');
+    if (hash == null) {
+      throw new BuiltValueNullFieldError('ImportRequest', 'hash');
+    }
+    if (importType == null) {
+      throw new BuiltValueNullFieldError('ImportRequest', 'importType');
+    }
+    if (skipHeader == null) {
+      throw new BuiltValueNullFieldError('ImportRequest', 'skipHeader');
+    }
+    if (columnMap == null) {
+      throw new BuiltValueNullFieldError('ImportRequest', 'columnMap');
+    }
   }
 
   @override
@@ -625,7 +636,9 @@ class ImportRequestBuilder
 
   @override
   void replace(ImportRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ImportRequest;
   }
 

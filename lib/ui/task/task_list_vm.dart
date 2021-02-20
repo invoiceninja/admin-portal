@@ -83,8 +83,7 @@ class TaskListVM {
       user: state.user,
       listState: state.taskListState,
       taskList: memoizedFilteredTaskList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.task),
           state.taskState.map,
           state.clientState.map,
           state.userState.map,

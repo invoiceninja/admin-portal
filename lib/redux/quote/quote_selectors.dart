@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -9,30 +10,35 @@ ClientEntity quoteClientSelector(
   return clientMap[quote.clientId];
 }
 
-var memoizedFilteredQuoteList = memo8((String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredQuoteList = memo7((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> quoteMap,
         BuiltList<String> quoteList,
         BuiltMap<String, ClientEntity> clientMap,
         ListUIState quoteListState,
         StaticState staticState,
         BuiltMap<String, UserEntity> userMap) =>
-    filteredQuotesSelector(filterEntityId, filterEntityType, quoteMap,
-        quoteList, clientMap, quoteListState, staticState, userMap));
+    filteredQuotesSelector(selectionState, quoteMap, quoteList, clientMap,
+        quoteListState, staticState, userMap));
 
 List<String> filteredQuotesSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltList<String> quoteList,
     BuiltMap<String, ClientEntity> clientMap,
     ListUIState quoteListState,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = quoteList.where((quoteId) {
     final quote = quoteMap[quoteId];
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
+
+    if (quote.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!client.isActive &&
         !client.matchesEntityFilter(filterEntityType, filterEntityId)) {

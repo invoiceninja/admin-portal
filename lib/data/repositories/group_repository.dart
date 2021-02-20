@@ -80,7 +80,7 @@ class GroupRepository {
         '${credentials.url}/group_settings/${entity.id}/upload',
         credentials.token,
         data: fields,
-        multipartFile: multipartFile);
+        multipartFiles: [multipartFile]);
 
     final GroupItemResponse groupResponse =
         serializers.deserializeWith(GroupItemResponse.serializer, response);

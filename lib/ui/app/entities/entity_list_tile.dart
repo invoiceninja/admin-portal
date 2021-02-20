@@ -180,10 +180,15 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
 
   void _onLongPress() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(FilterByEntity(
-        entityId: widget.entity.id, entityType: widget.entity.entityType));
+    final uiState = store.state.uiState;
+    final entity = widget.entity;
+    if (uiState.filterEntityId != entity.id ||
+        uiState.filterEntityType != entity.entityType) {
+      store.dispatch(
+          FilterByEntity(entityId: entity.id, entityType: entity.entityType));
+    }
     handleEntityAction(
-        context, widget.entity, EntityAction.newEntityType(widget.entityType));
+        context, entity, EntityAction.newEntityType(widget.entityType));
   }
 
   @override

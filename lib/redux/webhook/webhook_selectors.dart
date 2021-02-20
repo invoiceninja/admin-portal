@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/webhook_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -32,33 +33,37 @@ List<String> dropdownWebhooksSelector(
   return list;
 }
 
-var memoizedFilteredWebhookList = memo5((
-  String filterEntityId,
-  EntityType filterEntityType,
+var memoizedFilteredWebhookList = memo4((
+  SelectionState selectionState,
   BuiltMap<String, WebhookEntity> webhookMap,
   BuiltList<String> webhookList,
   ListUIState webhookListState,
 ) =>
     filteredWebhooksSelector(
-      filterEntityId,
-      filterEntityType,
+      selectionState,
       webhookMap,
       webhookList,
       webhookListState,
     ));
 
 List<String> filteredWebhooksSelector(
-  String filterEntityId,
-  EntityType filterEntityType,
+  SelectionState selectionState,
   BuiltMap<String, WebhookEntity> webhookMap,
   BuiltList<String> webhookList,
   ListUIState webhookListState,
 ) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = webhookList.where((webhookId) {
     final webhook = webhookMap[webhookId];
     if (filterEntityId != null && webhook.id != filterEntityId) {
       return false;
     } else {}
+
+    if (webhook.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!webhook.matchesStates(webhookListState.stateFilters)) {
       return false;

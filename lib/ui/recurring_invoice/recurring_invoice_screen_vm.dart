@@ -48,8 +48,7 @@ class RecurringInvoiceScreenVM {
     return RecurringInvoiceScreenVM(
       recurringInvoiceMap: state.recurringInvoiceState.map,
       recurringInvoiceList: memoizedFilteredRecurringInvoiceList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.recurringInvoice),
           state.recurringInvoiceState.map,
           state.clientState.map,
           state.recurringInvoiceState.list,

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -56,7 +55,7 @@ class MenuDrawerVM {
   final bool isLoading;
 
   static MenuDrawerVM fromStore(Store<AppState> store) {
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    //final GoogleSignIn _googleSignIn = GoogleSignIn();
 
     final AppState state = store.state;
 

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
@@ -524,8 +525,9 @@ class _LoginState extends State<LoginView> {
                       Padding(
                         padding: EdgeInsets.only(top: 30, bottom: 10),
                         child: RoundedLoadingButton(
-                          height: 42,
-                          width: _createAccount ? 224 : 210,
+                          height: 44,
+                          //width: 210,
+                          width: 220,
                           controller: _buttonController,
                           color: convertHexStringToColor('#4285F4'),
                           onPressed: () => _createAccount
@@ -575,10 +577,10 @@ class _LoginState extends State<LoginView> {
                                     children: <Widget>[
                                       if (!_recoverPassword)
                                         Icon(MdiIcons.lock, size: 16),
-                                      TextButton(
-                                          child: Text(_recoverPassword
+                                      AppTextButton(
+                                          label: _recoverPassword
                                               ? localization.cancel
-                                              : localization.recoverPassword),
+                                              : localization.recoverPassword,
                                           onPressed: () {
                                             setState(() {
                                               _recoverPassword =

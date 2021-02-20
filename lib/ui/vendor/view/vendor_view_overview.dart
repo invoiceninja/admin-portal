@@ -78,7 +78,6 @@ class VendorOverview extends StatelessWidget {
             isFilter: isFilter,
           ),
         FieldGrid(fields),
-        ListDivider(),
         EntitiesListTile(
           entity: vendor,
           title: localization.expenses,

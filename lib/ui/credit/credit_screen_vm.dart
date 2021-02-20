@@ -48,8 +48,7 @@ class CreditScreenVM {
     return CreditScreenVM(
       creditMap: state.creditState.map,
       creditList: memoizedFilteredCreditList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.credit),
           state.creditState.map,
           state.creditState.list,
           state.clientState.map,

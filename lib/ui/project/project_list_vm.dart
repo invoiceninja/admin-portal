@@ -86,8 +86,7 @@ class ProjectListVM {
       state: state,
       listState: state.projectListState,
       projectList: memoizedFilteredProjectList(
-        state.uiState.filterEntityId,
-        state.uiState.filterEntityType,
+        state.getUISelection(EntityType.project),
         state.projectState.map,
         state.projectState.list,
         state.projectListState,

@@ -148,9 +148,9 @@ class ExpenseOverview extends StatelessWidget {
         ListDivider(),
         if ((expense.privateNotes ?? '').isNotEmpty) ...[
           IconMessage(expense.privateNotes, iconData: Icons.lock),
+          ListDivider(),
         ],
         FieldGrid(fields),
-        ListDivider(),
         EntityListTile(entity: vendor, isFilter: isFilter),
         EntityListTile(entity: client, isFilter: isFilter),
         EntityListTile(entity: project, isFilter: isFilter),

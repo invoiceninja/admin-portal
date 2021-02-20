@@ -81,7 +81,7 @@ class TaskRepository {
 
     final dynamic response = await webClient.post(
         '${credentials.url}/tasks/${entity.id}/upload', credentials.token,
-        data: fields, multipartFile: multipartFile);
+        data: fields, multipartFiles: [multipartFile]);
 
     final TaskItemResponse taskResponse =
         serializers.deserializeWith(TaskItemResponse.serializer, response);

@@ -50,6 +50,12 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, FilterByEntity>(
+      (selectedId, action) => action.clearSelection
+          ? ''
+          : action.entityType == EntityType.project
+              ? action.entityId
+              : selectedId),
 ]);
 
 final editingReducer = combineReducers<ProjectEntity>([

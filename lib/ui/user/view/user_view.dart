@@ -44,7 +44,8 @@ class UserView extends StatelessWidget {
         shrinkWrap: true,
         children: <Widget>[
           if (user.emailVerifiedAt == null)
-            IconMessage(localization.emailSentToConfirmEmail),
+            IconMessage(localization.emailSentToConfirmEmail,
+                color: Colors.orange),
           EntityHeader(
             entity: user,
             value: user.email,

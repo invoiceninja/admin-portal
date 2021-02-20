@@ -89,7 +89,7 @@ class ClientRepository {
 
     final dynamic response = await webClient.post(
         '${credentials.url}/clients/${entity.id}/upload', credentials.token,
-        data: fields, multipartFile: multipartFile);
+        data: fields, multipartFiles: [multipartFile]);
 
     final ClientItemResponse clientResponse =
         serializers.deserializeWith(ClientItemResponse.serializer, response);

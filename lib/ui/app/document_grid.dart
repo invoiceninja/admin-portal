@@ -106,21 +106,24 @@ class DocumentGrid extends StatelessWidget {
             ),
           ),
         ListDivider(),
-        GridView.count(
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(6),
-          shrinkWrap: true,
-          primary: true,
-          crossAxisCount: 2,
-          children: documents
-              .map((document) => DocumentTile(
-                    document: document,
-                    onDeleteDocument: onDeleteDocument,
-                    onViewExpense: onViewExpense,
-                    isFromExpense: false,
-                  ))
-              .toList(),
-        ),
+        LayoutBuilder(builder: (context, constraints) {
+          return GridView.count(
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.all(6),
+            childAspectRatio: ((constraints.maxWidth / 2) - 8) / 200,
+            shrinkWrap: true,
+            primary: true,
+            crossAxisCount: 2,
+            children: documents
+                .map((document) => DocumentTile(
+                      document: document,
+                      onDeleteDocument: onDeleteDocument,
+                      onViewExpense: onViewExpense,
+                      isFromExpense: false,
+                    ))
+                .toList(),
+          );
+        }),
       ],
     );
   }
@@ -240,11 +243,13 @@ class DocumentTile extends StatelessWidget {
                           document.name ?? '',
                           style: Theme.of(context).textTheme.headline6,
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                         Text(
                           '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
                           style: Theme.of(context).textTheme.caption,
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ],
                     ),

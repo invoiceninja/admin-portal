@@ -96,8 +96,7 @@ class QuoteListVM extends EntityListVM {
     return QuoteListVM(
       state: state,
       invoiceList: memoizedFilteredQuoteList(
-          state.uiState.filterEntityId,
-          state.uiState.filterEntityType,
+          state.getUISelection(EntityType.quote),
           state.quoteState.map,
           state.quoteState.list,
           state.clientState.map,
