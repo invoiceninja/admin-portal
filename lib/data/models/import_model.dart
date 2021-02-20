@@ -57,7 +57,7 @@ abstract class ImportRequest
     @required String hash,
     @required String importType,
     @required bool skipHeader,
-    @required BuiltMap<String, BuiltMap<int, String>> columnMap,
+    @required BuiltMap<String, ImportRequestMapping> columnMap,
   }) {
     return _$ImportRequest._(
       hash: hash,
@@ -82,14 +82,29 @@ abstract class ImportRequest
   bool get skipHeader;
 
   @BuiltValueField(wireName: 'column_map')
-  BuiltMap<String, BuiltMap<int, String>> get columnMap;
-
-  // This needed so the builder factory for BuiltMap<int, String> is auto-created.
-  @nullable
-  @BuiltValueField(wireName: 'dummy_field')
-  BuiltMap<int, String> get dummy;
+  BuiltMap<String, ImportRequestMapping> get columnMap;
 
   static Serializer<ImportRequest> get serializer => _$importRequestSerializer;
+}
+
+abstract class ImportRequestMapping
+    implements Built<ImportRequestMapping, ImportRequestMappingBuilder> {
+  factory ImportRequestMapping(BuiltMap<int, String> mapping) {
+    return _$ImportRequestMapping._(
+      mapping: mapping
+    );
+  }
+
+  ImportRequestMapping._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'mapping')
+  BuiltMap<int, String> get mapping;
+
+  static Serializer<ImportRequestMapping> get serializer => _$importRequestMappingSerializer;
 }
 
 class ImportType extends EnumClass {
