@@ -268,7 +268,7 @@ class _$ImportRequestMappingSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final dynamic value = iterator.current;
       switch (key) {
         case 'mapping':
           result.mapping.replace(serializers.deserialize(value,
@@ -623,12 +623,11 @@ class ImportRequestBuilder
   ImportRequestBuilder();
 
   ImportRequestBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _hash = $v.hash;
-      _importType = $v.importType;
-      _skipHeader = $v.skipHeader;
-      _columnMap = $v.columnMap.toBuilder();
+    if (_$v != null) {
+      _hash = _$v.hash;
+      _importType = _$v.importType;
+      _skipHeader = _$v.skipHeader;
+      _columnMap = _$v.columnMap?.toBuilder();
       _$v = null;
     }
     return this;
@@ -653,12 +652,9 @@ class ImportRequestBuilder
     try {
       _$result = _$v ??
           new _$ImportRequest._(
-              hash: BuiltValueNullFieldError.checkNotNull(
-                  hash, 'ImportRequest', 'hash'),
-              importType: BuiltValueNullFieldError.checkNotNull(
-                  importType, 'ImportRequest', 'importType'),
-              skipHeader: BuiltValueNullFieldError.checkNotNull(
-                  skipHeader, 'ImportRequest', 'skipHeader'),
+              hash: hash,
+              importType: importType,
+              skipHeader: skipHeader,
               columnMap: columnMap.build());
     } catch (_) {
       String _$failedField;
@@ -685,8 +681,9 @@ class _$ImportRequestMapping extends ImportRequestMapping {
       (new ImportRequestMappingBuilder()..update(updates)).build();
 
   _$ImportRequestMapping._({this.mapping}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        mapping, 'ImportRequestMapping', 'mapping');
+    if (mapping == null) {
+      throw new BuiltValueNullFieldError('ImportRequestMapping', 'mapping');
+    }
   }
 
   @override
@@ -730,9 +727,8 @@ class ImportRequestMappingBuilder
   ImportRequestMappingBuilder();
 
   ImportRequestMappingBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _mapping = $v.mapping.toBuilder();
+    if (_$v != null) {
+      _mapping = _$v.mapping?.toBuilder();
       _$v = null;
     }
     return this;
@@ -740,7 +736,9 @@ class ImportRequestMappingBuilder
 
   @override
   void replace(ImportRequestMapping other) {
-    ArgumentError.checkNotNull(other, 'other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ImportRequestMapping;
   }
 
