@@ -162,6 +162,7 @@ part 'serializers.g.dart';
   SystemLogEntity,
   PreImportResponse,
   ImportRequest,
+  ImportRequestMapping,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

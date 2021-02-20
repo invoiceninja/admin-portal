@@ -49,6 +49,8 @@ Serializer<PreImportResponseEntityDetails>
     new _$PreImportResponseEntityDetailsSerializer();
 Serializer<ImportRequest> _$importRequestSerializer =
     new _$ImportRequestSerializer();
+Serializer<ImportRequestMapping> _$importRequestMappingSerializer =
+    new _$ImportRequestMappingSerializer();
 Serializer<ImportType> _$importTypeSerializer = new _$ImportTypeSerializer();
 
 class _$PreImportResponseSerializer
@@ -187,19 +189,10 @@ class _$ImportRequestSerializer implements StructuredSerializer<ImportRequest> {
       serializers.serialize(object.columnMap,
           specifiedType: const FullType(BuiltMap, const [
             const FullType(String),
-            const FullType(
-                BuiltMap, const [const FullType(int), const FullType(String)])
+            const FullType(ImportRequestMapping)
           ])),
     ];
-    Object value;
-    value = object.dummy;
-    if (value != null) {
-      result
-        ..add('dummy_field')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(BuiltMap,
-                const [const FullType(int), const FullType(String)])));
-    }
+
     return result;
   }
 
@@ -231,12 +224,54 @@ class _$ImportRequestSerializer implements StructuredSerializer<ImportRequest> {
           result.columnMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(BuiltMap,
-                    const [const FullType(int), const FullType(String)])
+                const FullType(ImportRequestMapping)
               ])));
           break;
-        case 'dummy_field':
-          result.dummy.replace(serializers.deserialize(value,
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ImportRequestMappingSerializer
+    implements StructuredSerializer<ImportRequestMapping> {
+  @override
+  final Iterable<Type> types = const [
+    ImportRequestMapping,
+    _$ImportRequestMapping
+  ];
+  @override
+  final String wireName = 'ImportRequestMapping';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, ImportRequestMapping object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'mapping',
+      serializers.serialize(object.mapping,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(int), const FullType(String)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  ImportRequestMapping deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ImportRequestMappingBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'mapping':
+          result.mapping.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(int), const FullType(String)])));
           break;
@@ -498,15 +533,13 @@ class _$ImportRequest extends ImportRequest {
   @override
   final bool skipHeader;
   @override
-  final BuiltMap<String, BuiltMap<int, String>> columnMap;
-  @override
-  final BuiltMap<int, String> dummy;
+  final BuiltMap<String, ImportRequestMapping> columnMap;
 
   factory _$ImportRequest([void Function(ImportRequestBuilder) updates]) =>
       (new ImportRequestBuilder()..update(updates)).build();
 
   _$ImportRequest._(
-      {this.hash, this.importType, this.skipHeader, this.columnMap, this.dummy})
+      {this.hash, this.importType, this.skipHeader, this.columnMap})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(hash, 'ImportRequest', 'hash');
     BuiltValueNullFieldError.checkNotNull(
@@ -531,19 +564,16 @@ class _$ImportRequest extends ImportRequest {
         hash == other.hash &&
         importType == other.importType &&
         skipHeader == other.skipHeader &&
-        columnMap == other.columnMap &&
-        dummy == other.dummy;
+        columnMap == other.columnMap;
   }
 
   int __hashCode;
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc(
-            $jc($jc($jc(0, hash.hashCode), importType.hashCode),
-                skipHeader.hashCode),
-            columnMap.hashCode),
-        dummy.hashCode));
+        $jc($jc($jc(0, hash.hashCode), importType.hashCode),
+            skipHeader.hashCode),
+        columnMap.hashCode));
   }
 
   @override
@@ -552,8 +582,7 @@ class _$ImportRequest extends ImportRequest {
           ..add('hash', hash)
           ..add('importType', importType)
           ..add('skipHeader', skipHeader)
-          ..add('columnMap', columnMap)
-          ..add('dummy', dummy))
+          ..add('columnMap', columnMap))
         .toString();
   }
 }
@@ -574,16 +603,11 @@ class ImportRequestBuilder
   bool get skipHeader => _$this._skipHeader;
   set skipHeader(bool skipHeader) => _$this._skipHeader = skipHeader;
 
-  MapBuilder<String, BuiltMap<int, String>> _columnMap;
-  MapBuilder<String, BuiltMap<int, String>> get columnMap =>
-      _$this._columnMap ??= new MapBuilder<String, BuiltMap<int, String>>();
-  set columnMap(MapBuilder<String, BuiltMap<int, String>> columnMap) =>
+  MapBuilder<String, ImportRequestMapping> _columnMap;
+  MapBuilder<String, ImportRequestMapping> get columnMap =>
+      _$this._columnMap ??= new MapBuilder<String, ImportRequestMapping>();
+  set columnMap(MapBuilder<String, ImportRequestMapping> columnMap) =>
       _$this._columnMap = columnMap;
-
-  MapBuilder<int, String> _dummy;
-  MapBuilder<int, String> get dummy =>
-      _$this._dummy ??= new MapBuilder<int, String>();
-  set dummy(MapBuilder<int, String> dummy) => _$this._dummy = dummy;
 
   ImportRequestBuilder();
 
@@ -594,7 +618,6 @@ class ImportRequestBuilder
       _importType = $v.importType;
       _skipHeader = $v.skipHeader;
       _columnMap = $v.columnMap.toBuilder();
-      _dummy = $v.dummy?.toBuilder();
       _$v = null;
     }
     return this;
@@ -623,18 +646,109 @@ class ImportRequestBuilder
                   importType, 'ImportRequest', 'importType'),
               skipHeader: BuiltValueNullFieldError.checkNotNull(
                   skipHeader, 'ImportRequest', 'skipHeader'),
-              columnMap: columnMap.build(),
-              dummy: _dummy?.build());
+              columnMap: columnMap.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'columnMap';
         columnMap.build();
-        _$failedField = 'dummy';
-        _dummy?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ImportRequest', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ImportRequestMapping extends ImportRequestMapping {
+  @override
+  final BuiltMap<int, String> mapping;
+
+  factory _$ImportRequestMapping(
+          [void Function(ImportRequestMappingBuilder) updates]) =>
+      (new ImportRequestMappingBuilder()..update(updates)).build();
+
+  _$ImportRequestMapping._({this.mapping}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        mapping, 'ImportRequestMapping', 'mapping');
+  }
+
+  @override
+  ImportRequestMapping rebuild(
+          void Function(ImportRequestMappingBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ImportRequestMappingBuilder toBuilder() =>
+      new ImportRequestMappingBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ImportRequestMapping && mapping == other.mapping;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(0, mapping.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ImportRequestMapping')
+          ..add('mapping', mapping))
+        .toString();
+  }
+}
+
+class ImportRequestMappingBuilder
+    implements Builder<ImportRequestMapping, ImportRequestMappingBuilder> {
+  _$ImportRequestMapping _$v;
+
+  MapBuilder<int, String> _mapping;
+  MapBuilder<int, String> get mapping =>
+      _$this._mapping ??= new MapBuilder<int, String>();
+  set mapping(MapBuilder<int, String> mapping) => _$this._mapping = mapping;
+
+  ImportRequestMappingBuilder();
+
+  ImportRequestMappingBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _mapping = $v.mapping.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ImportRequestMapping other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ImportRequestMapping;
+  }
+
+  @override
+  void update(void Function(ImportRequestMappingBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ImportRequestMapping build() {
+    _$ImportRequestMapping _$result;
+    try {
+      _$result = _$v ?? new _$ImportRequestMapping._(mapping: mapping.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'mapping';
+        mapping.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ImportRequestMapping', _$failedField, e.toString());
       }
       rethrow;
     }
