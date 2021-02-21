@@ -28,6 +28,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   final addCompany = _createCompany(repository);
   final deleteCompany = _deleteCompany(repository);
   final purgeData = _purgeData(repository);
+  final resendConfirmation = _resendConfirmation(repository);
 
   return [
     TypedMiddleware<AppState, UserLogout>(userLogout),
@@ -40,6 +41,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
     TypedMiddleware<AppState, AddCompany>(addCompany),
     TypedMiddleware<AppState, DeleteCompanyRequest>(deleteCompany),
     TypedMiddleware<AppState, PurgeDataRequest>(purgeData),
+    TypedMiddleware<AppState, ResendConfirmation>(resendConfirmation),
   ];
 }
 
@@ -365,6 +367,25 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
     }).catchError((Object error) {
       store.dispatch(PurgeDataFailure(error));
       action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _resendConfirmation(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ResendConfirmation;
+    final state = store.state;
+
+    repository
+        .resendConfirmation(
+            credentials: state.credentials, userId: state.user.id)
+        .then((dynamic value) {
+      store.dispatch(ResendConfirmationSuccess());
+    }).catchError((Object error) {
+      store.dispatch(ResendConfirmationFailure(error));
     });
 
     next(action);

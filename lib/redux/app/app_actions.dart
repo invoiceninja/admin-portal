@@ -151,6 +151,15 @@ class LoadAccountSuccess implements StopLoading {
   final LoginResponse loginResponse;
 }
 
+class ResendConfirmation implements StartLoading {}
+
+class ResendConfirmationFailure implements StopLoading {
+  ResendConfirmationFailure(this.error);
+  final dynamic error;
+}
+
+class ResendConfirmationSuccess implements StopLoading {}
+
 class RefreshData implements StartLoading {
   RefreshData({
     this.completer,

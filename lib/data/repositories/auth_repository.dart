@@ -161,6 +161,14 @@ class AuthRepository {
         password: password);
   }
 
+  Future<dynamic> resendConfirmation(
+      {@required Credentials credentials, @required String userId}) async {
+    return webClient.post(
+      '${credentials.url}/user/$userId/reconfirm',
+      credentials.token,
+    );
+  }
+
   Future<LoginResponse> sendRequest({
     String url,
     dynamic data,

@@ -40,7 +40,7 @@ class ConfirmEmailVM {
         store.dispatch(RefreshData());
       },
       onResendPressed: () {
-        //
+        store.dispatch(ResendConfirmation());
       },
     );
   }
