@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_shortcuts.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
+import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -79,6 +80,8 @@ class MainScreen extends StatelessWidget {
           child: LoadingIndicator(),
           color: Theme.of(context).cardColor,
         );
+      } else if (!state.isUserConfirmed) {
+        return ConfirmEmailBuilder();
       }
 
       bool editingFilterEntity = false;

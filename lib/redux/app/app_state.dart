@@ -714,6 +714,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isProPlan => true;
   bool get isEnterprisePlan => true;
 
+  bool get isUserConfirmed {
+    if (isSelfHosted) {
+      return true;
+    }
+
+    return (user.emailVerifiedAt ?? 0) > 0;
+  }
+
   bool get canAddCompany => userCompany.isOwner && companies.length < 10;
 
   bool get isMenuCollapsed =>
