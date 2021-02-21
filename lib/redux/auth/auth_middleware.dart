@@ -56,8 +56,10 @@ Middleware<AppState> _createUserLogout() {
 
     next(action);
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        LoginScreen.route, (Route<dynamic> route) => false);
+    if (action.navigate) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          LoginScreen.route, (Route<dynamic> route) => false);
+    }
 
     store.dispatch(UpdateCurrentRoute(LoginScreen.route));
   };
