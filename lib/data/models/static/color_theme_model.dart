@@ -30,7 +30,8 @@ Map<String, ColorTheme> colorThemesMap = {
   ),
   kColorThemeDark: ColorTheme(
     colorPrimary: const Color(0xff0c45a3),
-    colorInfo: const Color(0xff505f73),
+    //colorInfo: const Color(0xff505f73),
+    colorInfo: const Color(0xff298aab),
     colorSuccess: const Color(0xff407535),
     colorWarning: const Color(0xffa87000),
     colorDanger: const Color(0xff8b3d40),
