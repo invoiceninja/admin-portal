@@ -139,21 +139,21 @@ class _AccountManagementState extends State<AccountManagement>
                       DropdownMenuItem<int>(
                         child: Text(localization.countHours
                             .replaceFirst(':count', '8')),
-                        value: 60 * 60 * 8,
+                        value: 1000 * 60 * 60 * 8,
                       ),
                       DropdownMenuItem<int>(
                         child: Text(localization.countDay),
-                        value: 60 * 60 * 24,
+                        value: 1000 * 60 * 60 * 24,
                       ),
                       DropdownMenuItem<int>(
                         child: Text(
                             localization.countDays.replaceFirst(':count', '7')),
-                        value: 60 * 60 * 24 * 7,
+                        value: 1000 * 60 * 60 * 24 * 7,
                       ),
                       DropdownMenuItem<int>(
                         child: Text(localization.countDays
                             .replaceFirst(':count', '30')),
-                        value: 60 * 60 * 24 * 30,
+                        value: 1000 * 60 * 60 * 24 * 30,
                       ),
                     ],
                   )
