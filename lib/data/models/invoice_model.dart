@@ -516,7 +516,6 @@ abstract class InvoiceEntity extends Object
     int response = 0;
     final InvoiceEntity invoiceA = sortAscending ? this : invoice;
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
-
     switch (sortField) {
       case InvoiceFields.number:
         response = (invoiceA.number ?? '')
@@ -551,7 +550,7 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.poNumber:
         response = invoiceA.poNumber.compareTo(invoiceB.poNumber);
         break;
-      case InvoiceFields.statusId:
+      case InvoiceFields.status:
         response = invoiceA.statusId.compareTo(invoiceB.statusId);
         break;
       case EntityFields.state:
