@@ -1406,7 +1406,7 @@ void selectEntity({
       uiState.isViewing &&
       !entity.entityType.isSetting &&
       entityUIState.selectedId == entity.id &&
-      state.prefState.isPreviewVisible) {
+      (state.prefState.isPreviewVisible || state.prefState.isModuleList)) {
     if (entityUIState.tabIndex > 0) {
       store.dispatch(PreviewEntity());
     } else {
