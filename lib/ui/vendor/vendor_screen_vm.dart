@@ -45,6 +45,7 @@ class VendorScreenVM {
     return VendorScreenVM(
       vendorMap: state.vendorState.map,
       vendorList: memoizedFilteredVendorList(
+          state.getUISelection(EntityType.vendor),
           state.vendorState.map,
           state.vendorState.list,
           state.vendorListState,

@@ -48,6 +48,7 @@ class ExpenseCategoryScreenVM {
     return ExpenseCategoryScreenVM(
       expenseCategoryMap: state.expenseCategoryState.map,
       expenseCategoryList: memoizedFilteredExpenseCategoryList(
+          state.getUISelection(EntityType.expenseCategory),
           state.expenseCategoryState.map,
           state.expenseCategoryState.list,
           state.expenseCategoryListState),

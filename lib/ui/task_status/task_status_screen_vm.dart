@@ -47,8 +47,11 @@ class TaskStatusScreenVM {
 
     return TaskStatusScreenVM(
       taskStatusMap: state.taskStatusState.map,
-      taskStatusList: memoizedFilteredTaskStatusList(state.taskStatusState.map,
-          state.taskStatusState.list, state.taskStatusListState),
+      taskStatusList: memoizedFilteredTaskStatusList(
+          state.getUISelection(EntityType.taskStatus),
+          state.taskStatusState.map,
+          state.taskStatusState.list,
+          state.taskStatusListState),
       userCompany: state.userCompany,
       isInMultiselect: state.taskStatusListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> taskStatuses,

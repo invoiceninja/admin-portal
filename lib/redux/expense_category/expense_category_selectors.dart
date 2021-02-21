@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -41,19 +42,24 @@ List<String> dropdownExpenseCategoriesSelector(
   return list;
 }
 
-var memoizedFilteredExpenseCategoryList = memo3(
-    (BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-            BuiltList<String> expenseCategoryList,
-            ListUIState expenseCategoryListState) =>
-        filteredExpenseCategoriesSelector(
-            expenseCategoryMap, expenseCategoryList, expenseCategoryListState));
+var memoizedFilteredExpenseCategoryList = memo4((SelectionState selectionState,
+        BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+        BuiltList<String> expenseCategoryList,
+        ListUIState expenseCategoryListState) =>
+    filteredExpenseCategoriesSelector(selectionState, expenseCategoryMap,
+        expenseCategoryList, expenseCategoryListState));
 
 List<String> filteredExpenseCategoriesSelector(
+    SelectionState selectionState,
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     BuiltList<String> expenseCategoryList,
     ListUIState expenseCategoryListState) {
   final list = expenseCategoryList.where((expenseCategoryId) {
     final expenseCategory = expenseCategoryMap[expenseCategoryId];
+
+    if (expenseCategory.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!expenseCategory.matchesStates(expenseCategoryListState.stateFilters)) {
       return false;

@@ -44,8 +44,12 @@ class ProductScreenVM {
 
     return ProductScreenVM(
       productMap: state.productState.map,
-      productList: memoizedFilteredProductList(state.productState.map,
-          state.productState.list, state.productListState, state.userState.map),
+      productList: memoizedFilteredProductList(
+          state.getUISelection(EntityType.product),
+          state.productState.map,
+          state.productState.list,
+          state.productListState,
+          state.userState.map),
       userCompany: state.userCompany,
       isInMultiselect: state.productListState.isInMultiselect(),
     );

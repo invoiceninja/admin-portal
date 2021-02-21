@@ -80,8 +80,12 @@ class ProductListVM {
 
     return ProductListVM(
       state: state,
-      productList: memoizedFilteredProductList(state.productState.map,
-          state.productState.list, state.productListState, state.userState.map),
+      productList: memoizedFilteredProductList(
+          state.getUISelection(EntityType.product),
+          state.productState.map,
+          state.productState.list,
+          state.productListState,
+          state.userState.map),
       productMap: state.productState.map,
       isLoading: state.isLoading,
       filter: state.productUIState.listUIState.filter,
