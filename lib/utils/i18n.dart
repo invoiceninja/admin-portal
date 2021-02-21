@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'count_hours': ':count Hours',
+      'count_day': '1 Day',
+      'count_days': ':count Days',
       'web_session_timeout': 'Web Session Timeout',
       'security_settings': 'Security Settings',
       'resend_email': 'Resend Email',
@@ -54435,9 +54438,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get resendEmail => _localizedValues[localeCode]['resend_email'] ?? '';
 
-  String get securitySettings => _localizedValues[localeCode]['security_settings'] ?? '';
+  String get securitySettings =>
+      _localizedValues[localeCode]['security_settings'] ?? '';
 
-  String get webSessionTimeout => _localizedValues[localeCode]['web_session_timeout'] ?? '';
+  String get webSessionTimeout =>
+      _localizedValues[localeCode]['web_session_timeout'] ?? '';
+
+  String get countHours => _localizedValues[localeCode]['count_hours'] ?? '';
+
+  String get countDays => _localizedValues[localeCode]['count_days'] ?? '';
+
+  String get countDay => _localizedValues[localeCode]['count_day'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
