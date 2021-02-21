@@ -715,6 +715,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isEnterprisePlan => true;
 
   bool get isUserConfirmed {
+    return true;
+
     if (isSelfHosted) {
       return true;
     }

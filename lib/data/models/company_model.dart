@@ -212,6 +212,12 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'expense_inclusive_taxes')
   bool get expenseInclusiveTaxes;
 
+  @BuiltValueField(wireName: 'session_timeout')
+  int get sessionTimeout;
+
+  @BuiltValueField(wireName: 'ouath_password_required')
+  bool get ouathPasswordRequired;
+
   BuiltList<GroupEntity> get groups;
 
   BuiltList<ActivityEntity> get activities;
@@ -486,7 +492,9 @@ abstract class CompanyEntity extends Object
   static void _initializeBuilder(CompanyEntityBuilder builder) => builder
     ..calculateExpenseTaxByAmount = false
     ..enableProductDiscount = false
-    ..defaultTaskIsDateBased = false;
+    ..defaultTaskIsDateBased = false
+    ..sessionTimeout = 0
+    ..ouathPasswordRequired = false;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
