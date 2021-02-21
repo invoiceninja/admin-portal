@@ -65,9 +65,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreBuilder(
-        //onInit: (Store<AppState> store) => store.dispatch(RefreshData()),
-        builder: (BuildContext context, Store<AppState> store) {
+    return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final state = store.state;
       final uiState = state.uiState;
       final prefState = state.prefState;
