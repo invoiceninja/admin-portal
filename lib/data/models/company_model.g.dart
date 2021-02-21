@@ -117,6 +117,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'expense_inclusive_taxes',
       serializers.serialize(object.expenseInclusiveTaxes,
           specifiedType: const FullType(bool)),
+      'session_timeout',
+      serializers.serialize(object.sessionTimeout,
+          specifiedType: const FullType(int)),
+      'ouath_password_required',
+      serializers.serialize(object.ouathPasswordRequired,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -422,6 +428,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'expense_inclusive_taxes':
           result.expenseInclusiveTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'session_timeout':
+          result.sessionTimeout = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'ouath_password_required':
+          result.ouathPasswordRequired = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
@@ -3006,6 +3020,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool expenseInclusiveTaxes;
   @override
+  final int sessionTimeout;
+  @override
+  final bool ouathPasswordRequired;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -3130,6 +3148,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.numberOfInvoiceTaxRates,
       this.numberOfItemTaxRates,
       this.expenseInclusiveTaxes,
+      this.sessionTimeout,
+      this.ouathPasswordRequired,
       this.groups,
       this.activities,
       this.taxRates,
@@ -3271,6 +3291,13 @@ class _$CompanyEntity extends CompanyEntity {
     if (expenseInclusiveTaxes == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'expenseInclusiveTaxes');
+    }
+    if (sessionTimeout == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'sessionTimeout');
+    }
+    if (ouathPasswordRequired == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'ouathPasswordRequired');
     }
     if (groups == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'groups');
@@ -3440,6 +3467,8 @@ class _$CompanyEntity extends CompanyEntity {
         numberOfInvoiceTaxRates == other.numberOfInvoiceTaxRates &&
         numberOfItemTaxRates == other.numberOfItemTaxRates &&
         expenseInclusiveTaxes == other.expenseInclusiveTaxes &&
+        sessionTimeout == other.sessionTimeout &&
+        ouathPasswordRequired == other.ouathPasswordRequired &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -3509,7 +3538,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), ouathPasswordRequired.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode),
                                                                                 markExpensesInvoiceable.hashCode),
                                                                             markExpensesPaid.hashCode),
                                                                         invoiceExpenseDocuments.hashCode),
@@ -3562,6 +3591,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('numberOfInvoiceTaxRates', numberOfInvoiceTaxRates)
           ..add('numberOfItemTaxRates', numberOfItemTaxRates)
           ..add('expenseInclusiveTaxes', expenseInclusiveTaxes)
+          ..add('sessionTimeout', sessionTimeout)
+          ..add('ouathPasswordRequired', ouathPasswordRequired)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -3746,6 +3777,16 @@ class CompanyEntityBuilder
   bool get expenseInclusiveTaxes => _$this._expenseInclusiveTaxes;
   set expenseInclusiveTaxes(bool expenseInclusiveTaxes) =>
       _$this._expenseInclusiveTaxes = expenseInclusiveTaxes;
+
+  int _sessionTimeout;
+  int get sessionTimeout => _$this._sessionTimeout;
+  set sessionTimeout(int sessionTimeout) =>
+      _$this._sessionTimeout = sessionTimeout;
+
+  bool _ouathPasswordRequired;
+  bool get ouathPasswordRequired => _$this._ouathPasswordRequired;
+  set ouathPasswordRequired(bool ouathPasswordRequired) =>
+      _$this._ouathPasswordRequired = ouathPasswordRequired;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -4020,6 +4061,8 @@ class CompanyEntityBuilder
       _numberOfInvoiceTaxRates = _$v.numberOfInvoiceTaxRates;
       _numberOfItemTaxRates = _$v.numberOfItemTaxRates;
       _expenseInclusiveTaxes = _$v.expenseInclusiveTaxes;
+      _sessionTimeout = _$v.sessionTimeout;
+      _ouathPasswordRequired = _$v.ouathPasswordRequired;
       _groups = _$v.groups?.toBuilder();
       _activities = _$v.activities?.toBuilder();
       _taxRates = _$v.taxRates?.toBuilder();
@@ -4118,6 +4161,8 @@ class CompanyEntityBuilder
               numberOfInvoiceTaxRates: numberOfInvoiceTaxRates,
               numberOfItemTaxRates: numberOfItemTaxRates,
               expenseInclusiveTaxes: expenseInclusiveTaxes,
+              sessionTimeout: sessionTimeout,
+              ouathPasswordRequired: ouathPasswordRequired,
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),
