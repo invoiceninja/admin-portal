@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -31,17 +32,25 @@ List<String> dropdownTaxRatesSelector(
   return list;
 }
 
-var memoizedFilteredTaxRateList = memo3(
-    (BuiltMap<String, TaxRateEntity> taxRateMap, BuiltList<String> taxRateList,
-            ListUIState taxRateListState) =>
-        filteredTaxRatesSelector(taxRateMap, taxRateList, taxRateListState));
+var memoizedFilteredTaxRateList = memo4((SelectionState selectionState,
+        BuiltMap<String, TaxRateEntity> taxRateMap,
+        BuiltList<String> taxRateList,
+        ListUIState taxRateListState) =>
+    filteredTaxRatesSelector(
+        selectionState, taxRateMap, taxRateList, taxRateListState));
 
 List<String> filteredTaxRatesSelector(
+    SelectionState selectionState,
     BuiltMap<String, TaxRateEntity> taxRateMap,
     BuiltList<String> taxRateList,
     ListUIState taxRateListState) {
   final list = taxRateList.where((taxRateId) {
     final taxRate = taxRateMap[taxRateId];
+
+    if (taxRate.id == selectionState.selectedId) {
+      return true;
+    }
+
     if (!taxRate.matchesStates(taxRateListState.stateFilters)) {
       return false;
     }

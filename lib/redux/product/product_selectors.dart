@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -81,21 +82,27 @@ List<String> productList(BuiltMap<String, ProductEntity> productMap) {
   return list;
 }
 
-var memoizedFilteredProductList = memo4(
-    (BuiltMap<String, ProductEntity> productMap,
-            BuiltList<String> productList,
-            ListUIState productListState,
-            BuiltMap<String, UserEntity> userMap) =>
-        filteredProductsSelector(
-            productMap, productList, productListState, userMap));
+var memoizedFilteredProductList = memo5((SelectionState selectionState,
+        BuiltMap<String, ProductEntity> productMap,
+        BuiltList<String> productList,
+        ListUIState productListState,
+        BuiltMap<String, UserEntity> userMap) =>
+    filteredProductsSelector(
+        selectionState, productMap, productList, productListState, userMap));
 
 List<String> filteredProductsSelector(
+    SelectionState selectionState,
     BuiltMap<String, ProductEntity> productMap,
     BuiltList<String> productList,
     ListUIState productListState,
     BuiltMap<String, UserEntity> userMap) {
   final list = productList.where((productId) {
     final product = productMap[productId];
+
+    if (product.id == selectionState.selectedId) {
+      return true;
+    }
+
     if (!product.matchesStates(productListState.stateFilters)) {
       return false;
     }

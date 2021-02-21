@@ -49,6 +49,7 @@ class PaymentTermScreenVM {
     return PaymentTermScreenVM(
       paymentTermMap: state.paymentTermState.map,
       paymentTermList: memoizedFilteredPaymentTermList(
+          state.getUISelection(EntityType.paymentTerm),
           state.paymentTermState.map,
           state.paymentTermState.list,
           state.paymentTermListState),

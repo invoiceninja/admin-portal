@@ -87,6 +87,7 @@ class PaymentTermListVM {
       userCompany: state.userCompany,
       listState: state.paymentTermListState,
       paymentTermList: memoizedFilteredPaymentTermList(
+          state.getUISelection(EntityType.paymentTerm),
           state.paymentTermState.map,
           state.paymentTermState.list,
           state.paymentTermListState),

@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -29,16 +30,17 @@ List<String> dropdownVendorsSelector(
   return list;
 }
 
-var memoizedFilteredVendorList = memo5(
-    (BuiltMap<String, VendorEntity> vendorMap,
-            BuiltList<String> vendorList,
-            ListUIState vendorListState,
-            BuiltMap<String, UserEntity> userMap,
-            StaticState staticState) =>
-        filteredVendorsSelector(
-            vendorMap, vendorList, vendorListState, userMap, staticState));
+var memoizedFilteredVendorList = memo6((SelectionState selectionState,
+        BuiltMap<String, VendorEntity> vendorMap,
+        BuiltList<String> vendorList,
+        ListUIState vendorListState,
+        BuiltMap<String, UserEntity> userMap,
+        StaticState staticState) =>
+    filteredVendorsSelector(selectionState, vendorMap, vendorList,
+        vendorListState, userMap, staticState));
 
 List<String> filteredVendorsSelector(
+    SelectionState selectionState,
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltList<String> vendorList,
     ListUIState vendorListState,
@@ -46,6 +48,10 @@ List<String> filteredVendorsSelector(
     StaticState staticState) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
+
+    if (vendor.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!vendor.matchesStates(vendorListState.stateFilters)) {
       return false;

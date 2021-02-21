@@ -86,7 +86,10 @@ class GroupListVM {
       userCompany: state.userCompany,
       listState: state.groupListState,
       groupList: memoizedFilteredGroupList(
-          state.groupState.map, state.groupState.list, state.groupListState),
+          state.getUISelection(EntityType.group),
+          state.groupState.map,
+          state.groupState.list,
+          state.groupListState),
       groupMap: state.groupState.map,
       isLoading: state.isLoading,
       filter: state.groupUIState.listUIState.filter,

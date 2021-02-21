@@ -44,8 +44,12 @@ class UserScreenVM {
 
     return UserScreenVM(
       userMap: state.userState.map,
-      userList: memoizedFilteredUserList(state.userState.map,
-          state.userState.list, state.userListState, state.user.id),
+      userList: memoizedFilteredUserList(
+          state.getUISelection(EntityType.user),
+          state.userState.map,
+          state.userState.list,
+          state.userListState,
+          state.user.id),
       userCompany: state.userCompany,
       isInMultiselect: state.userListState.isInMultiselect(),
     );

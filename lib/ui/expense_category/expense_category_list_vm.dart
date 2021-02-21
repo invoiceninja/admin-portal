@@ -89,6 +89,7 @@ class ExpenseCategoryListVM {
       userCompany: state.userCompany,
       listState: state.expenseCategoryListState,
       expenseCategoryList: memoizedFilteredExpenseCategoryList(
+          state.getUISelection(EntityType.expenseCategory),
           state.expenseCategoryState.map,
           state.expenseCategoryState.list,
           state.expenseCategoryListState),
