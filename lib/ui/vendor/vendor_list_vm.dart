@@ -85,6 +85,7 @@ class VendorListVM {
       state: state,
       listState: state.vendorListState,
       vendorList: memoizedFilteredVendorList(
+          state.getUISelection(EntityType.vendor),
           state.vendorState.map,
           state.vendorState.list,
           state.vendorListState,

@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/task_status_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -43,19 +44,24 @@ List<String> dropdownTaskStatusesSelector(
   return list;
 }
 
-var memoizedFilteredTaskStatusList = memo3(
-    (BuiltMap<String, TaskStatusEntity> taskStatusMap,
-            BuiltList<String> taskStatusList,
-            ListUIState taskStatusListState) =>
-        filteredTaskStatusesSelector(
-            taskStatusMap, taskStatusList, taskStatusListState));
+var memoizedFilteredTaskStatusList = memo4((SelectionState selectionState,
+        BuiltMap<String, TaskStatusEntity> taskStatusMap,
+        BuiltList<String> taskStatusList,
+        ListUIState taskStatusListState) =>
+    filteredTaskStatusesSelector(
+        selectionState, taskStatusMap, taskStatusList, taskStatusListState));
 
 List<String> filteredTaskStatusesSelector(
+    SelectionState selectionState,
     BuiltMap<String, TaskStatusEntity> taskStatusMap,
     BuiltList<String> taskStatusList,
     ListUIState taskStatusListState) {
   final list = taskStatusList.where((taskStatusId) {
     final taskStatus = taskStatusMap[taskStatusId];
+
+    if (taskStatus.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!taskStatus.matchesStates(taskStatusListState.stateFilters)) {
       return false;

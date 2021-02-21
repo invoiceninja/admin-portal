@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -30,14 +31,24 @@ List<String> dropdownGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
   return list;
 }
 
-var memoizedFilteredGroupList = memo3((BuiltMap<String, GroupEntity> groupMap,
-        BuiltList<String> groupList, ListUIState groupListState) =>
-    filteredGroupsSelector(groupMap, groupList, groupListState));
+var memoizedFilteredGroupList = memo4((SelectionState selectionState,
+        BuiltMap<String, GroupEntity> groupMap,
+        BuiltList<String> groupList,
+        ListUIState groupListState) =>
+    filteredGroupsSelector(
+        selectionState, groupMap, groupList, groupListState));
 
-List<String> filteredGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
-    BuiltList<String> groupList, ListUIState groupListState) {
+List<String> filteredGroupsSelector(
+    SelectionState selectionState,
+    BuiltMap<String, GroupEntity> groupMap,
+    BuiltList<String> groupList,
+    ListUIState groupListState) {
   final list = groupList.where((groupId) {
     final group = groupMap[groupId];
+
+    if (group.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!group.matchesStates(groupListState.stateFilters)) {
       return false;

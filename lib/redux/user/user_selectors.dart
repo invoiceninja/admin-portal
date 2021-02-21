@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -29,16 +30,26 @@ List<String> dropdownUsersSelector(BuiltMap<String, UserEntity> userMap,
   return list;
 }
 
-var memoizedFilteredUserList = memo4((BuiltMap<String, UserEntity> userMap,
+var memoizedFilteredUserList = memo5((SelectionState selectionState,
+        BuiltMap<String, UserEntity> userMap,
         BuiltList<String> userList,
         ListUIState userListState,
         String authUserId) =>
-    filteredUsersSelector(userMap, userList, userListState, authUserId));
+    filteredUsersSelector(
+        selectionState, userMap, userList, userListState, authUserId));
 
-List<String> filteredUsersSelector(BuiltMap<String, UserEntity> userMap,
-    BuiltList<String> userList, ListUIState userListState, String authUserId) {
+List<String> filteredUsersSelector(
+    SelectionState selectionState,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltList<String> userList,
+    ListUIState userListState,
+    String authUserId) {
   final list = userList.where((userId) {
     final user = userMap[userId];
+
+    if (user.id == selectionState.selectedId) {
+      return true;
+    }
 
     if (!user.matchesStates(userListState.stateFilters)) {
       return false;
