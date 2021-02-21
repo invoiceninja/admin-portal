@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/app_header.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -47,7 +48,7 @@ class _AccountManagementState extends State<AccountManagement>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: 3, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -84,6 +85,9 @@ class _AccountManagementState extends State<AccountManagement>
           Tab(
             text: localization.enabledModules,
           ),
+          Tab(
+            text: localization.securitySettings,
+          ),
         ],
       ),
       body: AppTabForm(
@@ -116,6 +120,26 @@ class _AccountManagementState extends State<AccountManagement>
               }).toList()),
             ],
           ),
+          ListView(
+            children: [
+              FormCard(
+                children: [
+                  AppDropdownButton<int>(
+                    labelText: localization.webSessionTimeout,
+                    value: company.sessionTimeout,
+                    onChanged: (dynamic value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..sessionTimeout = value)),
+                    items: [
+                      DropdownMenuItem<int>(
+                        child: Text(localization.never),
+                        value: 0,
+                      )
+                    ],
+                  )
+                ],
+              )
+            ],
+          )
         ],
       ),
     );

@@ -90,6 +90,8 @@ abstract class CompanyEntity extends Object
       isDisabled: false,
       calculateExpenseTaxByAmount: false,
       expenseInclusiveTaxes: false,
+      sessionTimeout: 0,
+      ouathPasswordRequired: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),

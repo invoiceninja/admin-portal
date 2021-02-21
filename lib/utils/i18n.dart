@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'web_session_timeout': 'Web Session Timeout',
+      'security_settings': 'Security Settings',
       'resend_email': 'Resend Email',
       'confirm_your_email_address': 'Please confirm your email address',
       'refunded_payment': 'Successfully refunded payment',
@@ -54432,6 +54434,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['confirm_your_email_address'] ?? '';
 
   String get resendEmail => _localizedValues[localeCode]['resend_email'] ?? '';
+
+  String get securitySettings => _localizedValues[localeCode]['security_settings'] ?? '';
+
+  String get webSessionTimeout => _localizedValues[localeCode]['web_session_timeout'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
