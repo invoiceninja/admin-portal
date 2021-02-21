@@ -48,6 +48,7 @@ class _InvitationListTile extends StatelessWidget {
         orElse: () => ContactEntity());
 
     return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       title: Text(contact.fullNameWithEmail.isEmpty
           ? client.displayName
           : contact.fullNameWithEmail),
