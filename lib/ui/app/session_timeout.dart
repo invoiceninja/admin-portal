@@ -28,7 +28,7 @@ class _SessionTimeoutState extends State<SessionTimeout> {
     }
 
     _timer = Timer.periodic(
-      Duration(seconds: 1),
+      Duration(minutes: 1),
       (Timer timer) {
         final store = StoreProvider.of<AppState>(context);
         final state = store.state;
