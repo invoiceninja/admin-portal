@@ -26,12 +26,11 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
     super.initState();
 
     if (!kIsWeb) {
-      //return;
+      return;
     }
 
     _timer = Timer.periodic(
-      //Duration(minutes: 1),
-      Duration(seconds: 1),
+      Duration(minutes: 1),
       (Timer timer) {
         final store = StoreProvider.of<AppState>(context);
         final state = store.state;
@@ -44,11 +43,9 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
         final sessionLength = DateTime.now().millisecondsSinceEpoch -
             state.userCompanyState.lastUpdated;
 
-        print('## DESKTOP Timeout: $sessionTimeout, Length: $sessionLength');
-
         if (sessionLength > sessionTimeout) {
           store.dispatch(UserLogout(context));
-        } else if (sessionLength > (sessionTimeout - (1000 * 60))) {
+        } else if (sessionLength > (sessionTimeout - (1000 * 60 * 2))) {
           setState(() {
             _isWarned = true;
           });
@@ -80,11 +77,14 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
                   Expanded(child: Text(localization.sessionAboutToExpire)),
                   TextButton(
                       onPressed: () {
-                        setState(() {
-                          _isWarned = false;
-                        });
                         final store = StoreProvider.of<AppState>(context);
-                        store.dispatch(RefreshData());
+                        final completer = Completer<Null>();
+                        completer.future.then((value) {
+                          setState(() {
+                            _isWarned = false;
+                          });
+                        });
+                        store.dispatch(RefreshData(completer: completer));
                       },
                       child: Text(
                         localization.stayLoggedIn,

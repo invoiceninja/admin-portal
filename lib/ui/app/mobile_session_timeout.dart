@@ -25,12 +25,11 @@ class _MobileSessionTimeoutState extends State<MobileSessionTimeout> {
     super.initState();
 
     if (!kIsWeb) {
-      //return;
+      return;
     }
 
     _timer = Timer.periodic(
-      //Duration(minutes: 1),
-      Duration(seconds: 1),
+      Duration(minutes: 1),
       (Timer timer) {
         final store = StoreProvider.of<AppState>(context);
         final state = store.state;
@@ -43,11 +42,11 @@ class _MobileSessionTimeoutState extends State<MobileSessionTimeout> {
         final sessionLength = DateTime.now().millisecondsSinceEpoch -
             state.userCompanyState.lastUpdated;
 
-        print('## MOBILE Timeout: $sessionTimeout, Length: $sessionLength');
-
         if (sessionLength > sessionTimeout) {
           store.dispatch(UserLogout(context, navigate: false));
-          WebUtils.reloadBrowser();
+          WidgetsBinding.instance.addPostFrameCallback((duration) {
+            WebUtils.reloadBrowser();
+          });
         }
       },
     );
