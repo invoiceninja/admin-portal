@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_view.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -81,6 +82,15 @@ class LoginVM {
   final Function(BuildContext, Completer<Null> completer) onGoogleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
+    final GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+        'openid',
+        'profile',
+        'https://www.googleapis.com/auth/gmail.send',
+      ],
+    );
+
     void _handleLogin({BuildContext context, bool isSignUp = false}) {
       final layout = calculateLayout(context);
 
@@ -110,9 +120,52 @@ class LoginVM {
           @required String url,
           @required String secret,
           @required String oneTimePassword,
-        }) async {},
+        }) async {
+          try {
+            final account = await _googleSignIn.signIn();
+
+            if (account != null) {
+              account.authentication.then((GoogleSignInAuthentication value) {
+                store.dispatch(OAuthLoginRequest(
+                  completer: completer,
+                  idToken: value.idToken,
+                  accessToken: value.accessToken,
+                  serverAuthCode: value.serverAuthCode,
+                  url: formatApiUrl(url.trim()),
+                  secret: secret.trim(),
+                  platform: getPlatform(context),
+                  oneTimePassword: oneTimePassword,
+                ));
+                completer.future.then((_) => _handleLogin(context: context));
+              });
+            }
+          } catch (error) {
+            completer.completeError(error);
+            print(error);
+          }
+        },
         onGoogleSignUpPressed:
-            (BuildContext context, Completer<Null> completer) async {},
+            (BuildContext context, Completer<Null> completer) async {
+          try {
+            final account = await _googleSignIn.grantOfflineAccess();
+
+            if (account != null) {
+              account.authentication.then((GoogleSignInAuthentication value) {
+                store.dispatch(OAuthSignUpRequest(
+                  completer: completer,
+                  idToken: value.idToken,
+                  accessToken: value.accessToken,
+                  serverAuthCode: value.serverAuthCode,
+                ));
+                completer.future.then(
+                    (_) => _handleLogin(context: context, isSignUp: true));
+              });
+            }
+          } catch (error) {
+            completer.completeError(error);
+            print(error);
+          }
+        },
         onSignUpPressed: (
           BuildContext context,
           Completer<Null> completer, {
