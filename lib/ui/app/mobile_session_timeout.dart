@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
-class SessionTimeout extends StatefulWidget {
-  const SessionTimeout({this.child});
+class MobileSessionTimeout extends StatefulWidget {
+  const MobileSessionTimeout({this.child});
   final Widget child;
 
   @override
-  _SessionTimeoutState createState() => _SessionTimeoutState();
+  _MobileSessionTimeoutState createState() => _MobileSessionTimeoutState();
 }
 
-class _SessionTimeoutState extends State<SessionTimeout> {
+class _MobileSessionTimeoutState extends State<MobileSessionTimeout> {
   Timer _timer;
 
   @override
@@ -24,20 +25,27 @@ class _SessionTimeoutState extends State<SessionTimeout> {
     super.initState();
 
     if (!kIsWeb) {
-      return;
+      //return;
     }
 
     _timer = Timer.periodic(
-      Duration(minutes: 1),
+      //Duration(minutes: 1),
+      Duration(seconds: 1),
       (Timer timer) {
         final store = StoreProvider.of<AppState>(context);
         final state = store.state;
         final sessionTimeout = state.company.sessionTimeout;
+
+        if (sessionTimeout == 0 || isDesktop(context)) {
+          return;
+        }
+
         final sessionLength = DateTime.now().millisecondsSinceEpoch -
             state.userCompanyState.lastUpdated;
 
-        print('## Timeout: $sessionTimeout, Length: $sessionLength');
-        if (sessionTimeout != 0 && sessionLength > sessionTimeout) {
+        print('## MOBILE Timeout: $sessionTimeout, Length: $sessionLength');
+
+        if (sessionLength > sessionTimeout) {
           store.dispatch(UserLogout(context, navigate: false));
           WebUtils.reloadBrowser();
         }

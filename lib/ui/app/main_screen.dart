@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/app_shortcuts.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/desktop_session_timeout.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -264,21 +265,23 @@ class MainScreen extends StatelessWidget {
 
           return false;
         },
-        child: AppShortcuts(
-          child: SafeArea(
-            child: FocusTraversalGroup(
-              policy: WidgetOrderTraversalPolicy(),
-              child: ChangeLayoutBanner(
-                appLayout: prefState.appLayout,
-                suggestedLayout: AppLayout.desktop,
-                child: Row(children: <Widget>[
-                  if (prefState.showMenu) MenuDrawerBuilder(),
-                  Expanded(
-                      child: AppBorder(
-                    child: screen,
-                    isLeft: prefState.showMenu,
-                  )),
-                ]),
+        child: DesktopSessionTimeout(
+          child: AppShortcuts(
+            child: SafeArea(
+              child: FocusTraversalGroup(
+                policy: WidgetOrderTraversalPolicy(),
+                child: ChangeLayoutBanner(
+                  appLayout: prefState.appLayout,
+                  suggestedLayout: AppLayout.desktop,
+                  child: Row(children: <Widget>[
+                    if (prefState.showMenu) MenuDrawerBuilder(),
+                    Expanded(
+                        child: AppBorder(
+                      child: screen,
+                      isLeft: prefState.showMenu,
+                    )),
+                  ]),
+                ),
               ),
             ),
           ),
