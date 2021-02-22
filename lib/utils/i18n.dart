@@ -15,6 +15,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'count_hours': ':count Hours',
+      'count_day': '1 Day',
+      'count_days': ':count Days',
+      'web_session_timeout': 'Web Session Timeout',
+      'security_settings': 'Security Settings',
+      'resend_email': 'Resend Email',
+      'confirm_your_email_address': 'Please confirm your email address',
       'refunded_payment': 'Successfully refunded payment',
       'partially_unapplied': 'Partially Unapplied',
       'select_a_gmail_user': 'Please select a user authenticated with Gmail',
@@ -51595,7 +51602,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get uploadFile => _localizedValues[localeCode]['upload_file'] ?? '';
 
-  String get requiredFilesMissing => _localizedValues[localeCode]['required_files_missing'] ?? '';
+  String get requiredFilesMissing =>
+      _localizedValues[localeCode]['required_files_missing'] ?? '';
 
   String get download => _localizedValues[localeCode]['download'] ?? '';
 
@@ -54424,6 +54432,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get refundedPayment =>
       _localizedValues[localeCode]['refunded_payment'] ?? '';
+
+  String get confirmYourEmailAddress =>
+      _localizedValues[localeCode]['confirm_your_email_address'] ?? '';
+
+  String get resendEmail => _localizedValues[localeCode]['resend_email'] ?? '';
+
+  String get securitySettings =>
+      _localizedValues[localeCode]['security_settings'] ?? '';
+
+  String get webSessionTimeout =>
+      _localizedValues[localeCode]['web_session_timeout'] ?? '';
+
+  String get countHours => _localizedValues[localeCode]['count_hours'] ?? '';
+
+  String get countDays => _localizedValues[localeCode]['count_days'] ?? '';
+
+  String get countDay => _localizedValues[localeCode]['count_day'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

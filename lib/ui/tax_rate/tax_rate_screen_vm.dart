@@ -48,8 +48,11 @@ class TaxRateScreenVM {
 
     return TaxRateScreenVM(
       taxRateMap: state.taxRateState.map,
-      taxRateList: memoizedFilteredTaxRateList(state.taxRateState.map,
-          state.taxRateState.list, state.taxRateListState),
+      taxRateList: memoizedFilteredTaxRateList(
+          state.getUISelection(EntityType.taxRate),
+          state.taxRateState.map,
+          state.taxRateState.list,
+          state.taxRateListState),
       userCompany: state.userCompany,
       isInMultiselect: state.taxRateListState.isInMultiselect(),
       onBackPressed: (context) {

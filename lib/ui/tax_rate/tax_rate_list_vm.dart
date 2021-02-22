@@ -84,8 +84,11 @@ class TaxRateListVM {
       state: state,
       userCompany: state.userCompany,
       listState: state.taxRateListState,
-      taxRateList: memoizedFilteredTaxRateList(state.taxRateState.map,
-          state.taxRateState.list, state.taxRateListState),
+      taxRateList: memoizedFilteredTaxRateList(
+          state.getUISelection(EntityType.taxRate),
+          state.taxRateState.map,
+          state.taxRateState.list,
+          state.taxRateListState),
       taxRateMap: state.taxRateState.map,
       isLoading: state.isLoading,
       filter: state.taxRateUIState.listUIState.filter,

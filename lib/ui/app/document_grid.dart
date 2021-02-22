@@ -274,29 +274,32 @@ class DocumentPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
 
-    return ['png', 'jpg', 'jpeg'].contains(document.type)
-        ? CachedNetworkImage(
-            height: height,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            key: ValueKey(document.preview),
-            imageUrl: document.url,
-            httpHeaders: {'X-API-TOKEN': state.credentials.token},
-            placeholder: (context, url) => Container(
-                  height: height,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+    if (['png', 'jpg', 'jpeg'].contains(document.type)) {
+      return CachedNetworkImage(
+          height: height,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          key: ValueKey(document.preview),
+          imageUrl: document.url,
+          imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+          httpHeaders: {'X-API-TOKEN': state.credentials.token},
+          placeholder: (context, url) => Container(
+                height: height,
+                child: Center(
+                  child: CircularProgressIndicator(),
                 ),
-            errorWidget: (context, url, Object error) => Text(
-                  '$error: $url',
-                  maxLines: 6,
-                  overflow: TextOverflow.ellipsis,
-                ))
-        : SizedBox(
-            height: height,
-            width: double.infinity,
-            child: Icon(getFileTypeIcon(document.type), size: 40),
-          );
+              ),
+          errorWidget: (context, url, Object error) => Text(
+                '$error: $url',
+                maxLines: 6,
+                overflow: TextOverflow.ellipsis,
+              ));
+    }
+
+    return SizedBox(
+      height: height,
+      width: double.infinity,
+      child: Icon(getFileTypeIcon(document.type), size: 40),
+    );
   }
 }

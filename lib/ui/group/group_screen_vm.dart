@@ -46,7 +46,10 @@ class GroupScreenVM {
     return GroupScreenVM(
       groupMap: state.groupState.map,
       groupList: memoizedFilteredGroupList(
-          state.groupState.map, state.groupState.list, state.groupListState),
+          state.getUISelection(EntityType.group),
+          state.groupState.map,
+          state.groupState.list,
+          state.groupListState),
       userCompany: state.userCompany,
       isInMultiselect: state.groupListState.isInMultiselect(),
     );

@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -30,19 +31,25 @@ List<String> dropdownPaymentTermsSelector(
   return list;
 }
 
-var memoizedFilteredPaymentTermList = memo3(
-    (BuiltMap<String, PaymentTermEntity> paymentTermMap,
-            BuiltList<String> paymentTermList,
-            ListUIState paymentTermListState) =>
-        filteredPaymentTermsSelector(
-            paymentTermMap, paymentTermList, paymentTermListState));
+var memoizedFilteredPaymentTermList = memo4((SelectionState selectionState,
+        BuiltMap<String, PaymentTermEntity> paymentTermMap,
+        BuiltList<String> paymentTermList,
+        ListUIState paymentTermListState) =>
+    filteredPaymentTermsSelector(
+        selectionState, paymentTermMap, paymentTermList, paymentTermListState));
 
 List<String> filteredPaymentTermsSelector(
+    SelectionState selectionState,
     BuiltMap<String, PaymentTermEntity> paymentTermMap,
     BuiltList<String> paymentTermList,
     ListUIState paymentTermListState) {
   final list = paymentTermList.where((paymentTermId) {
     final paymentTerm = paymentTermMap[paymentTermId];
+
+    if (paymentTerm.id == selectionState.selectedId) {
+      return true;
+    }
+
     if (!paymentTerm.matchesStates(paymentTermListState.stateFilters)) {
       return false;
     }

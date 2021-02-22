@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/app_header.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -18,6 +19,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -47,7 +49,7 @@ class _AccountManagementState extends State<AccountManagement>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: 3, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -77,12 +79,16 @@ class _AccountManagementState extends State<AccountManagement>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
+        isScrollable: isMobile(context),
         tabs: [
           Tab(
             text: localization.overview,
           ),
           Tab(
             text: localization.enabledModules,
+          ),
+          Tab(
+            text: localization.securitySettings,
           ),
         ],
       ),
@@ -116,6 +122,49 @@ class _AccountManagementState extends State<AccountManagement>
               }).toList()),
             ],
           ),
+          ListView(
+            children: [
+              FormCard(
+                children: [
+                  AppDropdownButton<int>(
+                    labelText: localization.webSessionTimeout,
+                    value: company.sessionTimeout,
+                    onChanged: (dynamic value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..sessionTimeout = value)),
+                    items: [
+                      DropdownMenuItem<int>(
+                        child: Text(localization.never),
+                        value: 0,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text('1 minute'),
+                        value: 1000 * 60,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text(localization.countHours
+                            .replaceFirst(':count', '8')),
+                        value: 1000 * 60 * 60 * 8,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text(localization.countDay),
+                        value: 1000 * 60 * 60 * 24,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text(
+                            localization.countDays.replaceFirst(':count', '7')),
+                        value: 1000 * 60 * 60 * 24 * 7,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text(localization.countDays
+                            .replaceFirst(':count', '30')),
+                        value: 1000 * 60 * 60 * 24 * 30,
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ],
+          )
         ],
       ),
     );

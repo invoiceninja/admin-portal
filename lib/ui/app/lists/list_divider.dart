@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -16,8 +17,8 @@ class ListDivider extends StatelessWidget {
 
     return Divider(
       color: color,
-      thickness: 1.5,
-      height: 1.5,
+      thickness: kIsWeb ? 2 : 1.5,
+      height: kIsWeb ? 2 : 1.5,
     );
   }
 }

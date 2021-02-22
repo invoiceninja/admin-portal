@@ -151,6 +151,15 @@ class LoadAccountSuccess implements StopLoading {
   final LoginResponse loginResponse;
 }
 
+class ResendConfirmation implements StartLoading {}
+
+class ResendConfirmationFailure implements StopLoading {
+  ResendConfirmationFailure(this.error);
+  final dynamic error;
+}
+
+class ResendConfirmationSuccess implements StopLoading {}
+
 class RefreshData implements StartLoading {
   RefreshData({
     this.completer,
@@ -1406,7 +1415,7 @@ void selectEntity({
       uiState.isViewing &&
       !entity.entityType.isSetting &&
       entityUIState.selectedId == entity.id &&
-      state.prefState.isPreviewVisible) {
+      (state.prefState.isPreviewVisible || state.prefState.isModuleList)) {
     if (entityUIState.tabIndex > 0) {
       store.dispatch(PreviewEntity());
     } else {

@@ -88,8 +88,11 @@ class TaskStatusListVM {
       state: state,
       userCompany: state.userCompany,
       listState: state.taskStatusListState,
-      taskStatusList: memoizedFilteredTaskStatusList(state.taskStatusState.map,
-          state.taskStatusState.list, state.taskStatusListState),
+      taskStatusList: memoizedFilteredTaskStatusList(
+          state.getUISelection(EntityType.taskStatus),
+          state.taskStatusState.map,
+          state.taskStatusState.list,
+          state.taskStatusListState),
       taskStatusMap: state.taskStatusState.map,
       isLoading: state.isLoading,
       filter: state.taskStatusUIState.listUIState.filter,

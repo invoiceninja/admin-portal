@@ -95,9 +95,10 @@ class RecoverPasswordFailure implements StopLoading {
 }
 
 class UserLogout implements PersistData, PersistUI {
-  UserLogout(this.context);
+  UserLogout(this.context, {this.navigate = true});
 
   final BuildContext context;
+  final bool navigate;
 }
 
 class UserSignUpRequest implements StartLoading {
