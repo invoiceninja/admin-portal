@@ -111,21 +111,32 @@ void passwordCallback({
   } else {
     if (state.user.oauthProvider.isNotEmpty) {
       googleSignIn((idToken, accessToken, serverAuthCode) {
-        //
+        if (!state.company.ouathPasswordRequired) {
+          callback(null, idToken);
+        } else {
+          showDialog<AlertDialog>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return PasswordConfirmation(
+                callback: callback,
+                idToken: idToken,
+              );
+            },
+          );
+        }
       });
-      //
-      // !state.company.ouathPasswordRequired
+    } else {
+      showDialog<AlertDialog>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return PasswordConfirmation(
+            callback: callback,
+          );
+        },
+      );
     }
-
-    showDialog<AlertDialog>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return PasswordConfirmation(
-          callback: callback,
-        );
-      },
-    );
   }
 }
 
