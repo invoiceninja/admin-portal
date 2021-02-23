@@ -84,7 +84,16 @@ class _TimePickerState extends State<TimePicker> {
     final TimeOfDay selectedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay(hour: hour, minute: minute),
-      //initialEntryMode: TimePickerEntryMode.input,
+      builder: (BuildContext context, Widget child) {
+        final store = StoreProvider.of<AppState>(context);
+        final enableMilitaryTime =
+            store.state.company.settings.enableMilitaryTime;
+        return MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(alwaysUse24HourFormat: enableMilitaryTime),
+          child: child,
+        );
+      },
     );
 
     if (selectedTime != null) {
