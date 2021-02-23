@@ -106,12 +106,6 @@ void passwordCallback({
   bool alwaysRequire = false,
 }) {
   final state = StoreProvider.of<AppState>(context).state;
-  print(
-      '## hasRecentlyEnteredPassword: ${state.authState.hasRecentlyEnteredPassword}');
-  print('## oauthProvider.isNotEmpty: ${state.user.oauthProvider.isNotEmpty}');
-  print(
-      '## company.oauthPasswordRequired: ${state.company.oauthPasswordRequired}');
-
   if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
     callback(null, null);
   } else {
