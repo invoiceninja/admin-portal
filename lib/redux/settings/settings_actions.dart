@@ -93,11 +93,13 @@ class SaveAuthUserRequest implements StartSaving {
     @required this.completer,
     @required this.user,
     this.password,
+    this.idToken,
   });
 
   final Completer completer;
   final UserEntity user;
   final String password;
+  final String idToken;
 }
 
 class SaveAuthUserSuccess implements StopSaving, PersistData, PersistUI {

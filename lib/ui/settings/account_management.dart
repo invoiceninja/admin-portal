@@ -353,8 +353,9 @@ class _AccountOverview extends StatelessWidget {
                           passwordCallback(
                               alwaysRequire: true,
                               context: context,
-                              callback: (password) {
-                                viewModel.onPurgeData(context, password);
+                              callback: (password, idToken) {
+                                viewModel.onPurgeData(
+                                    context, password, idToken);
                               });
                         });
                   },
@@ -387,8 +388,9 @@ class _AccountOverview extends StatelessWidget {
                           passwordCallback(
                               alwaysRequire: true,
                               context: context,
-                              callback: (password) {
-                                viewModel.onCompanyDelete(context, password);
+                              callback: (password, idToken) {
+                                viewModel.onCompanyDelete(
+                                    context, password, idToken);
                               });
                         });
                   },

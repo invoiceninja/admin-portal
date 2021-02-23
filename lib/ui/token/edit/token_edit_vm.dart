@@ -75,12 +75,16 @@ class TokenEditVM {
       onSavePressed: (BuildContext context) {
         passwordCallback(
             context: context,
-            callback: (password) {
+            callback: (password, idToken) {
               final localization = AppLocalization.of(context);
               final Completer<TokenEntity> completer =
                   new Completer<TokenEntity>();
               store.dispatch(SaveTokenRequest(
-                  completer: completer, token: token, password: password));
+                completer: completer,
+                token: token,
+                password: password,
+                idToken: idToken,
+              ));
               return completer.future.then((savedToken) {
                 showToast(token.isNew
                     ? localization.createdToken

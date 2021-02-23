@@ -54,7 +54,7 @@ class AccountManagementVM {
         company: state.uiState.settingsUIState.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
-        onCompanyDelete: (context, password) {
+        onCompanyDelete: (context, password, idToken) {
           showDialog<AlertDialog>(
               context: context,
               barrierDismissible: false,
@@ -90,7 +90,10 @@ class AccountManagementVM {
                   });
             });
           store.dispatch(DeleteCompanyRequest(
-              completer: deleteCompleter, password: password));
+            completer: deleteCompleter,
+            password: password,
+            idToken: idToken,
+          ));
         },
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
@@ -99,11 +102,14 @@ class AccountManagementVM {
           store.dispatch(SaveCompanyRequest(
               completer: completer, company: settingsUIState.company));
         },
-        onPurgeData: (context, password) {
+        onPurgeData: (context, password, idToken) {
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).purgeSuccessful);
-          store.dispatch(
-              PurgeDataRequest(completer: completer, password: password));
+          store.dispatch(PurgeDataRequest(
+            completer: completer,
+            password: password,
+            idToken: idToken,
+          ));
         },
         onAppliedLicense: () {
           store.dispatch(RefreshData());
@@ -114,7 +120,7 @@ class AccountManagementVM {
   final Function(BuildContext) onSavePressed;
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
-  final Function(BuildContext, String) onCompanyDelete;
-  final Function(BuildContext, String) onPurgeData;
+  final Function(BuildContext, String, String) onCompanyDelete;
+  final Function(BuildContext, String, String) onPurgeData;
   final Function onAppliedLicense;
 }

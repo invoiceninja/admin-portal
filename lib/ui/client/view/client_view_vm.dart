@@ -98,8 +98,8 @@ class ClientViewVM {
               });
         });
       },
-      onDeleteDocument:
-          (BuildContext context, DocumentEntity document, String password) {
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future.then<Null>(
@@ -119,7 +119,7 @@ class ClientViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, MultipartFile) onUploadDocument;
-  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

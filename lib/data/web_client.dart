@@ -57,6 +57,7 @@ class WebClient {
     List<MultipartFile> multipartFiles,
     String secret,
     String password,
+    String idToken,
     bool rawResponse = false,
   }) async {
     if (Config.DEMO_MODE) {

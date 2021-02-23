@@ -59,7 +59,7 @@ class CreditViewVM extends EntityViewVM {
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
     Function(BuildContext, MultipartFile) onUploadDocument,
-    Function(BuildContext, DocumentEntity, String) onDeleteDocument,
+    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
     Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
   }) : super(
@@ -127,8 +127,8 @@ class CreditViewVM extends EntityViewVM {
               });
         });
       },
-      onDeleteDocument:
-          (BuildContext context, DocumentEntity document, String password) {
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future.then<Null>(

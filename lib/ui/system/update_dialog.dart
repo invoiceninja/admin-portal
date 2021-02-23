@@ -124,7 +124,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
     passwordCallback(
         alwaysRequire: true,
         context: context,
-        callback: (password) {
+        callback: (password, idToken) {
           setState(() => updateState = UpdateState.loading);
           final credentials = state.credentials;
           final webClient = WebClient();

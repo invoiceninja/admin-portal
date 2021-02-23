@@ -128,8 +128,8 @@ class TaskViewVM {
               });
         });
       },
-      onDeleteDocument:
-          (BuildContext context, DocumentEntity document, String password) {
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future
@@ -138,6 +138,7 @@ class TaskViewVM {
           completer: completer,
           documentIds: [document.id],
           password: password,
+          idToken: idToken,
         ));
       },
     );
@@ -156,5 +157,5 @@ class TaskViewVM {
   final bool isLoading;
   final bool isDirty;
   final Function(BuildContext, MultipartFile) onUploadDocument;
-  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }

@@ -16,8 +16,8 @@ class InvoiceViewDocuments extends StatelessWidget {
     return DocumentGrid(
       documents: invoice.documents.toList(),
       onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
-      onDeleteDocument: (document, password) =>
-          viewModel.onDeleteDocument(context, document, password),
+      onDeleteDocument: (document, password, idToken) =>
+          viewModel.onDeleteDocument(context, document, password, idToken),
       onViewExpense: (document) => viewModel.onViewExpense(context, document),
     );
   }

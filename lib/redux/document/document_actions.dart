@@ -159,11 +159,17 @@ class ArchiveDocumentFailure implements StopSaving {
 }
 
 class DeleteDocumentRequest implements StartSaving {
-  DeleteDocumentRequest({this.completer, this.documentIds, this.password});
+  DeleteDocumentRequest({
+    this.completer,
+    this.documentIds,
+    this.password,
+    this.idToken,
+  });
 
   final Completer completer;
   final List<String> documentIds;
   final String password;
+  final String idToken;
 }
 
 class DeleteDocumentSuccess implements StopSaving, PersistData {

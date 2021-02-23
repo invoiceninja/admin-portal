@@ -58,10 +58,15 @@ class AddCompany implements StartSaving {
 class AddCompanySuccess implements StopSaving {}
 
 class DeleteCompanyRequest implements StartSaving {
-  DeleteCompanyRequest({@required this.completer, @required this.password});
+  DeleteCompanyRequest({
+    @required this.completer,
+    @required this.password,
+    @required this.idToken,
+  });
 
   final Completer completer;
   final String password;
+  final String idToken;
 }
 
 class DeleteCompanySuccess implements StopSaving, PersistData {}
@@ -73,10 +78,15 @@ class DeleteCompanyFailure implements StopSaving {
 }
 
 class PurgeDataRequest implements StartSaving {
-  PurgeDataRequest({@required this.completer, @required this.password});
+  PurgeDataRequest({
+    @required this.completer,
+    @required this.password,
+    @required this.idToken,
+  });
 
   final Completer completer;
   final String password;
+  final String idToken;
 }
 
 class PurgeDataSuccess implements StopSaving, PersistData {
