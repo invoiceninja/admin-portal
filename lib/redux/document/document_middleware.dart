@@ -111,8 +111,8 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
     final action = dynamicAction as DeleteDocumentRequest;
 
     repository
-        .delete(
-            store.state.credentials, action.documentIds.first, action.password)
+        .delete(store.state.credentials, action.documentIds.first,
+            action.password, action.idToken)
         .then((value) {
       store.dispatch(DeleteDocumentSuccess());
       if (action.completer != null) {

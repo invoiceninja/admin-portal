@@ -101,7 +101,8 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
     final action = dynamicAction as SaveAuthUserRequest;
 
     settingsRepository
-        .saveAuthUser(store.state.credentials, action.user, action.password)
+        .saveAuthUser(store.state.credentials, action.user, action.password,
+            action.idToken)
         .then((user) {
       store.dispatch(SaveAuthUserSuccess(user));
       store.dispatch(UserVerifiedPassword());

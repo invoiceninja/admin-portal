@@ -166,7 +166,8 @@ Middleware<AppState> _saveToken(TokenRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTokenRequest;
     repository
-        .saveData(store.state.credentials, action.token, action.password)
+        .saveData(store.state.credentials, action.token, action.password,
+            action.idToken)
         .then((TokenEntity token) {
       if (action.token.isNew) {
         store.dispatch(AddTokenSuccess(token));
