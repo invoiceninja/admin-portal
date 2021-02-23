@@ -357,6 +357,7 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
         .purgeData(
             credentials: state.credentials,
             password: action.password,
+            idToken: action.idToken,
             companyId: state.company.id)
         .then((dynamic value) {
       store.dispatch(PurgeDataSuccess());

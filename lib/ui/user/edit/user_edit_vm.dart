@@ -76,9 +76,13 @@ class UserEditVM {
         final Completer<UserEntity> completer = new Completer<UserEntity>();
         passwordCallback(
             context: context,
-            callback: (password) {
+            callback: (password, idToken) {
               store.dispatch(SaveUserRequest(
-                  completer: completer, user: user, password: password));
+                completer: completer,
+                user: user,
+                password: password,
+                idToken: idToken,
+              ));
             });
         return completer.future.then((savedUser) {
           showToast(

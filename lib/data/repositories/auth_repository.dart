@@ -154,11 +154,14 @@ class AuthRepository {
     @required Credentials credentials,
     @required String companyId,
     @required String password,
+    @required String idToken,
   }) async {
     return webClient.post(
-        '${credentials.url}/companies/purge_save_settings/$companyId',
-        credentials.token,
-        password: password);
+      '${credentials.url}/companies/purge_save_settings/$companyId',
+      credentials.token,
+      password: password,
+      idToken: idToken,
+    );
   }
 
   Future<dynamic> resendConfirmation(

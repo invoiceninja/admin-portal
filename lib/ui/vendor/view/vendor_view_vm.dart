@@ -118,8 +118,8 @@ class VendorViewVM {
               });
         });
       },
-      onDeleteDocument:
-          (BuildContext context, DocumentEntity document, String password) {
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future.then<Null>(
@@ -128,6 +128,7 @@ class VendorViewVM {
           completer: completer,
           documentIds: [document.id],
           password: password,
+          idToken: idToken,
         ));
       },
     );
@@ -144,5 +145,5 @@ class VendorViewVM {
   final bool isLoading;
   final bool isDirty;
   final Function(BuildContext, MultipartFile) onUploadDocument;
-  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }

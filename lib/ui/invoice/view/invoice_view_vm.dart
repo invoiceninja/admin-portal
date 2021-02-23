@@ -70,7 +70,7 @@ class EntityViewVM {
   final Function(BuildContext) onPaymentsPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, MultipartFile) onUploadDocument;
-  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final Function(BuildContext, DocumentEntity) onViewExpense;
   final Function(BuildContext, InvoiceEntity, [String]) onViewPdf;
 }
@@ -91,7 +91,7 @@ class InvoiceViewVM extends EntityViewVM {
       Function(BuildContext) onPaymentsPressed,
       Function(BuildContext) onRefreshed,
       Function(BuildContext, MultipartFile) onUploadDocument,
-      Function(BuildContext, DocumentEntity, String) onDeleteDocument,
+      Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
       Function(BuildContext, DocumentEntity) onViewExpense,
       Function(BuildContext, InvoiceEntity, [String]) onViewPdf})
       : super(
@@ -163,8 +163,8 @@ class InvoiceViewVM extends EntityViewVM {
               });
         });
       },
-      onDeleteDocument:
-          (BuildContext context, DocumentEntity document, String password) {
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future.then<Null>(
@@ -173,6 +173,7 @@ class InvoiceViewVM extends EntityViewVM {
           completer: completer,
           documentIds: [document.id],
           password: password,
+          idToken: idToken,
         ));
       },
       onViewExpense: (BuildContext context, DocumentEntity document) {

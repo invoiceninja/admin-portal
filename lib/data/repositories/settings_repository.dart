@@ -31,7 +31,11 @@ class SettingsRepository {
   }
 
   Future<UserEntity> saveAuthUser(
-      Credentials credentials, UserEntity user, String password) async {
+    Credentials credentials,
+    UserEntity user,
+    String password,
+    String idToken,
+  ) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
@@ -41,6 +45,7 @@ class SettingsRepository {
       credentials.token,
       data: json.encode(data),
       password: password,
+      idToken: idToken,
     );
 
     final UserItemResponse userResponse =

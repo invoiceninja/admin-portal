@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 void showErrorDialog({
@@ -101,34 +102,49 @@ void confirmCallback({
 
 void passwordCallback({
   BuildContext context,
-  Function(String) callback,
+  Function(String, String) callback,
   bool alwaysRequire = false,
 }) {
   final state = StoreProvider.of<AppState>(context).state;
   if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
-    callback(null);
+    callback(null, null);
   } else {
     if (state.user.oauthProvider.isNotEmpty) {
-      //
-      // !state.company.ouathPasswordRequired
+      googleSignIn((idToken, accessToken, serverAuthCode) {
+        if (!state.company.oauthPasswordRequired) {
+          callback(null, idToken);
+        } else {
+          showDialog<AlertDialog>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return PasswordConfirmation(
+                callback: callback,
+                idToken: idToken,
+              );
+            },
+          );
+        }
+      });
+    } else {
+      showDialog<AlertDialog>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return PasswordConfirmation(
+            callback: callback,
+          );
+        },
+      );
     }
-
-    showDialog<AlertDialog>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return PasswordConfirmation(
-          callback: callback,
-        );
-      },
-    );
   }
 }
 
 class PasswordConfirmation extends StatefulWidget {
-  const PasswordConfirmation({@required this.callback});
+  const PasswordConfirmation({@required this.callback, this.idToken});
 
-  final Function(String) callback;
+  final Function(String, String) callback;
+  final String idToken;
 
   @override
   _PasswordConfirmationState createState() => _PasswordConfirmationState();
@@ -143,7 +159,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
       return;
     }
     Navigator.pop(context);
-    widget.callback(_password);
+    widget.callback(_password, widget.idToken);
   }
 
   @override

@@ -131,11 +131,13 @@ class SaveUserRequest implements StartSaving {
     @required this.completer,
     @required this.user,
     this.password,
+    this.idToken,
   });
 
   final Completer completer;
   final UserEntity user;
   final String password;
+  final String idToken;
 }
 
 class SaveUserSuccess implements StopSaving, PersistData, PersistUI {
@@ -157,11 +159,17 @@ class SaveUserFailure implements StopSaving {
 }
 
 class ArchiveUserRequest implements StartSaving {
-  ArchiveUserRequest({this.completer, this.userIds, this.password});
+  ArchiveUserRequest({
+    this.completer,
+    this.userIds,
+    this.password,
+    this.idToken,
+  });
 
   final Completer completer;
   final List<String> userIds;
   final String password;
+  final String idToken;
 }
 
 class ArchiveUserSuccess implements StopSaving, PersistData {
@@ -177,11 +185,17 @@ class ArchiveUserFailure implements StopSaving {
 }
 
 class DeleteUserRequest implements StartSaving {
-  DeleteUserRequest({this.completer, this.userIds, this.password});
+  DeleteUserRequest({
+    this.completer,
+    this.userIds,
+    this.password,
+    this.idToken,
+  });
 
   final Completer completer;
   final List<String> userIds;
   final String password;
+  final String idToken;
 }
 
 class DeleteUserSuccess implements StopSaving, PersistData {
@@ -197,11 +211,17 @@ class DeleteUserFailure implements StopSaving {
 }
 
 class RestoreUserRequest implements StartSaving {
-  RestoreUserRequest({this.completer, this.userIds, this.password});
+  RestoreUserRequest({
+    this.completer,
+    this.userIds,
+    this.password,
+    this.idToken,
+  });
 
   final Completer completer;
   final List<String> userIds;
   final String password;
+  final String idToken;
 }
 
 class RestoreUserSuccess implements StopSaving, PersistData {
@@ -217,11 +237,17 @@ class RestoreUserFailure implements StopSaving {
 }
 
 class RemoveUserRequest implements StartSaving {
-  RemoveUserRequest({this.completer, this.userId, this.password});
+  RemoveUserRequest({
+    this.completer,
+    this.userId,
+    this.password,
+    this.idToken,
+  });
 
   final Completer completer;
   final String userId;
   final String password;
+  final String idToken;
 }
 
 class RemoveUserSuccess implements StopSaving, PersistData {
@@ -362,14 +388,17 @@ void handleUserAction(
           ? localization.restoredUsers
               .replaceFirst(':value', userIds.length.toString())
           : localization.restoredUser;
-      final dispatch = ([String password]) => store.dispatch(RestoreUserRequest(
-          completer: snackBarCompleter<Null>(context, message),
-          userIds: userIds,
-          password: password));
+      final dispatch = ([String password, String idToken]) =>
+          store.dispatch(RestoreUserRequest(
+            completer: snackBarCompleter<Null>(context, message),
+            userIds: userIds,
+            password: password,
+            idToken: idToken,
+          ));
       passwordCallback(
           context: context,
-          callback: (password) {
-            dispatch(password);
+          callback: (password, idToken) {
+            dispatch(password, idToken);
           });
       break;
     case EntityAction.archive:
@@ -377,14 +406,17 @@ void handleUserAction(
           ? localization.archivedUsers
               .replaceFirst(':value', userIds.length.toString())
           : localization.archivedUser;
-      final dispatch = ([String password]) => store.dispatch(ArchiveUserRequest(
-          completer: snackBarCompleter<Null>(context, message),
-          userIds: userIds,
-          password: password));
+      final dispatch = ([String password, String idToken]) =>
+          store.dispatch(ArchiveUserRequest(
+            completer: snackBarCompleter<Null>(context, message),
+            userIds: userIds,
+            password: password,
+            idToken: idToken,
+          ));
       passwordCallback(
           context: context,
-          callback: (password) {
-            dispatch(password);
+          callback: (password, idToken) {
+            dispatch(password, idToken);
           });
       break;
     case EntityAction.delete:
@@ -392,14 +424,20 @@ void handleUserAction(
           ? localization.deletedUsers
               .replaceFirst(':value', userIds.length.toString())
           : localization.deletedUser;
-      final dispatch = ([String password]) => store.dispatch(DeleteUserRequest(
-          completer: snackBarCompleter<Null>(context, message),
-          userIds: userIds,
-          password: password));
+      final dispatch = ([
+        String password,
+        String idToken,
+      ]) =>
+          store.dispatch(DeleteUserRequest(
+            completer: snackBarCompleter<Null>(context, message),
+            userIds: userIds,
+            password: password,
+            idToken: idToken,
+          ));
       passwordCallback(
           context: context,
-          callback: (password) {
-            dispatch(password);
+          callback: (password, idToken) {
+            dispatch(password, idToken);
           });
       break;
     case EntityAction.remove:
@@ -407,17 +445,23 @@ void handleUserAction(
           ? localization.removedUsers
               .replaceFirst(':value', userIds.length.toString())
           : localization.removedUser;
-      final dispatch = ([String password]) => store.dispatch(RemoveUserRequest(
-          completer: snackBarCompleter<Null>(context, message),
-          userId: user.id,
-          password: password));
+      final dispatch = ([
+        String password,
+        String idToken,
+      ]) =>
+          store.dispatch(RemoveUserRequest(
+            completer: snackBarCompleter<Null>(context, message),
+            userId: user.id,
+            password: password,
+            idToken: idToken,
+          ));
       confirmCallback(
           context: context,
           callback: () {
             passwordCallback(
                 context: context,
-                callback: (password) {
-                  dispatch(password);
+                callback: (password, idToken) {
+                  dispatch(password, idToken);
                 });
           });
       break;

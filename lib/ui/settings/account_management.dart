@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -161,7 +162,14 @@ class _AccountManagementState extends State<AccountManagement>
                         value: 1000 * 60 * 60 * 24 * 30,
                       ),
                     ],
-                  )
+                  ),
+                  BoolDropdownButton(
+                      label: localization.requirePasswordWithSocialLogin,
+                      value: company.oauthPasswordRequired,
+                      onChanged: (value) {
+                        viewModel.onCompanyChanged(company
+                            .rebuild((b) => b.oauthPasswordRequired = value));
+                      }),
                 ],
               )
             ],
@@ -353,8 +361,9 @@ class _AccountOverview extends StatelessWidget {
                           passwordCallback(
                               alwaysRequire: true,
                               context: context,
-                              callback: (password) {
-                                viewModel.onPurgeData(context, password);
+                              callback: (password, idToken) {
+                                viewModel.onPurgeData(
+                                    context, password, idToken);
                               });
                         });
                   },
@@ -387,8 +396,9 @@ class _AccountOverview extends StatelessWidget {
                           passwordCallback(
                               alwaysRequire: true,
                               context: context,
-                              callback: (password) {
-                                viewModel.onCompanyDelete(context, password);
+                              callback: (password, idToken) {
+                                viewModel.onCompanyDelete(
+                                    context, password, idToken);
                               });
                         });
                   },

@@ -97,7 +97,7 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
 
     repository
         .bulkAction(store.state.credentials, action.userIds,
-            EntityAction.archive, action.password)
+            EntityAction.archive, action.password, action.idToken)
         .then((List<UserEntity> users) {
       store.dispatch(ArchiveUserSuccess(users));
       store.dispatch(UserVerifiedPassword());
@@ -127,7 +127,7 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
 
     repository
         .bulkAction(store.state.credentials, action.userIds,
-            EntityAction.delete, action.password)
+            EntityAction.delete, action.password, action.idToken)
         .then((List<UserEntity> users) {
       store.dispatch(DeleteUserSuccess(users));
       store.dispatch(UserVerifiedPassword());
@@ -157,7 +157,7 @@ Middleware<AppState> _restoreUser(UserRepository repository) {
 
     repository
         .bulkAction(store.state.credentials, action.userIds,
-            EntityAction.restore, action.password)
+            EntityAction.restore, action.password, action.idToken)
         .then((List<UserEntity> users) {
       store.dispatch(RestoreUserSuccess(users));
       store.dispatch(UserVerifiedPassword());
@@ -206,7 +206,8 @@ Middleware<AppState> _saveUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveUserRequest;
     repository
-        .saveData(store.state.credentials, action.user, action.password)
+        .saveData(store.state.credentials, action.user, action.password,
+            action.idToken)
         .then((UserEntity user) {
       if (action.user.isNew) {
         store.dispatch(AddUserSuccess(user));

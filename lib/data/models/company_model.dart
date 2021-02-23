@@ -91,7 +91,7 @@ abstract class CompanyEntity extends Object
       calculateExpenseTaxByAmount: false,
       expenseInclusiveTaxes: false,
       sessionTimeout: 0,
-      ouathPasswordRequired: false,
+      oauthPasswordRequired: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -217,8 +217,8 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'session_timeout')
   int get sessionTimeout;
 
-  @BuiltValueField(wireName: 'ouath_password_required')
-  bool get ouathPasswordRequired;
+  @BuiltValueField(wireName: 'oauth_password_required')
+  bool get oauthPasswordRequired;
 
   BuiltList<GroupEntity> get groups;
 
@@ -496,7 +496,7 @@ abstract class CompanyEntity extends Object
     ..enableProductDiscount = false
     ..defaultTaskIsDateBased = false
     ..sessionTimeout = 0
-    ..ouathPasswordRequired = false;
+    ..oauthPasswordRequired = false;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

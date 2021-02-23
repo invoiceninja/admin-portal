@@ -154,8 +154,8 @@ class CompanyDetailsVM {
               });
         });
       },
-      onDeleteDocument:
-          (BuildContext context, DocumentEntity document, String password) {
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future.then<Null>((value) => store.dispatch(RefreshData()));
@@ -163,6 +163,7 @@ class CompanyDetailsVM {
           completer: completer,
           documentIds: [document.id],
           password: password,
+          idToken: idToken,
         ));
       },
     );
@@ -178,5 +179,5 @@ class CompanyDetailsVM {
   final Function(BuildContext) onDeleteLogo;
   final Function(BuildContext) onConfigurePaymentTermsPressed;
   final Function(BuildContext, MultipartFile) onUploadDocument;
-  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }

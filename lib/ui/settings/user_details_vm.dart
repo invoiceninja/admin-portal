@@ -52,12 +52,13 @@ class UserDetailsVM {
         });
         passwordCallback(
             context: context,
-            callback: (password) {
+            callback: (password, idToken) {
               store.dispatch(
                 SaveAuthUserRequest(
                   completer: completer,
                   user: state.uiState.settingsUIState.user,
                   password: password,
+                  idToken: idToken,
                 ),
               );
             });

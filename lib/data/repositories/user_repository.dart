@@ -36,11 +36,21 @@ class UserRepository {
     return userResponse.data;
   }
 
-  Future<List<UserEntity>> bulkAction(Credentials credentials, List<String> ids,
-      EntityAction action, String password) async {
+  Future<List<UserEntity>> bulkAction(
+    Credentials credentials,
+    List<String> ids,
+    EntityAction action,
+    String password,
+    String idToken,
+  ) async {
     final url = credentials.url + '/users/bulk?include=company_user';
-    final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode({'ids': ids, 'action': action.toApiParam()}),
+      password: password,
+      idToken: idToken,
+    );
 
     final UserListResponse userResponse =
         serializers.deserializeWith(UserListResponse.serializer, response);
@@ -60,7 +70,11 @@ class UserRepository {
   }
 
   Future<UserEntity> saveData(
-      Credentials credentials, UserEntity user, String password) async {
+    Credentials credentials,
+    UserEntity user,
+    String password,
+    String idToken,
+  ) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
@@ -70,6 +84,7 @@ class UserRepository {
         credentials.token,
         data: json.encode(data),
         password: password,
+        idToken: idToken,
       );
     } else {
       final url = credentials.url + '/users/${user.id}?include=company_user';
@@ -78,6 +93,7 @@ class UserRepository {
         credentials.token,
         data: json.encode(data),
         password: password,
+        idToken: idToken,
       );
     }
 

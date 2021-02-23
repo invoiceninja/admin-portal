@@ -48,11 +48,14 @@ class DocumentRepository {
     return documentResponse.data.toList();
   }
 
-  Future<bool> delete(
-      Credentials credentials, String documentId, String password) async {
+  Future<bool> delete(Credentials credentials, String documentId,
+      String password, String idToken) async {
     await webClient.delete(
-        '${credentials.url}/documents/$documentId', credentials.token,
-        password: password);
+      '${credentials.url}/documents/$documentId',
+      credentials.token,
+      password: password,
+      idToken: idToken,
+    );
 
     return true;
   }
