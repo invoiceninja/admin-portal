@@ -108,6 +108,7 @@ class ClientViewVM {
           completer: completer,
           documentIds: [document.id],
           password: password,
+          idToken: idToken,
         ));
       },
     );

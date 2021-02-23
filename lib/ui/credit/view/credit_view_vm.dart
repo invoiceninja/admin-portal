@@ -137,6 +137,7 @@ class CreditViewVM extends EntityViewVM {
           completer: completer,
           documentIds: [document.id],
           password: password,
+          idToken: idToken,
         ));
       },
       onViewPdf: (context, credit, [activityId]) {
