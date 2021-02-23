@@ -108,6 +108,11 @@ void passwordCallback({
   if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
     callback(null);
   } else {
+    if (state.user.oauthProvider.isNotEmpty) {
+      //
+      // !state.company.ouathPasswordRequired
+    }
+
     showDialog<AlertDialog>(
       context: context,
       barrierDismissible: false,
