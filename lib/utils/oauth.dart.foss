@@ -1,0 +1,3 @@
+void googleSignIn(Function(String, String, String) callback) async {}
+
+void googleSignUp(Function(String, String, String) callback) async {}
