@@ -811,7 +811,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}'
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
         '\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}'
-        '\nPassword $passwordUpdated${authState.hasRecentlyEnteredPassword ? '' : ' [S]'}'
+        '\nPassword: $passwordUpdated${authState.hasRecentlyEnteredPassword ? '' : ' [S]'}'
         '\n';
   }
 }
