@@ -101,6 +101,7 @@ class WebClient {
     MultipartFile multipartFile,
     String fileIndex = 'file',
     String password,
+    String idToken,
   }) async {
     if (Config.DEMO_MODE) {
       throw 'Server requests are not supported in the demo';
@@ -123,7 +124,12 @@ class WebClient {
       response = await http.Client().put(
         url,
         body: data,
-        headers: _getHeaders(url, token, password: password),
+        headers: _getHeaders(
+          url,
+          token,
+          password: password,
+          idToken: idToken,
+        ),
       );
     }
 
@@ -132,7 +138,12 @@ class WebClient {
     return json.decode(response.body);
   }
 
-  Future<dynamic> delete(String url, String token, {String password}) async {
+  Future<dynamic> delete(
+    String url,
+    String token, {
+    String password,
+    String idToken,
+  }) async {
     if (Config.DEMO_MODE) {
       throw 'Server requests are not supported in the demo';
     }
@@ -145,7 +156,12 @@ class WebClient {
 
     final http.Response response = await http.Client().delete(
       url,
-      headers: _getHeaders(url, token, password: password),
+      headers: _getHeaders(
+        url,
+        token,
+        password: password,
+        idToken: idToken,
+      ),
     );
 
     _checkResponse(response);
@@ -154,8 +170,13 @@ class WebClient {
   }
 }
 
-Map<String, String> _getHeaders(String url, String token,
-    {String secret, String password}) {
+Map<String, String> _getHeaders(
+  String url,
+  String token, {
+  String secret,
+  String password,
+  String idToken,
+}) {
   if (url.startsWith(Constants.hostedApiUrl)) {
     secret = Config.API_SECRET;
   }
@@ -166,11 +187,15 @@ Map<String, String> _getHeaders(String url, String token,
     'Content-Type': 'application/json',
   };
 
-  if (token != null && token.isNotEmpty) {
+  if ((token ?? '').isNotEmpty) {
     headers['X-API-Token'] = token;
   }
 
-  if (password != null && password.isNotEmpty) {
+  if ((idToken ?? '').isNotEmpty) {
+    headers['X-API-OAUTH-PASSWORD'] = idToken;
+  }
+
+  if ((password ?? '').isNotEmpty) {
     headers['X-API-PASSWORD'] = password;
   }
 
