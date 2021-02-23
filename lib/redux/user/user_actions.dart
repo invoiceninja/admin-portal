@@ -406,11 +406,13 @@ void handleUserAction(
           ? localization.archivedUsers
               .replaceFirst(':value', userIds.length.toString())
           : localization.archivedUser;
-      final dispatch = ([String password, String idToken]) => store.dispatch(
-          ArchiveUserRequest(
-              completer: snackBarCompleter<Null>(context, message),
-              userIds: userIds,
-              password: password));
+      final dispatch = ([String password, String idToken]) =>
+          store.dispatch(ArchiveUserRequest(
+            completer: snackBarCompleter<Null>(context, message),
+            userIds: userIds,
+            password: password,
+            idToken: idToken,
+          ));
       passwordCallback(
           context: context,
           callback: (password, idToken) {

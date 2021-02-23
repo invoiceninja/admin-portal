@@ -130,8 +130,13 @@ class _UpdateDialogState extends State<UpdateDialog> {
           final webClient = WebClient();
           final url = '${credentials.url}/self-update';
           webClient
-              .post(url, credentials.token,
-                  password: password, rawResponse: true)
+              .post(
+            url,
+            credentials.token,
+            password: password,
+            idToken: idToken,
+            rawResponse: true,
+          )
               .then((dynamic response) {
             setState(() {
               updateState = UpdateState.done;

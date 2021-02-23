@@ -80,8 +80,13 @@ class WebClient {
       response = await http.Client()
           .post(url,
               body: data,
-              headers:
-                  _getHeaders(url, token, secret: secret, password: password))
+              headers: _getHeaders(
+                url,
+                token,
+                secret: secret,
+                password: password,
+                idToken: idToken,
+              ))
           .timeout(const Duration(seconds: kMaxPostSeconds));
     }
 
