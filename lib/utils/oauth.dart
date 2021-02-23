@@ -9,8 +9,11 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
   ],
 );
 
-void googleSignIn(Function(String, String, String) callback) async {
-  final account = await _googleSignIn.signIn();
+void googleSignIn(Function(String, String, String) callback,
+    {bool isSilent = false}) async {
+  final account = await (isSilent
+      ? _googleSignIn.signInSilently()
+      : _googleSignIn.signIn());
   if (account != null) {
     account.authentication.then((GoogleSignInAuthentication value) {
       callback(value.idToken, value.accessToken, value.serverAuthCode);
