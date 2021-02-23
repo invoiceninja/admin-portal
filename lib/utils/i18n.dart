@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'require_password_with_social_login':
+          'Require Password with Social Login',
       'stay_logged_in': 'Stay Logged In',
       'session_about_to_expire': 'Warning: Your session is about to expire',
       'count_hours': ':count Hours',
@@ -54457,6 +54459,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get stayLoggedIn =>
       _localizedValues[localeCode]['stay_logged_in'] ?? '';
+
+  String get requirePasswordWithSocialLogin =>
+      _localizedValues[localeCode]['require_password_with_social_login'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
