@@ -23,7 +23,7 @@ Note: if you don't have an Invoice Ninja backend setup you can test the app with
 - Password: `Password0`
 - URL: `demo.invoiceninja.com`
 
-## Removing non-FOSS code
+## Steps to remove non-FOSS code
 
 ```
 cp android/build.gradle.foss android/build.gradle
