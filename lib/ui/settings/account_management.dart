@@ -136,12 +136,11 @@ class _AccountManagementState extends State<AccountManagement>
                         child: Text(localization.never),
                         value: 0,
                       ),
-                      /*
-                      DropdownMenuItem<int>(
-                        child: Text('1 minute'),
-                        value: 1000 * 60,
-                      ),
-                      */
+                      if (!kReleaseMode)
+                        DropdownMenuItem<int>(
+                          child: Text('2 minutes'),
+                          value: 1000 * 60 * 2,
+                        ),
                       DropdownMenuItem<int>(
                         child: Text(localization.countHours
                             .replaceFirst(':count', '8')),

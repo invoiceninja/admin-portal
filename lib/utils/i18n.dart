@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'stay_logged_in': 'Stay Logged In',
+      'session_about_to_expire': 'Warning: Your session is about to expire',
       'count_hours': ':count Hours',
       'count_day': '1 Day',
       'count_days': ':count Days',
@@ -54449,6 +54451,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get countDays => _localizedValues[localeCode]['count_days'] ?? '';
 
   String get countDay => _localizedValues[localeCode]['count_day'] ?? '';
+
+  String get sessionAboutToExpire =>
+      _localizedValues[localeCode]['session_about_to_expire'] ?? '';
+
+  String get stayLoggedIn =>
+      _localizedValues[localeCode]['stay_logged_in'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
