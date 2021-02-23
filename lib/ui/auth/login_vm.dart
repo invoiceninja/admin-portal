@@ -8,13 +8,13 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_view.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -82,15 +82,6 @@ class LoginVM {
   final Function(BuildContext, Completer<Null> completer) onGoogleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
-    final GoogleSignIn _googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-        'openid',
-        'profile',
-        'https://www.googleapis.com/auth/gmail.send',
-      ],
-    );
-
     void _handleLogin({BuildContext context, bool isSignUp = false}) {
       final layout = calculateLayout(context);
 
@@ -122,23 +113,19 @@ class LoginVM {
           @required String oneTimePassword,
         }) async {
           try {
-            final account = await _googleSignIn.signIn();
-
-            if (account != null) {
-              account.authentication.then((GoogleSignInAuthentication value) {
-                store.dispatch(OAuthLoginRequest(
-                  completer: completer,
-                  idToken: value.idToken,
-                  accessToken: value.accessToken,
-                  serverAuthCode: value.serverAuthCode,
-                  url: formatApiUrl(url.trim()),
-                  secret: secret.trim(),
-                  platform: getPlatform(context),
-                  oneTimePassword: oneTimePassword,
-                ));
-                completer.future.then((_) => _handleLogin(context: context));
-              });
-            }
+            googleSignIn((idToken, accessToken, serverAuthCode) {
+              store.dispatch(OAuthLoginRequest(
+                completer: completer,
+                idToken: idToken,
+                accessToken: accessToken,
+                serverAuthCode: serverAuthCode,
+                url: formatApiUrl(url.trim()),
+                secret: secret.trim(),
+                platform: getPlatform(context),
+                oneTimePassword: oneTimePassword,
+              ));
+              completer.future.then((_) => _handleLogin(context: context));
+            });
           } catch (error) {
             completer.completeError(error);
             print(error);
@@ -147,20 +134,16 @@ class LoginVM {
         onGoogleSignUpPressed:
             (BuildContext context, Completer<Null> completer) async {
           try {
-            final account = await _googleSignIn.grantOfflineAccess();
-
-            if (account != null) {
-              account.authentication.then((GoogleSignInAuthentication value) {
-                store.dispatch(OAuthSignUpRequest(
-                  completer: completer,
-                  idToken: value.idToken,
-                  accessToken: value.accessToken,
-                  serverAuthCode: value.serverAuthCode,
-                ));
-                completer.future.then(
-                    (_) => _handleLogin(context: context, isSignUp: true));
-              });
-            }
+            googleSignUp((idToken, accessToken, serverAuthCode) {
+              store.dispatch(OAuthSignUpRequest(
+                completer: completer,
+                idToken: idToken,
+                accessToken: accessToken,
+                serverAuthCode: serverAuthCode,
+              ));
+              completer.future
+                  .then((_) => _handleLogin(context: context, isSignUp: true));
+            });
           } catch (error) {
             completer.completeError(error);
             print(error);

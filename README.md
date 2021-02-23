@@ -23,6 +23,16 @@ Note: if you don't have an Invoice Ninja backend setup you can test the app with
 - Password: `Password0`
 - URL: `demo.invoiceninja.com`
 
+## Removing non-FOSS code
+
+```
+cp android/build.gradle.foss android/build.gradle
+cp lib/ui/auth/login_vm.dart.foss lib/ui/auth/login_vm.dart
+cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
+cp pubspec.foss.yaml pubspec.yaml 
+rm pubspec.lock
+```
+
 ## Application Architecture
 
 The application was created using the [Flutter Redux Starter](https://github.com/hillelcoren/flutter-redux-starter).
