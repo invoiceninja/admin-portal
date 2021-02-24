@@ -430,7 +430,7 @@ packages:
       name: flutter_styled_toast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.2+1"
+    version: "1.5.1+1"
   flutter_typeahead:
     dependency: "direct main"
     description:
@@ -1022,7 +1022,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.16.3"
+    version: "1.16.4"
   test_api:
     dependency: transitive
     description:
@@ -1036,14 +1036,14 @@ packages:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.13"
+    version: "0.3.14"
   timeago:
     dependency: "direct main"
     description:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.29"
+    version: "2.0.30"
   timing:
     dependency: transitive
     description:
