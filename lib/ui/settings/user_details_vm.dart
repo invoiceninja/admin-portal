@@ -35,6 +35,8 @@ class UserDetailsVM {
     @required this.state,
     @required this.onChanged,
     @required this.onSavePressed,
+    @required this.onDisconnectGooglePressed,
+    @required this.onDisableTwoFactorPressed,
   });
 
   static UserDetailsVM fromStore(Store<AppState> store) {
@@ -44,6 +46,32 @@ class UserDetailsVM {
       state: state,
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
+      onDisableTwoFactorPressed: (context) {
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              store.dispatch(
+                SaveAuthUserRequest(
+                  //user: state.user.rebuild((b) => b..oauthProvider = ''),
+                  password: password,
+                  idToken: idToken,
+                ),
+              );
+            });
+      },
+      onDisconnectGooglePressed: (context) {
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              store.dispatch(
+                SaveAuthUserRequest(
+                  user: state.user.rebuild((b) => b..oauthProvider = ''),
+                  password: password,
+                  idToken: idToken,
+                ),
+              );
+            });
+      },
       onSavePressed: (context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).savedSettings);
@@ -70,4 +98,6 @@ class UserDetailsVM {
   final UserEntity user;
   final Function(UserEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onDisconnectGooglePressed;
+  final Function(BuildContext) onDisableTwoFactorPressed;
 }
