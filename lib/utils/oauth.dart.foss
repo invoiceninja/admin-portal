@@ -1,3 +1,5 @@
 void googleSignIn(Function(String, String, String) callback, {bool isSilent = false}) async {}
 
 void googleSignUp(Function(String, String, String) callback) async {}
+
+void googleSignOut() async {}

@@ -31,3 +31,7 @@ void googleSignUp(Function(String, String, String) callback) async {
     });
   }
 }
+
+Future<GoogleSignInAccount> googleSignOut() async {
+  return await _googleSignIn.signOut();
+}
