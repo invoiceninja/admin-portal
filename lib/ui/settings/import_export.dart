@@ -171,7 +171,7 @@ class _FileImportState extends State<_FileImport> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    final children = [
+    final List<Widget> children = [
       InputDecorator(
         decoration: InputDecoration(
           labelText: localization.importType,
