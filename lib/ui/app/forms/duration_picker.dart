@@ -23,7 +23,7 @@ class DurationPicker extends StatefulWidget {
 class _DurationPickerState extends State<DurationPicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
-  String _pendingValue;
+  Duration _pendingDuration;
 
   @override
   void initState() {
@@ -42,12 +42,16 @@ class _DurationPickerState extends State<DurationPicker> {
 
   void _onFoucsChanged() {
     if (!_focusNode.hasFocus) {
-      _textController.text = widget.selectedDuration != null
-          ? formatDuration(widget.selectedDuration)
-          : '';
+      if (widget.selectedDuration == null && _pendingDuration != null) {
+        widget.onSelected(_pendingDuration);
+      }
+
+      final duration = _pendingDuration ?? widget.selectedDuration;
+
+      _textController.text = duration != null ? formatDuration(duration) : '';
 
       setState(() {
-        _pendingValue = null;
+        _pendingDuration = null;
       });
     }
   }
@@ -82,14 +86,18 @@ class _DurationPickerState extends State<DurationPicker> {
           seconds = (parseDouble(value) * 60 * 60).round();
         }
         final duration = Duration(seconds: seconds);
-        widget.onSelected(duration);
+        if (widget.selectedDuration != null) {
+          widget.onSelected(duration);
+        }
 
         setState(() {
-          _pendingValue = formatDuration(duration);
+          _pendingDuration = duration;
         });
       },
       decoration: InputDecoration(
-          labelText: _pendingValue ?? widget.labelText ?? '',
+          labelText: _pendingDuration != null
+              ? formatDuration(_pendingDuration)
+              : (widget.labelText ?? ''),
           suffixIcon: widget.allowClearing &&
                   (widget.selectedDuration != null &&
                       widget.selectedDuration.inSeconds != 0)

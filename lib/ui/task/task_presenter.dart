@@ -68,7 +68,7 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.description:
         return Text(task.description);
       case TaskFields.duration:
-        return Text('');
+        return Text(formatDuration(task.calculateDuration()));
       case TaskFields.number:
         return Text(task.number.toString());
       case TaskFields.invoiceId:
@@ -80,7 +80,18 @@ class TaskPresenter extends EntityPresenter {
         return Text(
             state.projectState.map[task.projectId]?.listDisplayName ?? '');
       case TaskFields.timeLog:
-        return Text(task.timeLog);
+        final notes = <String>[];
+        task
+            .getTaskTimes()
+            .where((time) => time.startDate != null && time.endDate != null)
+            .forEach((time) {
+          final start = formatDate(time.startDate.toIso8601String(), context,
+              showTime: true, showDate: true);
+          final end = formatDate(time.endDate.toIso8601String(), context,
+              showTime: true, showDate: false);
+          notes.add('$start - $end');
+        });
+        return Text(notes.join('\n'));
       case TaskFields.isRunning:
         return Text(task.isRunning.toString());
       case TaskFields.customValue1:

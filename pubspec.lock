@@ -430,7 +430,7 @@ packages:
       name: flutter_styled_toast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.2+1"
+    version: "1.5.1+1"
   flutter_typeahead:
     dependency: "direct main"
     description:
@@ -457,7 +457,7 @@ packages:
     description:
       path: "packages/google_sign_in/google_sign_in"
       ref: master
-      resolved-ref: b9b7e1eabc2da8e669ea1b452d310ecce454741e
+      resolved-ref: "9cc21c0392eb9ba4a866787fd0a4d744bc94b8c7"
       url: "https://github.com/invoiceninja/plugins.git"
     source: git
     version: "4.5.4"
@@ -466,7 +466,7 @@ packages:
     description:
       path: "packages/google_sign_in/google_sign_in_platform_interface"
       ref: HEAD
-      resolved-ref: b9b7e1eabc2da8e669ea1b452d310ecce454741e
+      resolved-ref: "9cc21c0392eb9ba4a866787fd0a4d744bc94b8c7"
       url: "https://github.com/invoiceninja/plugins.git"
     source: git
     version: "1.1.2"
@@ -475,7 +475,7 @@ packages:
     description:
       path: "packages/google_sign_in/google_sign_in_web"
       ref: master
-      resolved-ref: b9b7e1eabc2da8e669ea1b452d310ecce454741e
+      resolved-ref: "9cc21c0392eb9ba4a866787fd0a4d744bc94b8c7"
       url: "https://github.com/invoiceninja/plugins.git"
     source: git
     version: "0.9.2"
@@ -562,7 +562,7 @@ packages:
       name: io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.3.5"
   js:
     dependency: transitive
     description:
@@ -1022,7 +1022,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.16.3"
+    version: "1.16.4"
   test_api:
     dependency: transitive
     description:
@@ -1036,14 +1036,14 @@ packages:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.13"
+    version: "0.3.14"
   timeago:
     dependency: "direct main"
     description:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.29"
+    version: "2.0.30"
   timing:
     dependency: transitive
     description:

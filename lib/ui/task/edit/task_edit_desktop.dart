@@ -297,7 +297,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: DatePicker(
-                        key: ValueKey('__${_startUpdatedAt}_${index}__'),
+                        key: ValueKey(
+                            '__${_startUpdatedAt}_${_durationUpdateAt}_${index}__'),
                         selectedDate: taskTimes[index].startDate == null
                             ? null
                             : convertDateTimeToSqlDate(
@@ -315,6 +316,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TimePicker(
+                        key: ValueKey('__${_durationUpdateAt}_${index}__'),
                         selectedDate: taskTimes[index].startDate,
                         selectedDateTime: taskTimes[index].startDate,
                         onSelected: (timeOfDay) {

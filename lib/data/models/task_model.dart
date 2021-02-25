@@ -190,9 +190,10 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   }
 
   TaskTime copyWithDuration(Duration duration) {
+    final start = startDate ?? DateTime.now().subtract(duration);
     return TaskTime(
-      startDate: startDate,
-      endDate: startDate.add(duration),
+      startDate: start,
+      endDate: start.add(duration),
     );
   }
 
