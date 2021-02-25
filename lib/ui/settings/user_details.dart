@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -209,7 +210,7 @@ class _UserDetailsState extends State<UserDetails>
                     SizedBox(width: kTableColumnGap),
                     Expanded(
                       child: OutlineButton(
-                        child: Text(localization.enable2fa.toUpperCase()),
+                        child: Text(localization.enableTwoFactor.toUpperCase()),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
@@ -248,6 +249,32 @@ class _UserDetailsState extends State<UserDetails>
           )
         ],
       ),
+    );
+  }
+}
+
+class _2faSetup extends StatefulWidget {
+  @override
+  __2faSetupState createState() => __2faSetupState();
+}
+
+class __2faSetupState extends State<_2faSetup> {
+  @override
+  Widget build(BuildContext context) {
+    final localzation = AppLocalization.of(context);
+
+    return AlertDialog(
+      title: Text(localzation.enableTwoFactor),
+      content: Column(
+        children: [],
+      ),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(localzation.cancel))
+      ],
     );
   }
 }

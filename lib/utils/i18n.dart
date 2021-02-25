@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'two_factor_setup_help': 'Scan the bar code with a :link compatible app.',
+      'enabled_two_factor': 'Successfully enabled Two-Factor Authentication',
       'connect_google': 'Connect Google',
       'disconnect_google': 'Disconnect Google',
       'enable_2fa': 'Enable 2FA',
@@ -54467,15 +54469,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get requirePasswordWithSocialLogin =>
       _localizedValues[localeCode]['require_password_with_social_login'] ?? '';
 
-  String get enable2fa => _localizedValues[localeCode]['enable_2fa'] ?? '';
+  String get enableTwoFactor => _localizedValues[localeCode]['enable_two_factor'] ?? '';
 
-  String get disable2fa => _localizedValues[localeCode]['disable_2fa'] ?? '';
+  String get disableTwoFacor => _localizedValues[localeCode]['disable_two_factor'] ?? '';
 
-  String get connectGoogle => _localizedValues[localeCode]['connect_google'] ?? '';
+  String get connectGoogle =>
+      _localizedValues[localeCode]['connect_google'] ?? '';
 
-  String get disconnectGoogle => _localizedValues[localeCode]['disconnect_google'] ?? '';
+  String get disconnectGoogle =>
+      _localizedValues[localeCode]['disconnect_google'] ?? '';
 
-    
+  String get twoFactorSetupHelp => _localizedValues[localeCode]['two_factor_setup_help'] ?? '';
+
+  String get enabledTwoFactor => _localizedValues[localeCode]['enabled_two_factor'] ?? '';
+
+      
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 
