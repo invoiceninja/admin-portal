@@ -2,6 +2,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -116,6 +118,7 @@ class _UserDetailsState extends State<UserDetails>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final user = viewModel.user;
+    final state = viewModel.state;
 
     return EditScaffold(
       title: localization.userDetails,
@@ -184,6 +187,39 @@ class _UserDetailsState extends State<UserDetails>
                   autoValidate: autoValidate,
                 ),
               ]),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, top: 20, right: 18, bottom: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlineButton(
+                        child: Text((user.oauthProvider ==
+                                    UserEntity.OAUTH_PROVIDER_GOOGLE
+                                ? localization.disconnectGoogle
+                                : localization.connectGoogle)
+                            .toUpperCase()),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: () {
+                          //
+                        },
+                      ),
+                    ),
+                    SizedBox(width: kTableColumnGap),
+                    Expanded(
+                      child: OutlineButton(
+                        child: Text(localization.enable2fa.toUpperCase()),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: () {
+                          //
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               FormCard(
                 children: <Widget>[
                   FormColorPicker(
