@@ -52,14 +52,8 @@ List<String> filteredWebhooksSelector(
   BuiltList<String> webhookList,
   ListUIState webhookListState,
 ) {
-  final filterEntityId = selectionState.filterEntityId;
-  final filterEntityType = selectionState.filterEntityType;
-
   final list = webhookList.where((webhookId) {
     final webhook = webhookMap[webhookId];
-    if (filterEntityId != null && webhook.id != filterEntityId) {
-      return false;
-    } else {}
 
     if (webhook.id == selectionState.selectedId) {
       return true;
