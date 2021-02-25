@@ -19,8 +19,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enabled_two_factor': 'Successfully enabled Two-Factor Authentication',
       'connect_google': 'Connect Google',
       'disconnect_google': 'Disconnect Google',
-      'enable_2fa': 'Enable 2FA',
-      'disable_2fa': 'Disable 2FA',
+      'enable_two_factor': 'Enable Two Factor',
+      'disable_two_factor': 'Disable Two Factor',
       'require_password_with_social_login':
           'Require Password with Social Login',
       'stay_logged_in': 'Stay Logged In',
@@ -54469,9 +54469,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get requirePasswordWithSocialLogin =>
       _localizedValues[localeCode]['require_password_with_social_login'] ?? '';
 
-  String get enableTwoFactor => _localizedValues[localeCode]['enable_two_factor'] ?? '';
+  String get enableTwoFactor =>
+      _localizedValues[localeCode]['enable_two_factor'] ?? '';
 
-  String get disableTwoFacor => _localizedValues[localeCode]['disable_two_factor'] ?? '';
+  String get disableTwoFacor =>
+      _localizedValues[localeCode]['disable_two_factor'] ?? '';
 
   String get connectGoogle =>
       _localizedValues[localeCode]['connect_google'] ?? '';
@@ -54479,11 +54481,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get disconnectGoogle =>
       _localizedValues[localeCode]['disconnect_google'] ?? '';
 
-  String get twoFactorSetupHelp => _localizedValues[localeCode]['two_factor_setup_help'] ?? '';
+  String get twoFactorSetupHelp =>
+      _localizedValues[localeCode]['two_factor_setup_help'] ?? '';
 
-  String get enabledTwoFactor => _localizedValues[localeCode]['enabled_two_factor'] ?? '';
+  String get enabledTwoFactor =>
+      _localizedValues[localeCode]['enabled_two_factor'] ?? '';
 
-      
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -214,7 +215,11 @@ class _UserDetailsState extends State<UserDetails>
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
-                          //
+                          showDialog<void>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                _EnableTwoFactor(state: viewModel.state),
+                          );
                         },
                       ),
                     ),
@@ -253,12 +258,28 @@ class _UserDetailsState extends State<UserDetails>
   }
 }
 
-class _2faSetup extends StatefulWidget {
+class _EnableTwoFactor extends StatefulWidget {
+  const _EnableTwoFactor({@required this.state});
+  final AppState state;
+
   @override
-  __2faSetupState createState() => __2faSetupState();
+  _EnableTwoFactorState createState() => _EnableTwoFactorState();
 }
 
-class __2faSetupState extends State<_2faSetup> {
+class _EnableTwoFactorState extends State<_EnableTwoFactor> {
+  @override
+  void initState() {
+    super.initState();
+
+    final webClient = WebClient();
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/settings/enable_two_factor';
+
+    webClient.get(url, credentials.token).then((dynamic response) {
+      print('## response: $response');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localzation = AppLocalization.of(context);
@@ -266,6 +287,7 @@ class __2faSetupState extends State<_2faSetup> {
     return AlertDialog(
       title: Text(localzation.enableTwoFactor),
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [],
       ),
       actions: [
@@ -273,7 +295,7 @@ class __2faSetupState extends State<_2faSetup> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text(localzation.cancel))
+            child: Text(localzation.cancel.toUpperCase()))
       ],
     );
   }
