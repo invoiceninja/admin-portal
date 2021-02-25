@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'enter_phone_to_enable_two_factor':
+          'Please provide a mobile phone number to enable two factor authentication',
       'send_sms': 'Send SMS',
       'sms_code': 'SMS Code',
       'two_factor_setup_help': 'Scan the bar code with a :link compatible app.',
@@ -54493,6 +54495,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get sendSms => _localizedValues[localeCode]['send_sms'] ?? '';
 
+  String get enterPhoneToEnableTwoFactor => _localizedValues[localeCode]['enter_phone_to_enable_two_factor'] ?? '';
+
+  
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 

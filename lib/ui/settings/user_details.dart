@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -108,7 +109,7 @@ class _UserDetailsState extends State<UserDetails>
         ..firstName = _firstNameController.text.trim()
         ..lastName = _lastNameController.text.trim()
         ..email = _emailController.text.trim()
-        ..firstName = _firstNameController.text.trim()
+        ..phone = _phoneController.text.trim()
         ..password = _passwordController.text.trim());
       if (user != widget.viewModel.user) {
         widget.viewModel.onChanged(user);
@@ -215,6 +216,14 @@ class _UserDetailsState extends State<UserDetails>
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
+                          if (state.user.phone.isEmpty || user.phone.isEmpty) {
+                            showMessageDialog(
+                                context: context,
+                                message:
+                                    localization.enterPhoneToEnableTwoFactor);
+                            return;
+                          }
+
                           showDialog<void>(
                             context: context,
                             builder: (BuildContext context) =>
@@ -310,6 +319,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                           },
                         ),
                       ),
+                      SizedBox(width: kTableColumnGap),
                       SizedBox(
                         width: 100,
                         child: TextButton(
@@ -332,6 +342,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                           },
                         ),
                       ),
+                      SizedBox(width: kTableColumnGap),
                       SizedBox(
                         width: 100,
                         child: TextButton(
