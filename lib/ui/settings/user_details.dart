@@ -13,11 +13,14 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserDetails extends StatefulWidget {
   const UserDetails({
@@ -267,6 +270,11 @@ class _EnableTwoFactor extends StatefulWidget {
 }
 
 class _EnableTwoFactorState extends State<_EnableTwoFactor> {
+  String _secret = 'test';
+  //String _secret;
+  String _oneTimePassword;
+  String _smsCode;
+
   @override
   void initState() {
     super.initState();
@@ -286,16 +294,78 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
 
     return AlertDialog(
       title: Text(localzation.enableTwoFactor),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [],
-      ),
+      content: _secret == null
+          ? LoadingIndicator(height: 100)
+          : SizedBox(
+              width: 280,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(_secret),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedFormField(
+                          label: localzation.oneTimePassword,
+                          onChanged: (value) {
+                            _oneTimePassword = value;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 100,
+                        child: TextButton(
+                          onPressed: () {
+                            launch(
+                                'https://github.com/antonioribeiro/google2fa#google-authenticator-apps');
+                          },
+                          child: Text(localzation.learnMore),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedFormField(
+                          label: localzation.smsCode,
+                          onChanged: (value) {
+                            _smsCode = value;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 100,
+                        child: TextButton(
+                          onPressed: () {
+                            //
+                          },
+                          child: Text(localzation.sendSms),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
       actions: [
         TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(localzation.cancel.toUpperCase()))
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            localzation.cancel.toUpperCase(),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            localzation.save.toUpperCase(),
+          ),
+        ),
       ],
     );
   }
