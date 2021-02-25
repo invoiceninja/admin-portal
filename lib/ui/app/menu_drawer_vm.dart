@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -55,8 +56,6 @@ class MenuDrawerVM {
   final bool isLoading;
 
   static MenuDrawerVM fromStore(Store<AppState> store) {
-    //final GoogleSignIn _googleSignIn = GoogleSignIn();
-
     final AppState state = store.state;
 
     return MenuDrawerVM(
@@ -73,13 +72,10 @@ class MenuDrawerVM {
             message: AppLocalization.of(context).logout,
             context: context,
             callback: () async {
-              // TODO re-enable this code
-              /*
               if (store.state.user.oauthProvider ==
                   UserEntity.OAUTH_PROVIDER_GOOGLE) {
-                await _googleSignIn.signOut();
+                await googleSignOut();
               }
-              */
               store.dispatch(UserLogout(context));
             });
       },
