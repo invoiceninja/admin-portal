@@ -199,8 +199,7 @@ class _UserDetailsState extends State<UserDetails>
                   children: [
                     Expanded(
                       child: OutlineButton(
-                        child: Text((user.oauthProvider ==
-                                    UserEntity.OAUTH_PROVIDER_GOOGLE
+                        child: Text((user.isConnectedToGoogle
                                 ? localization.disconnectGoogle
                                 : localization.connectGoogle)
                             .toUpperCase()),
