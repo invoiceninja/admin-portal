@@ -1245,6 +1245,10 @@ abstract class InvitationEntity extends Object
 
   InvitationEntity._();
 
+  static const EMAIL_STATUS_DELIVERED = 'delivered';
+  static const EMAIL_STATUS_BOUNCED = 'bounced';
+  static const EMAIL_STATUS_SPAM = 'spam';
+
   @override
   @memoized
   int get hashCode;
@@ -1264,6 +1268,10 @@ abstract class InvitationEntity extends Object
 
   @BuiltValueField(wireName: 'opened_date')
   String get openedDate;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_status')
+  String get emailStatus;
 
   String get downloadLink => '$link/download';
 
