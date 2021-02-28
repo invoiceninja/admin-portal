@@ -52,7 +52,8 @@ class UserDetailsVM {
             callback: (password, idToken) {
               store.dispatch(
                 SaveAuthUserRequest(
-                  //user: state.user.rebuild((b) => b..oauthProvider = ''),
+                  user:
+                      state.user.rebuild((b) => b..isTwoFactorEnabled = false),
                   password: password,
                   idToken: idToken,
                 ),

@@ -212,23 +212,31 @@ class _UserDetailsState extends State<UserDetails>
                     SizedBox(width: kTableColumnGap),
                     Expanded(
                       child: OutlineButton(
-                        child: Text(localization.enableTwoFactor.toUpperCase()),
+                        child: Text((user.isTwoFactorEnabled
+                                ? localization.disableTwoFacor
+                                : localization.enableTwoFactor)
+                            .toUpperCase()),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
-                          if (state.user.phone.isEmpty || user.phone.isEmpty) {
-                            showMessageDialog(
-                                context: context,
-                                message:
-                                    localization.enterPhoneToEnableTwoFactor);
-                            return;
-                          }
+                          if (user.isTwoFactorEnabled) {
+                            viewModel.onDisableTwoFactorPressed(context);
+                          } else {
+                            if (state.user.phone.isEmpty ||
+                                user.phone.isEmpty) {
+                              showMessageDialog(
+                                  context: context,
+                                  message:
+                                      localization.enterPhoneToEnableTwoFactor);
+                              return;
+                            }
 
-                          showDialog<void>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                _EnableTwoFactor(state: viewModel.state),
-                          );
+                            showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  _EnableTwoFactor(state: viewModel.state),
+                            );
+                          }
                         },
                       ),
                     ),
