@@ -23,6 +23,7 @@ import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DesignEdit extends StatefulWidget {
   const DesignEdit({
@@ -407,6 +408,14 @@ class _DesignSettingsState extends State<DesignSettings> {
               onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
             ),
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+          child: OutlinedButton(
+            child: Text(localization.viewDocs.toUpperCase()),
+            onPressed: () =>
+                launch('https://invoiceninja.github.io/docs/custom-fields/'),
+          ),
         ),
         VariablesHelp(),
       ],
