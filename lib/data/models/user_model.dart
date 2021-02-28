@@ -98,6 +98,7 @@ abstract class UserEntity extends Object
       customValue4: '',
       userCompany: userCompany,
       oauthProvider: '',
+      isTwoFactorEnabled: false,
     );
   }
 
@@ -142,6 +143,9 @@ abstract class UserEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @BuiltValueField(wireName: 'google_2fa_secret')
+  bool get isTwoFactorEnabled;
 
   @nullable
   @BuiltValueField(wireName: 'company_user')
@@ -254,6 +258,10 @@ abstract class UserEntity extends Object
 
   bool get isConnectedToGoogle =>
       oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
+
+  // ignore: unused_element
+  static void _initializeBuilder(UserEntityBuilder builder) =>
+      builder..isTwoFactorEnabled = false;
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }

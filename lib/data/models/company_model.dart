@@ -73,6 +73,7 @@ abstract class CompanyEntity extends Object
       clientCanRegister: true,
       autoStartTasks: false,
       invoiceTaskTimelog: true,
+      invoiceTaskDatelog: true,
       isLarge: false,
       enableShopApi: false,
       convertProductExchangeRate: false,
@@ -299,6 +300,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'invoice_task_timelog')
   bool get invoiceTaskTimelog;
 
+  @BuiltValueField(wireName: 'invoice_task_datelog')
+  bool get invoiceTaskDatelog;
+
   @BuiltValueField(wireName: 'auto_start_tasks')
   bool get autoStartTasks;
 
@@ -496,7 +500,8 @@ abstract class CompanyEntity extends Object
     ..enableProductDiscount = false
     ..defaultTaskIsDateBased = false
     ..sessionTimeout = 0
-    ..oauthPasswordRequired = false;
+    ..oauthPasswordRequired = false
+    ..invoiceTaskDatelog = true;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
