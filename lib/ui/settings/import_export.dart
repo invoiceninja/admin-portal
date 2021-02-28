@@ -10,7 +10,6 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/import_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -172,7 +171,7 @@ class _FileImportState extends State<_FileImport> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    List<Widget> children = [
+    final List<Widget> children = [
       InputDecorator(
         decoration: InputDecoration(
           labelText: localization.importType,

@@ -73,6 +73,7 @@ class ClientFields {
   static const String phone = 'phone';
   static const String website = 'website';
   static const String language = 'language';
+  static const String taskRate = 'task_rate';
   static const String publicNotes = 'public_notes';
   static const String privateNotes = 'private_notes';
   static const String currency = 'currency';

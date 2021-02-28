@@ -79,13 +79,13 @@ class _VariablesHelpState extends State<VariablesHelp>
                   InvoiceFields.terms,
                   InvoiceFields.footer,
                   if (company.hasCustomField(CustomFieldType.invoice1))
-                    InvoiceFields.customValue1,
+                    CustomFieldType.invoice1,
                   if (company.hasCustomField(CustomFieldType.invoice2))
-                    InvoiceFields.customValue2,
+                    CustomFieldType.invoice2,
                   if (company.hasCustomField(CustomFieldType.invoice3))
-                    InvoiceFields.customValue3,
+                    CustomFieldType.invoice3,
                   if (company.hasCustomField(CustomFieldType.invoice4))
-                    InvoiceFields.customValue4,
+                    CustomFieldType.invoice4,
                   if (company.hasCustomField(CustomFieldType.surcharge1))
                     InvoiceFields.customSurcharge1,
                   if (company.hasCustomField(CustomFieldType.surcharge2))
@@ -117,13 +117,13 @@ class _VariablesHelpState extends State<VariablesHelp>
                   ClientFields.creditBalance,
                   ClientFields.idNumber,
                   if (company.hasCustomField(CustomFieldType.client1))
-                    ClientFields.custom1,
+                    CustomFieldType.client1,
                   if (company.hasCustomField(CustomFieldType.client2))
-                    ClientFields.custom2,
+                    CustomFieldType.client2,
                   if (company.hasCustomField(CustomFieldType.client3))
-                    ClientFields.custom3,
+                    CustomFieldType.client3,
                   if (company.hasCustomField(CustomFieldType.client4))
-                    ClientFields.custom4,
+                    CustomFieldType.client4,
                 ].map((field) => 'client.$field').toList(),
               ),
               _VariableGrid(
@@ -133,13 +133,13 @@ class _VariablesHelpState extends State<VariablesHelp>
                   ContactFields.email,
                   ContactFields.phone,
                   if (company.hasCustomField(CustomFieldType.contact1))
-                    ContactFields.custom1,
+                    CustomFieldType.contact1,
                   if (company.hasCustomField(CustomFieldType.contact2))
-                    ContactFields.custom2,
+                    CustomFieldType.contact2,
                   if (company.hasCustomField(CustomFieldType.contact3))
-                    ContactFields.custom3,
+                    CustomFieldType.contact3,
                   if (company.hasCustomField(CustomFieldType.contact4))
-                    ContactFields.custom4,
+                    CustomFieldType.contact4,
                 ].map((field) => 'contact.$field').toList(),
               ),
               _VariableGrid(
@@ -155,13 +155,13 @@ class _VariablesHelpState extends State<VariablesHelp>
                   CompanyFields.vatNumber,
                   CompanyFields.website,
                   if (company.hasCustomField(CustomFieldType.company1))
-                    CompanyFields.custom1,
+                    CustomFieldType.company1,
                   if (company.hasCustomField(CustomFieldType.company2))
-                    CompanyFields.custom2,
+                    CustomFieldType.company2,
                   if (company.hasCustomField(CustomFieldType.company3))
-                    CompanyFields.custom3,
+                    CustomFieldType.company3,
                   if (company.hasCustomField(CustomFieldType.company4))
-                    CompanyFields.custom4,
+                    CustomFieldType.company4,
                 ].map((field) => 'company.$field').toList(),
               ),
               _VariableGrid(
@@ -171,13 +171,13 @@ class _VariablesHelpState extends State<VariablesHelp>
                   UserFields.phone,
                   UserFields.email,
                   if (company.hasCustomField(CustomFieldType.user1))
-                    UserFields.custom1,
+                    CustomFieldType.user1,
                   if (company.hasCustomField(CustomFieldType.user2))
-                    UserFields.custom2,
+                    CustomFieldType.user2,
                   if (company.hasCustomField(CustomFieldType.user3))
-                    UserFields.custom3,
+                    CustomFieldType.user3,
                   if (company.hasCustomField(CustomFieldType.user4))
-                    UserFields.custom4,
+                    CustomFieldType.user4,
                 ].map((field) => 'user.$field').toList(),
               ),
               if (widget.showEmailVariables) SizedBox(),

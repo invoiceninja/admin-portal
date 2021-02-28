@@ -92,8 +92,7 @@ List<String> gmailUserList(BuiltMap<String, UserEntity> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 
-    return user.isActive &&
-        user.oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
+    return user.isActive && user.isConnectedToGoogle;
   }).toList();
 }
 

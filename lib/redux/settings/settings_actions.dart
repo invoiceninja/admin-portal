@@ -90,8 +90,8 @@ class SaveUserSettingsFailure implements StopSaving {
 
 class SaveAuthUserRequest implements StartSaving {
   SaveAuthUserRequest({
-    @required this.completer,
     @required this.user,
+    this.completer,
     this.password,
     this.idToken,
   });

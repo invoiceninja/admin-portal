@@ -252,5 +252,8 @@ abstract class UserEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => null;
 
+  bool get isConnectedToGoogle =>
+      oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
+
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }

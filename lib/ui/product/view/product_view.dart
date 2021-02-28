@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 
 class ProductView extends StatefulWidget {
   const ProductView({

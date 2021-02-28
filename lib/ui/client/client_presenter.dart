@@ -32,6 +32,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.website,
       ClientFields.language,
       ClientFields.currency,
+      ClientFields.taskRate,
       ClientFields.publicNotes,
       ClientFields.privateNotes,
       ClientFields.creditBalance,
@@ -111,6 +112,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.publicNotes);
       case ClientFields.privateNotes:
         return Text(client.privateNotes);
+      case ClientFields.taskRate:
+        return Text(formatNumber(client.settings.defaultTaskRate, context));
       case ClientFields.documents:
         return Text('${client.documents.length}');
     }

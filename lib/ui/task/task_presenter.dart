@@ -74,11 +74,6 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.invoiceId:
         return Text(
             state.invoiceState.map[task.invoiceId]?.listDisplayName ?? '');
-      case TaskFields.clientId:
-        return Text(state.clientState.map[task.clientId]?.displayName ?? '');
-      case TaskFields.projectId:
-        return Text(
-            state.projectState.map[task.projectId]?.listDisplayName ?? '');
       case TaskFields.timeLog:
         final notes = <String>[];
         task
