@@ -929,6 +929,12 @@ class _$InvitationEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.emailStatus != null) {
+      result
+        ..add('email_status')
+        ..add(serializers.serialize(object.emailStatus,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -996,6 +1002,10 @@ class _$InvitationEntitySerializer
           break;
         case 'opened_date':
           result.openedDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_status':
+          result.emailStatus = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -2823,6 +2833,8 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String openedDate;
   @override
+  final String emailStatus;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -2852,6 +2864,7 @@ class _$InvitationEntity extends InvitationEntity {
       this.sentDate,
       this.viewedDate,
       this.openedDate,
+      this.emailStatus,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -2912,6 +2925,7 @@ class _$InvitationEntity extends InvitationEntity {
         sentDate == other.sentDate &&
         viewedDate == other.viewedDate &&
         openedDate == other.openedDate &&
+        emailStatus == other.emailStatus &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2940,13 +2954,15 @@ class _$InvitationEntity extends InvitationEntity {
                                                 $jc(
                                                     $jc(
                                                         $jc(
-                                                            $jc(0,
-                                                                key.hashCode),
-                                                            link.hashCode),
-                                                        contactId.hashCode),
-                                                    sentDate.hashCode),
-                                                viewedDate.hashCode),
-                                            openedDate.hashCode),
+                                                            $jc(
+                                                                $jc(0,
+                                                                    key.hashCode),
+                                                                link.hashCode),
+                                                            contactId.hashCode),
+                                                        sentDate.hashCode),
+                                                    viewedDate.hashCode),
+                                                openedDate.hashCode),
+                                            emailStatus.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -2967,6 +2983,7 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('sentDate', sentDate)
           ..add('viewedDate', viewedDate)
           ..add('openedDate', openedDate)
+          ..add('emailStatus', emailStatus)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -3007,6 +3024,10 @@ class InvitationEntityBuilder
   String _openedDate;
   String get openedDate => _$this._openedDate;
   set openedDate(String openedDate) => _$this._openedDate = openedDate;
+
+  String _emailStatus;
+  String get emailStatus => _$this._emailStatus;
+  set emailStatus(String emailStatus) => _$this._emailStatus = emailStatus;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -3056,6 +3077,7 @@ class InvitationEntityBuilder
       _sentDate = _$v.sentDate;
       _viewedDate = _$v.viewedDate;
       _openedDate = _$v.openedDate;
+      _emailStatus = _$v.emailStatus;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -3093,6 +3115,7 @@ class InvitationEntityBuilder
             sentDate: sentDate,
             viewedDate: viewedDate,
             openedDate: openedDate,
+            emailStatus: emailStatus,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

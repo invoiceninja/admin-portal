@@ -182,6 +182,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'google_2fa_secret',
+      serializers.serialize(object.isTwoFactorEnabled,
+          specifiedType: const FullType(bool)),
       'oauth_provider_id',
       serializers.serialize(object.oauthProvider,
           specifiedType: const FullType(String)),
@@ -292,6 +295,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'google_2fa_secret':
+          result.isTwoFactorEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'company_user':
           result.userCompany.replace(serializers.deserialize(value,
@@ -647,6 +654,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String customValue4;
   @override
+  final bool isTwoFactorEnabled;
+  @override
   final UserCompanyEntity userCompany;
   @override
   final String oauthProvider;
@@ -681,6 +690,7 @@ class _$UserEntity extends UserEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.isTwoFactorEnabled,
       this.userCompany,
       this.oauthProvider,
       this.isChanged,
@@ -715,6 +725,9 @@ class _$UserEntity extends UserEntity {
     }
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'customValue4');
+    }
+    if (isTwoFactorEnabled == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'isTwoFactorEnabled');
     }
     if (oauthProvider == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'oauthProvider');
@@ -754,6 +767,7 @@ class _$UserEntity extends UserEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        isTwoFactorEnabled == other.isTwoFactorEnabled &&
         userCompany == other.userCompany &&
         oauthProvider == other.oauthProvider &&
         isChanged == other.isChanged &&
@@ -787,16 +801,16 @@ class _$UserEntity extends UserEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc(0, firstName.hashCode),
-                                                                                lastName.hashCode),
-                                                                            email.hashCode),
-                                                                        phone.hashCode),
-                                                                    password.hashCode),
-                                                                emailVerifiedAt.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
+                                                                            $jc($jc($jc(0, firstName.hashCode), lastName.hashCode),
+                                                                                email.hashCode),
+                                                                            phone.hashCode),
+                                                                        password.hashCode),
+                                                                    emailVerifiedAt.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                isTwoFactorEnabled.hashCode),
                                             userCompany.hashCode),
                                         oauthProvider.hashCode),
                                     isChanged.hashCode),
@@ -822,6 +836,7 @@ class _$UserEntity extends UserEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('isTwoFactorEnabled', isTwoFactorEnabled)
           ..add('userCompany', userCompany)
           ..add('oauthProvider', oauthProvider)
           ..add('isChanged', isChanged)
@@ -880,6 +895,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  bool _isTwoFactorEnabled;
+  bool get isTwoFactorEnabled => _$this._isTwoFactorEnabled;
+  set isTwoFactorEnabled(bool isTwoFactorEnabled) =>
+      _$this._isTwoFactorEnabled = isTwoFactorEnabled;
+
   UserCompanyEntityBuilder _userCompany;
   UserCompanyEntityBuilder get userCompany =>
       _$this._userCompany ??= new UserCompanyEntityBuilder();
@@ -925,7 +945,9 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  UserEntityBuilder();
+  UserEntityBuilder() {
+    UserEntity._initializeBuilder(this);
+  }
 
   UserEntityBuilder get _$this {
     if (_$v != null) {
@@ -939,6 +961,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
+      _isTwoFactorEnabled = _$v.isTwoFactorEnabled;
       _userCompany = _$v.userCompany?.toBuilder();
       _oauthProvider = _$v.oauthProvider;
       _isChanged = _$v.isChanged;
@@ -983,6 +1006,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               customValue2: customValue2,
               customValue3: customValue3,
               customValue4: customValue4,
+              isTwoFactorEnabled: isTwoFactorEnabled,
               userCompany: _userCompany?.build(),
               oauthProvider: oauthProvider,
               isChanged: isChanged,
