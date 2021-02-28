@@ -1245,6 +1245,10 @@ abstract class InvitationEntity extends Object
 
   InvitationEntity._();
 
+  static const EMAIL_STATUS_DELIVERED = 'delivered';
+  static const EMAIL_STATUS_BOUNCED = 'bounced';
+  static const EMAIL_STATUS_SPAM = 'spam';
+
   @override
   @memoized
   int get hashCode;
