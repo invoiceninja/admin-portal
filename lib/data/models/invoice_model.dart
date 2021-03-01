@@ -1273,7 +1273,8 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'email_status')
   String get emailStatus;
 
-  String get downloadLink => '$link/download';
+  String get downloadLink =>
+      '$link/download?updated_at=$updatedAt'.replaceAll(' ', '_');
 
   String get silentLink => '$link?silent=true';
 
