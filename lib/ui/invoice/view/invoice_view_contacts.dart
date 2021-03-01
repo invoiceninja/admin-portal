@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -46,6 +47,28 @@ class _InvitationListTile extends StatelessWidget {
     final contact = client.contacts.firstWhere(
         (contact) => contact.id == invitation.contactId,
         orElse: () => ContactEntity());
+
+    Widget icon = Icon(Icons.contacts);
+    switch (invitation.emailStatus) {
+      case InvitationEntity.EMAIL_STATUS_DELIVERED:
+        icon = Tooltip(
+          child: Icon(Icons.check_circle),
+          message: localization.delivered,
+        );
+        break;
+      case InvitationEntity.EMAIL_STATUS_BOUNCED:
+        icon = Tooltip(
+          child: Icon(Icons.error),
+          message: localization.bounced,
+        );
+        break;
+      case InvitationEntity.EMAIL_STATUS_SPAM:
+        icon = Tooltip(
+          child: Icon(Icons.error),
+          message: localization.spam,
+        );
+        break;
+    }
 
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -111,7 +134,7 @@ class _InvitationListTile extends StatelessWidget {
           )
         ],
       ),
-      leading: Icon(Icons.contacts),
+      leading: icon,
       isThreeLine: true,
     );
   }
