@@ -249,10 +249,13 @@ class MenuDrawer extends StatelessWidget {
                                   child: IconText(
                                     icon: Icons.warning,
                                     text: localization.debugModeIsEnabled,
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                 ),
-                                subtitle:
-                                    Text(localization.debugModeIsEnabledHelp),
+                                subtitle: Text(
+                                  localization.debugModeIsEnabledHelp,
+                                  style: TextStyle(color: Colors.white),
+                                ),
                                 onTap: () => launch(kDebugModeUrl),
                               ),
                           DrawerTile(
