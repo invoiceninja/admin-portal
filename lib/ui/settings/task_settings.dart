@@ -108,11 +108,18 @@ class _TaskSettingsState extends State<TaskSettings> {
                 SwitchListTile(
                   activeColor: Theme.of(context).accentColor,
                   title: Text(localization.showTasksTable),
-                  value: company.showTasksTable ?? false,
-                  // TODO remove null check
+                  value: company.showTasksTable,
                   subtitle: Text(localization.showTasksTableHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..showTasksTable = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.invoiceTaskDatelog),
+                  value: company.invoiceTaskDatelog,
+                  subtitle: Text(localization.invoiceTaskDatelogHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..invoiceTaskDatelog = value)),
                 ),
                 SwitchListTile(
                   activeColor: Theme.of(context).accentColor,

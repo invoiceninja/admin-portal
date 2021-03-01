@@ -180,6 +180,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Always show the tasks section when creating invoices',
       'invoice_task_timelog': 'Invoice Task Timelog',
       'invoice_task_timelog_help': 'Add time details to the invoice line items',
+      'invoice_task_datelog': 'Invoice Task Datelog',
+      'invoice_task_datelog_help': 'Add date details to the invoice line items',
       'auto_start_tasks_help': 'Start tasks before saving',
       'configure_statuses': 'Configure Statuses',
       'task_settings': 'Task Settings',
@@ -54755,6 +54757,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get invoiceTaskTimelogHelp =>
       _localizedValues[localeCode]['invoice_task_timelog_help'] ?? '';
+
+  String get invoiceTaskDatelog =>
+      _localizedValues[localeCode]['invoice_task_datelog'] ?? '';
+
+  String get invoiceTaskDatelogHelp =>
+      _localizedValues[localeCode]['invoice_task_datelog_help'] ?? '';
 
   String get showTasksTable =>
       _localizedValues[localeCode]['show_tasks_table'] ?? '';

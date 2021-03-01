@@ -16,8 +16,9 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   final group = state.groupState.get(client.groupId);
 
   var notes = task.description;
+  Set dates = <String>{};
 
-  if (state.company.invoiceTaskTimelog) {
+  if (state.company.invoiceTaskDatelog || state.company.invoiceTaskTimelog) {
     if (notes.trim().isNotEmpty) {
       notes += '\n';
     }
@@ -26,12 +27,30 @@ InvoiceItemEntity convertTaskToInvoiceItem(
         .getTaskTimes()
         .where((time) => time.startDate != null && time.endDate != null)
         .forEach((time) {
-      final start =
-          formatDate(time.startDate.toIso8601String(), context, showTime: true);
-      final end = formatDate(time.endDate.toIso8601String(), context,
-          showTime: true, showDate: false, showSeconds: true);
-      notes += '\n$start - $end';
+      if (state.company.invoiceTaskDatelog &&
+          state.company.invoiceTaskTimelog) {
+        final start = formatDate(time.startDate.toIso8601String(), context,
+            showTime: true);
+        final end = formatDate(time.endDate.toIso8601String(), context,
+            showTime: true, showDate: false, showSeconds: true);
+        notes += '\n$start - $end';
+      } else if (state.company.invoiceTaskDatelog) {
+        final date = formatDate(time.startDate.toIso8601String(), context,
+            showTime: false);
+        dates.add(date);
+      } else {
+        final start = formatDate(time.startDate.toIso8601String(), context,
+            showTime: true, showDate: false);
+        final end = formatDate(time.endDate.toIso8601String(), context,
+            showTime: true, showDate: false, showSeconds: true);
+        notes += '\n$start - $end';
+      }
     });
+
+    if (state.company.invoiceTaskDatelog && !state.company.invoiceTaskTimelog) {
+      notes += '\n' + dates.join('\n');
+    }
+
     notes += '\n</span>';
   }
 
