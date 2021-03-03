@@ -27,9 +27,9 @@ class TaskPresenter extends EntityPresenter {
       TaskFields.number,
       TaskFields.rate,
       TaskFields.calculatedRate,
-      TaskFields.invoiceId,
-      TaskFields.clientId,
-      TaskFields.projectId,
+      TaskFields.invoice,
+      TaskFields.client,
+      TaskFields.project,
       TaskFields.timeLog,
       TaskFields.isRunning,
       TaskFields.customValue1,
@@ -71,7 +71,7 @@ class TaskPresenter extends EntityPresenter {
         return Text(formatDuration(task.calculateDuration()));
       case TaskFields.number:
         return Text(task.number.toString());
-      case TaskFields.invoiceId:
+      case TaskFields.invoice:
         return Text(
             state.invoiceState.map[task.invoiceId]?.listDisplayName ?? '');
       case TaskFields.timeLog:

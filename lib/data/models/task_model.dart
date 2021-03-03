@@ -54,6 +54,7 @@ class TaskFields {
   static const String description = 'description';
   static const String duration = 'duration';
   static const String invoiceId = 'invoice_id';
+  static const String invoice = 'invoice';
   static const String client = 'client';
   static const String clientId = 'client_id';
   static const String project = 'project';

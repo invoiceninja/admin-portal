@@ -191,58 +191,59 @@ class _UserDetailsState extends State<UserDetails>
                   autoValidate: autoValidate,
                 ),
               ]),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 18, top: 20, right: 18, bottom: 10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: OutlineButton(
-                        child: Text((user.isConnectedToGoogle
-                                ? localization.disconnectGoogle
-                                : localization.connectGoogle)
-                            .toUpperCase()),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {
-                          //
-                        },
+              if (!kReleaseMode) // TODO enable this code
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 18, top: 20, right: 18, bottom: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: OutlineButton(
+                          child: Text((user.isConnectedToGoogle
+                                  ? localization.disconnectGoogle
+                                  : localization.connectGoogle)
+                              .toUpperCase()),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            //
+                          },
+                        ),
                       ),
-                    ),
-                    SizedBox(width: kTableColumnGap),
-                    Expanded(
-                      child: OutlineButton(
-                        child: Text((user.isTwoFactorEnabled
-                                ? localization.disableTwoFacor
-                                : localization.enableTwoFactor)
-                            .toUpperCase()),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {
-                          if (user.isTwoFactorEnabled) {
-                            viewModel.onDisableTwoFactorPressed(context);
-                          } else {
-                            if (state.user.phone.isEmpty ||
-                                user.phone.isEmpty) {
-                              showMessageDialog(
-                                  context: context,
-                                  message:
-                                      localization.enterPhoneToEnableTwoFactor);
-                              return;
-                            }
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: OutlineButton(
+                          child: Text((user.isTwoFactorEnabled
+                                  ? localization.disableTwoFacor
+                                  : localization.enableTwoFactor)
+                              .toUpperCase()),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            if (user.isTwoFactorEnabled) {
+                              viewModel.onDisableTwoFactorPressed(context);
+                            } else {
+                              if (state.user.phone.isEmpty ||
+                                  user.phone.isEmpty) {
+                                showMessageDialog(
+                                    context: context,
+                                    message: localization
+                                        .enterPhoneToEnableTwoFactor);
+                                return;
+                              }
 
-                            showDialog<void>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  _EnableTwoFactor(state: viewModel.state),
-                            );
-                          }
-                        },
+                              showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    _EnableTwoFactor(state: viewModel.state),
+                              );
+                            }
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               FormCard(
                 children: <Widget>[
                   FormColorPicker(
