@@ -261,6 +261,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 Tooltip(
                                   message: localization.debugModeIsEnabled,
                                   child: ListTile(
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 20),
                                     onTap: () => launch(kDebugModeUrl),
                                     leading:
                                         Icon(Icons.warning, color: Colors.red),
