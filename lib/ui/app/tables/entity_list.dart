@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 import 'package:flutter_redux/flutter_redux.dart';
@@ -157,7 +156,29 @@ class _EntityListState extends State<EntityList> {
               fit: FlexFit.loose,
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
-                  : DraggableScrollbar.semicircle(
+                  : Scrollbar(
+                      controller: _scrollController,
+                      isAlwaysShown: isDesktop(context),
+                      child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        controller: _scrollController,
+                        separatorBuilder: (context, index) =>
+                            (index == 0 || index == entityList.length)
+                                ? SizedBox()
+                                : ListDivider(),
+                        itemCount: entityList.length + 2,
+                        itemBuilder: (BuildContext context, index) {
+                          if (index == 0 || index == entityList.length + 1) {
+                            return Container(
+                              color: Theme.of(context).cardColor,
+                              height: 25,
+                            );
+                          } else {
+                            return widget.itemBuilder(context, index - 1);
+                          }
+                        },
+                      ),
+                    ) /*DraggableScrollbar.semicircle(
                       backgroundColor: Theme.of(context).backgroundColor,
                       scrollbarTimeToFade: Duration(seconds: 1),
                       controller: _scrollController,
@@ -180,7 +201,8 @@ class _EntityListState extends State<EntityList> {
                           }
                         },
                       ),
-                    ),
+                    )*/
+              ,
             ),
           ],
         );

@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:charts_common/common.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -402,10 +401,9 @@ class DashboardPanels extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 74),
-          child: DraggableScrollbar.semicircle(
-            backgroundColor: Theme.of(context).backgroundColor,
-            scrollbarTimeToFade: Duration(seconds: 1),
+          child: Scrollbar(
             controller: scrollController,
+            isAlwaysShown: isDesktop(context),
             child: ListView(
               controller: scrollController,
               children: <Widget>[

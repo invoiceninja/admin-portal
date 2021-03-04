@@ -1,4 +1,3 @@
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -68,10 +67,8 @@ class _SettingsListState extends State<SettingsList> {
         filter: settingsUIState.filter,
       );
 
-    return DraggableScrollbar.semicircle(
-      backgroundColor: Theme.of(context).backgroundColor,
-      scrollbarTimeToFade: Duration(seconds: 1),
-      controller: _scrollController,
+    return Scrollbar(
+      isAlwaysShown: isDesktop(context),
       child: ListView(
         controller: _scrollController,
         children: <Widget>[
