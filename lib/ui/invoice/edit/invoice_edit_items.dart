@@ -84,6 +84,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     }
 
     return Scrollbar(
+      controller: _scrollController,
       isAlwaysShown: isDesktop(context),
       child: ListView(
         controller: _scrollController,
