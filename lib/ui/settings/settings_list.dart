@@ -68,6 +68,7 @@ class _SettingsListState extends State<SettingsList> {
       );
 
     return Scrollbar(
+      controller: _scrollController,
       isAlwaysShown: isDesktop(context),
       child: ListView(
         controller: _scrollController,
