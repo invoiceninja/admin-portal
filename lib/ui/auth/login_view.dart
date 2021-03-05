@@ -269,7 +269,7 @@ class _LoginState extends State<LoginView> {
           context,
           completer,
           email: _emailController.text,
-          url: _isSelfHosted ? _urlController.text : kAppProductionUrl,
+          url: _urlController.text,
           secret: _isSelfHosted ? _secretController.text : '',
         );
       } else {
@@ -278,14 +278,14 @@ class _LoginState extends State<LoginView> {
           completer,
           email: _emailController.text,
           password: _passwordController.text,
-          url: _isSelfHosted ? _urlController.text : kAppProductionUrl,
+          url: _urlController.text,
           secret: _isSelfHosted ? _secretController.text : '',
           oneTimePassword: _oneTimePasswordController.text,
         );
       }
     } else {
       viewModel.onGoogleLoginPressed(context, completer,
-          url: _isSelfHosted ? _urlController.text : kAppProductionUrl,
+          url: _urlController.text,
           secret: _isSelfHosted ? _secretController.text : '',
           oneTimePassword: _oneTimePasswordController.text);
     }
