@@ -347,7 +347,8 @@ class ReportsScreenVM {
 
           if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
             reportResult.columns.forEach((column) {
-              csvData += '${localization.lookup(column)},';
+              final value = localization.lookup(column);
+              csvData += value.contains(' ') ? '"$value",' : '$value,';
             });
             csvData = csvData.substring(0, csvData.length - 1);
             reportResult.data.forEach((row) {
