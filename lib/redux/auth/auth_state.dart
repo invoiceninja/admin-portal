@@ -72,5 +72,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   bool get isSelfHost => !isHosted;
 
+  bool get isStaging => cleanApiUrl(url) == kAppStagingUrl;
+
   static Serializer<AuthState> get serializer => _$authStateSerializer;
 }

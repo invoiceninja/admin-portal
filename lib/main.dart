@@ -123,7 +123,7 @@ void main({bool isTesting = false}) async {
 Future<AppState> _initialState(bool isTesting) async {
   final prefs = await SharedPreferences.getInstance();
   final prefString = prefs?.getString(kSharedPrefs);
-  final url = prefs.getString(kSharedPrefUrl) ?? WebUtils.browserUrl ?? '';
+  final url = WebUtils.browserUrl ?? prefs.getString(kSharedPrefUrl) ?? '';
 
   var prefState = PrefState();
   if (prefString != null) {
