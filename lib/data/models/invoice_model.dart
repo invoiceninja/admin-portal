@@ -225,6 +225,7 @@ abstract class InvoiceEntity extends Object
     ..number = ''
     ..date = convertDateTimeToSqlDate()
     ..dueDate = ''
+    ..documents.clear()
     ..lineItems.replace(lineItems
         .where(
             (lineItem) => lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
