@@ -218,7 +218,7 @@ class _UserDetailsState extends State<UserDetails>
                       Expanded(
                         child: OutlineButton(
                           child: Text((user.isTwoFactorEnabled
-                                  ? localization.disableTwoFacor
+                                  ? localization.disableTwoFactor
                                   : localization.enableTwoFactor)
                               .toUpperCase()),
                           shape: RoundedRectangleBorder(

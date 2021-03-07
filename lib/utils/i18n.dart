@@ -15,7 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'connected_oauth': 'Successfully connected account',
+      'disabled_two_factor': 'Successfully disabled 2FA',
+      'connected_google': 'Successfully connected account',
+      'disconnected_google': 'Successfully disconnected account',
       'delivered': 'Delivered',
       'bounced': 'Bounced',
       'spam': 'Spam',
@@ -55560,8 +55562,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enableTwoFactor =>
       _localizedValues[localeCode]['enable_two_factor'] ?? '';
 
-  String get disableTwoFacor =>
+  String get disableTwoFactor =>
       _localizedValues[localeCode]['disable_two_factor'] ?? '';
+
+  String get disabledTwoFactor =>
+      _localizedValues[localeCode]['disabled_two_factor'] ?? '';
 
   String get connectGoogle =>
       _localizedValues[localeCode]['connect_google'] ?? '';
@@ -55590,7 +55595,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get spam => _localizedValues[localeCode]['spam'] ?? '';
 
-  String get connectedOauth => _localizedValues[localeCode]['connected_oauth'] ?? '';  
+  String get connectedGoogle =>
+      _localizedValues[localeCode]['connected_google'] ?? '';
+
+  String get disconnectedGoogle =>
+      _localizedValues[localeCode]['disconnected_google'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
