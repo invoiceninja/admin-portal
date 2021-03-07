@@ -54,6 +54,30 @@ class SettingsRepository {
     return userResponse.data;
   }
 
+  Future<UserEntity> connectOAuthUser(
+    Credentials credentials,
+    String password,
+    String idToken,
+    String serverAuthCode,
+  ) async {
+    dynamic response;
+
+    final url = credentials.url + '/connected_account?include=company_user';
+    response = await webClient.post(
+      url,
+      credentials.token,
+      data: json
+          .encode({'id_token': idToken, 'server_auth_code': serverAuthCode}),
+      password: password,
+      idToken: idToken,
+    );
+
+    final UserItemResponse userResponse =
+        serializers.deserializeWith(UserItemResponse.serializer, response);
+
+    return userResponse.data;
+  }
+
   Future<UserCompanyEntity> saveUserSettings(
       Credentials credentials, UserEntity user) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);

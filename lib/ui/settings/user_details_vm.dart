@@ -5,10 +5,12 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -35,6 +37,7 @@ class UserDetailsVM {
     @required this.state,
     @required this.onChanged,
     @required this.onSavePressed,
+    @required this.onConnectGooglePressed,
     @required this.onDisconnectGooglePressed,
     @required this.onDisableTwoFactorPressed,
   });
@@ -73,12 +76,46 @@ class UserDetailsVM {
               );
             });
       },
+      onConnectGooglePressed: (context) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).connectedOauth);
+        completer.future.catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              googleSignUp((idToken, accessToken, serverAuthCode) {
+                store.dispatch(
+                  ConnecOAuthUserRequest(
+                    provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                    password: password,
+                    idToken: idToken,
+                    serverAuthCode: serverAuthCode,
+                    completer: completer,
+                  ),
+                );
+              });
+            });
+      },
       onSavePressed: (context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).savedSettings);
         completer.future.then((_) {
           AppBuilder.of(context).rebuild();
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
+
         passwordCallback(
             context: context,
             callback: (password, idToken) {
@@ -99,6 +136,7 @@ class UserDetailsVM {
   final UserEntity user;
   final Function(UserEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onConnectGooglePressed;
   final Function(BuildContext) onDisconnectGooglePressed;
   final Function(BuildContext) onDisableTwoFactorPressed;
 }

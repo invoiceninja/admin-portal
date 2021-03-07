@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'connected_oauth': 'Successfully connected account',
       'delivered': 'Delivered',
       'bounced': 'Bounced',
       'spam': 'Spam',
@@ -55588,6 +55589,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get bounced => _localizedValues[localeCode]['bounced'] ?? '';
 
   String get spam => _localizedValues[localeCode]['spam'] ?? '';
+
+  String get connectedOauth => _localizedValues[localeCode]['connected_oauth'] ?? '';  
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

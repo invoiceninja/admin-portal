@@ -140,6 +140,7 @@ ListUIState _clearListMultiselect(
 final usersReducer = combineReducers<UserState>([
   TypedReducer<UserState, SaveUserSuccess>(_updateUser),
   TypedReducer<UserState, SaveAuthUserSuccess>(_updateAuthUser),
+  TypedReducer<UserState, ConnecOAuthUserSuccess>(_connectOAuthUser),
   TypedReducer<UserState, AddUserSuccess>(_addUser),
   TypedReducer<UserState, LoadUsersSuccess>(_setLoadedUsers),
   TypedReducer<UserState, LoadUserSuccess>(_setLoadedUser),
@@ -190,6 +191,11 @@ UserState _updateUser(UserState userState, SaveUserSuccess action) {
 }
 
 UserState _updateAuthUser(UserState userState, SaveAuthUserSuccess action) {
+  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+}
+
+UserState _connectOAuthUser(
+    UserState userState, ConnecOAuthUserSuccess action) {
   return userState.rebuild((b) => b..map[action.user.id] = action.user);
 }
 

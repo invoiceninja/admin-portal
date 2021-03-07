@@ -25,7 +25,6 @@ jobs:
           cp lib/.env.dart.example lib/.env.dart
           cp android/app/build.gradle.prod android/app/build.gradle
           sed -i 's/secret/${{secrets.api_secret}}/g' lib/.env.dart
-          sed -i 's/dns/${{secrets.app_sentry}}/g' lib/.env.dart
       - run: |
           echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
           flutter --version --machine >> lib/flutter_version.dart
