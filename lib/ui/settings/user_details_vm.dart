@@ -35,6 +35,7 @@ class UserDetailsVM {
     @required this.state,
     @required this.onChanged,
     @required this.onSavePressed,
+    @required this.onConnectGooglePressed,
     @required this.onDisconnectGooglePressed,
     @required this.onDisableTwoFactorPressed,
   });
@@ -73,6 +74,19 @@ class UserDetailsVM {
               );
             });
       },
+      onConnectGooglePressed: (context) {
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              store.dispatch(
+                ConnecOAuthUserRequest(
+                  provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                  password: password,
+                  idToken: idToken,
+                ),
+              );
+            });
+      },
       onSavePressed: (context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).savedSettings);
@@ -99,6 +113,7 @@ class UserDetailsVM {
   final UserEntity user;
   final Function(UserEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onConnectGooglePressed;
   final Function(BuildContext) onDisconnectGooglePressed;
   final Function(BuildContext) onDisableTwoFactorPressed;
 }

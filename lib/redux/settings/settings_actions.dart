@@ -114,6 +114,32 @@ class SaveAuthUserFailure implements StopSaving {
   final Object error;
 }
 
+class ConnecOAuthUserRequest implements StartSaving {
+  ConnecOAuthUserRequest({
+    @required this.provider,
+    this.completer,
+    this.password,
+    this.idToken,
+  });
+
+  final Completer completer;
+  final String provider;
+  final String password;
+  final String idToken;
+}
+
+class ConnecOAuthUserSuccess implements StopSaving, PersistData, PersistUI {
+  ConnecOAuthUserSuccess(this.user);
+
+  final UserEntity user;
+}
+
+class ConnecOAuthUserFailure implements StopSaving {
+  ConnecOAuthUserFailure(this.error);
+
+  final Object error;
+}
+
 class FilterSettings implements PersistUI {
   FilterSettings(this.filter);
 
