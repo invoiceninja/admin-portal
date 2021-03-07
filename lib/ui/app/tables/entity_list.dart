@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -156,9 +157,8 @@ class _EntityListState extends State<EntityList> {
               fit: FlexFit.loose,
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
-                  : Scrollbar(
+                  : AppScrollbar(
                       controller: _scrollController,
-                      isAlwaysShown: isDesktop(context),
                       child: ListView.separated(
                         padding: const EdgeInsets.symmetric(vertical: 25),
                         controller: _scrollController,

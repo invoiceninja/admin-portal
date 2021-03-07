@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/flutter_version.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -249,9 +250,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   : Expanded(
                       child: Container(
                       color: Theme.of(context).cardColor,
-                      child: Scrollbar(
+                      child: AppScrollbar(
                         controller: _scrollController,
-                        isAlwaysShown: isDesktop(context),
                         child: ListView(
                           controller: _scrollController,
                           shrinkWrap: true,

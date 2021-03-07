@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
@@ -67,9 +68,8 @@ class _SettingsListState extends State<SettingsList> {
         filter: settingsUIState.filter,
       );
 
-    return Scrollbar(
+    return AppScrollbar(
       controller: _scrollController,
-      isAlwaysShown: isDesktop(context),
       child: ListView(
         controller: _scrollController,
         children: <Widget>[
