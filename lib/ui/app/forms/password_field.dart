@@ -7,10 +7,12 @@ class PasswordFormField extends StatefulWidget {
     this.controller,
     this.autoValidate,
     this.newPassword = true,
+    this.onSavePressed,
     this.labelText,
   });
 
   final TextEditingController controller;
+  final Function(BuildContext) onSavePressed;
   final bool autoValidate;
   final bool newPassword;
   final String labelText;
@@ -34,6 +36,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
 
     return DecoratedFormField(
       controller: widget.controller,
+      onSavePressed: widget.onSavePressed,
       autocorrect: false,
       autovalidate: widget.autoValidate,
       decoration: InputDecoration(
