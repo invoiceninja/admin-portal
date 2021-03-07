@@ -256,7 +256,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                           controller: _scrollController,
                           shrinkWrap: true,
                           children: <Widget>[
-                            if (state.account.debugEnabled)
+                            if (kReleaseMode && state.account.debugEnabled)
                               if (state.isMenuCollapsed)
                                 Tooltip(
                                   message: localization.debugModeIsEnabled,
