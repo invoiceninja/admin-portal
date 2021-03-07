@@ -162,6 +162,7 @@ abstract class ExpenseEntity extends Object
     ..isDeleted = false
     ..invoiceId = null
     ..date = convertDateTimeToSqlDate()
+    ..documents.clear()
     ..transactionReference = ''
     ..paymentTypeId = ''
     ..paymentDate = '');

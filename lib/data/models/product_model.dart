@@ -99,6 +99,7 @@ abstract class ProductEntity extends Object
 
   ProductEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..documents.clear()
     ..isChanged = false
     ..isDeleted = false);
 

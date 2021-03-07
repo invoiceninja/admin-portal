@@ -164,6 +164,7 @@ abstract class ClientEntity extends Object
   ClientEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..idNumber = ''
+    ..documents.clear()
     ..isChanged = false
     ..isDeleted = false);
 
