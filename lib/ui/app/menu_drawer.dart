@@ -675,7 +675,9 @@ class SidebarFooter extends StatelessWidget {
                 ),
             IconButton(
               icon: Icon(Icons.mail),
-              onPressed: () => _showContactUs(context),
+              onPressed: () => state.uiState.isShowingPdf && kIsWeb
+                  ? null
+                  : _showContactUs(context),
               tooltip: localization.contactUs,
             ),
             IconButton(
@@ -691,7 +693,7 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.info_outline),
               // prevent the modal from being stuck over the pdf
-              onPressed: state.uiState.isInPdf && kIsWeb
+              onPressed: state.uiState.isShowingPdf && kIsWeb
                   ? null
                   : () => _showAbout(context),
               tooltip: localization.about,
