@@ -206,7 +206,11 @@ class _UserDetailsState extends State<UserDetails>
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                           onPressed: () {
-                            //
+                            if (user.isConnectedToGoogle) {
+                              viewModel.onDisconnectGooglePressed(context);
+                            } else {
+                              viewModel.onConnectGooglePressed(context);
+                            }
                           },
                         ),
                       ),
