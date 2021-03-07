@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -78,13 +79,16 @@ class UserDetailsVM {
         passwordCallback(
             context: context,
             callback: (password, idToken) {
-              store.dispatch(
-                ConnecOAuthUserRequest(
-                  provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
-                  password: password,
-                  idToken: idToken,
-                ),
-              );
+              googleSignUp((idToken, accessToken, serverAuthCode) {
+                store.dispatch(
+                  ConnecOAuthUserRequest(
+                    provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                    password: password,
+                    idToken: idToken,
+                    serverAuthCode: serverAuthCode,
+                  ),
+                );
+              });
             });
       },
       onSavePressed: (context) {

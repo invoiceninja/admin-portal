@@ -117,15 +117,17 @@ class SaveAuthUserFailure implements StopSaving {
 class ConnecOAuthUserRequest implements StartSaving {
   ConnecOAuthUserRequest({
     @required this.provider,
+    @required this.idToken,
+    @required this.serverAuthCode,
     this.completer,
     this.password,
-    this.idToken,
   });
 
   final Completer completer;
   final String provider;
   final String password;
   final String idToken;
+  final String serverAuthCode;
 }
 
 class ConnecOAuthUserSuccess implements StopSaving, PersistData, PersistUI {

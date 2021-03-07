@@ -23,6 +23,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   final viewSettings = _viewSettings();
   final saveCompany = _saveCompany(repository);
   final saveAuthUser = _saveAuthUser(repository);
+  final connectOAuthUser = _connectOAuthUser(repository);
   final saveSettings = _saveSettings(repository);
   final uploadLogo = _uploadLogo(repository);
   final saveDocument = _saveDocument(repository);
@@ -31,6 +32,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
     TypedMiddleware<AppState, SaveCompanyRequest>(saveCompany),
     TypedMiddleware<AppState, SaveAuthUserRequest>(saveAuthUser),
+    TypedMiddleware<AppState, ConnecOAuthUserRequest>(connectOAuthUser),
     TypedMiddleware<AppState, SaveUserSettingsRequest>(saveSettings),
     TypedMiddleware<AppState, UploadLogoRequest>(uploadLogo),
     TypedMiddleware<AppState, SaveCompanyDocumentRequest>(saveDocument),
@@ -112,6 +114,34 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveAuthUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _connectOAuthUser(SettingsRepository settingsRepository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ConnecOAuthUserRequest;
+
+    settingsRepository
+        .connectOAuthUser(store.state.credentials, action.password,
+            action.idToken, action.serverAuthCode)
+        .then((user) {
+      store.dispatch(ConnecOAuthUserSuccess(user));
+      store.dispatch(UserVerifiedPassword());
+      if (action.completer != null) {
+        action.completer.complete();
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConnecOAuthUserFailure(error));
       if ('$error'.contains('412')) {
         store.dispatch(UserUnverifiedPassword());
       }
