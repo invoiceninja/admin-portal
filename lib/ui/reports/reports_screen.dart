@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -206,11 +207,9 @@ class ReportsScreen extends StatelessWidget {
           actions: <Widget>[
             if (isDesktop(context)) ...[
               Builder(builder: (BuildContext context) {
-                return TextButton(
-                  child: Text(
-                    localization.columns,
-                    style: TextStyle(color: store.state.headerTextColor),
-                  ),
+                return AppTextButton(
+                  label: localization.columns,
+                  isInHeader: true,
                   onPressed: () {
                     multiselectDialog(
                       context: context,
@@ -224,11 +223,9 @@ class ReportsScreen extends StatelessWidget {
                   },
                 );
               }),
-              TextButton(
-                child: Text(
-                  localization.export,
-                  style: TextStyle(color: store.state.headerTextColor),
-                ),
+              AppTextButton(
+                label: localization.export,
+                isInHeader: true,
                 onPressed: () {
                   viewModel.onExportPressed(context);
                 },
