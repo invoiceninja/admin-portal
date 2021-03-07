@@ -74,7 +74,11 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  Expanded(child: Text(localization.sessionAboutToExpire)),
+                  Expanded(
+                      child: Text(
+                    localization.sessionAboutToExpire,
+                    style: TextStyle(color: Colors.white),
+                  )),
                   TextButton(
                       onPressed: () {
                         final store = StoreProvider.of<AppState>(context);
