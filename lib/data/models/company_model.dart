@@ -478,10 +478,16 @@ abstract class CompanyEntity extends Object
     } else if (entityType == EntityType.quote &&
         enabledModules & kModuleQuotes == 0) {
       return false;
-    } else if ([EntityType.task, EntityType.project].contains(entityType) &&
+    } else if (entityType == EntityType.task &&
         enabledModules & kModuleTasks == 0) {
       return false;
-    } else if ([EntityType.expense, EntityType.vendor].contains(entityType) &&
+    } else if (entityType == EntityType.project &&
+        enabledModules & kModuleProjects == 0) {
+      return false;
+    } else if (entityType == EntityType.vendor &&
+        enabledModules & kModuleVendors == 0) {
+      return false;
+    } else if (entityType == EntityType.expense &&
         enabledModules & kModuleExpenses == 0) {
       return false;
     } else if (entityType == EntityType.recurringInvoice &&

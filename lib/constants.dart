@@ -48,7 +48,7 @@ const String kDebugModeUrl =
     'https://www.mailgun.com/blog/a-word-of-caution-for-laravel-developers/';
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
-    'https://invoiceninja.github.io/docs/self-host/#cron-configuration';
+    'https://invoiceninja.github.io/docs/self-host-installation/#cron-configuration';
 const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 const String kGitHubLangUrl =

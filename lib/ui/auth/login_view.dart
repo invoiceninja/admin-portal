@@ -263,13 +263,20 @@ class _LoginState extends State<LoginView> {
       });
     });
 
+    final authState = widget.viewModel.authState;
+    final url = _isSelfHosted
+        ? _urlController.text
+        : authState.isStaging
+            ? kAppStagingUrl
+            : kAppProductionUrl;
+
     if (_emailLogin) {
       if (_recoverPassword) {
         viewModel.onRecoverPressed(
           context,
           completer,
           email: _emailController.text,
-          url: _isSelfHosted ? _urlController.text : kAppProductionUrl,
+          url: url,
           secret: _isSelfHosted ? _secretController.text : '',
         );
       } else {
@@ -278,14 +285,14 @@ class _LoginState extends State<LoginView> {
           completer,
           email: _emailController.text,
           password: _passwordController.text,
-          url: _isSelfHosted ? _urlController.text : kAppProductionUrl,
+          url: url,
           secret: _isSelfHosted ? _secretController.text : '',
           oneTimePassword: _oneTimePasswordController.text,
         );
       }
     } else {
       viewModel.onGoogleLoginPressed(context, completer,
-          url: _isSelfHosted ? _urlController.text : kAppProductionUrl,
+          url: url,
           secret: _isSelfHosted ? _secretController.text : '',
           oneTimePassword: _oneTimePasswordController.text);
     }

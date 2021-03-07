@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/.env.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
+    Key key,
     @required this.entityType,
     @required this.labelText,
     @required this.onSelected,
@@ -30,7 +31,7 @@ class EntityDropdown extends StatefulWidget {
     this.onFieldSubmitted,
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
-  });
+  }) : super(key: key);
 
   final EntityType entityType;
   final List<String> entityList;

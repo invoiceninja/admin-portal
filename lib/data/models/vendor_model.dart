@@ -121,6 +121,7 @@ abstract class VendorEntity extends Object
   VendorEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..number = ''
+    ..documents.clear()
     ..isChanged = false
     ..isDeleted = false);
 

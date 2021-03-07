@@ -1,4 +1,4 @@
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -83,9 +83,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
       return HelpText(localization.clickPlusToAddItem);
     }
 
-    return DraggableScrollbar.semicircle(
-      backgroundColor: Theme.of(context).backgroundColor,
-      scrollbarTimeToFade: Duration(seconds: 1),
+    return AppScrollbar(
       controller: _scrollController,
       child: ListView(
         controller: _scrollController,

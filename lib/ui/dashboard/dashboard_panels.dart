@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:charts_common/common.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -9,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_date_range_picker.dart';
@@ -402,9 +402,7 @@ class DashboardPanels extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 74),
-          child: DraggableScrollbar.semicircle(
-            backgroundColor: Theme.of(context).backgroundColor,
-            scrollbarTimeToFade: Duration(seconds: 1),
+          child: AppScrollbar(
             controller: scrollController,
             child: ListView(
               controller: scrollController,
