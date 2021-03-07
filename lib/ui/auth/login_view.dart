@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
@@ -47,7 +46,6 @@ class _LoginState extends State<LoginView> {
   final _secretController = TextEditingController();
   final _oneTimePasswordController = TextEditingController();
 
-  List<TextEditingController> _controllers;
   final _buttonController = RoundedLoadingButtonController();
 
   static const String OTP_ERROR = 'OTP_REQUIRED';
@@ -67,7 +65,6 @@ class _LoginState extends State<LoginView> {
   bool _autoValidate = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
-  bool _isFormComplete = false;
 
   @override
   void initState() {
@@ -85,18 +82,6 @@ class _LoginState extends State<LoginView> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _firstNameController,
-      _lastNameController,
-      _emailController,
-      _passwordController,
-      _urlController,
-      _secretController,
-    ];
-
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
     if (!kReleaseMode && Config.TEST_EMAIL.isNotEmpty) {
       _urlController.text = Config.TEST_URL;
       _secretController.text = Config.TEST_SECRET;
@@ -113,14 +98,6 @@ class _LoginState extends State<LoginView> {
       _urlController.text = widget.viewModel.authState.url;
     }
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    /*
-    if (cleanApiUrl(state.url).isNotEmpty) {
-      _isSelfHosted = true;
-    }
-     */
     super.didChangeDependencies();
   }
 
@@ -136,32 +113,8 @@ class _LoginState extends State<LoginView> {
     super.dispose();
   }
 
-  void _onChanged() {
-    if (_isFormComplete) {
-      return;
-    }
-
-    final hasEmail = _emailController.text.isNotEmpty;
-    final hasPassword = _passwordController.text.isNotEmpty;
-    final hasUrl = _urlController.text.isNotEmpty;
-    final hasSecret = _secretController.text.isNotEmpty;
-
-    bool isComplete;
-    if (_isSelfHosted) {
-      isComplete = hasEmail && hasPassword && hasUrl && hasSecret;
-    } else {
-      isComplete = hasEmail && hasPassword;
-    }
-
-    if (isComplete) {
-      setState(() {
-        _isFormComplete = true;
-      });
-    }
-  }
-
   void _submitSignUpForm() {
-    final bool isValid = _formKey.currentState.validate();
+    final isValid = _formKey.currentState.validate();
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
 
@@ -426,7 +379,7 @@ class _LoginState extends State<LoginView> {
                                 newPassword: _createAccount,
                                 onSavePressed: (_) => _submitLoginForm(),
                               ),
-                            if (_isSelfHosted || viewModel.state.isDemo)
+                            if (_isSelfHosted && !kIsWeb)
                               DecoratedFormField(
                                 controller: _urlController,
                                 autocorrect: false,
