@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -76,6 +77,16 @@ class UserDetailsVM {
             });
       },
       onConnectGooglePressed: (context) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).connectedOauth);
+        completer.future.catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+
         passwordCallback(
             context: context,
             callback: (password, idToken) {
@@ -86,6 +97,7 @@ class UserDetailsVM {
                     password: password,
                     idToken: idToken,
                     serverAuthCode: serverAuthCode,
+                    completer: completer,
                   ),
                 );
               });
@@ -96,7 +108,14 @@ class UserDetailsVM {
             context, AppLocalization.of(context).savedSettings);
         completer.future.then((_) {
           AppBuilder.of(context).rebuild();
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
+
         passwordCallback(
             context: context,
             callback: (password, idToken) {
