@@ -424,6 +424,7 @@ class _LoginState extends State<LoginView> {
                                 controller: _passwordController,
                                 autoValidate: false,
                                 newPassword: _createAccount,
+                                onSavePressed: (_) => _submitLoginForm(),
                               ),
                             if (_isSelfHosted || viewModel.state.isDemo)
                               DecoratedFormField(
@@ -435,6 +436,7 @@ class _LoginState extends State<LoginView> {
                                         ? localization.pleaseEnterYourUrl
                                         : null,
                                 keyboardType: TextInputType.url,
+                                onSavePressed: (_) => _submitLoginForm(),
                               ),
                             if (_isSelfHosted)
                               PasswordFormField(
@@ -442,6 +444,7 @@ class _LoginState extends State<LoginView> {
                                     '${localization.secret} (${localization.optional})',
                                 controller: _secretController,
                                 autoValidate: _autoValidate,
+                                onSavePressed: (_) => _submitLoginForm(),
                               ),
                             if (_createAccount)
                               Padding(

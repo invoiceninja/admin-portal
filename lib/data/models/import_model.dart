@@ -20,14 +20,16 @@ abstract class PreImportResponse
 
   String get hash;
 
-  BuiltMap<String,PreImportResponseEntityDetails> get mappings;
+  BuiltMap<String, PreImportResponseEntityDetails> get mappings;
 
   static Serializer<PreImportResponse> get serializer =>
       _$preImportResponseSerializer;
 }
 
 abstract class PreImportResponseEntityDetails
-    implements Built<PreImportResponseEntityDetails, PreImportResponseEntityDetailsBuilder> {
+    implements
+        Built<PreImportResponseEntityDetails,
+            PreImportResponseEntityDetailsBuilder> {
   factory PreImportResponseEntityDetails() {
     return _$PreImportResponseEntityDetails._();
   }
@@ -90,9 +92,7 @@ abstract class ImportRequest
 abstract class ImportRequestMapping
     implements Built<ImportRequestMapping, ImportRequestMappingBuilder> {
   factory ImportRequestMapping(BuiltMap<int, String> mapping) {
-    return _$ImportRequestMapping._(
-      mapping: mapping
-    );
+    return _$ImportRequestMapping._(mapping: mapping);
   }
 
   ImportRequestMapping._();
@@ -104,7 +104,8 @@ abstract class ImportRequestMapping
   @BuiltValueField(wireName: 'mapping')
   BuiltMap<int, String> get mapping;
 
-  static Serializer<ImportRequestMapping> get serializer => _$importRequestMappingSerializer;
+  static Serializer<ImportRequestMapping> get serializer =>
+      _$importRequestMappingSerializer;
 }
 
 class ImportType extends EnumClass {
@@ -129,7 +130,7 @@ class ImportType extends EnumClass {
           EntityType.client.toString(): 'clients',
           EntityType.invoice.toString(): 'invoices',
           EntityType.payment.toString(): 'payments',
-          EntityType.product.toString(): 'payments',
+          EntityType.product.toString(): 'products',
           EntityType.vendor.toString(): 'vendors',
           EntityType.expense.toString(): 'expenses',
         };
