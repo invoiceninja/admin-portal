@@ -50,6 +50,18 @@ class UserDetailsVM {
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
       onDisableTwoFactorPressed: (context) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).disabledTwoFactor);
+        completer.future.then((_) {
+          AppBuilder.of(context).rebuild();
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+
         passwordCallback(
             context: context,
             callback: (password, idToken) {
@@ -64,6 +76,18 @@ class UserDetailsVM {
             });
       },
       onDisconnectGooglePressed: (context) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).disconnectGoogle);
+        completer.future.then((_) {
+          AppBuilder.of(context).rebuild();
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+
         passwordCallback(
             context: context,
             callback: (password, idToken) {
@@ -72,13 +96,14 @@ class UserDetailsVM {
                   user: state.user.rebuild((b) => b..oauthProvider = ''),
                   password: password,
                   idToken: idToken,
+                  completer: completer,
                 ),
               );
             });
       },
       onConnectGooglePressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).connectedOauth);
+            context, AppLocalization.of(context).connectedGoogle);
         completer.future.catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
