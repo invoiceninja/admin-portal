@@ -395,7 +395,7 @@ class SettingsSearch extends StatelessWidget {
         'delete_company',
       ],
       [
-        'enabeled_modules',
+        'enabled_modules',
       ],
     ],
     kSettingsInvoiceDesign: [
