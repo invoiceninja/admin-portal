@@ -79,7 +79,8 @@ class UserDetailsVM {
             callback: () {
               passwordCallback(
                   context: context,
-                  callback: (password, idToken) {
+                  callback: (password, idToken) async {
+                    await googleSignOut();
                     store.dispatch(
                       SaveAuthUserRequest(
                         user: state.user.rebuild((b) => b..oauthProvider = ''),
