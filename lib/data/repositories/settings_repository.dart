@@ -66,8 +66,13 @@ class SettingsRepository {
     response = await webClient.post(
       url,
       credentials.token,
-      data: json
-          .encode({'id_token': idToken, 'server_auth_code': serverAuthCode}),
+      data: json.encode(
+        {
+          'id_token': idToken,
+          'server_auth_code': serverAuthCode,
+          'provider': UserEntity.OAUTH_PROVIDER_GOOGLE,
+        },
+      ),
       password: password,
       idToken: idToken,
     );

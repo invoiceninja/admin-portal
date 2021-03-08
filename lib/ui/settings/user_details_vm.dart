@@ -52,35 +52,43 @@ class UserDetailsVM {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).disabledTwoFactor);
 
-        passwordCallback(
+        confirmCallback(
             context: context,
-            callback: (password, idToken) {
-              store.dispatch(
-                SaveAuthUserRequest(
-                  user:
-                      state.user.rebuild((b) => b..isTwoFactorEnabled = false),
-                  password: password,
-                  idToken: idToken,
-                  completer: completer,
-                ),
-              );
+            callback: () {
+              passwordCallback(
+                  context: context,
+                  callback: (password, idToken) {
+                    store.dispatch(
+                      SaveAuthUserRequest(
+                        user: state.user
+                            .rebuild((b) => b..isTwoFactorEnabled = false),
+                        password: password,
+                        idToken: idToken,
+                        completer: completer,
+                      ),
+                    );
+                  });
             });
       },
       onDisconnectGooglePressed: (context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).disconnectGoogle);
 
-        passwordCallback(
+        confirmCallback(
             context: context,
-            callback: (password, idToken) {
-              store.dispatch(
-                SaveAuthUserRequest(
-                  user: state.user.rebuild((b) => b..oauthProvider = ''),
-                  password: password,
-                  idToken: idToken,
-                  completer: completer,
-                ),
-              );
+            callback: () {
+              passwordCallback(
+                  context: context,
+                  callback: (password, idToken) {
+                    store.dispatch(
+                      SaveAuthUserRequest(
+                        user: state.user.rebuild((b) => b..oauthProvider = ''),
+                        password: password,
+                        idToken: idToken,
+                        completer: completer,
+                      ),
+                    );
+                  });
             });
       },
       onConnectGooglePressed: (context) {
