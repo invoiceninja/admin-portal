@@ -149,7 +149,7 @@ abstract class UserEntity extends Object
   bool get isTwoFactorEnabled;
 
   @BuiltValueField(wireName: 'has_password')
-  String get hasPassword;
+  bool get hasPassword;
 
   @nullable
   @BuiltValueField(wireName: 'company_user')
