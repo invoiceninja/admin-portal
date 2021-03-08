@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'please_select_a_country': 'Please select a country',
       'resend_invite': 'Resend Invite',
       'disabled_two_factor': 'Successfully disabled 2FA',
       'connected_google': 'Successfully connected account',
@@ -55604,6 +55605,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get resendInvite =>
       _localizedValues[localeCode]['resend_invite'] ?? '';
+
+  String get pleaseSelectACountry =>
+      _localizedValues[localeCode]['please_select_a_country'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

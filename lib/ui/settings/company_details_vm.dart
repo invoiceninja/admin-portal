@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -101,6 +102,13 @@ class CompanyDetailsVM {
       },
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;
+        if (settingsUIState.entityType == EntityType.company &&
+            settingsUIState.company.settings.countryId == null) {
+          showErrorDialog(
+              context: context,
+              message: AppLocalization.of(context).pleaseSelectACountry);
+          return;
+        }
         switch (settingsUIState.entityType) {
           case EntityType.company:
             final completer = snackBarCompleter<Null>(
