@@ -26,6 +26,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.emailQuote:
     case EntityAction.emailInvoice:
     case EntityAction.emailCredit:
+    case EntityAction.resendInvite:
       return Icons.send;
     case EntityAction.archive:
       return Icons.archive;

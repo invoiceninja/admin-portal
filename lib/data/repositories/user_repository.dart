@@ -69,6 +69,22 @@ class UserRepository {
     return userResponse.data.toList();
   }
 
+  Future<List<UserEntity>> resendInvite(
+      Credentials credentials, String userId) async {
+    final url = credentials.url + '/users/$userId/invite';
+    final dynamic response = await webClient.post(url, credentials.token);
+
+    print('## invite: $response');
+    /*
+    final UserListResponse userResponse =
+        serializers.deserializeWith(UserListResponse.serializer, response);
+
+    return userResponse.data.toList();
+    */
+
+    return null;
+  }
+
   Future<UserEntity> saveData(
     Credentials credentials,
     UserEntity user,
