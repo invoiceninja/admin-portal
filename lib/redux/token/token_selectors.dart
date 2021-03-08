@@ -48,11 +48,6 @@ List<String> filteredTokensSelector(
 
   final list = tokenList.where((tokenId) {
     final token = tokenMap[tokenId];
-    if (filterEntityId != null && token.id != filterEntityId) {
-      return false;
-    } else {
-      //
-    }
 
     if (token.id == selectionState.selectedId) {
       return true;
