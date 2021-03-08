@@ -186,7 +186,12 @@ Middleware<AppState> _removeUser(UserRepository repository) {
     final action = dynamicAction as RemoveUserRequest;
 
     repository
-        .detachFromCompany(store.state.credentials, action.userId)
+        .detachFromCompany(
+      store.state.credentials,
+      action.userId,
+      action.password,
+      action.idToken,
+    )
         .then((_) {
       store.dispatch(RemoveUserSuccess(action.userId));
       if (action.completer != null) {
@@ -209,7 +214,12 @@ Middleware<AppState> _resendInvite(UserRepository repository) {
     final action = dynamicAction as ResendInviteRequest;
 
     repository
-        .detachFromCompany(store.state.credentials, action.userId)
+        .resendInvite(
+      store.state.credentials,
+      action.userId,
+      action.password,
+      action.idToken,
+    )
         .then((_) {
       store.dispatch(ResendInviteSuccess(action.userId));
       if (action.completer != null) {
