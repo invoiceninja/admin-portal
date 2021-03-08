@@ -187,7 +187,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           specifiedType: const FullType(bool)),
       'has_password',
       serializers.serialize(object.hasPassword,
-          specifiedType: const FullType(String)),
+          specifiedType: const FullType(bool)),
       'oauth_provider_id',
       serializers.serialize(object.oauthProvider,
           specifiedType: const FullType(String)),
@@ -305,7 +305,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'has_password':
           result.hasPassword = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'company_user':
           result.userCompany.replace(serializers.deserialize(value,
@@ -663,7 +663,7 @@ class _$UserEntity extends UserEntity {
   @override
   final bool isTwoFactorEnabled;
   @override
-  final String hasPassword;
+  final bool hasPassword;
   @override
   final UserCompanyEntity userCompany;
   @override
@@ -915,9 +915,9 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   set isTwoFactorEnabled(bool isTwoFactorEnabled) =>
       _$this._isTwoFactorEnabled = isTwoFactorEnabled;
 
-  String _hasPassword;
-  String get hasPassword => _$this._hasPassword;
-  set hasPassword(String hasPassword) => _$this._hasPassword = hasPassword;
+  bool _hasPassword;
+  bool get hasPassword => _$this._hasPassword;
+  set hasPassword(bool hasPassword) => _$this._hasPassword = hasPassword;
 
   UserCompanyEntityBuilder _userCompany;
   UserCompanyEntityBuilder get userCompany =>
