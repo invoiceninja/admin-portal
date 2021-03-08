@@ -20,6 +20,8 @@ const String kAppPlansURL =
     'https://www.invoiceninja.com/invoicing-pricing-plans/';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
+const String kTransifexURL =
+    'https://www.transifex.com/invoice-ninja/invoice-ninja/';
 
 //const String kAppleStoreUrl = 'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
 //const String kGoogleStoreUrl = 'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
