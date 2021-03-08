@@ -133,7 +133,8 @@ String portalRegistrationUrlSelector(AppState state) {
 
   url += '/client/register';
 
-  if (true || state.companies.length > 1) {
+  if (state.companies.length > 1 &&
+      state.company.id != state.account.defaultCompanyId) {
     url += '/' + state.company.companyKey;
   }
 
