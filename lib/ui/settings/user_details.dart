@@ -191,7 +191,7 @@ class _UserDetailsState extends State<UserDetails>
                   autoValidate: autoValidate,
                 ),
               ]),
-              if (state.isProduction)
+              if (state.isHosted)
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 18, top: 20, right: 18, bottom: 10),
