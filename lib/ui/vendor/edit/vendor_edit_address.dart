@@ -115,6 +115,7 @@ class VendorEditAddressState extends State<VendorEditAddress> {
             onSavePressed: viewModel.onSavePressed,
           ),
           EntityDropdown(
+            key: ValueKey('__country_${vendor.countryId}__'),
             entityType: EntityType.country,
             entityList:
                 memoizedCountryList(viewModel.state.staticState.countryMap),

@@ -146,6 +146,7 @@ class _PaymentEditState extends State<PaymentEdit> {
             children: <Widget>[
               if (payment.isNew) ...[
                 EntityDropdown(
+                  key: ValueKey('__client_${payment.clientId}__'),
                   entityType: EntityType.client,
                   labelText: AppLocalization.of(context).client,
                   entityId: payment.clientId,
@@ -213,6 +214,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
               if (payment.isApplying != true)
                 EntityDropdown(
+                  key: ValueKey('__type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
                   entityList: memoizedPaymentTypeList(
                       viewModel.staticState.paymentTypeMap),
@@ -478,6 +480,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         if (widget.entityType == EntityType.invoice)
           Expanded(
             child: EntityDropdown(
+              key: ValueKey('__invoice_${paymentable.invoiceId}__'),
               allowClearing: false,
               entityType: EntityType.invoice,
               labelText: AppLocalization.of(context).invoice,
@@ -498,6 +501,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         if (widget.entityType == EntityType.credit)
           Expanded(
             child: EntityDropdown(
+              key: ValueKey('__credit_${paymentable.creditId}__'),
               allowClearing: false,
               entityType: EntityType.credit,
               labelText: AppLocalization.of(context).credit,

@@ -132,6 +132,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
               FormCard(
                 children: <Widget>[
                   EntityDropdown(
+                    key: ValueKey('__currency_${settings.currencyId}__'),
                     entityType: EntityType.currency,
                     entityList:
                         memoizedCurrencyList(state.staticState.currencyMap),
@@ -156,6 +157,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             currencyId: settings.currencyId),
                   ),
                   EntityDropdown(
+                    key: ValueKey('__language_${settings.languageId}__'),
                     showUseDefault: state.settingsUIState.isFiltered,
                     entityType: EntityType.language,
                     entityList:
@@ -167,6 +169,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             .rebuild((b) => b..languageId = language?.id)),
                   ),
                   EntityDropdown(
+                    key: ValueKey('__timezone_${settings.timezoneId}__'),
                     showUseDefault: state.settingsUIState.isFiltered,
                     entityType: EntityType.timezone,
                     entityList:
@@ -178,6 +181,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             .rebuild((b) => b..timezoneId = timezone?.id)),
                   ),
                   EntityDropdown(
+                    key: ValueKey('__date_format_${settings.dateFormatId}__'),
                     showUseDefault: state.settingsUIState.isFiltered,
                     entityType: EntityType.dateFormat,
                     entityList:
