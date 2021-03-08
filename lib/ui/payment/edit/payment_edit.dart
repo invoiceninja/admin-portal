@@ -50,6 +50,7 @@ class _PaymentEditState extends State<PaymentEdit> {
   void didChangeDependencies() {
     _controllers = [
       _amountController,
+      _numberController,
       _transactionReferenceController,
       _privateNotesController,
     ];
