@@ -489,8 +489,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 final amount = widget.limit != null
-                    ? min(widget.limit, invoice.balance)
-                    : invoice.balance;
+                    ? min(widget.limit, invoice.balanceOrAmount)
+                    : invoice.balanceOrAmount;
                 _amountController.text = formatNumber(amount, context,
                     formatNumberType: FormatNumberType.inputMoney);
                 _invoiceId = invoice.id;
