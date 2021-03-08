@@ -278,7 +278,7 @@ class MainScreen extends StatelessWidget {
                     Expanded(
                         child: AppBorder(
                       child: screen,
-                      isLeft: prefState.showMenu,
+                      isLeft: prefState.showMenu && !state.isFullScreen,
                     )),
                   ]),
                 ),
