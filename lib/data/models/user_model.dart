@@ -99,6 +99,7 @@ abstract class UserEntity extends Object
       userCompany: userCompany,
       oauthProvider: '',
       isTwoFactorEnabled: false,
+      hasPassword: false,
     );
   }
 
@@ -146,6 +147,9 @@ abstract class UserEntity extends Object
 
   @BuiltValueField(wireName: 'google_2fa_secret')
   bool get isTwoFactorEnabled;
+
+  @BuiltValueField(wireName: 'has_password')
+  bool get hasPassword;
 
   @nullable
   @BuiltValueField(wireName: 'company_user')
@@ -240,6 +244,10 @@ abstract class UserEntity extends Object
     }
 
     if (userCompany.isAdmin || userCompany.isOwner) {
+      if (true || (!multiselect && !isEmailVerified)) {
+        actions.add(EntityAction.resendInvite);
+      }
+
       actions.add(EntityAction.remove);
     }
 
@@ -259,9 +267,12 @@ abstract class UserEntity extends Object
   bool get isConnectedToGoogle =>
       oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
 
+  bool get isEmailVerified => emailVerifiedAt != null;
+
   // ignore: unused_element
-  static void _initializeBuilder(UserEntityBuilder builder) =>
-      builder..isTwoFactorEnabled = false;
+  static void _initializeBuilder(UserEntityBuilder builder) => builder
+    ..isTwoFactorEnabled = false
+    ..hasPassword = false;
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }

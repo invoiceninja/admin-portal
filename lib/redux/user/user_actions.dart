@@ -262,6 +262,32 @@ class RemoveUserFailure implements StopSaving {
   final dynamic error;
 }
 
+class ResendInviteRequest implements StartSaving {
+  ResendInviteRequest({
+    this.completer,
+    this.userId,
+    this.password,
+    this.idToken,
+  });
+
+  final Completer completer;
+  final String userId;
+  final String password;
+  final String idToken;
+}
+
+class ResendInviteSuccess implements StopSaving, PersistData {
+  ResendInviteSuccess(this.userId);
+
+  final String userId;
+}
+
+class ResendInviteFailure implements StopSaving {
+  ResendInviteFailure(this.error);
+
+  final dynamic error;
+}
+
 class FilterUsers {
   FilterUsers(this.filter);
 
@@ -481,6 +507,19 @@ void handleUserAction(
           store.dispatch(RemoveFromUserMultiselect(entity: user));
         }
       }
+      break;
+    case EntityAction.resendInvite:
+      passwordCallback(
+          context: context,
+          callback: (password, idToken) {
+            store.dispatch(ResendInviteRequest(
+              userId: user.id,
+              password: password,
+              idToken: idToken,
+              completer: snackBarCompleter<Null>(
+                  context, localization.emailSentToConfirmEmail),
+            ));
+          });
       break;
     case EntityAction.more:
       showEntityActionsDialog(

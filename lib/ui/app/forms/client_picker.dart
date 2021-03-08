@@ -31,6 +31,7 @@ class ClientPicker extends StatelessWidget {
     final state = store.state;
 
     return EntityDropdown(
+      key: ValueKey('__client_${clientId}__'),
       entityType: EntityType.client,
       labelText: localization.client,
       entityId: clientId,

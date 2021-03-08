@@ -112,7 +112,7 @@ void passwordCallback({
   } else {
     if (state.user.oauthProvider.isNotEmpty) {
       googleSignIn((idToken, accessToken, serverAuthCode) {
-        if (!state.company.oauthPasswordRequired) {
+        if (!state.company.oauthPasswordRequired || !state.user.hasPassword) {
           callback(null, idToken);
         } else {
           showDialog<AlertDialog>(

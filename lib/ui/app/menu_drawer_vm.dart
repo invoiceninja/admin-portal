@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -100,17 +101,26 @@ class MenuDrawerVM {
               }
               AppBuilder.of(context).rebuild();
 
-              if (state.uiState.isInSettings) {
+              final uiState = state.uiState;
+              if (uiState.isInSettings) {
+                /*
                 String section = state.uiState.subRoute;
                 if ([kSettingsUserDetails].contains(section)) {
                   section = kSettingsCompanyDetails;
                 }
+                */
                 store.dispatch(ViewSettings(
                   navigator: Navigator.of(context),
                   company: company,
-                  section: section,
+                  section: uiState.subRoute,
                   force: true,
                 ));
+
+                if (uiState.isEditing || uiState.isViewing) {
+                  store.dispatch(UpdateCurrentRoute(uiState.currentRoute
+                      .replaceFirst('_edit', '')
+                      .replaceFirst('_view', '')));
+                }
               }
             });
       },

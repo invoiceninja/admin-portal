@@ -190,6 +190,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   LearnMoreUrl(
                     url: 'https://fonts.google.com',
                     child: EntityDropdown(
+                      key: ValueKey('__primary_font_${settings.primaryFont}__'),
                       entityType: EntityType.font,
                       labelText: localization.primaryFont,
                       entityId: settings.primaryFont,
@@ -201,6 +202,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     ),
                   ),
                   EntityDropdown(
+                    key: ValueKey(
+                        '__secondary_fond_${settings.secondaryFont}__'),
                     entityType: EntityType.font,
                     labelText: localization.secondaryFont,
                     entityId: settings.secondaryFont,

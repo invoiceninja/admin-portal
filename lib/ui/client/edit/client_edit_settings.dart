@@ -89,6 +89,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
+              key: ValueKey('__currency_${client.currencyId}__'),
               entityType: EntityType.currency,
               entityList:
                   memoizedCurrencyList(viewModel.staticState.currencyMap),
@@ -99,6 +100,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                       (b) => b..settings.currencyId = currency?.id ?? '')),
             ),
             EntityDropdown(
+              key: ValueKey('__language_${client.languageId}__'),
               entityType: EntityType.language,
               entityList:
                   memoizedLanguageList(viewModel.staticState.languageMap),

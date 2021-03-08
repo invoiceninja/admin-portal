@@ -26,6 +26,7 @@ List<Middleware<AppState>> createStoreUsersMiddleware([
   final deleteUser = _deleteUser(repository);
   final restoreUser = _restoreUser(repository);
   final removeUser = _removeUser(repository);
+  final resendInvite = _resendInvite(repository);
 
   return [
     TypedMiddleware<AppState, ViewUserList>(viewUserList),
@@ -38,6 +39,7 @@ List<Middleware<AppState>> createStoreUsersMiddleware([
     TypedMiddleware<AppState, DeleteUserRequest>(deleteUser),
     TypedMiddleware<AppState, RestoreUserRequest>(restoreUser),
     TypedMiddleware<AppState, RemoveUserRequest>(removeUser),
+    TypedMiddleware<AppState, ResendInviteRequest>(resendInvite),
   ];
 }
 
@@ -184,7 +186,12 @@ Middleware<AppState> _removeUser(UserRepository repository) {
     final action = dynamicAction as RemoveUserRequest;
 
     repository
-        .detachFromCompany(store.state.credentials, action.userId)
+        .detachFromCompany(
+      store.state.credentials,
+      action.userId,
+      action.password,
+      action.idToken,
+    )
         .then((_) {
       store.dispatch(RemoveUserSuccess(action.userId));
       if (action.completer != null) {
@@ -193,6 +200,34 @@ Middleware<AppState> _removeUser(UserRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(RemoveUserFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _resendInvite(UserRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ResendInviteRequest;
+
+    repository
+        .resendInvite(
+      store.state.credentials,
+      action.userId,
+      action.password,
+      action.idToken,
+    )
+        .then((_) {
+      store.dispatch(ResendInviteSuccess(action.userId));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ResendInviteFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

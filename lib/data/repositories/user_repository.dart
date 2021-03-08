@@ -59,14 +59,48 @@ class UserRepository {
   }
 
   Future<List<UserEntity>> detachFromCompany(
-      Credentials credentials, String userId) async {
+    Credentials credentials,
+    String userId,
+    String password,
+    String idToken,
+  ) async {
     final url = credentials.url + '/users/$userId/detach_from_company';
-    final dynamic response = await webClient.delete(url, credentials.token);
+    final dynamic response = await webClient.delete(
+      url,
+      credentials.token,
+      password: password,
+      idToken: idToken,
+    );
 
     final UserListResponse userResponse =
         serializers.deserializeWith(UserListResponse.serializer, response);
 
     return userResponse.data.toList();
+  }
+
+  Future<List<UserEntity>> resendInvite(
+    Credentials credentials,
+    String userId,
+    String password,
+    String idToken,
+  ) async {
+    final url = credentials.url + '/users/$userId/invite';
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      password: password,
+      idToken: idToken,
+    );
+
+    print('## invite: $response');
+    /*
+    final UserListResponse userResponse =
+        serializers.deserializeWith(UserListResponse.serializer, response);
+
+    return userResponse.data.toList();
+    */
+
+    return null;
   }
 
   Future<UserEntity> saveData(
