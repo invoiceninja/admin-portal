@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -52,15 +51,6 @@ class UserDetailsVM {
       onDisableTwoFactorPressed: (context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).disabledTwoFactor);
-        completer.future.then((_) {
-          AppBuilder.of(context).rebuild();
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
 
         passwordCallback(
             context: context,
@@ -71,6 +61,7 @@ class UserDetailsVM {
                       state.user.rebuild((b) => b..isTwoFactorEnabled = false),
                   password: password,
                   idToken: idToken,
+                  completer: completer,
                 ),
               );
             });
@@ -78,15 +69,6 @@ class UserDetailsVM {
       onDisconnectGooglePressed: (context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).disconnectGoogle);
-        completer.future.then((_) {
-          AppBuilder.of(context).rebuild();
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
 
         passwordCallback(
             context: context,
@@ -104,13 +86,6 @@ class UserDetailsVM {
       onConnectGooglePressed: (context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).connectedGoogle);
-        completer.future.catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
 
         passwordCallback(
             context: context,
@@ -133,12 +108,6 @@ class UserDetailsVM {
             context, AppLocalization.of(context).savedSettings);
         completer.future.then((_) {
           AppBuilder.of(context).rebuild();
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
         });
 
         passwordCallback(
