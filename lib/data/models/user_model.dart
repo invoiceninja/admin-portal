@@ -245,7 +245,7 @@ abstract class UserEntity extends Object
 
     if (userCompany.isAdmin || userCompany.isOwner) {
       if (!isEmailVerified) {
-        //actions.add(EntityAction.);
+        actions.add(EntityAction.sendInvite);
       }
 
       actions.add(EntityAction.remove);
