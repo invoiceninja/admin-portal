@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -235,8 +236,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                       child: Container(
                         color: Theme.of(context).cardColor,
                         width: 350,
-                        child: ListView.builder(
-                          shrinkWrap: true,
+                        child: ScrollableListViewBuilder(
                           itemCount: options.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
@@ -417,8 +417,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               widget.entityMap[entityId]?.matchesFilter(_filter) ?? false)
           .toList();
 
-      return ListView.builder(
-        shrinkWrap: true,
+      return ScrollableListViewBuilder(
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final entityId = matches[index];

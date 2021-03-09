@@ -50,3 +50,58 @@ class _ScrollableListViewState extends State<ScrollableListView> {
     );
   }
 }
+
+class ScrollableListViewBuilder extends StatefulWidget {
+  const ScrollableListViewBuilder({
+    Key key,
+    @required this.itemBuilder,
+    @required this.itemCount,
+    this.scrollController,
+    this.padding,
+  }) : super(key: key);
+
+  final IndexedWidgetBuilder itemBuilder;
+  final int itemCount;
+  final ScrollController scrollController;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  _ScrollableListViewBuilderState createState() =>
+      _ScrollableListViewBuilderState();
+}
+
+class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
+  ScrollController _scrollController;
+  bool _isHovered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (event) => setState(() => _isHovered = true),
+      onExit: (event) => setState(() => _isHovered = false),
+      child: Scrollbar(
+        child: ListView.builder(
+          padding: widget.padding,
+          itemBuilder: widget.itemBuilder,
+          itemCount: widget.itemCount,
+          controller: widget.scrollController ?? _scrollController,
+          shrinkWrap: true,
+        ),
+        controller: widget.scrollController ?? _scrollController,
+        isAlwaysShown: _isHovered,
+      ),
+    );
+  }
+}

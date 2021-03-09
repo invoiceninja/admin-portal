@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -196,8 +197,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         return entity.isActive && entity.matchesFilter(_filter);
       }).toList();
 
-      return ListView.builder(
-        shrinkWrap: true,
+      return ScrollableListViewBuilder(
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final String entityId = matches[index];
@@ -236,8 +236,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         return task.matchesFilter(_filter);
       }).toList();
 
-      return ListView.builder(
-        shrinkWrap: true,
+      return ScrollableListViewBuilder(
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final String entityId = matches[index];
@@ -272,8 +271,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         return expense.matchesFilter(_filter);
       }).toList();
 
-      return ListView.builder(
-        shrinkWrap: true,
+      return ScrollableListViewBuilder(
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final String entityId = matches[index];
