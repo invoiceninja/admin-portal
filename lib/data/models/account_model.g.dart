@@ -47,6 +47,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'is_scheduler_running',
       serializers.serialize(object.isSchedulerRunning,
           specifiedType: const FullType(bool)),
+      'default_company_id',
+      serializers.serialize(object.defaultCompanyId,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -104,6 +107,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.isSchedulerRunning = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'default_company_id':
+          result.defaultCompanyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -132,6 +139,8 @@ class _$AccountEntity extends AccountEntity {
   final bool isDocker;
   @override
   final bool isSchedulerRunning;
+  @override
+  final String defaultCompanyId;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates)).build();
@@ -146,7 +155,8 @@ class _$AccountEntity extends AccountEntity {
       this.currentVersion,
       this.debugEnabled,
       this.isDocker,
-      this.isSchedulerRunning})
+      this.isSchedulerRunning,
+      this.defaultCompanyId})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'id');
@@ -178,6 +188,9 @@ class _$AccountEntity extends AccountEntity {
     if (isSchedulerRunning == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'isSchedulerRunning');
     }
+    if (defaultCompanyId == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'defaultCompanyId');
+    }
   }
 
   @override
@@ -200,7 +213,8 @@ class _$AccountEntity extends AccountEntity {
         currentVersion == other.currentVersion &&
         debugEnabled == other.debugEnabled &&
         isDocker == other.isDocker &&
-        isSchedulerRunning == other.isSchedulerRunning;
+        isSchedulerRunning == other.isSchedulerRunning &&
+        defaultCompanyId == other.defaultCompanyId;
   }
 
   int __hashCode;
@@ -214,16 +228,18 @@ class _$AccountEntity extends AccountEntity {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, id.hashCode),
-                                        defaultUrl.hashCode),
-                                    reportErrors.hashCode),
-                                plan.hashCode),
-                            planExpires.hashCode),
-                        latestVersion.hashCode),
-                    currentVersion.hashCode),
-                debugEnabled.hashCode),
-            isDocker.hashCode),
-        isSchedulerRunning.hashCode));
+                                    $jc(
+                                        $jc($jc(0, id.hashCode),
+                                            defaultUrl.hashCode),
+                                        reportErrors.hashCode),
+                                    plan.hashCode),
+                                planExpires.hashCode),
+                            latestVersion.hashCode),
+                        currentVersion.hashCode),
+                    debugEnabled.hashCode),
+                isDocker.hashCode),
+            isSchedulerRunning.hashCode),
+        defaultCompanyId.hashCode));
   }
 
   @override
@@ -238,7 +254,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('currentVersion', currentVersion)
           ..add('debugEnabled', debugEnabled)
           ..add('isDocker', isDocker)
-          ..add('isSchedulerRunning', isSchedulerRunning))
+          ..add('isSchedulerRunning', isSchedulerRunning)
+          ..add('defaultCompanyId', defaultCompanyId))
         .toString();
   }
 }
@@ -290,6 +307,11 @@ class AccountEntityBuilder
   set isSchedulerRunning(bool isSchedulerRunning) =>
       _$this._isSchedulerRunning = isSchedulerRunning;
 
+  String _defaultCompanyId;
+  String get defaultCompanyId => _$this._defaultCompanyId;
+  set defaultCompanyId(String defaultCompanyId) =>
+      _$this._defaultCompanyId = defaultCompanyId;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -306,6 +328,7 @@ class AccountEntityBuilder
       _debugEnabled = _$v.debugEnabled;
       _isDocker = _$v.isDocker;
       _isSchedulerRunning = _$v.isSchedulerRunning;
+      _defaultCompanyId = _$v.defaultCompanyId;
       _$v = null;
     }
     return this;
@@ -337,7 +360,8 @@ class AccountEntityBuilder
             currentVersion: currentVersion,
             debugEnabled: debugEnabled,
             isDocker: isDocker,
-            isSchedulerRunning: isSchedulerRunning);
+            isSchedulerRunning: isSchedulerRunning,
+            defaultCompanyId: defaultCompanyId);
     replace(_$result);
     return _$result;
   }

@@ -6,10 +6,12 @@ class LearnMoreUrl extends StatelessWidget {
   const LearnMoreUrl({
     @required this.child,
     @required this.url,
+    this.label,
   });
 
   final Widget child;
   final String url;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class LearnMoreUrl extends StatelessWidget {
           width: 10,
         ),
         TextButton(
-          child: Text(localization.learnMore),
+          child: Text(label ?? localization.learnMore),
           onPressed: () async {
             if (await canLaunch(url)) {
               await launch(url, forceSafariVC: false, forceWebView: false);

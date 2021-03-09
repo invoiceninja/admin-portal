@@ -413,16 +413,14 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..requireQuoteSignature = value)),
                   ),
-                  /* TODO Re-enable
                   BoolDropdownButton(
                     label: localization.signatureOnPdf,
                     helpLabel: localization.signatureOnPdfHelp,
                     value: settings.signatureOnPdf,
-                    iconData: MdiIcons.fileContract,
+                    iconData: getEntityIcon(EntityType.invoice),
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..signatureOnPdf = value)),
                   ),
-                   */
                 ],
               ),
             ],

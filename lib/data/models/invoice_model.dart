@@ -836,7 +836,7 @@ abstract class InvoiceEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => balance;
+  double get listDisplayAmount => balanceOrAmount;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
