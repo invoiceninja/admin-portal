@@ -91,6 +91,7 @@ class MainScreen extends StatelessWidget {
         showFilterSidebar = true;
         if (mainRoute == '/${uiState.filterEntityType}' &&
             subRoute == '/edit') {
+          // Keep the current entity preview in place
           mainRoute = '/' + uiState.previousMainRoute;
           editingFilterEntity = true;
         }
