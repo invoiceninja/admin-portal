@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/flutter_version.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -18,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/health_check_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -37,7 +37,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 
-class MenuDrawer extends StatefulWidget {
+class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
     Key key,
     @required this.viewModel,
@@ -47,33 +47,13 @@ class MenuDrawer extends StatefulWidget {
   static const LOGO_WIDTH = 38.0;
 
   @override
-  _MenuDrawerState createState() => _MenuDrawerState();
-}
-
-class _MenuDrawerState extends State<MenuDrawer> {
-  ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
     final account = state.account;
-    final company = widget.viewModel.selectedCompany;
+    final company = viewModel.selectedCompany;
 
     if (company == null) {
       return Container();
@@ -130,11 +110,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
       child: SizedBox(
         height: 48,
         width: MenuDrawer.LOGO_WIDTH,
-        child: _companyLogo(widget.viewModel.selectedCompany),
+        child: _companyLogo(viewModel.selectedCompany),
       ),
       color: Theme.of(context).cardColor,
       itemBuilder: (BuildContext context) => [
-        ...widget.viewModel.state.companies
+        ...viewModel.state.companies
             .map((company) => PopupMenuItem<String>(
                   child: _companyListItem(company),
                   value: company.id,
@@ -166,14 +146,14 @@ class _MenuDrawerState extends State<MenuDrawer> {
       ],
       onSelected: (String companyId) {
         if (companyId == 'company') {
-          widget.viewModel.onAddCompany(context);
+          viewModel.onAddCompany(context);
         } else if (companyId == 'logout') {
-          widget.viewModel.onLogoutTap(context);
+          viewModel.onLogoutTap(context);
         } else {
           final company =
               state.companies.firstWhere((company) => company.id == companyId);
           final index = state.companies.indexOf(company);
-          widget.viewModel.onCompanyChanged(context, index, company);
+          viewModel.onCompanyChanged(context, index, company);
         }
       },
     );
@@ -181,7 +161,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
     final _expandedCompanySelector = state.companies.isEmpty
         ? SizedBox()
         : AppDropdownButton<String>(
-            value: widget.viewModel.selectedCompanyIndex,
+            value: viewModel.selectedCompanyIndex,
             items: [
               ...state.companies
                   .map((CompanyEntity company) => DropdownMenuItem<String>(
@@ -214,13 +194,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
             ],
             onChanged: (dynamic value) {
               if (value == 'company') {
-                widget.viewModel.onAddCompany(context);
+                viewModel.onAddCompany(context);
               } else if (value == 'logout') {
-                widget.viewModel.onLogoutTap(context);
+                viewModel.onLogoutTap(context);
               } else {
                 final index = int.parse(value);
-                widget.viewModel
-                    .onCompanyChanged(context, index, state.companies[index]);
+                viewModel.onCompanyChanged(
+                    context, index, state.companies[index]);
               }
             },
           );
@@ -250,148 +230,142 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   : Expanded(
                       child: Container(
                       color: Theme.of(context).cardColor,
-                      child: AppScrollbar(
-                        controller: _scrollController,
-                        child: ListView(
-                          controller: _scrollController,
-                          shrinkWrap: true,
-                          children: <Widget>[
-                            if (kReleaseMode && state.account.debugEnabled)
-                              if (state.isMenuCollapsed)
-                                Tooltip(
-                                  message: localization.debugModeIsEnabled,
-                                  child: ListTile(
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 20),
-                                    onTap: () => launch(kDebugModeUrl),
-                                    leading:
-                                        Icon(Icons.warning, color: Colors.red),
-                                  ),
-                                )
-                              else
-                                ListTile(
-                                  tileColor: Colors.red.shade800,
-                                  title: Padding(
-                                    padding: const EdgeInsets.only(bottom: 6),
-                                    child: IconText(
-                                      icon: Icons.warning,
-                                      text: localization.debugModeIsEnabled,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    localization.debugModeIsEnabledHelp,
+                      child: ScrollableListView(
+                        children: <Widget>[
+                          if (kReleaseMode && state.account.debugEnabled)
+                            if (state.isMenuCollapsed)
+                              Tooltip(
+                                message: localization.debugModeIsEnabled,
+                                child: ListTile(
+                                  contentPadding:
+                                      const EdgeInsets.only(left: 20),
+                                  onTap: () => launch(kDebugModeUrl),
+                                  leading:
+                                      Icon(Icons.warning, color: Colors.red),
+                                ),
+                              )
+                            else
+                              ListTile(
+                                tileColor: Colors.red.shade800,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: IconText(
+                                    icon: Icons.warning,
+                                    text: localization.debugModeIsEnabled,
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  onTap: () => launch(kDebugModeUrl),
                                 ),
-                            DrawerTile(
-                              company: company,
-                              icon: getEntityIcon(EntityType.dashboard),
-                              title: localization.dashboard,
-                              onTap: () => viewEntitiesByType(
-                                  context: context,
-                                  entityType: EntityType.dashboard),
-                              onLongPress: () => store.dispatch(ViewDashboard(
-                                  navigator: Navigator.of(context),
-                                  filter: '')),
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.client,
-                              icon: getEntityIcon(EntityType.client),
-                              title: localization.clients,
-                              iconTooltip: localization.newClient,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.product,
-                              icon: getEntityIcon(EntityType.product),
-                              title: localization.products,
-                              iconTooltip: localization.newProduct,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.invoice,
-                              icon: getEntityIcon(EntityType.invoice),
-                              title: localization.invoices,
-                              iconTooltip: localization.newInvoice,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.payment,
-                              icon: getEntityIcon(EntityType.payment),
-                              title: localization.payments,
-                              iconTooltip: localization.newPayment,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.recurringInvoice,
-                              icon: getEntityIcon(EntityType.recurringInvoice),
-                              title: localization.recurringInvoices,
-                              iconTooltip: localization.newRecurringInvoice,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.quote,
-                              icon: getEntityIcon(EntityType.quote),
-                              title: localization.quotes,
-                              iconTooltip: localization.newQuote,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.credit,
-                              icon: getEntityIcon(EntityType.credit),
-                              title: localization.credits,
-                              iconTooltip: localization.newCredit,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.project,
-                              icon: getEntityIcon(EntityType.project),
-                              title: localization.projects,
-                              iconTooltip: localization.newProject,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.task,
-                              icon: getEntityIcon(EntityType.task),
-                              title: localization.tasks,
-                              iconTooltip: localization.newTask,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.vendor,
-                              icon: getEntityIcon(EntityType.vendor),
-                              title: localization.vendors,
-                              iconTooltip: localization.newVendor,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.expense,
-                              icon: getEntityIcon(EntityType.expense),
-                              title: localization.expenses,
-                              iconTooltip: localization.newExpense,
-                            ),
-                            // STARTER: menu - do not remove comment
-                            DrawerTile(
-                              company: company,
-                              icon: getEntityIcon(EntityType.reports),
-                              title: localization.reports,
-                              onTap: () => viewEntitiesByType(
-                                  context: context,
-                                  entityType: EntityType.reports),
-                            ),
-                            DrawerTile(
-                              company: company,
-                              icon: getEntityIcon(EntityType.settings),
-                              title: localization.settings,
-                              onTap: () => viewEntitiesByType(
-                                  context: context,
-                                  entityType: EntityType.settings),
-                            ),
-                          ],
-                        ),
+                                subtitle: Text(
+                                  localization.debugModeIsEnabledHelp,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onTap: () => launch(kDebugModeUrl),
+                              ),
+                          DrawerTile(
+                            company: company,
+                            icon: getEntityIcon(EntityType.dashboard),
+                            title: localization.dashboard,
+                            onTap: () => viewEntitiesByType(
+                                context: context,
+                                entityType: EntityType.dashboard),
+                            onLongPress: () => store.dispatch(ViewDashboard(
+                                navigator: Navigator.of(context), filter: '')),
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.client,
+                            icon: getEntityIcon(EntityType.client),
+                            title: localization.clients,
+                            iconTooltip: localization.newClient,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.product,
+                            icon: getEntityIcon(EntityType.product),
+                            title: localization.products,
+                            iconTooltip: localization.newProduct,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.invoice,
+                            icon: getEntityIcon(EntityType.invoice),
+                            title: localization.invoices,
+                            iconTooltip: localization.newInvoice,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.payment,
+                            icon: getEntityIcon(EntityType.payment),
+                            title: localization.payments,
+                            iconTooltip: localization.newPayment,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.recurringInvoice,
+                            icon: getEntityIcon(EntityType.recurringInvoice),
+                            title: localization.recurringInvoices,
+                            iconTooltip: localization.newRecurringInvoice,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.quote,
+                            icon: getEntityIcon(EntityType.quote),
+                            title: localization.quotes,
+                            iconTooltip: localization.newQuote,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.credit,
+                            icon: getEntityIcon(EntityType.credit),
+                            title: localization.credits,
+                            iconTooltip: localization.newCredit,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.project,
+                            icon: getEntityIcon(EntityType.project),
+                            title: localization.projects,
+                            iconTooltip: localization.newProject,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.task,
+                            icon: getEntityIcon(EntityType.task),
+                            title: localization.tasks,
+                            iconTooltip: localization.newTask,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.vendor,
+                            icon: getEntityIcon(EntityType.vendor),
+                            title: localization.vendors,
+                            iconTooltip: localization.newVendor,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.expense,
+                            icon: getEntityIcon(EntityType.expense),
+                            title: localization.expenses,
+                            iconTooltip: localization.newExpense,
+                          ),
+                          // STARTER: menu - do not remove comment
+                          DrawerTile(
+                            company: company,
+                            icon: getEntityIcon(EntityType.reports),
+                            title: localization.reports,
+                            onTap: () => viewEntitiesByType(
+                                context: context,
+                                entityType: EntityType.reports),
+                          ),
+                          DrawerTile(
+                            company: company,
+                            icon: getEntityIcon(EntityType.settings),
+                            title: localization.settings,
+                            onTap: () => viewEntitiesByType(
+                                context: context,
+                                entityType: EntityType.settings),
+                          ),
+                        ],
                       ),
                     )),
               SizedBox(
