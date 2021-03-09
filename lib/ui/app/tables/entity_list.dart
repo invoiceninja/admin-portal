@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
@@ -54,13 +55,10 @@ class EntityList extends StatefulWidget {
 
 class _EntityListState extends State<EntityList> {
   EntityDataTableSource dataTableSource;
-  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-
-    _scrollController = ScrollController();
 
     final entityType = widget.entityType;
     final state = widget.state;
@@ -93,12 +91,6 @@ class _EntityListState extends State<EntityList> {
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -157,32 +149,28 @@ class _EntityListState extends State<EntityList> {
               fit: FlexFit.loose,
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
-                  : AppScrollbar(
-                      controller: _scrollController,
-                      child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(vertical: 25),
-                        controller: _scrollController,
-                        separatorBuilder: (context, index) =>
-                            (index == 0 || index == entityList.length)
-                                ? SizedBox()
-                                : ListDivider(),
-                        itemCount: entityList.length + 2,
-                        itemBuilder: (BuildContext context, index) {
-                          if (index == 0 || index == entityList.length + 1) {
-                            return Container(
-                              color: Theme.of(context).cardColor,
-                              height: 25,
-                            );
-                          } else {
-                            return widget.itemBuilder(context, index - 1);
-                          }
-                        },
-                      ),
+                  : ScrollableListViewBuilder(
+                      padding: const EdgeInsets.symmetric(vertical: 25),
+                      separatorBuilder: (context, index) =>
+                          (index == 0 || index == entityList.length)
+                              ? SizedBox()
+                              : ListDivider(),
+                      itemCount: entityList.length + 2,
+                      itemBuilder: (BuildContext context, index) {
+                        if (index == 0 || index == entityList.length + 1) {
+                          return Container(
+                            color: Theme.of(context).cardColor,
+                            height: 25,
+                          );
+                        } else {
+                          return widget.itemBuilder(context, index - 1);
+                        }
+                      },
                     ) /*DraggableScrollbar.semicircle(
                       backgroundColor: Theme.of(context).backgroundColor,
                       scrollbarTimeToFade: Duration(seconds: 1),
                       controller: _scrollController,
-                      child: ListView.separated(
+                      child: ScrollableListViewBuilder(
                         padding: const EdgeInsets.symmetric(vertical: 25),
                         controller: _scrollController,
                         separatorBuilder: (context, index) =>

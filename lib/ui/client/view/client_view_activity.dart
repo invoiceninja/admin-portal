@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 
 class ClientViewActivity extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ClientViewActivityState extends State<ClientViewActivity> {
       return LoadingIndicator();
     }
 
-    return ListView.separated(
+    return ScrollableListViewBuilder(
       itemCount: activities.length,
       padding: const EdgeInsets.symmetric(vertical: 16),
       separatorBuilder: (context, index) => ListDivider(),

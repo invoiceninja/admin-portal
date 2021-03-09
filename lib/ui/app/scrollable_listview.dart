@@ -56,11 +56,13 @@ class ScrollableListViewBuilder extends StatefulWidget {
     Key key,
     @required this.itemBuilder,
     @required this.itemCount,
+    this.separatorBuilder,
     this.scrollController,
     this.padding,
   }) : super(key: key);
 
   final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder separatorBuilder;
   final int itemCount;
   final ScrollController scrollController;
   final EdgeInsetsGeometry padding;
@@ -92,13 +94,22 @@ class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
       onEnter: (event) => setState(() => _isHovered = true),
       onExit: (event) => setState(() => _isHovered = false),
       child: Scrollbar(
-        child: ListView.builder(
-          padding: widget.padding,
-          itemBuilder: widget.itemBuilder,
-          itemCount: widget.itemCount,
-          controller: widget.scrollController ?? _scrollController,
-          shrinkWrap: true,
-        ),
+        child: widget.separatorBuilder != null
+            ? ListView.separated(
+                separatorBuilder: widget.separatorBuilder,
+                padding: widget.padding,
+                itemBuilder: widget.itemBuilder,
+                itemCount: widget.itemCount,
+                controller: widget.scrollController ?? _scrollController,
+                shrinkWrap: true,
+              )
+            : ListView.builder(
+                padding: widget.padding,
+                itemBuilder: widget.itemBuilder,
+                itemCount: widget.itemCount,
+                controller: widget.scrollController ?? _scrollController,
+                shrinkWrap: true,
+              ),
         controller: widget.scrollController ?? _scrollController,
         isAlwaysShown: _isHovered,
       ),
