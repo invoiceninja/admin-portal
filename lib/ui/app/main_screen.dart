@@ -85,11 +85,12 @@ class MainScreen extends StatelessWidget {
         return ConfirmEmailBuilder();
       }
 
+      bool showFilterSidebar = false;
       bool editingFilterEntity = false;
-      if (prefState.showFilterSidebar &&
-          uiState.filterEntityId != null &&
-          subRoute == '/edit') {
-        if (mainRoute == '/${uiState.filterEntityType}') {
+      if (prefState.showFilterSidebar && uiState.filterEntityId != null) {
+        showFilterSidebar = true;
+        if (mainRoute == '/${uiState.filterEntityType}' &&
+            subRoute == '/edit') {
           mainRoute = '/' + uiState.previousMainRoute;
           editingFilterEntity = true;
         }
@@ -278,7 +279,8 @@ class MainScreen extends StatelessWidget {
                     Expanded(
                         child: AppBorder(
                       child: screen,
-                      isLeft: prefState.showMenu && !state.isFullScreen,
+                      isLeft: prefState.showMenu &&
+                          (!state.isFullScreen || showFilterSidebar),
                     )),
                   ]),
                 ),
