@@ -68,7 +68,13 @@ class DecoratedFormField extends StatelessWidget {
 
     final hasValue =
         (initialValue ?? '').isNotEmpty || (controller?.text ?? '').isNotEmpty;
-    final enterShouldSubmit = isDesktop(context) && onSavePressed != null;
+    final calcKeyboardType = isMoney || isPercent
+        ? TextInputType.numberWithOptions(decimal: true, signed: true)
+        : (maxLines ?? 0) > 1
+            ? TextInputType.multiline
+            : keyboardType ?? TextInputType.text;
+    final enterShouldSubmit =
+        isDesktop(context) && onSavePressed != null && (maxLines ?? 1) <= 1;
 
     if (showClear && hasValue && key == null) {
       if (suffixIcon == null && enabled) {
@@ -115,9 +121,7 @@ class DecoratedFormField extends StatelessWidget {
       autofocus: autofocus,
       decoration: inputDecoration,
       validator: validator,
-      keyboardType: isMoney || isPercent
-          ? TextInputType.numberWithOptions(decimal: true, signed: true)
-          : keyboardType ?? TextInputType.text,
+      keyboardType: calcKeyboardType,
       maxLines: expands ? null : maxLines ?? 1,
       minLines: expands ? null : minLines,
       expands: expands,
@@ -127,7 +131,7 @@ class DecoratedFormField extends StatelessWidget {
       autocorrect: isMoney || isPercent ? false : autocorrect,
       obscureText: obscureText,
       initialValue: initialValue,
-      textInputAction: keyboardType == TextInputType.multiline
+      textInputAction: calcKeyboardType == TextInputType.multiline
           ? TextInputAction.newline
           : enterShouldSubmit
               ? TextInputAction.done
@@ -136,7 +140,7 @@ class DecoratedFormField extends StatelessWidget {
       onFieldSubmitted: (value) {
         if (onFieldSubmitted != null) {
           return onFieldSubmitted(value);
-        } else if (keyboardType == TextInputType.multiline) {
+        } else if (calcKeyboardType == TextInputType.multiline) {
           return null;
         } else if (enterShouldSubmit) {
           onSavePressed(context);
