@@ -148,6 +148,15 @@ class _ProjectEditState extends State<ProjectEdit> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
+                  DecoratedFormField(
+                    controller: _nameController,
+                    validator: (String val) => val.trim().isEmpty
+                        ? localization.pleaseEnterAName
+                        : null,
+                    autovalidate: _autoValidate,
+                    autofocus: true,
+                    label: localization.projectName,
+                  ),
                   project.isNew
                       ? EntityDropdown(
                           key: ValueKey('__client_${project.clientId}__'),
@@ -177,14 +186,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                           label: localization.projectNumber,
                           autocorrect: false,
                         ),
-                  DecoratedFormField(
-                    controller: _nameController,
-                    validator: (String val) => val.trim().isEmpty
-                        ? localization.pleaseEnterAName
-                        : null,
-                    autovalidate: _autoValidate,
-                    label: localization.projectName,
-                  ),
                   UserPicker(
                     userId: project.assignedUserId,
                     onChanged: (userId) => viewModel.onChanged(
