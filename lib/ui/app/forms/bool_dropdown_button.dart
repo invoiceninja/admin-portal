@@ -81,43 +81,48 @@ class BoolDropdownButton extends StatelessWidget {
                   ].toList(),
                 ),
               )
-            : Row(
-                children: <Widget>[
-                  InkWell(
-                    onTap: () => onChanged(false),
-                    child: Row(
-                      children: [
-                        IgnorePointer(
-                          child: Radio<bool>(
-                            value: false,
-                            onChanged: (value) => null,
-                            groupValue: value,
-                            activeColor: Theme.of(context).accentColor,
+            : Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Flex(
+                  direction:
+                      isDesktop(context) ? Axis.horizontal : Axis.vertical,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () => onChanged(false),
+                      child: Row(
+                        children: [
+                          IgnorePointer(
+                            child: Radio<bool>(
+                              value: false,
+                              onChanged: (value) => null,
+                              groupValue: value,
+                              activeColor: Theme.of(context).accentColor,
+                            ),
                           ),
-                        ),
-                        Text(falseLabel),
-                        SizedBox(width: 16),
-                      ],
+                          Text(falseLabel),
+                          SizedBox(width: 16),
+                        ],
+                      ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: () => onChanged(true),
-                    child: Row(
-                      children: [
-                        IgnorePointer(
-                          child: Radio<bool>(
-                            value: true,
-                            onChanged: (value) => null,
-                            groupValue: value,
-                            activeColor: Theme.of(context).accentColor,
+                    InkWell(
+                      onTap: () => onChanged(true),
+                      child: Row(
+                        children: [
+                          IgnorePointer(
+                            child: Radio<bool>(
+                              value: true,
+                              onChanged: (value) => null,
+                              groupValue: value,
+                              activeColor: Theme.of(context).accentColor,
+                            ),
                           ),
-                        ),
-                        Text(trueLabel),
-                        SizedBox(width: 16),
-                      ],
+                          Text(trueLabel),
+                          SizedBox(width: 16),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ));
   }
 }
