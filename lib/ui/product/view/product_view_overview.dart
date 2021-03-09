@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -62,7 +63,7 @@ class _ProductOverviewState extends State<ProductOverview> {
           value: product.customValue2);
     }
 
-    return ListView(
+    return ScrollableListView(
       children: <Widget>[
         EntityHeader(
           entity: product,

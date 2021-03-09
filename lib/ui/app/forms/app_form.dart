@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 
 class AppForm extends StatelessWidget {
   const AppForm({
@@ -22,8 +23,7 @@ class AppForm extends StatelessWidget {
       child: Form(
         key: formKey,
         child: child ??
-            ListView(
-              shrinkWrap: true,
+            ScrollableListView(
               children: children,
             ),
       ),

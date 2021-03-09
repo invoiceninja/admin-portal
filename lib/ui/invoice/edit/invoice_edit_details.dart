@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +136,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final originalInvoice =
         state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
 
-    return ListView(
+    return ScrollableListView(
       children: <Widget>[
         FormCard(
           children: <Widget>[

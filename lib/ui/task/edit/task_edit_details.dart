@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -118,7 +119,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                 ? client.currencyId
                 : company.currencyId);
 
-    return ListView(
+    return ScrollableListView(
       children: <Widget>[
         FormCard(
           children: <Widget>[

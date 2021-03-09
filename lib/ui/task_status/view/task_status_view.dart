@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dar
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -38,7 +39,7 @@ class _TaskStatusViewState extends State<TaskStatusView> {
       isFilter: widget.isFilter,
       entity: taskStatus,
       onBackPressed: () => viewModel.onBackPressed(),
-      body: ListView(
+      body: ScrollableListView(
         children: <Widget>[
           EntityHeader(
               entity: taskStatus,

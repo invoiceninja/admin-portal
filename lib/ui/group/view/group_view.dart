@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -75,8 +76,7 @@ class _GroupViewState extends State<GroupView>
       body: TabBarView(
         controller: _controller,
         children: [
-          ListView(
-            shrinkWrap: true,
+          ScrollableListView(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),

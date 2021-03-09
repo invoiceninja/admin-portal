@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -181,7 +182,7 @@ class _TaskOverviewState extends State<TaskOverview> {
 
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
-      child: ListView(
+      child: ScrollableListView(
         children: _buildView(),
       ),
     );

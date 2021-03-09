@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/system_log_viewer.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
@@ -138,7 +139,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
       }
     }
 
-    return ListView(children: <Widget>[
+    return ScrollableListView(children: <Widget>[
       EntityHeader(
           entity: companyGateway,
           label: localization.processed,

@@ -92,7 +92,7 @@ class _StubEditState extends State<StubEdit> {
       body:Form(
                        key: _formKey,
                        child: Builder(builder: (BuildContext context) {
-                         return ListView(
+                         return ScrollableListView(
                            children: <Widget>[
                              FormCard(
                                children: <Widget>[

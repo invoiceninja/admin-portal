@@ -24,6 +24,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/fonts.dart';
@@ -108,7 +109,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
@@ -229,7 +230,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ),
             ],
           ),
-          ListView(
+          ScrollableListView(
             padding: const EdgeInsets.all(10),
             children: <Widget>[
               FormCard(

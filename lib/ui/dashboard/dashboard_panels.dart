@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_date_range_picker.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
@@ -402,42 +403,39 @@ class DashboardPanels extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 74),
-          child: AppScrollbar(
-            controller: scrollController,
-            child: ListView(
-              controller: scrollController,
-              children: <Widget>[
-                if (company.isModuleEnabled(EntityType.invoice))
-                  _InvoiceChart(
-                      viewModel: viewModel,
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.invoice, entityIds)),
-                if (company.isModuleEnabled(EntityType.invoice))
-                  _paymentChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.payment, entityIds)),
-                if (company.isModuleEnabled(EntityType.quote))
-                  _quoteChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.quote, entityIds)),
-                if (company.isModuleEnabled(EntityType.task))
-                  _taskChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.task, entityIds)),
-                if (company.isModuleEnabled(EntityType.expense))
-                  _expenseChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.expense, entityIds)),
-                SizedBox(
-                  height: 500,
-                )
-              ],
-            ),
+          child: ScrollableListView(
+            scrollController: scrollController,
+            children: <Widget>[
+              if (company.isModuleEnabled(EntityType.invoice))
+                _InvoiceChart(
+                    viewModel: viewModel,
+                    context: context,
+                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                        EntityType.invoice, entityIds)),
+              if (company.isModuleEnabled(EntityType.invoice))
+                _paymentChart(
+                    context: context,
+                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                        EntityType.payment, entityIds)),
+              if (company.isModuleEnabled(EntityType.quote))
+                _quoteChart(
+                    context: context,
+                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                        EntityType.quote, entityIds)),
+              if (company.isModuleEnabled(EntityType.task))
+                _taskChart(
+                    context: context,
+                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                        EntityType.task, entityIds)),
+              if (company.isModuleEnabled(EntityType.expense))
+                _expenseChart(
+                    context: context,
+                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                        EntityType.expense, entityIds)),
+              SizedBox(
+                height: 500,
+              )
+            ],
           ),
         ),
         ConstrainedBox(

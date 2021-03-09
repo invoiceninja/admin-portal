@@ -41,7 +41,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
     }
 
     return ListView.separated(
-      shrinkWrap: true,
+      shrinkWrap: true,      
       padding: const EdgeInsets.symmetric(vertical: 16),
       itemCount: ledgers.length + 1,
       separatorBuilder: (context, index) => ListDivider(),

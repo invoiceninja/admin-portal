@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +40,7 @@ class UserView extends StatelessWidget {
       isFilter: isFilter,
       entity: user,
       onBackPressed: () => viewModel.onBackPressed(),
-      body: ListView(
-        shrinkWrap: true,
+      body: ScrollableListView(
         children: <Widget>[
           if (user.emailVerifiedAt == null)
             IconMessage(localization.emailSentToConfirmEmail,

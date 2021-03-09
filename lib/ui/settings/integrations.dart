@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/integrations_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -80,7 +81,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
     return EditScaffold(
       title: localization.integrations,
       onSavePressed: widget.viewModel.onSavePressed,
-      body: ListView(
+      body: ScrollableListView(
         children: <Widget>[
           FormCard(
             children: <Widget>[

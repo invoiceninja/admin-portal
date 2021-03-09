@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -92,8 +93,7 @@ class _DocumentEditState extends State<DocumentEdit> {
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
-            return ListView(
-              key: ValueKey(viewModel.document.id),
+            return ScrollableListView(
               children: <Widget>[
                 FormCard(
                   children: <Widget>[

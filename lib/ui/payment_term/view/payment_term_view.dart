@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -27,13 +28,15 @@ class _PaymentTermViewState extends State<PaymentTermView> {
     return ViewScaffold(
       entity: paymentTerm,
       onBackPressed: () => viewModel.onBackPressed(),
-      body: ListView(children: [
-        EntityHeader(
-          entity: paymentTerm,
-          label: localization.name,
-          value: paymentTerm.name,
-        ),
-      ]),
+      body: ScrollableListView(
+        children: [
+          EntityHeader(
+            entity: paymentTerm,
+            label: localization.name,
+            value: paymentTerm.name,
+          ),
+        ],
+      ),
     );
   }
 }

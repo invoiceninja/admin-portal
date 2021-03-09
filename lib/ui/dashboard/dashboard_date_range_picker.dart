@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -50,8 +51,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(24.0),
-              child: ListView(
-                shrinkWrap: true,
+              child: ScrollableListView(
                 children: <Widget>[
                   Text(localization.dateRange,
                       style: Theme.of(context).textTheme.headline6),

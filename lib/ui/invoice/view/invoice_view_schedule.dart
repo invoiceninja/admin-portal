@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -14,8 +15,7 @@ class InvoiceViewSchedule extends StatelessWidget {
     final invoice = viewModel.invoice;
     final localization = AppLocalization.of(context);
 
-    return ListView(
-      shrinkWrap: true,
+    return ScrollableListView(
       padding: const EdgeInsets.all(16),
       children: [
         Row(

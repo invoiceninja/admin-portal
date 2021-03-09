@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -101,7 +102,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
         focusNode: _focusNode,
         tabController: _controller,
         children: <Widget>[
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[
@@ -137,7 +138,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
               ),
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(children: <Widget>[
                 if (companyGateway.gatewayId != kGatewayCustom)
@@ -295,7 +296,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 )
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               if (gateway?.options != null && gateway.options.length > 1)
                 FormCard(

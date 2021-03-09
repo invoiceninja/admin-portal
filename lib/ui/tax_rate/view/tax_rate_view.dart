@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -31,7 +32,7 @@ class _TaxRateViewState extends State<TaxRateView> {
       isFilter: widget.isFilter,
       entity: taxRate,
       onBackPressed: () => viewModel.onBackPressed(),
-      body: ListView(children: [
+      body: ScrollableListView(children: [
         EntityHeader(
           entity: taxRate,
           label: localization.name,

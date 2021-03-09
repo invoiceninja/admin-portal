@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -134,7 +135,7 @@ class _ProjectOverviewState extends State<ProjectOverview> {
 
     return RefreshIndicator(
       onRefresh: () => widget.viewModel.onRefreshed(context),
-      child: ListView(
+      child: ScrollableListView(
         children: _buildView(),
       ),
     );
