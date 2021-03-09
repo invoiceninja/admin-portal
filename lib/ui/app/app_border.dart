@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -22,7 +23,7 @@ class AppBorder extends StatelessWidget {
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final isAllSides = isTop == null && isLeft == null;
-    const borderWidth = 1.5;
+    const borderWidth = kIsWeb ? 2 : 1.5;
 
     final color = enableDarkMode
         ? convertHexStringToColor(kDefaultDarkBorderColor)
