@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -39,8 +40,7 @@ class InvoiceEditContacts extends StatelessWidget {
         });
     }
 
-    return ListView(
-      shrinkWrap: true,
+    return ScrollableListView(
       children: contacts.map((contact) {
         final invitation = invoice.getInvitationForContact(contact);
         return _ContactListTile(

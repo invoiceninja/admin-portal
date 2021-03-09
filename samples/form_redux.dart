@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
@@ -251,7 +252,7 @@ class ContactsPage extends StatelessWidget {
           //key: Key('__contact_${contact.id}__'),
           index: store.state.client.contacts.indexOf(contact)));
 
-      return ListView(
+      return ScrollableListView(
         children: []
           ..addAll(contacts)
           ..add(Padding(

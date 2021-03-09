@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_json_widget/flutter_json_widget.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class StateInspector extends StatefulWidget {
@@ -48,8 +49,7 @@ class _StateInspectorState extends State<StateInspector> {
       padding: const EdgeInsets.all(15),
       child: Material(
         child: ResponsivePadding(
-          child: ListView(
-            shrinkWrap: true,
+          child: ScrollableListView(
             children: <Widget>[
               TextFormField(
                 autofocus: true,

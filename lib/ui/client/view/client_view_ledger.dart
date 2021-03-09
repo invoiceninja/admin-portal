@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -40,8 +41,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
       return LoadingIndicator();
     }
 
-    return ListView.separated(
-      shrinkWrap: true,
+    return ScrollableListViewBuilder(
       padding: const EdgeInsets.symmetric(vertical: 16),
       itemCount: ledgers.length + 1,
       separatorBuilder: (context, index) => ListDivider(),

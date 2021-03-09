@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -239,7 +240,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
         formKey: _formKey,
         tabController: _controller,
         children: <Widget>[
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[
@@ -339,7 +340,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
             ],
           ),
           AutofillGroup(
-            child: ListView(
+            child: ScrollableListView(
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
@@ -397,8 +398,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ListView(
-              shrinkWrap: true,
+            child: ScrollableListView(
               children: <Widget>[
                 Builder(
                   builder: (context) {
@@ -452,7 +452,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
               ],
             ),
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

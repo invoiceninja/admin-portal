@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_list_vm.dart';
@@ -38,7 +39,7 @@ class _PaymentTermListState extends State<PaymentTermList> {
 
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
-      child: ListView.separated(
+      child: ScrollableListViewBuilder(
           separatorBuilder: (context, index) => ListDivider(),
           itemCount: viewModel.paymentTermList.length,
           itemBuilder: (BuildContext context, index) {

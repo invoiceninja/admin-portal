@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -34,7 +35,7 @@ class _WebhookViewState extends State<WebhookView> {
       isFilter: widget.isFilter,
       onBackPressed: () => viewModel.onBackPressed(),
       entity: webhook,
-      body: ListView(
+      body: ScrollableListView(
         children: <Widget>[
           EntityHeader(
             entity: webhook,

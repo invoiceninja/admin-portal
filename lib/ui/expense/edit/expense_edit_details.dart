@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_field.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -113,8 +114,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
       onSavePressed: viewModel.onSavePressed,
     );
 
-    return ListView(
-      shrinkWrap: true,
+    return ScrollableListView(
       children: <Widget>[
         FormCard(
           children: <Widget>[

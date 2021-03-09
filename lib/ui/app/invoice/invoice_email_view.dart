@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
@@ -267,7 +268,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       return HelpText(localization.noHistory);
     }
 
-    return ListView.builder(
+    return ScrollableListViewBuilder(
       itemCount: activities.length,
       itemBuilder: (BuildContext context, index) {
         final ActivityEntity activity = activities.elementAt(index);

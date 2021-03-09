@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -280,8 +281,7 @@ class _LoginState extends State<LoginView> {
             ),
           ),
         ),
-        ListView(
-          shrinkWrap: true,
+        ScrollableListView(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),

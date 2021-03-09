@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -205,7 +206,7 @@ class _ClientPortalState extends State<ClientPortal>
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               /*
               if (!state.settingsUIState.isFiltered)
@@ -361,7 +362,7 @@ class _ClientPortalState extends State<ClientPortal>
               )
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[
@@ -425,7 +426,7 @@ class _ClientPortalState extends State<ClientPortal>
               ),
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[
@@ -453,7 +454,7 @@ class _ClientPortalState extends State<ClientPortal>
               ),
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[

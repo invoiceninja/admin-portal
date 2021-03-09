@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -231,7 +232,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[
@@ -487,7 +488,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return ListView(
+    return ScrollableListView(
       children: [
         FormCard(
           children: <Widget>[

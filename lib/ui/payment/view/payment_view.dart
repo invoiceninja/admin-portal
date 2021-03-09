@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -80,7 +81,7 @@ class _PaymentViewState extends State<PaymentView> {
             child: Column(
               children: <Widget>[
                 Expanded(
-                  child: ListView(
+                  child: ScrollableListView(
                     children: <Widget>[
                       EntityHeader(
                         entity: payment,

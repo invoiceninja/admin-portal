@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -37,8 +38,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
     final historyList = invoice.history.toList();
     historyList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
-    return ListView.separated(
-      shrinkWrap: true,
+    return ScrollableListViewBuilder(
       padding: const EdgeInsets.symmetric(vertical: 16),
       itemBuilder: (BuildContext context, index) {
         final history = historyList[index];

@@ -27,7 +27,7 @@ class _StubViewState extends State<StubView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: stub,
-      body: ListView(
+      body: ScrollableListView(
         children: <Widget>[
         ],
       ),

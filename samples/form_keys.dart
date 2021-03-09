@@ -1,6 +1,7 @@
 // https://hillelcoren.com/2018/06/12/flutter-complex-forms-with-multiple-tabs-and-relationships/
 
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // Sample entity classes
@@ -229,7 +230,7 @@ class ContactsPageState extends State<ContactsPage>
       ),
     ));
 
-    return ListView(
+    return ScrollableListView(
       children: items,
     );
   }

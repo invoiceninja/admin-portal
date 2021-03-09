@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -179,7 +180,7 @@ class _UserEditState extends State<UserEdit>
         formKey: _formKey,
         tabController: _controller,
         children: <Widget>[
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[
@@ -245,7 +246,7 @@ class _UserEditState extends State<UserEdit>
               ),
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               NotificationSettings(
                 user: user,
@@ -256,7 +257,7 @@ class _UserEditState extends State<UserEdit>
               ),
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[

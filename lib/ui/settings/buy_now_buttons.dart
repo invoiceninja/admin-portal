@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -76,7 +77,7 @@ class _BuyNowButtonsState extends State<BuyNowButtons> {
         ),
         body: Form(
           key: _formKey,
-          child: ListView(
+          child: ScrollableListView(
             children: <Widget>[
               FormCard(
                 children: <Widget>[

@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_redux/flutter_redux.dart';
@@ -71,7 +72,7 @@ class HistoryDrawer extends StatelessWidget {
           ),
           body: ColoredBox(
             color: Theme.of(context).cardColor,
-            child: ListView(
+            child: ScrollableListView(
               children: widgets,
             ),
           ),

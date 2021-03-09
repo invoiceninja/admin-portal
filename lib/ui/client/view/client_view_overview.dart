@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/gateways/token_meta.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/extensions.dart';
@@ -108,7 +109,7 @@ class ClientOverview extends StatelessWidget {
           value: client.customValue4);
     }
 
-    return ListView(
+    return ScrollableListView(
       children: <Widget>[
         EntityHeader(
           entity: client,

@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/duration_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
               onTap: (context) => _showTaskTimeEditor(taskTime, context),
             ));
 
-    return ListView(
+    return ScrollableListView(
       children: taskTimeWidgets.toList(),
     );
   }

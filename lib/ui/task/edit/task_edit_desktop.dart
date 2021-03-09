@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -134,7 +135,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                 ? client.currencyId
                 : company.currencyId);
 
-    return ListView(
+    return ScrollableListView(
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,

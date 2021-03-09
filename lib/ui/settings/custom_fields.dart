@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -97,7 +98,7 @@ class _CustomFieldsState extends State<CustomFields>
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               CustomFieldsSettings(
                 viewModel: viewModel,
@@ -105,7 +106,7 @@ class _CustomFieldsState extends State<CustomFields>
               ),
             ],
           ),
-          ListView(children: <Widget>[
+          ScrollableListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
               fieldType: CustomFieldType.client,
@@ -115,7 +116,7 @@ class _CustomFieldsState extends State<CustomFields>
               fieldType: CustomFieldType.contact,
             ),
           ]),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               CustomFieldsSettings(
                 viewModel: viewModel,
@@ -123,7 +124,7 @@ class _CustomFieldsState extends State<CustomFields>
               ),
             ],
           ),
-          ListView(children: <Widget>[
+          ScrollableListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
               fieldType: CustomFieldType.invoice,
@@ -134,13 +135,13 @@ class _CustomFieldsState extends State<CustomFields>
               showChargeTaxes: true,
             ),
           ]),
-          ListView(children: <Widget>[
+          ScrollableListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
               fieldType: CustomFieldType.payment,
             ),
           ]),
-          ListView(children: <Widget>[
+          ScrollableListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
               fieldType: CustomFieldType.user,

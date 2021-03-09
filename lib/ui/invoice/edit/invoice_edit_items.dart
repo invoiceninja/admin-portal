@@ -1,9 +1,9 @@
-import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -29,19 +29,6 @@ class InvoiceEditItems extends StatefulWidget {
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
   int selectedItemIndex;
-  ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   void _showInvoiceItemEditor(int lineItemIndex, BuildContext context) {
     showDialog<ItemEditDetails>(
@@ -83,19 +70,15 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
       return HelpText(localization.clickPlusToAddItem);
     }
 
-    return AppScrollbar(
-      controller: _scrollController,
-      child: ListView(
-        controller: _scrollController,
-        children: [
-          for (int i = 0; i < invoice.lineItems.length; i++)
-            InvoiceItemListTile(
-              invoice: invoice,
-              invoiceItem: invoice.lineItems[i],
-              onTap: () => _showInvoiceItemEditor(i, context),
-            )
-        ],
-      ),
+    return ScrollableListView(
+      children: [
+        for (int i = 0; i < invoice.lineItems.length; i++)
+          InvoiceItemListTile(
+            invoice: invoice,
+            invoiceItem: invoice.lineItems[i],
+            onTap: () => _showInvoiceItemEditor(i, context),
+          )
+      ],
     );
   }
 }

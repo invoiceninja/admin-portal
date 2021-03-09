@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -99,7 +100,7 @@ class _AccountManagementState extends State<AccountManagement>
         tabController: _controller,
         children: <Widget>[
           _AccountOverview(viewModel: viewModel),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(
                   // TODO change to kModules.keys
@@ -123,7 +124,7 @@ class _AccountManagementState extends State<AccountManagement>
               }).toList()),
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: [
               FormCard(
                 children: [
@@ -197,8 +198,7 @@ class _AccountOverview extends StatelessWidget {
     final company = viewModel.company;
     final companies = state.companies;
 
-    return ListView(
-      shrinkWrap: true,
+    return ScrollableListView(
       children: <Widget>[
         AppHeader(
           label: localization.plan,

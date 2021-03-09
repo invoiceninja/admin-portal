@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
@@ -383,8 +384,7 @@ class _DesignSettingsState extends State<DesignSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return ListView(
-      shrinkWrap: true,
+    return ScrollableListView(
       children: <Widget>[
         FormCard(
           children: <Widget>[

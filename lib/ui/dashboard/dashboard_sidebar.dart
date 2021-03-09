@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
@@ -109,8 +110,7 @@ class InvoiceSidebar extends StatelessWidget {
           (upcomingInvoices.isNotEmpty ? ' (${upcomingInvoices.length})' : ''),
       list1: upcomingInvoices.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: upcomingInvoices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
@@ -124,8 +124,7 @@ class InvoiceSidebar extends StatelessWidget {
           (pastDueInvoices.isNotEmpty ? ' (${pastDueInvoices.length})' : ''),
       list2: pastDueInvoices.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: pastDueInvoices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
@@ -140,8 +139,7 @@ class InvoiceSidebar extends StatelessWidget {
           : localization.selectedInvoices + ' (${selectedIds.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
                 final invoice = state.invoiceState.map[selectedIds[index]];
@@ -179,8 +177,7 @@ class PaymentSidebar extends StatelessWidget {
           (recentPayments.isNotEmpty ? ' (${recentPayments.length})' : ''),
       list1: recentPayments.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: recentPayments.length,
               itemBuilder: (BuildContext context, int index) {
                 return PaymentListItem(
@@ -195,8 +192,7 @@ class PaymentSidebar extends StatelessWidget {
           : localization.selectedPayments + ' (${selectedIds.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
                 final payment = state.paymentState.map[selectedIds[index]];
@@ -238,8 +234,7 @@ class QuoteSidebar extends StatelessWidget {
           (upcomingQuotes.isNotEmpty ? ' (${upcomingQuotes.length})' : ''),
       list1: upcomingQuotes.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: upcomingQuotes.length,
               itemBuilder: (BuildContext context, int index) {
                 return QuoteListItem(
@@ -253,8 +248,7 @@ class QuoteSidebar extends StatelessWidget {
           (expriedQuotes.isNotEmpty ? ' (${expriedQuotes.length})' : ''),
       list2: expriedQuotes.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: expriedQuotes.length,
               itemBuilder: (BuildContext context, int index) {
                 return QuoteListItem(
@@ -269,8 +263,7 @@ class QuoteSidebar extends StatelessWidget {
           : localization.selectedQuotes + ' (${selectedIds.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
                 final quote = state.quoteState.map[selectedIds[index]];
@@ -312,8 +305,7 @@ class TaskSidebar extends StatelessWidget {
           (runningTasks.isNotEmpty ? ' (${runningTasks.length})' : ''),
       list1: runningTasks.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: runningTasks.length,
               itemBuilder: (BuildContext context, int index) {
                 return TaskListItem(
@@ -327,8 +319,7 @@ class TaskSidebar extends StatelessWidget {
           (recentTasks.isNotEmpty ? ' (${recentTasks.length})' : ''),
       list2: recentTasks.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: recentTasks.length,
               itemBuilder: (BuildContext context, int index) {
                 return TaskListItem(
@@ -343,8 +334,7 @@ class TaskSidebar extends StatelessWidget {
           : localization.selectedTasks + ' (${selectedIds.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
                 final task = state.taskState.map[selectedIds[index]];
@@ -390,8 +380,7 @@ class ExpenseSidbar extends StatelessWidget {
           (upcomingExpenses.isNotEmpty ? ' (${upcomingExpenses.length})' : ''),
       list1: upcomingExpenses.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: upcomingExpenses.length,
               itemBuilder: (BuildContext context, int index) {
                 return ExpenseListItem(
@@ -406,8 +395,7 @@ class ExpenseSidbar extends StatelessWidget {
           (recentExpenses.isNotEmpty ? ' (${recentExpenses.length})' : ''),
       list1: recentExpenses.isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: recentExpenses.length,
               itemBuilder: (BuildContext context, int index) {
                 return ExpenseListItem(
@@ -422,8 +410,7 @@ class ExpenseSidbar extends StatelessWidget {
           : localization.selectedExpenses + ' (${selectedIds.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : ListView.separated(
-              shrinkWrap: true,
+          : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
                 final expense = state.expenseState.map[selectedIds[index]];
@@ -455,9 +442,9 @@ class _DashboardSidebar extends StatelessWidget {
   final String label1;
   final String label2;
   final String label3;
-  final ListView list1;
-  final ListView list2;
-  final ListView list3;
+  final ScrollableListViewBuilder list1;
+  final ScrollableListViewBuilder list2;
+  final ScrollableListViewBuilder list3;
 
   @override
   Widget build(BuildContext context) {

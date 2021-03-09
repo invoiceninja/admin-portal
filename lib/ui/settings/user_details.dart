@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -155,7 +156,7 @@ class _UserDetailsState extends State<UserDetails>
         formKey: _formKey,
         tabController: _controller,
         children: <Widget>[
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               FormCard(children: <Widget>[
                 DecoratedFormField(
@@ -270,7 +271,7 @@ class _UserDetailsState extends State<UserDetails>
               ),
             ],
           ),
-          ListView(
+          ScrollableListView(
             children: <Widget>[
               NotificationSettings(
                 user: user,

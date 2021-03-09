@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -50,7 +51,7 @@ class _SettingsListState extends State<SettingsList> {
     }
 
     if (!state.userCompany.isAdmin)
-      return ListView(
+      return ScrollableListView(
         children: <Widget>[
           SettingsListTile(
             section: kSettingsUserDetails,
@@ -68,144 +69,142 @@ class _SettingsListState extends State<SettingsList> {
         filter: settingsUIState.filter,
       );
 
-    return AppScrollbar(
-      controller: _scrollController,
-      child: ListView(
-        controller: _scrollController,
-        children: <Widget>[
-          if (settingsUIState.isFiltered)
-            Container(
-              color: Colors.orangeAccent,
-              child: ListFilterMessage(
-                filterEntityType: settingsUIState.entityType,
-                filterEntityId: settingsUIState.entityType == EntityType.group
-                    ? settingsUIState.group.id
-                    : settingsUIState.client.id,
-                onPressed: settingsUIState.entityType == EntityType.client
-                    ? widget.viewModel.onViewClientPressed
-                    : widget.viewModel.onViewGroupPressed,
-                onClearPressed: widget.viewModel.onClearSettingsFilterPressed,
-                isSettings: true,
-              ),
-            ),
+    return ScrollableListView(
+      scrollController: _scrollController,
+      children: <Widget>[
+        if (settingsUIState.isFiltered)
           Container(
-            color: Theme.of(context).backgroundColor,
-            padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
-            child: Text(
-              localization.basicSettings,
-              style: Theme.of(context).textTheme.bodyText2,
+            color: Colors.orangeAccent,
+            child: ListFilterMessage(
+              filterEntityType: settingsUIState.entityType,
+              filterEntityId: settingsUIState.entityType == EntityType.group
+                  ? settingsUIState.group.id
+                  : settingsUIState.client.id,
+              onPressed: settingsUIState.entityType == EntityType.client
+                  ? widget.viewModel.onViewClientPressed
+                  : widget.viewModel.onViewGroupPressed,
+              onClearPressed: widget.viewModel.onClearSettingsFilterPressed,
+              isSettings: true,
             ),
           ),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
+          child: Text(
+            localization.basicSettings,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+        ),
+        SettingsListTile(
+          section: kSettingsCompanyDetails,
+          viewModel: widget.viewModel,
+        ),
+        if (showAll)
           SettingsListTile(
-            section: kSettingsCompanyDetails,
+            section: kSettingsUserDetails,
             viewModel: widget.viewModel,
           ),
-          if (showAll)
-            SettingsListTile(
-              section: kSettingsUserDetails,
-              viewModel: widget.viewModel,
-            ),
+        SettingsListTile(
+          section: kSettingsLocalization,
+          viewModel: widget.viewModel,
+        ),
+        SettingsListTile(
+          section: kSettingsOnlinePayments,
+          viewModel: widget.viewModel,
+        ),
+        if (showAll)
           SettingsListTile(
-            section: kSettingsLocalization,
+            section: kSettingsTaxSettings,
             viewModel: widget.viewModel,
           ),
+        if (showAll)
           SettingsListTile(
-            section: kSettingsOnlinePayments,
+            section: kSettingsProducts,
             viewModel: widget.viewModel,
           ),
-          if (showAll)
-            SettingsListTile(
-              section: kSettingsTaxSettings,
-              viewModel: widget.viewModel,
-            ),
-          if (showAll)
-            SettingsListTile(
-              section: kSettingsProducts,
-              viewModel: widget.viewModel,
-            ),
-          if (state.company.isModuleEnabled(EntityType.task))
-            SettingsListTile(
-              section: kSettingsTasks,
-              viewModel: widget.viewModel,
-            ),
-          if (showAll && state.company.isModuleEnabled(EntityType.expense))
-            SettingsListTile(
-              section: kSettingsExpenses,
-              viewModel: widget.viewModel,
-            ),
-          // TODO Re-entable
-          /*
+        if (state.company.isModuleEnabled(EntityType.task))
+          SettingsListTile(
+            section: kSettingsTasks,
+            viewModel: widget.viewModel,
+          ),
+        if (showAll && state.company.isModuleEnabled(EntityType.expense))
+          SettingsListTile(
+            section: kSettingsExpenses,
+            viewModel: widget.viewModel,
+          ),
+        // TODO Re-entable
+        /*
           if (showAll)
             SettingsListTile(
               section: kSettingsIntegrations,
               viewModel: viewModel,
             ),
            */
-          if (showAll)
-            SettingsListTile(
-              section: kSettingsImportExport,
-              viewModel: widget.viewModel,
-            ),
-          if (showAll)
-            SettingsListTile(
-              section: kSettingsDeviceSettings,
-              viewModel: widget.viewModel,
-            ),
-          if (showAll && state.userCompany.isOwner)
-            SettingsListTile(
-              section: kSettingsAccountManagement,
-              viewModel: widget.viewModel,
-            ),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
-            child: Text(
-              localization.advancedSettings,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsImportExport,
+            viewModel: widget.viewModel,
           ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsDeviceSettings,
+            viewModel: widget.viewModel,
+          ),
+        if (showAll && state.userCompany.isOwner)
+          SettingsListTile(
+            section: kSettingsAccountManagement,
+            viewModel: widget.viewModel,
+          ),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
+          child: Text(
+            localization.advancedSettings,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+        ),
 
+        SettingsListTile(
+          section: kSettingsInvoiceDesign,
+          viewModel: widget.viewModel,
+        ),
+        if (showAll)
           SettingsListTile(
-            section: kSettingsInvoiceDesign,
+            section: kSettingsCustomFields,
             viewModel: widget.viewModel,
           ),
-          if (showAll)
-            SettingsListTile(
-              section: kSettingsCustomFields,
-              viewModel: widget.viewModel,
-            ),
-          SettingsListTile(
-            section: kSettingsGeneratedNumbers,
-            viewModel: widget.viewModel,
-          ),
-          SettingsListTile(
-            section: kSettingsEmailSettings,
-            viewModel: widget.viewModel,
-          ),
-          SettingsListTile(
-            section: kSettingsClientPortal,
-            viewModel: widget.viewModel,
-          ),
-          SettingsListTile(
-            section: kSettingsTemplatesAndReminders,
-            viewModel: widget.viewModel,
-          ),
-          SettingsListTile(
-            section: kSettingsGroupSettings,
-            viewModel: widget.viewModel,
-          ),
-          SettingsListTile(
-            section: kSettingsWorkflowSettings,
-            viewModel: widget.viewModel,
-          ),
-          /*
+        SettingsListTile(
+          section: kSettingsGeneratedNumbers,
+          viewModel: widget.viewModel,
+        ),
+        SettingsListTile(
+          section: kSettingsEmailSettings,
+          viewModel: widget.viewModel,
+        ),
+        SettingsListTile(
+          section: kSettingsClientPortal,
+          viewModel: widget.viewModel,
+        ),
+        SettingsListTile(
+          section: kSettingsTemplatesAndReminders,
+          viewModel: widget.viewModel,
+        ),
+        SettingsListTile(
+          section: kSettingsGroupSettings,
+          viewModel: widget.viewModel,
+        ),
+        SettingsListTile(
+          section: kSettingsWorkflowSettings,
+          viewModel: widget.viewModel,
+        ),
+        /*
           if (showAll)
             SettingsListTile(
               section: kSettingsBuyNowButtons,
               viewModel: viewModel,
             ),
            */
-          /*
+        /*
           SettingsListTile(
             section: kSettingsCreditCardsAndBanks,
             viewModel: viewModel,
@@ -215,13 +214,12 @@ class _SettingsListState extends State<SettingsList> {
             viewModel: viewModel,
           ),
            */
-          if (showAll)
-            SettingsListTile(
-              section: kSettingsUserManagement,
-              viewModel: widget.viewModel,
-            ),
-        ],
-      ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsUserManagement,
+            viewModel: widget.viewModel,
+          ),
+      ],
     );
   }
 }
@@ -507,7 +505,7 @@ class SettingsSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    return ListView(
+    return ScrollableListView(
       children: <Widget>[
         for (var section in map.keys)
           for (int i = 0; i < map[section].length; i++)

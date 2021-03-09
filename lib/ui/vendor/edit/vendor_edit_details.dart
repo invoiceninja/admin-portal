@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/contacts.dart';
@@ -122,8 +123,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
 
-    return ListView(
-      shrinkWrap: true,
+    return ScrollableListView(
       children: <Widget>[
         FormCard(
           children: <Widget>[

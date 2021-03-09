@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/workflow_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -86,7 +87,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
           formKey: _formKey,
           focusNode: _focusNode,
           children: <Widget>[
-            ListView(
+            ScrollableListView(
               children: <Widget>[
                 FormCard(children: <Widget>[
                   BoolDropdownButton(
@@ -129,7 +130,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                 ),
               ],
             ),
-            ListView(
+            ScrollableListView(
               children: <Widget>[
                 FormCard(
                   children: <Widget>[

@@ -16,6 +16,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
@@ -69,7 +70,7 @@ class _ImportExportState extends State<ImportExport> {
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
-        child: ListView(
+        child: ScrollableListView(
           children: [
             if (_response == null)
               _FileImport(
@@ -399,10 +400,12 @@ class __FileMapperState extends State<_FileMapper> {
                   final state = StoreProvider.of<AppState>(context).state;
                   final credentials = state.credentials;
                   final url = '${credentials.url}/import';
-                  final convertedMapping=<String,ImportRequestMapping>{};
+                  final convertedMapping = <String, ImportRequestMapping>{};
 
-                  for(MapEntry<String,Map<int,String>> e in _mapping.entries){
-                    convertedMapping[e.key] = new ImportRequestMapping(BuiltMap(e.value));
+                  for (MapEntry<String, Map<int, String>> e
+                      in _mapping.entries) {
+                    convertedMapping[e.key] =
+                        new ImportRequestMapping(BuiltMap(e.value));
                   }
 
                   setState(() => _isLoading = true);

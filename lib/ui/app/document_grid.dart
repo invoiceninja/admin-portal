@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -40,8 +41,7 @@ class DocumentGrid extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
 
-    return ListView(
-      shrinkWrap: true,
+    return ScrollableListView(
       children: [
         if (state.isEnterprisePlan)
           Padding(

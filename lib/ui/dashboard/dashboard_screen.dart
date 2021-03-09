@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
@@ -260,7 +261,7 @@ class _CustomTabBarView extends StatelessWidget {
     final company = viewModel.state.company;
 
     if ((viewModel.filter ?? '').isNotEmpty) {
-      return ListView.builder(
+      return ScrollableListViewBuilder(
           itemCount: viewModel.filteredList.length,
           itemBuilder: (BuildContext context, index) {
             final localization = AppLocalization.of(context);
