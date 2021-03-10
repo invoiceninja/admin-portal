@@ -11,21 +11,24 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
 
 void googleSignIn(Function(String, String, String) callback,
     {bool isSilent = false}) async {
-  final account = await (isSilent
-      ? _googleSignIn.signInSilently().onError((Object error, stackTrace) {
-          print('## on sign in silent error: $error');
-          return null;
-        })
-      : _googleSignIn.signIn().onError((Object error, stackTrace) {
-          print('## on sign in error: $error');
-          return null;
-        }));
-  if (account != null) {
+  GoogleSignInAccount account;
+
+  if (isSilent) {
+    account = await _googleSignIn.signInSilently().catchError((Object error) {
+      print('## on sign in silent error: $error');
+    });
+  }
+
+  account ??= await _googleSignIn.signIn().catchError((Object error) {
+    print('## on sign in error: $error');
+  });
+
+  if (account == null) {
+    print('## Error: Google sign in failed');
+  } else {
     account.authentication.then((GoogleSignInAuthentication value) {
       callback(value.idToken, value.accessToken, value.serverAuthCode);
     });
-  } else {
-    print('## Error: Google sign in failed');
   }
 }
 
