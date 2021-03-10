@@ -74,12 +74,15 @@ class UserDetailsVM {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).disconnectGoogle);
 
+        print('## onDisconnectGooglePressed');
         confirmCallback(
             context: context,
             callback: () {
+              print('## confirmCallback');
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
+                    print('## passwordCallback');
                     store.dispatch(
                       SaveAuthUserRequest(
                         user: state.user.rebuild((b) => b..oauthProvider = ''),
@@ -88,6 +91,7 @@ class UserDetailsVM {
                         completer: completer,
                       ),
                     );
+                    print('## signOut');
                     googleSignOut();
                   });
             });

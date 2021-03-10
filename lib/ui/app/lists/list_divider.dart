@@ -17,8 +17,8 @@ class ListDivider extends StatelessWidget {
 
     return Divider(
       color: color,
-      thickness: kIsWeb ? 2 : 1.5,
-      height: kIsWeb ? 2 : 1.5,
+      thickness: kIsWeb ? 2.5 : 1.5,
+      height: kIsWeb ? 2.5 : 1.5,
     );
   }
 }
