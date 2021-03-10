@@ -31,9 +31,5 @@ void googleSignUp(Function(String, String, String) callback) async {
 }
 
 Future<GoogleSignInAccount> googleSignOut() async {
-  if (!await _googleSignIn.isSignedIn()) {
-    return null;
-  }
-
   return await _googleSignIn.signOut();
 }
