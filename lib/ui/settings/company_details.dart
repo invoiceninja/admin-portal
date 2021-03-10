@@ -446,8 +446,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: CachedImage(
                         width: double.infinity,
-                        url: state.account.defaultUrl + settings.companyLogo,
-                        //url: '${settings.logoUrl}?clear_cache=${state.selectedCompany.updatedAt}',
+                        url: settings.companyLogo,
                       )),
               ],
             ),

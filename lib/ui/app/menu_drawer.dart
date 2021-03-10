@@ -65,7 +65,7 @@ class MenuDrawer extends StatelessWidget {
             company.settings.companyLogo.isNotEmpty
         ? CachedImage(
             width: MenuDrawer.LOGO_WIDTH,
-            url: account.defaultUrl + company.settings.companyLogo,
+            url: company.settings.companyLogo,
           )
         : Image.asset('assets/images/logo.png', width: MenuDrawer.LOGO_WIDTH);
 
