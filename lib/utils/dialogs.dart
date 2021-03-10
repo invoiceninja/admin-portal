@@ -106,15 +106,20 @@ void passwordCallback({
   Function(String, String) callback,
   bool alwaysRequire = false,
 }) {
+  print('## passwordCallback');
   final state = StoreProvider.of<AppState>(context).state;
   if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
+    print('## hasRecentlyEnteredPassword');
     callback(null, null);
   } else {
     if (state.user.oauthProvider.isNotEmpty) {
+      print('## oauthProvider.isNotEmpty');
       googleSignIn((idToken, accessToken, serverAuthCode) {
         if (!state.company.oauthPasswordRequired || !state.user.hasPassword) {
+          print('## !oauthPasswordRequired');
           callback(null, idToken);
         } else {
+          print('## showDialog 1');
           showDialog<AlertDialog>(
             context: context,
             barrierDismissible: false,
@@ -128,6 +133,7 @@ void passwordCallback({
         }
       }, isSilent: true);
     } else {
+      print('## showDialog 2');
       showDialog<AlertDialog>(
         context: context,
         barrierDismissible: false,
