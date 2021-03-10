@@ -114,24 +114,28 @@ void passwordCallback({
   } else {
     if (state.user.oauthProvider.isNotEmpty) {
       print('## oauthProvider.isNotEmpty');
-      googleSignIn((idToken, accessToken, serverAuthCode) {
-        if (!state.company.oauthPasswordRequired || !state.user.hasPassword) {
-          print('## !oauthPasswordRequired');
-          callback(null, idToken);
-        } else {
-          print('## showDialog 1');
-          showDialog<AlertDialog>(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return PasswordConfirmation(
-                callback: callback,
-                idToken: idToken,
-              );
-            },
-          );
-        }
-      }, isSilent: true);
+      try {
+        googleSignIn((idToken, accessToken, serverAuthCode) {
+          if (!state.company.oauthPasswordRequired || !state.user.hasPassword) {
+            print('## !oauthPasswordRequired');
+            callback(null, idToken);
+          } else {
+            print('## showDialog 1');
+            showDialog<AlertDialog>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return PasswordConfirmation(
+                  callback: callback,
+                  idToken: idToken,
+                );
+              },
+            );
+          }
+        }, isSilent: true);
+      } catch (error) {
+        showErrorDialog(context: context, message: '$error');
+      }
     } else {
       print('## showDialog 2');
       showDialog<AlertDialog>(
