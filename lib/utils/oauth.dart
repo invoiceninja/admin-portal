@@ -16,7 +16,6 @@ void googleSignIn(Function(String, String, String) callback,
       : _googleSignIn.signIn());
   if (account != null) {
     account.authentication.then((GoogleSignInAuthentication value) {
-      print('## googleSignIn: ${value.idToken.isEmpty}, ${value.accessToken.isEmpty}, ${value.serverAuthCode.isEmpty}');
       callback(value.idToken, value.accessToken, value.serverAuthCode);
     });
   }
@@ -26,12 +25,15 @@ void googleSignUp(Function(String, String, String) callback) async {
   final account = await _googleSignIn.grantOfflineAccess();
   if (account != null) {
     account.authentication.then((GoogleSignInAuthentication value) {
-      print('## googleSignUp: ${value.idToken.isEmpty}, ${value.accessToken.isEmpty}, ${value.serverAuthCode.isEmpty}');
       callback(value.idToken, value.accessToken, value.serverAuthCode);
     });
   }
 }
 
 Future<GoogleSignInAccount> googleSignOut() async {
+  if (!await _googleSignIn.isSignedIn()) {
+    return null;
+  }
+
   return await _googleSignIn.signOut();
 }
