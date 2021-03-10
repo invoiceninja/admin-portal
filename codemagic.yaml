@@ -1,0 +1,48 @@
+# Automatically generated on 2021-03-10 UTC from https://codemagic.io/app/5d0892ea8576915bf198949b/settings
+# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
+
+workflows:
+  default-workflow:
+    name: Default Workflow
+    max_build_duration: 120
+    environment:
+      vars:
+      flutter: 2.0.1
+      xcode: latest
+      cocoapods: default
+    cache:
+      cache_paths: []
+    triggering:
+      events:
+        - tag
+      branch_patterns:
+        - pattern: master
+          include: true
+          source: true
+    scripts:
+      - |
+        #rm $FCI_BUILD_DIR/ios/Podfile.lock
+
+        cp $FCI_BUILD_DIR/android/app/build.gradle.prod $FCI_BUILD_DIR/android/app/build.gradle
+        cp $FCI_BUILD_DIR/lib/.env.dart.example $FCI_BUILD_DIR/lib/.env.dart
+        #cp $FCI_BUILD_DIR/ios/Runner/Info.plist.example $FCI_BUILD_DIR/ios/Runner/Info.plist
+
+        sed -i '.bak' 's/secret/Password123/g' $FCI_BUILD_DIR/lib/.env.dart
+        sed -i '.bak' 's/user@example.com/medium@example.com/g' $FCI_BUILD_DIR/lib/.env.dart
+        sed -i '.bak' 's/www.ninja.test/staging.invoicing.co/g' $FCI_BUILD_DIR/lib/.env.dart
+        lib/.env.dart
+        #sed -i '.bak' 's/password/pass1234/g' $FCI_BUILD_DIR/lib/.env.dart
+
+        #echo $ANDROID_FIREBASE_SECRET | base64 --decode > $FCI_BUILD_DIR/android/app/google-services.json
+        #echo $IOS_FIREBASE_SECRET | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist
+
+        echo "const FLUTTER_VERSION = const <String, String>" > $FCI_BUILD_DIR/lib/flutter_version.dart
+        flutter --version --machine >> $FCI_BUILD_DIR/lib/flutter_version.dart
+        echo ";" >> $FCI_BUILD_DIR/lib/flutter_version.dart
+      - cd . && flutter packages pub get
+    artifacts:
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - hillelcoren@gmail.com
