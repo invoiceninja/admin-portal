@@ -79,8 +79,7 @@ class UserDetailsVM {
             callback: () {
               passwordCallback(
                   context: context,
-                  callback: (password, idToken) async {
-                    await googleSignOut();
+                  callback: (password, idToken) {
                     store.dispatch(
                       SaveAuthUserRequest(
                         user: state.user.rebuild((b) => b..oauthProvider = ''),
@@ -89,6 +88,7 @@ class UserDetailsVM {
                         completer: completer,
                       ),
                     );
+                    googleSignOut();
                   });
             });
       },
