@@ -14,14 +14,10 @@ void googleSignIn(Function(String, String, String) callback,
   GoogleSignInAccount account;
 
   if (isSilent) {
-    account = await _googleSignIn.signInSilently().catchError((Object error) {
-      print('## on sign in silent error: $error');
-    });
+    account = await _googleSignIn.signInSilently();
   }
 
-  account ??= await _googleSignIn.signIn().catchError((Object error) {
-    print('## on sign in error: $error');
-  });
+  account ??= await _googleSignIn.signIn();
 
   if (account == null) {
     print('## Error: Google sign in failed');
