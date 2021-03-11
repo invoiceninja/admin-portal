@@ -39,6 +39,7 @@ workflows:
         echo ";" >> $FCI_BUILD_DIR/lib/flutter_version.dart
       - cd . && flutter packages pub get
     artifacts:
+      - build/**/outputs/**/*.zip
       - flutter_drive.log
     publishing:
       email:
