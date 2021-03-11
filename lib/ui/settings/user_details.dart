@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -314,6 +316,10 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
 
     webClient.get(url, credentials.token).then((dynamic response) {
       print('## response: $response');
+      final data = serializers.deserializeWith(
+          UserTwoFactorResponse.serializer, response);
+      print('## qrCode: ${data.data.qrCode}');
+      print('## secret: ${data.data.secret}');
 
       //final data = jsonDecode(response);
     });
