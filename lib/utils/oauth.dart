@@ -29,7 +29,13 @@ void googleSignIn(Function(String, String, String) callback,
 }
 
 void googleSignUp(Function(String, String, String) callback) async {
-  final account = await _googleSignIn.grantOfflineAccess();
+  final account =
+      await _googleSignIn.grantOfflineAccess().catchError((Object error) {
+    print('## CATCH ERROR: $error');
+  }).onError((Object error, stackTrace) {
+    print('## ON ERROR: $error');
+    return null;
+  });
   if (account != null) {
     account.authentication.then((GoogleSignInAuthentication value) {
       callback(value.idToken, value.accessToken, value.serverAuthCode);
