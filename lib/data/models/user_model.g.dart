@@ -10,6 +10,10 @@ Serializer<UserListResponse> _$userListResponseSerializer =
     new _$UserListResponseSerializer();
 Serializer<UserItemResponse> _$userItemResponseSerializer =
     new _$UserItemResponseSerializer();
+Serializer<UserTwoFactorResponse> _$userTwoFactorResponseSerializer =
+    new _$UserTwoFactorResponseSerializer();
+Serializer<UserTwoFactorData> _$userTwoFactorDataSerializer =
+    new _$UserTwoFactorDataSerializer();
 Serializer<UserCompanyItemResponse> _$userCompanyItemResponseSerializer =
     new _$UserCompanyItemResponseSerializer();
 Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
@@ -93,6 +97,102 @@ class _$UserItemResponseSerializer
         case 'data':
           result.data.replace(serializers.deserialize(value,
               specifiedType: const FullType(UserEntity)) as UserEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$UserTwoFactorResponseSerializer
+    implements StructuredSerializer<UserTwoFactorResponse> {
+  @override
+  final Iterable<Type> types = const [
+    UserTwoFactorResponse,
+    _$UserTwoFactorResponse
+  ];
+  @override
+  final String wireName = 'UserTwoFactorResponse';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, UserTwoFactorResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'data',
+      serializers.serialize(object.data,
+          specifiedType: const FullType(UserTwoFactorData)),
+    ];
+
+    return result;
+  }
+
+  @override
+  UserTwoFactorResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new UserTwoFactorResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserTwoFactorData))
+              as UserTwoFactorData);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$UserTwoFactorDataSerializer
+    implements StructuredSerializer<UserTwoFactorData> {
+  @override
+  final Iterable<Type> types = const [UserTwoFactorData, _$UserTwoFactorData];
+  @override
+  final String wireName = 'UserTwoFactorData';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, UserTwoFactorData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'secret',
+      serializers.serialize(object.secret,
+          specifiedType: const FullType(String)),
+      'qrCode',
+      serializers.serialize(object.qrCode,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  UserTwoFactorData deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new UserTwoFactorDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'secret':
+          result.secret = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'qrCode':
+          result.qrCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -537,6 +637,197 @@ class UserItemResponseBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$UserTwoFactorResponse extends UserTwoFactorResponse {
+  @override
+  final UserTwoFactorData data;
+
+  factory _$UserTwoFactorResponse(
+          [void Function(UserTwoFactorResponseBuilder) updates]) =>
+      (new UserTwoFactorResponseBuilder()..update(updates)).build();
+
+  _$UserTwoFactorResponse._({this.data}) : super._() {
+    if (data == null) {
+      throw new BuiltValueNullFieldError('UserTwoFactorResponse', 'data');
+    }
+  }
+
+  @override
+  UserTwoFactorResponse rebuild(
+          void Function(UserTwoFactorResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UserTwoFactorResponseBuilder toBuilder() =>
+      new UserTwoFactorResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is UserTwoFactorResponse && data == other.data;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(0, data.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('UserTwoFactorResponse')
+          ..add('data', data))
+        .toString();
+  }
+}
+
+class UserTwoFactorResponseBuilder
+    implements Builder<UserTwoFactorResponse, UserTwoFactorResponseBuilder> {
+  _$UserTwoFactorResponse _$v;
+
+  UserTwoFactorDataBuilder _data;
+  UserTwoFactorDataBuilder get data =>
+      _$this._data ??= new UserTwoFactorDataBuilder();
+  set data(UserTwoFactorDataBuilder data) => _$this._data = data;
+
+  UserTwoFactorResponseBuilder();
+
+  UserTwoFactorResponseBuilder get _$this {
+    if (_$v != null) {
+      _data = _$v.data?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(UserTwoFactorResponse other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$UserTwoFactorResponse;
+  }
+
+  @override
+  void update(void Function(UserTwoFactorResponseBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$UserTwoFactorResponse build() {
+    _$UserTwoFactorResponse _$result;
+    try {
+      _$result = _$v ?? new _$UserTwoFactorResponse._(data: data.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'data';
+        data.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'UserTwoFactorResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$UserTwoFactorData extends UserTwoFactorData {
+  @override
+  final String secret;
+  @override
+  final String qrCode;
+
+  factory _$UserTwoFactorData(
+          [void Function(UserTwoFactorDataBuilder) updates]) =>
+      (new UserTwoFactorDataBuilder()..update(updates)).build();
+
+  _$UserTwoFactorData._({this.secret, this.qrCode}) : super._() {
+    if (secret == null) {
+      throw new BuiltValueNullFieldError('UserTwoFactorData', 'secret');
+    }
+    if (qrCode == null) {
+      throw new BuiltValueNullFieldError('UserTwoFactorData', 'qrCode');
+    }
+  }
+
+  @override
+  UserTwoFactorData rebuild(void Function(UserTwoFactorDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UserTwoFactorDataBuilder toBuilder() =>
+      new UserTwoFactorDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is UserTwoFactorData &&
+        secret == other.secret &&
+        qrCode == other.qrCode;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, secret.hashCode), qrCode.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('UserTwoFactorData')
+          ..add('secret', secret)
+          ..add('qrCode', qrCode))
+        .toString();
+  }
+}
+
+class UserTwoFactorDataBuilder
+    implements Builder<UserTwoFactorData, UserTwoFactorDataBuilder> {
+  _$UserTwoFactorData _$v;
+
+  String _secret;
+  String get secret => _$this._secret;
+  set secret(String secret) => _$this._secret = secret;
+
+  String _qrCode;
+  String get qrCode => _$this._qrCode;
+  set qrCode(String qrCode) => _$this._qrCode = qrCode;
+
+  UserTwoFactorDataBuilder();
+
+  UserTwoFactorDataBuilder get _$this {
+    if (_$v != null) {
+      _secret = _$v.secret;
+      _qrCode = _$v.qrCode;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(UserTwoFactorData other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$UserTwoFactorData;
+  }
+
+  @override
+  void update(void Function(UserTwoFactorDataBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$UserTwoFactorData build() {
+    final _$result =
+        _$v ?? new _$UserTwoFactorData._(secret: secret, qrCode: qrCode);
     replace(_$result);
     return _$result;
   }
