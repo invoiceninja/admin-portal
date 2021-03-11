@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -312,6 +314,8 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
 
     webClient.get(url, credentials.token).then((dynamic response) {
       print('## response: $response');
+
+      //final data = jsonDecode(response);
     });
   }
 
