@@ -340,7 +340,16 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                   if (_secret == null)
                     LoadingIndicator()
                   else ...[
-                    Text(_secret),
+                    QrImage(
+                      data: _qrCode,
+                      version: QrVersions.auto,
+                      size: 180,
+                      backgroundColor: Colors.white,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: SelectableText(_secret),
+                    ),
                   ],
                   Row(
                     children: [
