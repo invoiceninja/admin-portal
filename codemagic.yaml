@@ -28,7 +28,7 @@ workflows:
       - flutter config --enable-linux-desktop
       - flutter build linux --release
     artifacts:
-      - build/linux/release/bundle/**/*.zip
+      - build/linux/release/bundle/**
       - flutter_drive.log
     publishing:
       email:
