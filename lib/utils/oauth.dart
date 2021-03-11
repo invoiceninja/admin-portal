@@ -14,26 +14,36 @@ void googleSignIn(Function(String, String, String) callback,
   GoogleSignInAccount account;
 
   if (isSilent) {
-    account = await _googleSignIn.signInSilently();
+    account = await _googleSignIn.signInSilently().catchError((Object error) {
+      print('## 1 CATCH ERROR: $error');
+    }).onError((Object error, stackTrace) {
+      print('## 1 ON ERROR: $error');
+      return null;
+    });
   }
 
-  account ??= await _googleSignIn.signIn();
+  account ??= await _googleSignIn.signIn().catchError((Object error) {
+    print('## 2 CATCH ERROR: $error');
+  }).onError((Object error, stackTrace) {
+    print('## 2 ON ERROR: $error');
+    return null;
+  });
 
-  if (account == null) {
-    print('## Error: Google sign in failed');
-  } else {
+  if (account != null) {
     account.authentication.then((GoogleSignInAuthentication value) {
       callback(value.idToken, value.accessToken, value.serverAuthCode);
     });
+  } else {
+    throw 'Error: sign in failed';
   }
 }
 
 void googleSignUp(Function(String, String, String) callback) async {
   final account =
       await _googleSignIn.grantOfflineAccess().catchError((Object error) {
-    print('## CATCH ERROR: $error');
+    print('## 3 CATCH ERROR: $error');
   }).onError((Object error, stackTrace) {
-    print('## ON ERROR: $error');
+    print('## 3 ON ERROR: $error');
     return null;
   });
   if (account != null) {
@@ -41,7 +51,7 @@ void googleSignUp(Function(String, String, String) callback) async {
       callback(value.idToken, value.accessToken, value.serverAuthCode);
     });
   } else {
-    print('## Error: Google sign up failed');
+    throw 'Error: sign up failed';
   }
 }
 
