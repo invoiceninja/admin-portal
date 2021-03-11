@@ -7,13 +7,13 @@ workflows:
     instance_type: linux
     max_build_duration: 120
     environment:
+      vars:
       flutter: 2.0.1
       xcode: latest
       cocoapods: default
     cache:
       cache_paths: []
     triggering:
-      events:
       branch_patterns:
         - pattern: master
           include: true
