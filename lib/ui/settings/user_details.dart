@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
@@ -304,22 +306,38 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
   String _qrCode;
   String _oneTimePassword;
   String _smsCode;
+  final _webClient = WebClient();
 
   @override
   void initState() {
     super.initState();
 
-    final webClient = WebClient();
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/settings/enable_two_factor';
 
-    webClient.get(url, credentials.token).then((dynamic data) {
+    _webClient.get(url, credentials.token).then((dynamic data) {
       final response =
           serializers.deserializeWith(UserTwoFactorResponse.serializer, data);
       setState(() {
         _qrCode = response.data.qrCode;
         _secret = response.data.secret;
       });
+    });
+  }
+
+  void enableTwoFactor() {
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/settings/enable_two_factor';
+
+    _webClient
+        .post(url, credentials.token,
+            data: json.encode({
+              'secret': _secret,
+              'one_time_password': _oneTimePassword,
+            }))
+        .then((dynamic data) {
+      showToast(AppLocalization.of(context).enableTwoFactor);
+      Navigator.of(context).pop();
     });
   }
 
@@ -374,28 +392,29 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DecoratedFormField(
-                          label: localzation.smsCode,
-                          onChanged: (value) {
-                            _smsCode = value;
-                          },
+                  if (false)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DecoratedFormField(
+                            label: localzation.smsCode,
+                            onChanged: (value) {
+                              _smsCode = value;
+                            },
+                          ),
                         ),
-                      ),
-                      SizedBox(width: kTableColumnGap),
-                      SizedBox(
-                        width: 100,
-                        child: TextButton(
-                          onPressed: () {
-                            //
-                          },
-                          child: Text(localzation.sendSms),
+                        SizedBox(width: kTableColumnGap),
+                        SizedBox(
+                          width: 100,
+                          child: TextButton(
+                            onPressed: () {
+                              //
+                            },
+                            child: Text(localzation.sendSms),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
                 ],
               ),
             ),
