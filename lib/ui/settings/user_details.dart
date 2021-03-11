@@ -313,12 +313,12 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/settings/enable_two_factor';
 
-    webClient.get(url, credentials.token).then((dynamic response) {
-      final data = serializers.deserializeWith(
-          UserTwoFactorResponse.serializer, response);
+    webClient.get(url, credentials.token).then((dynamic data) {
+      final response =
+          serializers.deserializeWith(UserTwoFactorResponse.serializer, data);
       setState(() {
-        _qrCode = data.data.qrCode;
-        _secret = data.data.secret;
+        _qrCode = response.data.qrCode;
+        _secret = response.data.secret;
       });
     });
   }
@@ -400,15 +400,15 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
               ),
             ),
       actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            localzation.cancel.toUpperCase(),
+        if (_secret != null) ...[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              localzation.cancel.toUpperCase(),
+            ),
           ),
-        ),
-        if (_secret != null)
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -417,6 +417,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
               localzation.save.toUpperCase(),
             ),
           ),
+        ]
       ],
     );
   }
