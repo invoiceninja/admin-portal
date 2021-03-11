@@ -99,17 +99,21 @@ class UserDetailsVM {
         passwordCallback(
             context: context,
             callback: (password, idToken) {
-              googleSignUp((idToken, accessToken, serverAuthCode) {
-                store.dispatch(
-                  ConnecOAuthUserRequest(
-                    provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
-                    password: password,
-                    idToken: idToken,
-                    serverAuthCode: serverAuthCode,
-                    completer: completer,
-                  ),
-                );
-              });
+              try {
+                googleSignUp((idToken, accessToken, serverAuthCode) {
+                  store.dispatch(
+                    ConnecOAuthUserRequest(
+                      provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                      password: password,
+                      idToken: idToken,
+                      serverAuthCode: serverAuthCode,
+                      completer: completer,
+                    ),
+                  );
+                });
+              } catch (error) {
+                showErrorDialog(context: context, message: error);
+              }
             });
       },
       onSavePressed: (context) {
