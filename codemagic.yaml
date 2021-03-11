@@ -14,7 +14,6 @@ workflows:
       cache_paths: []
     triggering:
       events:
-        - tag
       branch_patterns:
         - pattern: master
           include: true
