@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -301,8 +300,8 @@ class _EnableTwoFactor extends StatefulWidget {
 }
 
 class _EnableTwoFactorState extends State<_EnableTwoFactor> {
-  String _secret = 'test';
-  //String _secret;
+  String _secret;
+  String _qrCode;
   String _oneTimePassword;
   String _smsCode;
 
@@ -317,6 +316,10 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
     webClient.get(url, credentials.token).then((dynamic response) {
       final data = serializers.deserializeWith(
           UserTwoFactorResponse.serializer, response);
+      setState(() {
+        _qrCode = data.data.qrCode;
+        _secret = data.data.secret;
+      });
     });
   }
 
@@ -334,7 +337,11 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(_secret),
+                  if (_secret == null)
+                    LoadingIndicator()
+                  else ...[
+                    Text(_secret),
+                  ],
                   Row(
                     children: [
                       Expanded(
@@ -392,14 +399,15 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             localzation.cancel.toUpperCase(),
           ),
         ),
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            localzation.save.toUpperCase(),
+        if (_secret != null)
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              localzation.save.toUpperCase(),
+            ),
           ),
-        ),
       ],
     );
   }
