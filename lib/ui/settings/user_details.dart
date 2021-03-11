@@ -315,13 +315,8 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
     final url = '${credentials.url}/settings/enable_two_factor';
 
     webClient.get(url, credentials.token).then((dynamic response) {
-      print('## response: $response');
       final data = serializers.deserializeWith(
           UserTwoFactorResponse.serializer, response);
-      print('## qrCode: ${data.data.qrCode}');
-      print('## secret: ${data.data.secret}');
-
-      //final data = jsonDecode(response);
     });
   }
 
