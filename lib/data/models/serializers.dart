@@ -163,6 +163,7 @@ part 'serializers.g.dart';
   PreImportResponse,
   ImportRequest,
   ImportRequestMapping,
+  UserTwoFactorResponse,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

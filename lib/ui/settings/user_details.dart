@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -297,21 +302,42 @@ class _EnableTwoFactor extends StatefulWidget {
 }
 
 class _EnableTwoFactorState extends State<_EnableTwoFactor> {
-  String _secret = 'test';
-  //String _secret;
+  String _secret;
+  String _qrCode;
   String _oneTimePassword;
   String _smsCode;
+  final _webClient = WebClient();
 
   @override
   void initState() {
     super.initState();
 
-    final webClient = WebClient();
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/settings/enable_two_factor';
 
-    webClient.get(url, credentials.token).then((dynamic response) {
-      print('## response: $response');
+    _webClient.get(url, credentials.token).then((dynamic data) {
+      final response =
+          serializers.deserializeWith(UserTwoFactorResponse.serializer, data);
+      setState(() {
+        _qrCode = response.data.qrCode;
+        _secret = response.data.secret;
+      });
+    });
+  }
+
+  void enableTwoFactor() {
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/settings/enable_two_factor';
+
+    _webClient
+        .post(url, credentials.token,
+            data: json.encode({
+              'secret': _secret,
+              'one_time_password': _oneTimePassword,
+            }))
+        .then((dynamic data) {
+      showToast(AppLocalization.of(context).enableTwoFactor);
+      Navigator.of(context).pop();
     });
   }
 
@@ -329,7 +355,20 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(_secret),
+                  if (_secret == null)
+                    LoadingIndicator()
+                  else ...[
+                    QrImage(
+                      data: _qrCode,
+                      version: QrVersions.auto,
+                      size: 180,
+                      backgroundColor: Colors.white,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: SelectableText(_secret),
+                    ),
+                  ],
                   Row(
                     children: [
                       Expanded(
@@ -353,48 +392,51 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DecoratedFormField(
-                          label: localzation.smsCode,
-                          onChanged: (value) {
-                            _smsCode = value;
-                          },
+                  if (false)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DecoratedFormField(
+                            label: localzation.smsCode,
+                            onChanged: (value) {
+                              _smsCode = value;
+                            },
+                          ),
                         ),
-                      ),
-                      SizedBox(width: kTableColumnGap),
-                      SizedBox(
-                        width: 100,
-                        child: TextButton(
-                          onPressed: () {
-                            //
-                          },
-                          child: Text(localzation.sendSms),
+                        SizedBox(width: kTableColumnGap),
+                        SizedBox(
+                          width: 100,
+                          child: TextButton(
+                            onPressed: () {
+                              //
+                            },
+                            child: Text(localzation.sendSms),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
                 ],
               ),
             ),
       actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            localzation.cancel.toUpperCase(),
+        if (_secret != null) ...[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              localzation.cancel.toUpperCase(),
+            ),
           ),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            localzation.save.toUpperCase(),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              localzation.save.toUpperCase(),
+            ),
           ),
-        ),
+        ]
       ],
     );
   }

@@ -1275,7 +1275,7 @@ abstract class InvitationEntity extends Object
   String get emailStatus;
 
   String get downloadLink =>
-      '$link/download?updated_at=$updatedAt'.replaceAll(' ', '_');
+      '$link/download?t=${DateTime.now().millisecondsSinceEpoch}';
 
   String get silentLink => '$link?silent=true';
 

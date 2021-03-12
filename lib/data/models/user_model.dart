@@ -44,6 +44,42 @@ abstract class UserItemResponse
       _$userItemResponseSerializer;
 }
 
+abstract class UserTwoFactorResponse
+    implements Built<UserTwoFactorResponse, UserTwoFactorResponseBuilder> {
+  factory UserTwoFactorResponse(
+      [void updates(UserTwoFactorResponseBuilder b)]) = _$UserTwoFactorResponse;
+
+  UserTwoFactorResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  UserTwoFactorData get data;
+
+  static Serializer<UserTwoFactorResponse> get serializer =>
+      _$userTwoFactorResponseSerializer;
+}
+
+abstract class UserTwoFactorData
+    implements Built<UserTwoFactorData, UserTwoFactorDataBuilder> {
+  factory UserTwoFactorData([void updates(UserTwoFactorDataBuilder b)]) =
+      _$UserTwoFactorData;
+
+  UserTwoFactorData._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get secret;
+
+  String get qrCode;
+
+  static Serializer<UserTwoFactorData> get serializer =>
+      _$userTwoFactorDataSerializer;
+}
+
 abstract class UserCompanyItemResponse
     implements Built<UserCompanyItemResponse, UserCompanyItemResponseBuilder> {
   factory UserCompanyItemResponse(

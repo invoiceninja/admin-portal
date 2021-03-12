@@ -25,9 +25,10 @@ workflows:
         flutter --version --machine >> $FCI_BUILD_DIR/lib/flutter_version.dart
         echo ";" >> $FCI_BUILD_DIR/lib/flutter_version.dart
       - cd . && flutter packages pub get
+      - flutter config --enable-linux-desktop
       - flutter build linux --release
     artifacts:
-      - build/linux/release/bundle/**/*.zip
+      - build/linux/release/bundle/**
       - flutter_drive.log
     publishing:
       email:
