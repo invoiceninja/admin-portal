@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -71,15 +74,17 @@ class UserDetailsVM {
             });
       },
       onDisconnectGooglePressed: (context) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).disconnectGoogle);
-
         confirmCallback(
             context: context,
             callback: () {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
+                    final completer = Completer<Null>();
+                    completer.future.then((value) {
+                      showToast(AppLocalization.of(context).disconnectGoogle);
+                      googleSignOut();
+                    });
                     store.dispatch(
                       SaveAuthUserRequest(
                         user: state.user.rebuild((b) => b..oauthProvider = ''),
@@ -88,7 +93,6 @@ class UserDetailsVM {
                         completer: completer,
                       ),
                     );
-                    googleSignOut();
                   });
             });
       },

@@ -109,39 +109,40 @@ void passwordCallback({
   final state = StoreProvider.of<AppState>(context).state;
   if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
     callback(null, null);
-  } else {
-    if (state.user.oauthProvider.isNotEmpty) {
-      try {
-        googleSignIn((idToken, accessToken, serverAuthCode) {
-          if (!state.company.oauthPasswordRequired || !state.user.hasPassword) {
-            callback(null, idToken);
-          } else {
-            showDialog<AlertDialog>(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return PasswordConfirmation(
-                  callback: callback,
-                  idToken: idToken,
-                );
-              },
+    return;
+  }
+
+  if (state.user.oauthProvider.isEmpty) {
+    showDialog<AlertDialog>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return PasswordConfirmation(
+          callback: callback,
+        );
+      },
+    );
+  }
+
+  try {
+    googleSignIn((idToken, accessToken, serverAuthCode) {
+      if (!state.company.oauthPasswordRequired || !state.user.hasPassword) {
+        callback(null, idToken);
+      } else {
+        showDialog<AlertDialog>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return PasswordConfirmation(
+              callback: callback,
+              idToken: idToken,
             );
-          }
-        }, isSilent: true);
-      } catch (error) {
-        showErrorDialog(context: context, message: '$error');
+          },
+        );
       }
-    } else {
-      showDialog<AlertDialog>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return PasswordConfirmation(
-            callback: callback,
-          );
-        },
-      );
-    }
+    }, isSilent: true);
+  } catch (error) {
+    showErrorDialog(context: context, message: '$error');
   }
 }
 
