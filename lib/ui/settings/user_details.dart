@@ -306,6 +306,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
   String _qrCode;
   String _oneTimePassword;
   String _smsCode;
+  bool _isLoading = true;
   final _webClient = WebClient();
 
   @override
@@ -319,15 +320,18 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
       final response =
           serializers.deserializeWith(UserTwoFactorResponse.serializer, data);
       setState(() {
+        _isLoading = false;
         _qrCode = response.data.qrCode;
         _secret = response.data.secret;
       });
     });
   }
 
-  void enableTwoFactor() {
+  void _onSavePressed() {
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/settings/enable_two_factor';
+
+    setState(() => _isLoading = true);
 
     _webClient
         .post(url, credentials.token,
@@ -336,8 +340,13 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
               'one_time_password': _oneTimePassword,
             }))
         .then((dynamic data) {
+      setState(() => _isLoading = false);
+      print('## DONE: $data');
       showToast(AppLocalization.of(context).enableTwoFactor);
       Navigator.of(context).pop();
+    }).catchError((Object error) {
+      setState(() => _isLoading = false);
+      showErrorDialog(context: context, message: '$error');
     });
   }
 
@@ -347,7 +356,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
 
     return AlertDialog(
       title: Text(localzation.enableTwoFactor),
-      content: _secret == null
+      content: _isLoading
           ? LoadingIndicator(height: 100)
           : SizedBox(
               width: 280,
@@ -373,6 +382,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                     children: [
                       Expanded(
                         child: DecoratedFormField(
+                          autofocus: true,
                           label: localzation.oneTimePassword,
                           onChanged: (value) {
                             _oneTimePassword = value;
@@ -429,9 +439,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             ),
           ),
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => _onSavePressed(),
             child: Text(
               localzation.save.toUpperCase(),
             ),
