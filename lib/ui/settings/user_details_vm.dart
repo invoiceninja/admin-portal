@@ -82,7 +82,7 @@ class UserDetailsVM {
                   callback: (password, idToken) {
                     final completer = Completer<Null>();
                     completer.future.then((value) {
-                      showToast(AppLocalization.of(context).disconnectGoogle);
+                      showToast(AppLocalization.of(context).disconnectedGoogle);
                       googleSignOut();
                     });
                     store.dispatch(
