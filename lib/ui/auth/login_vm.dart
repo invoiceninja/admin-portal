@@ -128,7 +128,7 @@ class LoginVM {
             });
           } catch (error) {
             completer.completeError(error);
-            print(error);
+            print('## onGoogleLoginPressed: $error');
           }
         },
         onGoogleSignUpPressed:
@@ -146,7 +146,7 @@ class LoginVM {
             });
           } catch (error) {
             completer.completeError(error);
-            print(error);
+            print('## onGoogleSignUpPressed: $error');
           }
         },
         onSignUpPressed: (
