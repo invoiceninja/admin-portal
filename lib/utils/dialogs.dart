@@ -128,6 +128,7 @@ void passwordCallback({
         );
       },
     );
+    return;
   }
 
   try {
