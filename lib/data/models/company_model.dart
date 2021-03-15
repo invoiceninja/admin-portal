@@ -1236,6 +1236,10 @@ abstract class SettingsEntity
   String get emailSubjectQuote;
 
   @nullable
+  @BuiltValueField(wireName: 'email_subject_credit')
+  String get emailSubjectCredit;
+
+  @nullable
   @BuiltValueField(wireName: 'email_subject_payment')
   String get emailSubjectPayment;
 
@@ -1250,6 +1254,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'email_template_quote')
   String get emailBodyQuote;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_credit')
+  String get emailBodyCredit;
 
   @nullable
   @BuiltValueField(wireName: 'email_template_payment')
