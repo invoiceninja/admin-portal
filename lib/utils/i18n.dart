@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'changing_phone_disables_two_factor':
+          'Warning: Changing your phone number will disable 2FA',
       'help_translate': 'Help Translate',
       'please_select_a_country': 'Please select a country',
       'resend_invite': 'Resend Invite',
@@ -55612,6 +55614,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get helpTranslate =>
       _localizedValues[localeCode]['help_translate'] ?? '';
+
+  String get changingPhoneDisablesTwoFactor =>
+      _localizedValues[localeCode]['changing_phone_disables_two_factor'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

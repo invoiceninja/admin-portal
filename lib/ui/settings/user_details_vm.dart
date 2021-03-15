@@ -121,23 +121,32 @@ class UserDetailsVM {
             });
       },
       onSavePressed: (context) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).savedSettings);
+        final localization = AppLocalization.of(context);
+        final completer =
+            snackBarCompleter<Null>(context, localization.savedSettings);
         completer.future.then((_) {
           AppBuilder.of(context).rebuild();
         });
 
-        passwordCallback(
+        confirmCallback(
             context: context,
-            callback: (password, idToken) {
-              store.dispatch(
-                SaveAuthUserRequest(
-                  completer: completer,
-                  user: state.uiState.settingsUIState.user,
-                  password: password,
-                  idToken: idToken,
-                ),
-              );
+            message: localization.changingPhoneDisablesTwoFactor,
+            skip:
+                state.user.phone == state.uiState.settingsUIState.user.phone ||
+                    !state.user.isTwoFactorEnabled,
+            callback: () {
+              passwordCallback(
+                  context: context,
+                  callback: (password, idToken) {
+                    store.dispatch(
+                      SaveAuthUserRequest(
+                        completer: completer,
+                        user: state.uiState.settingsUIState.user,
+                        password: password,
+                        idToken: idToken,
+                      ),
+                    );
+                  });
             });
       },
     );

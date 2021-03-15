@@ -46,7 +46,13 @@ void confirmCallback({
   @required VoidCallback callback,
   String message,
   String typeToConfirm,
+  bool skip = false,
 }) {
+  if (skip) {
+    callback();
+    return;
+  }
+
   final localization = AppLocalization.of(context);
   final title = message == null ? localization.areYouSure : message;
   final content = message == null ? null : localization.areYouSure;
