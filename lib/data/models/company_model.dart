@@ -1645,6 +1645,8 @@ abstract class SettingsEntity
         return emailSubjectInvoice;
       case EmailTemplate.quote:
         return emailSubjectQuote;
+      case EmailTemplate.credit:
+        return emailSubjectCredit;
       case EmailTemplate.payment:
         return emailSubjectPayment;
       case EmailTemplate.payment_partial:
@@ -1672,6 +1674,8 @@ abstract class SettingsEntity
         return emailBodyInvoice;
       case EmailTemplate.quote:
         return emailBodyQuote;
+      case EmailTemplate.credit:
+        return emailBodyCredit;
       case EmailTemplate.payment:
         return emailBodyPayment;
       case EmailTemplate.payment_partial:

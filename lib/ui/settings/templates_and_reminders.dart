@@ -130,6 +130,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         settings = settings.rebuild((b) => b
           ..emailBodyQuote = body
           ..emailSubjectQuote = subject);
+      } else if (_template == EmailTemplate.credit) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyCredit = body
+          ..emailSubjectCredit = subject);
       } else if (_template == EmailTemplate.payment) {
         settings = settings.rebuild((b) => b
           ..emailBodyPayment = body
