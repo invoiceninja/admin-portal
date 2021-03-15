@@ -93,6 +93,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
           FormCard(
             children: <Widget>[
               DecoratedFormField(
+                autofocus: true,
                 label: localization.name,
                 controller: _nameController,
                 validator: (val) => val.isEmpty || val.trim().isEmpty

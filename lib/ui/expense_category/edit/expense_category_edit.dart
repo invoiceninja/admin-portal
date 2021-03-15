@@ -102,8 +102,8 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
                   children: <Widget>[
                     // STARTER: widgets - do not remove comment
                     DecoratedFormField(
+                      autofocus: true,
                       controller: _nameController,
-                      autocorrect: false,
                       autovalidate: _autoValidate,
                       label: localization.name,
                     ),

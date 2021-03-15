@@ -101,6 +101,7 @@ class _GroupEditState extends State<GroupEdit> {
                 FormCard(
                   children: <Widget>[
                     DecoratedFormField(
+                      autofocus: true,
                       label: localization.name,
                       controller: _nameController,
                       onSavePressed: viewModel.onSavePressed,

@@ -185,6 +185,7 @@ class _UserEditState extends State<UserEdit>
               FormCard(
                 children: <Widget>[
                   DecoratedFormField(
+                    autofocus: true,
                     label: localization.firstName,
                     controller: _firstNameController,
                     validator: (val) => val.isEmpty || val.trim().isEmpty
