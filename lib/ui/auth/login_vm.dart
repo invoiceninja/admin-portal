@@ -113,7 +113,7 @@ class LoginVM {
           @required String oneTimePassword,
         }) async {
           try {
-            googleSignIn((idToken, accessToken, serverAuthCode) {
+            GoogleOAuth.signIn((idToken, accessToken, serverAuthCode) {
               store.dispatch(OAuthLoginRequest(
                 completer: completer,
                 idToken: idToken,
@@ -134,7 +134,7 @@ class LoginVM {
         onGoogleSignUpPressed:
             (BuildContext context, Completer<Null> completer) async {
           try {
-            googleSignUp((idToken, accessToken, serverAuthCode) {
+            GoogleOAuth.signUp((idToken, accessToken, serverAuthCode) {
               store.dispatch(OAuthSignUpRequest(
                 completer: completer,
                 idToken: idToken,
