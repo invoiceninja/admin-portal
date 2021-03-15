@@ -96,6 +96,7 @@ class _TokenEditState extends State<TokenEdit> {
                 FormCard(
                   children: <Widget>[
                     DecoratedFormField(
+                      autofocus: true,
                       controller: _nameController,
                       label: localization.name,
                       autovalidate: _autoValidate,

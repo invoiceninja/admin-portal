@@ -99,8 +99,8 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
                 FormCard(
                   children: <Widget>[
                     DecoratedFormField(
+                      autofocus: true,
                       controller: _nameController,
-                      autocorrect: false,
                       autovalidate: _autoValidate,
                       label: localization.name,
                       validator: (val) => val.isEmpty || val.trim().isEmpty
