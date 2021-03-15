@@ -306,8 +306,13 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
   String _qrCode;
   String _oneTimePassword;
   String _smsCode;
+  bool autoValidate = false;
   bool _isLoading = true;
   final _webClient = WebClient();
+
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_twoFactor');
+  final FocusScopeNode _focusNode = FocusScopeNode();
 
   @override
   void initState() {
@@ -327,7 +332,23 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
     });
   }
 
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
   void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    setState(() {
+      autoValidate = !isValid ?? false;
+    });
+
+    if (!isValid) {
+      return;
+    }
+
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/settings/enable_two_factor';
 
@@ -358,59 +379,41 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
       title: Text(localzation.enableTwoFactor),
       content: _isLoading
           ? LoadingIndicator(height: 100)
-          : SizedBox(
-              width: 280,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (_secret == null)
-                    LoadingIndicator()
-                  else ...[
-                    QrImage(
-                      data: _qrCode,
-                      version: QrVersions.auto,
-                      size: 180,
-                      backgroundColor: Colors.white,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: SelectableText(_secret),
-                    ),
-                  ],
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DecoratedFormField(
-                          autofocus: true,
-                          label: localzation.oneTimePassword,
-                          onChanged: (value) {
-                            _oneTimePassword = value;
-                          },
-                        ),
+          : AppForm(
+              focusNode: _focusNode,
+              formKey: _formKey,
+              child: SizedBox(
+                width: 280,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (_secret == null)
+                      LoadingIndicator()
+                    else ...[
+                      QrImage(
+                        data: _qrCode,
+                        version: QrVersions.auto,
+                        size: 180,
+                        backgroundColor: Colors.white,
                       ),
-                      SizedBox(width: kTableColumnGap),
-                      SizedBox(
-                        width: 100,
-                        child: TextButton(
-                          onPressed: () {
-                            launch(
-                                'https://github.com/antonioribeiro/google2fa#google-authenticator-apps');
-                          },
-                          child: Text(localzation.learnMore),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: SelectableText(_secret),
                       ),
                     ],
-                  ),
-                  if (false)
                     Row(
                       children: [
                         Expanded(
                           child: DecoratedFormField(
-                            label: localzation.smsCode,
+                            autofocus: true,
+                            label: localzation.oneTimePassword,
                             onChanged: (value) {
-                              _smsCode = value;
+                              _oneTimePassword = value;
                             },
+                            validator: (value) => value.isEmpty
+                                ? AppLocalization.of(context).pleaseEnterAValue
+                                : null,
                           ),
                         ),
                         SizedBox(width: kTableColumnGap),
@@ -418,14 +421,39 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                           width: 100,
                           child: TextButton(
                             onPressed: () {
-                              //
+                              launch(
+                                  'https://github.com/antonioribeiro/google2fa#google-authenticator-apps');
                             },
-                            child: Text(localzation.sendSms),
+                            child: Text(localzation.learnMore),
                           ),
                         ),
                       ],
                     ),
-                ],
+                    if (false)
+                      Row(
+                        children: [
+                          Expanded(
+                            child: DecoratedFormField(
+                              label: localzation.smsCode,
+                              onChanged: (value) {
+                                _smsCode = value;
+                              },
+                            ),
+                          ),
+                          SizedBox(width: kTableColumnGap),
+                          SizedBox(
+                            width: 100,
+                            child: TextButton(
+                              onPressed: () {
+                                //
+                              },
+                              child: Text(localzation.sendSms),
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
               ),
             ),
       actions: [

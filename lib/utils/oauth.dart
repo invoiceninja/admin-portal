@@ -14,20 +14,10 @@ void googleSignIn(Function(String, String, String) callback,
   GoogleSignInAccount account;
 
   if (isSilent) {
-    account = await _googleSignIn.signInSilently().catchError((Object error) {
-      print('## 1 CATCH ERROR: $error');
-    }).onError((Object error, stackTrace) {
-      print('## 1 ON ERROR: $error');
-      return null;
-    });
+    account = await _googleSignIn.signInSilently();
   }
 
-  account ??= await _googleSignIn.signIn().catchError((Object error) {
-    print('## 2 CATCH ERROR: $error');
-  }).onError((Object error, stackTrace) {
-    print('## 2 ON ERROR: $error');
-    return null;
-  });
+  account ??= await _googleSignIn.signIn();
 
   if (account != null) {
     account.authentication.then((GoogleSignInAuthentication value) {
@@ -39,13 +29,7 @@ void googleSignIn(Function(String, String, String) callback,
 }
 
 void googleSignUp(Function(String, String, String) callback) async {
-  final account =
-      await _googleSignIn.grantOfflineAccess().catchError((Object error) {
-    print('## 3 CATCH ERROR: $error');
-  }).onError((Object error, stackTrace) {
-    print('## 3 ON ERROR: $error');
-    return null;
-  });
+  final account = await _googleSignIn.grantOfflineAccess();
   if (account != null) {
     account.authentication.then((GoogleSignInAuthentication value) {
       callback(value.idToken, value.accessToken, value.serverAuthCode);
