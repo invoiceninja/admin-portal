@@ -104,6 +104,7 @@ class _TokenEditState extends State<TokenEdit> {
                           value.isEmpty || value.trim().isEmpty
                               ? localization.pleaseEnterAName
                               : null,
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                   ],
                 ),

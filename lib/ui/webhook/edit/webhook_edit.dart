@@ -99,6 +99,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                 FormCard(
                   children: <Widget>[
                     DecoratedFormField(
+                      autofocus: true,
                       controller: _targetUrlController,
                       label: localization.targetUrl,
                       keyboardType: TextInputType.url,
