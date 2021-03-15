@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -67,6 +68,9 @@ class AccountManagementVM {
             ..future.then((value) {
               if (companyLength == 1) {
                 store.dispatch(UserLogout(context));
+                if (store.state.user.isConnectedToGoogle) {
+                  googleSignOut();
+                }
               } else {
                 store.dispatch(SelectCompany(companyIndex: 0));
                 final refreshCompleter = Completer<Null>()
