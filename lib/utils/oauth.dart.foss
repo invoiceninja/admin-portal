@@ -1,5 +1,17 @@
-void googleSignIn(Function(String, String, String) callback, {bool isSilent = false}) async {}
+class GoogleOAuth {
+  static void signIn(Function(String, String, String) callback, {bool isSilent = false}) async {
+    //
+  }
 
-void googleSignUp(Function(String, String, String) callback) async {}
+  static void signUp(Function(String, String, String) callback) async {
+    //
+  }
 
-void googleSignOut() async {}
+  static void signOut() async {
+    //
+  }
+
+  static void disconnect() async {
+    //
+  }
+}

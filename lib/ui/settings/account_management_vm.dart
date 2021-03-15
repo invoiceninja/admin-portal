@@ -69,7 +69,7 @@ class AccountManagementVM {
               if (companyLength == 1) {
                 store.dispatch(UserLogout(context));
                 if (store.state.user.isConnectedToGoogle) {
-                  googleSignOut();
+                  GoogleOAuth.disconnect();
                 }
               } else {
                 store.dispatch(SelectCompany(companyIndex: 0));

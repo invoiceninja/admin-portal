@@ -9,36 +9,42 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
   ],
 );
 
-void googleSignIn(Function(String, String, String) callback,
-    {bool isSilent = false}) async {
-  GoogleSignInAccount account;
+class GoogleOAuth {
+  static void signIn(Function(String, String, String) callback,
+      {bool isSilent = false}) async {
+    GoogleSignInAccount account;
 
-  if (isSilent) {
-    account = await _googleSignIn.signInSilently();
+    if (isSilent) {
+      account = await _googleSignIn.signInSilently();
+    }
+
+    account ??= await _googleSignIn.signIn();
+
+    if (account != null) {
+      account.authentication.then((GoogleSignInAuthentication value) {
+        callback(value.idToken, value.accessToken, value.serverAuthCode);
+      });
+    } else {
+      throw 'Error: sign in failed';
+    }
   }
 
-  account ??= await _googleSignIn.signIn();
-
-  if (account != null) {
-    account.authentication.then((GoogleSignInAuthentication value) {
-      callback(value.idToken, value.accessToken, value.serverAuthCode);
-    });
-  } else {
-    throw 'Error: sign in failed';
+  static void signUp(Function(String, String, String) callback) async {
+    final account = await _googleSignIn.grantOfflineAccess();
+    if (account != null) {
+      account.authentication.then((GoogleSignInAuthentication value) {
+        callback(value.idToken, value.accessToken, value.serverAuthCode);
+      });
+    } else {
+      throw 'Error: sign up failed';
+    }
   }
-}
 
-void googleSignUp(Function(String, String, String) callback) async {
-  final account = await _googleSignIn.grantOfflineAccess();
-  if (account != null) {
-    account.authentication.then((GoogleSignInAuthentication value) {
-      callback(value.idToken, value.accessToken, value.serverAuthCode);
-    });
-  } else {
-    throw 'Error: sign up failed';
+  static Future<GoogleSignInAccount> signOut() async {
+    return await _googleSignIn.signOut();
   }
-}
 
-Future<GoogleSignInAccount> googleSignOut() async {
-  return await _googleSignIn.signOut();
+  static Future<GoogleSignInAccount> disconnect() async {
+    return await _googleSignIn.disconnect();
+  }
 }

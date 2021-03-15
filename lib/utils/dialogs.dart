@@ -132,7 +132,7 @@ void passwordCallback({
   }
 
   try {
-    googleSignIn((idToken, accessToken, serverAuthCode) {
+    GoogleOAuth.signIn((idToken, accessToken, serverAuthCode) {
       if (!state.company.oauthPasswordRequired || !state.user.hasPassword) {
         callback(null, idToken);
       } else {

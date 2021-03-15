@@ -75,7 +75,7 @@ class MenuDrawerVM {
             callback: () async {
               store.dispatch(UserLogout(context));
               if (store.state.user.isConnectedToGoogle) {
-                googleSignOut();
+                GoogleOAuth.signOut();
               }
             });
       },

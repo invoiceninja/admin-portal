@@ -90,7 +90,7 @@ class UserDetailsVM {
                     final completer = Completer<Null>();
                     completer.future.then((value) {
                       showToast(AppLocalization.of(context).disconnectedGoogle);
-                      googleSignOut();
+                      GoogleOAuth.signOut();
                     });
                     store.dispatch(
                       SaveAuthUserRequest(
@@ -111,7 +111,7 @@ class UserDetailsVM {
             context: context,
             callback: (password, idToken) {
               try {
-                googleSignUp((idToken, accessToken, serverAuthCode) {
+                GoogleOAuth.signUp((idToken, accessToken, serverAuthCode) {
                   store.dispatch(
                     ConnecOAuthUserRequest(
                       provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
