@@ -74,6 +74,13 @@ class UserDetailsVM {
             });
       },
       onDisconnectGooglePressed: (context) {
+        if (!state.user.hasPassword) {
+          showErrorDialog(
+              context: context,
+              message: AppLocalization.of(context).pleaseFirstSetAPassword);
+          return;
+        }
+
         confirmCallback(
             context: context,
             callback: () {
