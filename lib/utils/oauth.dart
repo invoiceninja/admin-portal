@@ -5,7 +5,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
     'email',
     'openid',
     'profile',
-    //'https://www.googleapis.com/auth/gmail.send',
+    'https://www.googleapis.com/auth/gmail.send',
   ],
 );
 
