@@ -101,6 +101,8 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
                 FormCard(
                   children: <Widget>[
                     DecoratedFormField(
+                      autofocus: true,
+                      keyboardType: TextInputType.number,
                       controller: _numDaysController,
                       label: localization.numberOfDays,
                       validator: (value) => value == null || value.isEmpty
