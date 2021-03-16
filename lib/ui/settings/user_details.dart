@@ -363,7 +363,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
         .then((dynamic data) {
       setState(() => _isLoading = false);
       print('## DONE: $data');
-      showToast(AppLocalization.of(context).enableTwoFactor);
+      showToast(AppLocalization.of(context).enabledTwoFactor);
       Navigator.of(context).pop();
     }).catchError((Object error) {
       setState(() => _isLoading = false);

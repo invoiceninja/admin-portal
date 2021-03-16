@@ -109,9 +109,10 @@ class UserDetailsVM {
 
         passwordCallback(
             context: context,
-            callback: (password, idToken) {
+            callback: (password, idToken) async {
               try {
-                GoogleOAuth.signUp((idToken, accessToken, serverAuthCode) {
+                final signedIn = await GoogleOAuth.signUp(
+                    (idToken, accessToken, serverAuthCode) {
                   store.dispatch(
                     ConnecOAuthUserRequest(
                       provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
@@ -122,6 +123,12 @@ class UserDetailsVM {
                     ),
                   );
                 });
+                if (!signedIn) {
+                  showErrorDialog(
+                      context: context,
+                      message:
+                          AppLocalization.of(context).anErrorOccurredTryAgain);
+                }
               } catch (error) {
                 showErrorDialog(context: context, message: error);
               }
