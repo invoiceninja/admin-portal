@@ -25,18 +25,37 @@ class GoogleOAuth {
         callback(value.idToken, value.accessToken, value.serverAuthCode);
       });
     } else {
-      throw 'Error: sign in failed';
+      // throw 'Error: sign in failed';
+      // TODO remove this code
+      account ??= await _googleSignIn.signIn();
+
+      if (account != null) {
+        account.authentication.then((GoogleSignInAuthentication value) {
+          callback(value.idToken, value.accessToken, value.serverAuthCode);
+        });
+      } else {
+        throw 'Error: sign in failed';
+      }
     }
   }
 
   static void signUp(Function(String, String, String) callback) async {
-    final account = await _googleSignIn.grantOfflineAccess();
+    var account = await _googleSignIn.grantOfflineAccess();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
         callback(value.idToken, value.accessToken, value.serverAuthCode);
       });
     } else {
-      throw 'Error: sign up failed';
+      // throw 'Error: sign up failed';
+      // TODO remove this code
+      account = await _googleSignIn.grantOfflineAccess();
+      if (account != null) {
+        account.authentication.then((GoogleSignInAuthentication value) {
+          callback(value.idToken, value.accessToken, value.serverAuthCode);
+        });
+      } else {
+        throw 'Error: sign up failed';
+      }
     }
   }
 
