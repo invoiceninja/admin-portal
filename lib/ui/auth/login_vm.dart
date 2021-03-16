@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -113,6 +114,7 @@ class LoginVM {
           @required String oneTimePassword,
         }) async {
           try {
+            await GoogleOAuth.signOut();
             GoogleOAuth.signIn((idToken, accessToken, serverAuthCode) {
               store.dispatch(OAuthLoginRequest(
                 completer: completer,
@@ -134,6 +136,7 @@ class LoginVM {
         onGoogleSignUpPressed:
             (BuildContext context, Completer<Null> completer) async {
           try {
+            await GoogleOAuth.signOut();
             GoogleOAuth.signUp((idToken, accessToken, serverAuthCode) {
               store.dispatch(OAuthSignUpRequest(
                 completer: completer,
