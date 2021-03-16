@@ -151,7 +151,7 @@ class LoginVM {
           try {
             // TODO enable this
             //await GoogleOAuth.signOut();
-            var signedIn = await GoogleOAuth.signUp(
+            final signedIn = await GoogleOAuth.signUp(
                 (idToken, accessToken, serverAuthCode) {
               if (idToken.isEmpty ||
                   accessToken.isEmpty ||
@@ -170,30 +170,8 @@ class LoginVM {
               }
             });
             if (!signedIn) {
-              // completer.completeError(AppLocalization.of(context).anErrorOccurredTryAgain);
-              // TODO remove this
-              signedIn = await GoogleOAuth.signUp(
-                  (idToken, accessToken, serverAuthCode) {
-                if (idToken.isEmpty ||
-                    accessToken.isEmpty ||
-                    serverAuthCode.isEmpty) {
-                  completer.completeError(
-                      AppLocalization.of(context).anErrorOccurredTryAgain);
-                } else {
-                  store.dispatch(OAuthSignUpRequest(
-                    completer: completer,
-                    idToken: idToken,
-                    accessToken: accessToken,
-                    serverAuthCode: serverAuthCode,
-                  ));
-                  completer.future.then(
-                      (_) => _handleLogin(context: context, isSignUp: true));
-                }
-              });
-              if (!signedIn) {
-                completer.completeError(
-                    AppLocalization.of(context).anErrorOccurredTryAgain);
-              }
+              completer.completeError(
+                  AppLocalization.of(context).anErrorOccurredTryAgain);
             }
           } catch (error) {
             completer.completeError(error);
