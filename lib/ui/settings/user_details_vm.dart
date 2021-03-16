@@ -90,7 +90,7 @@ class UserDetailsVM {
                     final completer = Completer<Null>();
                     completer.future.then((value) {
                       showToast(AppLocalization.of(context).disconnectedGoogle);
-                      GoogleOAuth.signOut();
+                      GoogleOAuth.disconnect();
                     });
                     store.dispatch(
                       SaveAuthUserRequest(
