@@ -8,7 +8,9 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -116,17 +118,26 @@ class LoginVM {
           try {
             await GoogleOAuth.signOut();
             GoogleOAuth.signIn((idToken, accessToken, serverAuthCode) {
-              store.dispatch(OAuthLoginRequest(
-                completer: completer,
-                idToken: idToken,
-                accessToken: accessToken,
-                serverAuthCode: serverAuthCode,
-                url: formatApiUrl(url.trim()),
-                secret: secret.trim(),
-                platform: getPlatform(context),
-                oneTimePassword: oneTimePassword,
-              ));
-              completer.future.then((_) => _handleLogin(context: context));
+              if (idToken.isEmpty ||
+                  accessToken.isEmpty ||
+                  serverAuthCode.isEmpty) {
+                showErrorDialog(
+                    context: context,
+                    message:
+                        AppLocalization.of(context).anErrorOccurredTryAgain);
+              } else {
+                store.dispatch(OAuthLoginRequest(
+                  completer: completer,
+                  idToken: idToken,
+                  accessToken: accessToken,
+                  serverAuthCode: serverAuthCode,
+                  url: formatApiUrl(url.trim()),
+                  secret: secret.trim(),
+                  platform: getPlatform(context),
+                  oneTimePassword: oneTimePassword,
+                ));
+                completer.future.then((_) => _handleLogin(context: context));
+              }
             });
           } catch (error) {
             completer.completeError(error);
@@ -138,14 +149,23 @@ class LoginVM {
           try {
             await GoogleOAuth.signOut();
             GoogleOAuth.signUp((idToken, accessToken, serverAuthCode) {
-              store.dispatch(OAuthSignUpRequest(
-                completer: completer,
-                idToken: idToken,
-                accessToken: accessToken,
-                serverAuthCode: serverAuthCode,
-              ));
-              completer.future
-                  .then((_) => _handleLogin(context: context, isSignUp: true));
+              if (idToken.isEmpty ||
+                  accessToken.isEmpty ||
+                  serverAuthCode.isEmpty) {
+                showErrorDialog(
+                    context: context,
+                    message:
+                        AppLocalization.of(context).anErrorOccurredTryAgain);
+              } else {
+                store.dispatch(OAuthSignUpRequest(
+                  completer: completer,
+                  idToken: idToken,
+                  accessToken: accessToken,
+                  serverAuthCode: serverAuthCode,
+                ));
+                completer.future.then(
+                    (_) => _handleLogin(context: context, isSignUp: true));
+              }
             });
           } catch (error) {
             completer.completeError(error);
