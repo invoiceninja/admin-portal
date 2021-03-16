@@ -371,7 +371,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     final paymentable = widget.paymentable;
     _amountController.text = formatNumber(paymentable.amount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+            formatNumberType: FormatNumberType.inputMoney) ??
+        '0';
     if (paymentable.entityType == EntityType.invoice) {
       _invoiceId = paymentable.invoiceId;
     } else {
@@ -502,7 +503,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                     ? min(widget.limit, invoice.balanceOrAmount)
                     : invoice.balanceOrAmount;
                 _amountController.text = formatNumber(amount, context,
-                    formatNumberType: FormatNumberType.inputMoney);
+                        formatNumberType: FormatNumberType.inputMoney) ??
+                    '0';
                 _invoiceId = invoice.id;
                 _onChanged(invoice.clientId);
               },
@@ -520,7 +522,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
                 _amountController.text = formatNumber(credit.balance, context,
-                    formatNumberType: FormatNumberType.inputMoney);
+                        formatNumberType: FormatNumberType.inputMoney) ??
+                    '0';
                 _creditId = credit.id;
                 _onChanged(credit.clientId);
               },
