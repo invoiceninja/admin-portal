@@ -290,7 +290,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           specifiedType: const FullType(bool)),
       'last_confirmed_email_address',
       serializers.serialize(object.lastEmailAddress,
-          specifiedType: const FullType(bool)),
+          specifiedType: const FullType(String)),
       'oauth_provider_id',
       serializers.serialize(object.oauthProvider,
           specifiedType: const FullType(String)),
@@ -412,7 +412,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'last_confirmed_email_address':
           result.lastEmailAddress = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'company_user':
           result.userCompany.replace(serializers.deserialize(value,
@@ -963,7 +963,7 @@ class _$UserEntity extends UserEntity {
   @override
   final bool hasPassword;
   @override
-  final bool lastEmailAddress;
+  final String lastEmailAddress;
   @override
   final UserCompanyEntity userCompany;
   @override
@@ -1225,9 +1225,9 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   bool get hasPassword => _$this._hasPassword;
   set hasPassword(bool hasPassword) => _$this._hasPassword = hasPassword;
 
-  bool _lastEmailAddress;
-  bool get lastEmailAddress => _$this._lastEmailAddress;
-  set lastEmailAddress(bool lastEmailAddress) =>
+  String _lastEmailAddress;
+  String get lastEmailAddress => _$this._lastEmailAddress;
+  set lastEmailAddress(String lastEmailAddress) =>
       _$this._lastEmailAddress = lastEmailAddress;
 
   UserCompanyEntityBuilder _userCompany;
