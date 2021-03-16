@@ -288,6 +288,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'has_password',
       serializers.serialize(object.hasPassword,
           specifiedType: const FullType(bool)),
+      'last_confirmed_email_address',
+      serializers.serialize(object.lastEmailAddress,
+          specifiedType: const FullType(String)),
       'oauth_provider_id',
       serializers.serialize(object.oauthProvider,
           specifiedType: const FullType(String)),
@@ -406,6 +409,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'has_password':
           result.hasPassword = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'last_confirmed_email_address':
+          result.lastEmailAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'company_user':
           result.userCompany.replace(serializers.deserialize(value,
@@ -956,6 +963,8 @@ class _$UserEntity extends UserEntity {
   @override
   final bool hasPassword;
   @override
+  final String lastEmailAddress;
+  @override
   final UserCompanyEntity userCompany;
   @override
   final String oauthProvider;
@@ -992,6 +1001,7 @@ class _$UserEntity extends UserEntity {
       this.customValue4,
       this.isTwoFactorEnabled,
       this.hasPassword,
+      this.lastEmailAddress,
       this.userCompany,
       this.oauthProvider,
       this.isChanged,
@@ -1033,6 +1043,9 @@ class _$UserEntity extends UserEntity {
     if (hasPassword == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'hasPassword');
     }
+    if (lastEmailAddress == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'lastEmailAddress');
+    }
     if (oauthProvider == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'oauthProvider');
     }
@@ -1073,6 +1086,7 @@ class _$UserEntity extends UserEntity {
         customValue4 == other.customValue4 &&
         isTwoFactorEnabled == other.isTwoFactorEnabled &&
         hasPassword == other.hasPassword &&
+        lastEmailAddress == other.lastEmailAddress &&
         userCompany == other.userCompany &&
         oauthProvider == other.oauthProvider &&
         isChanged == other.isChanged &&
@@ -1106,16 +1120,16 @@ class _$UserEntity extends UserEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode),
-                                                                                phone.hashCode),
-                                                                            password.hashCode),
-                                                                        emailVerifiedAt.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    isTwoFactorEnabled.hashCode),
-                                                hasPassword.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode), phone.hashCode),
+                                                                                password.hashCode),
+                                                                            emailVerifiedAt.hashCode),
+                                                                        customValue1.hashCode),
+                                                                    customValue2.hashCode),
+                                                                customValue3.hashCode),
+                                                            customValue4.hashCode),
+                                                        isTwoFactorEnabled.hashCode),
+                                                    hasPassword.hashCode),
+                                                lastEmailAddress.hashCode),
                                             userCompany.hashCode),
                                         oauthProvider.hashCode),
                                     isChanged.hashCode),
@@ -1143,6 +1157,7 @@ class _$UserEntity extends UserEntity {
           ..add('customValue4', customValue4)
           ..add('isTwoFactorEnabled', isTwoFactorEnabled)
           ..add('hasPassword', hasPassword)
+          ..add('lastEmailAddress', lastEmailAddress)
           ..add('userCompany', userCompany)
           ..add('oauthProvider', oauthProvider)
           ..add('isChanged', isChanged)
@@ -1210,6 +1225,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   bool get hasPassword => _$this._hasPassword;
   set hasPassword(bool hasPassword) => _$this._hasPassword = hasPassword;
 
+  String _lastEmailAddress;
+  String get lastEmailAddress => _$this._lastEmailAddress;
+  set lastEmailAddress(String lastEmailAddress) =>
+      _$this._lastEmailAddress = lastEmailAddress;
+
   UserCompanyEntityBuilder _userCompany;
   UserCompanyEntityBuilder get userCompany =>
       _$this._userCompany ??= new UserCompanyEntityBuilder();
@@ -1273,6 +1293,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _customValue4 = _$v.customValue4;
       _isTwoFactorEnabled = _$v.isTwoFactorEnabled;
       _hasPassword = _$v.hasPassword;
+      _lastEmailAddress = _$v.lastEmailAddress;
       _userCompany = _$v.userCompany?.toBuilder();
       _oauthProvider = _$v.oauthProvider;
       _isChanged = _$v.isChanged;
@@ -1319,6 +1340,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               customValue4: customValue4,
               isTwoFactorEnabled: isTwoFactorEnabled,
               hasPassword: hasPassword,
+              lastEmailAddress: lastEmailAddress,
               userCompany: _userCompany?.build(),
               oauthProvider: oauthProvider,
               isChanged: isChanged,

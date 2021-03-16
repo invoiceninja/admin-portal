@@ -216,9 +216,8 @@ class _AccountOverview extends StatelessWidget {
                 viewModel.onCompanyChanged(
                     company.rebuild((b) => b..isDisabled = !value));
               },
-              // TODO change to localization
-              title: Text('Company Activated'),
-              subtitle: Text('Enable recurring invoices and notifications'),
+              title: Text(localization.activateCompany),
+              subtitle: Text(localization.activateCompanyHelp),
               activeColor: Theme.of(context).accentColor,
             )
           ],

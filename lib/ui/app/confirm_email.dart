@@ -20,7 +20,7 @@ class ConfirmEmail extends StatelessWidget {
 
     return Material(
       color: Theme.of(context).cardColor,
-      child: state.isLoading
+      child: state.isLoading || state.isSaving
           ? LoadingIndicator()
           : Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -40,9 +40,18 @@ class ConfirmEmail extends StatelessWidget {
                     SizedBox(
                       width: kTableColumnGap,
                     ),
+                    if (state.user.lastEmailAddress.isNotEmpty) ...[
+                      TextButton(
+                        onPressed: () => viewModel.onUseLastPressed(context),
+                        child: Text(localization.useLastEmail),
+                      ),
+                      SizedBox(
+                        width: kTableColumnGap,
+                      ),
+                    ],
                     ElevatedButton(
                       onPressed: viewModel.onRefreshPressed,
-                      child: Text(localization.refreshData),
+                      child: Text(localization.refresh),
                     ),
                   ],
                 )
