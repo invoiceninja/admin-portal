@@ -192,7 +192,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                 for (var index = 0; index < invoicePaymentables.length; index++)
                   PaymentableEditor(
                     key: ValueKey(
-                        '__paymentable_${index}_${invoicePaymentables[index].invoiceId}__'),
+                        '__invoice_paymentable_${index}_${invoicePaymentables[index].invoiceId}__'),
                     viewModel: viewModel,
                     paymentable: invoicePaymentables[index],
                     index: index,
@@ -232,7 +232,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       index++)
                     PaymentableEditor(
                       key: ValueKey(
-                          '__paymentable_${index}_${creditPaymentables[index].creditId}__'),
+                          '__credit_paymentable_${index}_${creditPaymentables[index].creditId}__'),
                       viewModel: viewModel,
                       paymentable: creditPaymentables[index],
                       index: index,
@@ -487,6 +487,15 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               labelText: AppLocalization.of(context).invoice,
               entityId: paymentable.invoiceId,
               entityList: paymentList,
+              overrideSuggestedLabel: (entity) {
+                if (entity == null) {
+                  return '';
+                } else {
+                  return entity.listDisplayName.isEmpty
+                      ? localization.pending
+                      : entity.listDisplayName;
+                }
+              },
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 final amount = widget.limit != null
