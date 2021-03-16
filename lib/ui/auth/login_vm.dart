@@ -121,6 +121,7 @@ class LoginVM {
             final signedIn = await GoogleOAuth.signIn(
                 (idToken, accessToken, serverAuthCode) {
               if (idToken.isEmpty || accessToken.isEmpty) {
+                GoogleOAuth.signOut();
                 completer.completeError(
                     AppLocalization.of(context).anErrorOccurredTryAgain);
               } else {
@@ -156,6 +157,7 @@ class LoginVM {
               if (idToken.isEmpty ||
                   accessToken.isEmpty ||
                   serverAuthCode.isEmpty) {
+                GoogleOAuth.signOut();
                 completer.completeError(
                     AppLocalization.of(context).anErrorOccurredTryAgain);
               } else {
