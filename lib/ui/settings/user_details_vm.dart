@@ -109,19 +109,36 @@ class UserDetailsVM {
 
         passwordCallback(
             context: context,
-            callback: (password, idToken) {
+            callback: (password, idToken) async {
               try {
-                GoogleOAuth.signUp((idToken, accessToken, serverAuthCode) {
-                  store.dispatch(
-                    ConnecOAuthUserRequest(
-                      provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
-                      password: password,
-                      idToken: idToken,
-                      serverAuthCode: serverAuthCode,
-                      completer: completer,
-                    ),
-                  );
+                final signedIn = await GoogleOAuth.signUp(
+                    (idToken, accessToken, serverAuthCode) {
+                  if (idToken.isEmpty ||
+                      accessToken.isEmpty ||
+                      serverAuthCode.isEmpty) {
+                    GoogleOAuth.signOut();
+                    showErrorDialog(
+                        context: context,
+                        message: AppLocalization.of(context)
+                            .anErrorOccurredTryAgain);
+                  } else {
+                    store.dispatch(
+                      ConnecOAuthUserRequest(
+                        provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                        password: password,
+                        idToken: idToken,
+                        serverAuthCode: serverAuthCode,
+                        completer: completer,
+                      ),
+                    );
+                  }
                 });
+                if (!signedIn) {
+                  showErrorDialog(
+                      context: context,
+                      message:
+                          AppLocalization.of(context).anErrorOccurredTryAgain);
+                }
               } catch (error) {
                 showErrorDialog(context: context, message: error);
               }
