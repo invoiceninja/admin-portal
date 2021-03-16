@@ -192,7 +192,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                 for (var index = 0; index < invoicePaymentables.length; index++)
                   PaymentableEditor(
                     key: ValueKey(
-                        '__paymentable_${index}_${invoicePaymentables[index].id}__'),
+                        '__paymentable_${index}_${invoicePaymentables[index].invoiceId}__'),
                     viewModel: viewModel,
                     paymentable: invoicePaymentables[index],
                     index: index,
@@ -232,7 +232,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       index++)
                     PaymentableEditor(
                       key: ValueKey(
-                          '__paymentable_${index}_${creditPaymentables[index].id}__'),
+                          '__paymentable_${index}_${creditPaymentables[index].creditId}__'),
                       viewModel: viewModel,
                       paymentable: creditPaymentables[index],
                       index: index,
