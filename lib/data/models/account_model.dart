@@ -19,6 +19,7 @@ abstract class AccountEntity
       debugEnabled: false,
       isDocker: false,
       isSchedulerRunning: false,
+      disableAutoUpdate: false,
       defaultCompanyId: '',
     );
   }
@@ -57,18 +58,26 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'is_scheduler_running')
   bool get isSchedulerRunning;
 
+  @BuiltValueField(wireName: 'disable_auto_update')
+  bool get disableAutoUpdate;
+
   @BuiltValueField(wireName: 'default_company_id')
   String get defaultCompanyId;
 
-  bool get isUpdateAvailable =>
-      Version.parse(currentVersion) < Version.parse(latestVersion) &&
-      isSchedulerRunning;
+  bool get isUpdateAvailable {
+    if (!isSchedulerRunning || disableAutoUpdate) {
+      return false;
+    }
+
+    return Version.parse(currentVersion) < Version.parse(latestVersion);
+  }
 
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
     ..debugEnabled = false
     ..isDocker = false
     ..isSchedulerRunning = false
+    ..disableAutoUpdate = false
     ..defaultCompanyId = '';
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;

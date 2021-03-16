@@ -157,8 +157,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'project_name': 'Project Name',
       'warning': 'Warning',
       'view_settings': 'View Settings',
-      'company_disabled_warning':
-          'Warning: this company has not yet been activated',
+      'company_disabled_warning': 'Company is not activated',
       'late_invoice': 'Late Invoice',
       'expired_quote': 'Expired Quote',
       'remind_invoice': 'Remind Invoice',

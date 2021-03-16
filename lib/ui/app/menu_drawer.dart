@@ -232,7 +232,7 @@ class MenuDrawer extends StatelessWidget {
                       color: Theme.of(context).cardColor,
                       child: ScrollableListView(
                         children: <Widget>[
-                          if (kReleaseMode && state.account.debugEnabled)
+                          if (state.account.debugEnabled && kReleaseMode)
                             if (state.isMenuCollapsed)
                               Tooltip(
                                 message: localization.debugModeIsEnabled,
@@ -260,6 +260,43 @@ class MenuDrawer extends StatelessWidget {
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 onTap: () => launch(kDebugModeUrl),
+                              ),
+                          if (state.company.isDisabled)
+                            if (state.isMenuCollapsed)
+                              Tooltip(
+                                message: localization.companyDisabledWarning,
+                                child: ListTile(
+                                  contentPadding:
+                                      const EdgeInsets.only(left: 20),
+                                  onTap: () {
+                                    store.dispatch(ViewSettings(
+                                        navigator: Navigator.of(context),
+                                        section: kSettingsAccountManagement));
+                                  },
+                                  leading:
+                                      Icon(Icons.warning, color: Colors.orange),
+                                ),
+                              )
+                            else
+                              ListTile(
+                                tileColor: Colors.orange.shade800,
+                                title: Padding(
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: IconText(
+                                    icon: Icons.warning,
+                                    text: localization.warning,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  localization.companyDisabledWarning,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onTap: () {
+                                  store.dispatch(ViewSettings(
+                                      navigator: Navigator.of(context),
+                                      section: kSettingsAccountManagement));
+                                },
                               ),
                           DrawerTile(
                             company: company,
@@ -599,28 +636,6 @@ class SidebarFooter extends StatelessWidget {
                           child: Text(localization.refreshData.toUpperCase()),
                           onPressed: () {
                             store.dispatch(RefreshData());
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ]),
-                )
-              else if (state.company.isDisabled)
-                IconButton(
-                  tooltip: localization.warning,
-                  icon: Icon(
-                    Icons.warning,
-                    color: Colors.orange,
-                  ),
-                  onPressed: () => showMessageDialog(
-                      context: context,
-                      message: localization.companyDisabledWarning,
-                      secondaryActions: [
-                        TextButton(
-                          child: Text(localization.viewSettings.toUpperCase()),
-                          onPressed: () {
-                            store.dispatch(ViewSettings(
-                                navigator: Navigator.of(context),
-                                section: kSettingsAccountManagement));
                             Navigator.of(context).pop();
                           },
                         ),
@@ -1062,15 +1077,16 @@ void _showAbout(BuildContext context) async {
                           });
                     },
                   ),
-                  AppButton(
-                    label: (state.account.isUpdateAvailable
-                            ? localization.updateApp
-                            : localization.forceUpdate)
-                        .toUpperCase(),
-                    iconData: MdiIcons.cloudDownload,
-                    color: Colors.orange,
-                    onPressed: () => _showUpdate(context),
-                  ),
+                  if (!state.account.disableAutoUpdate)
+                    AppButton(
+                      label: (state.account.isUpdateAvailable
+                              ? localization.updateApp
+                              : localization.forceUpdate)
+                          .toUpperCase(),
+                      iconData: MdiIcons.cloudDownload,
+                      color: Colors.orange,
+                      onPressed: () => _showUpdate(context),
+                    ),
                 ],
               ],
             ),
