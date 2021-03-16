@@ -136,6 +136,7 @@ abstract class UserEntity extends Object
       oauthProvider: '',
       isTwoFactorEnabled: false,
       hasPassword: false,
+      lastEmailAddress: '',
     );
   }
 
@@ -186,6 +187,9 @@ abstract class UserEntity extends Object
 
   @BuiltValueField(wireName: 'has_password')
   bool get hasPassword;
+
+  @BuiltValueField(wireName: 'last_confirmed_email_address')
+  bool get lastEmailAddress;
 
   @nullable
   @BuiltValueField(wireName: 'company_user')
@@ -308,7 +312,8 @@ abstract class UserEntity extends Object
   // ignore: unused_element
   static void _initializeBuilder(UserEntityBuilder builder) => builder
     ..isTwoFactorEnabled = false
-    ..hasPassword = false;
+    ..hasPassword = false
+    ..lastEmailAddress = '';
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }
