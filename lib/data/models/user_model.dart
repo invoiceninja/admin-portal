@@ -189,7 +189,7 @@ abstract class UserEntity extends Object
   bool get hasPassword;
 
   @BuiltValueField(wireName: 'last_confirmed_email_address')
-  bool get lastEmailAddress;
+  String get lastEmailAddress;
 
   @nullable
   @BuiltValueField(wireName: 'company_user')
