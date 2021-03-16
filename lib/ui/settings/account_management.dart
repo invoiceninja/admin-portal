@@ -208,22 +208,21 @@ class _AccountOverview extends StatelessWidget {
           secondLabel: localization.expiresOn,
           secondValue: formatDate(account.planExpires, context),
         ),
-        if (state.company.isDisabled)
-          FormCard(
-            children: [
-              SwitchListTile(
-                value: !company.isDisabled,
-                onChanged: (value) {
-                  viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..isDisabled = !value));
-                },
-                // TODO change to localization
-                title: Text('Company Activated'),
-                subtitle: Text('Enable recurring invoices and notifications'),
-                activeColor: Theme.of(context).accentColor,
-              )
-            ],
-          ),
+        FormCard(
+          children: [
+            SwitchListTile(
+              value: !company.isDisabled,
+              onChanged: (value) {
+                viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..isDisabled = !value));
+              },
+              // TODO change to localization
+              title: Text('Company Activated'),
+              subtitle: Text('Enable recurring invoices and notifications'),
+              activeColor: Theme.of(context).accentColor,
+            )
+          ],
+        ),
         Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
