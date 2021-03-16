@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
@@ -120,7 +118,8 @@ class LoginVM {
           try {
             // TODO enable this
             //await GoogleOAuth.signOut();
-            GoogleOAuth.signIn((idToken, accessToken, serverAuthCode) {
+            final signedIn = await GoogleOAuth.signIn(
+                (idToken, accessToken, serverAuthCode) {
               if (idToken.isEmpty ||
                   accessToken.isEmpty ||
                   serverAuthCode.isEmpty) {
@@ -140,6 +139,10 @@ class LoginVM {
                 completer.future.then((_) => _handleLogin(context: context));
               }
             });
+            if (!signedIn) {
+              completer.completeError(
+                  AppLocalization.of(context).anErrorOccurredTryAgain);
+            }
           } catch (error) {
             completer.completeError(error);
             print('## onGoogleLoginPressed: $error');
@@ -150,7 +153,8 @@ class LoginVM {
           try {
             // TODO enable this
             //await GoogleOAuth.signOut();
-            GoogleOAuth.signUp((idToken, accessToken, serverAuthCode) {
+            final signedIn = await GoogleOAuth.signUp(
+                (idToken, accessToken, serverAuthCode) {
               if (idToken.isEmpty ||
                   accessToken.isEmpty ||
                   serverAuthCode.isEmpty) {
@@ -167,6 +171,10 @@ class LoginVM {
                     (_) => _handleLogin(context: context, isSignUp: true));
               }
             });
+            if (!signedIn) {
+              completer.completeError(
+                  AppLocalization.of(context).anErrorOccurredTryAgain);
+            }
           } catch (error) {
             completer.completeError(error);
             print('## onGoogleSignUpPressed: $error');
