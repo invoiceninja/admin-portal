@@ -10,7 +10,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 class GoogleOAuth {
-  static void signIn(Function(String, String, String) callback,
+  static Future<bool> signIn(Function(String, String, String) callback,
       {bool isSilent = false}) async {
     GoogleSignInAccount account;
 
@@ -24,21 +24,27 @@ class GoogleOAuth {
       account.authentication.then((GoogleSignInAuthentication value) {
         callback(value.idToken, value.accessToken, value.serverAuthCode);
       });
+
+      return true;
     } else {
       //throw 'Error: sign in failed';
       print('## Error: sign in failed');
+      return false;
     }
   }
 
-  static void signUp(Function(String, String, String) callback) async {
+  static Future<bool> signUp(Function(String, String, String) callback) async {
     var account = await _googleSignIn.grantOfflineAccess();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
         callback(value.idToken, value.accessToken, value.serverAuthCode);
       });
+
+      return true;
     } else {
       //throw 'Error: sign up failed';
       print('## Error: sign up failed');
+      return false;
     }
   }
 
