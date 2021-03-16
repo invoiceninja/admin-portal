@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
           'Enable emails, recurring invoices and notifications',
@@ -55634,6 +55635,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get activateCompanyHelp =>
       _localizedValues[localeCode]['activate_company_help'] ?? '';
 
+  String get useLastEmail =>
+      _localizedValues[localeCode]['use_last_email'] ?? '';
 
 
   String lookup(String key) {
