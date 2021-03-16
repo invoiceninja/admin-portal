@@ -34,6 +34,8 @@ class LoginScreen extends StatelessWidget {
             viewModel: viewModel,
           );
         },
+        // TODO remove this
+        onInit: (Store<AppState> store) => GoogleOAuth.signOut(),
       ),
     );
   }
@@ -116,15 +118,14 @@ class LoginVM {
           @required String oneTimePassword,
         }) async {
           try {
-            await GoogleOAuth.signOut();
+            // TODO enable this
+            //await GoogleOAuth.signOut();
             GoogleOAuth.signIn((idToken, accessToken, serverAuthCode) {
               if (idToken.isEmpty ||
                   accessToken.isEmpty ||
                   serverAuthCode.isEmpty) {
-                showErrorDialog(
-                    context: context,
-                    message:
-                        AppLocalization.of(context).anErrorOccurredTryAgain);
+                completer.completeError(
+                    AppLocalization.of(context).anErrorOccurredTryAgain);
               } else {
                 store.dispatch(OAuthLoginRequest(
                   completer: completer,
@@ -147,15 +148,14 @@ class LoginVM {
         onGoogleSignUpPressed:
             (BuildContext context, Completer<Null> completer) async {
           try {
-            await GoogleOAuth.signOut();
+            // TODO enable this
+            //await GoogleOAuth.signOut();
             GoogleOAuth.signUp((idToken, accessToken, serverAuthCode) {
               if (idToken.isEmpty ||
                   accessToken.isEmpty ||
                   serverAuthCode.isEmpty) {
-                showErrorDialog(
-                    context: context,
-                    message:
-                        AppLocalization.of(context).anErrorOccurredTryAgain);
+                completer.completeError(
+                    AppLocalization.of(context).anErrorOccurredTryAgain);
               } else {
                 store.dispatch(OAuthSignUpRequest(
                   completer: completer,
