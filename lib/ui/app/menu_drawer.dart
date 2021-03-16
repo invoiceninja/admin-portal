@@ -1077,15 +1077,16 @@ void _showAbout(BuildContext context) async {
                           });
                     },
                   ),
-                  AppButton(
-                    label: (state.account.isUpdateAvailable
-                            ? localization.updateApp
-                            : localization.forceUpdate)
-                        .toUpperCase(),
-                    iconData: MdiIcons.cloudDownload,
-                    color: Colors.orange,
-                    onPressed: () => _showUpdate(context),
-                  ),
+                  if (!state.account.disableAutoUpdate)
+                    AppButton(
+                      label: (state.account.isUpdateAvailable
+                              ? localization.updateApp
+                              : localization.forceUpdate)
+                          .toUpperCase(),
+                      iconData: MdiIcons.cloudDownload,
+                      color: Colors.orange,
+                      onPressed: () => _showUpdate(context),
+                    ),
                 ],
               ],
             ),

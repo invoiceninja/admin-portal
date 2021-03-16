@@ -64,9 +64,13 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'default_company_id')
   String get defaultCompanyId;
 
-  bool get isUpdateAvailable =>
-      Version.parse(currentVersion) < Version.parse(latestVersion) &&
-      isSchedulerRunning;
+  bool get isUpdateAvailable {
+    if (!isSchedulerRunning || disableAutoUpdate) {
+      return false;
+    }
+
+    return Version.parse(currentVersion) < Version.parse(latestVersion);
+  }
 
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
