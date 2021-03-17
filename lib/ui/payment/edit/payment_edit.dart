@@ -141,7 +141,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     final body = Form(
       key: _formKey,
       child: Column(
-        key: ValueKey(viewModel.payment.id),
+        key: ValueKey('__payment_${viewModel.payment.id}__'),
         children: <Widget>[
           FormCard(
             children: <Widget>[
@@ -192,7 +192,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                 for (var index = 0; index < invoicePaymentables.length; index++)
                   PaymentableEditor(
                     key: ValueKey(
-                        '__paymentable_${index}_${invoicePaymentables[index].id}__'),
+                        '__invoice_paymentable_${index}_${invoicePaymentables[index].invoiceId}__'),
                     viewModel: viewModel,
                     paymentable: invoicePaymentables[index],
                     index: index,
@@ -232,7 +232,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       index++)
                     PaymentableEditor(
                       key: ValueKey(
-                          '__paymentable_${index}_${creditPaymentables[index].id}__'),
+                          '__credit_paymentable_${index}_${creditPaymentables[index].creditId}__'),
                       viewModel: viewModel,
                       paymentable: creditPaymentables[index],
                       index: index,
@@ -371,7 +371,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     final paymentable = widget.paymentable;
     _amountController.text = formatNumber(paymentable.amount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+            formatNumberType: FormatNumberType.inputMoney) ??
+        '0';
     if (paymentable.entityType == EntityType.invoice) {
       _invoiceId = paymentable.invoiceId;
     } else {
@@ -487,13 +488,23 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               labelText: AppLocalization.of(context).invoice,
               entityId: paymentable.invoiceId,
               entityList: paymentList,
+              overrideSuggestedLabel: (entity) {
+                if (entity == null) {
+                  return '';
+                } else {
+                  return entity.listDisplayName.isEmpty
+                      ? localization.pending
+                      : entity.listDisplayName;
+                }
+              },
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 final amount = widget.limit != null
                     ? min(widget.limit, invoice.balanceOrAmount)
                     : invoice.balanceOrAmount;
                 _amountController.text = formatNumber(amount, context,
-                    formatNumberType: FormatNumberType.inputMoney);
+                        formatNumberType: FormatNumberType.inputMoney) ??
+                    '0';
                 _invoiceId = invoice.id;
                 _onChanged(invoice.clientId);
               },
@@ -511,7 +522,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
                 _amountController.text = formatNumber(credit.balance, context,
-                    formatNumberType: FormatNumberType.inputMoney);
+                        formatNumberType: FormatNumberType.inputMoney) ??
+                    '0';
                 _creditId = credit.id;
                 _onChanged(credit.clientId);
               },
