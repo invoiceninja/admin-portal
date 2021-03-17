@@ -293,6 +293,8 @@ class SettingsViewer extends StatelessWidget {
       localization.counterPadding: settings.counterPadding?.toString(),
       localization.sharedInvoiceQuoteCounter:
           settings.sharedInvoiceQuoteCounter?.toString(),
+      localization.sharedInvoiceCreditCounter:
+          settings.sharedInvoiceCreditCounter?.toString(),
       localization.invoiceTerms: settings.defaultInvoiceTerms,
       localization.quoteTerms: settings.defaultQuoteTerms,
       localization.quoteFooter: settings.defaultQuoteFooter,
