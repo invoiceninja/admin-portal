@@ -1156,6 +1156,10 @@ abstract class SettingsEntity
   bool get sharedInvoiceQuoteCounter;
 
   @nullable
+  @BuiltValueField(wireName: 'shared_invoice_credit_counter')
+  bool get sharedInvoiceCreditCounter;
+
+  @nullable
   @BuiltValueField(wireName: 'invoice_terms')
   String get defaultInvoiceTerms;
 
