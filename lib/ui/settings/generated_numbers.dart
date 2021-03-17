@@ -282,6 +282,15 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                           settings.rebuild(
                               (b) => b..sharedInvoiceQuoteCounter = value)),
                     ),
+                  if (company.isModuleEnabled(EntityType.credit))
+                    BoolDropdownButton(
+                      iconData: Icons.content_copy,
+                      label: localization.sharedInvoiceCreditCounter,
+                      value: settings.sharedInvoiceCreditCounter,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..sharedInvoiceCreditCounter = value)),
+                    ),
                   AppDropdownButton(
                     labelText: localization.resetCounter,
                     value: settings.resetCounterFrequencyId,
