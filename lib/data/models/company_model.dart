@@ -92,7 +92,7 @@ abstract class CompanyEntity extends Object
       calculateExpenseTaxByAmount: false,
       expenseInclusiveTaxes: false,
       sessionTimeout: 0,
-      passwordTimeout: 30,
+      passwordTimeout: 30 * 60 * 1000,
       oauthPasswordRequired: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
@@ -510,7 +510,7 @@ abstract class CompanyEntity extends Object
     ..enableProductDiscount = false
     ..defaultTaskIsDateBased = false
     ..sessionTimeout = 0
-    ..passwordTimeout = 30
+    ..passwordTimeout = 30 * 60 * 1000
     ..oauthPasswordRequired = false
     ..invoiceTaskDatelog = true;
 
