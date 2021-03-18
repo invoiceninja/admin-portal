@@ -198,70 +198,67 @@ class _UserDetailsState extends State<UserDetails>
                   autoValidate: autoValidate,
                 ),
               ]),
-              if (state.isHosted)
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 18, top: 20, right: 18, bottom: 10),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: OutlineButton(
-                          child: Text((user.isConnectedToGoogle
-                                  ? localization.disconnectGoogle
-                                  : localization.connectGoogle)
-                              .toUpperCase()),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                          onPressed: state.settingsUIState.isChanged
-                              ? null
-                              : () {
-                                  if (user.isConnectedToGoogle) {
-                                    viewModel
-                                        .onDisconnectGooglePressed(context);
-                                  } else {
-                                    viewModel.onConnectGooglePressed(context);
-                                  }
-                                },
-                        ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, top: 20, right: 18, bottom: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlineButton(
+                        child: Text((state.user.isConnectedToGoogle
+                                ? localization.disconnectGoogle
+                                : localization.connectGoogle)
+                            .toUpperCase()),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: state.settingsUIState.isChanged
+                            ? null
+                            : () {
+                                if (state.user.isConnectedToGoogle) {
+                                  viewModel.onDisconnectGooglePressed(context);
+                                } else {
+                                  viewModel.onConnectGooglePressed(context);
+                                }
+                              },
                       ),
-                      SizedBox(width: kTableColumnGap),
-                      Expanded(
-                        child: OutlineButton(
-                          child: Text((user.isTwoFactorEnabled
-                                  ? localization.disableTwoFactor
-                                  : localization.enableTwoFactor)
-                              .toUpperCase()),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                          onPressed: state.settingsUIState.isChanged
-                              ? null
-                              : () {
-                                  if (user.isTwoFactorEnabled) {
-                                    viewModel
-                                        .onDisableTwoFactorPressed(context);
-                                  } else {
-                                    if (state.user.phone.isEmpty ||
-                                        user.phone.isEmpty) {
-                                      showMessageDialog(
-                                          context: context,
-                                          message: localization
-                                              .enterPhoneToEnableTwoFactor);
-                                      return;
-                                    }
+                    ),
+                    SizedBox(width: kTableColumnGap),
+                    Expanded(
+                      child: OutlineButton(
+                        child: Text((state.user.isTwoFactorEnabled
+                                ? localization.disableTwoFactor
+                                : localization.enableTwoFactor)
+                            .toUpperCase()),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: state.settingsUIState.isChanged
+                            ? null
+                            : () {
+                                if (state.user.isTwoFactorEnabled) {
+                                  viewModel.onDisableTwoFactorPressed(context);
+                                } else {
+                                  if (state.user.phone.isEmpty ||
+                                      user.phone.isEmpty) {
+                                    showMessageDialog(
+                                        context: context,
+                                        message: localization
+                                            .enterPhoneToEnableTwoFactor);
+                                    return;
+                                  }
 
-                                    showDialog<void>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          _EnableTwoFactor(
-                                              state: viewModel.state),
-                                    );
-                                  }
-                                },
-                        ),
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        _EnableTwoFactor(
+                                            state: viewModel.state),
+                                  );
+                                }
+                              },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
               FormCard(
                 children: <Widget>[
                   FormColorPicker(
