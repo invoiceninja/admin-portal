@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
@@ -364,6 +365,8 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
       setState(() => _isLoading = false);
       print('## DONE: $data');
       showToast(AppLocalization.of(context).enabledTwoFactor);
+      final store = StoreProvider.of<AppState>(context);
+      store.dispatch(RefreshData());
       Navigator.of(context).pop();
     }).catchError((Object error) {
       setState(() => _isLoading = false);
@@ -414,6 +417,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                             validator: (value) => value.isEmpty
                                 ? AppLocalization.of(context).pleaseEnterAValue
                                 : null,
+                            onSavePressed: (context) => _onSavePressed(),
                           ),
                         ),
                         SizedBox(width: kTableColumnGap),
