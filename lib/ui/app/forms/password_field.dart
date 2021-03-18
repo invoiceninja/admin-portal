@@ -80,7 +80,6 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       },
       obscureText: _isPasswordObscured,
       keyboardType: TextInputType.visiblePassword,
-      onFieldSubmitted: (String value) => FocusScope.of(context).nextFocus(),
       autofillHints: [
         widget.newPassword ? AutofillHints.newPassword : AutofillHints.password,
       ],

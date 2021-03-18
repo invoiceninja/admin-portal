@@ -95,27 +95,29 @@ class _VendorViewState extends State<VendorView>
       body: Builder(builder: (context) {
         return Column(
           children: [
-            TabBarView(
-              controller: _controller,
-              children: <Widget>[
-                RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: VendorOverview(
-                    viewModel: viewModel,
-                    isFilter: widget.isFilter,
+            Expanded(
+              child: TabBarView(
+                controller: _controller,
+                children: <Widget>[
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: VendorOverview(
+                      viewModel: viewModel,
+                      isFilter: widget.isFilter,
+                    ),
                   ),
-                ),
-                RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: VendorViewDetails(vendor: viewModel.vendor),
-                ),
-                RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: VendorViewDocuments(
-                    viewModel: viewModel,
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: VendorViewDetails(vendor: viewModel.vendor),
                   ),
-                ),
-              ],
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: VendorViewDocuments(
+                      viewModel: viewModel,
+                    ),
+                  ),
+                ],
+              ),
             ),
             BottomButtons(
               entity: vendor,
