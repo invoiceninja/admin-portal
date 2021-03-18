@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,12 +41,22 @@ class _UpdateDialogState extends State<UpdateDialog> {
     const dockerCommand =
         'docker-compose down\ndocker-compose pull\ndocker-compose up';
 
+    var message = '';
+    if (updateState == UpdateState.done) {
+      message = jsonDecode(updateResponse)['message'];
+      if (message.isEmpty) {
+        message = localization.appUpdated;
+      } else if (message.contains('git pull')) {
+        message += '\n\n' + localization.updateFailHelp;
+      }
+    }
+
     return AlertDialog(
       title: Text(account.isUpdateAvailable
           ? localization.updateAvailable
           : localization.forceUpdate),
       content: updateState == UpdateState.done
-          ? Text('${localization.appUpdated}\n\n$updateResponse')
+          ? Text(message)
           : updateState == UpdateState.loading
               ? Padding(
                   padding: const EdgeInsets.only(top: 10),

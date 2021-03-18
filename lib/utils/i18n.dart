@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'update_fail_help':
+          'Changes to the codebase may be blocking the update, running "git checkout ." to discard the changes may help',
       'client_id_number': 'Client ID Number',
       'count_minutes': ':count Minutes',
       'password_timeout': 'Password Timeout',
@@ -56099,6 +56101,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientIdNumber =>
       _localizedValues[localeCode]['client_id_number'] ??
       _localizedValues['en']['client_id_number'];
+
+  String get updateFailHelp =>
+      _localizedValues[localeCode]['update_fail_help'] ??
+      _localizedValues['en']['update_fail_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -1064,7 +1064,7 @@ void _showAbout(BuildContext context) async {
                     },
                   ),
                 ),
-                if (state.isSelfHosted) ...[
+                if (state.isSelfHosted || !kReleaseMode) ...[
                   AppButton(
                     label: localization.healthCheck.toUpperCase(),
                     iconData: MdiIcons.shieldHalfFull,
