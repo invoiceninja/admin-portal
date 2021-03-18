@@ -24,7 +24,8 @@ class ProjectPresenter extends EntityPresenter {
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
       ProjectFields.number,
-      ProjectFields.clientId,
+      ProjectFields.clientNumber,
+      ProjectFields.clientIdNumber,
       ProjectFields.customValue1,
       ProjectFields.customValue2,
       ProjectFields.customValue3,
@@ -37,13 +38,17 @@ class ProjectPresenter extends EntityPresenter {
   Widget getField({String field, BuildContext context}) {
     final project = entity as ProjectEntity;
     final state = StoreProvider.of<AppState>(context).state;
+    final client = state.clientState.get(project.clientId);
 
     switch (field) {
       case ProjectFields.name:
         return Text(project.name);
       case ProjectFields.client:
-      case ProjectFields.clientId:
-        return Text(state.clientState.get(project.clientId).displayName);
+        return Text(client.displayName);
+      case ProjectFields.clientIdNumber:
+        return Text(client.idNumber);
+      case ProjectFields.clientNumber:
+        return Text(client.number);
       case ProjectFields.taskRate:
         return Text(formatNumber(project.taskRate, context));
       case ProjectFields.dueDate:

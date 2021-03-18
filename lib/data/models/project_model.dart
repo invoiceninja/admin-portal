@@ -47,7 +47,8 @@ class ProjectFields {
   static const String number = 'number';
   static const String name = 'name';
   static const String color = 'color';
-  static const String clientId = 'client_id';
+  static const String clientNumber = 'client_number';
+  static const String clientIdNumber = 'client_id_number';
   static const String client = 'client';
   static const String taskRate = 'task_rate';
   static const String dueDate = 'due_date';
@@ -213,13 +214,26 @@ abstract class ProjectEntity extends Object
       case ProjectFields.taskRate:
         response = projectA.taskRate.compareTo(projectB.taskRate);
         break;
-      case ProjectFields.clientId:
       case ProjectFields.client:
         final clientA = clientMap[projectA.clientId] ?? ClientEntity();
         final clientB = clientMap[projectB.clientId] ?? ClientEntity();
         response = clientA.listDisplayName
             .toLowerCase()
             .compareTo(clientB.listDisplayName.toLowerCase());
+        break;
+      case ProjectFields.clientNumber:
+        final clientA = clientMap[projectA.clientId] ?? ClientEntity();
+        final clientB = clientMap[projectB.clientId] ?? ClientEntity();
+        response = clientA.number
+            .toLowerCase()
+            .compareTo(clientB.number.toLowerCase());
+        break;
+      case ProjectFields.clientIdNumber:
+        final clientA = clientMap[projectA.clientId] ?? ClientEntity();
+        final clientB = clientMap[projectB.clientId] ?? ClientEntity();
+        response = clientA.idNumber
+            .toLowerCase()
+            .compareTo(clientB.idNumber.toLowerCase());
         break;
       case ProjectFields.dueDate:
         response = projectA.dueDate.compareTo(projectB.dueDate);
