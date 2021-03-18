@@ -64,7 +64,7 @@ class UserLoginRequest implements StartLoading {
   final String oneTimePassword;
 }
 
-class UserLoginSuccess implements StopLoading {}
+class UserLoginSuccess implements StopLoading, UserVerifiedPassword {}
 
 class UserLoginFailure implements StopLoading {
   UserLoginFailure(this.error);

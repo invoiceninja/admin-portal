@@ -107,7 +107,6 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
             action.idToken)
         .then((user) {
       store.dispatch(SaveAuthUserSuccess(user));
-      store.dispatch(UserVerifiedPassword());
       if (action.completer != null) {
         action.completer.complete();
       }
@@ -135,7 +134,6 @@ Middleware<AppState> _connectOAuthUser(SettingsRepository settingsRepository) {
             action.idToken, action.serverAuthCode)
         .then((user) {
       store.dispatch(ConnecOAuthUserSuccess(user));
-      store.dispatch(UserVerifiedPassword());
       if (action.completer != null) {
         action.completer.complete();
       }
