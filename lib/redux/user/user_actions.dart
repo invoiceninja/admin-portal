@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -140,13 +141,15 @@ class SaveUserRequest implements StartSaving {
   final String idToken;
 }
 
-class SaveUserSuccess implements StopSaving, PersistData, PersistUI {
+class SaveUserSuccess
+    implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
   SaveUserSuccess(this.user);
 
   final UserEntity user;
 }
 
-class AddUserSuccess implements StopSaving, PersistData, PersistUI {
+class AddUserSuccess
+    implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
   AddUserSuccess(this.user);
 
   final UserEntity user;
@@ -172,7 +175,8 @@ class ArchiveUserRequest implements StartSaving {
   final String idToken;
 }
 
-class ArchiveUserSuccess implements StopSaving, PersistData {
+class ArchiveUserSuccess
+    implements StopSaving, PersistData, UserVerifiedPassword {
   ArchiveUserSuccess(this.users);
 
   final List<UserEntity> users;
@@ -198,7 +202,8 @@ class DeleteUserRequest implements StartSaving {
   final String idToken;
 }
 
-class DeleteUserSuccess implements StopSaving, PersistData {
+class DeleteUserSuccess
+    implements StopSaving, PersistData, UserVerifiedPassword {
   DeleteUserSuccess(this.users);
 
   final List<UserEntity> users;
@@ -224,7 +229,8 @@ class RestoreUserRequest implements StartSaving {
   final String idToken;
 }
 
-class RestoreUserSuccess implements StopSaving, PersistData {
+class RestoreUserSuccess
+    implements StopSaving, PersistData, UserVerifiedPassword {
   RestoreUserSuccess(this.users);
 
   final List<UserEntity> users;

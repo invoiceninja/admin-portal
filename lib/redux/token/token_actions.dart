@@ -8,6 +8,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -138,13 +139,15 @@ class SaveTokenRequest implements StartSaving {
   final String idToken;
 }
 
-class SaveTokenSuccess implements StopSaving, PersistData, PersistUI {
+class SaveTokenSuccess
+    implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
   SaveTokenSuccess(this.token);
 
   final TokenEntity token;
 }
 
-class AddTokenSuccess implements StopSaving, PersistData, PersistUI {
+class AddTokenSuccess
+    implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
   AddTokenSuccess(this.token);
 
   final TokenEntity token;

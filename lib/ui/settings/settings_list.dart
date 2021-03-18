@@ -395,6 +395,10 @@ class SettingsSearch extends StatelessWidget {
       [
         'enabled_modules',
       ],
+      [
+        'password_timeout',
+        'web_session_timeout',
+      ],
     ],
     kSettingsInvoiceDesign: [
       [

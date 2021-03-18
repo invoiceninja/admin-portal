@@ -75,6 +75,42 @@ class _AccountManagementState extends State<AccountManagement>
     final state = viewModel.state;
     final company = viewModel.company;
 
+    final durations = [
+      DropdownMenuItem<int>(
+        child: Text(localization.never),
+        value: 0,
+      ),
+      if (!kReleaseMode)
+        DropdownMenuItem<int>(
+          child: Text('2 minutes'),
+          value: 1000 * 60 * 2,
+        ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countMinutes.replaceFirst(':count', '30')),
+        value: 1000 * 60 * 30,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countHours.replaceFirst(':count', '2')),
+        value: 1000 * 60 * 60 * 2,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countHours.replaceFirst(':count', '8')),
+        value: 1000 * 60 * 60 * 8,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDay),
+        value: 1000 * 60 * 60 * 24,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDays.replaceFirst(':count', '7')),
+        value: 1000 * 60 * 60 * 24 * 7,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDays.replaceFirst(':count', '30')),
+        value: 1000 * 60 * 60 * 24 * 30,
+      ),
+    ];
+
     return EditScaffold(
       title: localization.accountManagement,
       onSavePressed: viewModel.onSavePressed,
@@ -129,40 +165,18 @@ class _AccountManagementState extends State<AccountManagement>
               FormCard(
                 children: [
                   AppDropdownButton<int>(
+                    labelText: localization.passwordTimeout,
+                    value: company.passwordTimeout,
+                    onChanged: (dynamic value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..passwordTimeout = value)),
+                    items: durations,
+                  ),
+                  AppDropdownButton<int>(
                     labelText: localization.webSessionTimeout,
                     value: company.sessionTimeout,
                     onChanged: (dynamic value) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..sessionTimeout = value)),
-                    items: [
-                      DropdownMenuItem<int>(
-                        child: Text(localization.never),
-                        value: 0,
-                      ),
-                      if (!kReleaseMode)
-                        DropdownMenuItem<int>(
-                          child: Text('2 minutes'),
-                          value: 1000 * 60 * 2,
-                        ),
-                      DropdownMenuItem<int>(
-                        child: Text(localization.countHours
-                            .replaceFirst(':count', '8')),
-                        value: 1000 * 60 * 60 * 8,
-                      ),
-                      DropdownMenuItem<int>(
-                        child: Text(localization.countDay),
-                        value: 1000 * 60 * 60 * 24,
-                      ),
-                      DropdownMenuItem<int>(
-                        child: Text(
-                            localization.countDays.replaceFirst(':count', '7')),
-                        value: 1000 * 60 * 60 * 24 * 7,
-                      ),
-                      DropdownMenuItem<int>(
-                        child: Text(localization.countDays
-                            .replaceFirst(':count', '30')),
-                        value: 1000 * 60 * 60 * 24 * 30,
-                      ),
-                    ],
+                    items: durations,
                   ),
                   BoolDropdownButton(
                       label: localization.requirePasswordWithSocialLogin,

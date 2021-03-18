@@ -92,6 +92,7 @@ abstract class CompanyEntity extends Object
       calculateExpenseTaxByAmount: false,
       expenseInclusiveTaxes: false,
       sessionTimeout: 0,
+      passwordTimeout: 30 * 60 * 1000,
       oauthPasswordRequired: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
@@ -217,6 +218,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'session_timeout')
   int get sessionTimeout;
+
+  @BuiltValueField(wireName: 'default_password_timeout')
+  int get passwordTimeout;
 
   @BuiltValueField(wireName: 'oauth_password_required')
   bool get oauthPasswordRequired;
@@ -506,6 +510,7 @@ abstract class CompanyEntity extends Object
     ..enableProductDiscount = false
     ..defaultTaskIsDateBased = false
     ..sessionTimeout = 0
+    ..passwordTimeout = 30 * 60 * 1000
     ..oauthPasswordRequired = false
     ..invoiceTaskDatelog = true;
 

@@ -612,6 +612,10 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.newCredit);
       }
 
+      if (userCompany.canCreate(EntityType.task)) {
+        actions.add(EntityAction.newTask);
+      }
+
       if (userCompany.canCreate(EntityType.expense)) {
         actions.add(EntityAction.newExpense);
       }
