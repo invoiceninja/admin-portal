@@ -40,9 +40,25 @@ class _CustomFieldsState extends State<CustomFields>
     super.initState();
     _focusNode = FocusScopeNode();
 
-    final settingsUIState = widget.viewModel.state.settingsUIState;
+    final state = widget.viewModel.state;
+    int tabs = 4;
+
+    [
+      EntityType.invoice,
+      EntityType.payment,
+      EntityType.task,
+      EntityType.vendor,
+      EntityType.expense,
+      EntityType.project,
+    ].forEach((entityType) {
+      if (state.company.isModuleEnabled(entityType)) {
+        tabs++;
+      }
+    });
+
+    final settingsUIState = state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 6, initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -64,6 +80,7 @@ class _CustomFieldsState extends State<CustomFields>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = state.company;
 
     return EditScaffold(
       title: localization.customFields,
@@ -82,12 +99,30 @@ class _CustomFieldsState extends State<CustomFields>
           Tab(
             text: localization.products,
           ),
-          Tab(
-            text: localization.invoices,
-          ),
-          Tab(
-            text: localization.payments,
-          ),
+          if (company.isModuleEnabled(EntityType.invoice))
+            Tab(
+              text: localization.invoices,
+            ),
+          if (company.isModuleEnabled(EntityType.payment))
+            Tab(
+              text: localization.payments,
+            ),
+          if (company.isModuleEnabled(EntityType.project))
+            Tab(
+              text: localization.projects,
+            ),
+          if (company.isModuleEnabled(EntityType.task))
+            Tab(
+              text: localization.tasks,
+            ),
+          if (company.isModuleEnabled(EntityType.vendor))
+            Tab(
+              text: localization.vendors,
+            ),
+          if (company.isModuleEnabled(EntityType.expense))
+            Tab(
+              text: localization.expenses,
+            ),
           Tab(
             text: localization.users,
           ),
@@ -124,23 +159,53 @@ class _CustomFieldsState extends State<CustomFields>
               ),
             ],
           ),
-          ScrollableListView(children: <Widget>[
-            CustomFieldsSettings(
-              viewModel: viewModel,
-              fieldType: CustomFieldType.invoice,
-            ),
-            CustomFieldsSettings(
-              viewModel: viewModel,
-              fieldType: CustomFieldType.surcharge,
-              showChargeTaxes: true,
-            ),
-          ]),
-          ScrollableListView(children: <Widget>[
-            CustomFieldsSettings(
-              viewModel: viewModel,
-              fieldType: CustomFieldType.payment,
-            ),
-          ]),
+          if (company.isModuleEnabled(EntityType.invoice))
+            ScrollableListView(children: <Widget>[
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.invoice,
+              ),
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.surcharge,
+                showChargeTaxes: true,
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.payment))
+            ScrollableListView(children: <Widget>[
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.payment,
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.project))
+            ScrollableListView(children: <Widget>[
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.project,
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.task))
+            ScrollableListView(children: <Widget>[
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.task,
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.vendor))
+            ScrollableListView(children: <Widget>[
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.vendor,
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.expense))
+            ScrollableListView(children: <Widget>[
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.expense,
+              ),
+            ]),
           ScrollableListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
