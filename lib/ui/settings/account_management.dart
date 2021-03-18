@@ -129,6 +129,47 @@ class _AccountManagementState extends State<AccountManagement>
               FormCard(
                 children: [
                   AppDropdownButton<int>(
+                    labelText: localization.passwordTimeout,
+                    value: company.passwordTimeout,
+                    onChanged: (dynamic value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..passwordTimeout = value)),
+                    items: [
+                      DropdownMenuItem<int>(
+                        child: Text(localization.never),
+                        value: 0,
+                      ),
+                      if (!kReleaseMode)
+                        DropdownMenuItem<int>(
+                          child: Text('2 minutes'),
+                          value: 2,
+                        ),
+                      DropdownMenuItem<int>(
+                        child: Text(localization.countMinutes
+                            .replaceFirst(':count', '30')),
+                        value: 30,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text(localization.countHours
+                            .replaceFirst(':count', '8')),
+                        value: 60 * 8,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text(localization.countDay),
+                        value: 60 * 24,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text(
+                            localization.countDays.replaceFirst(':count', '7')),
+                        value: 60 * 24 * 7,
+                      ),
+                      DropdownMenuItem<int>(
+                        child: Text(localization.countDays
+                            .replaceFirst(':count', '30')),
+                        value: 60 * 24 * 30,
+                      ),
+                    ],
+                  ),
+                  AppDropdownButton<int>(
                     labelText: localization.webSessionTimeout,
                     value: company.sessionTimeout,
                     onChanged: (dynamic value) => viewModel.onCompanyChanged(
@@ -143,6 +184,11 @@ class _AccountManagementState extends State<AccountManagement>
                           child: Text('2 minutes'),
                           value: 1000 * 60 * 2,
                         ),
+                      DropdownMenuItem<int>(
+                        child: Text(localization.countMinutes
+                            .replaceFirst(':count', '30')),
+                        value: 1000 * 60 * 30,
+                      ),
                       DropdownMenuItem<int>(
                         child: Text(localization.countHours
                             .replaceFirst(':count', '8')),
