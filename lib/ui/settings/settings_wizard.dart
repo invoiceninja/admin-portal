@@ -68,6 +68,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
     }
 
     final store = StoreProvider.of<AppState>(context);
+    final navigator = Navigator.of(context);
     final state = store.state;
     passwordCallback(
         context: context,
@@ -77,6 +78,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
           completer.future.then((value) {
             final toastCompleter =
                 snackBarCompleter<Null>(context, localization.savedSettings);
+            toastCompleter.future.then((value) => navigator.pop());
             store.dispatch(
               SaveCompanyRequest(
                 completer: toastCompleter,
