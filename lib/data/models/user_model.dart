@@ -307,6 +307,8 @@ abstract class UserEntity extends Object
   bool get isConnectedToGoogle =>
       oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
 
+  bool get isConnectedToGmail => false;
+
   bool get isEmailVerified => emailVerifiedAt != null;
 
   // ignore: unused_element

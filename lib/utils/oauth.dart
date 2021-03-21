@@ -48,6 +48,14 @@ class GoogleOAuth {
 
   static Future<bool> grantOfflineAccess(
       Function(String, String, String) callback) async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+        'openid',
+        'profile',
+        'https://www.googleapis.com/auth/gmail.send',
+      ],
+    );
     var account = await _googleSignIn.grantOfflineAccess();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
