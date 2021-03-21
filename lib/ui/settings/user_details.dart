@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,6 +48,7 @@ class _UserDetailsState extends State<UserDetails>
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
   bool autoValidate = false;
+  bool _connectingGmail = false;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -203,81 +205,104 @@ class _UserDetailsState extends State<UserDetails>
                     left: 18, top: 20, right: 18, bottom: 10),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: OutlineButton(
-                        child: Text((state.user.isConnectedToGoogle
-                                ? localization.disconnectGoogle
-                                : localization.connectGoogle)
-                            .toUpperCase()),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: state.settingsUIState.isChanged
-                            ? null
-                            : () {
-                                if (state.user.isConnectedToGoogle) {
-                                  viewModel.onDisconnectGooglePressed(context);
-                                } else {
-                                  viewModel.onConnectGooglePressed(context);
-                                }
-                              },
-                      ),
-                    ),
-                    SizedBox(width: kTableColumnGap),
-                    if (state.user.isConnectedToGoogle) ...[
+                    if (_connectingGmail)
                       Expanded(
                         child: OutlineButton(
-                          child: Text((state.user.isConnectedToGmail
-                                  ? localization.disconnectGmail
-                                  : localization.connectGmail)
+                          child: Text(localization.login.toUpperCase()),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            viewModel.onConnectGmailPressed(context);
+                          },
+                        ),
+                      )
+                    else ...[
+                      Expanded(
+                        child: OutlineButton(
+                          child: Text((state.user.isConnectedToGoogle
+                                  ? localization.disconnectGoogle
+                                  : localization.connectGoogle)
                               .toUpperCase()),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                           onPressed: state.settingsUIState.isChanged
                               ? null
                               : () {
-                                  if (state.user.isConnectedToGmail) {
-                                    viewModel.onDisconnectGmailPressed(context);
+                                  if (state.user.isConnectedToGoogle) {
+                                    viewModel
+                                        .onDisconnectGooglePressed(context);
                                   } else {
-                                    viewModel.onConnectGmailPressed(context);
+                                    viewModel.onConnectGooglePressed(context);
                                   }
                                 },
                         ),
                       ),
                       SizedBox(width: kTableColumnGap),
-                    ],
-                    Expanded(
-                      child: OutlineButton(
-                        child: Text((state.user.isTwoFactorEnabled
-                                ? localization.disableTwoFactor
-                                : localization.enableTwoFactor)
-                            .toUpperCase()),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: state.settingsUIState.isChanged
-                            ? null
-                            : () {
-                                if (state.user.isTwoFactorEnabled) {
-                                  viewModel.onDisableTwoFactorPressed(context);
-                                } else {
-                                  if (state.user.phone.isEmpty ||
-                                      user.phone.isEmpty) {
-                                    showMessageDialog(
-                                        context: context,
-                                        message: localization
-                                            .enterPhoneToEnableTwoFactor);
-                                    return;
-                                  }
+                      if (state.user.isConnectedToGoogle) ...[
+                        Expanded(
+                          child: OutlineButton(
+                            child: Text((state.user.isConnectedToGmail
+                                    ? localization.disconnectGmail
+                                    : localization.connectGmail)
+                                .toUpperCase()),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            onPressed: state.settingsUIState.isChanged
+                                ? null
+                                : () async {
+                                    if (state.user.isConnectedToGmail) {
+                                      viewModel
+                                          .onDisconnectGmailPressed(context);
+                                    } else {
+                                      final hasScope =
+                                          await GoogleOAuth.requestGmailScope();
+                                      if (hasScope) {
+                                        setState(() {
+                                          _connectingGmail = true;
+                                        });
+                                      }
+                                      //viewModel.onConnectGmailPressed(context);
+                                    }
+                                  },
+                          ),
+                        ),
+                        SizedBox(width: kTableColumnGap),
+                      ],
+                      Expanded(
+                        child: OutlineButton(
+                          child: Text((state.user.isTwoFactorEnabled
+                                  ? localization.disableTwoFactor
+                                  : localization.enableTwoFactor)
+                              .toUpperCase()),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: state.settingsUIState.isChanged
+                              ? null
+                              : () {
+                                  if (state.user.isTwoFactorEnabled) {
+                                    viewModel
+                                        .onDisableTwoFactorPressed(context);
+                                  } else {
+                                    if (state.user.phone.isEmpty ||
+                                        user.phone.isEmpty) {
+                                      showMessageDialog(
+                                          context: context,
+                                          message: localization
+                                              .enterPhoneToEnableTwoFactor);
+                                      return;
+                                    }
 
-                                  showDialog<void>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        _EnableTwoFactor(
-                                            state: viewModel.state),
-                                  );
-                                }
-                              },
+                                    showDialog<void>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          _EnableTwoFactor(
+                                              state: viewModel.state),
+                                    );
+                                  }
+                                },
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
