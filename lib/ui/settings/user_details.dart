@@ -223,6 +223,28 @@ class _UserDetailsState extends State<UserDetails>
                       ),
                     ),
                     SizedBox(width: kTableColumnGap),
+                    if (state.user.isConnectedToGoogle) ...[
+                      Expanded(
+                        child: OutlineButton(
+                          child: Text((state.user.isConnectedToGmail
+                                  ? localization.disconnectGmail
+                                  : localization.connectGmail)
+                              .toUpperCase()),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: state.settingsUIState.isChanged
+                              ? null
+                              : () {
+                                  if (state.user.isConnectedToGmail) {
+                                    viewModel.onDisconnectGmailPressed(context);
+                                  } else {
+                                    viewModel.onConnectGmailPressed(context);
+                                  }
+                                },
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                    ],
                     Expanded(
                       child: OutlineButton(
                         child: Text((state.user.isTwoFactorEnabled

@@ -39,6 +39,8 @@ class UserDetailsVM {
     @required this.onSavePressed,
     @required this.onConnectGooglePressed,
     @required this.onDisconnectGooglePressed,
+    @required this.onConnectGmailPressed,
+    @required this.onDisconnectGmailPressed,
     @required this.onDisableTwoFactorPressed,
   });
 
@@ -49,6 +51,49 @@ class UserDetailsVM {
       state: state,
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
+      onConnectGmailPressed: (context) {
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) async {
+              try {
+                final signedIn = await GoogleOAuth.grantOfflineAccess(
+                    (idToken, accessToken, serverAuthCode) {
+                  if (idToken.isEmpty ||
+                      accessToken.isEmpty ||
+                      serverAuthCode.isEmpty) {
+                    GoogleOAuth.signOut();
+                    showErrorDialog(
+                        context: context,
+                        message: AppLocalization.of(context)
+                            .anErrorOccurredTryAgain);
+                  } else {
+                    print('## TODO...');
+                    /*
+                    store.dispatch(
+                      ConnecOAuthUserRequest(
+                        provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                        password: password,
+                        idToken: idToken,
+                        completer: completer,
+                      ),
+                    );
+                    */
+                  }
+                });
+                if (!signedIn) {
+                  showErrorDialog(
+                      context: context,
+                      message:
+                          AppLocalization.of(context).anErrorOccurredTryAgain);
+                }
+              } catch (error) {
+                showErrorDialog(context: context, message: error);
+              }
+            });
+      },
+      onDisconnectGmailPressed: (context) {
+        //
+      },
       onDisableTwoFactorPressed: (context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).disabledTwoFactor);
@@ -178,5 +223,7 @@ class UserDetailsVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onConnectGooglePressed;
   final Function(BuildContext) onDisconnectGooglePressed;
+  final Function(BuildContext) onConnectGmailPressed;
+  final Function(BuildContext) onDisconnectGmailPressed;
   final Function(BuildContext) onDisableTwoFactorPressed;
 }

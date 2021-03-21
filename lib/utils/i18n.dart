@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'connect_gmail': 'Connect Gmail',
+      'disconnect_gmail': 'Disconnect Gmail',
+      'connected_gmail': 'Successfully connected Gmail',
+      'disconnected_gmail': 'Successfully disconnected Gmail',
       'update_fail_help':
           'Changes to the codebase may be blocking the update, running "git checkout ." to discard the changes may help',
       'client_id_number': 'Client ID Number',
@@ -56105,6 +56109,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get updateFailHelp =>
       _localizedValues[localeCode]['update_fail_help'] ??
       _localizedValues['en']['update_fail_help'];
+
+  String get connectGmail =>
+      _localizedValues[localeCode]['connect_gmail'] ??
+      _localizedValues['en']['connect_gmail'];
+
+  String get disconnectGmail =>
+      _localizedValues[localeCode]['disconnect_gmail'] ??
+      _localizedValues[localeCode]['disconnect_gmail'];
+
+  String get connectedGmail =>
+      _localizedValues[localeCode]['connected_gmail'] ??
+      _localizedValues['en']['connected_gmail'];
+
+  String get disconnectedGmail =>
+      _localizedValues[localeCode]['disconnected_gmail'] ??
+      _localizedValues[localeCode]['disconnected_gmail'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
