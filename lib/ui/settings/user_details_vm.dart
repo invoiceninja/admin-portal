@@ -110,11 +110,9 @@ class UserDetailsVM {
             context: context,
             callback: (password, idToken) async {
               try {
-                final signedIn = await GoogleOAuth.signUp(
-                    (idToken, accessToken, serverAuthCode) {
-                  if (idToken.isEmpty ||
-                      accessToken.isEmpty ||
-                      serverAuthCode.isEmpty) {
+                final signedIn =
+                    await GoogleOAuth.signUp((idToken, accessToken) {
+                  if (idToken.isEmpty || accessToken.isEmpty) {
                     GoogleOAuth.signOut();
                     showErrorDialog(
                         context: context,
@@ -126,7 +124,6 @@ class UserDetailsVM {
                         provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
                         password: password,
                         idToken: idToken,
-                        serverAuthCode: serverAuthCode,
                         completer: completer,
                       ),
                     );
