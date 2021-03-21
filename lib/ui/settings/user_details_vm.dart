@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -87,7 +85,8 @@ class UserDetailsVM {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
-                    final completer = Completer<Null>();
+                    final completer = snackBarCompleter<Null>(context,
+                        AppLocalization.of(context).disconnectedGoogle);
                     completer.future.then((value) {
                       showToast(AppLocalization.of(context).disconnectedGoogle);
                       GoogleOAuth.disconnect();
