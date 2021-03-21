@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
-
 class Constants {
-  static String get hostedApiUrl =>
-      kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
+  //static String get hostedApiUrl => kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
+  static String get hostedApiUrl => kAppProductionUrl;
 }
 
 // TODO remove version once #46609 is fixed

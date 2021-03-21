@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -13,12 +14,18 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsWizard extends StatefulWidget {
+  const SettingsWizard({
+    @required this.user,
+  });
+  final UserEntity user;
+
   @override
   _SettingsWizardState createState() => _SettingsWizardState();
 }
@@ -39,6 +46,9 @@ class _SettingsWizardState extends State<SettingsWizard> {
   @override
   void initState() {
     super.initState();
+
+    _firstNameController.text = widget.user.firstName;
+    _lastNameController.text = widget.user.lastName;
 
     _controllers = [
       _nameController,
@@ -234,9 +244,10 @@ class _SettingsWizardState extends State<SettingsWizard> {
         ),
       ),
       actions: [
-        TextButton(
-            onPressed: _onSavePressed,
-            child: Text(localization.save.toUpperCase()))
+        if (!state.isSaving)
+          TextButton(
+              onPressed: _onSavePressed,
+              child: Text(localization.save.toUpperCase()))
       ],
     );
   }
