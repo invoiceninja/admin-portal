@@ -134,7 +134,13 @@ class _SettingsWizardState extends State<SettingsWizard> {
           state.prefState.enableDarkMode,
         ],
         onPressed: (index) {
-          store.dispatch(UpdateUserPreferences(enableDarkMode: index == 1));
+          final isDark = index == 1;
+          store.dispatch(
+            UpdateUserPreferences(
+              enableDarkMode: isDark,
+              colorTheme: isDark ? kColorThemeDark : kColorThemeLight,
+            ),
+          );
           AppBuilder.of(context).rebuild();
         },
       );

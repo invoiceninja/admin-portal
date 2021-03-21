@@ -814,6 +814,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
         '\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}'
         '\nPassword: $passwordUpdated${authState.hasRecentlyEnteredPassword ? '' : ' [S]'}'
+        '\nThemse: ${prefState.colorTheme}'
         '\n';
   }
 }

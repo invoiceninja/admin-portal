@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_sidebar.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_wizard.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -73,9 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         ScrollController(initialScrollOffset: index * kDashboardPanelHeight)
           ..addListener(onScrollListener);
 
-    /*
-    if ((state.company.settings.name ?? '').isEmpty &&
-        state.companies.length == 1) {
+    if ((state.company.settings.name ?? '').isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         showDialog<SettingsWizard>(
             context: context,
@@ -84,8 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               return SettingsWizard();
             });
       });
-    }    
-     */
+    }
   }
 
   void onScrollListener() {
