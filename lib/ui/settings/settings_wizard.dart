@@ -1,19 +1,31 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsWizard extends StatefulWidget {
+  const SettingsWizard({
+    @required this.user,
+  });
+  final UserEntity user;
+
   @override
   _SettingsWizardState createState() => _SettingsWizardState();
 }
@@ -34,6 +46,9 @@ class _SettingsWizardState extends State<SettingsWizard> {
   @override
   void initState() {
     super.initState();
+
+    _firstNameController.text = widget.user.firstName;
+    _lastNameController.text = widget.user.lastName;
 
     _controllers = [
       _nameController,
@@ -61,6 +76,42 @@ class _SettingsWizardState extends State<SettingsWizard> {
     if (!isValid) {
       return;
     }
+
+    final store = StoreProvider.of<AppState>(context);
+    final navigator = Navigator.of(context);
+    final state = store.state;
+    passwordCallback(
+        context: context,
+        callback: (password, idToken) {
+          final localization = AppLocalization.of(context);
+          final completer = Completer<Null>();
+          completer.future.then((value) {
+            final toastCompleter =
+                snackBarCompleter<Null>(context, localization.savedSettings);
+            toastCompleter.future.then((value) => navigator.pop());
+            store.dispatch(
+              SaveCompanyRequest(
+                completer: toastCompleter,
+                company: state.company.rebuild(
+                  (b) => b
+                    ..settings.name = _nameController.text.trim()
+                    ..settings.currencyId = _currencyId
+                    ..settings.languageId = _languageId,
+                ),
+              ),
+            );
+          });
+          store.dispatch(
+            SaveAuthUserRequest(
+              completer: completer,
+              user: state.user.rebuild((b) => b
+                ..firstName = _firstNameController.text.trim()
+                ..lastName = _lastNameController.text.trim()),
+              password: password,
+              idToken: idToken,
+            ),
+          );
+        });
   }
 
   @override
@@ -134,7 +185,13 @@ class _SettingsWizardState extends State<SettingsWizard> {
           state.prefState.enableDarkMode,
         ],
         onPressed: (index) {
-          store.dispatch(UpdateUserPreferences(enableDarkMode: index == 1));
+          final isDark = index == 1;
+          store.dispatch(
+            UpdateUserPreferences(
+              enableDarkMode: isDark,
+              colorTheme: isDark ? kColorThemeDark : kColorThemeLight,
+            ),
+          );
           AppBuilder.of(context).rebuild();
         },
       );
@@ -187,9 +244,10 @@ class _SettingsWizardState extends State<SettingsWizard> {
         ),
       ),
       actions: [
-        TextButton(
-            onPressed: _onSavePressed,
-            child: Text(localization.save.toUpperCase()))
+        if (!state.isSaving)
+          TextButton(
+              onPressed: _onSavePressed,
+              child: Text(localization.save.toUpperCase()))
       ],
     );
   }

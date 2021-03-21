@@ -52,6 +52,9 @@ class UserDetailsVM {
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
       onConnectGmailPressed: (context) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).connectedGmail);
+
         passwordCallback(
             context: context,
             callback: (password, idToken) async {
@@ -67,17 +70,12 @@ class UserDetailsVM {
                         message: AppLocalization.of(context)
                             .anErrorOccurredTryAgain);
                   } else {
-                    print('## TODO...');
-                    /*
-                    store.dispatch(
-                      ConnecOAuthUserRequest(
-                        provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
-                        password: password,
-                        idToken: idToken,
-                        completer: completer,
-                      ),
-                    );
-                    */
+                    store.dispatch(ConnecGmailUserRequest(
+                      serverAuthCode: serverAuthCode,
+                      idToken: idToken,
+                      completer: completer,
+                      password: password,
+                    ));
                   }
                 });
                 if (!signedIn) {

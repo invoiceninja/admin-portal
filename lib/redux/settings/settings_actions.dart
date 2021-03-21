@@ -143,6 +143,33 @@ class ConnecOAuthUserFailure implements StopSaving {
   final Object error;
 }
 
+class ConnecGmailUserRequest implements StartSaving {
+  ConnecGmailUserRequest({
+    @required this.serverAuthCode,
+    @required this.idToken,
+    this.completer,
+    this.password,
+  });
+
+  final Completer completer;
+  final String idToken;
+  final String password;
+  final String serverAuthCode;
+}
+
+class ConnecGmailUserSuccess
+    implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
+  ConnecGmailUserSuccess(this.user);
+
+  final UserEntity user;
+}
+
+class ConnecGmailUserFailure implements StopSaving {
+  ConnecGmailUserFailure(this.error);
+
+  final Object error;
+}
+
 class FilterSettings implements PersistUI {
   FilterSettings(this.filter);
 
