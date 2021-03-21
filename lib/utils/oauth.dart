@@ -46,10 +46,13 @@ class GoogleOAuth {
     }
   }
 
+  static Future<bool> requestGmailScope() async {
+    return await _googleSignIn
+        .requestScopes(['https://www.googleapis.com/auth/gmail.send']);
+  }
+
   static Future<bool> grantOfflineAccess(
       Function(String, String, String) callback) async {
-    //final getScope = await _googleSignIn.requestScopes(['https://www.googleapis.com/auth/gmail.send']);
-    //print('## GET SCOPE: $getScope');
     var account = await _googleSignIn.grantOfflineAccess();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
