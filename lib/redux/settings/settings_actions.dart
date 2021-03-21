@@ -103,7 +103,8 @@ class SaveAuthUserRequest implements StartSaving {
   final String idToken;
 }
 
-class SaveAuthUserSuccess implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
+class SaveAuthUserSuccess
+    implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
   SaveAuthUserSuccess(this.user);
 
   final UserEntity user;
@@ -119,7 +120,6 @@ class ConnecOAuthUserRequest implements StartSaving {
   ConnecOAuthUserRequest({
     @required this.provider,
     @required this.idToken,
-    @required this.serverAuthCode,
     this.completer,
     this.password,
   });
@@ -128,10 +128,10 @@ class ConnecOAuthUserRequest implements StartSaving {
   final String provider;
   final String password;
   final String idToken;
-  final String serverAuthCode;
 }
 
-class ConnecOAuthUserSuccess implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
+class ConnecOAuthUserSuccess
+    implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
   ConnecOAuthUserSuccess(this.user);
 
   final UserEntity user;

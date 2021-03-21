@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -87,7 +85,8 @@ class UserDetailsVM {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
-                    final completer = Completer<Null>();
+                    final completer = snackBarCompleter<Null>(context,
+                        AppLocalization.of(context).disconnectedGoogle);
                     completer.future.then((value) {
                       showToast(AppLocalization.of(context).disconnectedGoogle);
                       GoogleOAuth.disconnect();
@@ -111,11 +110,9 @@ class UserDetailsVM {
             context: context,
             callback: (password, idToken) async {
               try {
-                final signedIn = await GoogleOAuth.signUp(
-                    (idToken, accessToken, serverAuthCode) {
-                  if (idToken.isEmpty ||
-                      accessToken.isEmpty ||
-                      serverAuthCode.isEmpty) {
+                final signedIn =
+                    await GoogleOAuth.signUp((idToken, accessToken) {
+                  if (idToken.isEmpty || accessToken.isEmpty) {
                     GoogleOAuth.signOut();
                     showErrorDialog(
                         context: context,
@@ -127,7 +124,6 @@ class UserDetailsVM {
                         provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
                         password: password,
                         idToken: idToken,
-                        serverAuthCode: serverAuthCode,
                         completer: completer,
                       ),
                     );

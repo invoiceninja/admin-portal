@@ -1,9 +1,13 @@
 class GoogleOAuth {
-  static Future<bool> signIn(Function(String, String, String) callback, {bool isSilent = false}) async {
+  static Future<bool> signIn(Function(String, String) callback, {bool isSilent = false}) async {
     //
   }
 
-  static Future<bool> signUp(Function(String, String, String) callback) async {
+  static Future<bool> signUp(Function(String, String) callback) async {
+    //
+  }
+
+  static Future<bool> grantOfflineAccess(Function(String, String, String) callback) async {
     //
   }
 

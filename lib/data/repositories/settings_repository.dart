@@ -58,7 +58,6 @@ class SettingsRepository {
     Credentials credentials,
     String password,
     String idToken,
-    String serverAuthCode,
   ) async {
     dynamic response;
 
@@ -69,7 +68,6 @@ class SettingsRepository {
       data: json.encode(
         {
           'id_token': idToken,
-          'server_auth_code': serverAuthCode,
           'provider': UserEntity.OAUTH_PROVIDER_GOOGLE,
         },
       ),

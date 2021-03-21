@@ -32,8 +32,6 @@ class LoginScreen extends StatelessWidget {
             viewModel: viewModel,
           );
         },
-        // TODO remove this
-        onInit: (Store<AppState> store) => GoogleOAuth.signOut(),
       ),
     );
   }
@@ -116,10 +114,9 @@ class LoginVM {
           @required String oneTimePassword,
         }) async {
           try {
-            // TODO enable this
-            //await GoogleOAuth.signOut();
+            await GoogleOAuth.signOut();
             final signedIn = await GoogleOAuth.signIn(
-                (idToken, accessToken, serverAuthCode) {
+                (idToken, accessToken) {
               if (idToken.isEmpty || accessToken.isEmpty) {
                 GoogleOAuth.signOut();
                 completer.completeError(
@@ -129,7 +126,6 @@ class LoginVM {
                   completer: completer,
                   idToken: idToken,
                   accessToken: accessToken,
-                  serverAuthCode: serverAuthCode,
                   url: formatApiUrl(url.trim()),
                   secret: secret.trim(),
                   platform: getPlatform(context),
@@ -150,13 +146,9 @@ class LoginVM {
         onGoogleSignUpPressed:
             (BuildContext context, Completer<Null> completer) async {
           try {
-            // TODO enable this
-            //await GoogleOAuth.signOut();
-            final signedIn = await GoogleOAuth.signUp(
-                (idToken, accessToken, serverAuthCode) {
-              if (idToken.isEmpty ||
-                  accessToken.isEmpty ||
-                  serverAuthCode.isEmpty) {
+            await GoogleOAuth.signOut();
+            final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
+              if (idToken.isEmpty || accessToken.isEmpty) {
                 GoogleOAuth.signOut();
                 completer.completeError(
                     AppLocalization.of(context).anErrorOccurredTryAgain);
@@ -165,7 +157,6 @@ class LoginVM {
                   completer: completer,
                   idToken: idToken,
                   accessToken: accessToken,
-                  serverAuthCode: serverAuthCode,
                 ));
                 completer.future.then(
                     (_) => _handleLogin(context: context, isSignUp: true));
