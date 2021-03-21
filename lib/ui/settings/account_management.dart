@@ -76,10 +76,6 @@ class _AccountManagementState extends State<AccountManagement>
     final company = viewModel.company;
 
     final durations = [
-      DropdownMenuItem<int>(
-        child: Text(localization.never),
-        value: 0,
-      ),
       if (!kReleaseMode)
         DropdownMenuItem<int>(
           child: Text('2 minutes'),
@@ -108,6 +104,10 @@ class _AccountManagementState extends State<AccountManagement>
       DropdownMenuItem<int>(
         child: Text(localization.countDays.replaceFirst(':count', '30')),
         value: 1000 * 60 * 60 * 24 * 30,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.never),
+        value: 0,
       ),
     ];
 
