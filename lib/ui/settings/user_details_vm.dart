@@ -90,7 +90,28 @@ class UserDetailsVM {
             });
       },
       onDisconnectGmailPressed: (context) {
-        //
+        confirmCallback(
+            context: context,
+            callback: () {
+              passwordCallback(
+                  context: context,
+                  callback: (password, idToken) {
+                    final completer = snackBarCompleter<Null>(
+                        context, AppLocalization.of(context).disconnectedGmail);
+                    completer.future.then((value) {
+                      showToast(AppLocalization.of(context).disconnectedGoogle);
+                      GoogleOAuth.disconnect();
+                    });
+                    store.dispatch(
+                      SaveAuthUserRequest(
+                        user: state.user.rebuild((b) => b..oauthUserToken = ''),
+                        password: password,
+                        idToken: idToken,
+                        completer: completer,
+                      ),
+                    );
+                  });
+            });
       },
       onDisableTwoFactorPressed: (context) {
         final completer = snackBarCompleter<Null>(

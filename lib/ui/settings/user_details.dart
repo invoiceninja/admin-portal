@@ -205,7 +205,7 @@ class _UserDetailsState extends State<UserDetails>
                     left: 18, top: 20, right: 18, bottom: 10),
                 child: Row(
                   children: [
-                    if (_connectingGmail)
+                    if (_connectingGmail && !state.user.isConnectedToGmail)
                       Expanded(
                         child: OutlineButton(
                           child: Text(localization.login.toUpperCase()),
@@ -261,7 +261,6 @@ class _UserDetailsState extends State<UserDetails>
                                           _connectingGmail = true;
                                         });
                                       }
-                                      //viewModel.onConnectGmailPressed(context);
                                     }
                                   },
                           ),

@@ -137,6 +137,7 @@ abstract class UserEntity extends Object
       isTwoFactorEnabled: false,
       hasPassword: false,
       lastEmailAddress: '',
+      oauthUserToken: '',
     );
   }
 
@@ -190,6 +191,9 @@ abstract class UserEntity extends Object
 
   @BuiltValueField(wireName: 'last_confirmed_email_address')
   String get lastEmailAddress;
+
+  @BuiltValueField(wireName: 'oauth_user_token')
+  String get oauthUserToken;
 
   @nullable
   @BuiltValueField(wireName: 'company_user')
@@ -307,7 +311,7 @@ abstract class UserEntity extends Object
   bool get isConnectedToGoogle =>
       oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
 
-  bool get isConnectedToGmail => false;
+  bool get isConnectedToGmail => oauthUserToken.isNotEmpty;
 
   bool get isEmailVerified => emailVerifiedAt != null;
 
@@ -315,7 +319,8 @@ abstract class UserEntity extends Object
   static void _initializeBuilder(UserEntityBuilder builder) => builder
     ..isTwoFactorEnabled = false
     ..hasPassword = false
-    ..lastEmailAddress = '';
+    ..lastEmailAddress = ''
+    ..oauthUserToken = '';
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }
