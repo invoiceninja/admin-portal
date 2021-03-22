@@ -313,6 +313,9 @@ class SettingsSearch extends StatelessWidget {
         'email',
         'phone',
         'accent_color',
+        'connect_google',
+        'connect_gmail',
+        'enable_two_factor',
       ],
       [
         'notifications',
@@ -467,6 +470,7 @@ class SettingsSearch extends StatelessWidget {
     ],
     kSettingsEmailSettings: [
       [
+        'send_from_gmail',
         'email_design',
         'reply_to_email',
         'reply_to_name',
