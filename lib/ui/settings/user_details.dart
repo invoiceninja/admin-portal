@@ -48,7 +48,6 @@ class _UserDetailsState extends State<UserDetails>
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
   bool autoValidate = false;
-  bool _connectingGmail = false;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -205,18 +204,7 @@ class _UserDetailsState extends State<UserDetails>
                     left: 18, top: 20, right: 18, bottom: 10),
                 child: Row(
                   children: [
-                    if (_connectingGmail && !state.user.isConnectedToGmail)
-                      Expanded(
-                        child: OutlineButton(
-                          child: Text(localization.login.toUpperCase()),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                          onPressed: () {
-                            viewModel.onConnectGmailPressed(context);
-                          },
-                        ),
-                      )
-                    else ...[
+                    if (state.isHosted) ...[
                       Expanded(
                         child: OutlineButton(
                           child: Text((state.user.isConnectedToGoogle
@@ -238,24 +226,23 @@ class _UserDetailsState extends State<UserDetails>
                         ),
                       ),
                       SizedBox(width: kTableColumnGap),
-                      if (state.user.isConnectedToGoogle) ...[
-                        Expanded(
-                          child: OutlineButton(
-                            child: Text((state.user.isConnectedToGmail
-                                    ? localization.disconnectGmail
-                                    : localization.connectGmail)
-                                .toUpperCase()),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            onPressed: state.settingsUIState.isChanged
-                                ? null
-                                : () async {
-                                    if (state.user.isConnectedToGmail) {
-                                      viewModel
-                                          .onDisconnectGmailPressed(context);
-                                    } else {
-                                      viewModel.onConnectGmailPressed(context);
-                                      /*
+                      Expanded(
+                        child: OutlineButton(
+                          child: Text((state.user.isConnectedToGmail
+                                  ? localization.disconnectGmail
+                                  : localization.connectGmail)
+                              .toUpperCase()),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: state.settingsUIState.isChanged ||
+                                  !state.user.isConnectedToGoogle
+                              ? null
+                              : () async {
+                                  if (state.user.isConnectedToGmail) {
+                                    viewModel.onDisconnectGmailPressed(context);
+                                  } else {
+                                    viewModel.onConnectGmailPressed(context);
+                                    /*
                                       final hasScope =
                                           await GoogleOAuth.requestGmailScope();
                                       if (hasScope) {
@@ -264,47 +251,45 @@ class _UserDetailsState extends State<UserDetails>
                                         });
                                       }
                                       */
-                                    }
-                                  },
-                          ),
-                        ),
-                        SizedBox(width: kTableColumnGap),
-                      ],
-                      Expanded(
-                        child: OutlineButton(
-                          child: Text((state.user.isTwoFactorEnabled
-                                  ? localization.disableTwoFactor
-                                  : localization.enableTwoFactor)
-                              .toUpperCase()),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                          onPressed: state.settingsUIState.isChanged
-                              ? null
-                              : () {
-                                  if (state.user.isTwoFactorEnabled) {
-                                    viewModel
-                                        .onDisableTwoFactorPressed(context);
-                                  } else {
-                                    if (state.user.phone.isEmpty ||
-                                        user.phone.isEmpty) {
-                                      showMessageDialog(
-                                          context: context,
-                                          message: localization
-                                              .enterPhoneToEnableTwoFactor);
-                                      return;
-                                    }
-
-                                    showDialog<void>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          _EnableTwoFactor(
-                                              state: viewModel.state),
-                                    );
                                   }
                                 },
                         ),
                       ),
+                      SizedBox(width: kTableColumnGap),
                     ],
+                    Expanded(
+                      child: OutlineButton(
+                        child: Text((state.user.isTwoFactorEnabled
+                                ? localization.disableTwoFactor
+                                : localization.enableTwoFactor)
+                            .toUpperCase()),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: state.settingsUIState.isChanged
+                            ? null
+                            : () {
+                                if (state.user.isTwoFactorEnabled) {
+                                  viewModel.onDisableTwoFactorPressed(context);
+                                } else {
+                                  if (state.user.phone.isEmpty ||
+                                      user.phone.isEmpty) {
+                                    showMessageDialog(
+                                        context: context,
+                                        message: localization
+                                            .enterPhoneToEnableTwoFactor);
+                                    return;
+                                  }
+
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        _EnableTwoFactor(
+                                            state: viewModel.state),
+                                  );
+                                }
+                              },
+                      ),
+                    ),
                   ],
                 ),
               ),
