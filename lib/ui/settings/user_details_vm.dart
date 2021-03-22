@@ -98,10 +98,6 @@ class UserDetailsVM {
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(
                         context, AppLocalization.of(context).disconnectedGmail);
-                    completer.future.then((value) {
-                      showToast(AppLocalization.of(context).disconnectedGoogle);
-                      GoogleOAuth.disconnect();
-                    });
                     store.dispatch(
                       SaveAuthUserRequest(
                         user: state.user.rebuild((b) => b..oauthUserToken = ''),
@@ -152,7 +148,6 @@ class UserDetailsVM {
                     final completer = snackBarCompleter<Null>(context,
                         AppLocalization.of(context).disconnectedGoogle);
                     completer.future.then((value) {
-                      showToast(AppLocalization.of(context).disconnectedGoogle);
                       GoogleOAuth.disconnect();
                     });
                     store.dispatch(

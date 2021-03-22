@@ -61,7 +61,7 @@ class GoogleOAuth {
 
       return true;
     } else {
-      print('## Error: grant offlien failed');
+      print('## Error: grant offline failed');
       return false;
     }
   }
