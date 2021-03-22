@@ -76,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     if (false && (state.company.settings.name ?? '').isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
-        showDialog<SettingsWizard>(
+        showDialog<void>(
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
