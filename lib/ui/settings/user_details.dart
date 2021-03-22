@@ -254,6 +254,8 @@ class _UserDetailsState extends State<UserDetails>
                                       viewModel
                                           .onDisconnectGmailPressed(context);
                                     } else {
+                                      viewModel.onConnectGmailPressed(context);
+                                      /*
                                       final hasScope =
                                           await GoogleOAuth.requestGmailScope();
                                       if (hasScope) {
@@ -261,6 +263,7 @@ class _UserDetailsState extends State<UserDetails>
                                           _connectingGmail = true;
                                         });
                                       }
+                                      */
                                     }
                                   },
                           ),
