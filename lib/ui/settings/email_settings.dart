@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -146,20 +149,42 @@ class _EmailSettingsState extends State<EmailSettings> {
               ),
               if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: DynamicSelector(
-                    onChanged: (userId) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..gmailSendingUserId = userId)),
-                    entityType: EntityType.user,
-                    entityId: settings.gmailSendingUserId,
-                    entityIds: gmailUserIds,
-                    overrideSuggestedLabel: (entity) {
-                      final user = entity as UserEntity;
-                      return '${user.fullName} <${user.email}>';
-                    },
+                if (gmailUserIds.isEmpty) ...[
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlineButton(
+                          child: Text(localization.connectGmail.toUpperCase()),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            final store = StoreProvider.of<AppState>(context);
+                            store.dispatch(ViewSettings(
+                              navigator: Navigator.of(context),
+                              section: kSettingsUserDetails,
+                            ));
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                ] else
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: DynamicSelector(
+                      onChanged: (userId) => viewModel.onSettingsChanged(
+                          settings
+                              .rebuild((b) => b..gmailSendingUserId = userId)),
+                      entityType: EntityType.user,
+                      entityId: settings.gmailSendingUserId,
+                      entityIds: gmailUserIds,
+                      overrideSuggestedLabel: (entity) {
+                        final user = entity as UserEntity;
+                        return '${user.fullName} <${user.email}>';
+                      },
+                    ),
                   ),
-                ),
             ]),
           ],
           FormCard(
