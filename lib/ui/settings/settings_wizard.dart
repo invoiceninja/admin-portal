@@ -82,9 +82,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
       final credentials = state.credentials;
       final url = '${credentials.url}/check_subdomain';
 
-      setState(() => _isSubdomainUnique = false);
-
       if (subdomain.isEmpty) {
+        setState(() => _isSubdomainUnique = false);
         return;
       }
 
@@ -249,14 +248,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
       validator: (value) {
         if (value.isEmpty) {
           return localization.pleaseEnterAValue;
-        } else if (!_isSubdomainUnique) {
+        } else if (!_isCheckingSubdomain && !_isSubdomainUnique) {
           return localization.subdomainIsNotAvailable;
         }
 
         return null;
       },
       suffixIcon: Icon(_isCheckingSubdomain
-          ? Icons.help_outline
+          ? Icons.pending_outlined
           : _isSubdomainUnique
               ? Icons.check_circle_outline
               : Icons.error_outline),
