@@ -267,13 +267,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
     );
 
     return AlertDialog(
-      title: Text(localization.welcomeToInvoiceNinja),
+      title:
+          isMobile(context) ? Text(localization.welcomeToInvoiceNinja) : null,
       content: AppForm(
         focusNode: _focusNode,
         formKey: _formKey,
         child: SingleChildScrollView(
           child: Container(
-            width: isMobile(context) ? double.infinity : 400,
+            width: isMobile(context) ? double.infinity : 500,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: isMobile(context)
@@ -289,9 +290,24 @@ class _SettingsWizardState extends State<SettingsWizard> {
                   : [
                       Row(
                         children: [
+                          Expanded(
+                              child: Text(
+                            localization.welcomeToInvoiceNinja,
+                            style: Theme.of(context).textTheme.headline6,
+                          )),
+                          if (state.isHosted) ...[
+                            SizedBox(width: kTableColumnGap),
+                            Flexible(child: darkMode),
+                          ]
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        children: [
                           Expanded(child: companyName),
                           SizedBox(width: kTableColumnGap),
-                          Expanded(child: darkMode),
+                          Expanded(
+                              child: state.isHosted ? subdomain : darkMode),
                         ],
                       ),
                       Row(
@@ -308,14 +324,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
                           Expanded(child: currency),
                         ],
                       ),
-                      if (state.isHosted)
-                        Row(
-                          children: [
-                            Expanded(child: subdomain),
-                            SizedBox(width: kTableColumnGap),
-                            Expanded(child: SizedBox()),
-                          ],
-                        ),
                     ],
             ),
           ),
