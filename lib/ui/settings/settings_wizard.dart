@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -34,12 +36,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
       GlobalKey<FormState>(debugLabel: '_settingsWizard');
   final FocusScopeNode _focusNode = FocusScopeNode();
   bool _autoValidate = false;
+  bool _isSubdomainUnique = false;
   final _nameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _subdomainController = TextEditingController();
   String _currencyId = kCurrencyUSDollar;
   String _languageId = kLanguageEnglish;
+  final _webClient = WebClient();
 
   List<TextEditingController> _controllers = [];
 
@@ -67,7 +71,29 @@ class _SettingsWizardState extends State<SettingsWizard> {
     super.dispose();
   }
 
+  void _validateSubdomain() {
+    print('## VALIDATE');
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final credentials = state.credentials;
+    final url = '${credentials.url}/check_subdomain';
+
+    _webClient
+        .post(url, credentials.token,
+            data: jsonEncode(
+              {'subdomain': 'test'},
+            ))
+        .then((dynamic data) {
+      print('## DATA: $data');
+    }).catchError((Object error) {
+      showErrorDialog(context: context, message: '$error');
+    });
+  }
+
   void _onSavePressed() {
+    _validateSubdomain();
+    return;
+
     final bool isValid = _formKey.currentState.validate();
 
     setState(() {
