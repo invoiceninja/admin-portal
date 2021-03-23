@@ -77,15 +77,18 @@ class _SettingsWizardState extends State<SettingsWizard> {
   void _validateSubdomain() {
     _debouncer.run(() {
       final subdomain = _subdomainController.text.trim();
+      final store = StoreProvider.of<AppState>(context);
+      final state = store.state;
+      final credentials = state.credentials;
+      final url = '${credentials.url}/check_subdomain';
+
+      setState(() => _isSubdomainUnique = false);
 
       if (subdomain.isEmpty) {
         return;
       }
 
-      final store = StoreProvider.of<AppState>(context);
-      final state = store.state;
-      final credentials = state.credentials;
-      final url = '${credentials.url}/check_subdomain';
+      setState(() => _isCheckingSubdomain = true);
 
       _webClient
           .post(url, credentials.token,
@@ -94,10 +97,15 @@ class _SettingsWizardState extends State<SettingsWizard> {
               ))
           .then((dynamic data) {
         print('## DATA: $data');
-        setState(() => _isSubdomainUnique = true);
+        setState(() {
+          _isSubdomainUnique = true;
+          _isCheckingSubdomain = false;
+        });
       }).catchError((Object error) {
-        setState(() => _isSubdomainUnique = false);
-        //showErrorDialog(context: context, message: '$error');
+        setState(() {
+          _isSubdomainUnique = false;
+          _isCheckingSubdomain = false;
+        });
       });
     });
   }
@@ -109,7 +117,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       _autoValidate = !isValid;
     });
 
-    if (!isValid) {
+    if (!isValid || _isCheckingSubdomain) {
       return;
     }
 
@@ -247,9 +255,11 @@ class _SettingsWizardState extends State<SettingsWizard> {
 
         return null;
       },
-      suffixIcon: _isCheckingSubdomain
-          ? null
-          : Icon(_isSubdomainUnique ? Icons.check_circle : Icons.error_outline),
+      suffixIcon: Icon(_isCheckingSubdomain
+          ? Icons.help_outline
+          : _isSubdomainUnique
+              ? Icons.check_circle_outline
+              : Icons.error_outline),
       onChanged: (value) => _validateSubdomain(),
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r'[a-z0-9\-]')),
