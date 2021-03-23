@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'subdomain_is_not_available': 'Subdomain is not available',
       'connect_gmail': 'Connect Gmail',
       'disconnect_gmail': 'Disconnect Gmail',
       'connected_gmail': 'Successfully connected Gmail',
@@ -56125,6 +56126,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get disconnectedGmail =>
       _localizedValues[localeCode]['disconnected_gmail'] ??
       _localizedValues[localeCode]['disconnected_gmail'];
+
+  String get subdomainIsNotAvailable =>
+      _localizedValues[localeCode]['subdomain_is_not_available'] ??
+      _localizedValues[localeCode]['subdomain_is_not_available'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

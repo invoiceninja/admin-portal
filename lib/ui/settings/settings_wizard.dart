@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -75,7 +76,12 @@ class _SettingsWizardState extends State<SettingsWizard> {
 
   void _validateSubdomain() {
     _debouncer.run(() {
-      print('## VALIDATE');
+      final subdomain = _subdomainController.text.trim();
+
+      if (subdomain.isEmpty) {
+        return;
+      }
+
       final store = StoreProvider.of<AppState>(context);
       final state = store.state;
       final credentials = state.credentials;
@@ -84,12 +90,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
       _webClient
           .post(url, credentials.token,
               data: jsonEncode(
-                {'subdomain': 'test'},
+                {'subdomain': subdomain},
               ))
           .then((dynamic data) {
         print('## DATA: $data');
+        setState(() => _isSubdomainUnique = true);
       }).catchError((Object error) {
-        showErrorDialog(context: context, message: '$error');
+        setState(() => _isSubdomainUnique = false);
+        //showErrorDialog(context: context, message: '$error');
       });
     });
   }
@@ -230,12 +238,22 @@ class _SettingsWizardState extends State<SettingsWizard> {
       label: localization.subdomain,
       autovalidate: _autoValidate,
       controller: _subdomainController,
-      validator: (value) =>
-          value.isEmpty ? localization.pleaseEnterAValue : null,
+      validator: (value) {
+        if (value.isEmpty) {
+          return localization.pleaseEnterAValue;
+        } else if (!_isSubdomainUnique) {
+          return localization.subdomainIsNotAvailable;
+        }
+
+        return null;
+      },
       suffixIcon: _isCheckingSubdomain
           ? null
           : Icon(_isSubdomainUnique ? Icons.check_circle : Icons.error_outline),
       onChanged: (value) => _validateSubdomain(),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'[a-z0-9\-]')),
+      ],
     );
 
     return AlertDialog(
