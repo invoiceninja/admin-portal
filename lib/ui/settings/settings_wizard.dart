@@ -35,14 +35,16 @@ class _SettingsWizardState extends State<SettingsWizard> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_settingsWizard');
   final FocusScopeNode _focusNode = FocusScopeNode();
+  final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
   bool _autoValidate = false;
   bool _isSubdomainUnique = false;
+  bool _isCheckingSubdomain = false;
+  String _currencyId = kCurrencyUSDollar;
+  String _languageId = kLanguageEnglish;
   final _nameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _subdomainController = TextEditingController();
-  String _currencyId = kCurrencyUSDollar;
-  String _languageId = kLanguageEnglish;
   final _webClient = WebClient();
 
   List<TextEditingController> _controllers = [];
@@ -72,28 +74,27 @@ class _SettingsWizardState extends State<SettingsWizard> {
   }
 
   void _validateSubdomain() {
-    print('## VALIDATE');
-    final store = StoreProvider.of<AppState>(context);
-    final state = store.state;
-    final credentials = state.credentials;
-    final url = '${credentials.url}/check_subdomain';
+    _debouncer.run(() {
+      print('## VALIDATE');
+      final store = StoreProvider.of<AppState>(context);
+      final state = store.state;
+      final credentials = state.credentials;
+      final url = '${credentials.url}/check_subdomain';
 
-    _webClient
-        .post(url, credentials.token,
-            data: jsonEncode(
-              {'subdomain': 'test'},
-            ))
-        .then((dynamic data) {
-      print('## DATA: $data');
-    }).catchError((Object error) {
-      showErrorDialog(context: context, message: '$error');
+      _webClient
+          .post(url, credentials.token,
+              data: jsonEncode(
+                {'subdomain': 'test'},
+              ))
+          .then((dynamic data) {
+        print('## DATA: $data');
+      }).catchError((Object error) {
+        showErrorDialog(context: context, message: '$error');
+      });
     });
   }
 
   void _onSavePressed() {
-    _validateSubdomain();
-    return;
-
     final bool isValid = _formKey.currentState.validate();
 
     setState(() {
@@ -231,6 +232,10 @@ class _SettingsWizardState extends State<SettingsWizard> {
       controller: _subdomainController,
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
+      suffixIcon: _isCheckingSubdomain
+          ? null
+          : Icon(_isSubdomainUnique ? Icons.check_circle : Icons.error_outline),
+      onChanged: (value) => _validateSubdomain(),
     );
 
     return AlertDialog(
