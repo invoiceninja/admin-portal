@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -34,6 +35,7 @@ class DecoratedFormField extends StatelessWidget {
     this.isMoney = false,
     this.isPercent = false,
     this.showClear = true,
+    this.inputFormatters,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -61,6 +63,7 @@ class DecoratedFormField extends StatelessWidget {
   final bool isMoney;
   final bool isPercent;
   final bool showClear;
+  final List<TextInputFormatter> inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +140,7 @@ class DecoratedFormField extends StatelessWidget {
               ? TextInputAction.done
               : TextInputAction.next,
       onChanged: onChanged,
+      inputFormatters: inputFormatters,
       onFieldSubmitted: (value) {
         if (onFieldSubmitted != null) {
           return onFieldSubmitted(value);

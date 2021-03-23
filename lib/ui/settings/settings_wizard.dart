@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -34,12 +37,18 @@ class _SettingsWizardState extends State<SettingsWizard> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_settingsWizard');
   final FocusScopeNode _focusNode = FocusScopeNode();
+  final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
   bool _autoValidate = false;
+  bool _isSaving = false;
+  bool _isSubdomainUnique = false;
+  bool _isCheckingSubdomain = false;
+  String _currencyId = kCurrencyUSDollar;
+  String _languageId = kLanguageEnglish;
   final _nameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  String _currencyId = kCurrencyUSDollar;
-  String _languageId = kLanguageEnglish;
+  final _subdomainController = TextEditingController();
+  final _webClient = WebClient();
 
   List<TextEditingController> _controllers = [];
 
@@ -54,6 +63,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       _nameController,
       _firstNameController,
       _lastNameController,
+      _subdomainController,
     ];
   }
 
@@ -66,6 +76,45 @@ class _SettingsWizardState extends State<SettingsWizard> {
     super.dispose();
   }
 
+  void _validateSubdomain() {
+    _debouncer.run(() {
+      if (_isCheckingSubdomain) {
+        return;
+      }
+
+      final subdomain = _subdomainController.text.trim();
+      final store = StoreProvider.of<AppState>(context);
+      final state = store.state;
+      final credentials = state.credentials;
+      final url = '${credentials.url}/check_subdomain';
+
+      if (subdomain.isEmpty) {
+        setState(() => _isSubdomainUnique = false);
+        return;
+      }
+
+      setState(() => _isCheckingSubdomain = true);
+
+      _webClient
+          .post(url, credentials.token,
+              data: jsonEncode(
+                {'subdomain': subdomain},
+              ))
+          .then((dynamic data) {
+        print('## DATA: $data');
+        setState(() {
+          _isSubdomainUnique = true;
+          _isCheckingSubdomain = false;
+        });
+      }).catchError((Object error) {
+        setState(() {
+          _isSubdomainUnique = false;
+          _isCheckingSubdomain = false;
+        });
+      });
+    });
+  }
+
   void _onSavePressed() {
     final bool isValid = _formKey.currentState.validate();
 
@@ -73,13 +122,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
       _autoValidate = !isValid;
     });
 
-    if (!isValid) {
+    if (!isValid || _isCheckingSubdomain) {
       return;
     }
 
     final store = StoreProvider.of<AppState>(context);
     final navigator = Navigator.of(context);
     final state = store.state;
+
     passwordCallback(
         context: context,
         callback: (password, idToken) {
@@ -88,19 +138,28 @@ class _SettingsWizardState extends State<SettingsWizard> {
           completer.future.then((value) {
             final toastCompleter =
                 snackBarCompleter<Null>(context, localization.savedSettings);
-            toastCompleter.future.then((value) => navigator.pop());
+            toastCompleter.future
+                .then((value) => navigator.pop())
+                .catchError((Object error) {
+              setState(() => _isSaving = false);
+            });
             store.dispatch(
               SaveCompanyRequest(
                 completer: toastCompleter,
                 company: state.company.rebuild(
                   (b) => b
+                    ..subdomain = _subdomainController.text.trim()
                     ..settings.name = _nameController.text.trim()
                     ..settings.currencyId = _currencyId
                     ..settings.languageId = _languageId,
                 ),
               ),
             );
+          }).catchError((Object error) {
+            setState(() => _isSaving = false);
           });
+
+          setState(() => _isSaving = true);
           store.dispatch(
             SaveAuthUserRequest(
               completer: completer,
@@ -197,54 +256,100 @@ class _SettingsWizardState extends State<SettingsWizard> {
       );
     });
 
+    final subdomain = DecoratedFormField(
+      label: localization.subdomain,
+      autovalidate: _autoValidate,
+      controller: _subdomainController,
+      validator: (value) {
+        if (value.isEmpty) {
+          return localization.pleaseEnterAValue;
+        } else if (!_isCheckingSubdomain && !_isSubdomainUnique) {
+          return localization.subdomainIsNotAvailable;
+        }
+
+        return null;
+      },
+      suffixIcon: Icon(_isCheckingSubdomain
+          ? Icons.pending_outlined
+          : _isSubdomainUnique
+              ? Icons.check_circle_outline
+              : Icons.error_outline),
+      onChanged: (value) => _validateSubdomain(),
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'[a-z0-9\-]')),
+      ],
+    );
+
     return AlertDialog(
-      title: Text(localization.welcomeToInvoiceNinja),
+      title:
+          isMobile(context) ? Text(localization.welcomeToInvoiceNinja) : null,
       content: AppForm(
         focusNode: _focusNode,
         formKey: _formKey,
         child: SingleChildScrollView(
           child: Container(
-            width: isMobile(context) ? double.infinity : 400,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: isMobile(context)
-                  ? [
-                      companyName,
-                      firstName,
-                      lastName,
-                      language,
-                      currency,
-                      darkMode,
-                    ]
-                  : [
-                      Row(
-                        children: [
-                          Expanded(child: companyName),
-                          SizedBox(width: kTableColumnGap),
-                          Expanded(child: darkMode),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(child: firstName),
-                          SizedBox(width: kTableColumnGap),
-                          Expanded(child: lastName),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(child: language),
-                          SizedBox(width: kTableColumnGap),
-                          Expanded(child: currency),
-                        ],
-                      )
-                    ],
-            ),
+            width: isMobile(context) ? double.infinity : 500,
+            child: _isSaving
+                ? LoadingIndicator(
+                    height: 200,
+                  )
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: isMobile(context)
+                        ? [
+                            companyName,
+                            if (state.isHosted) subdomain,
+                            firstName,
+                            lastName,
+                            language,
+                            currency,
+                            darkMode,
+                          ]
+                        : [
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: Text(
+                                  localization.welcomeToInvoiceNinja,
+                                  style: Theme.of(context).textTheme.headline6,
+                                )),
+                                if (state.isHosted) ...[
+                                  SizedBox(width: kTableColumnGap),
+                                  Flexible(child: darkMode),
+                                ]
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Expanded(child: companyName),
+                                SizedBox(width: kTableColumnGap),
+                                Expanded(
+                                    child:
+                                        state.isHosted ? subdomain : darkMode),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(child: firstName),
+                                SizedBox(width: kTableColumnGap),
+                                Expanded(child: lastName),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(child: language),
+                                SizedBox(width: kTableColumnGap),
+                                Expanded(child: currency),
+                              ],
+                            ),
+                          ],
+                  ),
           ),
         ),
       ),
       actions: [
-        if (!state.isSaving)
+        if (!_isSaving)
           TextButton(
               onPressed: _onSavePressed,
               child: Text(localization.save.toUpperCase()))

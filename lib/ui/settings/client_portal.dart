@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -208,11 +210,10 @@ class _ClientPortalState extends State<ClientPortal>
         children: <Widget>[
           ScrollableListView(
             children: <Widget>[
-              /*
-              if (!state.settingsUIState.isFiltered)
+              if (state.isHosted && !state.settingsUIState.isFiltered)
                 FormCard(
                   children: <Widget>[
-                    AppDropdownButton(
+                    AppDropdownButton<String>(
                       labelText: localization.portalMode,
                       value: viewModel.company.portalMode,
                       onChanged: (dynamic value) => viewModel.onCompanyChanged(
@@ -223,7 +224,7 @@ class _ClientPortalState extends State<ClientPortal>
                           child: Text(localization.subdomain),
                           value: kClientPortalModeSubdomain,
                         ),
-                        if (company.isEnterprisePlan)
+                        if (state.isEnterprisePlan)
                           DropdownMenuItem(
                             child: Text(localization.domain),
                             value: kClientPortalModeDomain,
@@ -251,7 +252,6 @@ class _ClientPortalState extends State<ClientPortal>
                     ),
                   ],
                 ),
-               */
               FormCard(
                 children: <Widget>[
                   BoolDropdownButton(
