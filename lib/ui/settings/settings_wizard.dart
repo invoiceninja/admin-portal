@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -38,6 +37,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
   final _nameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
+  final _subdomainController = TextEditingController();
   String _currencyId = kCurrencyUSDollar;
   String _languageId = kLanguageEnglish;
 
@@ -54,6 +54,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       _nameController,
       _firstNameController,
       _lastNameController,
+      _subdomainController,
     ];
   }
 
@@ -94,6 +95,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                 completer: toastCompleter,
                 company: state.company.rebuild(
                   (b) => b
+                    ..subdomain = _subdomainController.text.trim()
                     ..settings.name = _nameController.text.trim()
                     ..settings.currencyId = _currencyId
                     ..settings.languageId = _languageId,
@@ -197,6 +199,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
       );
     });
 
+    final subdomain = DecoratedFormField(
+      label: localization.subdomain,
+      autovalidate: _autoValidate,
+      controller: _subdomainController,
+      validator: (value) =>
+          value.isEmpty ? localization.pleaseEnterAValue : null,
+    );
+
     return AlertDialog(
       title: Text(localization.welcomeToInvoiceNinja),
       content: AppForm(
@@ -210,6 +220,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
               children: isMobile(context)
                   ? [
                       companyName,
+                      if (state.isHosted) subdomain,
                       firstName,
                       lastName,
                       language,
@@ -237,7 +248,15 @@ class _SettingsWizardState extends State<SettingsWizard> {
                           SizedBox(width: kTableColumnGap),
                           Expanded(child: currency),
                         ],
-                      )
+                      ),
+                      if (state.isHosted)
+                        Row(
+                          children: [
+                            Expanded(child: subdomain),
+                            SizedBox(width: kTableColumnGap),
+                            Expanded(child: SizedBox()),
+                          ],
+                        ),
                     ],
             ),
           ),
