@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -18,7 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SubscriptionEditScreen extends StatelessWidget {
   const SubscriptionEditScreen({Key key}) : super(key: key);
-  static const String route = '/subscription/edit';
+  static const String route = '/$kSettings/$kSettingsSubscriptionsEdit';
 
   @override
   Widget build(BuildContext context) {

@@ -202,6 +202,8 @@ IconData getSettingIcon(String section) {
       return getEntityIcon(EntityType.expense);
     case kSettingsTasks:
       return getEntityIcon(EntityType.task);
+    case kSettingsSubscriptions:
+      return getEntityIcon(EntityType.subscription);
     default:
       return null;
   }

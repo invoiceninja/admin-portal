@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class SubscriptionViewScreen extends StatelessWidget {
     Key key,
     this.isFilter = false,
   }) : super(key: key);
-  static const String route = '/subscription/view';
+  static const String route = '/$kSettings/$kSettingsSubscriptionsView';
   final bool isFilter;
 
   @override
