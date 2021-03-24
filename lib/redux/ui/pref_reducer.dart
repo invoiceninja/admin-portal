@@ -329,7 +329,17 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.group.id, entityType: EntityType.group))),
   // STARTER: history - do not remove comment
-TypedReducer<BuiltList<HistoryRecord>, ViewSubscription>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.subscriptionId, entityType: EntityType.subscription))),TypedReducer<BuiltList<HistoryRecord>, EditSubscription>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.subscription.id, entityType: EntityType.subscription))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewSubscription>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.subscriptionId, entityType: EntityType.subscription))),
+  TypedReducer<BuiltList<HistoryRecord>, EditSubscription>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.subscription.id,
+              entityType: EntityType.subscription))),
 
   TypedReducer<BuiltList<HistoryRecord>, ViewTaskStatus>(
       (historyList, action) => _addToHistory(

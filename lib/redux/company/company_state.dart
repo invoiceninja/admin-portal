@@ -52,7 +52,7 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
-subscriptionState: SubscriptionState(),
+      subscriptionState: SubscriptionState(),
 
       taskStatusState: TaskStatusState(),
 
@@ -103,7 +103,7 @@ subscriptionState: SubscriptionState(),
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
-SubscriptionState get subscriptionState;
+  SubscriptionState get subscriptionState;
 
   TaskStatusState get taskStatusState;
 

@@ -9,7 +9,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
-class ViewSubscriptionList extends AbstractNavigatorAction implements PersistUI, StopLoading {
+class ViewSubscriptionList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
   ViewSubscriptionList({
     @required NavigatorState navigator,
     this.force = false,
@@ -120,7 +121,6 @@ class LoadSubscriptionsSuccess implements StopLoading {
   }
 }
 
-
 class SaveSubscriptionRequest implements StartSaving {
   SaveSubscriptionRequest({this.completer, this.subscription});
 
@@ -141,7 +141,7 @@ class AddSubscriptionSuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class SaveSubscriptionFailure implements StopSaving {
-  SaveSubscriptionFailure (this.error);
+  SaveSubscriptionFailure(this.error);
 
   final Object error;
 }
@@ -202,7 +202,6 @@ class RestoreSubscriptionsFailure implements StopSaving {
 
   final List<SubscriptionEntity> subscriptions;
 }
-
 
 class FilterSubscriptions implements PersistUI {
   FilterSubscriptions(this.filter);
@@ -274,7 +273,6 @@ class UpdateSubscriptionTab implements PersistUI {
 
 void handleSubscriptionAction(
     BuildContext context, List<BaseEntity> subscriptions, EntityAction action) {
-
   if (subscriptions.isEmpty) {
     return;
   }
@@ -283,7 +281,8 @@ void handleSubscriptionAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final subscription = subscriptions.first as SubscriptionEntity;
-  final subscriptionIds = subscriptions.map((subscription) => subscription.id).toList();
+  final subscriptionIds =
+      subscriptions.map((subscription) => subscription.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -291,15 +290,18 @@ void handleSubscriptionAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization.restoredSubscription), subscriptionIds));
+          snackBarCompleter<Null>(context, localization.restoredSubscription),
+          subscriptionIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization.archivedSubscription), subscriptionIds));
+          snackBarCompleter<Null>(context, localization.archivedSubscription),
+          subscriptionIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization.deletedSubscription), subscriptionIds));
+          snackBarCompleter<Null>(context, localization.deletedSubscription),
+          subscriptionIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.subscriptionListState.isInMultiselect()) {
@@ -312,23 +314,21 @@ void handleSubscriptionAction(
 
       for (final subscription in subscriptions) {
         if (!store.state.subscriptionListState.isSelected(subscription.id)) {
-          store.dispatch(
-              AddToSubscriptionMultiselect(entity: subscription));
+          store.dispatch(AddToSubscriptionMultiselect(entity: subscription));
         } else {
           store.dispatch(
               RemoveFromSubscriptionMultiselect(entity: subscription));
         }
       }
       break;
-      case EntityAction.more:
-        showEntityActionsDialog(
-          entities: [subscription],
-          context: context,
-        );
-        break;
-      default:
-        print('Error: unhandled action $action in subscription_actions');
-        break;
-
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [subscription],
+        context: context,
+      );
+      break;
+    default:
+      print('Error: unhandled action $action in subscription_actions');
+      break;
   }
 }

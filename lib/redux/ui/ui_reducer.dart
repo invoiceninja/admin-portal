@@ -88,8 +88,8 @@ UIState uiReducer(UIState state, dynamic action) {
         .replace(dashboardUIReducer(state.dashboardUIState, action))
     ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
     // STARTER: reducer - do not remove comment
-..subscriptionUIState.replace(subscriptionUIReducer(state.subscriptionUIState, action))
-
+    ..subscriptionUIState
+        .replace(subscriptionUIReducer(state.subscriptionUIState, action))
     ..taskStatusUIState
         .replace(taskStatusUIReducer(state.taskStatusUIState, action))
     ..expenseCategoryUIState

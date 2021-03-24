@@ -51,7 +51,9 @@ import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
+import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.dart';
 
 import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
@@ -275,8 +277,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
-case EntityType.subscription:
-return subscriptionState.map;
+      case EntityType.subscription:
+        return subscriptionState.map;
 
       case EntityType.taskStatus:
         return taskStatusState.map;
@@ -349,8 +351,8 @@ return subscriptionState.map;
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
-case EntityType.subscription:
-return subscriptionState.list;
+      case EntityType.subscription:
+        return subscriptionState.list;
 
       case EntityType.taskStatus:
         return taskStatusState.list;
@@ -414,8 +416,8 @@ return subscriptionState.list;
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
-case EntityType.subscription:
-return subscriptionUIState;
+      case EntityType.subscription:
+        return subscriptionUIState;
 
       case EntityType.taskStatus:
         return taskStatusUIState;
@@ -483,10 +485,10 @@ return subscriptionUIState;
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
-SubscriptionState get subscriptionState => userCompanyState.subscriptionState;
-ListUIState get subscriptionListState => uiState.subscriptionUIState.listUIState;
-SubscriptionUIState get subscriptionUIState => uiState.subscriptionUIState;
-
+  SubscriptionState get subscriptionState => userCompanyState.subscriptionState;
+  ListUIState get subscriptionListState =>
+      uiState.subscriptionUIState.listUIState;
+  SubscriptionUIState get subscriptionUIState => uiState.subscriptionUIState;
 
   TaskStatusState get taskStatusState => userCompanyState.taskStatusState;
 
@@ -644,7 +646,9 @@ SubscriptionUIState get subscriptionUIState => uiState.subscriptionUIState;
       case CreditEditScreen.route:
         return hasCreditChanges(creditUIState.editing, creditState.map);
       // STARTER: has changes - do not remove comment
-case SubscriptionEditScreen.route: return hasSubscriptionChanges(subscriptionUIState.editing, subscriptionState.map);
+      case SubscriptionEditScreen.route:
+        return hasSubscriptionChanges(
+            subscriptionUIState.editing, subscriptionState.map);
 
       case TaskStatusEditScreen.route:
         return hasTaskStatusChanges(

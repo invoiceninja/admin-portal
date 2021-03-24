@@ -100,7 +100,9 @@ final lastErrorReducer = combineReducers<String>([
     return '${action.error}';
   }),
   // STARTER: errors - do not remove comment
-TypedReducer<String, LoadSubscriptionsFailure>((state, action) { return '${action.error}'; }),
+  TypedReducer<String, LoadSubscriptionsFailure>((state, action) {
+    return '${action.error}';
+  }),
 
   TypedReducer<String, LoadTaskStatusesFailure>((state, action) {
     return '${action.error}';

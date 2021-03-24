@@ -52,8 +52,8 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     // STARTER: reducer - do not remove comment
-..subscriptionState.replace(subscriptionsReducer(state.subscriptionState, action))
-
+    ..subscriptionState
+        .replace(subscriptionsReducer(state.subscriptionState, action))
     ..taskStatusState
         .replace(taskStatusesReducer(state.taskStatusState, action))
     ..expenseCategoryState

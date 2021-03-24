@@ -63,26 +63,31 @@ class SubscriptionEditVM {
       onChanged: (SubscriptionEntity subscription) {
         store.dispatch(UpdateSubscription(subscription));
       },
-    onCancelPressed: (BuildContext context) {
-      createEntity(context: context, entity: SubscriptionEntity(), force: true);
-    },
+      onCancelPressed: (BuildContext context) {
+        createEntity(
+            context: context, entity: SubscriptionEntity(), force: true);
+      },
       onSavePressed: (BuildContext context) {
         final localization = AppLocalization.of(context);
-        final Completer<SubscriptionEntity> completer = new Completer<SubscriptionEntity>();
-        store.dispatch(SaveSubscriptionRequest(completer: completer, subscription: subscription));
+        final Completer<SubscriptionEntity> completer =
+            new Completer<SubscriptionEntity>();
+        store.dispatch(SaveSubscriptionRequest(
+            completer: completer, subscription: subscription));
         return completer.future.then((savedSubscription) {
           showToast(subscription.isNew
-                ? localization.createdSubscription
-                : localization.updatedSubscription);
+              ? localization.createdSubscription
+              : localization.updatedSubscription);
           if (isMobile(context)) {
-                store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
-              if (subscription.isNew) {
-                Navigator.of(context).pushReplacementNamed(SubscriptionViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedSubscription);
-              }
+            store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
+            if (subscription.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(SubscriptionViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedSubscription);
+            }
           } else {
-              viewEntity(context: context, entity: savedSubscription, force: true);
+            viewEntity(
+                context: context, entity: savedSubscription, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

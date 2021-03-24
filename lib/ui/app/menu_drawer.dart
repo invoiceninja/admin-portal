@@ -386,13 +386,6 @@ class MenuDrawer extends StatelessWidget {
                             iconTooltip: localization.newExpense,
                           ),
                           // STARTER: menu - do not remove comment
-DrawerTile(
-company: company,
-entityType: EntityType.subscription,
-icon: getEntityIcon(EntityType.subscription),
-title: localization.subscriptions,
-),
-
                           DrawerTile(
                             company: company,
                             icon: getEntityIcon(EntityType.reports),

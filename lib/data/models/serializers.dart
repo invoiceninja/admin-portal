@@ -129,9 +129,9 @@ part 'serializers.g.dart';
   TaxRateItemResponse,
   TaxRateListResponse,
   // STARTER: serializers - do not remove comment
-SubscriptionEntity,
-SubscriptionListResponse,
-SubscriptionItemResponse,
+  SubscriptionEntity,
+  SubscriptionListResponse,
+  SubscriptionItemResponse,
 
   TaskStatusEntity,
   TaskStatusListResponse,

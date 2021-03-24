@@ -343,9 +343,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                       QuotePdfScreen.route: (context) => QuotePdfScreen(),
                       // STARTER: routes - do not remove comment
-SubscriptionScreen.route: (context) => SubscriptionScreenBuilder(),
-SubscriptionViewScreen.route: (context) => SubscriptionViewScreen(),
-SubscriptionEditScreen.route: (context) => SubscriptionEditScreen(),
+                      SubscriptionScreen.route: (context) =>
+                          SubscriptionScreenBuilder(),
+                      SubscriptionViewScreen.route: (context) =>
+                          SubscriptionViewScreen(),
+                      SubscriptionEditScreen.route: (context) =>
+                          SubscriptionEditScreen(),
 
                       TaskStatusScreen.route: (context) =>
                           TaskStatusScreenBuilder(),

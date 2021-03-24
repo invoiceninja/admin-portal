@@ -3,11 +3,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
 class SubscriptionPresenter extends EntityPresenter {
-
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
-    return [
-
-    ];
+    return [];
   }
 
   static List<String> getAllTableFields(UserCompanyEntity userCompany) {

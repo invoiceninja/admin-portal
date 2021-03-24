@@ -115,8 +115,7 @@ class LoginVM {
         }) async {
           try {
             await GoogleOAuth.signOut();
-            final signedIn = await GoogleOAuth.signIn(
-                (idToken, accessToken) {
+            final signedIn = await GoogleOAuth.signIn((idToken, accessToken) {
               if (idToken.isEmpty || accessToken.isEmpty) {
                 GoogleOAuth.signOut();
                 completer.completeError(

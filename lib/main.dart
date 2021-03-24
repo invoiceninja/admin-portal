@@ -69,8 +69,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreSettingsMiddleware())
         ..addAll(createStoreReportsMiddleware())
         // STARTER: middleware - do not remove comment
-..addAll(createStoreSubscriptionsMiddleware())
-
+        ..addAll(createStoreSubscriptionsMiddleware())
         ..addAll(createStoreTaskStatusesMiddleware())
         ..addAll(createStoreExpenseCategoriesMiddleware())
         ..addAll(createStoreRecurringInvoicesMiddleware())
