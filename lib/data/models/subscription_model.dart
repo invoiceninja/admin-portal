@@ -8,14 +8,16 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 part 'subscription_model.g.dart';
 
 abstract class SubscriptionListResponse
-    implements Built<SubscriptionListResponse, SubscriptionListResponseBuilder> {
-  factory SubscriptionListResponse([void updates(SubscriptionListResponseBuilder b)]) =
+    implements
+        Built<SubscriptionListResponse, SubscriptionListResponseBuilder> {
+  factory SubscriptionListResponse(
+          [void updates(SubscriptionListResponseBuilder b)]) =
       _$SubscriptionListResponse;
 
   SubscriptionListResponse._();
 
   @override
-@memoized
+  @memoized
   int get hashCode;
 
   BuiltList<SubscriptionEntity> get data;
@@ -25,14 +27,16 @@ abstract class SubscriptionListResponse
 }
 
 abstract class SubscriptionItemResponse
-    implements Built<SubscriptionItemResponse, SubscriptionItemResponseBuilder> {
-  factory SubscriptionItemResponse([void updates(SubscriptionItemResponseBuilder b)]) =
+    implements
+        Built<SubscriptionItemResponse, SubscriptionItemResponseBuilder> {
+  factory SubscriptionItemResponse(
+          [void updates(SubscriptionItemResponseBuilder b)]) =
       _$SubscriptionItemResponse;
 
   SubscriptionItemResponse._();
 
   @override
-@memoized
+  @memoized
   int get hashCode;
 
   SubscriptionEntity get data;
@@ -45,8 +49,9 @@ class SubscriptionFields {
   // STARTER: fields - do not remove comment
 }
 
-abstract class SubscriptionEntity extends Object with BaseEntity implements Built<SubscriptionEntity, SubscriptionEntityBuilder> {
-
+abstract class SubscriptionEntity extends Object
+    with BaseEntity
+    implements Built<SubscriptionEntity, SubscriptionEntityBuilder> {
   // STARTER: properties - do not remove comment
 
   factory SubscriptionEntity({String id, AppState state}) {
@@ -60,18 +65,13 @@ abstract class SubscriptionEntity extends Object with BaseEntity implements Buil
   SubscriptionEntity._();
 
   @override
-@memoized
+  @memoized
   int get hashCode;
 
   @override
   EntityType get entityType => EntityType.subscription;
 
-  String get displayName {
-    // STARTER: display name - do not remove comment
-return subscriptions;
-
-  }
-
+  String get displayName => id;
 
   @override
   List<EntityAction> getActions(
@@ -94,23 +94,22 @@ return subscriptions;
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(SubscriptionEntity subscription, String sortField, bool sortAscending) {
+  int compareTo(
+      SubscriptionEntity subscription, String sortField, bool sortAscending) {
     int response = 0;
     final subscriptionA = sortAscending ? this : subscription;
-    final subscriptionB = sortAscending ? subscription: this;
+    final subscriptionB = sortAscending ? subscription : this;
 
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
-            default:
-              print('## ERROR: sort by subscription.$sortField is not implemented');
-              break;
-
+      default:
+        print('## ERROR: sort by subscription.$sortField is not implemented');
+        break;
     }
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
-return subscriptionA.subscriptions.compareTo(subscriptionB.subscriptions);
-
+      return subscriptionA.createdAt.compareTo(subscriptionB.createdAt);
     } else {
       return response;
     }
@@ -147,5 +146,6 @@ return subscriptionA.subscriptions.compareTo(subscriptionB.subscriptions);
   @override
   FormatNumberType get listDisplayAmountType => null;
 
-  static Serializer<SubscriptionEntity> get serializer => _$subscriptionEntitySerializer;
+  static Serializer<SubscriptionEntity> get serializer =>
+      _$subscriptionEntitySerializer;
 }

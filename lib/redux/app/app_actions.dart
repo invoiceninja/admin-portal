@@ -331,7 +331,9 @@ void viewEntitiesByType({
             action = ViewGroupList(navigator: navigator);
             break;
           // STARTER: view list - do not remove comment
-case EntityType.subscription: store.dispatch(ViewSubscriptionList(navigator: navigator)); break;
+          case EntityType.subscription:
+            store.dispatch(ViewSubscriptionList(navigator: navigator));
+            break;
 
           case EntityType.taskStatus:
             store.dispatch(ViewTaskStatusList(navigator: navigator));
@@ -544,7 +546,13 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
-case EntityType.subscription: store.dispatch(ViewSubscription(subscriptionId: entityId, navigator: navigator, force: force,)); break;
+          case EntityType.subscription:
+            store.dispatch(ViewSubscription(
+              subscriptionId: entityId,
+              navigator: navigator,
+              force: force,
+            ));
+            break;
 
           case EntityType.taskStatus:
             store.dispatch(ViewTaskStatus(
@@ -780,7 +788,13 @@ void createEntityByType({
             ));
             break;
           // STARTER: create type - do not remove comment
-case EntityType.subscription: store.dispatch(EditSubscription(navigator: navigator, force: force, subscription: SubscriptionEntity(state: state), )); break;
+          case EntityType.subscription:
+            store.dispatch(EditSubscription(
+              navigator: navigator,
+              force: force,
+              subscription: SubscriptionEntity(state: state),
+            ));
+            break;
 
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
@@ -996,7 +1010,14 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
-case EntityType.subscription: store.dispatch(EditSubscription(navigator: navigator, subscription: entity, force: force, completer: completer, )); break;
+          case EntityType.subscription:
+            store.dispatch(EditSubscription(
+              navigator: navigator,
+              subscription: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
 
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
@@ -1199,7 +1220,12 @@ void editEntity(
             ));
             break;
           // STARTER: edit - do not remove comment
-case EntityType.subscription: store.dispatch(EditSubscription(subscription: entity, navigator: navigator, completer: completer ?? snackBarCompleter<SubscriptionEntity>(context, entity.isNew ? localization.createdSubscription : localization.updatedSubscription),));break;
+          case EntityType.subscription:
+            store.dispatch(EditSubscription(
+                subscription: entity,
+                navigator: navigator,
+                completer: completer));
+            break;
 
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
@@ -1361,7 +1387,9 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
-case EntityType.subscription: handleSubscriptionAction(context, entities, action); break;
+    case EntityType.subscription:
+      handleSubscriptionAction(context, entities, action);
+      break;
 
     case EntityType.taskStatus:
       handleTaskStatusAction(context, entities, action);

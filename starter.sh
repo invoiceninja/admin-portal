@@ -426,7 +426,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: edit - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: entity, navigator: navigator, completer: completer ?? snackBarCompleter<${Module}Entity>(context, entity.isNew ? localization.created${Module} : localization.updated${Module}),));break;${lineBreak}"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: entity, navigator: navigator, completer: completer));break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: actions - do not remove comment"
