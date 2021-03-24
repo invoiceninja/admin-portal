@@ -245,7 +245,13 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     onPressed: _response == null
                         ? null
                         : () async {
-                            final fileName = '${invoice.number}.pdf';
+                            final fileName =
+                                localization.lookup('${invoice.entityType}') +
+                                    '_' +
+                                    (invoice.number.isEmpty
+                                        ? localization.pending
+                                        : invoice.number) +
+                                    '.pdf';
                             if (kIsWeb) {
                               WebUtils.downloadBinaryFile(
                                   fileName, _response.bodyBytes);
