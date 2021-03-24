@@ -46,7 +46,8 @@ abstract class SubscriptionItemResponse
 }
 
 class SubscriptionFields {
-  // STARTER: fields - do not remove comment
+  static const String createdAt = 'created_at';
+  static const String updatedAt = 'updated_at';
 }
 
 abstract class SubscriptionEntity extends Object

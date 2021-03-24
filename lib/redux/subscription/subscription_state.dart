@@ -9,8 +9,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 
 part 'subscription_state.g.dart';
 
-abstract class SubscriptionState implements Built<SubscriptionState, SubscriptionStateBuilder> {
-
+abstract class SubscriptionState
+    implements Built<SubscriptionState, SubscriptionStateBuilder> {
   factory SubscriptionState() {
     return _$SubscriptionState._(
       map: BuiltMap<String, SubscriptionEntity>(),
@@ -46,15 +46,16 @@ abstract class SubscriptionState implements Built<SubscriptionState, Subscriptio
       ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
-
-  static Serializer<SubscriptionState> get serializer => _$subscriptionStateSerializer;
+  static Serializer<SubscriptionState> get serializer =>
+      _$subscriptionStateSerializer;
 }
 
-abstract class SubscriptionUIState extends Object with EntityUIState implements Built<SubscriptionUIState, SubscriptionUIStateBuilder> {
-
+abstract class SubscriptionUIState extends Object
+    with EntityUIState
+    implements Built<SubscriptionUIState, SubscriptionUIStateBuilder> {
   factory SubscriptionUIState() {
     return _$SubscriptionUIState._(
-      listUIState: ListUIState(SubscriptionFields.name),
+      listUIState: ListUIState(SubscriptionFields.createdAt),
       editing: SubscriptionEntity(),
       selectedId: '',
       tabIndex: 0,
@@ -63,7 +64,7 @@ abstract class SubscriptionUIState extends Object with EntityUIState implements 
   SubscriptionUIState._();
 
   @override
-@memoized
+  @memoized
   int get hashCode;
 
   @nullable
@@ -75,5 +76,6 @@ abstract class SubscriptionUIState extends Object with EntityUIState implements 
   @override
   String get editingId => editing.id;
 
-  static Serializer<SubscriptionUIState> get serializer => _$subscriptionUIStateSerializer;
+  static Serializer<SubscriptionUIState> get serializer =>
+      _$subscriptionUIStateSerializer;
 }

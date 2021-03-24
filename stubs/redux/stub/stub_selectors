@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -36,9 +37,8 @@ List<String> dropdownStubsSelector(BuiltMap<String, StubEntity> stubMap,
   return list;
 }
 
-var memoizedFilteredStubList = memo7((
-        String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredStubList = memo6((
+        SelectionState selectionState,
         BuiltMap<String, StubEntity> stubMap,
         BuiltList<String> stubList,
         StaticState staticState,
@@ -47,13 +47,16 @@ var memoizedFilteredStubList = memo7((
     filteredStubsSelector(filterEntityId, filterEntityType, stubMap, stubList, staticState, userMap, stubListState));
 
 List<String> filteredStubsSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, StubEntity> stubMap,
     BuiltList<String> stubList, 
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     ListUIState stubListState) {
+
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = stubList.where((stubId) {
     final stub = stubMap[stubId];
     if (filterEntityId != null && stub.id != filterEntityId) {
@@ -77,11 +80,10 @@ List<String> filteredStubsSelector(
   }).toList();
 
   list.sort((stubAId, stubBId) {
-    return stubMap[stubAId].compareTo(
-      stub: stubMap[stubBId],
-      sortField: stubListState.sortField,
-      sortAscending: stubListState.sortAscending,
-    );
+    final stubA = stubMap[stubAId];
+    final stubB = stubMap[stubBId];
+    return clientA.compareTo(stubB, stubListState.sortField,
+        stubListState.sortAscending, userMap, staticState);
   });
 
 

@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 
 class SubscriptionView extends StatefulWidget {
-
   const SubscriptionView({
     Key key,
     @required this.viewModel,
@@ -28,8 +28,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
       isFilter: widget.isFilter,
       entity: subscription,
       body: ScrollableListView(
-        children: <Widget>[
-        ],
+        children: <Widget>[],
       ),
     );
   }

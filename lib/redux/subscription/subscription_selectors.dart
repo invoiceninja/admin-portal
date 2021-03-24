@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/subscription_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -6,16 +7,19 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownSubscriptionList = memo5(
-    (BuiltMap<String, SubscriptionEntity> subscriptionMap, BuiltList<String> subscriptionList,
-                StaticState staticState,
-                BuiltMap<String, UserEntity> userMap,
+    (BuiltMap<String, SubscriptionEntity> subscriptionMap,
+            BuiltList<String> subscriptionList,
+            StaticState staticState,
+            BuiltMap<String, UserEntity> userMap,
             String clientId) =>
-        dropdownSubscriptionsSelector(subscriptionMap, subscriptionList, staticState, userMap, clientId));
+        dropdownSubscriptionsSelector(
+            subscriptionMap, subscriptionList, staticState, userMap, clientId));
 
-List<String> dropdownSubscriptionsSelector(BuiltMap<String, SubscriptionEntity> subscriptionMap,
-    BuiltList<String> subscriptionList, 
+List<String> dropdownSubscriptionsSelector(
+    BuiltMap<String, SubscriptionEntity> subscriptionMap,
+    BuiltList<String> subscriptionList,
     StaticState staticState,
-    BuiltMap<String, UserEntity> userMap,    
+    BuiltMap<String, UserEntity> userMap,
     String clientId) {
   final list = subscriptionList.where((subscriptionId) {
     final subscription = subscriptionMap[subscriptionId];
@@ -30,64 +34,60 @@ List<String> dropdownSubscriptionsSelector(BuiltMap<String, SubscriptionEntity> 
   list.sort((subscriptionAId, subscriptionBId) {
     final subscriptionA = subscriptionMap[subscriptionAId];
     final subscriptionB = subscriptionMap[subscriptionBId];
-    return subscriptionA.compareTo(subscriptionB, SubscriptionFields.name, true);
+    return subscriptionA.compareTo(
+        subscriptionB, SubscriptionFields.createdAt, true);
   });
 
   return list;
 }
 
-var memoizedFilteredSubscriptionList = memo7((
-        String filterEntityId,
-        EntityType filterEntityType,
+var memoizedFilteredSubscriptionList = memo4((SelectionState selectionState,
         BuiltMap<String, SubscriptionEntity> subscriptionMap,
         BuiltList<String> subscriptionList,
-        StaticState staticState,
-        BuiltMap<String, UserEntity> userMap, 
         ListUIState subscriptionListState) =>
-    filteredSubscriptionsSelector(filterEntityId, filterEntityType, subscriptionMap, subscriptionList, staticState, userMap, subscriptionListState));
+    filteredSubscriptionsSelector(
+      selectionState,
+      subscriptionMap,
+      subscriptionList,
+      subscriptionListState,
+    ));
 
 List<String> filteredSubscriptionsSelector(
-    String filterEntityId,
-    EntityType filterEntityType,
+    SelectionState selectionState,
     BuiltMap<String, SubscriptionEntity> subscriptionMap,
-    BuiltList<String> subscriptionList, 
-    StaticState staticState,
-    BuiltMap<String, UserEntity> userMap,
+    BuiltList<String> subscriptionList,
     ListUIState subscriptionListState) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = subscriptionList.where((subscriptionId) {
     final subscription = subscriptionMap[subscriptionId];
+    if (subscription.id == selectionState.selectedId) {
+      return true;
+    }
+
     if (filterEntityId != null && subscription.id != filterEntityId) {
       return false;
-    } else {
-
-    }
+    } else {}
 
     if (!subscription.matchesStates(subscriptionListState.stateFilters)) {
-      return false;
-    }
-    if (subscriptionListState.custom1Filters.isNotEmpty &&
-        !subscriptionListState.custom1Filters.contains(subscription.customValue1)) {
-      return false;
-    }
-    if (subscriptionListState.custom2Filters.isNotEmpty &&
-        !subscriptionListState.custom2Filters.contains(subscription.customValue2)) {
       return false;
     }
     return subscription.matchesFilter(subscriptionListState.filter);
   }).toList();
 
   list.sort((subscriptionAId, subscriptionBId) {
-    return subscriptionMap[subscriptionAId].compareTo(
-      subscription: subscriptionMap[subscriptionBId],
-      sortField: subscriptionListState.sortField,
-      sortAscending: subscriptionListState.sortAscending,
-    );
+    final subscriptionA = subscriptionMap[subscriptionAId];
+    final subscriptionB = subscriptionMap[subscriptionBId];
+    return subscriptionA.compareTo(subscriptionB,
+        subscriptionListState.sortField, subscriptionListState.sortAscending);
   });
-
 
   return list;
 }
 
-bool hasSubscriptionChanges(
-        SubscriptionEntity subscription, BuiltMap<String, SubscriptionEntity> subscriptionMap) =>
-    subscription.isNew ? subscription.isChanged : subscription != subscriptionMap[subscription.id];
+bool hasSubscriptionChanges(SubscriptionEntity subscription,
+        BuiltMap<String, SubscriptionEntity> subscriptionMap) =>
+    subscription.isNew
+        ? subscription.isChanged
+        : subscription != subscriptionMap[subscription.id];

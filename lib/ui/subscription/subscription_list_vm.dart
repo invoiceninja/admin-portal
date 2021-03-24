@@ -47,7 +47,8 @@ class SubscriptionListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 subscription: subscription,
-                isChecked: isInMultiselect && listState.isSelected(subscription.id),
+                isChecked:
+                    isInMultiselect && listState.isSelected(subscription.id),
               );
             });
       },
@@ -85,23 +86,27 @@ class SubscriptionListVM {
     final state = store.state;
 
     return SubscriptionListVM(
-        state: state,
-        userCompany: state.userCompany,
-        listState: state.subscriptionListState,
-        subscriptionList: memoizedFilteredSubscriptionList(state.subscriptionState.map,
-            state.subscriptionState.list, state.subscriptionListState),
-        subscriptionMap: state.subscriptionState.map,
-        isLoading: state.isLoading,
-        filter: state.subscriptionUIState.listUIState.filter,
-      onEntityAction:
-          (BuildContext context, List<BaseEntity> subscriptions, EntityAction action) =>
+      state: state,
+      userCompany: state.userCompany,
+      listState: state.subscriptionListState,
+      subscriptionList: memoizedFilteredSubscriptionList(
+        state.getUISelection(EntityType.subscription),
+        state.subscriptionState.map,
+        state.subscriptionState.list,
+        state.subscriptionListState,
+      ),
+      subscriptionMap: state.subscriptionState.map,
+      isLoading: state.isLoading,
+      filter: state.subscriptionUIState.listUIState.filter,
+      onEntityAction: (BuildContext context, List<BaseEntity> subscriptions,
+              EntityAction action) =>
           handleSubscriptionAction(context, subscriptions, action),
-        onRefreshed: (context) => _handleRefresh(context),
-              tableColumns:
-                  state.userCompany.settings.getTableColumns(EntityType.subscription) ??
-                      SubscriptionPresenter.getDefaultTableFields(state.userCompany),
-        onSortColumn: (field) => store.dispatch(SortSubscriptions(field)),
-        onClearMultielsect: () => store.dispatch(ClearSubscriptionMultiselect()),
+      onRefreshed: (context) => _handleRefresh(context),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.subscription) ??
+              SubscriptionPresenter.getDefaultTableFields(state.userCompany),
+      onSortColumn: (field) => store.dispatch(SortSubscriptions(field)),
+      onClearMultielsect: () => store.dispatch(ClearSubscriptionMultiselect()),
     );
   }
 
@@ -117,4 +122,4 @@ class SubscriptionListVM {
   final List<String> tableColumns;
   final Function(String) onSortColumn;
   final Function onClearMultielsect;
- }
+}

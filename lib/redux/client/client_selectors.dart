@@ -47,7 +47,6 @@ List<String> filteredClientsSelector(
     ListUIState clientListState,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState) {
-
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 

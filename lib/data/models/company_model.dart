@@ -517,7 +517,7 @@ abstract class CompanyEntity extends Object
     ..passwordTimeout = 30 * 60 * 1000
     ..oauthPasswordRequired = false
     ..invoiceTaskDatelog = true
-    ..subscriptions = BuiltList<SubscriptionEntity>();
+    ..subscriptions.replace(BuiltList<SubscriptionEntity>());
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

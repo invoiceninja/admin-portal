@@ -47,8 +47,12 @@ class SubscriptionScreenVM {
 
     return SubscriptionScreenVM(
       subscriptionMap: state.subscriptionState.map,
-      subscriptionList: memoizedFilteredSubscriptionList(state.subscriptionState.map,
-          state.subscriptionState.list, state.subscriptionListState),
+      subscriptionList: memoizedFilteredSubscriptionList(
+        state.getUISelection(EntityType.subscription),
+        state.subscriptionState.map,
+        state.subscriptionState.list,
+        state.subscriptionListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.subscriptionListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> subscriptions,

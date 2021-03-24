@@ -47,7 +47,9 @@ class SubscriptionListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: subscription,
       isSelected: subscription.id ==
-          (uiState.isEditing ? subscriptionUIState.editing.id : subscriptionUIState.selectedId),
+          (uiState.isEditing
+              ? subscriptionUIState.editing.id
+              : subscriptionUIState.selectedId),
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()
@@ -73,7 +75,7 @@ class SubscriptionListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  subscription.name,
+                  subscription.id,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

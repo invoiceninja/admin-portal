@@ -34,7 +34,8 @@ class SubscriptionScreen extends StatelessWidget {
 
     return ListScaffold(
       entityType: EntityType.subscription,
-      onHamburgerLongPress: () => store.dispatch(StartSubscriptionMultiselect()),
+      onHamburgerLongPress: () =>
+          store.dispatch(StartSubscriptionMultiselect()),
       appBarTitle: ListFilter(
         entityIds: viewModel.subscriptionList,
         filter: state.subscriptionListState.filter,
@@ -46,13 +47,13 @@ class SubscriptionScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.subscription,
         tableColumns: SubscriptionPresenter.getAllTableFields(userCompany),
-        defaultTableColumns: SubscriptionPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns:
+            SubscriptionPresenter.getDefaultTableFields(userCompany),
         onSelectedSortField: (value) {
           store.dispatch(SortSubscriptions(value));
         },
         sortFields: [
-          SubscriptionFields.name,
-          SubscriptionFields.balance,
+          SubscriptionFields.createdAt,
           SubscriptionFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
@@ -65,14 +66,6 @@ class SubscriptionScreen extends StatelessWidget {
             store.dispatch(StartSubscriptionMultiselect());
           }
         },
-        customValues1: company.getCustomFieldValues(CustomFieldType.subscription1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.subscription2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.subscription3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.subscription4,
-            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterSubscriptionsByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -82,7 +75,8 @@ class SubscriptionScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterSubscriptionsByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated && userCompany.canCreate(EntityType.subscription)
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.subscription)
           ? FloatingActionButton(
               heroTag: 'subscription_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
