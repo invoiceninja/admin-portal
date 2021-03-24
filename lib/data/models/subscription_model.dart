@@ -59,7 +59,12 @@ abstract class SubscriptionEntity extends Object
     return _$SubscriptionEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
-      // STARTER: constructor - do not remove comment
+      isDeleted: false,
+      createdAt: 0,
+      updatedAt: 0,
+      createdUserId: '',
+      assignedUserId: '',
+      archivedAt: 0,
     );
   }
 
