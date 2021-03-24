@@ -49,6 +49,9 @@ import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
@@ -458,6 +461,9 @@ class EntityScreens extends StatelessWidget {
           case EntityType.group:
             child = GroupViewScreen();
             break;
+          case EntityType.subscription:
+            child = SubscriptionViewScreen();
+            break;
           case EntityType.companyGateway:
             child = CompanyGatewayViewScreen();
             break;
@@ -511,6 +517,11 @@ class EntityScreens extends StatelessWidget {
             leftFilterChild = editingFilterEntity
                 ? GroupEditScreen()
                 : GroupViewScreen(isFilter: true);
+            break;
+          case EntityType.subscription:
+            leftFilterChild = editingFilterEntity
+                ? SubscriptionEditScreen()
+                : SubscriptionViewScreen(isFilter: true);
             break;
           case EntityType.companyGateway:
             leftFilterChild = editingFilterEntity
@@ -730,6 +741,15 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsGroupSettingsEdit:
         screen = GroupEditScreen();
+        break;
+      case kSettingsSubscriptions:
+        screen = SubscriptionScreenBuilder();
+        break;
+      case kSettingsSubscriptionsView:
+        screen = SubscriptionViewScreen();
+        break;
+      case kSettingsSubscriptionsEdit:
+        screen = SubscriptionEditScreen();
         break;
       case kSettingsGeneratedNumbers:
         screen = GeneratedNumbersScreen();
