@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+'subscription': 'Subscription', 'subscriptions': 'Subscriptions', 'new_subscription': 'New Subscription', 'edit_subscription': 'Edit Subscription', 'created_subscription': 'Successfully created subscription', 'updated_subscription': 'Successfully updated subscription', 'archived_subscription': 'Successfully archived subscription', 'deleted_subscription': 'Successfully deleted subscription', 'removed_subscription': 'Successfully removed subscription', 'restored_subscription': 'Successfully restored subscription', 'search_subscription': 'Search Subscription',
+
       'subdomain_is_not_available': 'Subdomain is not available',
       'connect_gmail': 'Connect Gmail',
       'disconnect_gmail': 'Disconnect Gmail',
@@ -54538,6 +54540,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
 // STARTER: lang field - do not remove comment
+String get subscription => _localizedValues[localeCode]['subscription']; String get subscriptions => _localizedValues[localeCode]['subscriptions']; String get newSubscription => _localizedValues[localeCode]['new_subscription']; String get createdSubscription => _localizedValues[localeCode]['created_subscription']; String get updatedSubscription => _localizedValues[localeCode]['updated_subscription']; String get archivedSubscription => _localizedValues[localeCode]['archived_subscription']; String get deletedSubscription => _localizedValues[localeCode]['deleted_subscription']; String get restoredSubscription => _localizedValues[localeCode]['restored_subscription']; String get editSubscription => _localizedValues[localeCode]['edit_subscription'];
+ String get searchSubscription => _localizedValues[localeCode]['search_subscription'];
+
   String get taskStatus => _localizedValues[localeCode]['task_status'] ?? '';
 
   String get taskStatuses =>

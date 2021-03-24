@@ -41,6 +41,9 @@ import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/data/models/subscription_model.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
+
 import 'package:invoiceninja_flutter/data/models/task_status_model.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
 
@@ -126,6 +129,10 @@ part 'serializers.g.dart';
   TaxRateItemResponse,
   TaxRateListResponse,
   // STARTER: serializers - do not remove comment
+SubscriptionEntity,
+SubscriptionListResponse,
+SubscriptionItemResponse,
+
   TaskStatusEntity,
   TaskStatusListResponse,
   TaskStatusItemResponse,

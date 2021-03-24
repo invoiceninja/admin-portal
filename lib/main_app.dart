@@ -60,6 +60,11 @@ import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
+import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen_vm.dart';
+
 import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
 import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
@@ -338,6 +343,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                       QuotePdfScreen.route: (context) => QuotePdfScreen(),
                       // STARTER: routes - do not remove comment
+SubscriptionScreen.route: (context) => SubscriptionScreenBuilder(),
+SubscriptionViewScreen.route: (context) => SubscriptionViewScreen(),
+SubscriptionEditScreen.route: (context) => SubscriptionEditScreen(),
+
                       TaskStatusScreen.route: (context) =>
                           TaskStatusScreenBuilder(),
                       TaskStatusViewScreen.route: (context) =>

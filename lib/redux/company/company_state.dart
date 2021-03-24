@@ -8,6 +8,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
+
 import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
 
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
@@ -50,6 +52,8 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
+subscriptionState: SubscriptionState(),
+
       taskStatusState: TaskStatusState(),
 
       expenseCategoryState: ExpenseCategoryState(),
@@ -99,6 +103,8 @@ abstract class UserCompanyState
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
+SubscriptionState get subscriptionState;
+
   TaskStatusState get taskStatusState;
 
   ExpenseCategoryState get expenseCategoryState;

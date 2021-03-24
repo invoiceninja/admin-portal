@@ -44,6 +44,8 @@ import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
@@ -329,6 +331,8 @@ void viewEntitiesByType({
             action = ViewGroupList(navigator: navigator);
             break;
           // STARTER: view list - do not remove comment
+case EntityType.subscription: store.dispatch(ViewSubscriptionList(navigator: navigator)); break;
+
           case EntityType.taskStatus:
             store.dispatch(ViewTaskStatusList(navigator: navigator));
             break;
@@ -540,6 +544,8 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+case EntityType.subscription: store.dispatch(ViewSubscription(subscriptionId: entityId, navigator: navigator, force: force,)); break;
+
           case EntityType.taskStatus:
             store.dispatch(ViewTaskStatus(
               taskStatusId: entityId,
@@ -774,6 +780,8 @@ void createEntityByType({
             ));
             break;
           // STARTER: create type - do not remove comment
+case EntityType.subscription: store.dispatch(EditSubscription(navigator: navigator, force: force, subscription: SubscriptionEntity(state: state), )); break;
+
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               navigator: navigator,
@@ -988,6 +996,8 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
+case EntityType.subscription: store.dispatch(EditSubscription(navigator: navigator, subscription: entity, force: force, completer: completer, )); break;
+
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               navigator: navigator,
@@ -1189,6 +1199,8 @@ void editEntity(
             ));
             break;
           // STARTER: edit - do not remove comment
+case EntityType.subscription: store.dispatch(EditSubscription(subscription: entity, navigator: navigator, completer: completer ?? snackBarCompleter<SubscriptionEntity>(context, entity.isNew ? localization.createdSubscription : localization.updatedSubscription),));break;
+
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               taskStatus: entity,
@@ -1349,6 +1361,8 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+case EntityType.subscription: handleSubscriptionAction(context, entities, action); break;
+
     case EntityType.taskStatus:
       handleTaskStatusAction(context, entities, action);
       break;
