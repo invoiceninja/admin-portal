@@ -83,7 +83,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-
+    final state = StoreProvider.of<AppState>(context).state;
     final webPhpVersion =
         _parseVersion(_response?.phpVersion?.currentPHPVersion ?? '');
     final cliPhpVersion =
@@ -137,7 +137,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     title: '.env Writable',
                     isValid: false,
                   ),
-                if (!_response.cacheEnabled)
+                if (!_response.cacheEnabled && !state.account.isDocker)
                   _HealthListTile(
                     title: 'Config not cached',
                     subtitle: 'Run php artisan optimize to improve performance',
