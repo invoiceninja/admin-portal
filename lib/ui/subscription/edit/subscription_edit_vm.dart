@@ -67,6 +67,11 @@ class SubscriptionEditVM {
       onCancelPressed: (BuildContext context) {
         createEntity(
             context: context, entity: SubscriptionEntity(), force: true);
+        if (state.subscriptionUIState.cancelCompleter != null) {
+          state.subscriptionUIState.cancelCompleter.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
       onSavePressed: (BuildContext context) {
         final localization = AppLocalization.of(context);

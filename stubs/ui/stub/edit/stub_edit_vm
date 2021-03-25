@@ -65,6 +65,11 @@ class StubEditVM {
       },
     onCancelPressed: (BuildContext context) {
       createEntity(context: context, entity: StubEntity(), force: true);
+      if (state.stubUIState.cancelCompleter != null) {
+        state.stubUIState.cancelCompleter.complete();
+      } else {
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      }
     },
       onSavePressed: (BuildContext context) {
         final localization = AppLocalization.of(context);

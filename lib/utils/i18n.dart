@@ -25,7 +25,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_subscription': 'Successfully deleted subscription',
       'removed_subscription': 'Successfully removed subscription',
       'restored_subscription': 'Successfully restored subscription',
-      'search_subscription': 'Search Subscription',
+      'search_subscription': 'Search 1 Subscription',
+      'search_subscriptions': 'Search :count Subscriptions',
       'subdomain_is_not_available': 'Subdomain is not available',
       'connect_gmail': 'Connect Gmail',
       'disconnect_gmail': 'Disconnect Gmail',
@@ -56182,6 +56183,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchSubscription =>
       _localizedValues[localeCode]['search_subscription'] ??
       _localizedValues['en']['search_subscription'];
+
+  String get searchSubscriptions =>
+      _localizedValues[localeCode]['search_subscriptions'] ??
+      _localizedValues['en']['search_subscriptions'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
