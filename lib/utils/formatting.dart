@@ -90,7 +90,7 @@ String formatNumber(
 
   String countryId;
 
-  if (client != null && client.hasNameSet) {
+  if ((client?.countryId ?? '').isNotEmpty && client.hasNameSet) {
     countryId = client.countryId;
   } else {
     countryId = company.settings.countryId;
