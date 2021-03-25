@@ -29,8 +29,8 @@ class CustomSurcharges extends StatelessWidget {
     return Column(
       children: <Widget>[
         if (company.hasCustomField(CustomFieldType.surcharge1) &&
-            ((isAfterTaxes && company.enableCustomSurchargeTaxes1) ||
-                (!isAfterTaxes && !company.enableCustomSurchargeTaxes1)))
+            ((isAfterTaxes && !company.enableCustomSurchargeTaxes1) ||
+                (!isAfterTaxes && company.enableCustomSurchargeTaxes1)))
           DecoratedFormField(
             label: company.getCustomFieldLabel(CustomFieldType.surcharge1),
             controller: surcharge1Controller,
@@ -38,8 +38,8 @@ class CustomSurcharges extends StatelessWidget {
             onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge2) &&
-            ((isAfterTaxes && company.enableCustomSurchargeTaxes2) ||
-                (!isAfterTaxes && !company.enableCustomSurchargeTaxes2)))
+            ((isAfterTaxes && !company.enableCustomSurchargeTaxes2) ||
+                (!isAfterTaxes && company.enableCustomSurchargeTaxes2)))
           DecoratedFormField(
             controller: surcharge2Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge2),
@@ -47,8 +47,8 @@ class CustomSurcharges extends StatelessWidget {
             onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge3) &&
-            ((isAfterTaxes && company.enableCustomSurchargeTaxes3) ||
-                (!isAfterTaxes && !company.enableCustomSurchargeTaxes3)))
+            ((isAfterTaxes && !company.enableCustomSurchargeTaxes3) ||
+                (!isAfterTaxes && company.enableCustomSurchargeTaxes3)))
           DecoratedFormField(
             controller: surcharge3Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge3),
@@ -56,8 +56,8 @@ class CustomSurcharges extends StatelessWidget {
             onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge4) &&
-            ((isAfterTaxes && company.enableCustomSurchargeTaxes4) ||
-                (!isAfterTaxes && !company.enableCustomSurchargeTaxes4)))
+            ((isAfterTaxes && !company.enableCustomSurchargeTaxes4) ||
+                (!isAfterTaxes && company.enableCustomSurchargeTaxes4)))
           DecoratedFormField(
             controller: surcharge4Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge4),
