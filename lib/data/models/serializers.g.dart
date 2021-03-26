@@ -150,6 +150,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(StaticDataEntity.serializer)
       ..add(StaticDataItemResponse.serializer)
       ..add(StaticState.serializer)
+      ..add(SubscriptionEntity.serializer)
+      ..add(SubscriptionItemResponse.serializer)
+      ..add(SubscriptionListResponse.serializer)
+      ..add(SubscriptionState.serializer)
+      ..add(SubscriptionUIState.serializer)
       ..add(SystemLogEntity.serializer)
       ..add(TaskEntity.serializer)
       ..add(TaskItemResponse.serializer)
@@ -406,6 +411,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(WebhookEntity)]),
           () => new ListBuilder<WebhookEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(SubscriptionEntity)]),
+          () => new ListBuilder<SubscriptionEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(PaymentTermEntity)]),
           () => new ListBuilder<PaymentTermEntity>())
       ..addBuilderFactory(
@@ -437,9 +445,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DocumentEntity)]),
           () => new ListBuilder<DocumentEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(InvoiceHistoryEntity)]),
-          () => new ListBuilder<InvoiceHistoryEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(InvoiceHistoryEntity)]), () => new ListBuilder<InvoiceHistoryEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(LanguageEntity)]), () => new ListBuilder<LanguageEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(PaymentEntity)]), () => new ListBuilder<PaymentEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(PaymentTermEntity)]), () => new ListBuilder<PaymentTermEntity>())
@@ -458,6 +464,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(BuiltList, const [const FullType(String)])
           ]),
           () => new ListBuilder<BuiltList<String>>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(SubscriptionEntity)]), () => new ListBuilder<SubscriptionEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaskEntity)]), () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaskStatusEntity)]), () => new ListBuilder<TaskStatusEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaxRateEntity)]), () => new ListBuilder<TaxRateEntity>())
@@ -545,6 +552,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(BuiltList, const [const FullType(String)])
           ]),
           () => new MapBuilder<String, BuiltList<String>>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(SubscriptionEntity)]), () => new MapBuilder<String, SubscriptionEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(TaskEntity)]), () => new MapBuilder<String, TaskEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(TaskStatusEntity)]), () => new MapBuilder<String, TaskStatusEntity>())

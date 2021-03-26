@@ -119,6 +119,8 @@ IconData getEntityIcon(EntityType entityType) {
       return MdiIcons.link;
     case EntityType.expenseCategory:
       return MdiIcons.label;
+    case EntityType.subscription:
+      return MdiIcons.shopping;
     default:
       return MdiIcons.crosshairsQuestion;
   }
@@ -200,6 +202,8 @@ IconData getSettingIcon(String section) {
       return getEntityIcon(EntityType.expense);
     case kSettingsTasks:
       return getEntityIcon(EntityType.task);
+    case kSettingsSubscriptions:
+      return getEntityIcon(EntityType.subscription);
     default:
       return null;
   }

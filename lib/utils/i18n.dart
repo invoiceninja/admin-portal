@@ -15,6 +15,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'subscription': 'Subscription',
+      'subscriptions': 'Subscriptions',
+      'new_subscription': 'New Subscription',
+      'edit_subscription': 'Edit Subscription',
+      'created_subscription': 'Successfully created subscription',
+      'updated_subscription': 'Successfully updated subscription',
+      'archived_subscription': 'Successfully archived subscription',
+      'deleted_subscription': 'Successfully deleted subscription',
+      'removed_subscription': 'Successfully removed subscription',
+      'restored_subscription': 'Successfully restored subscription',
+      'search_subscription': 'Search 1 Subscription',
+      'search_subscriptions': 'Search :count Subscriptions',
       'subdomain_is_not_available': 'Subdomain is not available',
       'connect_gmail': 'Connect Gmail',
       'disconnect_gmail': 'Disconnect Gmail',
@@ -54538,6 +54550,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
 // STARTER: lang field - do not remove comment
+
   String get taskStatus => _localizedValues[localeCode]['task_status'] ?? '';
 
   String get taskStatuses =>
@@ -56117,20 +56130,63 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get disconnectGmail =>
       _localizedValues[localeCode]['disconnect_gmail'] ??
-      _localizedValues[localeCode]['disconnect_gmail'];
+      _localizedValues['en']['disconnect_gmail'];
 
   String get connectedGmail =>
       _localizedValues[localeCode]['connected_gmail'] ??
       _localizedValues['en']['connected_gmail'];
 
   String get disconnectedGmail =>
-      _localizedValues[localeCode]['disconnected_gmail'] ??
-      _localizedValues[localeCode]['disconnected_gmail'];
+      _localizedValues['en']['disconnected_gmail'] ??
+      _localizedValues['en']['disconnected_gmail'];
 
   String get subdomainIsNotAvailable =>
       _localizedValues[localeCode]['subdomain_is_not_available'] ??
-      _localizedValues[localeCode]['subdomain_is_not_available'];
+      _localizedValues['en']['subdomain_is_not_available'];
 
+  String get subscription =>
+      _localizedValues[localeCode]['subscription'] ??
+      _localizedValues['en']['subscription'];
+
+  String get subscriptions =>
+      _localizedValues[localeCode]['subscriptions'] ??
+      _localizedValues['en']['subscriptions'];
+
+  String get newSubscription =>
+      _localizedValues[localeCode]['new_subscription'] ??
+      _localizedValues['en']['new_subscription'];
+
+  String get createdSubscription =>
+      _localizedValues[localeCode]['created_subscription'] ??
+      _localizedValues['en']['created_subscription'];
+
+  String get updatedSubscription =>
+      _localizedValues[localeCode]['updated_subscription'] ??
+      _localizedValues['en']['updated_subscription'];
+
+  String get archivedSubscription =>
+      _localizedValues[localeCode]['archived_subscription'] ??
+      _localizedValues['en']['archived_subscription'];
+
+  String get deletedSubscription =>
+      _localizedValues[localeCode]['deleted_subscription'] ??
+      _localizedValues['en']['deleted_subscription'];
+
+  String get restoredSubscription =>
+      _localizedValues[localeCode]['restored_subscription'] ??
+      _localizedValues['en']['restored_subscription'];
+
+  String get editSubscription =>
+      _localizedValues[localeCode]['edit_subscription'] ??
+      _localizedValues['en']['edit_subscription'];
+
+  String get searchSubscription =>
+      _localizedValues[localeCode]['search_subscription'] ??
+      _localizedValues['en']['search_subscription'];
+
+  String get searchSubscriptions =>
+      _localizedValues[localeCode]['search_subscriptions'] ??
+      _localizedValues['en']['search_subscriptions'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

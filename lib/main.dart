@@ -39,6 +39,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/subscription/subscription_middleware.dart';
+
 import 'package:invoiceninja_flutter/redux/task_status/task_status_middleware.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_middleware.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_middleware.dart';
@@ -67,6 +69,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreSettingsMiddleware())
         ..addAll(createStoreReportsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreSubscriptionsMiddleware())
         ..addAll(createStoreTaskStatusesMiddleware())
         ..addAll(createStoreExpenseCategoriesMiddleware())
         ..addAll(createStoreRecurringInvoicesMiddleware())

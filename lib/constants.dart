@@ -48,7 +48,7 @@ const String kDebugModeUrl =
     'https://www.mailgun.com/blog/a-word-of-caution-for-laravel-developers/';
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
-    'https://invoiceninja.github.io/docs/self-host-installation/#cron-configuration';
+    'https://invoiceninja.github.io/docs/self-host-troubleshooting/#cron-not-running-queue-not-running';
 const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 const String kGitHubLangUrl =
@@ -343,6 +343,9 @@ const String kSettingsDeviceSettings = 'device_settings';
 const String kSettingsGroupSettings = 'group_settings';
 const String kSettingsGroupSettingsView = 'group_settings_view';
 const String kSettingsGroupSettingsEdit = 'group_settings_edit';
+const String kSettingsSubscriptions = 'subscriptions';
+const String kSettingsSubscriptionsView = 'subscriptions_view';
+const String kSettingsSubscriptionsEdit = 'subscriptions_edit';
 const String kSettingsCustomFields = 'custom_fields';
 const String kSettingsCustomDesigns = 'custom_designs';
 const String kSettingsCustomDesignsView = 'custom_designs_view';

@@ -53,6 +53,12 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
     return _$StubEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
+      isDeleted: false,
+      createdAt: 0,
+      updatedAt: 0,
+      createdUserId: '',
+      assignedUserId: '',
+      archivedAt: 0,
       // STARTER: constructor - do not remove comment
     );
   }

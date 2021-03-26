@@ -1,0 +1,334 @@
+import 'dart:async';
+import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+
+class ViewSubscriptionList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
+  ViewSubscriptionList({
+    @required NavigatorState navigator,
+    this.force = false,
+  }) : super(navigator: navigator);
+
+  final bool force;
+}
+
+class ViewSubscription extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  ViewSubscription({
+    @required NavigatorState navigator,
+    @required this.subscriptionId,
+    this.force = false,
+  }) : super(navigator: navigator);
+
+  final String subscriptionId;
+  final bool force;
+}
+
+class EditSubscription extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  EditSubscription(
+      {@required this.subscription,
+      @required NavigatorState navigator,
+      this.completer,
+      this.cancelCompleter,
+      this.force = false})
+      : super(navigator: navigator);
+
+  final SubscriptionEntity subscription;
+  final Completer completer;
+  final Completer cancelCompleter;
+  final bool force;
+}
+
+class UpdateSubscription implements PersistUI {
+  UpdateSubscription(this.subscription);
+
+  final SubscriptionEntity subscription;
+}
+
+class LoadSubscription {
+  LoadSubscription({this.completer, this.subscriptionId});
+
+  final Completer completer;
+  final String subscriptionId;
+}
+
+class LoadSubscriptionActivity {
+  LoadSubscriptionActivity({this.completer, this.subscriptionId});
+
+  final Completer completer;
+  final String subscriptionId;
+}
+
+class LoadSubscriptions {
+  LoadSubscriptions({this.completer});
+
+  final Completer completer;
+}
+
+class LoadSubscriptionRequest implements StartLoading {}
+
+class LoadSubscriptionFailure implements StopLoading {
+  LoadSubscriptionFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadSubscriptionFailure{error: $error}';
+  }
+}
+
+class LoadSubscriptionSuccess implements StopLoading, PersistData {
+  LoadSubscriptionSuccess(this.subscription);
+
+  final SubscriptionEntity subscription;
+
+  @override
+  String toString() {
+    return 'LoadSubscriptionSuccess{subscription: $subscription}';
+  }
+}
+
+class LoadSubscriptionsRequest implements StartLoading {}
+
+class LoadSubscriptionsFailure implements StopLoading {
+  LoadSubscriptionsFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadSubscriptionsFailure{error: $error}';
+  }
+}
+
+class LoadSubscriptionsSuccess implements StopLoading {
+  LoadSubscriptionsSuccess(this.subscriptions);
+
+  final BuiltList<SubscriptionEntity> subscriptions;
+
+  @override
+  String toString() {
+    return 'LoadSubscriptionsSuccess{subscriptions: $subscriptions}';
+  }
+}
+
+class SaveSubscriptionRequest implements StartSaving {
+  SaveSubscriptionRequest({this.completer, this.subscription});
+
+  final Completer completer;
+  final SubscriptionEntity subscription;
+}
+
+class SaveSubscriptionSuccess implements StopSaving, PersistData, PersistUI {
+  SaveSubscriptionSuccess(this.subscription);
+
+  final SubscriptionEntity subscription;
+}
+
+class AddSubscriptionSuccess implements StopSaving, PersistData, PersistUI {
+  AddSubscriptionSuccess(this.subscription);
+
+  final SubscriptionEntity subscription;
+}
+
+class SaveSubscriptionFailure implements StopSaving {
+  SaveSubscriptionFailure(this.error);
+
+  final Object error;
+}
+
+class ArchiveSubscriptionsRequest implements StartSaving {
+  ArchiveSubscriptionsRequest(this.completer, this.subscriptionIds);
+
+  final Completer completer;
+  final List<String> subscriptionIds;
+}
+
+class ArchiveSubscriptionsSuccess implements StopSaving, PersistData {
+  ArchiveSubscriptionsSuccess(this.subscriptions);
+
+  final List<SubscriptionEntity> subscriptions;
+}
+
+class ArchiveSubscriptionsFailure implements StopSaving {
+  ArchiveSubscriptionsFailure(this.subscriptions);
+
+  final List<SubscriptionEntity> subscriptions;
+}
+
+class DeleteSubscriptionsRequest implements StartSaving {
+  DeleteSubscriptionsRequest(this.completer, this.subscriptionIds);
+
+  final Completer completer;
+  final List<String> subscriptionIds;
+}
+
+class DeleteSubscriptionsSuccess implements StopSaving, PersistData {
+  DeleteSubscriptionsSuccess(this.subscriptions);
+
+  final List<SubscriptionEntity> subscriptions;
+}
+
+class DeleteSubscriptionsFailure implements StopSaving {
+  DeleteSubscriptionsFailure(this.subscriptions);
+
+  final List<SubscriptionEntity> subscriptions;
+}
+
+class RestoreSubscriptionsRequest implements StartSaving {
+  RestoreSubscriptionsRequest(this.completer, this.subscriptionIds);
+
+  final Completer completer;
+  final List<String> subscriptionIds;
+}
+
+class RestoreSubscriptionsSuccess implements StopSaving, PersistData {
+  RestoreSubscriptionsSuccess(this.subscriptions);
+
+  final List<SubscriptionEntity> subscriptions;
+}
+
+class RestoreSubscriptionsFailure implements StopSaving {
+  RestoreSubscriptionsFailure(this.subscriptions);
+
+  final List<SubscriptionEntity> subscriptions;
+}
+
+class FilterSubscriptions implements PersistUI {
+  FilterSubscriptions(this.filter);
+
+  final String filter;
+}
+
+class SortSubscriptions implements PersistUI {
+  SortSubscriptions(this.field);
+
+  final String field;
+}
+
+class FilterSubscriptionsByState implements PersistUI {
+  FilterSubscriptionsByState(this.state);
+
+  final EntityState state;
+}
+
+class FilterSubscriptionsByCustom1 implements PersistUI {
+  FilterSubscriptionsByCustom1(this.value);
+
+  final String value;
+}
+
+class FilterSubscriptionsByCustom2 implements PersistUI {
+  FilterSubscriptionsByCustom2(this.value);
+
+  final String value;
+}
+
+class FilterSubscriptionsByCustom3 implements PersistUI {
+  FilterSubscriptionsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterSubscriptionsByCustom4 implements PersistUI {
+  FilterSubscriptionsByCustom4(this.value);
+
+  final String value;
+}
+
+class StartSubscriptionMultiselect {
+  StartSubscriptionMultiselect();
+}
+
+class AddToSubscriptionMultiselect {
+  AddToSubscriptionMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromSubscriptionMultiselect {
+  RemoveFromSubscriptionMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearSubscriptionMultiselect {
+  ClearSubscriptionMultiselect();
+}
+
+class UpdateSubscriptionTab implements PersistUI {
+  UpdateSubscriptionTab({this.tabIndex});
+
+  final int tabIndex;
+}
+
+void handleSubscriptionAction(
+    BuildContext context, List<BaseEntity> subscriptions, EntityAction action) {
+  if (subscriptions.isEmpty) {
+    return;
+  }
+
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final localization = AppLocalization.of(context);
+  final subscription = subscriptions.first as SubscriptionEntity;
+  final subscriptionIds =
+      subscriptions.map((subscription) => subscription.id).toList();
+
+  switch (action) {
+    case EntityAction.edit:
+      editEntity(context: context, entity: subscription);
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreSubscriptionsRequest(
+          snackBarCompleter<Null>(context, localization.restoredSubscription),
+          subscriptionIds));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveSubscriptionsRequest(
+          snackBarCompleter<Null>(context, localization.archivedSubscription),
+          subscriptionIds));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteSubscriptionsRequest(
+          snackBarCompleter<Null>(context, localization.deletedSubscription),
+          subscriptionIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.subscriptionListState.isInMultiselect()) {
+        store.dispatch(StartSubscriptionMultiselect());
+      }
+
+      if (subscriptions.isEmpty) {
+        break;
+      }
+
+      for (final subscription in subscriptions) {
+        if (!store.state.subscriptionListState.isSelected(subscription.id)) {
+          store.dispatch(AddToSubscriptionMultiselect(entity: subscription));
+        } else {
+          store.dispatch(
+              RemoveFromSubscriptionMultiselect(entity: subscription));
+        }
+      }
+      break;
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [subscription],
+        context: context,
+      );
+      break;
+    default:
+      print('Error: unhandled action $action in subscription_actions');
+      break;
+  }
+}

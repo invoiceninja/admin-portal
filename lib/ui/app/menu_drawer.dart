@@ -928,8 +928,14 @@ void _showAbout(BuildContext context) async {
                     );
                   },
                 ),
+                SizedBox(height: 8),
+                ListTile(
+                  contentPadding: const EdgeInsets.all(0),
+                  title: Text(state.user.fullName),
+                  subtitle: Text(state.user.email),
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 24),
+                  padding: const EdgeInsets.only(top: 8),
                   child: RichText(
                     text: TextSpan(
                       children: <TextSpan>[

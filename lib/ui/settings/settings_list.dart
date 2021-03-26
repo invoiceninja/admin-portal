@@ -193,6 +193,11 @@ class _SettingsListState extends State<SettingsList> {
           section: kSettingsGroupSettings,
           viewModel: widget.viewModel,
         ),
+        if (!kReleaseMode)
+          SettingsListTile(
+            section: kSettingsSubscriptions,
+            viewModel: widget.viewModel,
+          ),
         SettingsListTile(
           section: kSettingsWorkflowSettings,
           viewModel: widget.viewModel,
@@ -491,6 +496,11 @@ class SettingsSearch extends StatelessWidget {
     kSettingsGroupSettings: [
       [
         'groups',
+      ],
+    ],
+    kSettingsSubscriptions: [
+      [
+        'subscriptions',
       ],
     ],
     kSettingsWorkflowSettings: [
