@@ -72,7 +72,9 @@ class AccountManagementVM {
                   GoogleOAuth.disconnect();
                 }
               } else {
-                store.dispatch(SelectCompany(companyIndex: 0));
+                final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
+                final index = selectedCompanyIndex == 0 ? 1 : 0;
+                store.dispatch(SelectCompany(companyIndex: index));
                 final refreshCompleter = Completer<Null>()
                   ..future.then((value) {
                     store.dispatch(SelectCompany(companyIndex: 0));

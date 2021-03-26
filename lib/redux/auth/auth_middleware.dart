@@ -213,9 +213,14 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final url =
         formatApiUrl(prefs.getString(kSharedPrefUrl) ?? state.authState.url);
-    final token =
-        TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
-            'TOKEN';
+
+    String token;
+    if ((state?.userCompany?.token?.token ?? '').isNotEmpty) {
+      token = state.userCompany.token.token;
+    } else {
+      token = TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
+          'TOKEN';
+    }
 
     final updatedAt = action.clearData && !company.isLarge
         ? 0
