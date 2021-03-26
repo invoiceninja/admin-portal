@@ -348,7 +348,7 @@ class ReportsScreenVM {
           if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
             reportResult.columns.forEach((column) {
               final value = localization.lookup(column);
-              csvData += value.contains(' ') ? '"$value",' : '$value,';
+              csvData += '"$value",';
             });
             csvData = csvData.substring(0, csvData.length - 1);
             reportResult.data.forEach((row) {
@@ -356,7 +356,7 @@ class ReportsScreenVM {
               for (var i = 0; i < row.length; i++) {
                 final column = reportResult.columns[i];
                 final value = row[i].renderText(context, column).trim();
-                csvData += value.contains(' ') ? '"$value",' : '$value,';
+                csvData += '"$value",';
               }
               csvData = csvData.substring(0, csvData.length - 1);
             });
