@@ -71,8 +71,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child:
-                      JsonViewerWidget(jsonDecode(systemLog.log)['response']),
+                  child: JsonViewerWidget(jsonDecode(systemLog.log)),
                 ),
               ),
             );

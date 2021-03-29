@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_sidebar.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_system_logs.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_wizard.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -60,7 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     });
 
     final index = _tabs.contains(entityType) ? _tabs.indexOf(entityType) : 0;
-    int mainTabCount = 2;
+    int mainTabCount = 3;
 
     if (state.prefState.isMobile) {
       mainTabCount += _tabs.length;
@@ -186,6 +187,9 @@ class _DashboardScreenState extends State<DashboardScreen>
             Tab(
               text: localization.activity,
             ),
+            Tab(
+              text: localization.systemLogs,
+            ),
             if (isMobile(context) &&
                 company.isModuleEnabled(EntityType.invoice))
               Tab(
@@ -293,6 +297,10 @@ class _CustomTabBarView extends StatelessWidget {
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
           child: DashboardActivity(viewModel: viewModel),
+        ),
+        RefreshIndicator(
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: DashboardSystemLogs(viewModel: viewModel),
         ),
         if (isMobile(context) && company.isModuleEnabled(EntityType.invoice))
           InvoiceSidebar(),

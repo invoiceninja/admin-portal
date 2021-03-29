@@ -23,6 +23,9 @@ abstract class SystemLogEntity
 
   static const CATEGORY_PAYMENT = 1;
   static const CATEGORY_EMAIL = 2;
+  static const CATEGORY_WEBHOOK = 3;
+  static const CATEGORY_PDF = 4;
+  static const CATEGORY_SECURITY = 5;
 
   @override
   @memoized
@@ -59,6 +62,12 @@ abstract class SystemLogEntity
         return 'payment';
       case CATEGORY_EMAIL:
         return 'email';
+      case CATEGORY_PDF:
+        return 'pdf';
+      case CATEGORY_SECURITY:
+        return 'security';
+      case CATEGORY_WEBHOOK:
+        return 'webhook';
     }
 
     return '';
@@ -66,6 +75,7 @@ abstract class SystemLogEntity
 
   bool get isVisible => eventId >= 20;
 
+  // https://github.com/invoiceninja/invoiceninja/blob/v5-develop/app/Models/SystemLog.php
   String get event {
     switch (eventId) {
       case 10:
@@ -82,6 +92,20 @@ abstract class SystemLogEntity
         return 'email_send';
       case 31:
         return 'email_retry_queue';
+      case 32:
+        return 'email_bounced';
+      case 33:
+        return 'email_spam_complaint';
+      case 34:
+        return 'email_delivery';
+      case 40:
+        return 'webhook_response';
+      case 50:
+        return 'pdf_response';
+      case 60:
+        return 'authentication_failure';
+      case 61:
+        return 'user';
     }
 
     return '';
@@ -101,10 +125,22 @@ abstract class SystemLogEntity
         return 'Checkout.com';
       case 305:
         return 'Authorize.net';
+      case 306:
+        return 'custom';
       case 400:
         return 'quota_exceeded';
       case 401:
         return 'upstream_failure';
+      case 500:
+        return 'webhook_response';
+      case 600:
+        return 'pdf_failed';
+      case 601:
+        return 'pdf_success';
+      case 701:
+        return 'modified';
+      case 702:
+        return 'deleted';
     }
 
     return '';

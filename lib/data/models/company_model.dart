@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
+import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -121,6 +122,7 @@ abstract class CompanyEntity extends Object
       webhooks: BuiltList<WebhookEntity>(),
       documents: BuiltList<DocumentEntity>(),
       subscriptions: BuiltList<SubscriptionEntity>(),
+      systemLogs: BuiltList<SystemLogEntity>(),
     );
   }
 
@@ -283,6 +285,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'payment_terms')
   BuiltList<PaymentTermEntity> get paymentTerms;
+
+  @BuiltValueField(wireName: 'system_logs')
+  BuiltList<SystemLogEntity> get systemLogs;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
@@ -517,6 +522,7 @@ abstract class CompanyEntity extends Object
     ..passwordTimeout = 30 * 60 * 1000
     ..oauthPasswordRequired = false
     ..invoiceTaskDatelog = true
+    ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>());
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
