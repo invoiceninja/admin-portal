@@ -14,7 +14,9 @@ var memoizedDropdownExpenseCategoriesList = memo2(
 List<String> dropdownExpenseCategoriesSelector(
     BuiltMap<String, ExpenseCategoryEntity> categoryMap,
     BuiltList<String> categoryList) {
-  final list = categoryList.toList();
+  final list = categoryList
+      .where((categoryId) => categoryMap[categoryId].isActive)
+      .toList();
 
   list.sort((categoryAId, categoryBId) {
     final categoryA = categoryMap[categoryAId];
