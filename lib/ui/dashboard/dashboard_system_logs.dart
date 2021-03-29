@@ -14,22 +14,10 @@ class DashboardSystemLogs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final company = viewModel.state.company;
-    //final systemLogs = company.systemLogs;
-    final clientId = viewModel.state.clientState.list.first;
-    final systemLogs = viewModel.state.clientState.map[clientId].systemLogs;
-    print('## systemLogs: $systemLogs');
+    final systemLogs = company.systemLogs;
 
     return SystemLogViewer(
       systemLogs: systemLogs,
-    );
-
-    return ScrollableListViewBuilder(
-      itemCount: systemLogs.length,
-      itemBuilder: (BuildContext context, index) {
-        return SystemLogViewer(
-          systemLogs: systemLogs,
-        );
-      },
     );
   }
 }
