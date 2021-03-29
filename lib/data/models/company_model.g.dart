@@ -226,6 +226,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.paymentTerms,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentTermEntity)])),
+      'system_logs',
+      serializers.serialize(object.systemLogs,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(SystemLogEntity)])),
       'custom_fields',
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
@@ -599,6 +603,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.paymentTerms.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTermEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'system_logs':
+          result.systemLogs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(SystemLogEntity)]))
               as BuiltList<Object>);
           break;
         case 'custom_fields':
@@ -1296,6 +1306,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<PaymentTermEntity> paymentTerms;
   @override
+  final BuiltList<SystemLogEntity> systemLogs;
+  @override
   final BuiltMap<String, String> customFields;
   @override
   final String slackWebhookUrl;
@@ -1402,6 +1414,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.webhooks,
       this.subscriptions,
       this.paymentTerms,
+      this.systemLogs,
       this.customFields,
       this.slackWebhookUrl,
       this.googleAnalyticsKey,
@@ -1606,6 +1619,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (paymentTerms == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'paymentTerms');
     }
+    if (systemLogs == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'systemLogs');
+    }
     if (customFields == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
     }
@@ -1733,6 +1749,7 @@ class _$CompanyEntity extends CompanyEntity {
         webhooks == other.webhooks &&
         subscriptions == other.subscriptions &&
         paymentTerms == other.paymentTerms &&
+        systemLogs == other.systemLogs &&
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
         googleAnalyticsKey == other.googleAnalyticsKey &&
@@ -1779,7 +1796,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode),
                                                                                 markExpensesPaid.hashCode),
                                                                             invoiceExpenseDocuments.hashCode),
                                                                         invoiceTaskDocuments.hashCode),
@@ -1860,6 +1877,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('webhooks', webhooks)
           ..add('subscriptions', subscriptions)
           ..add('paymentTerms', paymentTerms)
+          ..add('systemLogs', systemLogs)
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
           ..add('googleAnalyticsKey', googleAnalyticsKey)
@@ -2178,6 +2196,12 @@ class CompanyEntityBuilder
   set paymentTerms(ListBuilder<PaymentTermEntity> paymentTerms) =>
       _$this._paymentTerms = paymentTerms;
 
+  ListBuilder<SystemLogEntity> _systemLogs;
+  ListBuilder<SystemLogEntity> get systemLogs =>
+      _$this._systemLogs ??= new ListBuilder<SystemLogEntity>();
+  set systemLogs(ListBuilder<SystemLogEntity> systemLogs) =>
+      _$this._systemLogs = systemLogs;
+
   MapBuilder<String, String> _customFields;
   MapBuilder<String, String> get customFields =>
       _$this._customFields ??= new MapBuilder<String, String>();
@@ -2349,6 +2373,7 @@ class CompanyEntityBuilder
       _webhooks = _$v.webhooks?.toBuilder();
       _subscriptions = _$v.subscriptions?.toBuilder();
       _paymentTerms = _$v.paymentTerms?.toBuilder();
+      _systemLogs = _$v.systemLogs?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _slackWebhookUrl = _$v.slackWebhookUrl;
       _googleAnalyticsKey = _$v.googleAnalyticsKey;
@@ -2452,6 +2477,7 @@ class CompanyEntityBuilder
               webhooks: webhooks.build(),
               subscriptions: subscriptions.build(),
               paymentTerms: paymentTerms.build(),
+              systemLogs: systemLogs.build(),
               customFields: customFields.build(),
               slackWebhookUrl: slackWebhookUrl,
               googleAnalyticsKey: googleAnalyticsKey,
@@ -2528,6 +2554,8 @@ class CompanyEntityBuilder
         subscriptions.build();
         _$failedField = 'paymentTerms';
         paymentTerms.build();
+        _$failedField = 'systemLogs';
+        systemLogs.build();
         _$failedField = 'customFields';
         customFields.build();
 
