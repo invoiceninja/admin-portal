@@ -131,6 +131,7 @@ const int kUpdatedAtBufferSeconds = 600;
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToReenterPassword = 1000 * 60 * 30; // 30 minutes
+const int kMillisecondsToDebounceUpdate = 1000; // 1 second
 const int kMillisecondsToDebounceSave = 1000 * 2; // 2 seconds
 
 const String kLanguageEnglish = '1';
@@ -539,6 +540,7 @@ List<String> kCustomLabels = [
   'item',
   'line_total',
   'paid_to_date',
+  'partial_due',
   'payment_date',
   'phone',
   'po_number',
