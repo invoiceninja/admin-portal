@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -91,23 +92,23 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final client = viewModel.client.rebuild((b) => b
-        ..number = _numberController.text.trim()
-        ..name = _nameController.text.trim()
-        ..idNumber = _idNumberController.text.trim()
-        ..vatNumber = _vatNumberController.text.trim()
-        ..website = _websiteController.text.trim()
-        ..phone = _phoneController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-        ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim());
-      if (client != viewModel.client) {
+    final viewModel = widget.viewModel;
+    final client = viewModel.client.rebuild((b) => b
+      ..number = _numberController.text.trim()
+      ..name = _nameController.text.trim()
+      ..idNumber = _idNumberController.text.trim()
+      ..vatNumber = _vatNumberController.text.trim()
+      ..website = _websiteController.text.trim()
+      ..phone = _phoneController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
+    if (client != viewModel.client) {
+      _debouncer.run(() {
         viewModel.onChanged(client);
-      }
-    });
+      });
+    }
   }
 
   void _setContactControllers(Contact contact) {
