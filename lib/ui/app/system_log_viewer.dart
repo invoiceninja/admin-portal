@@ -41,7 +41,6 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
             final client = state.clientState.get(systemLog.clientId);
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
-                print('## LOG: ${systemLog.log}');
                 return ListTile(
                   leading: Icon(
                       systemLog.categoryId == SystemLogEntity.CATEGORY_EMAIL
