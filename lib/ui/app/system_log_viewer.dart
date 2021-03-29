@@ -41,8 +41,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
             final client = state.clientState.get(systemLog.clientId);
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
-                print(
-                    '## LOG - categoryId: ${systemLog.categoryId}, category: ${systemLog.category}, eventId: ${systemLog.eventId}, event: ${systemLog.event}');
+                print('## LOG: ${systemLog.log}');
                 return ListTile(
                   leading: Icon(
                       systemLog.categoryId == SystemLogEntity.CATEGORY_EMAIL
@@ -73,8 +72,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child:
-                      JsonViewerWidget(jsonDecode(systemLog.log)['response']),
+                  child: JsonViewerWidget(jsonDecode(systemLog.log)),
                 ),
               ),
             );
