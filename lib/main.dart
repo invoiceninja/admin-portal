@@ -127,6 +127,8 @@ Future<AppState> _initialState(bool isTesting) async {
   final prefs = await SharedPreferences.getInstance();
   final prefString = prefs?.getString(kSharedPrefs);
   final url = WebUtils.browserUrl ?? prefs.getString(kSharedPrefUrl) ?? '';
+  //url = kAppProductionUrl;
+  //url = kAppDemoUrl;
 
   var prefState = PrefState();
   if (prefString != null) {
