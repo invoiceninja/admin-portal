@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 
 Completer<T> snackBarCompleter<T>(BuildContext context, String message,
@@ -59,11 +60,10 @@ Completer<Null> errorCompleter(BuildContext context) {
 
 // https://stackoverflow.com/a/55119208/497368
 class Debouncer {
-  Debouncer({this.milliseconds});
+  Debouncer({this.milliseconds = kMillisecondsToDebounceUpdate});
 
-  static bool isDebouncing = false;
   final int milliseconds;
-  VoidCallback action;
+  static VoidCallback action;
   Timer _timer;
 
   void run(VoidCallback action) {
@@ -76,11 +76,19 @@ class Debouncer {
       _timer.cancel();
     }
 
-    Debouncer.isDebouncing = true;
+    Debouncer.action = action;
 
     _timer = Timer(Duration(milliseconds: milliseconds), () {
-      Debouncer.isDebouncing = false;
-      action();
+      Debouncer.action();
+      Debouncer.action = null;
     });
+  }
+
+  static void runOnComplete(Function callback) {
+    if (Debouncer.action != null) {
+      action();
+    }
+
+    callback();
   }
 }

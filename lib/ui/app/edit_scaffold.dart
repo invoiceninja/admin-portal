@@ -74,17 +74,6 @@ class EditScaffold extends StatelessWidget {
                     disposition: UnfocusDisposition.previouslyFocusedChild);
 
                 onSavePressed(context);
-
-                /* The debouncer has been disabled b/c if you click
-                   save too quickly the changes are lost
-                if (Debouncer.isDebouncing) {
-                  Timer(Duration(milliseconds: kDebounceDelay), () {
-                    onSavePressed(context);
-                  });
-                } else {
-                  onSavePressed(context);
-                }
-                 */
               },
               onCancelPressed: isMobile(context)
                   ? null

@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -12,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -89,40 +92,43 @@ class ClientEditVM {
           }
         },
         onSavePressed: (BuildContext context) {
-          if (!client.hasNameSet) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(AppLocalization.of(context)
-                      .pleaseEnterAClientOrContactName);
-                });
-            return null;
-          }
-          final Completer<ClientEntity> completer = Completer<ClientEntity>();
-          final localization = AppLocalization.of(context);
-          store.dispatch(
-              SaveClientRequest(completer: completer, client: client));
-          return completer.future.then((savedClient) {
-            showToast(client.isNew
-                ? localization.createdClient
-                : localization.updatedClient);
-            if (isMobile(context)) {
-              store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
-              if (client.isNew && state.clientUIState.saveCompleter == null) {
-                Navigator.of(context)
-                    .pushReplacementNamed(ClientViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedClient);
-              }
-            } else {
-              viewEntity(context: context, entity: savedClient, force: true);
+          Debouncer.runOnComplete(() {
+            final client = store.state.clientUIState.editing;
+            if (!client.hasNameSet) {
+              showDialog<ErrorDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(AppLocalization.of(context)
+                        .pleaseEnterAClientOrContactName);
+                  });
+              return null;
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
+            final Completer<ClientEntity> completer = Completer<ClientEntity>();
+            final localization = AppLocalization.of(context);
+            store.dispatch(
+                SaveClientRequest(completer: completer, client: client));
+            return completer.future.then((savedClient) {
+              showToast(client.isNew
+                  ? localization.createdClient
+                  : localization.updatedClient);
+              if (isMobile(context)) {
+                store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
+                if (client.isNew && state.clientUIState.saveCompleter == null) {
+                  Navigator.of(context)
+                      .pushReplacementNamed(ClientViewScreen.route);
+                } else {
+                  Navigator.of(context).pop(savedClient);
+                }
+              } else {
+                viewEntity(context: context, entity: savedClient, force: true);
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
           });
         });
   }
