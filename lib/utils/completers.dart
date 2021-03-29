@@ -79,7 +79,7 @@ class Debouncer {
     Debouncer.action = action;
 
     _timer = Timer(Duration(milliseconds: milliseconds), () {
-      Debouncer.action();
+      Debouncer?.action();
       Debouncer.action = null;
     });
   }
