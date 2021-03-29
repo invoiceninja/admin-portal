@@ -15,6 +15,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'security': 'Security',
+      'email_bounced': 'Email Bounced',
+      'email_spam_complaint': 'Spam Complaint',
+      'email_delivery': 'Email Delivery',
+      'webhook_response': 'Webhook Response',
+      'pdf_response': 'PDF Response',
+      'authentication_failure': 'Authentication Failure',
+      'pdf_failed': 'PDF Failed',
+      'pdf_success': 'PDF Success',
+      'modified': 'Modified',
       'subscription': 'Subscription',
       'subscriptions': 'Subscriptions',
       'new_subscription': 'New Subscription',
@@ -56187,6 +56197,46 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchSubscriptions =>
       _localizedValues[localeCode]['search_subscriptions'] ??
       _localizedValues['en']['search_subscriptions'];
+
+  String get security =>
+      _localizedValues[localeCode]['security'] ??
+      _localizedValues['en']['security'];
+
+  String get emailBounced =>
+      _localizedValues[localeCode]['email_bounced'] ??
+      _localizedValues['en']['email_bounced'];
+
+  String get emailSpamComplaint =>
+      _localizedValues[localeCode]['email_spam_complaint'] ??
+      _localizedValues['en']['email_spam_complaint'];
+
+  String get emailDelivery =>
+      _localizedValues[localeCode]['email_delivery'] ??
+      _localizedValues['en']['email_delivery'];
+
+  String get webhookResponse =>
+      _localizedValues[localeCode]['webhook_response'] ??
+      _localizedValues['en']['webhook_response'];
+
+  String get pdfResponse =>
+      _localizedValues[localeCode]['pdf_response'] ??
+      _localizedValues['en']['pdf_response'];
+
+  String get authenticationFailure =>
+      _localizedValues[localeCode]['authentication_failure'] ??
+      _localizedValues['en']['authentication_failure'];
+
+  String get pdfFailed =>
+      _localizedValues[localeCode]['pdf_failed'] ??
+      _localizedValues['en']['pdf_failed'];
+
+  String get pdfSuccess =>
+      _localizedValues[localeCode]['pdf_success'] ??
+      _localizedValues['en']['pdf_success'];
+
+  String get modified =>
+      _localizedValues[localeCode]['modified'] ??
+      _localizedValues['en']['modified'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
