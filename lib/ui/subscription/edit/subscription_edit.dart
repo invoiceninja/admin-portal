@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -247,9 +248,13 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   label: localization.promoCode,
                   controller: _promoCodeController,
                 ),
-                DecoratedFormField(
+                DiscountField(
                   label: localization.promoDiscount,
                   controller: _promoDiscountController,
+                  value: subscription.promoDiscount,
+                  isAmountDiscount: subscription.isAmountDiscount,
+                  onTypeChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b..isAmountDiscount = value)),
                 ),
               ],
             ),

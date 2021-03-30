@@ -71,7 +71,7 @@ abstract class SubscriptionEntity extends Object
       autoBill: '',
       frequencyId: '',
       groupId: '',
-      isAmountDiscount: false,
+      isAmountDiscount: true,
       price: 0,
       maxSeatsLimit: 0,
       perSeatEnabled: false,
