@@ -199,11 +199,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
               ),
               FormCard(
                 children: <Widget>[
-                  BoolDropdownButton(
-                      label: localization.allowCancellation,
-                      value: subscription.allowCancellation,
-                      onChanged: (value) => viewModel.onChanged(subscription
-                          .rebuild((b) => b..allowCancellation = value))),
+                  //
                 ],
               ),
             ],
@@ -261,10 +257,17 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
             ),
             FormCard(
               children: [
-                DecoratedFormField(
-                  label: localization.refundPeriod,
-                  controller: _refundPeriodController,
-                ),
+                BoolDropdownButton(
+                    label: localization.allowCancellation,
+                    value: subscription.allowCancellation,
+                    onChanged: (value) => viewModel.onChanged(subscription
+                        .rebuild((b) => b..allowCancellation = value))),
+                if (subscription.allowCancellation ||
+                    origSubscription.allowCancellation)
+                  DecoratedFormField(
+                    label: localization.refundPeriod,
+                    controller: _refundPeriodController,
+                  ),
                 BoolDropdownButton(
                     label: localization.trialEnabled,
                     value: subscription.trialEnabled,
