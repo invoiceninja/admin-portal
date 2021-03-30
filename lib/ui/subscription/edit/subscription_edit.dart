@@ -1,12 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/settings_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -33,6 +41,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   TabController _controller;
 
   final _nameController = TextEditingController();
+  final _promoCodeController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -56,12 +65,13 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   void didChangeDependencies() {
     _controllers = [
       _nameController,
+      _promoCodeController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final subscription = widget.viewModel.subscription;
-    //_subscriptionsController.text = subscription.subscriptions;
+    _promoCodeController.text = subscription.promoCode;
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
@@ -80,15 +90,13 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final subscription = widget.viewModel.subscription.rebuild((b) => b
-          // STARTER: set value - do not remove comment
-          //..subscriptions = _subscriptionsController.text.trim()
-          );
-      if (subscription != widget.viewModel.subscription) {
+    final subscription = widget.viewModel.subscription
+        .rebuild((b) => b..promoCode = _promoCodeController.text.trim());
+    if (subscription != widget.viewModel.subscription) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(subscription);
-      }
-    });
+      });
+    }
   }
 
   @override
@@ -139,14 +147,30 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
           ScrollableListView(
             children: <Widget>[
               FormCard(
-                children: <Widget>[
+                children: [
                   TextFormField(
                     controller: _nameController,
                     autocorrect: false,
                     decoration: InputDecoration(
-                      labelText: 'Subscriptions',
+                      labelText: localization.name,
                     ),
                   ),
+                  DynamicSelector(
+                    entityType: EntityType.group,
+                    entityIds: memoizedGroupList(state.groupState.map),
+                    entityId: subscription.groupId,
+                    onChanged: (groupId) => viewModel.onChanged(
+                        subscription.rebuild((b) => b..groupId = groupId)),
+                  ),
+                  UserPicker(
+                    userId: subscription.assignedUserId,
+                    onChanged: (userId) => viewModel.onChanged(subscription
+                        .rebuild((b) => b..assignedUserId = userId)),
+                  ),
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
                   BoolDropdownButton(
                       label: localization.allowCancellation,
                       value: subscription.allowCancellation,
@@ -157,7 +181,48 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
             ],
           ),
           ScrollableListView(children: [
-            Placeholder(),
+            FormCard(
+              children: [
+                AppDropdownButton<String>(
+                    labelText: localization.frequency,
+                    value: subscription.frequencyId,
+                    onChanged: (dynamic value) {
+                      viewModel.onChanged(
+                          subscription.rebuild((b) => b..frequencyId = value));
+                    },
+                    items: kFrequencies.entries
+                        .map((entry) => DropdownMenuItem(
+                              value: entry.key,
+                              child: Text(localization.lookup(entry.value)),
+                            ))
+                        .toList()),
+                AppDropdownButton<String>(
+                  labelText: localization.autoBill,
+                  value: subscription.autoBill,
+                  onChanged: (dynamic value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b..autoBill = value)),
+                  items: [
+                    SettingsEntity.AUTO_BILL_ALWAYS,
+                    SettingsEntity.AUTO_BILL_OPT_OUT,
+                    SettingsEntity.AUTO_BILL_OPT_IN,
+                    SettingsEntity.AUTO_BILL_OFF,
+                  ]
+                      .map((value) => DropdownMenuItem(
+                            child: Text(localization.lookup(value)),
+                            value: value,
+                          ))
+                      .toList(),
+                ),
+              ],
+            ),
+            FormCard(
+              children: [
+                DecoratedFormField(
+                  label: localization.promoCode,
+                  controller: _promoCodeController,
+                ),
+              ],
+            ),
           ]),
         ],
       ),
