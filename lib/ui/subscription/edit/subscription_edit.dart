@@ -25,7 +25,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit> {
   final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
-  final _subscriptionsController = TextEditingController();
+  final _nameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -33,7 +33,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit> {
   void didChangeDependencies() {
     _controllers = [
       // STARTER: array - do not remove comment
-      _subscriptionsController,
+      _nameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -102,9 +102,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    // STARTER: widgets - do not remove comment
                     TextFormField(
-                      controller: _subscriptionsController,
+                      controller: _nameController,
                       autocorrect: false,
                       decoration: InputDecoration(
                         labelText: 'Subscriptions',

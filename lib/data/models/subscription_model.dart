@@ -65,6 +65,26 @@ abstract class SubscriptionEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
+      allowCancellation: false,
+      allowPlanChanges: false,
+      allowQueryOverrides: false,
+      autoBill: '',
+      frequencyId: '',
+      groupId: '',
+      isAmountDiscount: false,
+      price: 0,
+      maxSeatsLimit: 0,
+      perSeatEnabled: false,
+      planMap: '',
+      productIds: '',
+      promoCode: '',
+      promoDiscount: 0,
+      purchasePage: '',
+      recurringProductIds: '',
+      refundPeriod: 0,
+      trialDuration: 0,
+      trialEnabled: false,
+      webhookConfiguration: BuiltMap<String, String>(),
     );
   }
 
@@ -97,6 +117,8 @@ abstract class SubscriptionEntity extends Object
 
   @BuiltValueField(wireName: 'promo_discount')
   double get promoDiscount;
+
+  double get price;
 
   @BuiltValueField(wireName: 'is_amount_discount')
   bool get isAmountDiscount;
