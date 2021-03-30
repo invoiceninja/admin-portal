@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -109,6 +110,11 @@ class _SubscriptionEditState extends State<SubscriptionEdit> {
                         labelText: 'Subscriptions',
                       ),
                     ),
+                    BoolDropdownButton(
+                        label: localization.allowCancellation,
+                        value: subscription.allowCancellation,
+                        onChanged: (value) => viewModel.onChanged(subscription
+                            .rebuild((b) => b..allowCancellation = value))),
                   ],
                 ),
               ],

@@ -15,6 +15,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'recurring_products': 'Recurring Products',
+      'promo_code': 'Promo Code',
+      'promo_discount': 'Promo Discount',
+      'allow_cancellation': 'Allow Cancellation',
+      'per_seat_enabled': 'Per Seat Enabled',
+      'max_seats_limit': 'Max Seats Limit',
+      'trial_enabled': 'Trial Enabled',
+      'trial_duration': 'Trial Duration',
+      'allow_query_overrides': 'Allow Query Overrides',
+      'allow_plan_changes': 'Allow Plan Changes',
+      'plan_map': 'Plan Map',
+      'refund_period': 'Refund Period',
+      'webhook_configuration': 'Webhook Configuration',
+      'purchase_page': 'Purchase Page',
       'security': 'Security',
       'email_bounced': 'Email Bounced',
       'email_spam_complaint': 'Spam Complaint',
@@ -56237,6 +56251,62 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get modified =>
       _localizedValues[localeCode]['modified'] ??
       _localizedValues['en']['modified'];
+
+  String get recurringProducts =>
+      _localizedValues[localeCode]['recurring_products'] ??
+      _localizedValues['en']['recurring_products'];
+
+  String get promoCode =>
+      _localizedValues[localeCode]['promo_code'] ??
+      _localizedValues['en']['promo_code'];
+
+  String get promoDiscount =>
+      _localizedValues[localeCode]['promo_discount'] ??
+      _localizedValues['en']['promo_discount'];
+
+  String get allowCancellation =>
+      _localizedValues[localeCode]['allow_cancellation'] ??
+      _localizedValues['en']['allow_cancellation'];
+
+  String get perSeatEnabled =>
+      _localizedValues[localeCode]['per_seat_enabled'] ??
+      _localizedValues['en']['per_seat_enabled'];
+
+  String get maxSeatsLimit =>
+      _localizedValues[localeCode]['max_seats_limit'] ??
+      _localizedValues['en']['max_seats_limit'];
+
+  String get trialEnabled =>
+      _localizedValues[localeCode]['trial_enabled'] ??
+      _localizedValues['en']['trial_enabled'];
+
+  String get trialDuration =>
+      _localizedValues[localeCode]['trial_duration'] ??
+      _localizedValues['en']['trial_duration'];
+
+  String get allowQueryOverrides =>
+      _localizedValues[localeCode]['allow_query_overrides'] ??
+      _localizedValues['en']['allow_query_overrides'];
+
+  String get allowPlanChanges =>
+      _localizedValues[localeCode]['allow_plan_changes'] ??
+      _localizedValues['en']['allow_plan_changes'];
+
+  String get planMap =>
+      _localizedValues[localeCode]['plan_map'] ??
+      _localizedValues['en']['plan_map'];
+
+  String get refundPeriod =>
+      _localizedValues[localeCode]['refund_period'] ??
+      _localizedValues['en']['refund_period'];
+
+  String get webhookConfiguration =>
+      _localizedValues[localeCode]['webhook_configuration'] ??
+      _localizedValues['en']['webhook_configuration'];
+
+  String get purchasePage =>
+      _localizedValues[localeCode]['purchase_page'] ??
+      _localizedValues['en']['purchase_page'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
