@@ -175,6 +175,7 @@ abstract class InvoiceEntity extends Object
       customSurcharge3: 0,
       customSurcharge4: 0,
       filename: '',
+      subscriptionId: '',
       recurringDates: BuiltList<InvoiceScheduleEntity>(),
       lineItems: BuiltList<InvoiceItemEntity>(),
       history: BuiltList<InvoiceHistoryEntity>(),
