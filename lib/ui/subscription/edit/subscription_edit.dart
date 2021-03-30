@@ -203,24 +203,74 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
               FormCard(
                 children: <Widget>[
                   EntityDropdown(
-                    key: ValueKey('__${subscription.productIds}__'),
+                    key: ValueKey('__products_${subscription.productIds}__'),
                     entityType: EntityType.product,
                     entityList: dropdownProductsSelector(state.productState.map,
                         state.productState.list, state.userState.map),
                     entityMap: state.productState.map,
                     labelText: localization.products,
-                    onSelected: (value) {
-                      print('## value: $value');
-                      viewModel.onChanged(subscription.rebuild((b) => b
-                        ..productIds =
-                            subscription.productIds + ',${value.id}'));
-                    },
+                    onSelected: (value) => viewModel.onChanged(
+                        subscription.rebuild((b) => b
+                          ..productIds =
+                              subscription.productIds + ',${value.id}')),
+                  ),
+                  SizedBox(
+                    height: 8,
                   ),
                   ...subscription.productIds
                       .split(',')
+                      .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
                                 state.productState.get(productId).productKey),
+                            trailing: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                final parts =
+                                    subscription.productIds.split(',');
+                                parts.remove(productId);
+                                viewModel.onChanged(subscription.rebuild(
+                                    (b) => b..productIds = parts.join(',')));
+                              },
+                            ),
+                          ))
+                      .toList(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  EntityDropdown(
+                    key: ValueKey(
+                        '__recuring_products_${subscription.recurringProductIds}__'),
+                    entityType: EntityType.product,
+                    entityList: dropdownProductsSelector(state.productState.map,
+                        state.productState.list, state.userState.map),
+                    entityMap: state.productState.map,
+                    labelText: localization.recurringProducts,
+                    onSelected: (value) => viewModel.onChanged(
+                        subscription.rebuild((b) => b
+                          ..recurringProductIds =
+                              subscription.recurringProductIds +
+                                  ',${value.id}')),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  ...subscription.recurringProductIds
+                      .split(',')
+                      .where((element) => element.isNotEmpty)
+                      .map((productId) => ListTile(
+                            title: Text(
+                                state.productState.get(productId).productKey),
+                            trailing: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                final parts =
+                                    subscription.recurringProductIds.split(',');
+                                parts.remove(productId);
+                                viewModel.onChanged(subscription.rebuild((b) =>
+                                    b..recurringProductIds = parts.join(',')));
+                              },
+                            ),
                           ))
                       .toList(),
                 ],
