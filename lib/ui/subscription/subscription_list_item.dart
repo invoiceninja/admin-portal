@@ -79,7 +79,7 @@ class SubscriptionListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
-              Text(formatNumber(subscription.listDisplayAmount, context),
+              Text(formatNumber(subscription.price, context),
                   style: Theme.of(context).textTheme.headline6),
             ],
           ),
