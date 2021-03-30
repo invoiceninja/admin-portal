@@ -77,6 +77,41 @@ abstract class SubscriptionEntity extends Object
   @override
   EntityType get entityType => EntityType.subscription;
 
+  @BuiltValueField(wireName: 'group_id')
+  String get groupId;
+
+  @BuiltValueField(wireName: 'product_ids')
+  String get productIds;
+
+  @BuiltValueField(wireName: 'recurring_product_ids')
+  String get recurringProductIds;
+
+  @BuiltValueField(wireName: 'frequency_id')
+  String get frequencyId;
+
+  @BuiltValueField(wireName: 'auto_bill')
+  String get autoBill;
+
+  @BuiltValueField(wireName: 'promo_code')
+  String get promoCode;
+
+  /*
+    'promo_discount' => (float)$subscription->promo_discount,
+    'is_amount_discount' => (bool)$subscription->is_amount_discount,
+    'allow_cancellation' => (bool)$subscription->allow_cancellation,
+    'per_seat_enabled' => (bool)$subscription->per_set_enabled,
+    'min_seats_limit' => (int)$subscription->min_seats_limit,
+    'max_seats_limit' => (int)$subscription->max_seats_limit,
+    'trial_enabled' => (bool)$subscription->trial_enabled,
+    'trial_duration' => (int)$subscription->trial_duration,
+    'allow_query_overrides' => (bool)$subscription->allow_query_overrides,
+    'allow_plan_changes' => (bool)$subscription->allow_plan_changes,
+    'plan_map' => (string)$subscription->plan_map,
+    'refund_period' => (int)$subscription->refund_period,
+    'webhook_configuration' => $subscription->webhook_configuration ?: $std,
+    'purchase_page' => (string)route('client.subscription.purchase', $subscription->hashed_id),
+  */
+
   String get displayName => id;
 
   @override
