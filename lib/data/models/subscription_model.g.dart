@@ -120,6 +120,64 @@ class _$SubscriptionEntitySerializer
   Iterable<Object> serialize(Serializers serializers, SubscriptionEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'group_id',
+      serializers.serialize(object.groupId,
+          specifiedType: const FullType(String)),
+      'product_ids',
+      serializers.serialize(object.productIds,
+          specifiedType: const FullType(String)),
+      'recurring_product_ids',
+      serializers.serialize(object.recurringProductIds,
+          specifiedType: const FullType(String)),
+      'frequency_id',
+      serializers.serialize(object.frequencyId,
+          specifiedType: const FullType(String)),
+      'auto_bill',
+      serializers.serialize(object.autoBill,
+          specifiedType: const FullType(String)),
+      'promo_code',
+      serializers.serialize(object.promoCode,
+          specifiedType: const FullType(String)),
+      'promo_discount',
+      serializers.serialize(object.promoDiscount,
+          specifiedType: const FullType(double)),
+      'is_amount_discount',
+      serializers.serialize(object.isAmountDiscount,
+          specifiedType: const FullType(bool)),
+      'allow_cancellation',
+      serializers.serialize(object.allowCancellation,
+          specifiedType: const FullType(bool)),
+      'per_seat_enabled',
+      serializers.serialize(object.perSeatEnabled,
+          specifiedType: const FullType(bool)),
+      'max_seats_limit',
+      serializers.serialize(object.maxSeatsLimit,
+          specifiedType: const FullType(int)),
+      'trial_enabled',
+      serializers.serialize(object.trialEnabled,
+          specifiedType: const FullType(bool)),
+      'trial_duration',
+      serializers.serialize(object.trialDuration,
+          specifiedType: const FullType(int)),
+      'allow_query_overrides',
+      serializers.serialize(object.allowQueryOverrides,
+          specifiedType: const FullType(bool)),
+      'allow_plan_changes',
+      serializers.serialize(object.allowPlanChanges,
+          specifiedType: const FullType(bool)),
+      'plan_map',
+      serializers.serialize(object.planMap,
+          specifiedType: const FullType(String)),
+      'refund_period',
+      serializers.serialize(object.refundPeriod,
+          specifiedType: const FullType(int)),
+      'webhook_configuration',
+      serializers.serialize(object.webhookConfiguration,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
+      'purchase_page',
+      serializers.serialize(object.purchasePage,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -171,6 +229,83 @@ class _$SubscriptionEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'group_id':
+          result.groupId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'product_ids':
+          result.productIds = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'recurring_product_ids':
+          result.recurringProductIds = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'frequency_id':
+          result.frequencyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'auto_bill':
+          result.autoBill = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'promo_code':
+          result.promoCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'promo_discount':
+          result.promoDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'is_amount_discount':
+          result.isAmountDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'allow_cancellation':
+          result.allowCancellation = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'per_seat_enabled':
+          result.perSeatEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'max_seats_limit':
+          result.maxSeatsLimit = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'trial_enabled':
+          result.trialEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'trial_duration':
+          result.trialDuration = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'allow_query_overrides':
+          result.allowQueryOverrides = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'allow_plan_changes':
+          result.allowPlanChanges = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'plan_map':
+          result.planMap = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'refund_period':
+          result.refundPeriod = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'webhook_configuration':
+          result.webhookConfiguration.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
+          break;
+        case 'purchase_page':
+          result.purchasePage = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -406,6 +541,44 @@ class SubscriptionItemResponseBuilder
 
 class _$SubscriptionEntity extends SubscriptionEntity {
   @override
+  final String groupId;
+  @override
+  final String productIds;
+  @override
+  final String recurringProductIds;
+  @override
+  final String frequencyId;
+  @override
+  final String autoBill;
+  @override
+  final String promoCode;
+  @override
+  final double promoDiscount;
+  @override
+  final bool isAmountDiscount;
+  @override
+  final bool allowCancellation;
+  @override
+  final bool perSeatEnabled;
+  @override
+  final int maxSeatsLimit;
+  @override
+  final bool trialEnabled;
+  @override
+  final int trialDuration;
+  @override
+  final bool allowQueryOverrides;
+  @override
+  final bool allowPlanChanges;
+  @override
+  final String planMap;
+  @override
+  final int refundPeriod;
+  @override
+  final BuiltMap<String, String> webhookConfiguration;
+  @override
+  final String purchasePage;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -427,7 +600,26 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       (new SubscriptionEntityBuilder()..update(updates)).build();
 
   _$SubscriptionEntity._(
-      {this.isChanged,
+      {this.groupId,
+      this.productIds,
+      this.recurringProductIds,
+      this.frequencyId,
+      this.autoBill,
+      this.promoCode,
+      this.promoDiscount,
+      this.isAmountDiscount,
+      this.allowCancellation,
+      this.perSeatEnabled,
+      this.maxSeatsLimit,
+      this.trialEnabled,
+      this.trialDuration,
+      this.allowQueryOverrides,
+      this.allowPlanChanges,
+      this.planMap,
+      this.refundPeriod,
+      this.webhookConfiguration,
+      this.purchasePage,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -436,6 +628,70 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       this.assignedUserId,
       this.id})
       : super._() {
+    if (groupId == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'groupId');
+    }
+    if (productIds == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'productIds');
+    }
+    if (recurringProductIds == null) {
+      throw new BuiltValueNullFieldError(
+          'SubscriptionEntity', 'recurringProductIds');
+    }
+    if (frequencyId == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'frequencyId');
+    }
+    if (autoBill == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'autoBill');
+    }
+    if (promoCode == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'promoCode');
+    }
+    if (promoDiscount == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'promoDiscount');
+    }
+    if (isAmountDiscount == null) {
+      throw new BuiltValueNullFieldError(
+          'SubscriptionEntity', 'isAmountDiscount');
+    }
+    if (allowCancellation == null) {
+      throw new BuiltValueNullFieldError(
+          'SubscriptionEntity', 'allowCancellation');
+    }
+    if (perSeatEnabled == null) {
+      throw new BuiltValueNullFieldError(
+          'SubscriptionEntity', 'perSeatEnabled');
+    }
+    if (maxSeatsLimit == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'maxSeatsLimit');
+    }
+    if (trialEnabled == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'trialEnabled');
+    }
+    if (trialDuration == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'trialDuration');
+    }
+    if (allowQueryOverrides == null) {
+      throw new BuiltValueNullFieldError(
+          'SubscriptionEntity', 'allowQueryOverrides');
+    }
+    if (allowPlanChanges == null) {
+      throw new BuiltValueNullFieldError(
+          'SubscriptionEntity', 'allowPlanChanges');
+    }
+    if (planMap == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'planMap');
+    }
+    if (refundPeriod == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'refundPeriod');
+    }
+    if (webhookConfiguration == null) {
+      throw new BuiltValueNullFieldError(
+          'SubscriptionEntity', 'webhookConfiguration');
+    }
+    if (purchasePage == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'purchasePage');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('SubscriptionEntity', 'createdAt');
     }
@@ -463,6 +719,25 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SubscriptionEntity &&
+        groupId == other.groupId &&
+        productIds == other.productIds &&
+        recurringProductIds == other.recurringProductIds &&
+        frequencyId == other.frequencyId &&
+        autoBill == other.autoBill &&
+        promoCode == other.promoCode &&
+        promoDiscount == other.promoDiscount &&
+        isAmountDiscount == other.isAmountDiscount &&
+        allowCancellation == other.allowCancellation &&
+        perSeatEnabled == other.perSeatEnabled &&
+        maxSeatsLimit == other.maxSeatsLimit &&
+        trialEnabled == other.trialEnabled &&
+        trialDuration == other.trialDuration &&
+        allowQueryOverrides == other.allowQueryOverrides &&
+        allowPlanChanges == other.allowPlanChanges &&
+        planMap == other.planMap &&
+        refundPeriod == other.refundPeriod &&
+        webhookConfiguration == other.webhookConfiguration &&
+        purchasePage == other.purchasePage &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -481,7 +756,33 @@ class _$SubscriptionEntity extends SubscriptionEntity {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, isChanged.hashCode), createdAt.hashCode),
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), isAmountDiscount.hashCode),
+                                                                                allowCancellation.hashCode),
+                                                                            perSeatEnabled.hashCode),
+                                                                        maxSeatsLimit.hashCode),
+                                                                    trialEnabled.hashCode),
+                                                                trialDuration.hashCode),
+                                                            allowQueryOverrides.hashCode),
+                                                        allowPlanChanges.hashCode),
+                                                    planMap.hashCode),
+                                                refundPeriod.hashCode),
+                                            webhookConfiguration.hashCode),
+                                        purchasePage.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
                             updatedAt.hashCode),
                         archivedAt.hashCode),
                     isDeleted.hashCode),
@@ -493,6 +794,25 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SubscriptionEntity')
+          ..add('groupId', groupId)
+          ..add('productIds', productIds)
+          ..add('recurringProductIds', recurringProductIds)
+          ..add('frequencyId', frequencyId)
+          ..add('autoBill', autoBill)
+          ..add('promoCode', promoCode)
+          ..add('promoDiscount', promoDiscount)
+          ..add('isAmountDiscount', isAmountDiscount)
+          ..add('allowCancellation', allowCancellation)
+          ..add('perSeatEnabled', perSeatEnabled)
+          ..add('maxSeatsLimit', maxSeatsLimit)
+          ..add('trialEnabled', trialEnabled)
+          ..add('trialDuration', trialDuration)
+          ..add('allowQueryOverrides', allowQueryOverrides)
+          ..add('allowPlanChanges', allowPlanChanges)
+          ..add('planMap', planMap)
+          ..add('refundPeriod', refundPeriod)
+          ..add('webhookConfiguration', webhookConfiguration)
+          ..add('purchasePage', purchasePage)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -508,6 +828,91 @@ class _$SubscriptionEntity extends SubscriptionEntity {
 class SubscriptionEntityBuilder
     implements Builder<SubscriptionEntity, SubscriptionEntityBuilder> {
   _$SubscriptionEntity _$v;
+
+  String _groupId;
+  String get groupId => _$this._groupId;
+  set groupId(String groupId) => _$this._groupId = groupId;
+
+  String _productIds;
+  String get productIds => _$this._productIds;
+  set productIds(String productIds) => _$this._productIds = productIds;
+
+  String _recurringProductIds;
+  String get recurringProductIds => _$this._recurringProductIds;
+  set recurringProductIds(String recurringProductIds) =>
+      _$this._recurringProductIds = recurringProductIds;
+
+  String _frequencyId;
+  String get frequencyId => _$this._frequencyId;
+  set frequencyId(String frequencyId) => _$this._frequencyId = frequencyId;
+
+  String _autoBill;
+  String get autoBill => _$this._autoBill;
+  set autoBill(String autoBill) => _$this._autoBill = autoBill;
+
+  String _promoCode;
+  String get promoCode => _$this._promoCode;
+  set promoCode(String promoCode) => _$this._promoCode = promoCode;
+
+  double _promoDiscount;
+  double get promoDiscount => _$this._promoDiscount;
+  set promoDiscount(double promoDiscount) =>
+      _$this._promoDiscount = promoDiscount;
+
+  bool _isAmountDiscount;
+  bool get isAmountDiscount => _$this._isAmountDiscount;
+  set isAmountDiscount(bool isAmountDiscount) =>
+      _$this._isAmountDiscount = isAmountDiscount;
+
+  bool _allowCancellation;
+  bool get allowCancellation => _$this._allowCancellation;
+  set allowCancellation(bool allowCancellation) =>
+      _$this._allowCancellation = allowCancellation;
+
+  bool _perSeatEnabled;
+  bool get perSeatEnabled => _$this._perSeatEnabled;
+  set perSeatEnabled(bool perSeatEnabled) =>
+      _$this._perSeatEnabled = perSeatEnabled;
+
+  int _maxSeatsLimit;
+  int get maxSeatsLimit => _$this._maxSeatsLimit;
+  set maxSeatsLimit(int maxSeatsLimit) => _$this._maxSeatsLimit = maxSeatsLimit;
+
+  bool _trialEnabled;
+  bool get trialEnabled => _$this._trialEnabled;
+  set trialEnabled(bool trialEnabled) => _$this._trialEnabled = trialEnabled;
+
+  int _trialDuration;
+  int get trialDuration => _$this._trialDuration;
+  set trialDuration(int trialDuration) => _$this._trialDuration = trialDuration;
+
+  bool _allowQueryOverrides;
+  bool get allowQueryOverrides => _$this._allowQueryOverrides;
+  set allowQueryOverrides(bool allowQueryOverrides) =>
+      _$this._allowQueryOverrides = allowQueryOverrides;
+
+  bool _allowPlanChanges;
+  bool get allowPlanChanges => _$this._allowPlanChanges;
+  set allowPlanChanges(bool allowPlanChanges) =>
+      _$this._allowPlanChanges = allowPlanChanges;
+
+  String _planMap;
+  String get planMap => _$this._planMap;
+  set planMap(String planMap) => _$this._planMap = planMap;
+
+  int _refundPeriod;
+  int get refundPeriod => _$this._refundPeriod;
+  set refundPeriod(int refundPeriod) => _$this._refundPeriod = refundPeriod;
+
+  MapBuilder<String, String> _webhookConfiguration;
+  MapBuilder<String, String> get webhookConfiguration =>
+      _$this._webhookConfiguration ??= new MapBuilder<String, String>();
+  set webhookConfiguration(MapBuilder<String, String> webhookConfiguration) =>
+      _$this._webhookConfiguration = webhookConfiguration;
+
+  String _purchasePage;
+  String get purchasePage => _$this._purchasePage;
+  set purchasePage(String purchasePage) => _$this._purchasePage = purchasePage;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -547,6 +952,25 @@ class SubscriptionEntityBuilder
 
   SubscriptionEntityBuilder get _$this {
     if (_$v != null) {
+      _groupId = _$v.groupId;
+      _productIds = _$v.productIds;
+      _recurringProductIds = _$v.recurringProductIds;
+      _frequencyId = _$v.frequencyId;
+      _autoBill = _$v.autoBill;
+      _promoCode = _$v.promoCode;
+      _promoDiscount = _$v.promoDiscount;
+      _isAmountDiscount = _$v.isAmountDiscount;
+      _allowCancellation = _$v.allowCancellation;
+      _perSeatEnabled = _$v.perSeatEnabled;
+      _maxSeatsLimit = _$v.maxSeatsLimit;
+      _trialEnabled = _$v.trialEnabled;
+      _trialDuration = _$v.trialDuration;
+      _allowQueryOverrides = _$v.allowQueryOverrides;
+      _allowPlanChanges = _$v.allowPlanChanges;
+      _planMap = _$v.planMap;
+      _refundPeriod = _$v.refundPeriod;
+      _webhookConfiguration = _$v.webhookConfiguration?.toBuilder();
+      _purchasePage = _$v.purchasePage;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -575,16 +999,48 @@ class SubscriptionEntityBuilder
 
   @override
   _$SubscriptionEntity build() {
-    final _$result = _$v ??
-        new _$SubscriptionEntity._(
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+    _$SubscriptionEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$SubscriptionEntity._(
+              groupId: groupId,
+              productIds: productIds,
+              recurringProductIds: recurringProductIds,
+              frequencyId: frequencyId,
+              autoBill: autoBill,
+              promoCode: promoCode,
+              promoDiscount: promoDiscount,
+              isAmountDiscount: isAmountDiscount,
+              allowCancellation: allowCancellation,
+              perSeatEnabled: perSeatEnabled,
+              maxSeatsLimit: maxSeatsLimit,
+              trialEnabled: trialEnabled,
+              trialDuration: trialDuration,
+              allowQueryOverrides: allowQueryOverrides,
+              allowPlanChanges: allowPlanChanges,
+              planMap: planMap,
+              refundPeriod: refundPeriod,
+              webhookConfiguration: webhookConfiguration.build(),
+              purchasePage: purchasePage,
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'webhookConfiguration';
+        webhookConfiguration.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'SubscriptionEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
