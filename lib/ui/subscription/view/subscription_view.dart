@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -30,6 +33,8 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     final viewModel = widget.viewModel;
     final subscription = viewModel.subscription;
     final localization = AppLocalization.of(context);
+    final state = viewModel.state;
+    final company = state.company;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -56,6 +61,16 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             },
           ),
           ListDivider(),
+          if (company.isModuleEnabled(EntityType.invoice))
+            EntitiesListTile(
+              entity: subscription,
+              isFilter: widget.isFilter,
+              entityType: EntityType.invoice,
+              title: localization.invoices,
+              subtitle: memoizedInvoiceStatsForSubscription(
+                      subscription.id, state.invoiceState.map)
+                  .present(localization.active, localization.archived),
+            ),
         ],
       ),
     );

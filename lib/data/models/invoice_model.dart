@@ -222,6 +222,7 @@ abstract class InvoiceEntity extends Object
     ..paidToDate = 0
     ..remainingCycles = -1
     ..invoiceId = ''
+    ..subscriptionId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
     ..dueDate = ''
@@ -246,6 +247,10 @@ abstract class InvoiceEntity extends Object
   @override
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
+
+  @override
+  @BuiltValueField(wireName: 'subscription_id')
+  String get subscriptionId;
 
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
@@ -1036,7 +1041,8 @@ abstract class InvoiceEntity extends Object
   // ignore: unused_element
   static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
     ..paidToDate = 0
-    ..hasTasks = false;
+    ..hasTasks = false
+    ..subscriptionId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }

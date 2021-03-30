@@ -192,6 +192,27 @@ EntityStats invoiceStatsForClient(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedInvoiceStatsForSubscription = memo2(
+    (String subscriptionId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        invoiceStatsForSubscription(subscriptionId, invoiceMap));
+
+EntityStats invoiceStatsForSubscription(
+    String subscriptionId, BuiltMap<String, InvoiceEntity> invoiceMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  invoiceMap.forEach((invoiceId, invoice) {
+    if (invoice.subscriptionId == subscriptionId) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 var memoizedInvoiceStatsForUser = memo2(
     (String userId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
         invoiceStatsForUser(userId, invoiceMap));
