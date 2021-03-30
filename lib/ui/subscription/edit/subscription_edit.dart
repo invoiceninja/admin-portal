@@ -287,6 +287,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       viewModel.onChanged(
                           subscription.rebuild((b) => b..frequencyId = value));
                     },
+                    showBlank: true,
                     items: kFrequencies.entries
                         .map((entry) => DropdownMenuItem(
                               value: entry.key,
@@ -298,6 +299,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   value: subscription.autoBill,
                   onChanged: (dynamic value) => viewModel.onChanged(
                       subscription.rebuild((b) => b..autoBill = value)),
+                  showBlank: true,
                   items: [
                     SettingsEntity.AUTO_BILL_ALWAYS,
                     SettingsEntity.AUTO_BILL_OPT_OUT,
