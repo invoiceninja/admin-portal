@@ -95,22 +95,44 @@ abstract class SubscriptionEntity extends Object
   @BuiltValueField(wireName: 'promo_code')
   String get promoCode;
 
-  /*
-    'promo_discount' => (float)$subscription->promo_discount,
-    'is_amount_discount' => (bool)$subscription->is_amount_discount,
-    'allow_cancellation' => (bool)$subscription->allow_cancellation,
-    'per_seat_enabled' => (bool)$subscription->per_set_enabled,
-    'min_seats_limit' => (int)$subscription->min_seats_limit,
-    'max_seats_limit' => (int)$subscription->max_seats_limit,
-    'trial_enabled' => (bool)$subscription->trial_enabled,
-    'trial_duration' => (int)$subscription->trial_duration,
-    'allow_query_overrides' => (bool)$subscription->allow_query_overrides,
-    'allow_plan_changes' => (bool)$subscription->allow_plan_changes,
-    'plan_map' => (string)$subscription->plan_map,
-    'refund_period' => (int)$subscription->refund_period,
-    'webhook_configuration' => $subscription->webhook_configuration ?: $std,
-    'purchase_page' => (string)route('client.subscription.purchase', $subscription->hashed_id),
-  */
+  @BuiltValueField(wireName: 'promo_discount')
+  double get promoDiscount;
+
+  @BuiltValueField(wireName: 'is_amount_discount')
+  bool get isAmountDiscount;
+
+  @BuiltValueField(wireName: 'allow_cancellation')
+  bool get allowCancellation;
+
+  @BuiltValueField(wireName: 'per_seat_enabled')
+  bool get perSeatEnabled;
+
+  @BuiltValueField(wireName: 'max_seats_limit')
+  int get maxSeatsLimit;
+
+  @BuiltValueField(wireName: 'trial_enabled')
+  bool get trialEnabled;
+
+  @BuiltValueField(wireName: 'trial_duration')
+  int get trialDuration;
+
+  @BuiltValueField(wireName: 'allow_query_overrides')
+  bool get allowQueryOverrides;
+
+  @BuiltValueField(wireName: 'allow_plan_changes')
+  bool get allowPlanChanges;
+
+  @BuiltValueField(wireName: 'plan_map')
+  String get planMap;
+
+  @BuiltValueField(wireName: 'refund_period')
+  int get refundPeriod;
+
+  @BuiltValueField(wireName: 'webhook_configuration')
+  BuiltMap<String, String> get webhookConfiguration;
+
+  @BuiltValueField(wireName: 'purchase_page')
+  String get purchasePage;
 
   String get displayName => id;
 
