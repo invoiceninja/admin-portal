@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
@@ -42,6 +43,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
 
   final _nameController = TextEditingController();
   final _promoCodeController = TextEditingController();
+  final _promoDiscountController = TextEditingController();
+  final _maxSeatsLimitController = TextEditingController();
+  final _trialDurationController = TextEditingController();
+  final _refundPeriodController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -66,12 +71,29 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     _controllers = [
       _nameController,
       _promoCodeController,
+      _promoDiscountController,
+      _maxSeatsLimitController,
+      _trialDurationController,
+      _refundPeriodController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final subscription = widget.viewModel.subscription;
     _promoCodeController.text = subscription.promoCode;
+    _promoDiscountController.text = formatNumber(
+        subscription.promoDiscount, context,
+        formatNumberType: FormatNumberType.inputMoney);
+    _maxSeatsLimitController.text = formatNumber(
+        subscription.maxSeatsLimit.toDouble(), context,
+        formatNumberType: FormatNumberType.inputAmount);
+    _trialDurationController.text = formatNumber(
+        subscription.trialDuration.toDouble(), context,
+        formatNumberType: FormatNumberType.inputAmount);
+    _refundPeriodController.text = formatNumber(
+        subscription.refundPeriod.toDouble(), context,
+        formatNumberType: FormatNumberType.inputAmount);
+
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
@@ -90,8 +112,12 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   }
 
   void _onChanged() {
-    final subscription = widget.viewModel.subscription
-        .rebuild((b) => b..promoCode = _promoCodeController.text.trim());
+    final subscription = widget.viewModel.subscription.rebuild((b) => b
+      ..promoCode = _promoCodeController.text.trim()
+      ..promoDiscount = parseDouble(_promoDiscountController.text)
+      ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
+      ..trialDuration = parseInt(_trialDurationController.text)
+      ..refundPeriod = parseInt(_refundPeriodController.text));
     if (subscription != widget.viewModel.subscription) {
       _debouncer.run(() {
         widget.viewModel.onChanged(subscription);
@@ -221,8 +247,28 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   label: localization.promoCode,
                   controller: _promoCodeController,
                 ),
+                DecoratedFormField(
+                  label: localization.promoDiscount,
+                  controller: _promoDiscountController,
+                ),
               ],
             ),
+            FormCard(
+              children: [
+                DecoratedFormField(
+                  label: localization.maxSeatsLimit,
+                  controller: _maxSeatsLimitController,
+                ),
+                DecoratedFormField(
+                  label: localization.trialDuration,
+                  controller: _trialDurationController,
+                ),
+                DecoratedFormField(
+                  label: localization.refundPeriod,
+                  controller: _refundPeriodController,
+                ),
+              ],
+            )
           ]),
         ],
       ),
