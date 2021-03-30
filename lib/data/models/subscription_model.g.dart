@@ -141,6 +141,9 @@ class _$SubscriptionEntitySerializer
       'promo_discount',
       serializers.serialize(object.promoDiscount,
           specifiedType: const FullType(double)),
+      'price',
+      serializers.serialize(object.price,
+          specifiedType: const FullType(double)),
       'is_amount_discount',
       serializers.serialize(object.isAmountDiscount,
           specifiedType: const FullType(bool)),
@@ -255,6 +258,10 @@ class _$SubscriptionEntitySerializer
           break;
         case 'promo_discount':
           result.promoDiscount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'price':
+          result.price = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'is_amount_discount':
@@ -555,6 +562,8 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final double promoDiscount;
   @override
+  final double price;
+  @override
   final bool isAmountDiscount;
   @override
   final bool allowCancellation;
@@ -607,6 +616,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       this.autoBill,
       this.promoCode,
       this.promoDiscount,
+      this.price,
       this.isAmountDiscount,
       this.allowCancellation,
       this.perSeatEnabled,
@@ -649,6 +659,9 @@ class _$SubscriptionEntity extends SubscriptionEntity {
     }
     if (promoDiscount == null) {
       throw new BuiltValueNullFieldError('SubscriptionEntity', 'promoDiscount');
+    }
+    if (price == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'price');
     }
     if (isAmountDiscount == null) {
       throw new BuiltValueNullFieldError(
@@ -726,6 +739,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
         autoBill == other.autoBill &&
         promoCode == other.promoCode &&
         promoDiscount == other.promoDiscount &&
+        price == other.price &&
         isAmountDiscount == other.isAmountDiscount &&
         allowCancellation == other.allowCancellation &&
         perSeatEnabled == other.perSeatEnabled &&
@@ -769,7 +783,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), isAmountDiscount.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode), isAmountDiscount.hashCode),
                                                                                 allowCancellation.hashCode),
                                                                             perSeatEnabled.hashCode),
                                                                         maxSeatsLimit.hashCode),
@@ -801,6 +815,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
           ..add('autoBill', autoBill)
           ..add('promoCode', promoCode)
           ..add('promoDiscount', promoDiscount)
+          ..add('price', price)
           ..add('isAmountDiscount', isAmountDiscount)
           ..add('allowCancellation', allowCancellation)
           ..add('perSeatEnabled', perSeatEnabled)
@@ -858,6 +873,10 @@ class SubscriptionEntityBuilder
   double get promoDiscount => _$this._promoDiscount;
   set promoDiscount(double promoDiscount) =>
       _$this._promoDiscount = promoDiscount;
+
+  double _price;
+  double get price => _$this._price;
+  set price(double price) => _$this._price = price;
 
   bool _isAmountDiscount;
   bool get isAmountDiscount => _$this._isAmountDiscount;
@@ -959,6 +978,7 @@ class SubscriptionEntityBuilder
       _autoBill = _$v.autoBill;
       _promoCode = _$v.promoCode;
       _promoDiscount = _$v.promoDiscount;
+      _price = _$v.price;
       _isAmountDiscount = _$v.isAmountDiscount;
       _allowCancellation = _$v.allowCancellation;
       _perSeatEnabled = _$v.perSeatEnabled;
@@ -1010,6 +1030,7 @@ class SubscriptionEntityBuilder
               autoBill: autoBill,
               promoCode: promoCode,
               promoDiscount: promoDiscount,
+              price: price,
               isAmountDiscount: isAmountDiscount,
               allowCancellation: allowCancellation,
               perSeatEnabled: perSeatEnabled,
