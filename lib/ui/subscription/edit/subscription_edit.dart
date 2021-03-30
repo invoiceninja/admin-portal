@@ -258,6 +258,16 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
             FormCard(
               children: [
                 BoolDropdownButton(
+                    label: localization.allowQueryOverrides,
+                    value: subscription.allowQueryOverrides,
+                    onChanged: (value) => viewModel.onChanged(subscription
+                        .rebuild((b) => b..allowQueryOverrides = value))),
+                BoolDropdownButton(
+                    label: localization.allowPlanChanges,
+                    value: subscription.allowPlanChanges,
+                    onChanged: (value) => viewModel.onChanged(subscription
+                        .rebuild((b) => b..allowPlanChanges = value))),
+                BoolDropdownButton(
                     label: localization.allowCancellation,
                     value: subscription.allowCancellation,
                     onChanged: (value) => viewModel.onChanged(subscription
