@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -199,7 +202,27 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
               ),
               FormCard(
                 children: <Widget>[
-                  //
+                  EntityDropdown(
+                    key: ValueKey('__${subscription.productIds}__'),
+                    entityType: EntityType.product,
+                    entityList: dropdownProductsSelector(state.productState.map,
+                        state.productState.list, state.userState.map),
+                    entityMap: state.productState.map,
+                    labelText: localization.products,
+                    onSelected: (value) {
+                      print('## value: $value');
+                      viewModel.onChanged(subscription.rebuild((b) => b
+                        ..productIds =
+                            subscription.productIds + ',${value.id}'));
+                    },
+                  ),
+                  ...subscription.productIds
+                      .split(',')
+                      .map((productId) => ListTile(
+                            title: Text(
+                                state.productState.get(productId).productKey),
+                          ))
+                      .toList(),
                 ],
               ),
             ],
