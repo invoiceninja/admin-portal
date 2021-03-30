@@ -48,7 +48,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               value: formatNumber(subscription.price, context)),
           ListDivider(),
           ListTile(
-            title: Text(localization.registrationUrl),
+            title: Text(localization.purchasePage),
             subtitle: Text(
               subscription.purchasePage,
               maxLines: 1,
@@ -62,6 +62,16 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             },
           ),
           ListDivider(),
+          if (subscription.groupId.isNotEmpty)
+            EntityListTile(
+              isFilter: widget.isFilter,
+              entity: state.groupState.get(subscription.groupId),
+            ),
+          if (subscription.assignedUserId.isNotEmpty)
+            EntityListTile(
+              isFilter: widget.isFilter,
+              entity: state.userState.get(subscription.assignedUserId),
+            ),
           if (company.isModuleEnabled(EntityType.invoice))
             EntitiesListTile(
               entity: subscription,
