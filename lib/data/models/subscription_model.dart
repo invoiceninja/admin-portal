@@ -84,7 +84,7 @@ abstract class SubscriptionEntity extends Object
       refundPeriod: 0,
       trialDuration: 0,
       trialEnabled: false,
-      webhookConfiguration: BuiltMap<String, String>(),
+      webhookConfiguration: WebhookConfigurationEntity(),
     );
   }
 
@@ -239,7 +239,13 @@ abstract class WebhookConfigurationEntity
     implements
         Built<WebhookConfigurationEntity, WebhookConfigurationEntityBuilder> {
   factory WebhookConfigurationEntity() {
-    return _$WebhookConfigurationEntity._();
+    return _$WebhookConfigurationEntity._(
+      postPurchaseBody: '',
+      postPurchaseHeaders: BuiltList<String>(),
+      postPurchaseRestMethod: '',
+      postPurchaseUrl: '',
+      returnUrl: '',
+    );
   }
 
   WebhookConfigurationEntity._();
@@ -262,6 +268,14 @@ abstract class WebhookConfigurationEntity
 
   @BuiltValueField(wireName: 'post_purchase_body')
   String get postPurchaseBody;
+
+  // ignore: unused_element
+  static void _initializeBuilder(WebhookConfigurationEntity builder) => builder
+    ..returnUrl = ''
+    ..postPurchaseBody = ''
+    ..postPurchaseHeaders = BuiltList<String>()
+    ..postPurchaseRestMethod = ''
+    ..postPurchaseUrl = '';
 
   static Serializer<WebhookConfigurationEntity> get serializer =>
       _$webhookConfigurationEntitySerializer;
