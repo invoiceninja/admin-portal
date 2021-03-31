@@ -151,7 +151,7 @@ abstract class SubscriptionEntity extends Object
   int get refundPeriod;
 
   @BuiltValueField(wireName: 'webhook_configuration')
-  BuiltMap<String, String> get webhookConfiguration;
+  WebhookConfigurationEntity get webhookConfiguration;
 
   @BuiltValueField(wireName: 'purchase_page')
   String get purchasePage;
