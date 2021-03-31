@@ -263,6 +263,6 @@ abstract class WebhookConfigurationEntity
   @BuiltValueField(wireName: 'post_purchase_body')
   String get postPurchaseBody;
 
-  static Serializer<InvoiceItemEntity> get serializer =>
+  static Serializer<WebhookConfigurationEntity> get serializer =>
       _$webhookConfigurationEntitySerializer;
 }
