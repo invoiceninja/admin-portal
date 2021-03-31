@@ -47,3 +47,31 @@ jobs:
           git add .
           git commit -m 'New admin portal build'
           git push
+      - run: |
+          cd ..
+          cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
+          cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
+          cp pubspec.foss.yaml pubspec.yaml 
+          rm pubspec.lock
+      - run: flutter pub get
+      - run: flutter build web --web-renderer canvaskit --release
+      - run: |
+          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
+          cd invoiceninja_foss
+          git checkout v5-develop
+          cp ../build/web/main.dart.js ./public/main.wasm.dart.js
+          cp ../build/web/main.dart.js.map ./public/main.wasm.dart.js.map
+          git add .
+          git commit -m 'New admin portal WASM build'
+          git push 
+      - run: flutter build web --web-renderer html --release
+      - run: |
+          cd ..
+          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
+          cd invoiceninja_foss
+          git checkout v5-develop
+          cp ../build/web/main.dart.js ./public/main.foss.dart.js
+          cp ../build/web/main.dart.js.map ./public/main.foss.dart.js.map
+          git add .
+          git commit -m 'New admin portal FOSS build'
+          git push

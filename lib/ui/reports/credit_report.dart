@@ -34,7 +34,6 @@ enum CreditReportFields {
   custom_value2,
   custom_value3,
   custom_value4,
-  has_expenses,
   custom_surcharge1,
   custom_surcharge2,
   custom_surcharge3,
@@ -175,9 +174,6 @@ ReportResult creditReport(
           break;
         case CreditReportFields.custom_value4:
           value = credit.customValue4;
-          break;
-        case CreditReportFields.has_expenses:
-          value = credit.hasExpenses;
           break;
         case CreditReportFields.custom_surcharge1:
           value = credit.customSurcharge1;
