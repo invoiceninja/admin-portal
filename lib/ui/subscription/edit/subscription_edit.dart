@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -49,8 +50,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   final _promoCodeController = TextEditingController();
   final _promoDiscountController = TextEditingController();
   final _maxSeatsLimitController = TextEditingController();
-  final _trialDurationController = TextEditingController();
-  final _refundPeriodController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -77,8 +76,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       _promoCodeController,
       _promoDiscountController,
       _maxSeatsLimitController,
-      _trialDurationController,
-      _refundPeriodController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -90,12 +87,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
         formatNumberType: FormatNumberType.inputMoney);
     _maxSeatsLimitController.text = formatNumber(
         subscription.maxSeatsLimit.toDouble(), context,
-        formatNumberType: FormatNumberType.inputAmount);
-    _trialDurationController.text = formatNumber(
-        subscription.trialDuration.toDouble(), context,
-        formatNumberType: FormatNumberType.inputAmount);
-    _refundPeriodController.text = formatNumber(
-        subscription.refundPeriod.toDouble(), context,
         formatNumberType: FormatNumberType.inputAmount);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -119,9 +110,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     final subscription = widget.viewModel.subscription.rebuild((b) => b
       ..promoCode = _promoCodeController.text.trim()
       ..promoDiscount = parseDouble(_promoDiscountController.text)
-      ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
-      ..trialDuration = parseInt(_trialDurationController.text)
-      ..refundPeriod = parseInt(_refundPeriodController.text));
+      ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text));
     if (subscription != widget.viewModel.subscription) {
       _debouncer.run(() {
         widget.viewModel.onChanged(subscription);
@@ -136,6 +125,37 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     final localization = AppLocalization.of(context);
     final subscription = viewModel.subscription;
     final origSubscription = state.subscriptionState.get(subscription.id);
+
+    final durations = [
+      DropdownMenuItem<int>(
+        child: Text(localization.countDay),
+        value: 60 * 60 * 24,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDays.replaceFirst(':count', '2')),
+        value: 60 * 60 * 24 * 2,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDays.replaceFirst(':count', '3')),
+        value: 60 * 60 * 24 * 3,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDays.replaceFirst(':count', '7')),
+        value: 60 * 60 * 24 * 7,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDays.replaceFirst(':count', '14')),
+        value: 60 * 60 * 24 * 14,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDays.replaceFirst(':count', '30')),
+        value: 60 * 60 * 24 * 30,
+      ),
+      DropdownMenuItem<int>(
+        child: Text(localization.countDays.replaceFirst(':count', '60')),
+        value: 60 * 60 * 24 * 60,
+      ),
+    ];
 
     return EditScaffold(
       title: subscription.isNew
@@ -349,9 +369,14 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         .rebuild((b) => b..allowCancellation = value))),
                 if (subscription.allowCancellation ||
                     origSubscription.allowCancellation)
-                  DecoratedFormField(
-                    label: localization.refundPeriod,
-                    controller: _refundPeriodController,
+                  AppDropdownButton<int>(
+                    showBlank: true,
+                    blankValue: 0,
+                    labelText: localization.refundPeriod,
+                    value: subscription.refundPeriod,
+                    onChanged: (dynamic value) => viewModel.onChanged(
+                        subscription.rebuild((b) => b..refundPeriod = value)),
+                    items: durations,
                   ),
                 BoolDropdownButton(
                     label: localization.trialEnabled,
@@ -359,9 +384,14 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     onChanged: (value) => viewModel.onChanged(
                         subscription.rebuild((b) => b.trialEnabled = value))),
                 if (subscription.trialEnabled || origSubscription.trialEnabled)
-                  DecoratedFormField(
-                    label: localization.trialDuration,
-                    controller: _trialDurationController,
+                  AppDropdownButton<int>(
+                    showBlank: true,
+                    blankValue: 0,
+                    labelText: localization.trialDuration,
+                    value: subscription.trialDuration,
+                    onChanged: (dynamic value) => viewModel.onChanged(
+                        subscription.rebuild((b) => b..trialDuration = value)),
+                    items: durations,
                   ),
                 BoolDropdownButton(
                     label: localization.perSeatEnabled,
@@ -374,6 +404,9 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     label: localization.maxSeatsLimit,
                     controller: _maxSeatsLimitController,
                     keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    ],
                   ),
               ],
             )
