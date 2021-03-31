@@ -178,8 +178,7 @@ class _$SubscriptionEntitySerializer
           specifiedType: const FullType(int)),
       'webhook_configuration',
       serializers.serialize(object.webhookConfiguration,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
+          specifiedType: const FullType(WebhookConfigurationEntity)),
       'purchase_page',
       serializers.serialize(object.purchasePage,
           specifiedType: const FullType(String)),
@@ -308,8 +307,8 @@ class _$SubscriptionEntitySerializer
           break;
         case 'webhook_configuration':
           result.webhookConfiguration.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)])));
+                  specifiedType: const FullType(WebhookConfigurationEntity))
+              as WebhookConfigurationEntity);
           break;
         case 'purchase_page':
           result.purchasePage = serializers.deserialize(value,
@@ -663,7 +662,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final int refundPeriod;
   @override
-  final BuiltMap<String, String> webhookConfiguration;
+  final WebhookConfigurationEntity webhookConfiguration;
   @override
   final String purchasePage;
   @override
@@ -1002,10 +1001,11 @@ class SubscriptionEntityBuilder
   int get refundPeriod => _$this._refundPeriod;
   set refundPeriod(int refundPeriod) => _$this._refundPeriod = refundPeriod;
 
-  MapBuilder<String, String> _webhookConfiguration;
-  MapBuilder<String, String> get webhookConfiguration =>
-      _$this._webhookConfiguration ??= new MapBuilder<String, String>();
-  set webhookConfiguration(MapBuilder<String, String> webhookConfiguration) =>
+  WebhookConfigurationEntityBuilder _webhookConfiguration;
+  WebhookConfigurationEntityBuilder get webhookConfiguration =>
+      _$this._webhookConfiguration ??= new WebhookConfigurationEntityBuilder();
+  set webhookConfiguration(
+          WebhookConfigurationEntityBuilder webhookConfiguration) =>
       _$this._webhookConfiguration = webhookConfiguration;
 
   String _purchasePage;
