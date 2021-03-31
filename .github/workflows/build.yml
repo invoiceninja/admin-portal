@@ -55,8 +55,8 @@ jobs:
       - run: flutter pub get
       - run: flutter build web --web-renderer canvaskit --release
       - run: |
-          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
-          cd invoiceninja_foss
+          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_wasm
+          cd invoiceninja_wasm
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.wasm.dart.js
           git add .
