@@ -48,7 +48,6 @@ jobs:
           git commit -m 'New admin portal build'
           git push
       - run: |
-          cd ..
           cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
           cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
           cp pubspec.foss.yaml pubspec.yaml 
