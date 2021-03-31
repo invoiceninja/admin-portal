@@ -84,7 +84,7 @@ abstract class SubscriptionEntity extends Object
       refundPeriod: 0,
       trialDuration: 0,
       trialEnabled: false,
-      webhookConfiguration: BuiltMap<String, String>(),
+      webhookConfiguration: WebhookConfigurationEntity(),
     );
   }
 
@@ -151,7 +151,7 @@ abstract class SubscriptionEntity extends Object
   int get refundPeriod;
 
   @BuiltValueField(wireName: 'webhook_configuration')
-  BuiltMap<String, String> get webhookConfiguration;
+  WebhookConfigurationEntity get webhookConfiguration;
 
   @BuiltValueField(wireName: 'purchase_page')
   String get purchasePage;
@@ -233,4 +233,51 @@ abstract class SubscriptionEntity extends Object
 
   static Serializer<SubscriptionEntity> get serializer =>
       _$subscriptionEntitySerializer;
+}
+
+abstract class WebhookConfigurationEntity
+    implements
+        Built<WebhookConfigurationEntity, WebhookConfigurationEntityBuilder> {
+  factory WebhookConfigurationEntity() {
+    return _$WebhookConfigurationEntity._(
+      postPurchaseBody: '',
+      postPurchaseHeaders: BuiltList<String>(),
+      postPurchaseRestMethod: '',
+      postPurchaseUrl: '',
+      returnUrl: '',
+    );
+  }
+
+  WebhookConfigurationEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'return_url')
+  String get returnUrl;
+
+  @BuiltValueField(wireName: 'post_purchase_url')
+  String get postPurchaseUrl;
+
+  @BuiltValueField(wireName: 'post_purchase_rest_method')
+  String get postPurchaseRestMethod;
+
+  @BuiltValueField(wireName: 'post_purchase_headers')
+  BuiltList<String> get postPurchaseHeaders;
+
+  @BuiltValueField(wireName: 'post_purchase_body')
+  String get postPurchaseBody;
+
+  // ignore: unused_element
+  static void _initializeBuilder(WebhookConfigurationEntityBuilder builder) =>
+      builder
+        ..returnUrl = ''
+        ..postPurchaseBody = ''
+        ..postPurchaseHeaders.replace(BuiltList<String>())
+        ..postPurchaseRestMethod = ''
+        ..postPurchaseUrl = '';
+
+  static Serializer<WebhookConfigurationEntity> get serializer =>
+      _$webhookConfigurationEntitySerializer;
 }

@@ -12,6 +12,8 @@ Serializer<SubscriptionItemResponse> _$subscriptionItemResponseSerializer =
     new _$SubscriptionItemResponseSerializer();
 Serializer<SubscriptionEntity> _$subscriptionEntitySerializer =
     new _$SubscriptionEntitySerializer();
+Serializer<WebhookConfigurationEntity> _$webhookConfigurationEntitySerializer =
+    new _$WebhookConfigurationEntitySerializer();
 
 class _$SubscriptionListResponseSerializer
     implements StructuredSerializer<SubscriptionListResponse> {
@@ -176,8 +178,7 @@ class _$SubscriptionEntitySerializer
           specifiedType: const FullType(int)),
       'webhook_configuration',
       serializers.serialize(object.webhookConfiguration,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
+          specifiedType: const FullType(WebhookConfigurationEntity)),
       'purchase_page',
       serializers.serialize(object.purchasePage,
           specifiedType: const FullType(String)),
@@ -306,8 +307,8 @@ class _$SubscriptionEntitySerializer
           break;
         case 'webhook_configuration':
           result.webhookConfiguration.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)])));
+                  specifiedType: const FullType(WebhookConfigurationEntity))
+              as WebhookConfigurationEntity);
           break;
         case 'purchase_page':
           result.purchasePage = serializers.deserialize(value,
@@ -343,6 +344,83 @@ class _$SubscriptionEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$WebhookConfigurationEntitySerializer
+    implements StructuredSerializer<WebhookConfigurationEntity> {
+  @override
+  final Iterable<Type> types = const [
+    WebhookConfigurationEntity,
+    _$WebhookConfigurationEntity
+  ];
+  @override
+  final String wireName = 'WebhookConfigurationEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, WebhookConfigurationEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'return_url',
+      serializers.serialize(object.returnUrl,
+          specifiedType: const FullType(String)),
+      'post_purchase_url',
+      serializers.serialize(object.postPurchaseUrl,
+          specifiedType: const FullType(String)),
+      'post_purchase_rest_method',
+      serializers.serialize(object.postPurchaseRestMethod,
+          specifiedType: const FullType(String)),
+      'post_purchase_headers',
+      serializers.serialize(object.postPurchaseHeaders,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
+      'post_purchase_body',
+      serializers.serialize(object.postPurchaseBody,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  WebhookConfigurationEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new WebhookConfigurationEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'return_url':
+          result.returnUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'post_purchase_url':
+          result.postPurchaseUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'post_purchase_rest_method':
+          result.postPurchaseRestMethod = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'post_purchase_headers':
+          result.postPurchaseHeaders.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(String)]))
+              as BuiltList<Object>);
+          break;
+        case 'post_purchase_body':
+          result.postPurchaseBody = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -584,7 +662,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final int refundPeriod;
   @override
-  final BuiltMap<String, String> webhookConfiguration;
+  final WebhookConfigurationEntity webhookConfiguration;
   @override
   final String purchasePage;
   @override
@@ -923,10 +1001,11 @@ class SubscriptionEntityBuilder
   int get refundPeriod => _$this._refundPeriod;
   set refundPeriod(int refundPeriod) => _$this._refundPeriod = refundPeriod;
 
-  MapBuilder<String, String> _webhookConfiguration;
-  MapBuilder<String, String> get webhookConfiguration =>
-      _$this._webhookConfiguration ??= new MapBuilder<String, String>();
-  set webhookConfiguration(MapBuilder<String, String> webhookConfiguration) =>
+  WebhookConfigurationEntityBuilder _webhookConfiguration;
+  WebhookConfigurationEntityBuilder get webhookConfiguration =>
+      _$this._webhookConfiguration ??= new WebhookConfigurationEntityBuilder();
+  set webhookConfiguration(
+          WebhookConfigurationEntityBuilder webhookConfiguration) =>
       _$this._webhookConfiguration = webhookConfiguration;
 
   String _purchasePage;
@@ -1059,6 +1138,180 @@ class SubscriptionEntityBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SubscriptionEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
+  @override
+  final String returnUrl;
+  @override
+  final String postPurchaseUrl;
+  @override
+  final String postPurchaseRestMethod;
+  @override
+  final BuiltList<String> postPurchaseHeaders;
+  @override
+  final String postPurchaseBody;
+
+  factory _$WebhookConfigurationEntity(
+          [void Function(WebhookConfigurationEntityBuilder) updates]) =>
+      (new WebhookConfigurationEntityBuilder()..update(updates)).build();
+
+  _$WebhookConfigurationEntity._(
+      {this.returnUrl,
+      this.postPurchaseUrl,
+      this.postPurchaseRestMethod,
+      this.postPurchaseHeaders,
+      this.postPurchaseBody})
+      : super._() {
+    if (returnUrl == null) {
+      throw new BuiltValueNullFieldError(
+          'WebhookConfigurationEntity', 'returnUrl');
+    }
+    if (postPurchaseUrl == null) {
+      throw new BuiltValueNullFieldError(
+          'WebhookConfigurationEntity', 'postPurchaseUrl');
+    }
+    if (postPurchaseRestMethod == null) {
+      throw new BuiltValueNullFieldError(
+          'WebhookConfigurationEntity', 'postPurchaseRestMethod');
+    }
+    if (postPurchaseHeaders == null) {
+      throw new BuiltValueNullFieldError(
+          'WebhookConfigurationEntity', 'postPurchaseHeaders');
+    }
+    if (postPurchaseBody == null) {
+      throw new BuiltValueNullFieldError(
+          'WebhookConfigurationEntity', 'postPurchaseBody');
+    }
+  }
+
+  @override
+  WebhookConfigurationEntity rebuild(
+          void Function(WebhookConfigurationEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  WebhookConfigurationEntityBuilder toBuilder() =>
+      new WebhookConfigurationEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is WebhookConfigurationEntity &&
+        returnUrl == other.returnUrl &&
+        postPurchaseUrl == other.postPurchaseUrl &&
+        postPurchaseRestMethod == other.postPurchaseRestMethod &&
+        postPurchaseHeaders == other.postPurchaseHeaders &&
+        postPurchaseBody == other.postPurchaseBody;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(
+        $jc(
+            $jc($jc($jc(0, returnUrl.hashCode), postPurchaseUrl.hashCode),
+                postPurchaseRestMethod.hashCode),
+            postPurchaseHeaders.hashCode),
+        postPurchaseBody.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('WebhookConfigurationEntity')
+          ..add('returnUrl', returnUrl)
+          ..add('postPurchaseUrl', postPurchaseUrl)
+          ..add('postPurchaseRestMethod', postPurchaseRestMethod)
+          ..add('postPurchaseHeaders', postPurchaseHeaders)
+          ..add('postPurchaseBody', postPurchaseBody))
+        .toString();
+  }
+}
+
+class WebhookConfigurationEntityBuilder
+    implements
+        Builder<WebhookConfigurationEntity, WebhookConfigurationEntityBuilder> {
+  _$WebhookConfigurationEntity _$v;
+
+  String _returnUrl;
+  String get returnUrl => _$this._returnUrl;
+  set returnUrl(String returnUrl) => _$this._returnUrl = returnUrl;
+
+  String _postPurchaseUrl;
+  String get postPurchaseUrl => _$this._postPurchaseUrl;
+  set postPurchaseUrl(String postPurchaseUrl) =>
+      _$this._postPurchaseUrl = postPurchaseUrl;
+
+  String _postPurchaseRestMethod;
+  String get postPurchaseRestMethod => _$this._postPurchaseRestMethod;
+  set postPurchaseRestMethod(String postPurchaseRestMethod) =>
+      _$this._postPurchaseRestMethod = postPurchaseRestMethod;
+
+  ListBuilder<String> _postPurchaseHeaders;
+  ListBuilder<String> get postPurchaseHeaders =>
+      _$this._postPurchaseHeaders ??= new ListBuilder<String>();
+  set postPurchaseHeaders(ListBuilder<String> postPurchaseHeaders) =>
+      _$this._postPurchaseHeaders = postPurchaseHeaders;
+
+  String _postPurchaseBody;
+  String get postPurchaseBody => _$this._postPurchaseBody;
+  set postPurchaseBody(String postPurchaseBody) =>
+      _$this._postPurchaseBody = postPurchaseBody;
+
+  WebhookConfigurationEntityBuilder() {
+    WebhookConfigurationEntity._initializeBuilder(this);
+  }
+
+  WebhookConfigurationEntityBuilder get _$this {
+    if (_$v != null) {
+      _returnUrl = _$v.returnUrl;
+      _postPurchaseUrl = _$v.postPurchaseUrl;
+      _postPurchaseRestMethod = _$v.postPurchaseRestMethod;
+      _postPurchaseHeaders = _$v.postPurchaseHeaders?.toBuilder();
+      _postPurchaseBody = _$v.postPurchaseBody;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(WebhookConfigurationEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$WebhookConfigurationEntity;
+  }
+
+  @override
+  void update(void Function(WebhookConfigurationEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$WebhookConfigurationEntity build() {
+    _$WebhookConfigurationEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$WebhookConfigurationEntity._(
+              returnUrl: returnUrl,
+              postPurchaseUrl: postPurchaseUrl,
+              postPurchaseRestMethod: postPurchaseRestMethod,
+              postPurchaseHeaders: postPurchaseHeaders.build(),
+              postPurchaseBody: postPurchaseBody);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'postPurchaseHeaders';
+        postPurchaseHeaders.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'WebhookConfigurationEntity', _$failedField, e.toString());
       }
       rethrow;
     }
