@@ -132,19 +132,11 @@ InvoiceEntity _updateEditing(InvoiceEntity invoice, dynamic action) {
 
 InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
   final item = action.invoiceItem ?? InvoiceItemEntity();
-  return invoice.rebuild((b) => b
-    ..hasTasks = b.hasTasks || item.isTask
-    ..hasExpenses = b.hasExpenses || item.isExpense
-    ..lineItems.add(item));
+  return invoice.rebuild((b) => b..lineItems.add(item));
 }
 
 InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
-  return invoice.rebuild((b) => b
-    ..hasTasks =
-        b.hasTasks || action.lineItems.where((item) => item.isTask).isNotEmpty
-    ..hasExpenses = b.hasExpenses ||
-        action.lineItems.where((item) => item.isExpense).isNotEmpty
-    ..lineItems.addAll(action.lineItems));
+  return invoice.rebuild((b) => b..lineItems.addAll(action.lineItems));
 }
 
 InvoiceEntity _removeInvoiceItem(

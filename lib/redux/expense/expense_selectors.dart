@@ -12,6 +12,7 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
   @required CompanyEntity company,
 }) {
   return InvoiceItemEntity().rebuild((b) => b
+    ..typeId = InvoiceItemEntity.TYPE_EXPENSE
     ..expenseId = expense.id
     ..productKey = categoryMap[expense.categoryId]?.name ?? ''
     ..notes = expense.publicNotes
