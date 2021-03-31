@@ -234,3 +234,35 @@ abstract class SubscriptionEntity extends Object
   static Serializer<SubscriptionEntity> get serializer =>
       _$subscriptionEntitySerializer;
 }
+
+abstract class WebhookConfigurationEntity
+    implements
+        Built<WebhookConfigurationEntity, WebhookConfigurationEntityBuilder> {
+  factory WebhookConfigurationEntity() {
+    return _$WebhookConfigurationEntity._();
+  }
+
+  WebhookConfigurationEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'return_url')
+  String get returnUrl;
+
+  @BuiltValueField(wireName: 'post_purchase_url')
+  String get postPurchaseUrl;
+
+  @BuiltValueField(wireName: 'post_purchase_rest_method')
+  String get postPurchaseRestMethod;
+
+  @BuiltValueField(wireName: 'post_purchase_headers')
+  BuiltList<String> get postPurchaseHeaders;
+
+  @BuiltValueField(wireName: 'post_purchase_body')
+  String get postPurchaseBody;
+
+  static Serializer<InvoiceItemEntity> get serializer =>
+      _$webhookConfigurationEntitySerializer;
+}
