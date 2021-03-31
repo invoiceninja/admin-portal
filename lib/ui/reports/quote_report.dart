@@ -31,7 +31,6 @@ enum QuoteReportFields {
   custom_value2,
   custom_value3,
   custom_value4,
-  has_expenses,
   custom_surcharge1,
   custom_surcharge2,
   custom_surcharge3,
@@ -170,9 +169,6 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.custom_value4:
           value = quote.customValue4;
-          break;
-        case QuoteReportFields.has_expenses:
-          value = quote.hasExpenses;
           break;
         case QuoteReportFields.custom_surcharge1:
           value = quote.customSurcharge1;

@@ -183,7 +183,9 @@ class PaymentListItem extends StatelessWidget {
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
-                      Text(formatNumber(payment.amount, context),
+                      Text(
+                          formatNumber(payment.amount, context,
+                              clientId: payment.clientId),
                           style: Theme.of(context).textTheme.headline6),
                     ],
                   ),

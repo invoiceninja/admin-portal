@@ -65,6 +65,26 @@ abstract class SubscriptionEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
+      allowCancellation: true,
+      allowPlanChanges: false,
+      allowQueryOverrides: false,
+      autoBill: '',
+      frequencyId: '',
+      groupId: '',
+      isAmountDiscount: true,
+      price: 0,
+      maxSeatsLimit: 0,
+      perSeatEnabled: false,
+      planMap: '',
+      productIds: '',
+      promoCode: '',
+      promoDiscount: 0,
+      purchasePage: '',
+      recurringProductIds: '',
+      refundPeriod: 0,
+      trialDuration: 0,
+      trialEnabled: false,
+      webhookConfiguration: BuiltMap<String, String>(),
     );
   }
 
@@ -76,6 +96,65 @@ abstract class SubscriptionEntity extends Object
 
   @override
   EntityType get entityType => EntityType.subscription;
+
+  @BuiltValueField(wireName: 'group_id')
+  String get groupId;
+
+  @BuiltValueField(wireName: 'product_ids')
+  String get productIds;
+
+  @BuiltValueField(wireName: 'recurring_product_ids')
+  String get recurringProductIds;
+
+  @BuiltValueField(wireName: 'frequency_id')
+  String get frequencyId;
+
+  @BuiltValueField(wireName: 'auto_bill')
+  String get autoBill;
+
+  @BuiltValueField(wireName: 'promo_code')
+  String get promoCode;
+
+  @BuiltValueField(wireName: 'promo_discount')
+  double get promoDiscount;
+
+  double get price;
+
+  @BuiltValueField(wireName: 'is_amount_discount')
+  bool get isAmountDiscount;
+
+  @BuiltValueField(wireName: 'allow_cancellation')
+  bool get allowCancellation;
+
+  @BuiltValueField(wireName: 'per_seat_enabled')
+  bool get perSeatEnabled;
+
+  @BuiltValueField(wireName: 'max_seats_limit')
+  int get maxSeatsLimit;
+
+  @BuiltValueField(wireName: 'trial_enabled')
+  bool get trialEnabled;
+
+  @BuiltValueField(wireName: 'trial_duration')
+  int get trialDuration;
+
+  @BuiltValueField(wireName: 'allow_query_overrides')
+  bool get allowQueryOverrides;
+
+  @BuiltValueField(wireName: 'allow_plan_changes')
+  bool get allowPlanChanges;
+
+  @BuiltValueField(wireName: 'plan_map')
+  String get planMap;
+
+  @BuiltValueField(wireName: 'refund_period')
+  int get refundPeriod;
+
+  @BuiltValueField(wireName: 'webhook_configuration')
+  BuiltMap<String, String> get webhookConfiguration;
+
+  @BuiltValueField(wireName: 'purchase_page')
+  String get purchasePage;
 
   String get displayName => id;
 

@@ -37,6 +37,7 @@ enum InvoiceReportFields {
   custom_value3,
   custom_value4,
   has_expenses,
+  has_tasks,
   custom_surcharge1,
   custom_surcharge2,
   custom_surcharge3,
@@ -201,6 +202,9 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.has_expenses:
           value = invoice.hasExpenses;
+          break;
+        case InvoiceReportFields.has_tasks:
+          value = invoice.hasTasks;
           break;
         case InvoiceReportFields.custom_surcharge1:
           value = invoice.customSurcharge1;

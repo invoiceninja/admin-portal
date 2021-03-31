@@ -81,6 +81,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       _saveAuthLocal(action.url);
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
+      store.dispatch(UserVerifiedPassword());
     }).catchError((Object error) {
       print('## Login error: $error');
       final message = _parseError('$error');
@@ -111,6 +112,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
+      store.dispatch(UserVerifiedPassword());
     }).catchError((Object error) {
       print('## Signup error: $error');
       final message = _parseError('$error');
@@ -143,6 +145,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
+      store.dispatch(UserVerifiedPassword());
     }).catchError((Object error) {
       print('## Oauth login error: $error');
       final message = _parseError('$error');
@@ -173,6 +176,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
+      store.dispatch(UserVerifiedPassword());
     }).catchError((Object error) {
       print('## OAuth signup error: $error');
       final message = _parseError('$error');

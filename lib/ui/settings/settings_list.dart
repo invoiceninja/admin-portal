@@ -317,6 +317,7 @@ class SettingsSearch extends StatelessWidget {
         'last_name',
         'email',
         'phone',
+        'password',
         'accent_color',
         'connect_google',
         'connect_gmail',

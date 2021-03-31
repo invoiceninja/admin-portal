@@ -26,6 +26,14 @@ abstract class ProductState
   BuiltMap<String, ProductEntity> get map;
   BuiltList<String> get list;
 
+  ProductEntity get(String productId) {
+    if (map.containsKey(productId)) {
+      return map[productId];
+    } else {
+      return ProductEntity(id: productId);
+    }
+  }
+
   ProductState loadProducts(BuiltList<ProductEntity> clients) {
     final map = Map<String, ProductEntity>.fromIterable(
       clients,

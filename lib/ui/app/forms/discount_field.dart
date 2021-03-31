@@ -9,12 +9,14 @@ class DiscountField extends StatelessWidget {
     @required this.value,
     @required this.isAmountDiscount,
     @required this.onTypeChanged,
+    this.label,
   });
 
   final TextEditingController controller;
   final double value;
   final bool isAmountDiscount;
   final Function(bool value) onTypeChanged;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class DiscountField extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: DecoratedFormField(
-            label: localization.discount,
+            label: label ?? localization.discount,
             controller: controller,
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           ),
