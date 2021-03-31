@@ -286,9 +286,8 @@ void handleProjectAction(
           convertProjectToInvoiceItem(project: project, context: context);
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..hasTasks = true
-            ..lineItems.addAll(items)));
+          entity: InvoiceEntity(state: state, client: client)
+              .rebuild((b) => b..lineItems.addAll(items)));
       break;
     case EntityAction.newExpense:
       createEntity(

@@ -158,7 +158,6 @@ abstract class InvoiceEntity extends Object
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',
-      hasTasks: false,
       autoBillEnabled: false,
       customValue1: '',
       customValue2: '',
@@ -168,7 +167,6 @@ abstract class InvoiceEntity extends Object
       customTaxes2: company?.enableCustomSurchargeTaxes2 ?? false,
       customTaxes3: company?.enableCustomSurchargeTaxes3 ?? false,
       customTaxes4: company?.enableCustomSurchargeTaxes4 ?? false,
-      hasExpenses: false,
       invoiceId: '',
       customSurcharge1: 0,
       customSurcharge2: 0,
@@ -472,9 +470,9 @@ abstract class InvoiceEntity extends Object
         kMillisecondsToRefreshActivities;
   }
 
-  bool get hasTask => lineItems.any((item) => item.isTask);
+  bool get hasTasks => lineItems.any((item) => item.isTask);
 
-  bool get hasExpense => lineItems.any((item) => item.isExpense);
+  bool get hasExpenses => lineItems.any((item) => item.isExpense);
 
   @override
   bool get isEditable {
@@ -1040,7 +1038,6 @@ abstract class InvoiceEntity extends Object
   // ignore: unused_element
   static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
     ..paidToDate = 0
-    ..hasTasks = false
     ..subscriptionId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;

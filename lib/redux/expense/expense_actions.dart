@@ -283,9 +283,8 @@ void handleExpenseAction(
       if (items.isNotEmpty) {
         createEntity(
             context: context,
-            entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-              ..hasExpenses = true
-              ..lineItems.addAll(items)));
+            entity: InvoiceEntity(state: state, client: client)
+                .rebuild((b) => b..lineItems.addAll(items)));
       }
       break;
     case EntityAction.restore:

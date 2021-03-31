@@ -55,8 +55,8 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   }
 
   return InvoiceItemEntity().rebuild((b) => b
-    ..taskId = task.id
     ..typeId = InvoiceItemEntity.TYPE_TASK
+    ..taskId = task.id
     ..notes = notes
     ..cost = taskRateSelector(
       company: state.company,
