@@ -1264,7 +1264,9 @@ class WebhookConfigurationEntityBuilder
   set postPurchaseBody(String postPurchaseBody) =>
       _$this._postPurchaseBody = postPurchaseBody;
 
-  WebhookConfigurationEntityBuilder();
+  WebhookConfigurationEntityBuilder() {
+    WebhookConfigurationEntity._initializeBuilder(this);
+  }
 
   WebhookConfigurationEntityBuilder get _$this {
     if (_$v != null) {
