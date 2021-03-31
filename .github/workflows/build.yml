@@ -59,7 +59,6 @@ jobs:
           cd invoiceninja_foss
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.wasm.dart.js
-          cp ../build/web/main.dart.js.map ./public/main.wasm.dart.js.map
           git add .
           git commit -m 'New admin portal WASM build'
           git push 
@@ -70,7 +69,6 @@ jobs:
           cd invoiceninja_foss
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.foss.dart.js
-          cp ../build/web/main.dart.js.map ./public/main.foss.dart.js.map
           git add .
           git commit -m 'New admin portal FOSS build'
           git push

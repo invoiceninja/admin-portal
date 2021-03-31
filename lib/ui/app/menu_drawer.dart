@@ -1034,7 +1034,7 @@ void _showAbout(BuildContext context) async {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  Text(localization.desktop + ' • Beta'),
+                                  Text(localization.desktop + ' • BETA'),
                                   AppButton(
                                     label: 'macOS',
                                     iconData: MdiIcons.apple,
