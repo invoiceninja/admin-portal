@@ -333,9 +333,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'partial_due_date')
   String get partialDueDate;
 
-  @BuiltValueField(wireName: 'has_tasks')
-  bool get hasTasks;
-
   @nullable
   @BuiltValueField(wireName: 'auto_bill')
   String get autoBill;
@@ -387,9 +384,6 @@ abstract class InvoiceEntity extends Object
   @override
   @BuiltValueField(wireName: 'custom_surcharge_tax4')
   bool get customTaxes4;
-
-  @BuiltValueField(wireName: 'has_expenses')
-  bool get hasExpenses;
 
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
@@ -477,6 +471,10 @@ abstract class InvoiceEntity extends Object
     return DateTime.now().millisecondsSinceEpoch - loadedAt >
         kMillisecondsToRefreshActivities;
   }
+
+  bool get hasTask => lineItems.any((item) => item.isTask);
+
+  bool get hasExpense => lineItems.any((item) => item.isExpense);
 
   @override
   bool get isEditable {
@@ -1105,7 +1103,9 @@ abstract class InvoiceItemEntity
   static const TYPE_STANDARD = '1';
   static const TYPE_TASK = '2';
   static const TYPE_UNPAID_FEE = '3';
-  static const TYPE_PAID_FEE = '3';
+  static const TYPE_PAID_FEE = '4';
+  static const TYPE_LATE_FEE = '5';
+  static const TYPE_EXPENSE = '6';
 
   @override
   @memoized
@@ -1192,9 +1192,9 @@ abstract class InvoiceItemEntity
 
   double get total => round(quantity * cost, 2);
 
-  bool get isTask => taskId != null && taskId.isNotEmpty;
+  bool get isTask => typeId == TYPE_TASK;
 
-  bool get isExpense => expenseId != null && expenseId.isNotEmpty;
+  bool get isExpense => typeId == TYPE_EXPENSE;
 
   bool get isEmpty =>
       productKey.isEmpty &&
