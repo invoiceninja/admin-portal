@@ -270,12 +270,13 @@ abstract class WebhookConfigurationEntity
   String get postPurchaseBody;
 
   // ignore: unused_element
-  static void _initializeBuilder(WebhookConfigurationEntity builder) => builder
-    ..returnUrl = ''
-    ..postPurchaseBody = ''
-    ..postPurchaseHeaders = BuiltList<String>()
-    ..postPurchaseRestMethod = ''
-    ..postPurchaseUrl = '';
+  static void _initializeBuilder(WebhookConfigurationEntityBuilder builder) =>
+      builder
+        ..returnUrl = ''
+        ..postPurchaseBody = ''
+        ..postPurchaseHeaders.replace(BuiltList<String>())
+        ..postPurchaseRestMethod = ''
+        ..postPurchaseUrl = '';
 
   static Serializer<WebhookConfigurationEntity> get serializer =>
       _$webhookConfigurationEntitySerializer;
