@@ -53,7 +53,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   final _maxSeatsLimitController = TextEditingController();
   final _returnUrlController = TextEditingController();
   final _postPurchaseHeadersController = TextEditingController();
-  final _postPurchaseRestMethodController = TextEditingController();
   final _postPurchaseUrlController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
@@ -83,7 +82,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       _maxSeatsLimitController,
       _returnUrlController,
       _postPurchaseHeadersController,
-      _postPurchaseRestMethodController,
       _postPurchaseUrlController,
     ];
 
@@ -101,8 +99,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     _returnUrlController.text = webhookConfiguration.returnUrl;
     _postPurchaseHeadersController.text =
         webhookConfiguration.postPurchaseHeaders.join(',');
-    _postPurchaseRestMethodController.text =
-        webhookConfiguration.postPurchaseRestMethod;
     _postPurchaseUrlController.text = webhookConfiguration.postPurchaseUrl;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -131,8 +127,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       ..webhookConfiguration
           .postPurchaseHeaders
           .replace(_postPurchaseHeadersController.text.trim().split(','))
-      ..webhookConfiguration.postPurchaseRestMethod =
-          _postPurchaseRestMethodController.text.trim()
       ..webhookConfiguration.postPurchaseUrl =
           _postPurchaseUrlController.text.trim());
     if (subscription != widget.viewModel.subscription) {
@@ -451,9 +445,24 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   controller: _postPurchaseUrlController,
                   keyboardType: TextInputType.url,
                 ),
-                DecoratedFormField(
-                  label: localization.restMethod,
-                  controller: _postPurchaseRestMethodController,
+                AppDropdownButton<String>(
+                  showBlank: true,
+                  labelText: localization.restMethod,
+                  value:
+                      subscription.webhookConfiguration.postPurchaseRestMethod,
+                  onChanged: (dynamic value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b
+                        ..webhookConfiguration.postPurchaseRestMethod = value)),
+                  items: [
+                    DropdownMenuItem(
+                      child: Text('POST'),
+                      value: 'post',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('PUT'),
+                      value: 'put',
+                    ),
+                  ],
                 ),
                 DecoratedFormField(
                   label: localization.headers,
