@@ -23,6 +23,7 @@ class EditScaffold extends StatelessWidget {
     this.appBarBottom,
     this.saveLabel,
     this.isFullscreen = false,
+    this.isAdvancedSettings = false,
     this.onActionPressed,
     this.actions,
   }) : super(key: key);
@@ -39,17 +40,24 @@ class EditScaffold extends StatelessWidget {
   final Widget bottomNavigationBar;
   final String saveLabel;
   final bool isFullscreen;
+  final bool isAdvancedSettings;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final isEnabled = (isMobile(context) ||
+    bool isEnabled = (isMobile(context) ||
             !state.uiState.isInSettings ||
             state.uiState.isEditing ||
             state.settingsUIState.isChanged) &&
         (!state.isLoading && !state.isSaving);
+    bool isCancelEnabled = false;
+
+    if (isAdvancedSettings && isEnabled && !state.isProPlan) {
+      isCancelEnabled = true;
+      isEnabled = false;
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -65,6 +73,7 @@ class EditScaffold extends StatelessWidget {
           actions: <Widget>[
             SaveCancelButtons(
               isEnabled: isEnabled,
+              isCancelEnabled: isCancelEnabled,
               saveLabel: saveLabel,
               isSaving: state.isSaving,
               onSavePressed: (context) {

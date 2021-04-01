@@ -146,6 +146,7 @@ class _UserEditState extends State<UserEdit>
       entity: user,
       title:
           viewModel.user.isNew ? localization.newUser : localization.editUser,
+      isAdvancedSettings: true,
       appBarBottom: TabBar(
         controller: _controller,
         isScrollable: isMobile(context),

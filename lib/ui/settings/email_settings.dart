@@ -129,6 +129,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
     return EditScaffold(
       title: localization.emailSettings,
+      isAdvancedSettings: true,
       onSavePressed: _onSavePressed,
       body: AppForm(
         formKey: _formKey,
