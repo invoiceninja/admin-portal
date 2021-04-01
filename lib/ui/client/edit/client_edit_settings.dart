@@ -26,7 +26,6 @@ class ClientEditSettings extends StatefulWidget {
 
 class ClientEditSettingsState extends State<ClientEditSettings> {
   final _taskRateController = TextEditingController();
-  final _paymentTermsController = TextEditingController();
 
   List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
@@ -35,7 +34,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   void didChangeDependencies() {
     _controllers = [
       _taskRateController,
-      _paymentTermsController,
     ];
 
     _controllers
@@ -45,9 +43,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     _taskRateController.text = formatNumber(
         client.settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.inputMoney);
-    _paymentTermsController.text = client.settings.defaultPaymentTerms != null
-        ? '$client.settings.defaultPaymentTerms'
-        : null;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -82,6 +77,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = state.company;
     final client = viewModel.client;
 
     return ScrollableListView(
@@ -110,25 +106,46 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                   client.rebuild(
                       (b) => b..settings.languageId = language?.id ?? '')),
             ),
-            AppDropdownButton<String>(
-              showBlank: true,
-              labelText: localization.paymentTerm,
-              items: memoizedDropdownPaymentTermList(
-                      state.paymentTermState.map, state.paymentTermState.list)
-                  .map((paymentTermId) {
-                final paymentTerm = state.paymentTermState.map[paymentTermId];
-                return DropdownMenuItem<String>(
-                  child: Text(paymentTerm.name),
-                  value: paymentTerm.numDays.toString(),
-                );
-              }).toList(),
-              value: '${client.settings.defaultPaymentTerms}',
-              onChanged: (dynamic numDays) {
-                viewModel.onChanged(client.rebuild((b) => b
-                  ..settings.defaultPaymentTerms =
-                      numDays == null ? null : '$numDays'));
-              },
-            ),
+            if (company.isModuleEnabled(EntityType.invoice))
+              AppDropdownButton<String>(
+                showBlank: true,
+                labelText: localization.invoicePaymentTerms,
+                items: memoizedDropdownPaymentTermList(
+                        state.paymentTermState.map, state.paymentTermState.list)
+                    .map((paymentTermId) {
+                  final paymentTerm = state.paymentTermState.map[paymentTermId];
+                  return DropdownMenuItem<String>(
+                    child: Text(paymentTerm.name),
+                    value: paymentTerm.numDays.toString(),
+                  );
+                }).toList(),
+                value: '${client.settings.defaultPaymentTerms}',
+                onChanged: (dynamic numDays) {
+                  viewModel.onChanged(client.rebuild((b) => b
+                    ..settings.defaultPaymentTerms =
+                        numDays == null ? null : '$numDays'));
+                },
+              ),
+            if (company.isModuleEnabled(EntityType.quote))
+              AppDropdownButton<String>(
+                showBlank: true,
+                labelText: localization.quoteValidUntil,
+                items: memoizedDropdownPaymentTermList(
+                        state.paymentTermState.map, state.paymentTermState.list)
+                    .map((paymentTermId) {
+                  final paymentTerm = state.paymentTermState.map[paymentTermId];
+                  return DropdownMenuItem<String>(
+                    child: Text(paymentTerm.name),
+                    value: paymentTerm.numDays.toString(),
+                  );
+                }).toList(),
+                value: '${client.settings.defaultValidUntil}',
+                onChanged: (dynamic numDays) {
+                  viewModel.onChanged(client.rebuild((b) => b
+                    ..settings.defaultValidUntil =
+                        numDays == null ? null : '$numDays'));
+                },
+              ),
             DecoratedFormField(
               controller: _taskRateController,
               isMoney: true,

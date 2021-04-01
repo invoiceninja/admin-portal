@@ -483,7 +483,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     AppDropdownButton<String>(
                       showUseDefault: true,
                       showBlank: true,
-                      labelText: localization.paymentTerm,
+                      labelText: localization.invoicePaymentTerms,
                       items: memoizedDropdownPaymentTermList(
                               state.paymentTermState.map,
                               state.paymentTermState.list)
@@ -506,7 +506,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     AppDropdownButton<String>(
                       showUseDefault: true,
                       showBlank: true,
-                      labelText: localization.validUntil,
+                      labelText: localization.quoteValidUntil,
                       items: memoizedDropdownPaymentTermList(
                               state.paymentTermState.map,
                               state.paymentTermState.list)
