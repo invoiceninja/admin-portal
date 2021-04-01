@@ -52,7 +52,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   final _promoDiscountController = TextEditingController();
   final _maxSeatsLimitController = TextEditingController();
   final _returnUrlController = TextEditingController();
-  final _postPurchaseBodyController = TextEditingController();
   final _postPurchaseHeadersController = TextEditingController();
   final _postPurchaseRestMethodController = TextEditingController();
   final _postPurchaseUrlController = TextEditingController();
@@ -83,7 +82,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       _promoDiscountController,
       _maxSeatsLimitController,
       _returnUrlController,
-      _postPurchaseBodyController,
       _postPurchaseHeadersController,
       _postPurchaseRestMethodController,
       _postPurchaseUrlController,
@@ -101,7 +99,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
         subscription.maxSeatsLimit.toDouble(), context,
         formatNumberType: FormatNumberType.inputAmount);
     _returnUrlController.text = webhookConfiguration.returnUrl;
-    _postPurchaseBodyController.text = webhookConfiguration.postPurchaseBody;
     _postPurchaseHeadersController.text =
         webhookConfiguration.postPurchaseHeaders.join(',');
     _postPurchaseRestMethodController.text =
@@ -131,8 +128,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       ..promoDiscount = parseDouble(_promoDiscountController.text)
       ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
       ..webhookConfiguration.returnUrl = _returnUrlController.text.trim()
-      ..webhookConfiguration.postPurchaseBody =
-          _postPurchaseBodyController.text.trim()
       ..webhookConfiguration
           .postPurchaseHeaders
           .replace(_postPurchaseHeadersController.text.trim().split(','))
@@ -153,7 +148,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final subscription = viewModel.subscription;
-    final origSubscription = state.subscriptionState.get(subscription.id);
 
     final durations = [
       DropdownMenuItem<int>(
@@ -385,6 +379,11 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
               ),
               FormCard(
                 children: [
+                  DecoratedFormField(
+                    label: localization.returnUrl,
+                    controller: _returnUrlController,
+                    keyboardType: TextInputType.url,
+                  ),
                   BoolDropdownButton(
                       label: localization.allowQueryOverrides,
                       value: subscription.allowQueryOverrides,
@@ -400,8 +399,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       value: subscription.allowCancellation,
                       onChanged: (value) => viewModel.onChanged(subscription
                           .rebuild((b) => b..allowCancellation = value))),
-                  if (subscription.allowCancellation ||
-                      origSubscription.allowCancellation)
+                  if (subscription.allowCancellation)
                     AppDropdownButton<int>(
                       showBlank: true,
                       blankValue: 0,
@@ -416,8 +414,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       value: subscription.trialEnabled,
                       onChanged: (value) => viewModel.onChanged(
                           subscription.rebuild((b) => b.trialEnabled = value))),
-                  if (subscription.trialEnabled ||
-                      origSubscription.trialEnabled)
+                  if (subscription.trialEnabled)
                     AppDropdownButton<int>(
                       showBlank: true,
                       blankValue: 0,
@@ -433,8 +430,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       value: subscription.perSeatEnabled,
                       onChanged: (value) => viewModel.onChanged(subscription
                           .rebuild((b) => b.perSeatEnabled = value))),
-                  if (subscription.perSeatEnabled ||
-                      origSubscription.perSeatEnabled)
+                  if (subscription.perSeatEnabled)
                     DecoratedFormField(
                       label: localization.maxSeatsLimit,
                       controller: _maxSeatsLimitController,
@@ -451,27 +447,17 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
             FormCard(
               children: [
                 DecoratedFormField(
-                  label: localization.returnUrl,
-                  controller: _returnUrlController,
-                  keyboardType: TextInputType.url,
-                ),
-                DecoratedFormField(
-                  label: localization.postPurchaseUrl,
+                  label: localization.webhookUrl,
                   controller: _postPurchaseUrlController,
                   keyboardType: TextInputType.url,
                 ),
                 DecoratedFormField(
-                  label: localization.postPurchaseRestMethod,
+                  label: localization.restMethod,
                   controller: _postPurchaseRestMethodController,
                 ),
                 DecoratedFormField(
-                  label: localization.postPurchaseHeaders,
+                  label: localization.headers,
                   controller: _postPurchaseHeadersController,
-                ),
-                DecoratedFormField(
-                  label: localization.postPurchaseBody,
-                  controller: _postPurchaseBodyController,
-                  maxLines: 6,
                 ),
               ],
             ),

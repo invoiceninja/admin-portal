@@ -65,7 +65,7 @@ abstract class SubscriptionEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
-      allowCancellation: true,
+      allowCancellation: false,
       allowPlanChanges: false,
       allowQueryOverrides: false,
       autoBill: '',

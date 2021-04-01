@@ -16,10 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'return_url': 'Return URL',
-      'post_purchase_url': 'Post Purchase URL',
-      'post_purchase_rest_method': 'Post Purchase REST Method',
-      'post_purchase_headers': 'Post Purchase Headers',
-      'post_purchase_body': 'Post Purchase Body',
+      'rest_method': 'REST Method',
+      'headers': 'Headers',
       'recurring_products': 'Recurring Products',
       'promo_code': 'Promo Code',
       'promo_discount': 'Promo Discount',
@@ -56317,21 +56315,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['return_url'] ??
       _localizedValues['en']['return_url'];
 
-  String get postPurchaseUrl =>
-      _localizedValues[localeCode]['post_purchase_url'] ??
-      _localizedValues['en']['post_purchase_url'];
+  String get restMethod =>
+      _localizedValues[localeCode]['rest_method'] ??
+      _localizedValues['en']['rest_method'];
 
-  String get postPurchaseRestMethod =>
-      _localizedValues[localeCode]['post_purchase_rest_method'] ??
-      _localizedValues['en']['post_purchase_rest_method'];
+  String get headers =>
+      _localizedValues[localeCode]['headers'] ??
+      _localizedValues['en']['headers'];
 
-  String get postPurchaseHeaders =>
-      _localizedValues[localeCode]['post_purchase_headers'] ??
-      _localizedValues['en']['post_purchase_headers'];
-
-  String get postPurchaseBody =>
-      _localizedValues[localeCode]['post_purchase_body'] ??
-      _localizedValues['en']['post_purchase_body'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
