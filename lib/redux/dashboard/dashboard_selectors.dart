@@ -111,7 +111,7 @@ List<ChartDataGroup> _chartInvoices({
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = invoice.hasExchangeRate
-            ? (1 / invoice.exchangeRate)
+            ? invoice.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
@@ -252,7 +252,7 @@ List<ChartDataGroup> chartQuotes({
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = quote.hasExchangeRate
-            ? (1 / quote.exchangeRate)
+            ? quote.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
@@ -403,7 +403,7 @@ List<ChartDataGroup> chartPayments(
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = payment.hasExchangeRate
-            ? (1 / payment.exchangeRate)
+            ? payment.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
@@ -571,7 +571,7 @@ List<ChartDataGroup> chartTasks(
           if (settings.currencyId == kCurrencyAll &&
               client.currencyId != company.currencyId) {
             final exchangeRate = invoice.hasExchangeRate
-                ? (1 / invoice.exchangeRate)
+                ? invoice.exchangeRate
                 : getExchangeRate(currencyMap,
                     fromCurrencyId: client.currencyId,
                     toCurrencyId: company.currencyId);
@@ -699,7 +699,7 @@ List<ChartDataGroup> chartExpenses(
       if (settings.currencyId == kCurrencyAll &&
           currencyId != company.currencyId) {
         final exchangeRate = expense.hasExchangeRate
-            ? (1 / expense.exchangeRate)
+            ? expense.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
         amount *= exchangeRate;
