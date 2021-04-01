@@ -15,11 +15,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'no_headers': 'No Headers',
+      'add_header': 'Add Header',
+      'remove_header': 'Remove Header',
       'return_url': 'Return URL',
-      'post_purchase_url': 'Post Purchase URL',
-      'post_purchase_rest_method': 'Post Purchase REST Method',
-      'post_purchase_headers': 'Post Purchase Headers',
-      'post_purchase_body': 'Post Purchase Body',
+      'rest_method': 'REST Method',
+      'header_key': 'Header Key',
+      'header_value': 'Header Value',
       'recurring_products': 'Recurring Products',
       'promo_code': 'Promo Code',
       'promo_discount': 'Promo Discount',
@@ -56317,21 +56319,31 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['return_url'] ??
       _localizedValues['en']['return_url'];
 
-  String get postPurchaseUrl =>
-      _localizedValues[localeCode]['post_purchase_url'] ??
-      _localizedValues['en']['post_purchase_url'];
+  String get restMethod =>
+      _localizedValues[localeCode]['rest_method'] ??
+      _localizedValues['en']['rest_method'];
 
-  String get postPurchaseRestMethod =>
-      _localizedValues[localeCode]['post_purchase_rest_method'] ??
-      _localizedValues['en']['post_purchase_rest_method'];
+  String get headerKey =>
+      _localizedValues[localeCode]['header_key'] ??
+      _localizedValues['en']['header_key'];
 
-  String get postPurchaseHeaders =>
-      _localizedValues[localeCode]['post_purchase_headers'] ??
-      _localizedValues['en']['post_purchase_headers'];
+  String get headerValue =>
+      _localizedValues[localeCode]['header_value'] ??
+      _localizedValues['en']['header_value'];
 
-  String get postPurchaseBody =>
-      _localizedValues[localeCode]['post_purchase_body'] ??
-      _localizedValues['en']['post_purchase_body'];
+  String get addHeader =>
+      _localizedValues[localeCode]['add_header'] ??
+      _localizedValues['en']['add_header'];
+
+  String get removeHeader =>
+      _localizedValues[localeCode]['remove_header'] ??
+      _localizedValues['en']['remove_header'];
+
+  String get noHeaders =>
+      _localizedValues[localeCode]['no_headers'] ??
+      _localizedValues['en']['no_headers'];
+
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

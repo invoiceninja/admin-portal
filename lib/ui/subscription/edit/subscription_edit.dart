@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -52,9 +53,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   final _promoDiscountController = TextEditingController();
   final _maxSeatsLimitController = TextEditingController();
   final _returnUrlController = TextEditingController();
-  final _postPurchaseBodyController = TextEditingController();
-  final _postPurchaseHeadersController = TextEditingController();
-  final _postPurchaseRestMethodController = TextEditingController();
+  final _postPurchaseHeaderKeyController = TextEditingController();
+  final _postPurchaseHeaderValueController = TextEditingController();
   final _postPurchaseUrlController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
@@ -83,10 +83,9 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       _promoDiscountController,
       _maxSeatsLimitController,
       _returnUrlController,
-      _postPurchaseBodyController,
-      _postPurchaseHeadersController,
-      _postPurchaseRestMethodController,
       _postPurchaseUrlController,
+      _postPurchaseHeaderKeyController,
+      _postPurchaseHeaderValueController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -101,11 +100,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
         subscription.maxSeatsLimit.toDouble(), context,
         formatNumberType: FormatNumberType.inputAmount);
     _returnUrlController.text = webhookConfiguration.returnUrl;
-    _postPurchaseBodyController.text = webhookConfiguration.postPurchaseBody;
-    _postPurchaseHeadersController.text =
-        webhookConfiguration.postPurchaseHeaders.join(',');
-    _postPurchaseRestMethodController.text =
-        webhookConfiguration.postPurchaseRestMethod;
     _postPurchaseUrlController.text = webhookConfiguration.postPurchaseUrl;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -131,13 +125,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       ..promoDiscount = parseDouble(_promoDiscountController.text)
       ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
       ..webhookConfiguration.returnUrl = _returnUrlController.text.trim()
-      ..webhookConfiguration.postPurchaseBody =
-          _postPurchaseBodyController.text.trim()
-      ..webhookConfiguration
-          .postPurchaseHeaders
-          .replace(_postPurchaseHeadersController.text.trim().split(','))
-      ..webhookConfiguration.postPurchaseRestMethod =
-          _postPurchaseRestMethodController.text.trim()
       ..webhookConfiguration.postPurchaseUrl =
           _postPurchaseUrlController.text.trim());
     if (subscription != widget.viewModel.subscription) {
@@ -153,7 +140,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final subscription = viewModel.subscription;
-    final origSubscription = state.subscriptionState.get(subscription.id);
+    final webhookConfiguration = subscription.webhookConfiguration;
 
     final durations = [
       DropdownMenuItem<int>(
@@ -385,6 +372,11 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
               ),
               FormCard(
                 children: [
+                  DecoratedFormField(
+                    label: localization.returnUrl,
+                    controller: _returnUrlController,
+                    keyboardType: TextInputType.url,
+                  ),
                   BoolDropdownButton(
                       label: localization.allowQueryOverrides,
                       value: subscription.allowQueryOverrides,
@@ -400,8 +392,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       value: subscription.allowCancellation,
                       onChanged: (value) => viewModel.onChanged(subscription
                           .rebuild((b) => b..allowCancellation = value))),
-                  if (subscription.allowCancellation ||
-                      origSubscription.allowCancellation)
+                  if (subscription.allowCancellation)
                     AppDropdownButton<int>(
                       showBlank: true,
                       blankValue: 0,
@@ -416,8 +407,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       value: subscription.trialEnabled,
                       onChanged: (value) => viewModel.onChanged(
                           subscription.rebuild((b) => b.trialEnabled = value))),
-                  if (subscription.trialEnabled ||
-                      origSubscription.trialEnabled)
+                  if (subscription.trialEnabled)
                     AppDropdownButton<int>(
                       showBlank: true,
                       blankValue: 0,
@@ -433,8 +423,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       value: subscription.perSeatEnabled,
                       onChanged: (value) => viewModel.onChanged(subscription
                           .rebuild((b) => b.perSeatEnabled = value))),
-                  if (subscription.perSeatEnabled ||
-                      origSubscription.perSeatEnabled)
+                  if (subscription.perSeatEnabled)
                     DecoratedFormField(
                       label: localization.maxSeatsLimit,
                       controller: _maxSeatsLimitController,
@@ -451,28 +440,101 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
             FormCard(
               children: [
                 DecoratedFormField(
-                  label: localization.returnUrl,
-                  controller: _returnUrlController,
-                  keyboardType: TextInputType.url,
-                ),
-                DecoratedFormField(
-                  label: localization.postPurchaseUrl,
+                  label: localization.webhookUrl,
                   controller: _postPurchaseUrlController,
                   keyboardType: TextInputType.url,
                 ),
-                DecoratedFormField(
-                  label: localization.postPurchaseRestMethod,
-                  controller: _postPurchaseRestMethodController,
+                AppDropdownButton<String>(
+                  showBlank: true,
+                  labelText: localization.restMethod,
+                  value: webhookConfiguration.postPurchaseRestMethod,
+                  onChanged: (dynamic value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b
+                        ..webhookConfiguration.postPurchaseRestMethod = value)),
+                  items: [
+                    DropdownMenuItem(
+                      child: Text('POST'),
+                      value: 'post',
+                    ),
+                    DropdownMenuItem(
+                      child: Text('PUT'),
+                      value: 'put',
+                    ),
+                  ],
                 ),
-                DecoratedFormField(
-                  label: localization.postPurchaseHeaders,
-                  controller: _postPurchaseHeadersController,
+                Row(
+                  children: [
+                    Expanded(
+                      child: DecoratedFormField(
+                        label: localization.headerKey,
+                        controller: _postPurchaseHeaderKeyController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: kTableColumnGap,
+                    ),
+                    Expanded(
+                      child: DecoratedFormField(
+                        label: localization.headerValue,
+                        controller: _postPurchaseHeaderValueController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: kTableColumnGap,
+                    ),
+                    IconButton(
+                        tooltip: localization.addHeader,
+                        icon: Icon(Icons.add_circle_outline),
+                        onPressed: () {
+                          final key =
+                              _postPurchaseHeaderKeyController.text.trim();
+                          final value =
+                              _postPurchaseHeaderValueController.text.trim();
+
+                          if (key.isEmpty || value.isEmpty) {
+                            return;
+                          }
+
+                          final header = '$key: $value';
+                          _postPurchaseHeaderKeyController.text = '';
+                          _postPurchaseHeaderValueController.text = '';
+
+                          if (webhookConfiguration.postPurchaseHeaders
+                              .contains(header)) {
+                            return;
+                          }
+
+                          viewModel.onChanged(subscription.rebuild((b) => b
+                            ..webhookConfiguration
+                                .postPurchaseHeaders
+                                .add(header)));
+                        })
+                  ],
                 ),
-                DecoratedFormField(
-                  label: localization.postPurchaseBody,
-                  controller: _postPurchaseBodyController,
-                  maxLines: 6,
-                ),
+                SizedBox(height: 8),
+                if (webhookConfiguration.postPurchaseHeaders.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Center(
+                      child: HelpText(localization.noHeaders),
+                    ),
+                  )
+                else
+                  ...webhookConfiguration.postPurchaseHeaders.map(
+                    (header) => ListTile(
+                      title: Text(header),
+                      trailing: IconButton(
+                        icon: Icon(Icons.clear),
+                        tooltip: localization.removeHeader,
+                        onPressed: () {
+                          viewModel.onChanged(subscription.rebuild((b) => b
+                            ..webhookConfiguration
+                                .postPurchaseHeaders
+                                .remove(header)));
+                        },
+                      ),
+                    ),
+                  )
               ],
             ),
           ]),

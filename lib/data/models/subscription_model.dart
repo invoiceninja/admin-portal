@@ -65,7 +65,7 @@ abstract class SubscriptionEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
-      allowCancellation: true,
+      allowCancellation: false,
       allowPlanChanges: false,
       allowQueryOverrides: false,
       autoBill: '',
@@ -266,6 +266,7 @@ abstract class WebhookConfigurationEntity
   @BuiltValueField(wireName: 'post_purchase_headers')
   BuiltList<String> get postPurchaseHeaders;
 
+  // TODO remove this field
   @BuiltValueField(wireName: 'post_purchase_body')
   String get postPurchaseBody;
 
