@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.d
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SubscriptionView extends StatefulWidget {
   const SubscriptionView({
@@ -60,6 +61,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               showToast(localization.copiedToClipboard
                   .replaceFirst(':value', subscription.purchasePage));
             },
+            onLongPress: () => launch(subscription.purchasePage),
           ),
           ListDivider(),
           if (subscription.groupId.isNotEmpty)
