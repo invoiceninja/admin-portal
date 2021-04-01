@@ -139,6 +139,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final subscription = viewModel.subscription;
+    final webhookConfiguration = subscription.webhookConfiguration;
 
     final durations = [
       DropdownMenuItem<int>(
@@ -445,8 +446,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 AppDropdownButton<String>(
                   showBlank: true,
                   labelText: localization.restMethod,
-                  value:
-                      subscription.webhookConfiguration.postPurchaseRestMethod,
+                  value: webhookConfiguration.postPurchaseRestMethod,
                   onChanged: (dynamic value) => viewModel.onChanged(
                       subscription.rebuild((b) => b
                         ..webhookConfiguration.postPurchaseRestMethod = value)),
@@ -485,10 +485,38 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         tooltip: localization.addHeader,
                         icon: Icon(Icons.add_circle_outline),
                         onPressed: () {
-                          //
+                          final header = _postPurchaseHeaderKeyController.text
+                                  .trim() +
+                              ': ' +
+                              _postPurchaseHeaderValueController.text.trim();
+                          viewModel.onChanged(subscription.rebuild((b) => b
+                            ..webhookConfiguration
+                                .postPurchaseHeaders
+                                .add(header)));
                         })
                   ],
                 ),
+                SizedBox(height: 8),
+                if (webhookConfiguration.postPurchaseHeaders.isEmpty)
+                  Center(
+                    child: Text(localization.noHeaders),
+                  )
+                else
+                  ...webhookConfiguration.postPurchaseHeaders.map(
+                    (header) => ListTile(
+                      title: Text(localization.header),
+                      trailing: IconButton(
+                        icon: Icon(Icons.clear),
+                        tooltip: localization.removeHeader,
+                        onPressed: () {
+                          viewModel.onChanged(subscription.rebuild((b) => b
+                            ..webhookConfiguration
+                                .postPurchaseHeaders
+                                .remove(header)));
+                        },
+                      ),
+                    ),
+                  )
               ],
             ),
           ]),

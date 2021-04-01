@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'no_headers': 'No Headers',
       'add_header': 'Add Header',
       'remove_header': 'Remove Header',
       'return_url': 'Return URL',
@@ -56337,6 +56338,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get removeHeader =>
       _localizedValues[localeCode]['remove_header'] ??
       _localizedValues['en']['remove_header'];
+
+  String get noHeaders =>
+      _localizedValues[localeCode]['no_headers'] ??
+      _localizedValues['en']['no_headers'];
 
 
 
