@@ -177,6 +177,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 
     return EditScaffold(
       title: localization.generatedNumbers,
+      isAdvancedSettings: true,
       onSavePressed: _onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),

@@ -728,13 +728,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isWhiteLabeled => isSelfHosted || account.plan == kPlanWhiteLabel;
 
-  /* TODO re-enable
-  bool get isProPlan => isSelfHosted || account.plan == kPlanPro;
-  bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
-   */
+  bool get isProPlan =>
+      isSelfHosted || isEnterprisePlan || account.plan == kPlanPro;
 
-  bool get isProPlan => true;
-  bool get isEnterprisePlan => true;
+  bool get isEnterprisePlan =>
+      !kReleaseMode || isSelfHosted || account.plan == kPlanEnterprise;
 
   bool get isUserConfirmed {
     if (!kReleaseMode) {

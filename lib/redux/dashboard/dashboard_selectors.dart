@@ -111,7 +111,7 @@ List<ChartDataGroup> _chartInvoices({
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = invoice.hasExchangeRate
-            ? (1 / invoice.exchangeRate)
+            ? invoice.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
@@ -132,8 +132,8 @@ List<ChartDataGroup> _chartInvoices({
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
@@ -252,7 +252,7 @@ List<ChartDataGroup> chartQuotes({
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = quote.hasExchangeRate
-            ? (1 / quote.exchangeRate)
+            ? quote.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
@@ -275,8 +275,8 @@ List<ChartDataGroup> chartQuotes({
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
@@ -403,7 +403,7 @@ List<ChartDataGroup> chartPayments(
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = payment.hasExchangeRate
-            ? (1 / payment.exchangeRate)
+            ? payment.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
@@ -424,8 +424,8 @@ List<ChartDataGroup> chartPayments(
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
@@ -571,7 +571,7 @@ List<ChartDataGroup> chartTasks(
           if (settings.currencyId == kCurrencyAll &&
               client.currencyId != company.currencyId) {
             final exchangeRate = invoice.hasExchangeRate
-                ? (1 / invoice.exchangeRate)
+                ? invoice.exchangeRate
                 : getExchangeRate(currencyMap,
                     fromCurrencyId: client.currencyId,
                     toCurrencyId: company.currencyId);
@@ -599,8 +599,8 @@ List<ChartDataGroup> chartTasks(
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
@@ -699,7 +699,7 @@ List<ChartDataGroup> chartExpenses(
       if (settings.currencyId == kCurrencyAll &&
           currencyId != company.currencyId) {
         final exchangeRate = expense.hasExchangeRate
-            ? (1 / expense.exchangeRate)
+            ? expense.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
         amount *= exchangeRate;
@@ -728,8 +728,8 @@ List<ChartDataGroup> chartExpenses(
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);

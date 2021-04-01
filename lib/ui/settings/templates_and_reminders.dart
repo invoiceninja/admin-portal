@@ -229,6 +229,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     return EditScaffold(
       title: localization.templatesAndReminders,
+      isAdvancedSettings: true,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
