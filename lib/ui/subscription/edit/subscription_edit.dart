@@ -52,7 +52,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   final _promoDiscountController = TextEditingController();
   final _maxSeatsLimitController = TextEditingController();
   final _returnUrlController = TextEditingController();
-  final _postPurchaseHeadersController = TextEditingController();
+  final _postPurchaseHeaderKeyController = TextEditingController();
+  final _postPurchaseHeaderValueController = TextEditingController();
   final _postPurchaseUrlController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
@@ -81,8 +82,9 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       _promoDiscountController,
       _maxSeatsLimitController,
       _returnUrlController,
-      _postPurchaseHeadersController,
       _postPurchaseUrlController,
+      _postPurchaseHeaderKeyController,
+      _postPurchaseHeaderValueController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -97,8 +99,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
         subscription.maxSeatsLimit.toDouble(), context,
         formatNumberType: FormatNumberType.inputAmount);
     _returnUrlController.text = webhookConfiguration.returnUrl;
-    _postPurchaseHeadersController.text =
-        webhookConfiguration.postPurchaseHeaders.join(',');
     _postPurchaseUrlController.text = webhookConfiguration.postPurchaseUrl;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -124,9 +124,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       ..promoDiscount = parseDouble(_promoDiscountController.text)
       ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
       ..webhookConfiguration.returnUrl = _returnUrlController.text.trim()
-      ..webhookConfiguration
-          .postPurchaseHeaders
-          .replace(_postPurchaseHeadersController.text.trim().split(','))
       ..webhookConfiguration.postPurchaseUrl =
           _postPurchaseUrlController.text.trim());
     if (subscription != widget.viewModel.subscription) {
@@ -464,9 +461,33 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     ),
                   ],
                 ),
-                DecoratedFormField(
-                  label: localization.headers,
-                  controller: _postPurchaseHeadersController,
+                Row(
+                  children: [
+                    Expanded(
+                      child: DecoratedFormField(
+                        label: localization.headerKey,
+                        controller: _postPurchaseHeaderKeyController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: kTableColumnGap,
+                    ),
+                    Expanded(
+                      child: DecoratedFormField(
+                        label: localization.headerValue,
+                        controller: _postPurchaseHeaderValueController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: kTableColumnGap,
+                    ),
+                    IconButton(
+                        tooltip: localization.addHeader,
+                        icon: Icon(Icons.add_circle_outline),
+                        onPressed: () {
+                          //
+                        })
+                  ],
                 ),
               ],
             ),

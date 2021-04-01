@@ -266,6 +266,7 @@ abstract class WebhookConfigurationEntity
   @BuiltValueField(wireName: 'post_purchase_headers')
   BuiltList<String> get postPurchaseHeaders;
 
+  // TODO remove this field
   @BuiltValueField(wireName: 'post_purchase_body')
   String get postPurchaseBody;
 

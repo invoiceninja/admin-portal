@@ -15,9 +15,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'add_header': 'Add Header',
+      'remove_header': 'Remove Header',
       'return_url': 'Return URL',
       'rest_method': 'REST Method',
-      'headers': 'Headers',
+      'header_key': 'Header Key',
+      'header_value': 'Header Value',
       'recurring_products': 'Recurring Products',
       'promo_code': 'Promo Code',
       'promo_discount': 'Promo Discount',
@@ -56319,9 +56322,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['rest_method'] ??
       _localizedValues['en']['rest_method'];
 
-  String get headers =>
-      _localizedValues[localeCode]['headers'] ??
-      _localizedValues['en']['headers'];
+  String get headerKey =>
+      _localizedValues[localeCode]['header_key'] ??
+      _localizedValues['en']['header_key'];
+
+  String get headerValue =>
+      _localizedValues[localeCode]['header_value'] ??
+      _localizedValues['en']['header_value'];
+
+  String get addHeader =>
+      _localizedValues[localeCode]['add_header'] ??
+      _localizedValues['en']['add_header'];
+
+  String get removeHeader =>
+      _localizedValues[localeCode]['remove_header'] ??
+      _localizedValues['en']['remove_header'];
+
 
 
   String lookup(String key) {
