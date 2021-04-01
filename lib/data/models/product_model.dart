@@ -157,7 +157,7 @@ abstract class ProductEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => cost;
+  double get listDisplayAmount => price;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
