@@ -41,6 +41,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: subscription,
+      onBackPressed: () => viewModel.onBackPressed(),
       body: ScrollableListView(
         children: <Widget>[
           EntityHeader(
