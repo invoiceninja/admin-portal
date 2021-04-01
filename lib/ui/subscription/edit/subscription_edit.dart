@@ -486,10 +486,24 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         tooltip: localization.addHeader,
                         icon: Icon(Icons.add_circle_outline),
                         onPressed: () {
-                          final header = _postPurchaseHeaderKeyController.text
-                                  .trim() +
-                              ': ' +
+                          final key =
+                              _postPurchaseHeaderKeyController.text.trim();
+                          final value =
                               _postPurchaseHeaderValueController.text.trim();
+
+                          if (key.isEmpty || value.isEmpty) {
+                            return;
+                          }
+
+                          final header = '$key: $value';
+                          _postPurchaseHeaderKeyController.text = '';
+                          _postPurchaseHeaderValueController.text = '';
+
+                          if (webhookConfiguration.postPurchaseHeaders
+                              .contains(header)) {
+                            return;
+                          }
+
                           viewModel.onChanged(subscription.rebuild((b) => b
                             ..webhookConfiguration
                                 .postPurchaseHeaders
@@ -508,7 +522,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 else
                   ...webhookConfiguration.postPurchaseHeaders.map(
                     (header) => ListTile(
-                      title: Text(localization.header),
+                      title: Text(header),
                       trailing: IconButton(
                         icon: Icon(Icons.clear),
                         tooltip: localization.removeHeader,
