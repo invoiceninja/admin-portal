@@ -258,11 +258,11 @@ String convertDateTimeToSqlDate([DateTime date]) {
 
 DateTime convertSqlDateToDateTime(String date) {
   final parts = date.split('-');
-  return DateTime(
+  return DateTime.utc(
     parseInt(parts[0]),
     parseInt(parts[1]),
     parseInt(parts[2]),
-  ).toUtc();
+  );
 }
 
 DateTime convertTimestampToDate(int timestamp) =>

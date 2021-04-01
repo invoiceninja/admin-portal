@@ -132,8 +132,8 @@ List<ChartDataGroup> _chartInvoices({
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
@@ -275,8 +275,8 @@ List<ChartDataGroup> chartQuotes({
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
@@ -424,8 +424,8 @@ List<ChartDataGroup> chartPayments(
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
@@ -599,8 +599,8 @@ List<ChartDataGroup> chartTasks(
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
@@ -728,8 +728,8 @@ List<ChartDataGroup> chartExpenses(
     }
   });
 
-  var date = DateTime.parse(settings.startDate(company));
-  final endDate = DateTime.parse(settings.endDate(company));
+  var date = convertSqlDateToDateTime(settings.startDate(company));
+  final endDate = convertSqlDateToDateTime(settings.endDate(company));
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
