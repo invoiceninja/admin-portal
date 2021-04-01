@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -538,6 +539,33 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         viewModel.onConfigurePaymentTermsPressed(context),
                   ),
                 ),
+              if (!state.isProPlan)
+                FormCard(children: <Widget>[
+                  if (company.isModuleEnabled(EntityType.invoice))
+                    DesignPicker(
+                      label: localization.invoiceDesign,
+                      initialValue: settings.defaultInvoiceDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..defaultInvoiceDesignId = value.id)),
+                    ),
+                  if (company.isModuleEnabled(EntityType.quote))
+                    DesignPicker(
+                      label: localization.quoteDesign,
+                      initialValue: settings.defaultQuoteDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..defaultQuoteDesignId = value.id)),
+                    ),
+                  if (company.isModuleEnabled(EntityType.credit))
+                    DesignPicker(
+                      label: localization.creditDesign,
+                      initialValue: settings.defaultCreditDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..defaultCreditDesignId = value.id)),
+                    ),
+                ]),
               FormCard(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
