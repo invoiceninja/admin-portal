@@ -122,6 +122,8 @@ class _$SubscriptionEntitySerializer
   Iterable<Object> serialize(Serializers serializers, SubscriptionEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
       'group_id',
       serializers.serialize(object.groupId,
           specifiedType: const FullType(String)),
@@ -233,6 +235,10 @@ class _$SubscriptionEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'group_id':
           result.groupId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -626,6 +632,8 @@ class SubscriptionItemResponseBuilder
 
 class _$SubscriptionEntity extends SubscriptionEntity {
   @override
+  final String name;
+  @override
   final String groupId;
   @override
   final String productIds;
@@ -687,7 +695,8 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       (new SubscriptionEntityBuilder()..update(updates)).build();
 
   _$SubscriptionEntity._(
-      {this.groupId,
+      {this.name,
+      this.groupId,
       this.productIds,
       this.recurringProductIds,
       this.frequencyId,
@@ -716,6 +725,9 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       this.assignedUserId,
       this.id})
       : super._() {
+    if (name == null) {
+      throw new BuiltValueNullFieldError('SubscriptionEntity', 'name');
+    }
     if (groupId == null) {
       throw new BuiltValueNullFieldError('SubscriptionEntity', 'groupId');
     }
@@ -810,6 +822,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SubscriptionEntity &&
+        name == other.name &&
         groupId == other.groupId &&
         productIds == other.productIds &&
         recurringProductIds == other.recurringProductIds &&
@@ -861,7 +874,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode), isAmountDiscount.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode), isAmountDiscount.hashCode),
                                                                                 allowCancellation.hashCode),
                                                                             perSeatEnabled.hashCode),
                                                                         maxSeatsLimit.hashCode),
@@ -886,6 +899,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SubscriptionEntity')
+          ..add('name', name)
           ..add('groupId', groupId)
           ..add('productIds', productIds)
           ..add('recurringProductIds', recurringProductIds)
@@ -921,6 +935,10 @@ class _$SubscriptionEntity extends SubscriptionEntity {
 class SubscriptionEntityBuilder
     implements Builder<SubscriptionEntity, SubscriptionEntityBuilder> {
   _$SubscriptionEntity _$v;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
 
   String _groupId;
   String get groupId => _$this._groupId;
@@ -1050,6 +1068,7 @@ class SubscriptionEntityBuilder
 
   SubscriptionEntityBuilder get _$this {
     if (_$v != null) {
+      _name = _$v.name;
       _groupId = _$v.groupId;
       _productIds = _$v.productIds;
       _recurringProductIds = _$v.recurringProductIds;
@@ -1102,6 +1121,7 @@ class SubscriptionEntityBuilder
     try {
       _$result = _$v ??
           new _$SubscriptionEntity._(
+              name: name,
               groupId: groupId,
               productIds: productIds,
               recurringProductIds: recurringProductIds,
