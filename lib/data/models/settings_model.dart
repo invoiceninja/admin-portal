@@ -92,6 +92,10 @@ abstract class SettingsEntity
   String get defaultPaymentTerms;
 
   @nullable
+  @BuiltValueField(wireName: 'valid_until')
+  String get defaultValidUntil;
+
+  @nullable
   @BuiltValueField(wireName: 'company_gateway_ids')
   String get companyGatewayIds;
 

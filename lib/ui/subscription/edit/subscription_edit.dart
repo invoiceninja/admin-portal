@@ -514,7 +514,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 SizedBox(height: 8),
                 if (webhookConfiguration.postPurchaseHeaders.isEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 16, bottom: 8),
                     child: Center(
                       child: HelpText(localization.noHeaders),
                     ),
