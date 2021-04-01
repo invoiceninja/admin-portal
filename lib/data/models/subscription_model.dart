@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'subscription_model.g.dart';
 
@@ -46,6 +47,7 @@ abstract class SubscriptionItemResponse
 }
 
 class SubscriptionFields {
+  static const String name = 'name';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
 }
@@ -58,6 +60,7 @@ abstract class SubscriptionEntity extends Object
   factory SubscriptionEntity({String id, AppState state}) {
     return _$SubscriptionEntity._(
       id: id ?? BaseEntity.nextId,
+      name: '',
       isChanged: false,
       isDeleted: false,
       createdAt: 0,
@@ -96,6 +99,8 @@ abstract class SubscriptionEntity extends Object
 
   @override
   EntityType get entityType => EntityType.subscription;
+
+  String get name;
 
   @BuiltValueField(wireName: 'group_id')
   String get groupId;
@@ -186,7 +191,17 @@ abstract class SubscriptionEntity extends Object
     final subscriptionB = sortAscending ? subscription : this;
 
     switch (sortField) {
-      // STARTER: sort switch - do not remove comment
+      case SubscriptionFields.name:
+        response = subscriptionA.displayName
+            .toLowerCase()
+            .compareTo(subscriptionB.displayName.toLowerCase());
+        break;
+      case SubscriptionFields.createdAt:
+        response = subscriptionA.createdAt.compareTo(subscriptionB.createdAt);
+        break;
+      case SubscriptionFields.updatedAt:
+        response = subscriptionA.updatedAt.compareTo(subscriptionB.updatedAt);
+        break;
       default:
         print('## ERROR: sort by subscription.$sortField is not implemented');
         break;
@@ -202,28 +217,26 @@ abstract class SubscriptionEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    filter = filter.toLowerCase();
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        name,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    filter = filter.toLowerCase();
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        name,
+      ],
+      needle: filter,
+    );
   }
 
   @override
-  String get listDisplayName => null;
+  String get listDisplayName => name;
 
   @override
   double get listDisplayAmount => null;

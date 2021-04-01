@@ -92,6 +92,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
 
     final subscription = widget.viewModel.subscription;
     final webhookConfiguration = subscription.webhookConfiguration;
+    _nameController.text = subscription.name;
     _promoCodeController.text = subscription.promoCode;
     _promoDiscountController.text = formatNumber(
         subscription.promoDiscount, context,
@@ -121,6 +122,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
 
   void _onChanged() {
     final subscription = widget.viewModel.subscription.rebuild((b) => b
+      ..name = _nameController.text.trim()
       ..promoCode = _promoCodeController.text.trim()
       ..promoDiscount = parseDouble(_promoDiscountController.text)
       ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
@@ -218,12 +220,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
             children: <Widget>[
               FormCard(
                 children: [
-                  TextFormField(
+                  DecoratedFormField(
                     controller: _nameController,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: localization.name,
-                    ),
+                    label: localization.name,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DynamicSelector(
                     entityType: EntityType.group,
@@ -359,6 +359,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   DecoratedFormField(
                     label: localization.promoCode,
                     controller: _promoCodeController,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DiscountField(
                     label: localization.promoDiscount,
@@ -376,6 +377,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     label: localization.returnUrl,
                     controller: _returnUrlController,
                     keyboardType: TextInputType.url,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   BoolDropdownButton(
                       label: localization.allowQueryOverrides,
@@ -431,6 +433,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       ],
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                 ],
               )
@@ -443,6 +446,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   label: localization.webhookUrl,
                   controller: _postPurchaseUrlController,
                   keyboardType: TextInputType.url,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 AppDropdownButton<String>(
                   showBlank: true,
@@ -468,6 +472,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       child: DecoratedFormField(
                         label: localization.headerKey,
                         controller: _postPurchaseHeaderKeyController,
+                        onSavePressed: viewModel.onSavePressed,
                       ),
                     ),
                     SizedBox(
@@ -477,6 +482,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       child: DecoratedFormField(
                         label: localization.headerValue,
                         controller: _postPurchaseHeaderValueController,
+                        onSavePressed: viewModel.onSavePressed,
                       ),
                     ),
                     SizedBox(
@@ -514,7 +520,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 SizedBox(height: 8),
                 if (webhookConfiguration.postPurchaseHeaders.isEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 16, bottom: 8),
                     child: Center(
                       child: HelpText(localization.noHeaders),
                     ),

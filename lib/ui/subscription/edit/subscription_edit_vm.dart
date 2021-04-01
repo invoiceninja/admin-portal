@@ -74,6 +74,17 @@ class SubscriptionEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
+        final subscription = store.state.subscriptionUIState.editing;
+        if (subscription.name.isEmpty) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(
+                    AppLocalization.of(context).pleaseEnterAName);
+              });
+          return null;
+        }
+
         final localization = AppLocalization.of(context);
         final Completer<SubscriptionEntity> completer =
             new Completer<SubscriptionEntity>();

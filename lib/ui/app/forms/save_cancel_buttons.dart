@@ -37,7 +37,7 @@ class SaveCancelButtons extends StatelessWidget {
             return TextButton(
               child: Text(
                 cancelLabel ?? localization.cancel,
-                style: isHeader && isEnabled
+                style: isHeader && (isEnabled || isCancelEnabled)
                     ? TextStyle(color: store.state.headerTextColor)
                     : null,
               ),

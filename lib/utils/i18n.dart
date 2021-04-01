@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_payment_terms': 'Invoice Payment Terms',
+      'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
       'add_header': 'Add Header',
       'remove_header': 'Remove Header',
@@ -56327,6 +56329,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['header_key'] ??
       _localizedValues['en']['header_key'];
 
+  String get invoicePaymentTerms =>
+      _localizedValues[localeCode]['invoice_payment_terms'] ??
+      _localizedValues['en']['invoice_payment_terms'];
+
+  String get quoteValidUntil =>
+      _localizedValues[localeCode]['quote_valid_until'] ??
+      _localizedValues['en']['quote_valid_until'];
+
   String get headerValue =>
       _localizedValues[localeCode]['header_value'] ??
       _localizedValues['en']['header_value'];
@@ -56342,8 +56352,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get noHeaders =>
       _localizedValues[localeCode]['no_headers'] ??
       _localizedValues['en']['no_headers'];
-
-
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

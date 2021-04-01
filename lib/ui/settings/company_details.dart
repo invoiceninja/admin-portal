@@ -60,7 +60,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
   final _postalCodeController = TextEditingController();
-  final _taskRateController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
@@ -118,7 +117,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _cityController,
       _stateController,
       _postalCodeController,
-      _taskRateController,
       _custom1Controller,
       _custom2Controller,
       _custom3Controller,
@@ -148,8 +146,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _cityController.text = settings.city;
     _stateController.text = settings.state;
     _postalCodeController.text = settings.postalCode;
-    _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = settings.customValue1;
     _custom2Controller.text = settings.customValue2;
     _custom3Controller.text = settings.customValue3;
@@ -181,8 +177,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
         ..city = _cityController.text.trim()
         ..state = _stateController.text.trim()
         ..postalCode = _postalCodeController.text.trim()
-        ..defaultTaskRate =
-            parseDouble(_taskRateController.text, zeroIsNull: true)
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customValue3 = _custom3Controller.text.trim()
@@ -485,36 +479,52 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),
                     showUseDefault: state.settingsUIState.isFiltered,
                   ),
-                  AppDropdownButton<String>(
-                    showUseDefault: true,
-                    showBlank: true,
-                    labelText: localization.paymentTerm,
-                    items: memoizedDropdownPaymentTermList(
-                            state.paymentTermState.map,
-                            state.paymentTermState.list)
-                        .map((paymentTermId) {
-                      final paymentTerm =
-                          state.paymentTermState.map[paymentTermId];
-                      return DropdownMenuItem<String>(
-                        child: Text(paymentTerm.name),
-                        value: paymentTerm.numDays.toString(),
-                      );
-                    }).toList(),
-                    value: '${settings.defaultPaymentTerms}',
-                    onChanged: (dynamic numDays) {
-                      viewModel.onSettingsChanged(settings.rebuild((b) => b
-                        ..defaultPaymentTerms =
-                            numDays == null ? null : '$numDays'));
-                    },
-                  ),
-                  /* TODO Re-enable with tasks
-                  DecoratedFormField(
-                    label: localization.taskRate,
-                    controller: _taskRateController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                  ),
-                   */
+                  if (company.isModuleEnabled(EntityType.invoice))
+                    AppDropdownButton<String>(
+                      showUseDefault: true,
+                      showBlank: true,
+                      labelText: localization.invoicePaymentTerms,
+                      items: memoizedDropdownPaymentTermList(
+                              state.paymentTermState.map,
+                              state.paymentTermState.list)
+                          .map((paymentTermId) {
+                        final paymentTerm =
+                            state.paymentTermState.map[paymentTermId];
+                        return DropdownMenuItem<String>(
+                          child: Text(paymentTerm.name),
+                          value: paymentTerm.numDays.toString(),
+                        );
+                      }).toList(),
+                      value: '${settings.defaultPaymentTerms}',
+                      onChanged: (dynamic numDays) {
+                        viewModel.onSettingsChanged(settings.rebuild((b) => b
+                          ..defaultPaymentTerms =
+                              numDays == null ? null : '$numDays'));
+                      },
+                    ),
+                  if (company.isModuleEnabled(EntityType.quote))
+                    AppDropdownButton<String>(
+                      showUseDefault: true,
+                      showBlank: true,
+                      labelText: localization.quoteValidUntil,
+                      items: memoizedDropdownPaymentTermList(
+                              state.paymentTermState.map,
+                              state.paymentTermState.list)
+                          .map((paymentTermId) {
+                        final paymentTerm =
+                            state.paymentTermState.map[paymentTermId];
+                        return DropdownMenuItem<String>(
+                          child: Text(paymentTerm.name),
+                          value: paymentTerm.numDays.toString(),
+                        );
+                      }).toList(),
+                      value: '${settings.defaultValidUntil}',
+                      onChanged: (dynamic numDays) {
+                        viewModel.onSettingsChanged(settings.rebuild((b) => b
+                          ..defaultValidUntil =
+                              numDays == null ? null : '$numDays'));
+                      },
+                    ),
                 ],
               ),
               if (!state.uiState.settingsUIState.isFiltered)

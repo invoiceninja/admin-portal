@@ -3,6 +3,8 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -45,6 +47,7 @@ class SubscriptionViewVM {
     @required this.onEntityAction,
     @required this.onRefreshed,
     @required this.isSaving,
+    @required this.onBackPressed,
     @required this.isLoading,
     @required this.isDirty,
   });
@@ -71,6 +74,9 @@ class SubscriptionViewVM {
       isDirty: subscription.isNew,
       subscription: subscription,
       onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        store.dispatch(UpdateCurrentRoute(SubscriptionScreen.route));
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [subscription], action, autoPop: true),
     );
@@ -81,6 +87,7 @@ class SubscriptionViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
+  final Function onBackPressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

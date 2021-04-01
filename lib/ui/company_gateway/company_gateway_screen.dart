@@ -43,6 +43,7 @@ class CompanyGatewayScreen extends StatelessWidget {
       appBarActions: [
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
+            isHeader: true,
             saveLabel: localization.done,
             onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
@@ -80,6 +81,7 @@ class CompanyGatewayScreen extends StatelessWidget {
         SaveCancelButtons(
           isEnabled: state.uiState.settingsUIState.isChanged,
           isCancelEnabled: true,
+          isHeader: true,
           isSaving: state.isSaving,
           onSavePressed: viewModel.onSavePressed,
           onCancelPressed: (_) {
