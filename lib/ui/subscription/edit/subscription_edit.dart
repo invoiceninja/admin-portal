@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -498,8 +499,11 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 ),
                 SizedBox(height: 8),
                 if (webhookConfiguration.postPurchaseHeaders.isEmpty)
-                  Center(
-                    child: Text(localization.noHeaders),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Center(
+                      child: HelpText(localization.noHeaders),
+                    ),
                   )
                 else
                   ...webhookConfiguration.postPurchaseHeaders.map(
