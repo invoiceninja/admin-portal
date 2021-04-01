@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'invoice_model.g.dart';
@@ -114,8 +115,11 @@ abstract class InvoiceEntity extends Object
     final company = state?.company;
     double exchangeRate = 1;
     if ((client?.currencyId ?? '').isNotEmpty) {
-      exchangeRate =
-          state.staticState.currencyMap[client.currencyId].exchangeRate;
+      exchangeRate = getExchangeRate(
+        state.staticState.currencyMap,
+        fromCurrencyId: state.company.currencyId,
+        toCurrencyId: client.currencyId,
+      );
     }
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
