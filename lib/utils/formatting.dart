@@ -256,7 +256,8 @@ String convertDateTimeToSqlDate([DateTime date]) {
   return date.toIso8601String().split('T').first;
 }
 
-DateTime convertSqlDateToDateTime(String date) {
+DateTime convertSqlDateToDateTime([String date]) {
+  date = date ?? convertDateTimeToSqlDate();
   final parts = date.split('-');
   return DateTime.utc(
     parseInt(parts[0]),
