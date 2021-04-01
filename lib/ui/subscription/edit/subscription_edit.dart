@@ -92,6 +92,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
 
     final subscription = widget.viewModel.subscription;
     final webhookConfiguration = subscription.webhookConfiguration;
+    //_nameController.text = subscription.name;
     _promoCodeController.text = subscription.promoCode;
     _promoDiscountController.text = formatNumber(
         subscription.promoDiscount, context,

@@ -58,6 +58,7 @@ abstract class SubscriptionEntity extends Object
   factory SubscriptionEntity({String id, AppState state}) {
     return _$SubscriptionEntity._(
       id: id ?? BaseEntity.nextId,
+      name: '',
       isChanged: false,
       isDeleted: false,
       createdAt: 0,
@@ -96,6 +97,8 @@ abstract class SubscriptionEntity extends Object
 
   @override
   EntityType get entityType => EntityType.subscription;
+
+  String get name;
 
   @BuiltValueField(wireName: 'group_id')
   String get groupId;
