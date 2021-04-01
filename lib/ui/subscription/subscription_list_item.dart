@@ -75,7 +75,7 @@ class SubscriptionListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  subscription.id,
+                  subscription.name,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
