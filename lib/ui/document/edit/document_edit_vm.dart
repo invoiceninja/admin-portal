@@ -55,38 +55,40 @@ class DocumentEditVM {
       },
       onSavePressed: (BuildContext context) {
         /*
-        final localization = AppLocalization.of(context);
-        final Completer<DocumentEntity> completer =
-            new Completer<DocumentEntity>();
-        store.dispatch(
-            SaveDocumentRequest(completer: completer, document: document));
-        return completer.future.then((savedDocument) {
-            showToast(client.isNew
-                ? localization.createdClient
-                : localization.updatedClient);
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-            if (document.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(DocumentViewScreen.route);
+        Debouncer.runOnComplete(() {
+          final document = store.state.documentUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<DocumentEntity> completer =
+              new Completer<DocumentEntity>();
+          store.dispatch(
+              SaveDocumentRequest(completer: completer, document: document));
+          return completer.future.then((savedDocument) {
+              showToast(client.isNew
+                  ? localization.createdClient
+                  : localization.updatedClient);
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
+              if (document.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(DocumentViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedDocument);
+              }
             } else {
-              Navigator.of(context).pop(savedDocument);
+              viewEntityById(
+                  context: context,
+                  entityId: savedDocument.id,
+                  entityType: EntityType.document,
+                  force: true);
             }
-          } else {
-            viewEntityById(
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
                 context: context,
-                entityId: savedDocument.id,
-                entityType: EntityType.document,
-                force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-         */
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
+        });*/
       },
     );
   }

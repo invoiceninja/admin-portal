@@ -70,17 +70,18 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final client = widget.viewModel.client.rebuild((b) => b
-        ..address1 = _address1Controller.text.trim()
-        ..address2 = _address2Controller.text.trim()
-        ..city = _cityController.text.trim()
-        ..state = _stateController.text.trim()
-        ..postalCode = _postalCodeController.text.trim());
-      if (client != widget.viewModel.client) {
-        widget.viewModel.onChanged(client);
-      }
-    });
+    final viewModel = widget.viewModel;
+    final client = viewModel.client.rebuild((b) => b
+      ..address1 = _address1Controller.text.trim()
+      ..address2 = _address2Controller.text.trim()
+      ..city = _cityController.text.trim()
+      ..state = _stateController.text.trim()
+      ..postalCode = _postalCodeController.text.trim());
+    if (client != viewModel.client) {
+      _debouncer.run(() {
+        viewModel.onChanged(client);
+      });
+    }
   }
 
   @override

@@ -58,13 +58,13 @@ class _WebhookEditState extends State<WebhookEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final webhook = widget.viewModel.webhook
-          .rebuild((b) => b..targetUrl = _targetUrlController.text.trim());
-      if (webhook != widget.viewModel.webhook) {
+    final webhook = widget.viewModel.webhook
+        .rebuild((b) => b..targetUrl = _targetUrlController.text.trim());
+    if (webhook != widget.viewModel.webhook) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(webhook);
-      }
-    });
+      });
+    }
   }
 
   @override

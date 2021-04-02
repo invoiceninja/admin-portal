@@ -60,13 +60,13 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final expenseCategory = widget.viewModel.expenseCategory
-          .rebuild((b) => b..name = _nameController.text.trim());
-      if (expenseCategory != widget.viewModel.expenseCategory) {
+    final expenseCategory = widget.viewModel.expenseCategory
+        .rebuild((b) => b..name = _nameController.text.trim());
+    if (expenseCategory != widget.viewModel.expenseCategory) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(expenseCategory);
-      }
-    });
+      });
+    }
   }
 
   @override

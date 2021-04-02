@@ -6,6 +6,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -70,37 +71,41 @@ class CompanyGatewayEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<CompanyGatewayEntity> completer =
-            new Completer<CompanyGatewayEntity>();
-        store.dispatch(SaveCompanyGatewayRequest(
-            completer: completer, companyGateway: companyGateway));
-        return completer.future.then((savedCompanyGateway) {
-          showToast(companyGateway.isNew
-              ? localization.createdCompanyGateway
-              : localization.updatedCompanyGateway);
+        Debouncer.runOnComplete(() {
+          final companyGateway = store.state.companyGatewayUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<CompanyGatewayEntity> completer =
+              new Completer<CompanyGatewayEntity>();
+          store.dispatch(SaveCompanyGatewayRequest(
+              completer: completer, companyGateway: companyGateway));
+          return completer.future.then((savedCompanyGateway) {
+            showToast(companyGateway.isNew
+                ? localization.createdCompanyGateway
+                : localization.updatedCompanyGateway);
 
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
-            if (companyGateway.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(CompanyGatewayViewScreen.route);
+            if (isMobile(context)) {
+              store
+                  .dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
+              if (companyGateway.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(CompanyGatewayViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedCompanyGateway);
+              }
             } else {
-              Navigator.of(context).pop(savedCompanyGateway);
+              viewEntityById(
+                  context: context,
+                  entityId: savedCompanyGateway.id,
+                  entityType: EntityType.companyGateway,
+                  force: true);
             }
-          } else {
-            viewEntityById(
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
                 context: context,
-                entityId: savedCompanyGateway.id,
-                entityType: EntityType.companyGateway,
-                force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

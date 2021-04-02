@@ -80,17 +80,17 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final expense = viewModel.expense.rebuild((b) => b
-        ..number = _numberController.text.trim()
-        ..amount = parseDouble(_amountController.text)
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim());
-      if (expense != viewModel.expense) {
+    final viewModel = widget.viewModel;
+    final expense = viewModel.expense.rebuild((b) => b
+      ..number = _numberController.text.trim()
+      ..amount = parseDouble(_amountController.text)
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim());
+    if (expense != viewModel.expense) {
+      _debouncer.run(() {
         viewModel.onChanged(expense);
-      }
-    });
+      });
+    }
   }
 
   @override

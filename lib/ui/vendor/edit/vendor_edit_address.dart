@@ -68,17 +68,17 @@ class VendorEditAddressState extends State<VendorEditAddress> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final vendor = widget.viewModel.vendor.rebuild((b) => b
-        ..address1 = _address1Controller.text.trim()
-        ..address2 = _address2Controller.text.trim()
-        ..city = _cityController.text.trim()
-        ..state = _stateController.text.trim()
-        ..postalCode = _postalCodeController.text.trim());
-      if (vendor != widget.viewModel.vendor) {
+    final vendor = widget.viewModel.vendor.rebuild((b) => b
+      ..address1 = _address1Controller.text.trim()
+      ..address2 = _address2Controller.text.trim()
+      ..city = _cityController.text.trim()
+      ..state = _stateController.text.trim()
+      ..postalCode = _postalCodeController.text.trim());
+    if (vendor != widget.viewModel.vendor) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(vendor);
-      }
-    });
+      });
+    }
   }
 
   @override

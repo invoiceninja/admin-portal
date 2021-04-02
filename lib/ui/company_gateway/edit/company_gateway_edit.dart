@@ -762,27 +762,27 @@ class _FeesEditorState extends State<FeesEditor> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final companyGateway = viewModel.companyGateway;
-      final settings =
-          companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+    final viewModel = widget.viewModel;
+    final companyGateway = viewModel.companyGateway;
+    final settings =
+        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
-      final amount = parseDouble(_amountController.text.trim());
-      final percent = parseDouble(_percentController.text.trim());
-      final cap = parseDouble(_capController.text.trim());
-      final feesEnabled = amount != 0 || percent != 0;
+    final amount = parseDouble(_amountController.text.trim());
+    final percent = parseDouble(_percentController.text.trim());
+    final cap = parseDouble(_capController.text.trim());
+    final feesEnabled = amount != 0 || percent != 0;
 
-      final updatedSettings = settings.rebuild((b) => b
-        ..feeAmount = feesEnabled ? amount : null
-        ..feePercent = feesEnabled ? percent : null
-        ..feeCap = feesEnabled ? cap : null);
+    final updatedSettings = settings.rebuild((b) => b
+      ..feeAmount = feesEnabled ? amount : null
+      ..feePercent = feesEnabled ? percent : null
+      ..feeCap = feesEnabled ? cap : null);
 
-      if (settings != updatedSettings) {
+    if (settings != updatedSettings) {
+      _debouncer.run(() {
         viewModel.onChanged(companyGateway.rebuild((b) =>
             b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings));
-      }
-    });
+      });
+    }
   }
 
   @override

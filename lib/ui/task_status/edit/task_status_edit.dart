@@ -58,13 +58,13 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final taskStatus = widget.viewModel.taskStatus
-          .rebuild((b) => b..name = _nameController.text.trim());
-      if (taskStatus != widget.viewModel.taskStatus) {
+    final taskStatus = widget.viewModel.taskStatus
+        .rebuild((b) => b..name = _nameController.text.trim());
+    if (taskStatus != widget.viewModel.taskStatus) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(taskStatus);
-      }
-    });
+      });
+    }
   }
 
   @override

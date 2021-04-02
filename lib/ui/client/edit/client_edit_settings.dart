@@ -61,15 +61,15 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final client = viewModel.client.rebuild((b) => b
-        ..settings.defaultTaskRate =
-            parseDouble(_taskRateController.text, zeroIsNull: true));
-      if (client != viewModel.client) {
+    final viewModel = widget.viewModel;
+    final client = viewModel.client.rebuild((b) => b
+      ..settings.defaultTaskRate =
+          parseDouble(_taskRateController.text, zeroIsNull: true));
+    if (client != viewModel.client) {
+      _debouncer.run(() {
         viewModel.onChanged(client);
-      }
-    });
+      });
+    }
   }
 
   @override
@@ -159,7 +159,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               showBlank: true,
               onChanged: (value) => viewModel.onChanged(
                   client.rebuild((b) => b..settings.sendReminders = value)),
-            )            
+            )
              */
           ],
         ),

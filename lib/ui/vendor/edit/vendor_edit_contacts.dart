@@ -205,16 +205,16 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final contact = widget.contact.rebuild((b) => b
-        ..firstName = _firstNameController.text.trim()
-        ..lastName = _lastNameController.text.trim()
-        ..email = _emailController.text.trim()
-        ..phone = _phoneController.text.trim());
-      if (contact != widget.contact) {
+    final contact = widget.contact.rebuild((b) => b
+      ..firstName = _firstNameController.text.trim()
+      ..lastName = _lastNameController.text.trim()
+      ..email = _emailController.text.trim()
+      ..phone = _phoneController.text.trim());
+    if (contact != widget.contact) {
+      _debouncer.run(() {
         widget.viewModel.onChangedContact(contact, widget.index);
-      }
-    });
+      });
+    }
   }
 
   void _setContactControllers(Contact contact) {

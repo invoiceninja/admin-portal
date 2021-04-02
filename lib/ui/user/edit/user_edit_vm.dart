@@ -6,6 +6,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -72,38 +73,43 @@ class UserEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<UserEntity> completer = new Completer<UserEntity>();
-        passwordCallback(
-            context: context,
-            callback: (password, idToken) {
-              store.dispatch(SaveUserRequest(
-                completer: completer,
-                user: user,
-                password: password,
-                idToken: idToken,
-              ));
-            });
-        return completer.future.then((savedUser) {
-          showToast(
-              user.isNew ? localization.createdUser : localization.updatedUser);
-
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
-            if (user.isNew) {
-              Navigator.of(context).pushReplacementNamed(UserViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedUser);
-            }
-          } else {
-            viewEntity(context: context, entity: savedUser, force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
+        Debouncer.runOnComplete(() {
+          final user = state.userUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<UserEntity> completer = new Completer<UserEntity>();
+          passwordCallback(
               context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
+              callback: (password, idToken) {
+                store.dispatch(SaveUserRequest(
+                  completer: completer,
+                  user: user,
+                  password: password,
+                  idToken: idToken,
+                ));
               });
+          return completer.future.then((savedUser) {
+            showToast(user.isNew
+                ? localization.createdUser
+                : localization.updatedUser);
+
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
+              if (user.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(UserViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedUser);
+              }
+            } else {
+              viewEntity(context: context, entity: savedUser, force: true);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );
