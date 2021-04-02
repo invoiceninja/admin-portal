@@ -98,22 +98,22 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final project = widget.viewModel.project.rebuild((b) => b
-        ..number = _numberController.text.trim()
-        ..name = _nameController.text.trim()
-        ..budgetedHours = parseDouble(_hoursController.text)
-        ..taskRate = parseDouble(_taskRateController.text)
-        ..publicNotes = _publicNotesController.text.trim()
-        ..privateNotes = _privateNotesController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-        ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim());
-      if (project != widget.viewModel.project) {
+    final project = widget.viewModel.project.rebuild((b) => b
+      ..number = _numberController.text.trim()
+      ..name = _nameController.text.trim()
+      ..budgetedHours = parseDouble(_hoursController.text)
+      ..taskRate = parseDouble(_taskRateController.text)
+      ..publicNotes = _publicNotesController.text.trim()
+      ..privateNotes = _privateNotesController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
+    if (project != widget.viewModel.project) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(project);
-      }
-    });
+      });
+    }
   }
 
   @override

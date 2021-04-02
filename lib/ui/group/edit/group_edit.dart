@@ -61,13 +61,13 @@ class _GroupEditState extends State<GroupEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final group = widget.viewModel.group
-          .rebuild((b) => b..name = _nameController.text.trim());
-      if (group != widget.viewModel.group) {
+    final group = widget.viewModel.group
+        .rebuild((b) => b..name = _nameController.text.trim());
+    if (group != widget.viewModel.group) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(group);
-      }
-    });
+      });
+    }
   }
 
   @override

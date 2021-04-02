@@ -81,16 +81,16 @@ class _PaymentEditState extends State<PaymentEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final payment = widget.viewModel.payment.rebuild((b) => b
-        ..amount = parseDouble(_amountController.text)
-        ..number = _numberController.text.trim()
-        ..transactionReference = _transactionReferenceController.text.trim()
-        ..privateNotes = _privateNotesController.text.trim());
-      if (payment != widget.viewModel.payment) {
+    final payment = widget.viewModel.payment.rebuild((b) => b
+      ..amount = parseDouble(_amountController.text)
+      ..number = _numberController.text.trim()
+      ..transactionReference = _transactionReferenceController.text.trim()
+      ..privateNotes = _privateNotesController.text.trim());
+    if (payment != widget.viewModel.payment) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(payment);
-      }
-    });
+      });
+    }
   }
 
   @override

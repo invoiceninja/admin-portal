@@ -60,15 +60,15 @@ class VendorEditNotesState extends State<VendorEditNotes> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final vendor = viewModel.vendor.rebuild((b) => b
-        ..publicNotes = _publicNotesController.text
-        ..privateNotes = _privateNotesController.text);
-      if (vendor != viewModel.vendor) {
+    final viewModel = widget.viewModel;
+    final vendor = viewModel.vendor.rebuild((b) => b
+      ..publicNotes = _publicNotesController.text
+      ..privateNotes = _privateNotesController.text);
+    if (vendor != viewModel.vendor) {
+      _debouncer.run(() {
         viewModel.onChanged(vendor);
-      }
-    });
+      });
+    }
   }
 
   @override

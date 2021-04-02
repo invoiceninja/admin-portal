@@ -106,24 +106,24 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final invoice = widget.viewModel.invoice.rebuild((b) => b
-        ..number = _invoiceNumberController.text.trim()
-        ..poNumber = _poNumberController.text.trim()
-        ..discount = parseDouble(_discountController.text)
-        ..partial = parseDouble(_partialController.text)
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-        ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim()
-        ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
-        ..customSurcharge2 = parseDouble(_surcharge2Controller.text)
-        ..customSurcharge3 = parseDouble(_surcharge3Controller.text)
-        ..customSurcharge4 = parseDouble(_surcharge4Controller.text));
-      if (invoice != widget.viewModel.invoice) {
+    final invoice = widget.viewModel.invoice.rebuild((b) => b
+      ..number = _invoiceNumberController.text.trim()
+      ..poNumber = _poNumberController.text.trim()
+      ..discount = parseDouble(_discountController.text)
+      ..partial = parseDouble(_partialController.text)
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim()
+      ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
+      ..customSurcharge2 = parseDouble(_surcharge2Controller.text)
+      ..customSurcharge3 = parseDouble(_surcharge3Controller.text)
+      ..customSurcharge4 = parseDouble(_surcharge4Controller.text));
+    if (invoice != widget.viewModel.invoice) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(invoice);
-      }
-    });
+      });
+    }
   }
 
   @override

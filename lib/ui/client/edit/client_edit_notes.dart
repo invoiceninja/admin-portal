@@ -61,15 +61,15 @@ class ClientEditNotesState extends State<ClientEditNotes> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final client = viewModel.client.rebuild((b) => b
-        ..publicNotes = _publicNotesController.text
-        ..privateNotes = _privateNotesController.text);
-      if (client != viewModel.client) {
+    final viewModel = widget.viewModel;
+    final client = viewModel.client.rebuild((b) => b
+      ..publicNotes = _publicNotesController.text
+      ..privateNotes = _privateNotesController.text);
+    if (client != viewModel.client) {
+      _debouncer.run(() {
         viewModel.onChanged(client);
-      }
-    });
+      });
+    }
   }
 
   @override

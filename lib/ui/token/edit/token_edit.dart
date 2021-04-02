@@ -57,13 +57,13 @@ class _TokenEditState extends State<TokenEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final token = widget.viewModel.token
-          .rebuild((b) => b..name = _nameController.text.trim());
-      if (token != widget.viewModel.token) {
+    final token = widget.viewModel.token
+        .rebuild((b) => b..name = _nameController.text.trim());
+    if (token != widget.viewModel.token) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(token);
-      }
-    });
+      });
+    }
   }
 
   @override

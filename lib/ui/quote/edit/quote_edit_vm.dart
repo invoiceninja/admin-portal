@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_edit.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -71,43 +72,47 @@ class QuoteEditVM extends EntityEditVM {
       invoiceItemIndex: state.quoteUIState.editingItemIndex,
       origInvoice: store.state.quoteState.map[quote.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
-        if (quote.clientId.isEmpty) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                    AppLocalization.of(context).pleaseSelectAClient);
-              });
-          return null;
-        }
-        final localization = AppLocalization.of(context);
-        final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-        store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
-        return completer.future.then((savedQuote) {
-          showToast(quote.isNew
-              ? localization.createdQuote
-              : localization.updatedQuote);
-
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
-            if (quote.isNew) {
-              Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedQuote);
-            }
-          } else {
-            if (action != null) {
-              handleEntityAction(context, savedQuote, action);
-            } else {
-              viewEntity(context: context, entity: savedQuote, force: true);
-            }
+        Debouncer.runOnComplete(() {
+          final quote = state.quoteUIState.editing;
+          if (quote.clientId.isEmpty) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(
+                      AppLocalization.of(context).pleaseSelectAClient);
+                });
+            return null;
           }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          final localization = AppLocalization.of(context);
+          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+          store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
+          return completer.future.then((savedQuote) {
+            showToast(quote.isNew
+                ? localization.createdQuote
+                : localization.updatedQuote);
+
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
+              if (quote.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(QuoteViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedQuote);
+              }
+            } else {
+              if (action != null) {
+                handleEntityAction(context, savedQuote, action);
+              } else {
+                viewEntity(context: context, entity: savedQuote, force: true);
+              }
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
       onItemsAdded: (items, clientId) {

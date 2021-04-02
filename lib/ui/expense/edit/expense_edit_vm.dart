@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -97,37 +98,40 @@ class ExpenseEditVM {
         });
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<ExpenseEntity> completer =
-            new Completer<ExpenseEntity>();
-        store.dispatch(
-            SaveExpenseRequest(completer: completer, expense: expense));
-        return completer.future.then((savedExpense) {
-          showToast(expense.isNew
-              ? localization.createdExpense
-              : localization.updatedExpense);
+        Debouncer.runOnComplete(() {
+          final expense = store.state.expenseUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<ExpenseEntity> completer =
+              new Completer<ExpenseEntity>();
+          store.dispatch(
+              SaveExpenseRequest(completer: completer, expense: expense));
+          return completer.future.then((savedExpense) {
+            showToast(expense.isNew
+                ? localization.createdExpense
+                : localization.updatedExpense);
 
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
-            if (expense.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(ExpenseViewScreen.route);
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
+              if (expense.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(ExpenseViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedExpense);
+              }
             } else {
-              Navigator.of(context).pop(savedExpense);
+              viewEntityById(
+                  context: context,
+                  entityType: EntityType.expense,
+                  entityId: savedExpense.id,
+                  force: true);
             }
-          } else {
-            viewEntityById(
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
                 context: context,
-                entityType: EntityType.expense,
-                entityId: savedExpense.id,
-                force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

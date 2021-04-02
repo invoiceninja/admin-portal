@@ -71,17 +71,18 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final client = widget.viewModel.client.rebuild((b) => b
-        ..shippingAddress1 = _shippingAddress1Controller.text.trim()
-        ..shippingAddress2 = _shippingAddress2Controller.text.trim()
-        ..shippingCity = _shippingCityController.text.trim()
-        ..shippingState = _shippingStateController.text.trim()
-        ..shippingPostalCode = _shippingPostalCodeController.text.trim());
-      if (client != widget.viewModel.client) {
-        widget.viewModel.onChanged(client);
-      }
-    });
+    final viewModel = widget.viewModel;
+    final client = viewModel.client.rebuild((b) => b
+      ..shippingAddress1 = _shippingAddress1Controller.text.trim()
+      ..shippingAddress2 = _shippingAddress2Controller.text.trim()
+      ..shippingCity = _shippingCityController.text.trim()
+      ..shippingState = _shippingStateController.text.trim()
+      ..shippingPostalCode = _shippingPostalCodeController.text.trim());
+    if (client != viewModel.client) {
+      _debouncer.run(() {
+        viewModel.onChanged(client);
+      });
+    }
   }
 
   @override

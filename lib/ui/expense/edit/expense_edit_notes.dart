@@ -57,15 +57,15 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final expense = viewModel.expense.rebuild((b) => b
-        ..publicNotes = _publicNotesController.text.trim()
-        ..privateNotes = _privateNotesController.text.trim());
-      if (expense != viewModel.expense) {
+    final viewModel = widget.viewModel;
+    final expense = viewModel.expense.rebuild((b) => b
+      ..publicNotes = _publicNotesController.text.trim()
+      ..privateNotes = _privateNotesController.text.trim());
+    if (expense != viewModel.expense) {
+      _debouncer.run(() {
         viewModel.onChanged(expense);
-      }
-    });
+      });
+    }
   }
 
   @override
