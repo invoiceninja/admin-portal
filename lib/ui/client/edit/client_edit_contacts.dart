@@ -237,21 +237,22 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final contact = widget.contact.rebuild((b) => b
-        ..firstName = _firstNameController.text.trim()
-        ..lastName = _lastNameController.text.trim()
-        ..email = _emailController.text.trim()
-        ..password = _passwordController.text.trim()
-        ..phone = _phoneController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-        ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim());
-      if (contact != widget.contact) {
-        widget.viewModel.onChangedContact(contact, widget.index);
-      }
-    });
+    final viewModel = widget.viewModel;
+    final contact = widget.contact.rebuild((b) => b
+      ..firstName = _firstNameController.text.trim()
+      ..lastName = _lastNameController.text.trim()
+      ..email = _emailController.text.trim()
+      ..password = _passwordController.text.trim()
+      ..phone = _phoneController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
+    if (contact != widget.contact) {
+      _debouncer.run(() {
+        viewModel.onChangedContact(contact, widget.index);
+      });
+    }
   }
 
   void _setContactControllers(Contact contact) {

@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -70,33 +71,36 @@ class ProductEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<ProductEntity> completer =
-            new Completer<ProductEntity>();
-        store.dispatch(
-            SaveProductRequest(completer: completer, product: product));
-        return completer.future.then((savedProduct) {
-          showToast(product.isNew
-              ? localization.createdProduct
-              : localization.updatedProduct);
+        Debouncer.runOnComplete(() {
+          final product = state.productUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<ProductEntity> completer =
+              new Completer<ProductEntity>();
+          store.dispatch(
+              SaveProductRequest(completer: completer, product: product));
+          return completer.future.then((savedProduct) {
+            showToast(product.isNew
+                ? localization.createdProduct
+                : localization.updatedProduct);
 
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
-            if (product.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(ProductViewScreen.route);
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
+              if (product.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(ProductViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedProduct);
+              }
             } else {
-              Navigator.of(context).pop(savedProduct);
+              viewEntity(context: context, entity: savedProduct, force: true);
             }
-          } else {
-            viewEntity(context: context, entity: savedProduct, force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
       onEntityAction: (BuildContext context, EntityAction action) {

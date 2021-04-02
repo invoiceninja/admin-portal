@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -71,44 +72,47 @@ class CreditEditVM extends EntityEditVM {
       invoiceItemIndex: state.creditUIState.editingItemIndex,
       origInvoice: store.state.creditState.map[credit.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
-        if (credit.clientId.isEmpty) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                    AppLocalization.of(context).pleaseSelectAClient);
-              });
-          return null;
-        }
-        final localization = AppLocalization.of(context);
-        final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-        store.dispatch(SaveCreditRequest(completer: completer, credit: credit));
-        return completer.future.then((savedCredit) {
-          showToast(credit.isNew
-              ? localization.createdCredit
-              : localization.updatedCredit);
-
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
-            if (credit.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(CreditViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedCredit);
-            }
-          } else {
-            if (action != null) {
-              handleEntityAction(context, savedCredit, action);
-            } else {
-              viewEntity(context: context, entity: savedCredit, force: true);
-            }
+        Debouncer.runOnComplete(() {
+          if (credit.clientId.isEmpty) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(
+                      AppLocalization.of(context).pleaseSelectAClient);
+                });
+            return null;
           }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          final localization = AppLocalization.of(context);
+          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+          store.dispatch(
+              SaveCreditRequest(completer: completer, credit: credit));
+          return completer.future.then((savedCredit) {
+            showToast(credit.isNew
+                ? localization.createdCredit
+                : localization.updatedCredit);
+
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
+              if (credit.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(CreditViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedCredit);
+              }
+            } else {
+              if (action != null) {
+                handleEntityAction(context, savedCredit, action);
+              } else {
+                viewEntity(context: context, entity: savedCredit, force: true);
+              }
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
       onItemsAdded: (items, clientId) {

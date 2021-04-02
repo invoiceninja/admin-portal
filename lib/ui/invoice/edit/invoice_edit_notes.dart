@@ -64,16 +64,16 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final invoice = widget.viewModel.invoice.rebuild((b) => b
-        ..publicNotes = _publicNotesController.text.trim()
-        ..privateNotes = _privateNotesController.text.trim()
-        ..terms = _termsController.text.trim()
-        ..footer = _footerController.text.trim());
-      if (invoice != widget.viewModel.invoice) {
+    final invoice = widget.viewModel.invoice.rebuild((b) => b
+      ..publicNotes = _publicNotesController.text.trim()
+      ..privateNotes = _privateNotesController.text.trim()
+      ..terms = _termsController.text.trim()
+      ..footer = _footerController.text.trim());
+    if (invoice != widget.viewModel.invoice) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(invoice);
-      }
-    });
+      });
+    }
   }
 
   @override

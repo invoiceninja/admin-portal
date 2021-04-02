@@ -89,23 +89,23 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final vendor = viewModel.vendor.rebuild((b) => b
-        ..number = _numberController.text.trim()
-        ..name = _nameController.text.trim()
-        ..idNumber = _idNumberController.text.trim()
-        ..vatNumber = _vatNumberController.text.trim()
-        ..website = _websiteController.text.trim()
-        ..phone = _phoneController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-        ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim());
-      if (vendor != viewModel.vendor) {
+    final viewModel = widget.viewModel;
+    final vendor = viewModel.vendor.rebuild((b) => b
+      ..number = _numberController.text.trim()
+      ..name = _nameController.text.trim()
+      ..idNumber = _idNumberController.text.trim()
+      ..vatNumber = _vatNumberController.text.trim()
+      ..website = _websiteController.text.trim()
+      ..phone = _phoneController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
+    if (vendor != viewModel.vendor) {
+      _debouncer.run(() {
         viewModel.onChanged(vendor);
-      }
-    });
+      });
+    }
   }
 
   void _setContactControllers(Contact contact) {

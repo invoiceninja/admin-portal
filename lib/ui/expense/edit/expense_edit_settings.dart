@@ -72,15 +72,15 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final expense = viewModel.expense.rebuild((b) => b
-        ..transactionReference = _transactionReferenceController.text.trim()
-        ..exchangeRate = parseDouble(_exchangeRateController.text));
-      if (expense != viewModel.expense) {
+    final viewModel = widget.viewModel;
+    final expense = viewModel.expense.rebuild((b) => b
+      ..transactionReference = _transactionReferenceController.text.trim()
+      ..exchangeRate = parseDouble(_exchangeRateController.text));
+    if (expense != viewModel.expense) {
+      _debouncer.run(() {
         viewModel.onChanged(expense);
-      }
-    });
+      });
+    }
   }
 
   void _setCurrency(CurrencyEntity currency) {

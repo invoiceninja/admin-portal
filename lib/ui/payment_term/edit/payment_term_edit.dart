@@ -59,13 +59,13 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final paymentTerm = widget.viewModel.paymentTerm
-          .rebuild((b) => b..numDays = parseInt(_numDaysController.text));
-      if (paymentTerm != widget.viewModel.paymentTerm) {
+    final paymentTerm = widget.viewModel.paymentTerm
+        .rebuild((b) => b..numDays = parseInt(_numDaysController.text));
+    if (paymentTerm != widget.viewModel.paymentTerm) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(paymentTerm);
-      }
-    });
+      });
+    }
   }
 
   @override

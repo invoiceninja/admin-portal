@@ -6,6 +6,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -69,30 +70,34 @@ class GroupEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<GroupEntity> completer = Completer<GroupEntity>();
-        store.dispatch(SaveGroupRequest(completer: completer, group: group));
-        return completer.future.then((savedGroup) {
-          showToast(group.isNew
-              ? localization.createdGroup
-              : localization.updatedGroup);
+        Debouncer.runOnComplete(() {
+          final group = store.state.groupUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<GroupEntity> completer = Completer<GroupEntity>();
+          store.dispatch(SaveGroupRequest(completer: completer, group: group));
+          return completer.future.then((savedGroup) {
+            showToast(group.isNew
+                ? localization.createdGroup
+                : localization.updatedGroup);
 
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
-            if (group.isNew) {
-              Navigator.of(context).pushReplacementNamed(GroupViewScreen.route);
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
+              if (group.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(GroupViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedGroup);
+              }
             } else {
-              Navigator.of(context).pop(savedGroup);
+              viewEntity(context: context, entity: savedGroup, force: true);
             }
-          } else {
-            viewEntity(context: context, entity: savedGroup, force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

@@ -42,6 +42,7 @@ class _UserEditState extends State<UserEdit>
   final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
+
   //final _passwordController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -100,21 +101,21 @@ class _UserEditState extends State<UserEdit>
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final user = widget.viewModel.user.rebuild((b) => b
-        ..firstName = _firstNameController.text.trim()
-        ..lastName = _lastNameController.text.trim()
-        ..email = _emailController.text.trim()
-        ..phone = _phoneController.text.trim()
-        //..password = _passwordController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-        ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim());
-      if (user != widget.viewModel.user) {
+    final user = widget.viewModel.user.rebuild((b) => b
+      ..firstName = _firstNameController.text.trim()
+      ..lastName = _lastNameController.text.trim()
+      ..email = _emailController.text.trim()
+      ..phone = _phoneController.text.trim()
+      //..password = _passwordController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
+    if (user != widget.viewModel.user) {
+      _debouncer.run(() {
         widget.viewModel.onUserChanged(user);
-      }
-    });
+      });
+    }
   }
 
   void _togglePermission(String permission) {

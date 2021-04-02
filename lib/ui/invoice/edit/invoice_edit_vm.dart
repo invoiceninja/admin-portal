@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -94,45 +95,48 @@ class InvoiceEditVM extends EntityEditVM {
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       origInvoice: store.state.invoiceState.map[invoice.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
-        if (invoice.clientId.isEmpty) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                    AppLocalization.of(context).pleaseSelectAClient);
-              });
-          return null;
-        }
-        final localization = AppLocalization.of(context);
-        final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-        store.dispatch(
-            SaveInvoiceRequest(completer: completer, invoice: invoice));
-        return completer.future.then((savedInvoice) {
-          showToast(invoice.isNew
-              ? localization.createdInvoice
-              : localization.updatedInvoice);
-
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-            if (invoice.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(InvoiceViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedInvoice);
-            }
-          } else {
-            if (action != null) {
-              handleEntityAction(context, savedInvoice, action);
-            } else {
-              viewEntity(context: context, entity: savedInvoice, force: true);
-            }
+        Debouncer.runOnComplete(() {
+          final invoice = state.invoiceUIState.editing;
+          if (invoice.clientId.isEmpty) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(
+                      AppLocalization.of(context).pleaseSelectAClient);
+                });
+            return null;
           }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          final localization = AppLocalization.of(context);
+          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+          store.dispatch(
+              SaveInvoiceRequest(completer: completer, invoice: invoice));
+          return completer.future.then((savedInvoice) {
+            showToast(invoice.isNew
+                ? localization.createdInvoice
+                : localization.updatedInvoice);
+
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+              if (invoice.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(InvoiceViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedInvoice);
+              }
+            } else {
+              if (action != null) {
+                handleEntityAction(context, savedInvoice, action);
+              } else {
+                viewEntity(context: context, entity: savedInvoice, force: true);
+              }
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
       onItemsAdded: (items, clientId) {

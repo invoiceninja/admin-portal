@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -72,40 +73,45 @@ class VendorEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        if (!vendor.hasNameSet) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                    AppLocalization.of(context).pleaseEnterAName);
-              });
-          return null;
-        }
-        final localization = AppLocalization.of(context);
-        final Completer<VendorEntity> completer = new Completer<VendorEntity>();
-        store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
-        return completer.future.then((savedVendor) {
-          showToast(vendor.isNew
-              ? localization.createdVendor
-              : localization.updatedVendor);
-
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
-            if (vendor.isNew && state.vendorUIState.saveCompleter == null) {
-              Navigator.of(context)
-                  .pushReplacementNamed(VendorViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedVendor);
-            }
-          } else {
-            viewEntity(context: context, entity: savedVendor, force: true);
+        Debouncer.runOnComplete(() {
+          final vendor = store.state.vendorUIState.editing;
+          if (!vendor.hasNameSet) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(
+                      AppLocalization.of(context).pleaseEnterAName);
+                });
+            return null;
           }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          final localization = AppLocalization.of(context);
+          final Completer<VendorEntity> completer =
+              new Completer<VendorEntity>();
+          store.dispatch(
+              SaveVendorRequest(completer: completer, vendor: vendor));
+          return completer.future.then((savedVendor) {
+            showToast(vendor.isNew
+                ? localization.createdVendor
+                : localization.updatedVendor);
+
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
+              if (vendor.isNew && state.vendorUIState.saveCompleter == null) {
+                Navigator.of(context)
+                    .pushReplacementNamed(VendorViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedVendor);
+              }
+            } else {
+              viewEntity(context: context, entity: savedVendor, force: true);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

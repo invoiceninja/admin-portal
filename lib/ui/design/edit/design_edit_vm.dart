@@ -65,9 +65,13 @@ class DesignEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final completer = snackBarCompleter<DesignEntity>(
-            context, AppLocalization.of(context).savedDesign);
-        store.dispatch(SaveDesignRequest(completer: completer, design: design));
+        Debouncer.runOnComplete(() {
+          final design = state.designUIState.editing;
+          final completer = snackBarCompleter<DesignEntity>(
+              context, AppLocalization.of(context).savedDesign);
+          store.dispatch(
+              SaveDesignRequest(completer: completer, design: design));
+        });
       },
     );
   }

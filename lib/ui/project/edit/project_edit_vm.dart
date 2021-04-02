@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -90,33 +91,36 @@ class ProjectEditVM {
         });
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<ProjectEntity> completer =
-            new Completer<ProjectEntity>();
-        store.dispatch(
-            SaveProjectRequest(completer: completer, project: project));
-        return completer.future.then((savedProject) {
-          showToast(project.isNew
-              ? localization.createdProject
-              : localization.updatedProject);
+        Debouncer.runOnComplete(() {
+          final project = store.state.projectUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<ProjectEntity> completer =
+              new Completer<ProjectEntity>();
+          store.dispatch(
+              SaveProjectRequest(completer: completer, project: project));
+          return completer.future.then((savedProject) {
+            showToast(project.isNew
+                ? localization.createdProject
+                : localization.updatedProject);
 
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
-            if (project.isNew && state.projectUIState.saveCompleter == null) {
-              Navigator.of(context)
-                  .pushReplacementNamed(ProjectViewScreen.route);
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
+              if (project.isNew && state.projectUIState.saveCompleter == null) {
+                Navigator.of(context)
+                    .pushReplacementNamed(ProjectViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedProject);
+              }
             } else {
-              Navigator.of(context).pop(savedProject);
+              viewEntity(context: context, entity: savedProject, force: true);
             }
-          } else {
-            viewEntity(context: context, entity: savedProject, force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -74,44 +75,46 @@ class SubscriptionEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        final subscription = store.state.subscriptionUIState.editing;
-        if (subscription.name.isEmpty) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(
-                    AppLocalization.of(context).pleaseEnterAName);
-              });
-          return null;
-        }
-
-        final localization = AppLocalization.of(context);
-        final Completer<SubscriptionEntity> completer =
-            new Completer<SubscriptionEntity>();
-        store.dispatch(SaveSubscriptionRequest(
-            completer: completer, subscription: subscription));
-        return completer.future.then((savedSubscription) {
-          showToast(subscription.isNew
-              ? localization.createdSubscription
-              : localization.updatedSubscription);
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
-            if (subscription.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(SubscriptionViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedSubscription);
-            }
-          } else {
-            viewEntity(
-                context: context, entity: savedSubscription, force: true);
+        Debouncer.runOnComplete(() {
+          final subscription = store.state.subscriptionUIState.editing;
+          if (subscription.name.isEmpty) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(
+                      AppLocalization.of(context).pleaseEnterAName);
+                });
+            return null;
           }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+
+          final localization = AppLocalization.of(context);
+          final Completer<SubscriptionEntity> completer =
+              new Completer<SubscriptionEntity>();
+          store.dispatch(SaveSubscriptionRequest(
+              completer: completer, subscription: subscription));
+          return completer.future.then((savedSubscription) {
+            showToast(subscription.isNew
+                ? localization.createdSubscription
+                : localization.updatedSubscription);
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
+              if (subscription.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(SubscriptionViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedSubscription);
+              }
+            } else {
+              viewEntity(
+                  context: context, entity: savedSubscription, force: true);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

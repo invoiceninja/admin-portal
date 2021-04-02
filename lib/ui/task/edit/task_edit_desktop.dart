@@ -91,19 +91,19 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final task = widget.viewModel.task.rebuild((b) => b
-        ..number = _numberController.text.trim()
-        ..rate = parseDouble(_rateController.text.trim())
-        ..description = _descriptionController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-        ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim());
-      if (task != widget.viewModel.task) {
+    final task = widget.viewModel.task.rebuild((b) => b
+      ..number = _numberController.text.trim()
+      ..rate = parseDouble(_rateController.text.trim())
+      ..description = _descriptionController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
+    if (task != widget.viewModel.task) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(task);
-      }
-    });
+      });
+    }
   }
 
   @override

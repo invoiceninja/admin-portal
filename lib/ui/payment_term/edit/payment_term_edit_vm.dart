@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -70,34 +71,37 @@ class PaymentTermEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<PaymentTermEntity> completer =
-            new Completer<PaymentTermEntity>();
-        store.dispatch(SavePaymentTermRequest(
-            completer: completer, paymentTerm: paymentTerm));
-        return completer.future.then((savedPaymentTerm) {
-          showToast(paymentTerm.isNew
-              ? localization.createdPaymentTerm
-              : localization.updatedPaymentTerm);
+        Debouncer.runOnComplete(() {
+          final paymentTerm = state.paymentTermUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<PaymentTermEntity> completer =
+              new Completer<PaymentTermEntity>();
+          store.dispatch(SavePaymentTermRequest(
+              completer: completer, paymentTerm: paymentTerm));
+          return completer.future.then((savedPaymentTerm) {
+            showToast(paymentTerm.isNew
+                ? localization.createdPaymentTerm
+                : localization.updatedPaymentTerm);
 
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
-            if (paymentTerm.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(PaymentTermScreen.route);
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
+              if (paymentTerm.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(PaymentTermScreen.route);
+              } else {
+                Navigator.of(context).pop(savedPaymentTerm);
+              }
             } else {
-              Navigator.of(context).pop(savedPaymentTerm);
+              viewEntitiesByType(
+                  context: context, entityType: EntityType.paymentTerm);
             }
-          } else {
-            viewEntitiesByType(
-                context: context, entityType: EntityType.paymentTerm);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

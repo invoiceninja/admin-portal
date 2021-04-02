@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -76,38 +77,43 @@ class TaskEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        if (!task.areTimesValid) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(AppLocalization.of(context).taskErrors);
-              });
-          return null;
-        }
-
-        final localization = AppLocalization.of(context);
-        final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-        store.dispatch(SaveTaskRequest(completer: completer, task: task));
-        return completer.future.then((savedTask) {
-          showToast(
-              task.isNew ? localization.createTask : localization.updatedTask);
-
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
-            if (task.isNew) {
-              Navigator.of(context).pushReplacementNamed(TaskViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedTask);
-            }
-          } else {
-            viewEntity(context: context, entity: savedTask, force: true);
+        Debouncer.runOnComplete(() {
+          final task = store.state.taskUIState.editing;
+          if (!task.areTimesValid) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(AppLocalization.of(context).taskErrors);
+                });
+            return null;
           }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+
+          final localization = AppLocalization.of(context);
+          final Completer<TaskEntity> completer = new Completer<TaskEntity>();
+          store.dispatch(SaveTaskRequest(completer: completer, task: task));
+          return completer.future.then((savedTask) {
+            showToast(task.isNew
+                ? localization.createTask
+                : localization.updatedTask);
+
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
+              if (task.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(TaskViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedTask);
+              }
+            } else {
+              viewEntity(context: context, entity: savedTask, force: true);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

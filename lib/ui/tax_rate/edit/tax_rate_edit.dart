@@ -65,14 +65,14 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final taxRate = widget.viewModel.taxRate.rebuild((b) => b
-        ..name = _nameController.text.trim()
-        ..rate = parseDouble(_rateController.text));
-      if (taxRate != widget.viewModel.taxRate) {
+    final taxRate = widget.viewModel.taxRate.rebuild((b) => b
+      ..name = _nameController.text.trim()
+      ..rate = parseDouble(_rateController.text));
+    if (taxRate != widget.viewModel.taxRate) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(taxRate);
-      }
-    });
+      });
+    }
   }
 
   @override

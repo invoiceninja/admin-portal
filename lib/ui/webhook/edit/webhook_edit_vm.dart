@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -73,33 +74,36 @@ class WebhookEditVM {
         ));
       },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<WebhookEntity> completer =
-            new Completer<WebhookEntity>();
-        store.dispatch(
-            SaveWebhookRequest(completer: completer, webhook: webhook));
-        return completer.future.then((savedWebhook) {
-          showToast(webhook.isNew
-              ? localization.createdWebhook
-              : localization.updatedWebhook);
+        Debouncer.runOnComplete(() {
+          final webhook = state.webhookUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<WebhookEntity> completer =
+              new Completer<WebhookEntity>();
+          store.dispatch(
+              SaveWebhookRequest(completer: completer, webhook: webhook));
+          return completer.future.then((savedWebhook) {
+            showToast(webhook.isNew
+                ? localization.createdWebhook
+                : localization.updatedWebhook);
 
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
-            if (webhook.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(WebhookViewScreen.route);
+            if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
+              if (webhook.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(WebhookViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedWebhook);
+              }
             } else {
-              Navigator.of(context).pop(savedWebhook);
+              viewEntity(context: context, entity: savedWebhook, force: true);
             }
-          } else {
-            viewEntity(context: context, entity: savedWebhook, force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );

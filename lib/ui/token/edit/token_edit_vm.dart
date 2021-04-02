@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -73,42 +74,46 @@ class TokenEditVM {
         ));
       },
       onSavePressed: (BuildContext context) {
-        passwordCallback(
-            context: context,
-            callback: (password, idToken) {
-              final localization = AppLocalization.of(context);
-              final Completer<TokenEntity> completer =
-                  new Completer<TokenEntity>();
-              store.dispatch(SaveTokenRequest(
-                completer: completer,
-                token: token,
-                password: password,
-                idToken: idToken,
-              ));
-              return completer.future.then((savedToken) {
-                showToast(token.isNew
-                    ? localization.createdToken
-                    : localization.updatedToken);
+        Debouncer.runOnComplete(() {
+          final token = state.tokenUIState.editing;
+          passwordCallback(
+              context: context,
+              callback: (password, idToken) {
+                final localization = AppLocalization.of(context);
+                final Completer<TokenEntity> completer =
+                    new Completer<TokenEntity>();
+                store.dispatch(SaveTokenRequest(
+                  completer: completer,
+                  token: token,
+                  password: password,
+                  idToken: idToken,
+                ));
+                return completer.future.then((savedToken) {
+                  showToast(token.isNew
+                      ? localization.createdToken
+                      : localization.updatedToken);
 
-                if (isMobile(context)) {
-                  store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
-                  if (token.isNew) {
-                    Navigator.of(context)
-                        .pushReplacementNamed(TokenViewScreen.route);
+                  if (isMobile(context)) {
+                    store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
+                    if (token.isNew) {
+                      Navigator.of(context)
+                          .pushReplacementNamed(TokenViewScreen.route);
+                    } else {
+                      Navigator.of(context).pop(savedToken);
+                    }
                   } else {
-                    Navigator.of(context).pop(savedToken);
+                    viewEntity(
+                        context: context, entity: savedToken, force: true);
                   }
-                } else {
-                  viewEntity(context: context, entity: savedToken, force: true);
-                }
-              }).catchError((Object error) {
-                showDialog<ErrorDialog>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    });
+                }).catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ErrorDialog(error);
+                      });
+                });
               });
-            });
+        });
       },
     );
   }
