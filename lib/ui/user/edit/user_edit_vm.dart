@@ -74,7 +74,7 @@ class UserEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final user = state.userUIState.editing;
+          final user = store.state.userUIState.editing;
           final localization = AppLocalization.of(context);
           final Completer<UserEntity> completer = new Completer<UserEntity>();
           passwordCallback(

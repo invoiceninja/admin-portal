@@ -72,7 +72,7 @@ class ProductEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final product = state.productUIState.editing;
+          final product = store.state.productUIState.editing;
           final localization = AppLocalization.of(context);
           final Completer<ProductEntity> completer =
               new Completer<ProductEntity>();

@@ -73,6 +73,7 @@ class CreditEditVM extends EntityEditVM {
       origInvoice: store.state.creditState.map[credit.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
+          final credit = store.state.creditUIState.editing;
           if (credit.clientId.isEmpty) {
             showDialog<ErrorDialog>(
                 context: context,
