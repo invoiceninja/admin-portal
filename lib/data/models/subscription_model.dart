@@ -78,7 +78,6 @@ abstract class SubscriptionEntity extends Object
       price: 0,
       maxSeatsLimit: 0,
       perSeatEnabled: false,
-      planMap: '',
       productIds: '',
       promoCode: '',
       promoDiscount: 0,
@@ -148,9 +147,6 @@ abstract class SubscriptionEntity extends Object
 
   @BuiltValueField(wireName: 'allow_plan_changes')
   bool get allowPlanChanges;
-
-  @BuiltValueField(wireName: 'plan_map')
-  String get planMap;
 
   @BuiltValueField(wireName: 'refund_period')
   int get refundPeriod;
