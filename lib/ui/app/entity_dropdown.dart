@@ -63,11 +63,17 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus && isMobile(context)) {
-        _showOptions();
-      }
-    });
+    _focusNode.addListener(_onFocusChanged);
+  }
+
+  void _onFocusChanged() {
+    if (_focusNode.hasFocus && isMobile(context)) {
+      _showOptions();
+    }
+
+    if (!_focusNode.hasFocus) {
+      _textController.text = '';
+    }
   }
 
   @override
@@ -120,6 +126,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   void dispose() {
     _textController.dispose();
+    _focusNode.removeListener(_onFocusChanged);
     _focusNode.dispose();
     super.dispose();
   }

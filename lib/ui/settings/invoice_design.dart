@@ -131,12 +131,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ),
               FormCard(
                 children: <Widget>[
-                  DesignPicker(
-                    label: localization.invoiceDesign,
-                    initialValue: settings.defaultInvoiceDesignId,
-                    onSelected: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..defaultInvoiceDesignId = value.id)),
-                  ),
+                  if (company.isModuleEnabled(EntityType.invoice))
+                    DesignPicker(
+                      label: localization.invoiceDesign,
+                      initialValue: settings.defaultInvoiceDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..defaultInvoiceDesignId = value.id)),
+                    ),
                   if (company.isModuleEnabled(EntityType.quote))
                     DesignPicker(
                       label: localization.quoteDesign,

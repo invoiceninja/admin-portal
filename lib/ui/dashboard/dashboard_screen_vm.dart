@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -47,7 +48,6 @@ class DashboardVM {
     @required this.dashboardUIState,
     @required this.currencyMap,
     @required this.isLoading,
-    @required this.isNextEnabled,
     @required this.filter,
     @required this.filteredList,
     @required this.onRefreshed,
@@ -77,14 +77,13 @@ class DashboardVM {
     final state = store.state;
     final filter = state.uiState.filter;
     final settings = state.dashboardUIState.settings;
+    final endDate = convertSqlDateToDateTime(settings.endDate(state.company));
 
     return DashboardVM(
       state: state,
       dashboardUIState: state.dashboardUIState,
       currencyMap: state.staticState.currencyMap,
       isLoading: state.isLoading,
-      isNextEnabled: DateTime.parse(settings.endDate(state.company))
-          .isBefore(DateTime.now()),
       onRefreshed: (context) => _handleRefresh(context),
       onEntityTypeChanged: (entityType) =>
           store.dispatch(UpdateDashboardEntityType(entityType: entityType)),
@@ -115,7 +114,6 @@ class DashboardVM {
   final String filter;
   final List<BaseEntity> filteredList;
   final bool isLoading;
-  final bool isNextEnabled;
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
   final Function(EntityType, List<String>) onSelectionChanged;
