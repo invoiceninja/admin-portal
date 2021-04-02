@@ -172,9 +172,6 @@ class _$SubscriptionEntitySerializer
       'allow_plan_changes',
       serializers.serialize(object.allowPlanChanges,
           specifiedType: const FullType(bool)),
-      'plan_map',
-      serializers.serialize(object.planMap,
-          specifiedType: const FullType(String)),
       'refund_period',
       serializers.serialize(object.refundPeriod,
           specifiedType: const FullType(int)),
@@ -302,10 +299,6 @@ class _$SubscriptionEntitySerializer
         case 'allow_plan_changes':
           result.allowPlanChanges = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'plan_map':
-          result.planMap = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'refund_period':
           result.refundPeriod = serializers.deserialize(value,
@@ -666,8 +659,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final bool allowPlanChanges;
   @override
-  final String planMap;
-  @override
   final int refundPeriod;
   @override
   final WebhookConfigurationEntity webhookConfiguration;
@@ -712,7 +703,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       this.trialDuration,
       this.allowQueryOverrides,
       this.allowPlanChanges,
-      this.planMap,
       this.refundPeriod,
       this.webhookConfiguration,
       this.purchasePage,
@@ -782,9 +772,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       throw new BuiltValueNullFieldError(
           'SubscriptionEntity', 'allowPlanChanges');
     }
-    if (planMap == null) {
-      throw new BuiltValueNullFieldError('SubscriptionEntity', 'planMap');
-    }
     if (refundPeriod == null) {
       throw new BuiltValueNullFieldError('SubscriptionEntity', 'refundPeriod');
     }
@@ -839,7 +826,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
         trialDuration == other.trialDuration &&
         allowQueryOverrides == other.allowQueryOverrides &&
         allowPlanChanges == other.allowPlanChanges &&
-        planMap == other.planMap &&
         refundPeriod == other.refundPeriod &&
         webhookConfiguration == other.webhookConfiguration &&
         purchasePage == other.purchasePage &&
@@ -874,15 +860,15 @@ class _$SubscriptionEntity extends SubscriptionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode), isAmountDiscount.hashCode),
-                                                                                allowCancellation.hashCode),
-                                                                            perSeatEnabled.hashCode),
-                                                                        maxSeatsLimit.hashCode),
-                                                                    trialEnabled.hashCode),
-                                                                trialDuration.hashCode),
-                                                            allowQueryOverrides.hashCode),
-                                                        allowPlanChanges.hashCode),
-                                                    planMap.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode),
+                                                                                isAmountDiscount.hashCode),
+                                                                            allowCancellation.hashCode),
+                                                                        perSeatEnabled.hashCode),
+                                                                    maxSeatsLimit.hashCode),
+                                                                trialEnabled.hashCode),
+                                                            trialDuration.hashCode),
+                                                        allowQueryOverrides.hashCode),
+                                                    allowPlanChanges.hashCode),
                                                 refundPeriod.hashCode),
                                             webhookConfiguration.hashCode),
                                         purchasePage.hashCode),
@@ -916,7 +902,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
           ..add('trialDuration', trialDuration)
           ..add('allowQueryOverrides', allowQueryOverrides)
           ..add('allowPlanChanges', allowPlanChanges)
-          ..add('planMap', planMap)
           ..add('refundPeriod', refundPeriod)
           ..add('webhookConfiguration', webhookConfiguration)
           ..add('purchasePage', purchasePage)
@@ -1011,10 +996,6 @@ class SubscriptionEntityBuilder
   set allowPlanChanges(bool allowPlanChanges) =>
       _$this._allowPlanChanges = allowPlanChanges;
 
-  String _planMap;
-  String get planMap => _$this._planMap;
-  set planMap(String planMap) => _$this._planMap = planMap;
-
   int _refundPeriod;
   int get refundPeriod => _$this._refundPeriod;
   set refundPeriod(int refundPeriod) => _$this._refundPeriod = refundPeriod;
@@ -1085,7 +1066,6 @@ class SubscriptionEntityBuilder
       _trialDuration = _$v.trialDuration;
       _allowQueryOverrides = _$v.allowQueryOverrides;
       _allowPlanChanges = _$v.allowPlanChanges;
-      _planMap = _$v.planMap;
       _refundPeriod = _$v.refundPeriod;
       _webhookConfiguration = _$v.webhookConfiguration?.toBuilder();
       _purchasePage = _$v.purchasePage;
@@ -1138,7 +1118,6 @@ class SubscriptionEntityBuilder
               trialDuration: trialDuration,
               allowQueryOverrides: allowQueryOverrides,
               allowPlanChanges: allowPlanChanges,
-              planMap: planMap,
               refundPeriod: refundPeriod,
               webhookConfiguration: webhookConfiguration.build(),
               purchasePage: purchasePage,
