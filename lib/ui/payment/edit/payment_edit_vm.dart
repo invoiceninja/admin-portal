@@ -74,7 +74,7 @@ class PaymentEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final payment = state.paymentUIState.editing;
+          final payment = store.state.paymentUIState.editing;
           double amount = 0;
           payment.invoices.forEach((invoice) => amount += invoice.amount);
           payment.credits.forEach((credit) => amount -= credit.amount);

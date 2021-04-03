@@ -73,7 +73,7 @@ class RecurringInvoiceEditVM extends EntityEditVM {
       origInvoice: store.state.recurringInvoiceState.map[recurringInvoice.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
-          final recurringInvoice = state.recurringInvoiceUIState.editing;
+          final recurringInvoice = store.state.recurringInvoiceUIState.editing;
           if (recurringInvoice.clientId.isEmpty) {
             showDialog<ErrorDialog>(
                 context: context,

@@ -73,7 +73,7 @@ class QuoteEditVM extends EntityEditVM {
       origInvoice: store.state.quoteState.map[quote.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
-          final quote = state.quoteUIState.editing;
+          final quote = store.state.quoteUIState.editing;
           if (quote.clientId.isEmpty) {
             showDialog<ErrorDialog>(
                 context: context,

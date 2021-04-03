@@ -75,7 +75,7 @@ class TokenEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final token = state.tokenUIState.editing;
+          final token = store.state.tokenUIState.editing;
           passwordCallback(
               context: context,
               callback: (password, idToken) {

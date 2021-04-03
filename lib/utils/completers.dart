@@ -88,7 +88,7 @@ class Debouncer {
 
   static void runOnComplete(Function callback) {
     if (Debouncer.action != null) {
-      action();
+      Debouncer.action();
     }
 
     callback();
