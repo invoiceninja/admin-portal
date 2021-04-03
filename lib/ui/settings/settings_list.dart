@@ -467,7 +467,7 @@ class SettingsSearch extends StatelessWidget {
         'require_quote_signature',
       ],
       [
-        'messagres',
+        'messages',
       ],
       [
         'custom_css',
