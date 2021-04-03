@@ -71,7 +71,7 @@ class TaskStatusEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final taskStatus = state.taskStatusUIState.editing;
+          final taskStatus = store.state.taskStatusUIState.editing;
           final localization = AppLocalization.of(context);
           final Completer<TaskStatusEntity> completer =
               new Completer<TaskStatusEntity>();

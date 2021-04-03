@@ -75,7 +75,7 @@ class WebhookEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final webhook = state.webhookUIState.editing;
+          final webhook = store.state.webhookUIState.editing;
           final localization = AppLocalization.of(context);
           final Completer<WebhookEntity> completer =
               new Completer<WebhookEntity>();

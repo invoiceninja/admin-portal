@@ -72,7 +72,7 @@ class PaymentTermEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final paymentTerm = state.paymentTermUIState.editing;
+          final paymentTerm = store.state.paymentTermUIState.editing;
           final localization = AppLocalization.of(context);
           final Completer<PaymentTermEntity> completer =
               new Completer<PaymentTermEntity>();

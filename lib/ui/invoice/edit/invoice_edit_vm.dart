@@ -96,7 +96,7 @@ class InvoiceEditVM extends EntityEditVM {
       origInvoice: store.state.invoiceState.map[invoice.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
-          final invoice = state.invoiceUIState.editing;
+          final invoice = store.state.invoiceUIState.editing;
           if (invoice.clientId.isEmpty) {
             showDialog<ErrorDialog>(
                 context: context,

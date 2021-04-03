@@ -72,7 +72,7 @@ class ExpenseCategoryEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final expenseCategory = state.expenseCategoryUIState.editing;
+          final expenseCategory = store.state.expenseCategoryUIState.editing;
           final localization = AppLocalization.of(context);
           final Completer<ExpenseCategoryEntity> completer =
               new Completer<ExpenseCategoryEntity>();
