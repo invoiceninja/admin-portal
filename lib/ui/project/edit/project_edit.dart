@@ -156,6 +156,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                     autovalidate: _autoValidate,
                     autofocus: true,
                     label: localization.projectName,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   project.isNew
                       ? EntityDropdown(
@@ -184,7 +185,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                       : DecoratedFormField(
                           controller: _numberController,
                           label: localization.projectNumber,
-                          autocorrect: false,
+                          onSavePressed: viewModel.onSavePressed,
                         ),
                   UserPicker(
                     userId: project.assignedUserId,
@@ -204,12 +205,14 @@ class _ProjectEditState extends State<ProjectEdit> {
                         TextInputType.numberWithOptions(decimal: true),
                     controller: _hoursController,
                     label: localization.budgetedHours,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DecoratedFormField(
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                     controller: _taskRateController,
                     label: localization.taskRate,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DecoratedFormField(
                     maxLines: 4,
@@ -227,21 +230,25 @@ class _ProjectEditState extends State<ProjectEdit> {
                     controller: _custom1Controller,
                     field: CustomFieldType.project1,
                     value: project.customValue1,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom2Controller,
                     field: CustomFieldType.project2,
                     value: project.customValue2,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom3Controller,
                     field: CustomFieldType.project3,
                     value: project.customValue3,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom4Controller,
                     field: CustomFieldType.project4,
                     value: project.customValue4,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                 ],
               ),
