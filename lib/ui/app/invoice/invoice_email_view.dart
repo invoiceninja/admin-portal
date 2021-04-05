@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
@@ -145,6 +146,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final viewModel = widget.viewModel;
     final invoice = widget.viewModel.invoice;
     final client = viewModel.client;
+    final state = viewModel.state;
+    final settings = SettingsEntity(
+      clientSettings: client.settings,
+      groupSettings: state.groupState.get(client.groupId).settings,
+      companySettings: state.company.settings,
+    );
     final contacts = invoice.invitations
         .map((invitation) => client.contacts.firstWhere(
             (contact) => contact.id == invitation.contactId,
@@ -192,18 +199,21 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     value: EmailTemplate.reminder3,
                   ),
                 ],
-                DropdownMenuItem<EmailTemplate>(
-                  child: Text(localization.firstCustom),
-                  value: EmailTemplate.custom1,
-                ),
-                DropdownMenuItem<EmailTemplate>(
-                  child: Text(localization.secondCustom),
-                  value: EmailTemplate.custom2,
-                ),
-                DropdownMenuItem<EmailTemplate>(
-                  child: Text(localization.thirdCustom),
-                  value: EmailTemplate.custom3,
-                ),
+                if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
+                  DropdownMenuItem<EmailTemplate>(
+                    child: Text(localization.firstCustom),
+                    value: EmailTemplate.custom1,
+                  ),
+                if ((settings.emailSubjectCustom2 ?? '').isNotEmpty)
+                  DropdownMenuItem<EmailTemplate>(
+                    child: Text(localization.secondCustom),
+                    value: EmailTemplate.custom2,
+                  ),
+                if ((settings.emailSubjectCustom3 ?? '').isNotEmpty)
+                  DropdownMenuItem<EmailTemplate>(
+                    child: Text(localization.thirdCustom),
+                    value: EmailTemplate.custom3,
+                  ),
               ],
             ),
           ),

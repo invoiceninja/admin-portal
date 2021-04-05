@@ -733,6 +733,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isEnterprisePlan =>
       !kReleaseMode || isSelfHosted || account.plan == kPlanEnterprise;
+  //bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
 
   bool get isUserConfirmed {
     if (!kReleaseMode) {

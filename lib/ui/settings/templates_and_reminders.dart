@@ -279,6 +279,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             !company.isModuleEnabled(EntityType.credit)) {
                           return false;
                         }
+                        // TODO remove this once statements are enabled
+                        if (value == EmailTemplate.statement) {
+                          return false;
+                        }
                         return true;
                       })
                       .map((item) => DropdownMenuItem<EmailTemplate>(
