@@ -249,10 +249,13 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         state.productState.list, state.userState.map),
                     entityMap: state.productState.map,
                     labelText: localization.products,
-                    onSelected: (value) => viewModel.onChanged(
-                        subscription.rebuild((b) => b
-                          ..productIds =
-                              subscription.productIds + ',${value.id}')),
+                    onSelected: (value) {
+                      final parts = subscription.productIds.split(',');
+                      viewModel.onChanged(subscription.rebuild((b) => b
+                        ..productIds = <String>[...parts, value.id]
+                            .where((part) => part.isNotEmpty)
+                            .join(',')));
+                    },
                   ),
                   SizedBox(
                     height: 8,
@@ -286,11 +289,13 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         state.productState.list, state.userState.map),
                     entityMap: state.productState.map,
                     labelText: localization.recurringProducts,
-                    onSelected: (value) => viewModel.onChanged(
-                        subscription.rebuild((b) => b
-                          ..recurringProductIds =
-                              subscription.recurringProductIds +
-                                  ',${value.id}')),
+                    onSelected: (value) {
+                      final parts = subscription.recurringProductIds.split(',');
+                      viewModel.onChanged(subscription.rebuild((b) => b
+                        ..recurringProductIds = <String>[...parts, value.id]
+                            .where((part) => part.isNotEmpty)
+                            .join(',')));
+                    },
                   ),
                   SizedBox(
                     height: 8,
@@ -507,14 +512,13 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                           _postPurchaseHeaderValueController.text = '';
 
                           if (webhookConfiguration.postPurchaseHeaders
-                              .contains(header)) {
+                              .containsKey(key)) {
                             return;
                           }
 
                           viewModel.onChanged(subscription.rebuild((b) => b
-                            ..webhookConfiguration
-                                .postPurchaseHeaders
-                                .add(header)));
+                            ..webhookConfiguration.postPurchaseHeaders[key] =
+                                value));
                         })
                   ],
                 ),
@@ -527,9 +531,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     ),
                   )
                 else
-                  ...webhookConfiguration.postPurchaseHeaders.map(
-                    (header) => ListTile(
-                      title: Text(header),
+                  ...webhookConfiguration.postPurchaseHeaders.keys.map(
+                    (key) => ListTile(
+                      title: Text(
+                          '$key: ${webhookConfiguration.postPurchaseHeaders[key]}'),
                       trailing: IconButton(
                         icon: Icon(Icons.clear),
                         tooltip: localization.removeHeader,
@@ -537,7 +542,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                           viewModel.onChanged(subscription.rebuild((b) => b
                             ..webhookConfiguration
                                 .postPurchaseHeaders
-                                .remove(header)));
+                                .remove(key)));
                         },
                       ),
                     ),

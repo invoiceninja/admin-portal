@@ -250,7 +250,7 @@ abstract class WebhookConfigurationEntity
   factory WebhookConfigurationEntity() {
     return _$WebhookConfigurationEntity._(
       postPurchaseBody: '',
-      postPurchaseHeaders: BuiltList<String>(),
+      postPurchaseHeaders: BuiltMap<String, String>(),
       postPurchaseRestMethod: '',
       postPurchaseUrl: '',
       returnUrl: '',
@@ -273,7 +273,7 @@ abstract class WebhookConfigurationEntity
   String get postPurchaseRestMethod;
 
   @BuiltValueField(wireName: 'post_purchase_headers')
-  BuiltList<String> get postPurchaseHeaders;
+  BuiltMap<String, String> get postPurchaseHeaders;
 
   // TODO remove this field
   @BuiltValueField(wireName: 'post_purchase_body')
@@ -284,7 +284,7 @@ abstract class WebhookConfigurationEntity
       builder
         ..returnUrl = ''
         ..postPurchaseBody = ''
-        ..postPurchaseHeaders.replace(BuiltList<String>())
+        ..postPurchaseHeaders.replace(BuiltMap<String, String>())
         ..postPurchaseRestMethod = ''
         ..postPurchaseUrl = '';
 
