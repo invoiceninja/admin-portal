@@ -175,6 +175,9 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       ),
     ];
 
+    final key = _postPurchaseHeaderKeyController.text.trim();
+    final value = _postPurchaseHeaderValueController.text.trim();
+
     return EditScaffold(
       title: subscription.isNew
           ? localization.newSubscription
@@ -479,6 +482,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         label: localization.headerKey,
                         controller: _postPurchaseHeaderKeyController,
                         onSavePressed: viewModel.onSavePressed,
+                        onChanged: (value) => setState(() {}),
                       ),
                     ),
                     SizedBox(
@@ -489,6 +493,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         label: localization.headerValue,
                         controller: _postPurchaseHeaderValueController,
                         onSavePressed: viewModel.onSavePressed,
+                        onChanged: (value) => setState(() {}),
                       ),
                     ),
                     SizedBox(
@@ -497,29 +502,22 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     IconButton(
                         tooltip: localization.addHeader,
                         icon: Icon(Icons.add_circle_outline),
-                        onPressed: () {
-                          final key =
-                              _postPurchaseHeaderKeyController.text.trim();
-                          final value =
-                              _postPurchaseHeaderValueController.text.trim();
+                        onPressed: (key.isEmpty || value.isEmpty)
+                            ? null
+                            : () {
+                                _postPurchaseHeaderKeyController.text = '';
+                                _postPurchaseHeaderValueController.text = '';
 
-                          if (key.isEmpty || value.isEmpty) {
-                            return;
-                          }
+                                if (webhookConfiguration.postPurchaseHeaders
+                                    .containsKey(key)) {
+                                  return;
+                                }
 
-                          final header = '$key: $value';
-                          _postPurchaseHeaderKeyController.text = '';
-                          _postPurchaseHeaderValueController.text = '';
-
-                          if (webhookConfiguration.postPurchaseHeaders
-                              .containsKey(key)) {
-                            return;
-                          }
-
-                          viewModel.onChanged(subscription.rebuild((b) => b
-                            ..webhookConfiguration.postPurchaseHeaders[key] =
-                                value));
-                        })
+                                viewModel.onChanged(subscription.rebuild((b) =>
+                                    b
+                                      ..webhookConfiguration
+                                          .postPurchaseHeaders[key] = value));
+                              })
                   ],
                 ),
                 SizedBox(height: 8),
