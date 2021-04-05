@@ -93,6 +93,7 @@ class EmailInvoiceVM extends EmailEntityVM {
     final state = store.state;
 
     return EmailInvoiceVM(
+      state: state,
       isLoading: state.isLoading,
       isSaving: state.isSaving,
       company: state.company,

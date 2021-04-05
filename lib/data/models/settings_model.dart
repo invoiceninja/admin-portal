@@ -23,6 +23,15 @@ abstract class SettingsEntity
       lockInvoices: clientSettings?.lockInvoices ??
           groupSettings?.lockInvoices ??
           companySettings?.lockInvoices,
+      emailSubjectCustom1: clientSettings?.emailSubjectCustom1 ??
+          groupSettings?.emailSubjectCustom1 ??
+          companySettings?.emailSubjectCustom1,
+      emailSubjectCustom2: clientSettings?.emailSubjectCustom2 ??
+          groupSettings?.emailSubjectCustom2 ??
+          companySettings?.emailSubjectCustom2,
+      emailSubjectCustom3: clientSettings?.emailSubjectCustom3 ??
+          groupSettings?.emailSubjectCustom3 ??
+          companySettings?.emailSubjectCustom3,
     );
   }
 
