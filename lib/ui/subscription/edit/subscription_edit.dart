@@ -512,14 +512,13 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                           _postPurchaseHeaderValueController.text = '';
 
                           if (webhookConfiguration.postPurchaseHeaders
-                              .contains(header)) {
+                              .containsKey(key)) {
                             return;
                           }
 
                           viewModel.onChanged(subscription.rebuild((b) => b
-                            ..webhookConfiguration
-                                .postPurchaseHeaders
-                                .add(header)));
+                            ..webhookConfiguration.postPurchaseHeaders[key] =
+                                value));
                         })
                   ],
                 ),
@@ -532,9 +531,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     ),
                   )
                 else
-                  ...webhookConfiguration.postPurchaseHeaders.map(
-                    (header) => ListTile(
-                      title: Text(header),
+                  ...webhookConfiguration.postPurchaseHeaders.keys.map(
+                    (key) => ListTile(
+                      title: Text(
+                          '$key: ${webhookConfiguration.postPurchaseHeaders[key]}'),
                       trailing: IconButton(
                         icon: Icon(Icons.clear),
                         tooltip: localization.removeHeader,
@@ -542,7 +542,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                           viewModel.onChanged(subscription.rebuild((b) => b
                             ..webhookConfiguration
                                 .postPurchaseHeaders
-                                .remove(header)));
+                                .remove(key)));
                         },
                       ),
                     ),

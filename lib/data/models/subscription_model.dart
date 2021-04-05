@@ -250,7 +250,7 @@ abstract class WebhookConfigurationEntity
   factory WebhookConfigurationEntity() {
     return _$WebhookConfigurationEntity._(
       postPurchaseBody: '',
-      postPurchaseHeaders: BuiltList<String>(),
+      postPurchaseHeaders: BuiltMap<String, String>(),
       postPurchaseRestMethod: '',
       postPurchaseUrl: '',
       returnUrl: '',
@@ -284,7 +284,7 @@ abstract class WebhookConfigurationEntity
       builder
         ..returnUrl = ''
         ..postPurchaseBody = ''
-        ..postPurchaseHeaders.replace(BuiltList<String>())
+        ..postPurchaseHeaders.replace(BuiltMap<String, String>())
         ..postPurchaseRestMethod = ''
         ..postPurchaseUrl = '';
 
