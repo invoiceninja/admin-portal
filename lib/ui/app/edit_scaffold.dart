@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -46,7 +47,9 @@ class EditScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final localization = AppLocalization.of(context);
 
+    bool showUpgradeBanner = false;
     bool isEnabled = (isMobile(context) ||
             !state.uiState.isInSettings ||
             state.uiState.isEditing ||
@@ -54,9 +57,12 @@ class EditScaffold extends StatelessWidget {
         (!state.isLoading && !state.isSaving);
     bool isCancelEnabled = false;
 
-    if (isAdvancedSettings && isEnabled && !state.isProPlan) {
-      isCancelEnabled = true;
-      isEnabled = false;
+    if (isAdvancedSettings && !state.isProPlan) {
+      showUpgradeBanner = true;
+      if (isEnabled) {
+        isCancelEnabled = true;
+        isEnabled = false;
+      }
     }
 
     return WillPopScope(
@@ -64,7 +70,15 @@ class EditScaffold extends StatelessWidget {
         return true;
       },
       child: Scaffold(
-        body: body,
+        body: showUpgradeBanner
+            ? Column(
+                children: [
+                  IconMessage(localization.upgradeToPaidPlan,
+                      color: Colors.orange),
+                  Expanded(child: body),
+                ],
+              )
+            : body,
         drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
         appBar: AppBar(
           centerTitle: false,

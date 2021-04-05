@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'upgrade_to_paid_plan':
+          'Upgrade to a paid plan to enable the advanded settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -56352,6 +56354,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get noHeaders =>
       _localizedValues[localeCode]['no_headers'] ??
       _localizedValues['en']['no_headers'];
+
+  String get upgradeToPaidPlan =>
+      _localizedValues[localeCode]['upgrade_to_paid_plan'] ??
+      _localizedValues['en']['upgrade_to_paid_plan'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
