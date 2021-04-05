@@ -533,8 +533,19 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 else
                   ...webhookConfiguration.postPurchaseHeaders.keys.map(
                     (key) => ListTile(
-                      title: Text(
-                          '$key: ${webhookConfiguration.postPurchaseHeaders[key]}'),
+                      contentPadding: const EdgeInsets.all(0),
+                      title: Row(
+                        children: [
+                          Expanded(
+                            child: Text(key),
+                          ),
+                          SizedBox(width: kTableColumnGap),
+                          Expanded(
+                            child: Text(
+                                webhookConfiguration.postPurchaseHeaders[key]),
+                          )
+                        ],
+                      ),
                       trailing: IconButton(
                         icon: Icon(Icons.clear),
                         tooltip: localization.removeHeader,
