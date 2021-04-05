@@ -378,8 +378,8 @@ class _$WebhookConfigurationEntitySerializer
           specifiedType: const FullType(String)),
       'post_purchase_headers',
       serializers.serialize(object.postPurchaseHeaders,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
       'post_purchase_body',
       serializers.serialize(object.postPurchaseBody,
           specifiedType: const FullType(String)),
@@ -414,9 +414,8 @@ class _$WebhookConfigurationEntitySerializer
           break;
         case 'post_purchase_headers':
           result.postPurchaseHeaders.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
           break;
         case 'post_purchase_body':
           result.postPurchaseBody = serializers.deserialize(value,
@@ -1153,7 +1152,7 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
   @override
   final String postPurchaseRestMethod;
   @override
-  final BuiltList<String> postPurchaseHeaders;
+  final BuiltMap<String, String> postPurchaseHeaders;
   @override
   final String postPurchaseBody;
 
@@ -1252,10 +1251,10 @@ class WebhookConfigurationEntityBuilder
   set postPurchaseRestMethod(String postPurchaseRestMethod) =>
       _$this._postPurchaseRestMethod = postPurchaseRestMethod;
 
-  ListBuilder<String> _postPurchaseHeaders;
-  ListBuilder<String> get postPurchaseHeaders =>
-      _$this._postPurchaseHeaders ??= new ListBuilder<String>();
-  set postPurchaseHeaders(ListBuilder<String> postPurchaseHeaders) =>
+  MapBuilder<String, String> _postPurchaseHeaders;
+  MapBuilder<String, String> get postPurchaseHeaders =>
+      _$this._postPurchaseHeaders ??= new MapBuilder<String, String>();
+  set postPurchaseHeaders(MapBuilder<String, String> postPurchaseHeaders) =>
       _$this._postPurchaseHeaders = postPurchaseHeaders;
 
   String _postPurchaseBody;
