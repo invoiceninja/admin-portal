@@ -68,7 +68,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'connected_gmail': 'Successfully connected Gmail',
       'disconnected_gmail': 'Successfully disconnected Gmail',
       'update_fail_help':
-          'Changes to the codebase may be blocking the update, running "git checkout ." to discard the changes may help',
+          'Changes to the codebase may be blocking the update, you can run these commands to discard the changes:',
       'client_id_number': 'Client ID Number',
       'count_minutes': ':count Minutes',
       'password_timeout': 'Password Timeout',
