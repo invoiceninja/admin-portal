@@ -726,13 +726,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isProduction => cleanApiUrl(authState.url) == kAppProductionUrl;
 
-  bool get isWhiteLabeled => isSelfHosted || account.plan == kPlanWhiteLabel;
+  bool get isWhiteLabeled => account.plan == kPlanWhiteLabel;
 
-  bool get isProPlan =>
-      isSelfHosted || isEnterprisePlan || account.plan == kPlanPro;
+  bool get isProPlan => isEnterprisePlan || account.plan == kPlanPro;
 
   bool get isEnterprisePlan =>
-      !kReleaseMode || isSelfHosted || account.plan == kPlanEnterprise;
+      !kReleaseMode || !isProduction || account.plan == kPlanEnterprise;
   //bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
 
   bool get isUserConfirmed {
