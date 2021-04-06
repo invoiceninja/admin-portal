@@ -251,7 +251,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  @override
   @BuiltValueField(wireName: 'subscription_id')
   String get subscriptionId;
 

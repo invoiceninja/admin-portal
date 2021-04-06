@@ -47,14 +47,15 @@ class QuoteEmailScreen extends StatelessWidget {
 
 class EmailQuoteVM extends EmailEntityVM {
   EmailQuoteVM({
-    AppState state,
-    bool isLoading,
-    bool isSaving,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    Function loadClient,
-    Function(BuildContext, EmailTemplate, String, String) onSendPressed,
+    @required AppState state,
+    @required bool isLoading,
+    @required bool isSaving,
+    @required CompanyEntity company,
+    @required InvoiceEntity invoice,
+    @required ClientEntity client,
+    @required Function loadClient,
+    @required
+        Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -70,6 +71,7 @@ class EmailQuoteVM extends EmailEntityVM {
     final state = store.state;
 
     return EmailQuoteVM(
+      state: state,
       isLoading: state.isLoading,
       isSaving: state.isSaving,
       company: state.company,
