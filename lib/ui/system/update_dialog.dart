@@ -154,13 +154,19 @@ class _UpdateDialogState extends State<UpdateDialog> {
               updateState = UpdateState.done;
               updateResponse = response.body;
             });
-            if (kIsWeb) {
-              WebUtils.reloadBrowser();
+
+            final String message = jsonDecode(response.body)['message'];
+            if (message.contains('failed')) {
+              // do nothing
             } else {
-              store.dispatch(RefreshData(
-                clearData: true,
-                includeStatic: true,
-              ));
+              if (kIsWeb) {
+                WebUtils.reloadBrowser();
+              } else {
+                store.dispatch(RefreshData(
+                  clearData: true,
+                  includeStatic: true,
+                ));
+              }
             }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');
