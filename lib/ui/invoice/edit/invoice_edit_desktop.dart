@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
@@ -375,11 +374,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     controller: _custom1Controller,
                     field: CustomFieldType.invoice1,
                     value: invoice.customValue1,
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom3Controller,
                     field: CustomFieldType.invoice3,
                     value: invoice.customValue3,
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   ),
                 ],
               ),
@@ -439,11 +440,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     controller: _custom2Controller,
                     field: CustomFieldType.invoice2,
                     value: invoice.customValue2,
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom4Controller,
                     field: CustomFieldType.invoice4,
                     value: invoice.customValue4,
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   ),
                 ],
               ),
