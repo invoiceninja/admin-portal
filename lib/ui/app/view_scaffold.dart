@@ -91,7 +91,7 @@ class ViewScaffold extends StatelessWidget {
                                   state.uiState.previousRoute));
                         },
                         child: Text(
-                          localization.cancel,
+                          localization.back,
                           style: TextStyle(color: state.headerTextColor),
                         )),
                   userCompany.canEditEntity(entity)
