@@ -155,20 +155,30 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           settings.rebuild(
                               (b) => b..defaultCreditDesignId = value.id)),
                     ),
-                  /*
-                AppDropdownButton(
-                  labelText: localization.pageSize,
-                  value: settings.pageSize,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..pageSize = value)),
-                  items: kPageSizes
-                      .map((pageSize) => DropdownMenuItem<String>(
-                            value: pageSize,
-                            child: Text(pageSize),
-                          ))
-                      .toList(),
-                ),
-                */
+                  AppDropdownButton(
+                    labelText: localization.pageLayout,
+                    value: settings.pageLayout,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..pageLayout = value)),
+                    items: kPageLayouts
+                        .map((pageLayout) => DropdownMenuItem<String>(
+                              value: pageLayout,
+                              child: Text(localization.lookup(pageLayout)),
+                            ))
+                        .toList(),
+                  ),
+                  AppDropdownButton(
+                    labelText: localization.pageSize,
+                    value: settings.pageSize,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..pageSize = value)),
+                    items: kPageSizes
+                        .map((pageSize) => DropdownMenuItem<String>(
+                              value: pageSize,
+                              child: Text(localization.lookup(pageSize)),
+                            ))
+                        .toList(),
+                  ),
                   AppDropdownButton(
                     showUseDefault: true,
                     labelText: localization.fontSize,

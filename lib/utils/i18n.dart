@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'letter': 'Letter',
+      'legal': 'Legal',
+      'page_layout': 'Page Layout',
+      'portrait': 'Portrait',
+      'landscape': 'Landscape',
       'upgrade_to_paid_plan':
           'Upgrade to a paid plan to enable the advanded settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
@@ -56358,6 +56363,25 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get upgradeToPaidPlan =>
       _localizedValues[localeCode]['upgrade_to_paid_plan'] ??
       _localizedValues['en']['upgrade_to_paid_plan'];
+
+  String get pageLayout =>
+      _localizedValues[localeCode]['page_layout'] ??
+      _localizedValues['en']['page_layout'];
+
+  String get portrait =>
+      _localizedValues[localeCode]['portrait'] ??
+      _localizedValues['en']['portrait'];
+
+  String get landscape =>
+      _localizedValues[localeCode]['landscape'] ??
+      _localizedValues['en']['landscape'];
+
+  String get letter =>
+      _localizedValues[localeCode]['letter'] ??
+      _localizedValues['en']['letter'];
+
+  String get legal =>
+      _localizedValues[localeCode]['legal'] ?? _localizedValues['en']['legal'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
