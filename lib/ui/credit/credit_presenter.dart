@@ -35,6 +35,7 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.customValue4,
       CreditFields.taxAmount,
       CreditFields.exchangeRate,
+      CreditFields.isViewed,
     ];
   }
 
@@ -96,6 +97,8 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.exchangeRate:
         return Text(formatNumber(credit.exchangeRate, context,
             formatNumberType: FormatNumberType.double));
+      case CreditFields.isViewed:
+        return Text(credit.isViewed ? localization.yes : localization.no);
     }
 
     return super.getField(field: field, context: context);

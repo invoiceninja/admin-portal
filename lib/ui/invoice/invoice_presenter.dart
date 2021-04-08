@@ -39,6 +39,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.reminder3Sent,
       InvoiceFields.reminderLastSent,
       InvoiceFields.exchangeRate,
+      InvoiceFields.isViewed,
     ];
   }
 
@@ -112,6 +113,8 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.exchangeRate:
         return Text(formatNumber(invoice.exchangeRate, context,
             formatNumberType: FormatNumberType.double));
+      case InvoiceFields.isViewed:
+        return Text(invoice.isViewed ? localization.yes : localization.no);
     }
 
     return super.getField(field: field, context: context);

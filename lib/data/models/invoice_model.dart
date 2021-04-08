@@ -86,6 +86,7 @@ class InvoiceFields {
   static const String reminder3Sent = 'reminder3_sent';
   static const String reminderLastSent = 'reminder_last_sent';
   static const String exchangeRate = 'exchange_rate';
+  static const String isViewed = 'is_viewed';
 }
 
 class InvoiceTotalFields {
@@ -621,6 +622,9 @@ abstract class InvoiceEntity extends Object
         response = clientA.listDisplayName
             .toLowerCase()
             .compareTo(clientB.listDisplayName.toLowerCase());
+        break;
+      case InvoiceFields.isViewed:
+        response = invoiceB.isViewed ? 1 : -1;
         break;
       default:
         print('## ERROR: sort by invoice.$sortField is not implemented');
