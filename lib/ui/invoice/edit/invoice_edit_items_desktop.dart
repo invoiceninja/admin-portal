@@ -52,6 +52,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final productIds = memoizedDropdownProductList(
         productState.map, productState.list, state.userState.map);
 
+    final hasTax1 = company.enableFirstItemTaxRate ||
+        invoice.lineItems.any((item) => item.taxName1.isNotEmpty);
+    final hasTax2 = company.enableSecondItemTaxRate ||
+        invoice.lineItems.any((item) => item.taxName2.isNotEmpty);
+    final hasTax3 = company.enableThirdItemTaxRate ||
+        invoice.lineItems.any((item) => item.taxName3.isNotEmpty);
+
     if (lineItems.where((item) => item.isEmpty).isEmpty) {
       lineItems.add(InvoiceItemEntity());
     }
@@ -104,12 +111,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             if (company.hasCustomField(CustomFieldType.product4))
               TableHeader(
                   company.getCustomFieldLabel(CustomFieldType.product4)),
-            if ((company.numberOfItemTaxRates ?? 0) >= 1)
-              TableHeader(localization.tax),
-            if ((company.numberOfItemTaxRates ?? 0) >= 2)
-              TableHeader(localization.tax),
-            if ((company.numberOfItemTaxRates ?? 0) >= 3)
-              TableHeader(localization.tax),
+            if (hasTax1) TableHeader(localization.tax),
+            if (hasTax2) TableHeader(localization.tax),
+            if (hasTax3) TableHeader(localization.tax),
             TableHeader(
                 widget.isTasks ? localization.rate : localization.unitCost,
                 isNumeric: true),
@@ -432,7 +436,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           onSavePressed: widget.entityViewModel.onSavePressed,
                         ),
                       ),
-                    if ((company.numberOfItemTaxRates ?? 0) >= 1)
+                    if (hasTax1)
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: TaxRateDropdown(
@@ -447,7 +451,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           initialTaxRate: lineItems[index].taxRate1,
                         ),
                       ),
-                    if ((company.numberOfItemTaxRates ?? 0) >= 2)
+                    if (hasTax2)
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: TaxRateDropdown(
@@ -462,7 +466,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           initialTaxRate: lineItems[index].taxRate2,
                         ),
                       ),
-                    if ((company.numberOfItemTaxRates ?? 0) >= 3)
+                    if (hasTax3)
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: TaxRateDropdown(

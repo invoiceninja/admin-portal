@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -24,6 +26,8 @@ class WebhookEdit extends StatefulWidget {
 
 class _WebhookEditState extends State<WebhookEdit> {
   final _targetUrlController = TextEditingController();
+  final _headerKeyController = TextEditingController();
+  final _headerValueController = TextEditingController();
 
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_webhookEdit');
@@ -35,6 +39,8 @@ class _WebhookEditState extends State<WebhookEdit> {
   void didChangeDependencies() {
     _controllers = [
       _targetUrlController,
+      _headerKeyController,
+      _headerValueController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -72,6 +78,9 @@ class _WebhookEditState extends State<WebhookEdit> {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
     final webhook = viewModel.webhook;
+
+    final key = _headerKeyController.text.trim();
+    final value = _headerValueController.text.trim();
 
     return EditScaffold(
       title: webhook.isNew ? localization.newWebhook : localization.editWebhook,
@@ -121,6 +130,98 @@ class _WebhookEditState extends State<WebhookEdit> {
                               ))
                           .toList(),
                     ),
+                    AppDropdownButton<String>(
+                      showBlank: true,
+                      labelText: localization.restMethod,
+                      value: webhook.restMethod,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          webhook.rebuild((b) => b..restMethod = value)),
+                      items: [
+                        DropdownMenuItem(
+                          child: Text('POST'),
+                          value: 'post',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('PUT'),
+                          value: 'put',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DecoratedFormField(
+                            label: localization.headerKey,
+                            controller: _headerKeyController,
+                            onSavePressed: viewModel.onSavePressed,
+                            onChanged: (value) => setState(() {}),
+                          ),
+                        ),
+                        SizedBox(
+                          width: kTableColumnGap,
+                        ),
+                        Expanded(
+                          child: DecoratedFormField(
+                            label: localization.headerValue,
+                            controller: _headerValueController,
+                            onSavePressed: viewModel.onSavePressed,
+                            onChanged: (value) => setState(() {}),
+                          ),
+                        ),
+                        SizedBox(
+                          width: kTableColumnGap,
+                        ),
+                        IconButton(
+                            tooltip: localization.addHeader,
+                            icon: Icon(Icons.add_circle_outline),
+                            onPressed: (key.isEmpty || value.isEmpty)
+                                ? null
+                                : () {
+                                    _headerKeyController.text = '';
+                                    _headerValueController.text = '';
+
+                                    if (webhook.headers.containsKey(key)) {
+                                      return;
+                                    }
+
+                                    viewModel.onChanged(webhook.rebuild(
+                                        (b) => b..headers[key] = value));
+                                  })
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    if (webhook.headers.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16, bottom: 8),
+                        child: Center(
+                          child: HelpText(localization.noHeaders),
+                        ),
+                      )
+                    else
+                      ...webhook.headers.keys.map(
+                        (key) => ListTile(
+                          contentPadding: const EdgeInsets.all(0),
+                          title: Row(
+                            children: [
+                              Expanded(
+                                child: Text(key),
+                              ),
+                              SizedBox(width: kTableColumnGap),
+                              Expanded(
+                                child: Text(webhook.headers[key]),
+                              )
+                            ],
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.clear),
+                            tooltip: localization.removeHeader,
+                            onPressed: () {
+                              viewModel.onChanged(webhook
+                                  .rebuild((b) => b..headers.remove(key)));
+                            },
+                          ),
+                        ),
+                      )
                   ],
                 ),
               ],

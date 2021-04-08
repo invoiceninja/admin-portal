@@ -561,6 +561,10 @@ abstract class SettingsEntity
   String get pageSize;
 
   @nullable
+  @BuiltValueField(wireName: 'page_layout')
+  String get pageLayout;
+
+  @nullable
   @BuiltValueField(wireName: 'font_size')
   int get fontSize;
 

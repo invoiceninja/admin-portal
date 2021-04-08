@@ -294,7 +294,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     onSavePressed: widget.entityViewModel.onSavePressed,
                   )
                 : Container(),
-            if (company.enableFirstItemTaxRate)
+            if (company.enableFirstItemTaxRate || _taxRate1.name.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) {
                   setState(() {
@@ -306,7 +306,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 initialTaxName: _taxRate1.name,
                 initialTaxRate: _taxRate1.rate,
               ),
-            if (company.enableSecondItemTaxRate)
+            if (company.enableSecondItemTaxRate || _taxRate2.name.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) {
                   setState(() {
@@ -318,7 +318,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 initialTaxName: _taxRate2.name,
                 initialTaxRate: _taxRate2.rate,
               ),
-            if (company.enableThirdItemTaxRate)
+            if (company.enableThirdItemTaxRate || _taxRate3.name.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) {
                   setState(() {

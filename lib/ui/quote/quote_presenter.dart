@@ -35,6 +35,7 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.customValue4,
       QuoteFields.taxAmount,
       QuoteFields.exchangeRate,
+      QuoteFields.isViewed,
     ];
   }
 
@@ -93,6 +94,8 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.exchangeRate:
         return Text(formatNumber(quote.exchangeRate, context,
             formatNumberType: FormatNumberType.double));
+      case QuoteFields.isViewed:
+        return Text(quote.isViewed ? localization.yes : localization.no);
     }
 
     return super.getField(field: field, context: context);

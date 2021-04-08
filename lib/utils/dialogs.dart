@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -13,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 void showErrorDialog({
   @required BuildContext context,
@@ -62,6 +62,14 @@ void confirmCallback({
     builder: (BuildContext context) {
       String _typed = '';
 
+      void _onPressed() {
+        if (typeToConfirm == null ||
+            typeToConfirm.toLowerCase() == _typed.toLowerCase()) {
+          Navigator.pop(context);
+          callback();
+        }
+      }
+
       return AlertDialog(
         semanticLabel: localization.areYouSure,
         title: Text(title),
@@ -79,6 +87,7 @@ void confirmCallback({
                       autofocus: true,
                       onChanged: (value) => _typed = value,
                       hint: typeToConfirm,
+                      onSavePressed: (context) => _onPressed(),
                     ),
                   ),
                 ],
@@ -93,14 +102,9 @@ void confirmCallback({
                 Navigator.pop(context);
               }),
           TextButton(
-              child: Text(localization.ok.toUpperCase()),
-              onPressed: () {
-                if (typeToConfirm == null ||
-                    typeToConfirm.toLowerCase() == _typed.toLowerCase()) {
-                  Navigator.pop(context);
-                  callback();
-                }
-              })
+            child: Text(localization.ok.toUpperCase()),
+            onPressed: () => _onPressed(),
+          )
         ],
       );
     },

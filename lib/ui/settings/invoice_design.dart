@@ -155,20 +155,30 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           settings.rebuild(
                               (b) => b..defaultCreditDesignId = value.id)),
                     ),
-                  /*
-                AppDropdownButton(
-                  labelText: localization.pageSize,
-                  value: settings.pageSize,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..pageSize = value)),
-                  items: kPageSizes
-                      .map((pageSize) => DropdownMenuItem<String>(
-                            value: pageSize,
-                            child: Text(pageSize),
-                          ))
-                      .toList(),
-                ),
-                */
+                  AppDropdownButton(
+                    labelText: localization.pageLayout,
+                    value: settings.pageLayout,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..pageLayout = value)),
+                    items: kPageLayouts
+                        .map((pageLayout) => DropdownMenuItem<String>(
+                              value: pageLayout,
+                              child: Text(localization.lookup(pageLayout)),
+                            ))
+                        .toList(),
+                  ),
+                  AppDropdownButton(
+                    labelText: localization.pageSize,
+                    value: settings.pageSize,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..pageSize = value)),
+                    items: kPageSizes
+                        .map((pageSize) => DropdownMenuItem<String>(
+                              value: pageSize,
+                              child: Text(localization.lookup(pageSize)),
+                            ))
+                        .toList(),
+                  ),
                   AppDropdownButton(
                     showUseDefault: true,
                     labelText: localization.fontSize,
@@ -297,6 +307,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               options: [
                 ...[
                   ClientFields.name,
+                  ClientFields.number,
                   ClientFields.idNumber,
                   ClientFields.vatNumber,
                   ClientFields.website,
@@ -324,11 +335,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected: [
                 ...[
                   ClientFields.name,
+                  ClientFields.idNumber,
                   ClientFields.vatNumber,
                   ClientFields.address1,
                   ClientFields.address2,
                   ClientFields.cityStatePostal,
                   ClientFields.country,
+                  ClientFields.phone,
                 ].map((field) => '\$client.$field'),
                 ...[
                   ContactFields.email,
@@ -440,8 +453,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 InvoiceFields.poNumber,
                 InvoiceFields.date,
                 InvoiceFields.dueDate,
-                InvoiceFields.balance,
                 InvoiceFields.total,
+                InvoiceFields.balance,
               ].map((field) => '\$invoice.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsInvoiceDetails),
               onSelected: (values) {
@@ -609,13 +622,12 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected: [
                 InvoiceTotalFields.subtotal,
                 InvoiceTotalFields.discount,
-                InvoiceTotalFields.totalTaxes,
-                InvoiceTotalFields.lineTaxes,
                 InvoiceTotalFields.customSurcharge1,
                 InvoiceTotalFields.customSurcharge2,
                 InvoiceTotalFields.customSurcharge3,
                 InvoiceTotalFields.customSurcharge4,
-                InvoiceTotalFields.total,
+                InvoiceTotalFields.totalTaxes,
+                InvoiceTotalFields.lineTaxes,
                 InvoiceTotalFields.paidToDate,
                 InvoiceTotalFields.outstanding,
               ].map((field) => '\$$field').toList(),
