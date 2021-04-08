@@ -65,6 +65,8 @@ abstract class WebhookEntity extends Object
       createdAt: 0,
       assignedUserId: '',
       createdUserId: '',
+      restMethod: '',
+      headers: BuiltMap<String, String>(),
     );
   }
 
@@ -243,6 +245,11 @@ abstract class WebhookEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+
+  // ignore: unused_element
+  static void _initializeBuilder(WebhookEntityBuilder builder) => builder
+    ..headers.replace(BuiltMap<String, String>())
+    ..restMethod = '';
 
   static Serializer<WebhookEntity> get serializer => _$webhookEntitySerializer;
 }
