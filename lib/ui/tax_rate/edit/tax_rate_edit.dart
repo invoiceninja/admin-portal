@@ -100,11 +100,13 @@ class _TaxRateEditState extends State<TaxRateEdit> {
                     ? localization.pleaseEnterAName
                     : null,
                 autovalidate: autoValidate,
+                onSavePressed: viewModel.onSavePressed,
               ),
               DecoratedFormField(
                 label: localization.rate,
                 controller: _rateController,
                 isPercent: true,
+                onSavePressed: viewModel.onSavePressed,
               ),
             ],
           )
