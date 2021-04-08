@@ -34,6 +34,8 @@ const String kSourceCodeFrontendSDK = 'https://pub.dev/packages/invoiceninja';
 const String kAppleStoreUrl = 'https://testflight.apple.com/join/MJ6WpaXh';
 const String kGoogleStoreUrl =
     'https://play.google.com/apps/testing/com.invoiceninja.app';
+const String kGoogleFDroidUrl =
+    'https://f-droid.org/en/packages/com.invoiceninja.app/';
 const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
 const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
 
