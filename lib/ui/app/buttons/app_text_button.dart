@@ -25,11 +25,13 @@ class AppTextButton extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color: isInHeader
-                ? state.headerTextColor
-                : state.prefState.enableDarkMode
-                    ? Colors.white
-                    : Colors.black,
+            color: onPressed == null
+                ? null
+                : isInHeader
+                    ? state.headerTextColor
+                    : state.prefState.enableDarkMode
+                        ? Colors.white
+                        : Colors.black,
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SaveCancelButtons extends StatelessWidget {
@@ -34,19 +35,14 @@ class SaveCancelButtons extends StatelessWidget {
       children: <Widget>[
         if (onCancelPressed != null && !isSaving)
           Builder(builder: (BuildContext context) {
-            return TextButton(
-              child: Text(
-                cancelLabel ?? localization.cancel,
-                style: isHeader && (isEnabled || isCancelEnabled)
-                    ? TextStyle(color: store.state.headerTextColor)
-                    : null,
-              ),
+            return AppTextButton(
+              label: cancelLabel ?? localization.cancel,
+              isInHeader: isHeader && (isEnabled || isCancelEnabled),
               onPressed: isEnabled || isCancelEnabled
                   ? () => onCancelPressed(context)
                   : null,
             );
           }),
-        SizedBox(width: 10),
         Builder(builder: (BuildContext context) {
           return ActionTextButton(
             tooltip: saveLabel ?? localization.save,

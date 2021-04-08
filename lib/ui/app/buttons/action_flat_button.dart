@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 
 class ActionTextButton extends StatelessWidget {
   const ActionTextButton({
@@ -45,13 +46,9 @@ class ActionTextButton extends StatelessWidget {
       );
     }
 
-    return TextButton(
-      child: Text(
-        tooltip,
-        style: isHeader && onPressed != null
-            ? TextStyle(color: store.state.headerTextColor)
-            : null,
-      ),
+    return AppTextButton(
+      label: tooltip,
+      isInHeader: isHeader,
       onPressed: onPressed,
     );
   }
