@@ -127,6 +127,13 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
       'format',
       serializers.serialize(object.format,
           specifiedType: const FullType(String)),
+      'rest_method',
+      serializers.serialize(object.restMethod,
+          specifiedType: const FullType(String)),
+      'headers',
+      serializers.serialize(object.headers,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -189,6 +196,15 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
         case 'format':
           result.format = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'rest_method':
+          result.restMethod = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'headers':
+          result.headers.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -428,6 +444,10 @@ class _$WebhookEntity extends WebhookEntity {
   @override
   final String format;
   @override
+  final String restMethod;
+  @override
+  final BuiltMap<String, String> headers;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -451,6 +471,8 @@ class _$WebhookEntity extends WebhookEntity {
       {this.eventId,
       this.targetUrl,
       this.format,
+      this.restMethod,
+      this.headers,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -468,6 +490,12 @@ class _$WebhookEntity extends WebhookEntity {
     }
     if (format == null) {
       throw new BuiltValueNullFieldError('WebhookEntity', 'format');
+    }
+    if (restMethod == null) {
+      throw new BuiltValueNullFieldError('WebhookEntity', 'restMethod');
+    }
+    if (headers == null) {
+      throw new BuiltValueNullFieldError('WebhookEntity', 'headers');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('WebhookEntity', 'createdAt');
@@ -497,6 +525,8 @@ class _$WebhookEntity extends WebhookEntity {
         eventId == other.eventId &&
         targetUrl == other.targetUrl &&
         format == other.format &&
+        restMethod == other.restMethod &&
+        headers == other.headers &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -519,9 +549,13 @@ class _$WebhookEntity extends WebhookEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, eventId.hashCode),
-                                            targetUrl.hashCode),
-                                        format.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, eventId.hashCode),
+                                                    targetUrl.hashCode),
+                                                format.hashCode),
+                                            restMethod.hashCode),
+                                        headers.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -538,6 +572,8 @@ class _$WebhookEntity extends WebhookEntity {
           ..add('eventId', eventId)
           ..add('targetUrl', targetUrl)
           ..add('format', format)
+          ..add('restMethod', restMethod)
+          ..add('headers', headers)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -565,6 +601,15 @@ class WebhookEntityBuilder
   String _format;
   String get format => _$this._format;
   set format(String format) => _$this._format = format;
+
+  String _restMethod;
+  String get restMethod => _$this._restMethod;
+  set restMethod(String restMethod) => _$this._restMethod = restMethod;
+
+  MapBuilder<String, String> _headers;
+  MapBuilder<String, String> get headers =>
+      _$this._headers ??= new MapBuilder<String, String>();
+  set headers(MapBuilder<String, String> headers) => _$this._headers = headers;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -607,6 +652,8 @@ class WebhookEntityBuilder
       _eventId = _$v.eventId;
       _targetUrl = _$v.targetUrl;
       _format = _$v.format;
+      _restMethod = _$v.restMethod;
+      _headers = _$v.headers?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -635,19 +682,34 @@ class WebhookEntityBuilder
 
   @override
   _$WebhookEntity build() {
-    final _$result = _$v ??
-        new _$WebhookEntity._(
-            eventId: eventId,
-            targetUrl: targetUrl,
-            format: format,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+    _$WebhookEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$WebhookEntity._(
+              eventId: eventId,
+              targetUrl: targetUrl,
+              format: format,
+              restMethod: restMethod,
+              headers: headers.build(),
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'headers';
+        headers.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'WebhookEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
