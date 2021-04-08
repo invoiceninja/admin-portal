@@ -1063,6 +1063,11 @@ void _showAbout(BuildContext context) async {
                                     iconData: MdiIcons.android,
                                     onPressed: () => launch(kGoogleStoreUrl),
                                   ),
+                                  AppButton(
+                                    label: 'F-Droid',
+                                    iconData: MdiIcons.android,
+                                    onPressed: () => launch(kGoogleFDroidUrl),
+                                  ),
                                 ],
                               ),
                             );

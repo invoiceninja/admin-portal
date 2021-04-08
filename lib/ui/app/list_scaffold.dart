@@ -108,7 +108,7 @@ class ListScaffold extends StatelessWidget {
                       ));
                     },
                     child: Text(
-                      localization.cancel,
+                      localization.back,
                       style: TextStyle(color: state.headerTextColor),
                     )),
               if (!isSettings &&

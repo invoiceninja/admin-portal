@@ -43,11 +43,12 @@ class _UpdateDialogState extends State<UpdateDialog> {
 
     var message = '';
     if (updateState == UpdateState.done) {
-      message = jsonDecode(updateResponse)['message'];
+      message = updateResponse;
       if (message.isEmpty) {
         message = localization.appUpdated;
-      } else if (message.contains('git pull')) {
-        message += '\n\n' + localization.updateFailHelp;
+      } else if (message.contains('failed')) {
+        message +=
+            '\n\n${localization.updateFailHelp}\n\ngit fetch\ngit reset --hard origin/v5-stable\ncomposer install --no-dev -o\nphp artisan migrate';
       }
     }
 
@@ -56,7 +57,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
           ? localization.updateAvailable
           : localization.forceUpdate),
       content: updateState == UpdateState.done
-          ? Text(message)
+          ? SelectableText(message)
           : updateState == UpdateState.loading
               ? Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -152,15 +153,20 @@ class _UpdateDialogState extends State<UpdateDialog> {
               .then((dynamic response) {
             setState(() {
               updateState = UpdateState.done;
-              updateResponse = response.body;
+              updateResponse = jsonDecode(response.body)['message'];
             });
-            if (kIsWeb) {
-              WebUtils.reloadBrowser();
+
+            if (updateResponse.contains('failed')) {
+              // do nothing
             } else {
-              store.dispatch(RefreshData(
-                clearData: true,
-                includeStatic: true,
-              ));
+              if (kIsWeb) {
+                WebUtils.reloadBrowser();
+              } else {
+                store.dispatch(RefreshData(
+                  clearData: true,
+                  includeStatic: true,
+                ));
+              }
             }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');

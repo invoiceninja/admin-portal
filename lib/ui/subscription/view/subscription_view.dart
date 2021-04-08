@@ -65,6 +65,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             onLongPress: () => launch(subscription.purchasePage),
           ),
           ListDivider(),
+          /*
           if (subscription.groupId.isNotEmpty)
             EntityListTile(
               isFilter: widget.isFilter,
@@ -75,6 +76,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               isFilter: widget.isFilter,
               entity: state.userState.get(subscription.assignedUserId),
             ),
+            */
           if (company.isModuleEnabled(EntityType.invoice))
             EntitiesListTile(
               entity: subscription,
@@ -84,6 +86,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               subtitle: memoizedInvoiceStatsForSubscription(
                       subscription.id, state.invoiceState.map)
                   .present(localization.active, localization.archived),
+              hideNew: true,
             ),
           if (company.isModuleEnabled(EntityType.recurringInvoice))
             EntitiesListTile(
@@ -94,6 +97,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               subtitle: memoizedRecurringInvoiceStatsForSubscription(
                       subscription.id, state.recurringInvoiceState.map)
                   .present(localization.active, localization.archived),
+              hideNew: true,
             ),
         ],
       ),
