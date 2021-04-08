@@ -166,6 +166,11 @@ abstract class WebhookEntity extends Object
 
   String get format;
 
+  @BuiltValueField(wireName: 'rest_method')
+  String get restMethod;
+
+  BuiltMap<String, String> get headers;
+
   @override
   String get listDisplayName {
     return targetUrl;
