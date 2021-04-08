@@ -1,5 +1,4 @@
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
@@ -344,7 +343,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 label: company.getCustomFieldLabel(CustomFieldType.surcharge4),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
-            if (company.enableFirstInvoiceTaxRate)
+            if (company.enableFirstInvoiceTaxRate ||
+                invoice.taxName1.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) =>
                     viewModel.onChanged(invoice.applyTax(taxRate)),
@@ -352,7 +352,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 initialTaxName: invoice.taxName1,
                 initialTaxRate: invoice.taxRate1,
               ),
-            if (company.enableSecondInvoiceTaxRate)
+            if (company.enableSecondInvoiceTaxRate ||
+                invoice.taxName2.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) => viewModel
                     .onChanged(invoice.applyTax(taxRate, isSecond: true)),
@@ -360,7 +361,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 initialTaxName: invoice.taxName2,
                 initialTaxRate: invoice.taxRate2,
               ),
-            if (company.enableThirdInvoiceTaxRate)
+            if (company.enableThirdInvoiceTaxRate ||
+                invoice.taxName3.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) => viewModel
                     .onChanged(invoice.applyTax(taxRate, isThird: true)),
