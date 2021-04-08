@@ -307,6 +307,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               options: [
                 ...[
                   ClientFields.name,
+                  ClientFields.number,
                   ClientFields.idNumber,
                   ClientFields.vatNumber,
                   ClientFields.website,
