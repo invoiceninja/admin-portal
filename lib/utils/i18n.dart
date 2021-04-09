@@ -75,7 +75,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'connected_gmail': 'Successfully connected Gmail',
       'disconnected_gmail': 'Successfully disconnected Gmail',
       'update_fail_help':
-          'Changes to the codebase may be blocking the update, you can run these commands to discard the changes:',
+          'Changes to the codebase may be blocking the update, you can run this command to discard the changes:',
       'client_id_number': 'Client ID Number',
       'count_minutes': ':count Minutes',
       'password_timeout': 'Password Timeout',
@@ -56392,7 +56392,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get viewDateFormats =>
       _localizedValues[localeCode]['view_date_formats'] ??
       _localizedValues['en']['view_date_formats'];
-
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

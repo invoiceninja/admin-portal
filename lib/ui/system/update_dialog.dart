@@ -47,8 +47,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
       if (message.isEmpty) {
         message = localization.appUpdated;
       } else if (message.contains('failed')) {
-        message +=
-            '\n\n${localization.updateFailHelp}\n\ngit fetch\ngit reset --hard origin/v5-stable\ncomposer install --no-dev -o\nphp artisan migrate';
+        message += '\n\n${localization.updateFailHelp}\n\ngit checkout .';
       }
     }
 
