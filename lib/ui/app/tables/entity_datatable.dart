@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityDataTableSource extends AppDataTableSource {
@@ -113,53 +112,6 @@ class EntityDataTableSource extends AppDataTableSource {
             backgroundColor: backgroundColor,
           ),
         )
-      ],
-    );
-  }
-}
-
-class DatatableHeader extends StatelessWidget {
-  const DatatableHeader({
-    @required this.entityType,
-    @required this.onClearPressed,
-    @required this.onRefreshPressed,
-  });
-
-  final EntityType entityType;
-  final Function onClearPressed;
-  final Function onRefreshPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-    /*
-    final state = StoreProvider.of<AppState>(context).state;
-    final listUIState = state.getListState(entityType);
-    Widget message = SizedBox();
-    if (onClearPressed != null && listUIState.filterEntityId != null) {
-      final entity = state.getEntityMap(
-          listUIState.filterEntityType)[listUIState.filterEntityId];
-      message = FilterListTile(
-        onPressed: (context) => viewEntityById(
-          context: context,
-          entityId: listUIState.filterEntityId,
-          entityType: listUIState.filterEntityType,
-        ),
-        onClearPressed: onClearPressed,
-        entityType: listUIState.filterEntityType,
-        entity: entity,
-      );
-    }
-    */
-
-    return Row(
-      children: <Widget>[
-        TextButton(
-          child: Text(localization.refresh),
-          onPressed: onRefreshPressed,
-        ),
-        SizedBox(width: 20),
-        Expanded(child: SizedBox()),
       ],
     );
   }

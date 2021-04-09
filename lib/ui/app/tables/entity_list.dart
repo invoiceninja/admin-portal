@@ -247,21 +247,30 @@ class _EntityListState extends State<EntityList> {
                     },
                     columns: [
                       if (!isInMultiselect) DataColumn(label: SizedBox()),
-                      ...widget.tableColumns.map((field) => DataColumn(
-                          label: Container(
-                            constraints: BoxConstraints(
-                              minWidth: kTableColumnWidthMin,
-                              maxWidth: kTableColumnWidthMax,
+                      ...widget.tableColumns.map((field) {
+                        String label =
+                            AppLocalization.of(context).lookup(field);
+                        if (field.startsWith('custom')) {
+                          final key = field.replaceFirst(
+                              'custom', entityType.snakeCase);
+                          label = state.company.getCustomFieldLabel(key);
+                        }
+                        return DataColumn(
+                            label: Container(
+                              constraints: BoxConstraints(
+                                minWidth: kTableColumnWidthMin,
+                                maxWidth: kTableColumnWidthMax,
+                              ),
+                              child: Text(
+                                label,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            child: Text(
-                              AppLocalization.of(context).lookup(field),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          numeric: EntityPresenter.isFieldNumeric(field),
-                          onSort: (int columnIndex, bool ascending) {
-                            widget.onSortColumn(field);
-                          })),
+                            numeric: EntityPresenter.isFieldNumeric(field),
+                            onSort: (int columnIndex, bool ascending) {
+                              widget.onSortColumn(field);
+                            });
+                      }),
                     ],
                     source: dataTableSource,
                     sortColumnIndex:
