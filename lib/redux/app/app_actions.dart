@@ -370,7 +370,7 @@ void viewEntitiesByType({
 }
 
 void viewEntity({
-  @required Navigator navigator,
+  @required NavigatorState navigator,
   @required BuildContext context,
   @required BaseEntity entity,
   bool force = false,
@@ -379,6 +379,7 @@ void viewEntity({
 }) =>
     viewEntityById(
       context: context,
+      navigator: navigator,
       entityId: entity.id,
       entityType: entity.entityType,
       force: force,
@@ -390,7 +391,7 @@ void viewEntityById({
   @required BuildContext context,
   @required String entityId,
   @required EntityType entityType,
-  @required Navigator navigator,
+  @required NavigatorState navigator,
   bool force = false,
   bool showError = true,
   bool addToStack = false,
