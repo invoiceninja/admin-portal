@@ -369,12 +369,14 @@ void viewEntitiesByType({
       });
 }
 
-void viewEntity(
-        {BuildContext context,
-        BaseEntity entity,
-        bool force = false,
-        bool addToStack = false,
-        BaseEntity filterEntity}) =>
+void viewEntity({
+  @required Navigator navigator,
+  @required BuildContext context,
+  @required BaseEntity entity,
+  bool force = false,
+  bool addToStack = false,
+  BaseEntity filterEntity,
+}) =>
     viewEntityById(
       context: context,
       entityId: entity.id,
@@ -386,8 +388,9 @@ void viewEntity(
 
 void viewEntityById({
   @required BuildContext context,
-  String entityId,
-  EntityType entityType,
+  @required String entityId,
+  @required EntityType entityType,
+  @required Navigator navigator,
   bool force = false,
   bool showError = true,
   bool addToStack = false,
