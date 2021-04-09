@@ -69,13 +69,13 @@ class CreditPresenter extends EntityPresenter {
             alignment: Alignment.centerRight,
             child: Text(formatNumber(credit.balance, context)));
       case CreditFields.customValue1:
-        return Text(credit.customValue1);
+        return Text(presentCustomField(credit.customValue1));
       case CreditFields.customValue2:
-        return Text(credit.customValue2);
+        return Text(presentCustomField(credit.customValue2));
       case CreditFields.customValue3:
-        return Text(credit.customValue3);
+        return Text(presentCustomField(credit.customValue3));
       case CreditFields.customValue4:
-        return Text(credit.customValue4);
+        return Text(presentCustomField(credit.customValue4));
       case CreditFields.publicNotes:
         return Text(credit.publicNotes);
       case CreditFields.privateNotes:

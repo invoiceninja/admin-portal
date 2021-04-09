@@ -66,13 +66,13 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.validUntil:
         return Text(formatDate(quote.dueDate, context));
       case QuoteFields.customValue1:
-        return Text(quote.customValue1);
+        return Text(presentCustomField(quote.customValue1));
       case QuoteFields.customValue2:
-        return Text(quote.customValue2);
+        return Text(presentCustomField(quote.customValue2));
       case QuoteFields.customValue3:
-        return Text(quote.customValue3);
+        return Text(presentCustomField(quote.customValue3));
       case QuoteFields.customValue4:
-        return Text(quote.customValue4);
+        return Text(presentCustomField(quote.customValue4));
       case QuoteFields.publicNotes:
         return Text(quote.publicNotes);
       case QuoteFields.privateNotes:

@@ -65,13 +65,13 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.status:
         return EntityStatusChip(entity: payment);
       case PaymentFields.customValue1:
-        return Text(payment.customValue1);
+        return Text(presentCustomField(payment.customValue1));
       case PaymentFields.customValue2:
-        return Text(payment.customValue2);
+        return Text(presentCustomField(payment.customValue2));
       case PaymentFields.customValue3:
-        return Text(payment.customValue3);
+        return Text(presentCustomField(payment.customValue3));
       case PaymentFields.customValue4:
-        return Text(payment.customValue4);
+        return Text(presentCustomField(payment.customValue4));
       case PaymentFields.refunded:
         return Text(formatNumber(payment.refunded, context,
             clientId: payment.clientId));

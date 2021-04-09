@@ -76,13 +76,13 @@ class VendorPresenter extends EntityPresenter {
         return Text(
             state.staticState.currencyMap[vendor.currencyId]?.name ?? '');
       case VendorFields.customValue1:
-        return Text(vendor.customValue1);
+        return Text(presentCustomField(vendor.customValue1));
       case VendorFields.customValue2:
-        return Text(vendor.customValue2);
+        return Text(presentCustomField(vendor.customValue2));
       case VendorFields.customValue3:
-        return Text(vendor.customValue3);
+        return Text(presentCustomField(vendor.customValue3));
       case VendorFields.customValue4:
-        return Text(vendor.customValue4);
+        return Text(presentCustomField(vendor.customValue4));
       case VendorFields.documents:
         return Text('${vendor.documents.length}');
     }

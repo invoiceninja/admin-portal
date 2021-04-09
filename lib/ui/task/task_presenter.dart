@@ -90,13 +90,13 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.isRunning:
         return Text(task.isRunning.toString());
       case TaskFields.customValue1:
-        return Text(task.customValue1);
+        return Text(presentCustomField(task.customValue1));
       case TaskFields.customValue2:
-        return Text(task.customValue2);
+        return Text(presentCustomField(task.customValue2));
       case TaskFields.customValue3:
-        return Text(task.customValue3);
+        return Text(presentCustomField(task.customValue3));
       case TaskFields.customValue4:
-        return Text(task.customValue4);
+        return Text(presentCustomField(task.customValue4));
       case TaskFields.documents:
         return Text('${task.documents.length}');
     }
