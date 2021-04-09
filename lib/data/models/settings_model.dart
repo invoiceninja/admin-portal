@@ -821,6 +821,8 @@ abstract class SettingsEntity
         return emailSubjectReminder2;
       case EmailTemplate.reminder3:
         return emailSubjectReminder3;
+      case EmailTemplate.reminder_endless:
+        return emailSubjectReminderEndless;
       case EmailTemplate.custom1:
         return emailSubjectCustom1;
       case EmailTemplate.custom2:
@@ -828,7 +830,7 @@ abstract class SettingsEntity
       case EmailTemplate.custom3:
         return emailSubjectCustom3;
       default:
-        return emailSubjectInvoice;
+        return 'Error: template not defined for $emailTemplate';
     }
   }
 
@@ -850,6 +852,8 @@ abstract class SettingsEntity
         return emailBodyReminder2;
       case EmailTemplate.reminder3:
         return emailBodyReminder3;
+      case EmailTemplate.reminder_endless:
+        return emailBodyReminderEndless;
       case EmailTemplate.custom1:
         return emailBodyCustom1;
       case EmailTemplate.custom2:
@@ -857,7 +861,7 @@ abstract class SettingsEntity
       case EmailTemplate.custom3:
         return emailBodyCustom3;
       default:
-        return emailBodyInvoice;
+        return 'Error: template not defined for $template';
     }
   }
 
