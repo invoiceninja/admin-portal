@@ -16,7 +16,8 @@ InvoiceItemEntity convertProductToInvoiceItem({
   if (company.fillProducts) {
     double cost = product.price;
 
-    if (company.convertProductExchangeRate && client != null) {
+    if (company.convertProductExchangeRate &&
+        (client?.currencyId ?? '').isNotEmpty) {
       cost = round(cost * invoice.exchangeRate,
           currencyMap[client.currencyId].precision);
     }
