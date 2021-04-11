@@ -68,11 +68,6 @@ class _EntityListTileState extends State<EntityListTile> {
           includeEdit: true,
           client: entityClient),
       isSaving: false,
-      color: isFilteredBy
-          ? (state.prefState.enableDarkMode
-              ? Colors.white
-              : Theme.of(context).accentColor)
-          : null,
       entity: widget.entity,
       onSelected: (context, action) => widget.onEntityActionSelected != null
           ? widget.onEntityActionSelected(context, widget.entity, action)
@@ -94,11 +89,6 @@ class _EntityListTileState extends State<EntityListTile> {
                 context: context,
                 addToStack: isDesktop(context) && !widget.isFilter,
               ),
-              color: isFilteredBy
-                  ? (state.prefState.enableDarkMode
-                      ? Colors.white
-                      : Theme.of(context).accentColor)
-                  : null,
             ),
           );
 
