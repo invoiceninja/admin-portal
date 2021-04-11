@@ -31,6 +31,7 @@ class QuoteEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return QuoteEdit(
           viewModel: viewModel,
+          key: ValueKey(viewModel.invoice.id),
         );
       },
     );

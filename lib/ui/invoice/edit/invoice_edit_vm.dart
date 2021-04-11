@@ -30,6 +30,7 @@ class InvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceEdit(
           viewModel: viewModel,
+          key: ValueKey(viewModel.invoice.id),
         );
       },
     );

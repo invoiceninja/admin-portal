@@ -21,6 +21,7 @@ class DocumentEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return DocumentEdit(
           viewModel: viewModel,
+          key: ValueKey(viewModel.document.id),
         );
       },
     );
