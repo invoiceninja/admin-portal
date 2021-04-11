@@ -19,6 +19,7 @@ class ViewSettings extends AbstractNavigatorAction implements PersistUI {
     this.client,
     this.user,
     this.force = false,
+    this.clearFilter = false,
     this.section,
     this.tabIndex,
   }) : super(navigator: navigator);
@@ -29,6 +30,7 @@ class ViewSettings extends AbstractNavigatorAction implements PersistUI {
   final UserEntity user;
   final bool force;
   final String section;
+  final bool clearFilter;
   final int tabIndex;
 }
 

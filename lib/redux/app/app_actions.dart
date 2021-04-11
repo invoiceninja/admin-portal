@@ -289,7 +289,10 @@ void viewEntitiesByType({
             break;
           case EntityType.settings:
             action = ViewSettings(
-                navigator: navigator, company: store.state.company);
+              navigator: navigator,
+              company: store.state.company,
+              clearFilter: true,
+            );
             break;
           case EntityType.client:
             action = ViewClientList(navigator: navigator);
@@ -334,15 +337,12 @@ void viewEntitiesByType({
           case EntityType.subscription:
             store.dispatch(ViewSubscriptionList(navigator: navigator));
             break;
-
           case EntityType.taskStatus:
             store.dispatch(ViewTaskStatusList(navigator: navigator));
             break;
-
           case EntityType.expenseCategory:
             store.dispatch(ViewExpenseCategoryList(navigator: navigator));
             break;
-
           case EntityType.recurringInvoice:
             store.dispatch(ViewRecurringInvoiceList(navigator: navigator));
             break;

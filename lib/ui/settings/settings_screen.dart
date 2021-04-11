@@ -26,6 +26,8 @@ class SettingsScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.settings,
       appBarTitle: ListFilter(
+        key:
+            ValueKey('__cleared_at_${state.settingsUIState.filterClearedAt}__'),
         entityType: EntityType.settings,
         entityIds: [],
         filter: state.settingsUIState.filter,
