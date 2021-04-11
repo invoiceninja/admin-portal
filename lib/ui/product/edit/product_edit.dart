@@ -207,7 +207,8 @@ class _ProductEditState extends State<ProductEdit> {
                         TextInputType.numberWithOptions(decimal: true),
                     onSavePressed: viewModel.onSavePressed,
                   ),
-                if (company.enableFirstItemTaxRate)
+                if (company.enableFirstItemTaxRate ||
+                    product.taxName1.isNotEmpty)
                   TaxRateDropdown(
                     onSelected: (taxRate) =>
                         viewModel.onChanged(product.rebuild((b) => b
@@ -217,7 +218,8 @@ class _ProductEditState extends State<ProductEdit> {
                     initialTaxName: product.taxName1,
                     initialTaxRate: product.taxRate1,
                   ),
-                if (company.enableSecondItemTaxRate)
+                if (company.enableSecondItemTaxRate ||
+                    product.taxName2.isNotEmpty)
                   TaxRateDropdown(
                     onSelected: (taxRate) =>
                         viewModel.onChanged(product.rebuild((b) => b
@@ -227,7 +229,8 @@ class _ProductEditState extends State<ProductEdit> {
                     initialTaxName: product.taxName2,
                     initialTaxRate: product.taxRate2,
                   ),
-                if (company.enableThirdItemTaxRate)
+                if (company.enableThirdItemTaxRate ||
+                    product.taxName3.isNotEmpty)
                   TaxRateDropdown(
                     onSelected: (taxRate) =>
                         viewModel.onChanged(product.rebuild((b) => b
