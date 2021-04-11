@@ -58,7 +58,7 @@ class _ProjectOverviewState extends State<ProjectOverview> {
     final Map<String, String> fields = {
       ProjectFields.dueDate: formatDate(project.dueDate, context),
       ProjectFields.taskRate: formatNumber(project.taskRate, context,
-          formatNumberType: FormatNumberType.money),
+          formatNumberType: FormatNumberType.money, clientId: project.clientId),
     };
 
     if (project.customValue1.isNotEmpty) {

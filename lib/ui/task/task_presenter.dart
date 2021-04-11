@@ -52,7 +52,7 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.client:
         return Text(state.clientState.map[task.clientId]?.displayName ?? '');
       case TaskFields.rate:
-        return Text(formatNumber(task.rate, context));
+        return Text(formatNumber(task.rate, context, clientId: task.clientId));
       case TaskFields.calculatedRate:
         final client = state.clientState.get(task.clientId);
         final rate = taskRateSelector(
@@ -62,7 +62,7 @@ class TaskPresenter extends EntityPresenter {
           project: state.projectState.get(task.projectId),
           group: state.groupState.get(client.groupId),
         );
-        return Text(formatNumber(rate, context));
+        return Text(formatNumber(rate, context, clientId: task.clientId));
       case TaskFields.project:
         return Text(state.projectState.map[task.projectId]?.name ?? '');
       case TaskFields.description:

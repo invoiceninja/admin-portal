@@ -50,7 +50,8 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.clientNumber:
         return Text(client.number);
       case ProjectFields.taskRate:
-        return Text(formatNumber(project.taskRate, context));
+        return Text(formatNumber(project.taskRate, context,
+            clientId: project.clientId));
       case ProjectFields.dueDate:
         return Text(formatDate(project.dueDate, context));
       case ProjectFields.publicNotes:
