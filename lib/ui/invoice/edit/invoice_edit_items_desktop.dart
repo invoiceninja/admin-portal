@@ -179,12 +179,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             ..notes = item.isTask ? item.notes : product.notes
                             ..cost =
                                 item.isTask && item.cost != 0 ? item.cost : cost
-                            ..quantity = item.isTask
+                            ..quantity = item.isTask || item.quantity != 0
                                 ? item.quantity
-                                : item.quantity == 0 &&
-                                        viewModel.state.company.defaultQuantity
+                                : viewModel.state.company.defaultQuantity
                                     ? 1
-                                    : item.quantity
+                                    : product.quantity
                             ..customValue1 = product.customValue1
                             ..customValue2 = product.customValue2
                             ..customValue3 = product.customValue3
@@ -283,13 +282,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   ..cost = item.isTask && item.cost != 0
                                       ? item.cost
                                       : cost
-                                  ..quantity = item.isTask
+                                  ..quantity = item.isTask || item.quantity != 0
                                       ? item.quantity
-                                      : item.quantity == 0 &&
-                                              viewModel
-                                                  .state.company.defaultQuantity
+                                      : viewModel.state.company.defaultQuantity
                                           ? 1
-                                          : item.quantity
+                                          : product.quantity
                                   ..customValue1 = product.customValue1
                                   ..customValue2 = product.customValue2
                                   ..customValue3 = product.customValue3
@@ -334,13 +331,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               ..cost = item.isTask && item.cost != 0
                                   ? item.cost
                                   : cost
-                              ..quantity = item.isTask
+                              ..quantity = item.isTask || item.quantity != 0
                                   ? item.quantity
-                                  : item.quantity == 0 &&
-                                          viewModel
-                                              .state.company.defaultQuantity
+                                  : viewModel.state.company.defaultQuantity
                                       ? 1
-                                      : item.quantity
+                                      : product.quantity
                               ..customValue1 = product.customValue1
                               ..customValue2 = product.customValue2
                               ..customValue3 = product.customValue3

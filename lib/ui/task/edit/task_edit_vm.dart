@@ -30,6 +30,7 @@ class TaskEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return TaskEdit(
           viewModel: viewModel,
+          key: ValueKey(viewModel.task.id),
         );
       },
     );

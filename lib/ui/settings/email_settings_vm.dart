@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -54,6 +55,16 @@ class EmailSettingsVM {
         },
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
+
+          final settings = settingsUIState.settings;
+          if (settings.emailStyle == kEmailDesignCustom &&
+              !settings.emailStyleCustom.contains('\$body')) {
+            showErrorDialog(
+                context: context,
+                message: AppLocalization.of(context).bodyVariableMissing);
+            return;
+          }
+
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(

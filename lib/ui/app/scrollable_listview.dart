@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 
 class ScrollableListView extends StatefulWidget {
   const ScrollableListView({
@@ -18,7 +19,6 @@ class ScrollableListView extends StatefulWidget {
 
 class _ScrollableListViewState extends State<ScrollableListView> {
   ScrollController _scrollController;
-  bool _isHovered = false;
 
   @override
   void initState() {
@@ -34,18 +34,13 @@ class _ScrollableListViewState extends State<ScrollableListView> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (event) => setState(() => _isHovered = true),
-      onExit: (event) => setState(() => _isHovered = false),
-      child: Scrollbar(
-        child: ListView(
-          padding: widget.padding,
-          children: widget.children,
-          controller: widget.scrollController ?? _scrollController,
-          shrinkWrap: true,
-        ),
+    return AppScrollbar(
+      controller: widget.scrollController ?? _scrollController,
+      child: ListView(
+        padding: widget.padding,
+        children: widget.children,
         controller: widget.scrollController ?? _scrollController,
-        isAlwaysShown: _isHovered,
+        shrinkWrap: true,
       ),
     );
   }
@@ -74,7 +69,6 @@ class ScrollableListViewBuilder extends StatefulWidget {
 
 class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
   ScrollController _scrollController;
-  bool _isHovered = false;
 
   @override
   void initState() {
@@ -90,29 +84,24 @@ class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (event) => setState(() => _isHovered = true),
-      onExit: (event) => setState(() => _isHovered = false),
-      child: Scrollbar(
-        child: widget.separatorBuilder != null
-            ? ListView.separated(
-                separatorBuilder: widget.separatorBuilder,
-                padding: widget.padding,
-                itemBuilder: widget.itemBuilder,
-                itemCount: widget.itemCount,
-                controller: widget.scrollController ?? _scrollController,
-                shrinkWrap: true,
-              )
-            : ListView.builder(
-                padding: widget.padding,
-                itemBuilder: widget.itemBuilder,
-                itemCount: widget.itemCount,
-                controller: widget.scrollController ?? _scrollController,
-                shrinkWrap: true,
-              ),
-        controller: widget.scrollController ?? _scrollController,
-        isAlwaysShown: _isHovered,
-      ),
+    return AppScrollbar(
+      controller: widget.scrollController ?? _scrollController,
+      child: widget.separatorBuilder != null
+          ? ListView.separated(
+              separatorBuilder: widget.separatorBuilder,
+              padding: widget.padding,
+              itemBuilder: widget.itemBuilder,
+              itemCount: widget.itemCount,
+              controller: widget.scrollController ?? _scrollController,
+              shrinkWrap: true,
+            )
+          : ListView.builder(
+              padding: widget.padding,
+              itemBuilder: widget.itemBuilder,
+              itemCount: widget.itemCount,
+              controller: widget.scrollController ?? _scrollController,
+              shrinkWrap: true,
+            ),
     );
   }
 }
