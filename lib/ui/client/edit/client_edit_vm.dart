@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -92,6 +90,7 @@ class ClientEditVM {
           }
         },
         onSavePressed: (BuildContext context) {
+          final navigator = Navigator.of(context);
           Debouncer.runOnComplete(() {
             final client = store.state.clientUIState.editing;
             if (!client.hasNameSet) {
@@ -120,7 +119,12 @@ class ClientEditVM {
                   Navigator.of(context).pop(savedClient);
                 }
               } else {
-                viewEntity(context: context, entity: savedClient, force: true);
+                viewEntity(
+                  context: context,
+                  navigator: navigator,
+                  entity: savedClient,
+                  force: true,
+                );
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

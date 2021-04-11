@@ -133,4 +133,13 @@ class EntityPresenter {
 
     return value;
   }
+
+  String presentCustomField(String value) {
+    if (['yes', 'no'].contains(value)) {
+      final localization = AppLocalization.of(context);
+      return localization.lookup(value);
+    }
+
+    return value;
+  }
 }

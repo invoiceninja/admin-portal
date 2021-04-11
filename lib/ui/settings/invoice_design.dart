@@ -439,6 +439,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   InvoiceFields.dueDate,
                   InvoiceFields.amount,
                   InvoiceFields.balance,
+                  InvoiceFields.balanceDue,
                   InvoiceFields.customValue1,
                   InvoiceFields.customValue2,
                   InvoiceFields.customValue3,
@@ -454,7 +455,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 InvoiceFields.date,
                 InvoiceFields.dueDate,
                 InvoiceFields.total,
-                InvoiceFields.balance,
+                InvoiceFields.balanceDue,
               ].map((field) => '\$invoice.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsInvoiceDetails),
               onSelected: (values) {

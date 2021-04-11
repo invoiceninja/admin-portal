@@ -25,6 +25,12 @@ class ProductPresenter extends EntityPresenter {
       ProductFields.customValue3,
       ProductFields.customValue4,
       ProductFields.documents,
+      ProductFields.taxRate1,
+      ProductFields.taxRate2,
+      ProductFields.taxRate3,
+      ProductFields.taxName1,
+      ProductFields.taxName2,
+      ProductFields.taxName3,
     ];
   }
 
@@ -58,15 +64,30 @@ class ProductPresenter extends EntityPresenter {
               formatNumberType: FormatNumberType.double)),
         );
       case ProductFields.customValue1:
-        return Text(product.customValue1);
+        return Text(presentCustomField(product.customValue1));
       case ProductFields.customValue2:
-        return Text(product.customValue2);
+        return Text(presentCustomField(product.customValue2));
       case ProductFields.customValue3:
-        return Text(product.customValue3);
+        return Text(presentCustomField(product.customValue3));
       case ProductFields.customValue4:
-        return Text(product.customValue4);
+        return Text(presentCustomField(product.customValue4));
       case ProductFields.documents:
         return Text('${product.documents.length}');
+      case ProductFields.taxName1:
+        return Text(product.taxName1);
+      case ProductFields.taxName2:
+        return Text(product.taxName2);
+      case ProductFields.taxName3:
+        return Text(product.taxName3);
+      case ProductFields.taxRate1:
+        return Text(formatNumber(product.taxRate1, context,
+            formatNumberType: FormatNumberType.percent));
+      case ProductFields.taxRate2:
+        return Text(formatNumber(product.taxRate2, context,
+            formatNumberType: FormatNumberType.percent));
+      case ProductFields.taxRate3:
+        return Text(formatNumber(product.taxRate3, context,
+            formatNumberType: FormatNumberType.percent));
     }
 
     return super.getField(field: field, context: context);

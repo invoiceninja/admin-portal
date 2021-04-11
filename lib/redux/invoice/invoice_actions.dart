@@ -7,6 +7,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -588,16 +589,26 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       createEntity(context: context, entity: invoice.clone);
       break;
     case EntityAction.cloneToQuote:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: invoice.clientId,
+          entityType: EntityType.quote);
       createEntity(
           context: context,
-          entity:
-              invoice.clone.rebuild((b) => b..entityType = EntityType.quote));
+          entity: invoice.clone.rebuild((b) => b
+            ..entityType = EntityType.quote
+            ..designId = designId));
       break;
     case EntityAction.cloneToCredit:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: invoice.clientId,
+          entityType: EntityType.credit);
       createEntity(
           context: context,
-          entity:
-              invoice.clone.rebuild((b) => b..entityType = EntityType.credit));
+          entity: invoice.clone.rebuild((b) => b
+            ..entityType = EntityType.credit
+            ..designId = designId));
       break;
     case EntityAction.cloneToRecurring:
       createEntity(

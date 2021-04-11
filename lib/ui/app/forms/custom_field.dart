@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CustomField extends StatefulWidget {
@@ -85,6 +86,7 @@ class _CustomFieldState extends State<CustomField> {
         return BoolDropdownButton(
           onChanged: (value) {
             _controller.text = value ? kSwitchValueYes : kSwitchValueNo;
+            Debouncer.action();
             if (widget.onChanged != null) {
               widget.onChanged(value ? kSwitchValueYes : kSwitchValueNo);
             }
@@ -99,6 +101,7 @@ class _CustomFieldState extends State<CustomField> {
           labelText: widget.hideFieldLabel ? null : fieldLabel,
           onSelected: (date) {
             _controller.text = date;
+            Debouncer.action();
             if (widget.onChanged != null) {
               widget.onChanged(date);
             }
@@ -116,6 +119,7 @@ class _CustomFieldState extends State<CustomField> {
               .toList(),
           onChanged: (dynamic value) {
             _controller.text = value;
+            Debouncer.action();
             if (widget.onChanged != null) {
               widget.onChanged(value);
             }

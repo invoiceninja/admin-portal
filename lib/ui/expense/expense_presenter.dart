@@ -39,8 +39,10 @@ class ExpensePresenter extends EntityPresenter {
       ExpenseFields.invoiceCurrencyId,
       ExpenseFields.taxName1,
       ExpenseFields.taxName2,
+      ExpenseFields.taxName3,
       ExpenseFields.taxRate1,
       ExpenseFields.taxRate2,
+      ExpenseFields.taxRate3,
       ExpenseFields.clientId,
       ExpenseFields.invoiceId,
       ExpenseFields.vendorId,
@@ -115,23 +117,28 @@ class ExpensePresenter extends EntityPresenter {
         return Text(expense.taxName1);
       case ExpenseFields.taxName2:
         return Text(expense.taxName2);
+      case ExpenseFields.taxName3:
+        return Text(expense.taxName3);
       case ExpenseFields.taxRate1:
         return Text(formatNumber(expense.taxRate1, context,
-            formatNumberType: FormatNumberType.double));
+            formatNumberType: FormatNumberType.percent));
       case ExpenseFields.taxRate2:
         return Text(formatNumber(expense.taxRate2, context,
-            formatNumberType: FormatNumberType.double));
+            formatNumberType: FormatNumberType.percent));
+      case ExpenseFields.taxRate3:
+        return Text(formatNumber(expense.taxRate3, context,
+            formatNumberType: FormatNumberType.percent));
       case ExpenseFields.invoiceId:
         return Text(
             state.invoiceState.map[expense.invoiceId]?.listDisplayName ?? '');
       case ExpenseFields.customValue1:
-        return Text(expense.customValue1);
+        return Text(presentCustomField(expense.customValue1));
       case ExpenseFields.customValue2:
-        return Text(expense.customValue2);
+        return Text(presentCustomField(expense.customValue2));
       case ExpenseFields.customValue3:
-        return Text(expense.customValue3);
+        return Text(presentCustomField(expense.customValue3));
       case ExpenseFields.customValue4:
-        return Text(expense.customValue4);
+        return Text(presentCustomField(expense.customValue4));
       case ExpenseFields.documents:
         return Text('${expense.documents.length}');
     }

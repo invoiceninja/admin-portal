@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GeneratedNumbers extends StatefulWidget {
   const GeneratedNumbers({
@@ -511,6 +512,17 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
               controller: _counterController,
             ),
           ],
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 16, top: 20, right: 16, bottom: 8),
+          child: OutlineButton(
+            child: Text(localization.viewDateFormats.toUpperCase()),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            onPressed: () =>
+                launch('https://www.php.net/manual/en/datetime.format.php'),
+          ),
         ),
         HelpPanel(
           showClientFields: widget.showClientFields,

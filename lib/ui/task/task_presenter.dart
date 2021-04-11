@@ -52,7 +52,7 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.client:
         return Text(state.clientState.map[task.clientId]?.displayName ?? '');
       case TaskFields.rate:
-        return Text(formatNumber(task.rate, context));
+        return Text(formatNumber(task.rate, context, clientId: task.clientId));
       case TaskFields.calculatedRate:
         final client = state.clientState.get(task.clientId);
         final rate = taskRateSelector(
@@ -62,7 +62,7 @@ class TaskPresenter extends EntityPresenter {
           project: state.projectState.get(task.projectId),
           group: state.groupState.get(client.groupId),
         );
-        return Text(formatNumber(rate, context));
+        return Text(formatNumber(rate, context, clientId: task.clientId));
       case TaskFields.project:
         return Text(state.projectState.map[task.projectId]?.name ?? '');
       case TaskFields.description:
@@ -90,13 +90,13 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.isRunning:
         return Text(task.isRunning.toString());
       case TaskFields.customValue1:
-        return Text(task.customValue1);
+        return Text(presentCustomField(task.customValue1));
       case TaskFields.customValue2:
-        return Text(task.customValue2);
+        return Text(presentCustomField(task.customValue2));
       case TaskFields.customValue3:
-        return Text(task.customValue3);
+        return Text(presentCustomField(task.customValue3));
       case TaskFields.customValue4:
-        return Text(task.customValue4);
+        return Text(presentCustomField(task.customValue4));
       case TaskFields.documents:
         return Text('${task.documents.length}');
     }

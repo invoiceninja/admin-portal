@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -473,25 +474,40 @@ Future handleCreditAction(
       cloneToDialog(context: context, invoice: credit);
       break;
     case EntityAction.cloneToInvoice:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: credit.clientId,
+          entityType: EntityType.invoice);
       createEntity(
           context: context,
-          entity:
-              credit.clone.rebuild((b) => b..entityType = EntityType.invoice));
+          entity: credit.clone.rebuild((b) => b
+            ..entityType = EntityType.invoice
+            ..designId = designId));
       break;
     case EntityAction.cloneToQuote:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: credit.clientId,
+          entityType: EntityType.quote);
       createEntity(
           context: context,
-          entity:
-              credit.clone.rebuild((b) => b..entityType = EntityType.quote));
+          entity: credit.clone.rebuild((b) => b
+            ..entityType = EntityType.quote
+            ..designId = designId));
       break;
     case EntityAction.cloneToCredit:
       createEntity(context: context, entity: credit.clone);
       break;
     case EntityAction.cloneToRecurring:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: credit.clientId,
+          entityType: EntityType.invoice);
       createEntity(
           context: context,
-          entity: credit.clone
-              .rebuild((b) => b..entityType = EntityType.recurringInvoice));
+          entity: credit.clone.rebuild((b) => b
+            ..entityType = EntityType.recurringInvoice
+            ..designId = designId));
       break;
     case EntityAction.newPayment:
       createEntity(

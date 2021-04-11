@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -63,3 +64,25 @@ List<String> filteredDesignsSelector(BuiltMap<String, DesignEntity> designMap,
 bool hasDesignChanges(
         DesignEntity design, BuiltMap<String, DesignEntity> designMap) =>
     design.isNew ? design.isChanged : design != designMap[design.id];
+
+String getDesignIdForClientByEntity(
+    {AppState state, String clientId, EntityType entityType}) {
+  final client = state.clientState.get(clientId);
+  final group = state.groupState.get(client.groupId);
+  final settings = SettingsEntity(
+    clientSettings: client.settings,
+    groupSettings: group.settings,
+    companySettings: state.company.settings,
+  );
+  switch (entityType) {
+    case EntityType.invoice:
+      return settings.defaultInvoiceDesignId;
+    case EntityType.quote:
+      return settings.defaultQuoteDesignId;
+    case EntityType.credit:
+      return settings.defaultCreditDesignId;
+    default:
+      print('## Error: undefined entity type $entityType in design_selectors');
+      return settings.defaultInvoiceDesignId;
+  }
+}
