@@ -1,3 +1,4 @@
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -18,14 +19,22 @@ class _AppScrollbarState extends State<AppScrollbar> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (event) => setState(() => _isHovered = true),
-      onExit: (event) => setState(() => _isHovered = false),
-      child: Scrollbar(
+    if (isMobile(context) || true) {
+      return DraggableScrollbar.semicircle(
+        scrollbarTimeToFade: const Duration(milliseconds: 1500),
         child: widget.child,
         controller: widget.controller,
-        isAlwaysShown: isDesktop(context) && _isHovered,
-      ),
-    );
+      );
+    } else {
+      return MouseRegion(
+        onEnter: (event) => setState(() => _isHovered = true),
+        onExit: (event) => setState(() => _isHovered = false),
+        child: Scrollbar(
+          child: widget.child,
+          controller: widget.controller,
+          isAlwaysShown: isDesktop(context) && _isHovered,
+        ),
+      );
+    }
   }
 }
