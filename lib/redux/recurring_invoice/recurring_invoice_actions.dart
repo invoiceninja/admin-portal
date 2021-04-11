@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -424,6 +425,7 @@ void handleRecurringInvoiceAction(BuildContext context,
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final recurringInvoice = recurringInvoices.first as InvoiceEntity;
   final recurringInvoiceIds =
@@ -456,16 +458,26 @@ void handleRecurringInvoiceAction(BuildContext context,
               .rebuild((b) => b..entityType = EntityType.invoice));
       break;
     case EntityAction.cloneToQuote:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: recurringInvoice.clientId,
+          entityType: EntityType.invoice);
       createEntity(
           context: context,
-          entity: recurringInvoice.clone
-              .rebuild((b) => b..entityType = EntityType.quote));
+          entity: recurringInvoice.clone.rebuild((b) => b
+            ..entityType = EntityType.quote
+            ..designId = designId));
       break;
     case EntityAction.cloneToCredit:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: recurringInvoice.clientId,
+          entityType: EntityType.credit);
       createEntity(
           context: context,
-          entity: recurringInvoice.clone
-              .rebuild((b) => b..entityType = EntityType.credit));
+          entity: recurringInvoice.clone.rebuild((b) => b
+            ..entityType = EntityType.credit
+            ..designId = designId));
       break;
     case EntityAction.start:
       store.dispatch(StartRecurringInvoicesRequest(

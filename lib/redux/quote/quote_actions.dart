@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -497,25 +498,40 @@ Future handleQuoteAction(
       cloneToDialog(context: context, invoice: quote);
       break;
     case EntityAction.cloneToInvoice:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: quote.clientId,
+          entityType: EntityType.invoice);
       createEntity(
           context: context,
-          entity:
-              quote.clone.rebuild((b) => b..entityType = EntityType.invoice));
+          entity: quote.clone.rebuild((b) => b
+            ..entityType = EntityType.invoice
+            ..designId = designId));
       break;
     case EntityAction.cloneToQuote:
       createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.cloneToCredit:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: quote.clientId,
+          entityType: EntityType.credit);
       createEntity(
           context: context,
-          entity:
-              quote.clone.rebuild((b) => b..entityType = EntityType.credit));
+          entity: quote.clone.rebuild((b) => b
+            ..entityType = EntityType.credit
+            ..designId = designId));
       break;
     case EntityAction.cloneToRecurring:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: quote.clientId,
+          entityType: EntityType.invoice);
       createEntity(
           context: context,
-          entity: quote.clone
-              .rebuild((b) => b..entityType = EntityType.recurringInvoice));
+          entity: quote.clone.rebuild((b) => b
+            ..entityType = EntityType.recurringInvoice
+            ..designId = designId));
       break;
     case EntityAction.restore:
       final message = quoteIds.length > 1

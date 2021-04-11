@@ -14,6 +14,15 @@ abstract class SettingsEntity
     SettingsEntity clientSettings,
   }) {
     return _$SettingsEntity._(
+      defaultInvoiceDesignId: clientSettings?.defaultInvoiceDesignId ??
+          groupSettings?.defaultInvoiceDesignId ??
+          companySettings?.defaultInvoiceDesignId,
+      defaultQuoteDesignId: clientSettings?.defaultQuoteDesignId ??
+          groupSettings?.defaultQuoteDesignId ??
+          companySettings?.defaultQuoteDesignId,
+      defaultCreditDesignId: clientSettings?.defaultCreditDesignId ??
+          groupSettings?.defaultCreditDesignId ??
+          companySettings?.defaultCreditDesignId,
       defaultInvoiceTerms: clientSettings?.defaultInvoiceTerms ??
           groupSettings?.defaultInvoiceTerms ??
           companySettings?.defaultInvoiceTerms,
