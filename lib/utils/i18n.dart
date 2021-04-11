@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'body_variable_missing': 'Error: the custom email must include a \$body variable',
+      'add_body_variable_message': 'Make sure to include a \$body variable',
       'view_date_formats': 'View Date Formats',
       'is_viewed': 'Is Viewed',
       'letter': 'Letter',
@@ -79,7 +81,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_id_number': 'Client ID Number',
       'count_minutes': ':count Minutes',
       'password_timeout': 'Password Timeout',
-      'shared_invoice_credit_counter': 'Shared Invoice Credit Counter',
+      'shared_invoice_credit_counter': 'Shared Invoice/Credit Counter',
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
@@ -1683,7 +1685,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'credit_number_counter': 'Credit Number Counter',
       'reset_counter_date': 'Reset Counter Date',
       'counter_padding': 'Counter Padding',
-      'shared_invoice_quote_counter': 'Shared Invoice Quote Counter',
+      'shared_invoice_quote_counter': 'Shared Invoice/Quote Counter',
       'default_tax_name_1': 'Default Tax Name 1',
       'default_tax_rate_1': 'Default Tax Rate 1',
       'default_tax_name_2': 'Default Tax Name 2',
@@ -56392,6 +56394,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get viewDateFormats =>
       _localizedValues[localeCode]['view_date_formats'] ??
       _localizedValues['en']['view_date_formats'];
+
+  String get addBodyVariableMessage =>
+      _localizedValues[localeCode]['add_body_variable_message'] ??
+      _localizedValues['en']['add_body_variable_message'];
+
+  String get bodyVariableMissing =>
+      _localizedValues[localeCode]['body_variable_missing'] ??
+      _localizedValues['en']['body_variable_missing'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
