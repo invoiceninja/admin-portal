@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/kanban/kanban_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -110,6 +111,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
     if ([
       EntityType.dashboard,
       EntityType.reports,
+      EntityType.kanban,
       EntityType.settings,
     ].contains(history.entityType)) {
       title = Text(localization.lookup(history.entityType.toString()));
@@ -203,6 +205,9 @@ class _HistoryListTileState extends State<HistoryListTile> {
               break;
             case EntityType.reports:
               store.dispatch(ViewReports(navigator: Navigator.of(context)));
+              break;
+            case EntityType.kanban:
+              store.dispatch(ViewKanban(navigator: Navigator.of(context)));
               break;
             case EntityType.settings:
               store.dispatch(ViewSettings(
