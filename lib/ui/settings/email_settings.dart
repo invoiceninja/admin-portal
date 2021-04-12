@@ -250,7 +250,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                   controller: _emailStyleCustomController,
                   maxLines: 6,
                   keyboardType: TextInputType.multiline,
-                  hint: localization.addBodyVariableMessage,
+                  hint: localization.addBodyVariableMessage
+                      .replaceFirst(':body', '\$body'),
                 ),
               ],
               DecoratedFormField(

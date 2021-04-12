@@ -61,7 +61,9 @@ class EmailSettingsVM {
               !settings.emailStyleCustom.contains('\$body')) {
             showErrorDialog(
                 context: context,
-                message: AppLocalization.of(context).bodyVariableMissing);
+                message: AppLocalization.of(context)
+                    .bodyVariableMissing
+                    .replaceFirst(':body', '\$body'));
             return;
           }
 
