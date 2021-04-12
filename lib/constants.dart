@@ -512,7 +512,7 @@ const List<String> kLanguages = [
   'pt_BR',
   'pt_PT',
   'ro',
-  'ru',
+  'ru_RU',
   'sl',
   'sq',
   'sr_RS',
