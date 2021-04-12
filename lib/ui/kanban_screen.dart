@@ -1,3 +1,6 @@
+import 'package:boardview/board_list.dart';
+import 'package:boardview/boardview.dart';
+import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
@@ -19,9 +22,26 @@ class KanbanScreen extends StatefulWidget {
 }
 
 class _KanbanScreenState extends State<KanbanScreen> {
+  BoardViewController _boardViewController = new BoardViewController();
+
   @override
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
+    final boardList = state.taskStatusState.list
+        .map((statusId) => state.taskStatusState.get(statusId))
+        .where((status) => status.isActive)
+        .map((status) {
+      return BoardList(
+        header: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Text(status.name),
+            ),
+          ),
+        ],
+      );
+    }).toList();
 
     return Scaffold(
       drawer: isMobile(context) || state.prefState.isMenuFloated
@@ -45,7 +65,13 @@ class _KanbanScreenState extends State<KanbanScreen> {
           },
         ),
       ),
-      body: Placeholder(),
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: BoardView(
+          boardViewController: _boardViewController,
+          lists: boardList,
+        ),
+      ),
     );
   }
 }
