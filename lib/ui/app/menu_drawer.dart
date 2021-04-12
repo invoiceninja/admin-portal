@@ -388,6 +388,14 @@ class MenuDrawer extends StatelessWidget {
                           // STARTER: menu - do not remove comment
                           DrawerTile(
                             company: company,
+                            //icon: getEntityIcon(EntityType.kanban),
+                            title: localization.reports,
+                            onTap: () => viewEntitiesByType(
+                                context: context,
+                                entityType: EntityType.reports),
+                          ),
+                          DrawerTile(
+                            company: company,
                             icon: getEntityIcon(EntityType.reports),
                             title: localization.reports,
                             onTap: () => viewEntitiesByType(
