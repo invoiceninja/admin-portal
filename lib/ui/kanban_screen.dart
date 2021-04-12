@@ -45,6 +45,9 @@ class _KanbanScreenState extends State<KanbanScreen> {
           (taskA.statusOrder ?? 9999).compareTo(taskB.statusOrder ?? 9999));
 
       return BoardList(
+        onDropList: (endIndex, startIndex) {
+          widget.viewModel.onStatusOrderChanged(context, status.id, endIndex);
+        },
         header: [
           Expanded(
             child: Padding(
