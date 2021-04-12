@@ -19,7 +19,7 @@ class _AppScrollbarState extends State<AppScrollbar> {
 
   @override
   Widget build(BuildContext context) {
-    if (isMobile(context) || true) {
+    if (isMobile(context)) {
       return DraggableScrollbar.semicircle(
         scrollbarTimeToFade: const Duration(milliseconds: 1500),
         child: widget.child,
