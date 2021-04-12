@@ -28,7 +28,6 @@ class _KanbanScreenState extends State<KanbanScreen> {
   @override
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
-
     final statuses = state.taskStatusState.list
         .map((statusId) => state.taskStatusState.get(statusId))
         .where((status) => status.isActive)
@@ -90,7 +89,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: BoardView(
           boardViewController: _boardViewController,
           lists: boardList,
