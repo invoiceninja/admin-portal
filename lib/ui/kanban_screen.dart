@@ -33,8 +33,15 @@ class _KanbanScreenState extends State<KanbanScreen> {
         .where((status) => status.isActive)
         .toList();
 
-    statuses.sort((statusA, statusB) =>
-        (statusA.statusOrder ?? 9999).compareTo(statusB.statusOrder ?? 9999));
+    statuses.forEach((element) {
+      print('## ${element.name} ${element.statusOrder}');
+    });
+
+    statuses.sort((statusA, statusB) {
+      print('## COMPRE: ${statusA.statusOrder}, ${statusB.statusOrder}');
+      return (statusA.statusOrder ?? 9999)
+          .compareTo(statusB.statusOrder ?? 9999);
+    });
 
     final boardList = statuses.map((status) {
       final items = state.taskState.list

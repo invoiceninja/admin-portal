@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/ui/kanban_screen.dart';
@@ -46,8 +47,8 @@ class KanbanVM {
         onStatusOrderChanged: (context, statusId, index) {
           final localization = AppLocalization.of(context);
           final taskStatus = state.taskStatusState.get(statusId);
-          final completer =
-              snackBarCompleter<Null>(context, localization.updatedTaskStatus);
+          final completer = snackBarCompleter<TaskStatusEntity>(
+              context, localization.updatedTaskStatus);
           store.dispatch(SaveTaskStatusRequest(
               completer: completer,
               taskStatus: taskStatus.rebuild((b) => b.statusOrder = index)));
