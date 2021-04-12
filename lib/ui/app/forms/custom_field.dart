@@ -86,7 +86,7 @@ class _CustomFieldState extends State<CustomField> {
         return BoolDropdownButton(
           onChanged: (value) {
             _controller.text = value ? kSwitchValueYes : kSwitchValueNo;
-            Debouncer.action();
+            Debouncer.complete();
             if (widget.onChanged != null) {
               widget.onChanged(value ? kSwitchValueYes : kSwitchValueNo);
             }
@@ -101,7 +101,7 @@ class _CustomFieldState extends State<CustomField> {
           labelText: widget.hideFieldLabel ? null : fieldLabel,
           onSelected: (date) {
             _controller.text = date;
-            Debouncer.action();
+            Debouncer.complete();
             if (widget.onChanged != null) {
               widget.onChanged(date);
             }
@@ -119,7 +119,7 @@ class _CustomFieldState extends State<CustomField> {
               .toList(),
           onChanged: (dynamic value) {
             _controller.text = value;
-            Debouncer.action();
+            Debouncer.complete();
             if (widget.onChanged != null) {
               widget.onChanged(value);
             }
