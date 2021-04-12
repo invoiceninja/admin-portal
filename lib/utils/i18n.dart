@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'enable': 'Enable',
       'move_top': 'Move Top',
       'move_up': 'Move Up',
       'move_down': 'Move Down',
@@ -56428,6 +56429,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get moveBottom =>
       _localizedValues[localeCode]['move_bottom'] ??
       _localizedValues['en']['move_bottom'];
+
+  String get enable =>
+      _localizedValues[localeCode]['enable'] ??
+      _localizedValues['en']['enable'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

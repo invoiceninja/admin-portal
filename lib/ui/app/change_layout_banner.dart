@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -71,20 +72,16 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                         text: message,
                       ),
                     ),
-                    TextButton(
-                      child: Text(
-                        localization.dismiss,
-                        style: TextStyle(color: Colors.white),
-                      ),
+                    AppTextButton(
+                      label: localization.dismiss,
+                      color: Colors.white,
                       onPressed: () {
                         setState(() => _dismissedChange = true);
                       },
                     ),
-                    TextButton(
-                      child: Text(
-                        localization.change,
-                        style: TextStyle(color: Colors.white),
-                      ),
+                    AppTextButton(
+                      label: localization.change,
+                      color: Colors.white,
                       onPressed: () {
                         final layout =
                             widget.suggestedLayout == AppLayout.desktop

@@ -647,8 +647,11 @@ class _LimitEditorState extends State<LimitEditor> {
                   SizedBox(height: 10),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
+                    contentPadding: const EdgeInsets.all(0),
                     activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.enableMin),
+                    title: Text(isDesktop(context)
+                        ? localization.enableMin
+                        : localization.enable),
                     value: _enableMin,
                     onChanged: (value) {
                       setState(() {
@@ -679,8 +682,11 @@ class _LimitEditorState extends State<LimitEditor> {
                   SizedBox(height: 10),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
+                    contentPadding: const EdgeInsets.all(0),
                     activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.enableMax),
+                    title: Text(isDesktop(context)
+                        ? localization.enableMax
+                        : localization.enable),
                     value: _enableMax,
                     onChanged: (value) {
                       setState(() {

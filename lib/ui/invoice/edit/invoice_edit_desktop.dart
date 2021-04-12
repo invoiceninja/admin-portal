@@ -206,6 +206,14 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       companySettings: state.company.settings,
     );
 
+    final terms = entityType == EntityType.quote
+        ? settings.defaultValidUntil
+        : settings.defaultPaymentTerms;
+    String termsString;
+    if ((terms ?? '').isNotEmpty) {
+      termsString = '${localization.net} $terms';
+    }
+
     return ScrollableListView(
       key: ValueKey('__invoice_${invoice.id}__'),
       children: <Widget>[
@@ -344,10 +352,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                     if (entityType != EntityType.credit)
                       DatePicker(
+                        key: ValueKey('__terms_${client.id}__'),
                         labelText: entityType == EntityType.quote
                             ? localization.validUntil
                             : localization.dueDate,
                         selectedDate: invoice.dueDate,
+                        message: termsString,
                         onSelected: (date) {
                           viewModel.onChanged(
                               invoice.rebuild((b) => b..dueDate = date));
