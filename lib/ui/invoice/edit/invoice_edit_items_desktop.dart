@@ -9,11 +9,13 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/growable_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
@@ -542,6 +544,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         textAlign: TextAlign.right,
                       ),
                     ),
+                    /*
                     IconButton(
                       icon: Icon(Icons.clear),
                       tooltip: localization.remove,
@@ -552,6 +555,49 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               _updateTable();
                             },
                     ),
+                    */
+                    PopupMenuButton<String>(
+                      icon: Icon(Icons.more_vert),
+                      enabled: !lineItems[index].isEmpty,
+                      itemBuilder: (BuildContext context) {
+                        final options = {
+                          if (index > 0)
+                            localization.moveTop: MdiIcons.chevronDoubleUp,
+                          if (index > 1)
+                            localization.moveUp: MdiIcons.chevronUp,
+                          if (index < lineItems.length - 3)
+                            localization.moveDown: MdiIcons.chevronDown,
+                          if (index < lineItems.length - 2)
+                            localization.moveBottom: MdiIcons.chevronDoubleDown,
+                          localization.remove: Icons.clear,
+                        };
+
+                        return options.keys
+                            .map((option) => PopupMenuItem<String>(
+                                  child: IconText(
+                                    icon: options[option],
+                                    text: option,
+                                  ),
+                                  value: option,
+                                ))
+                            .toList();
+                      },
+                      onSelected: (String action) {
+                        if (action == localization.moveTop) {
+                          viewModel.onMovedInvoiceItem(index, 0);
+                        } else if (action == localization.moveUp) {
+                          viewModel.onMovedInvoiceItem(index, index - 1);
+                        } else if (action == localization.moveDown) {
+                          viewModel.onMovedInvoiceItem(index, index + 1);
+                        } else if (action == localization.moveBottom) {
+                          viewModel.onMovedInvoiceItem(
+                              index, lineItems.length - 2);
+                        } else if (action == localization.remove) {
+                          viewModel.onRemoveInvoiceItemPressed(index);
+                        }
+                        _updateTable();
+                      },
+                    )
                   ])
         ],
       ),

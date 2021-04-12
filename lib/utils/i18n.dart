@@ -15,7 +15,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'body_variable_missing': 'Error: the custom email must include a \$body variable',
+      'move_top': 'Move Top',
+      'move_up': 'Move Up',
+      'move_down': 'Move Down',
+      'move_bottom': 'Move Bottom',
+      'subdomain_help': 'Lowercase letters, numbers and hyphens are supported',
+      'body_variable_missing':
+          'Error: the custom email must include a \$body variable',
       'add_body_variable_message': 'Make sure to include a \$body variable',
       'view_date_formats': 'View Date Formats',
       'is_viewed': 'Is Viewed',
@@ -56403,6 +56409,25 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['body_variable_missing'] ??
       _localizedValues['en']['body_variable_missing'];
 
+  String get subdomainHelp =>
+      _localizedValues[localeCode]['subdomain_help'] ??
+      _localizedValues['en']['subdomain_help'];
+
+  String get moveTop =>
+      _localizedValues[localeCode]['move_top'] ??
+      _localizedValues['en']['move_top'];
+
+  String get moveUp =>
+      _localizedValues[localeCode]['move_up'] ??
+      _localizedValues['en']['move_up'];
+
+  String get moveDown =>
+      _localizedValues[localeCode]['move_down'] ??
+      _localizedValues['en']['move_down'];
+
+  String get moveBottom =>
+      _localizedValues[localeCode]['move_bottom'] ??
+      _localizedValues['en']['move_bottom'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

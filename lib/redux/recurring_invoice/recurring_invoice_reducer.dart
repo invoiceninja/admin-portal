@@ -90,6 +90,9 @@ final editingReducer = combineReducers<InvoiceEntity>([
       (recurringInvoice, action) {
     return recurringInvoice.rebuild((b) => b..isChanged = true);
   }),
+  TypedReducer<InvoiceEntity, MoveRecurringInvoiceItem>((invoice, action) {
+    return invoice.moveLineItem(action.oldIndex, action.newIndex);
+  }),
   TypedReducer<InvoiceEntity, DeleteRecurringInvoiceItem>(
       (recurringInvoice, action) {
     return recurringInvoice.rebuild((b) => b..isChanged = true);

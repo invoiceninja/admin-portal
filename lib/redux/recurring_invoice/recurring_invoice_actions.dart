@@ -194,6 +194,16 @@ class AddRecurringInvoiceItem implements PersistUI {
   final InvoiceItemEntity invoiceItem;
 }
 
+class MoveRecurringInvoiceItem implements PersistUI {
+  MoveRecurringInvoiceItem({
+    this.oldIndex,
+    this.newIndex,
+  });
+
+  final int oldIndex;
+  final int newIndex;
+}
+
 class AddRecurringInvoiceItems implements PersistUI {
   AddRecurringInvoiceItems(this.items);
 

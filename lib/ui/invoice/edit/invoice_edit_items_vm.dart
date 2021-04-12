@@ -54,6 +54,7 @@ class EntityEditItemsVM {
     @required this.onRemoveInvoiceItemPressed,
     @required this.clearSelectedInvoiceItem,
     @required this.onChangedInvoiceItem,
+    @required this.onMovedInvoiceItem,
   });
 
   final AppState state;
@@ -65,6 +66,7 @@ class EntityEditItemsVM {
   final Function(int) onRemoveInvoiceItemPressed;
   final Function clearSelectedInvoiceItem;
   final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
+  final Function(int, int) onMovedInvoiceItem;
 }
 
 class InvoiceEditItemsVM extends EntityEditItemsVM {
@@ -78,6 +80,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     Function(int) onRemoveInvoiceItemPressed,
     Function clearSelectedInvoiceItem,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
+    Function(int, int) onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -88,32 +91,37 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
           clearSelectedInvoiceItem: clearSelectedInvoiceItem,
           onChangedInvoiceItem: onChangedInvoiceItem,
+          onMovedInvoiceItem: onMovedInvoiceItem,
         );
 
   factory InvoiceEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
     return InvoiceEditItemsVM(
-        state: store.state,
-        company: store.state.company,
-        invoice: store.state.invoiceUIState.editing,
-        invoiceItemIndex: store.state.invoiceUIState.editingItemIndex,
-        addLineItem: () =>
-            store.dispatch(AddInvoiceItem(invoiceItem: InvoiceItemEntity())),
-        deleteLineItem: null,
-        onRemoveInvoiceItemPressed: (index) =>
-            store.dispatch(DeleteInvoiceItem(index)),
-        clearSelectedInvoiceItem: () => store.dispatch(EditInvoiceItem()),
-        onChangedInvoiceItem: (invoiceItem, index) {
-          final invoice = store.state.invoiceUIState.editing;
-          if (index == invoice.lineItems.length) {
-            store.dispatch(AddInvoiceItem(
-                invoiceItem: invoiceItem.rebuild((b) => b
-                  ..typeId = isTasks
-                      ? InvoiceItemEntity.TYPE_TASK
-                      : InvoiceItemEntity.TYPE_STANDARD)));
-          } else {
-            store.dispatch(
-                UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
-          }
-        });
+      state: store.state,
+      company: store.state.company,
+      invoice: store.state.invoiceUIState.editing,
+      invoiceItemIndex: store.state.invoiceUIState.editingItemIndex,
+      addLineItem: () =>
+          store.dispatch(AddInvoiceItem(invoiceItem: InvoiceItemEntity())),
+      deleteLineItem: null,
+      onRemoveInvoiceItemPressed: (index) =>
+          store.dispatch(DeleteInvoiceItem(index)),
+      clearSelectedInvoiceItem: () => store.dispatch(EditInvoiceItem()),
+      onChangedInvoiceItem: (invoiceItem, index) {
+        final invoice = store.state.invoiceUIState.editing;
+        if (index == invoice.lineItems.length) {
+          store.dispatch(AddInvoiceItem(
+              invoiceItem: invoiceItem.rebuild((b) => b
+                ..typeId = isTasks
+                    ? InvoiceItemEntity.TYPE_TASK
+                    : InvoiceItemEntity.TYPE_STANDARD)));
+        } else {
+          store.dispatch(
+              UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
+        }
+      },
+      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
+        MoveInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
+      ),
+    );
   }
 }

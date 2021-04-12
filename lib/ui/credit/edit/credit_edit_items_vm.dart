@@ -55,6 +55,7 @@ class CreditEditItemsVM extends EntityEditItemsVM {
     Function(int) onRemoveInvoiceItemPressed,
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
+    Function(int, int) onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -65,29 +66,34 @@ class CreditEditItemsVM extends EntityEditItemsVM {
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
           clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
           onChangedInvoiceItem: onChangedInvoiceItem,
+          onMovedInvoiceItem: onMovedInvoiceItem,
         );
 
   factory CreditEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
     return CreditEditItemsVM(
-        state: store.state,
-        company: store.state.company,
-        invoice: store.state.creditUIState.editing,
-        invoiceItemIndex: store.state.creditUIState.editingItemIndex,
-        onRemoveInvoiceItemPressed: (index) =>
-            store.dispatch(DeleteCreditItem(index)),
-        onDoneInvoiceItemPressed: () => store.dispatch(EditCreditItem()),
-        onChangedInvoiceItem: (creditItem, index) {
-          final credit = store.state.creditUIState.editing;
-          if (index == credit.lineItems.length) {
-            store.dispatch(AddCreditItem(
-                creditItem: creditItem.rebuild((b) => b
-                  ..typeId = isTasks
-                      ? InvoiceItemEntity.TYPE_TASK
-                      : InvoiceItemEntity.TYPE_STANDARD)));
-          } else {
-            store.dispatch(
-                UpdateCreditItem(creditItem: creditItem, index: index));
-          }
-        });
+      state: store.state,
+      company: store.state.company,
+      invoice: store.state.creditUIState.editing,
+      invoiceItemIndex: store.state.creditUIState.editingItemIndex,
+      onRemoveInvoiceItemPressed: (index) =>
+          store.dispatch(DeleteCreditItem(index)),
+      onDoneInvoiceItemPressed: () => store.dispatch(EditCreditItem()),
+      onChangedInvoiceItem: (creditItem, index) {
+        final credit = store.state.creditUIState.editing;
+        if (index == credit.lineItems.length) {
+          store.dispatch(AddCreditItem(
+              creditItem: creditItem.rebuild((b) => b
+                ..typeId = isTasks
+                    ? InvoiceItemEntity.TYPE_TASK
+                    : InvoiceItemEntity.TYPE_STANDARD)));
+        } else {
+          store
+              .dispatch(UpdateCreditItem(creditItem: creditItem, index: index));
+        }
+      },
+      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
+        MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex),
+      ),
+    );
   }
 }

@@ -165,6 +165,16 @@ class AddCreditItem implements PersistUI {
   final InvoiceItemEntity creditItem;
 }
 
+class MoveCreditItem implements PersistUI {
+  MoveCreditItem({
+    this.oldIndex,
+    this.newIndex,
+  });
+
+  final int oldIndex;
+  final int newIndex;
+}
+
 class AddCreditItems implements PersistUI {
   AddCreditItems(this.creditItems);
 

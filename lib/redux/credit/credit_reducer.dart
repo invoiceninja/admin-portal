@@ -79,6 +79,9 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, AddCreditItem>((invoice, action) {
     return invoice.rebuild((b) => b..isChanged = true);
   }),
+  TypedReducer<InvoiceEntity, MoveCreditItem>((invoice, action) {
+    return invoice.moveLineItem(action.oldIndex, action.newIndex);
+  }),
   TypedReducer<InvoiceEntity, DeleteCreditItem>((invoice, action) {
     return invoice.rebuild((b) => b..isChanged = true);
   }),
