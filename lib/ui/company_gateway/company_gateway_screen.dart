@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'company_gateway_screen_vm.dart';
 
@@ -34,6 +35,7 @@ class CompanyGatewayScreen extends StatelessWidget {
     final state = store.state;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
+    final settingsUIState = state.uiState.settingsUIState;
 
     return ListScaffold(
       entityType: EntityType.companyGateway,
@@ -65,35 +67,36 @@ class CompanyGatewayScreen extends StatelessWidget {
             onCancelPressed: (context) =>
                 store.dispatch(ClearCompanyGatewayMultiselect()),
           )
-        else if (state.uiState.settingsUIState.isFiltered &&
-            !state.isSaving) ...[
+        else if (settingsUIState.isFiltered && !state.isSaving) ...[
           TextButton(
             child: Text(localization.reset,
                 style: TextStyle(color: store.state.headerTextColor)),
             onPressed: () {
-              final settings = store.state.uiState.settingsUIState.settings
+              final settings = settingsUIState.settings
                   .rebuild((b) => b..companyGatewayIds = '');
               store.dispatch(UpdateSettings(settings: settings));
             },
           ),
           SizedBox(width: 10),
-        ],
-        SaveCancelButtons(
-          isEnabled: state.uiState.settingsUIState.isChanged,
-          isCancelEnabled: true,
-          isHeader: true,
-          isSaving: state.isSaving,
-          onSavePressed: viewModel.onSavePressed,
-          onCancelPressed: (_) {
-            if (state.uiState.settingsUIState.isChanged) {
-              store.dispatch(ResetSettings());
-            } else {
-              store.dispatch(ViewSettings(
-                  navigator: Navigator.of(context),
-                  section: kSettingsOnlinePayments));
-            }
-          },
-        )
+        ] else
+          SaveCancelButtons(
+            isEnabled: settingsUIState.isChanged,
+            isCancelEnabled: true,
+            isHeader: true,
+            isSaving: state.isSaving,
+            onSavePressed: viewModel.onSavePressed,
+            onCancelPressed: isMobile(context) || !settingsUIState.isChanged
+                ? null
+                : (_) {
+                    if (settingsUIState.isChanged) {
+                      store.dispatch(ResetSettings());
+                    } else {
+                      store.dispatch(ViewSettings(
+                          navigator: Navigator.of(context),
+                          section: kSettingsOnlinePayments));
+                    }
+                  },
+          )
       ],
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(
@@ -125,7 +128,7 @@ class CompanyGatewayScreen extends StatelessWidget {
                   heroTag: 'company_gateway_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,
                   onPressed: () {
-                    if (state.settingsUIState.isFiltered) {
+                    if (settingsUIState.isFiltered) {
                     } else {
                       createEntityByType(
                           context: context,
