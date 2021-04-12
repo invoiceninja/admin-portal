@@ -645,7 +645,9 @@ class WebhookEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  WebhookEntityBuilder();
+  WebhookEntityBuilder() {
+    WebhookEntity._initializeBuilder(this);
+  }
 
   WebhookEntityBuilder get _$this {
     if (_$v != null) {
