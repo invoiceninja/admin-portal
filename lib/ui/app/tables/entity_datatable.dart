@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class EntityDataTableSource extends AppDataTableSource {
   EntityDataTableSource(
@@ -97,8 +98,8 @@ class EntityDataTableSource extends AppDataTableSource {
                           : null),
                   isSaving: false,
                   entity: entity,
-                  onSelected: (context, action) =>
-                      handleEntityAction(context, entity, action),
+                  onSelected: (context, action) => handleEntityAction(
+                      context.getAppContext(), entity, action),
                 ),
               ],
             ),

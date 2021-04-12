@@ -63,6 +63,7 @@ import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:redux/redux.dart';
 
@@ -266,7 +267,7 @@ class MainScreen extends StatelessWidget {
               break;
             default:
               viewEntityById(
-                context: context,
+                appContext: context.getAppContext(),
                 entityId: history.id,
                 entityType: history.entityType,
               );

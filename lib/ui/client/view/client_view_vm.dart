@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class ClientViewScreen extends StatelessWidget {
@@ -81,7 +82,8 @@ class ClientViewVM {
       company: state.company,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [client], action, autoPop: true),
+          handleEntitiesActions(context.getAppContext(), [client], action,
+              autoPop: true),
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveClientDocumentRequest(

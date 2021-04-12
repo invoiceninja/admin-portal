@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class CreditEditScreen extends StatelessWidget {
   const CreditEditScreen({Key key}) : super(key: key);
@@ -73,6 +74,7 @@ class CreditEditVM extends EntityEditVM {
       invoiceItemIndex: state.creditUIState.editingItemIndex,
       origInvoice: store.state.creditState.map[credit.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final credit = store.state.creditUIState.editing;
           if (credit.clientId.isEmpty) {
@@ -80,11 +82,11 @@ class CreditEditVM extends EntityEditVM {
                 context: context,
                 builder: (BuildContext context) {
                   return ErrorDialog(
-                      AppLocalization.of(context).pleaseSelectAClient);
+                      appContext.localization.pleaseSelectAClient);
                 });
             return null;
           }
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
           store.dispatch(
               SaveCreditRequest(completer: completer, credit: credit));
@@ -96,16 +98,17 @@ class CreditEditVM extends EntityEditVM {
             if (isMobile(context)) {
               store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
               if (credit.isNew) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(CreditViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedCredit);
+                appContext.navigator.pop(savedCredit);
               }
             } else {
               if (action != null) {
-                handleEntityAction(context, savedCredit, action);
+                handleEntityAction(appContext, savedCredit, action);
               } else {
-                viewEntity(context: context, entity: savedCredit, force: true);
+                viewEntity(
+                    appContext: appContext, entity: savedCredit, force: true);
               }
             }
           }).catchError((Object error) {

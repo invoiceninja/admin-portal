@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class GroupViewScreen extends StatelessWidget {
@@ -84,7 +85,8 @@ class GroupViewVM {
         store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [group], action, autoPop: true),
+          handleEntitiesActions(context.getAppContext(), [group], action,
+              autoPop: true),
       onClientsPressed: (context, [longPress = false]) {
         if (longPress) {
           handleGroupAction(context, [group], EntityAction.newClient);

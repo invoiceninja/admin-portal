@@ -8,8 +8,8 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -74,9 +74,10 @@ class WebhookEditVM {
         ));
       },
       onSavePressed: (BuildContext context) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final webhook = store.state.webhookUIState.editing;
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<WebhookEntity> completer =
               new Completer<WebhookEntity>();
           store.dispatch(
@@ -89,13 +90,14 @@ class WebhookEditVM {
             if (isMobile(context)) {
               store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
               if (webhook.isNew) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(WebhookViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedWebhook);
+                appContext.navigator.pop(savedWebhook);
               }
             } else {
-              viewEntity(context: context, entity: savedWebhook, force: true);
+              viewEntity(
+                  appContext: appContext, entity: savedWebhook, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

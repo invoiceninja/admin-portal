@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class VendorEditScreen extends StatelessWidget {
@@ -74,18 +75,18 @@ class VendorEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final vendor = store.state.vendorUIState.editing;
           if (!vendor.hasNameSet) {
             showDialog<ErrorDialog>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ErrorDialog(
-                      AppLocalization.of(context).pleaseEnterAName);
+                  return ErrorDialog(appContext.localization.pleaseEnterAName);
                 });
             return null;
           }
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<VendorEntity> completer =
               new Completer<VendorEntity>();
           store.dispatch(
@@ -98,13 +99,14 @@ class VendorEditVM {
             if (isMobile(context)) {
               store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
               if (vendor.isNew && state.vendorUIState.saveCompleter == null) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(VendorViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedVendor);
+                appContext.navigator.pop(savedVendor);
               }
             } else {
-              viewEntity(context: context, entity: savedVendor, force: true);
+              viewEntity(
+                  appContext: appContext, entity: savedVendor, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

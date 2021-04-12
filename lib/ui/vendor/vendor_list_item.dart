@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class VendorListItem extends StatelessWidget {
   const VendorListItem({
@@ -96,7 +97,8 @@ class VendorListItem extends StatelessWidget {
                                 isSaving: false,
                                 entity: vendor,
                                 onSelected: (context, action) =>
-                                    handleEntityAction(context, vendor, action),
+                                    handleEntityAction(context.getAppContext(),
+                                        vendor, action),
                               ),
                       ),
                       SizedBox(

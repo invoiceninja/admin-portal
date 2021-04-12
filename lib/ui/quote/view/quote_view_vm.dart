@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class QuoteViewScreen extends StatelessWidget {
@@ -108,7 +109,8 @@ class QuoteViewVM extends EntityViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [quote], action, autoPop: true),
+          handleEntitiesActions(context.getAppContext(), [quote], action,
+              autoPop: true),
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveQuoteDocumentRequest(

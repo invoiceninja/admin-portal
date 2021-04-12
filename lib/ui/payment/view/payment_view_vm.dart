@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class PaymentViewScreen extends StatelessWidget {
@@ -71,7 +72,8 @@ class PaymentViewVM {
       payment: payment,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [payment], action, autoPop: true),
+          handleEntitiesActions(context.getAppContext(), [payment], action,
+              autoPop: true),
     );
   }
 

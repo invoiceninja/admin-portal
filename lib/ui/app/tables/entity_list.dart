@@ -23,6 +23,7 @@ import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class EntityList extends StatefulWidget {
   EntityList({
@@ -123,7 +124,7 @@ class _EntityListState extends State<EntityList> {
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         viewEntityById(
-          context: context,
+          appContext: context.getAppContext(),
           entityType: entityType,
           entityId: entityId,
         );
@@ -140,7 +141,7 @@ class _EntityListState extends State<EntityList> {
                 filterEntityId: uiState.filterEntityId,
                 filterEntityType: uiState.filterEntityType,
                 onPressed: (_) => viewEntityById(
-                    context: context,
+                    appContext: context.getAppContext(),
                     entityId: state.uiState.filterEntityId,
                     entityType: state.uiState.filterEntityType),
                 onClearPressed: () => store.dispatch(ClearEntityFilter()),
@@ -220,7 +221,7 @@ class _EntityListState extends State<EntityList> {
                 filterEntityType: uiState.filterEntityType,
                 onPressed: (_) {
                   viewEntityById(
-                      context: context,
+                      appContext: context.getAppContext(),
                       entityId: state.uiState.filterEntityId,
                       entityType: state.uiState.filterEntityType);
                 },
@@ -242,8 +243,8 @@ class _EntityListState extends State<EntityList> {
                               value != listUIState.isSelected(invoice.id))
                           .map((entity) => entity as BaseEntity)
                           .toList();
-                      handleEntitiesActions(
-                          context, entities, EntityAction.toggleMultiselect);
+                      handleEntitiesActions(context.getAppContext(), entities,
+                          EntityAction.toggleMultiselect);
                     },
                     columns: [
                       if (!isInMultiselect) DataColumn(label: SizedBox()),
@@ -319,8 +320,8 @@ class _EntityListState extends State<EntityList> {
                                 .map<BaseEntity>(
                                     (entityId) => entityMap[entityId])
                                 .toList();
-                            handleEntitiesActions(context, entities,
-                                EntityAction.toggleMultiselect);
+                            handleEntitiesActions(context.getAppContext(),
+                                entities, EntityAction.toggleMultiselect);
                           },
                           activeColor: Theme.of(context).accentColor,
                           value: entityList.length ==

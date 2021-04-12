@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class ActivityListTile extends StatelessWidget {
   const ActivityListTile({
@@ -53,7 +54,7 @@ class ActivityListTile extends StatelessWidget {
               switch (activity.entityType) {
                 case EntityType.task:
                   viewEntityById(
-                    context: context,
+                    appContext: context.getAppContext(),
                     entityId: activity.taskId,
                     entityType: EntityType.task,
                     filterEntity: client,
@@ -61,13 +62,13 @@ class ActivityListTile extends StatelessWidget {
                   break;
                 case EntityType.client:
                   viewEntityById(
-                      context: context,
+                      appContext: context.getAppContext(),
                       entityId: activity.clientId,
                       entityType: EntityType.client);
                   break;
                 case EntityType.invoice:
                   viewEntityById(
-                    context: context,
+                    appContext: context.getAppContext(),
                     entityId: activity.invoiceId,
                     entityType: EntityType.invoice,
                     filterEntity: client,
@@ -75,7 +76,7 @@ class ActivityListTile extends StatelessWidget {
                   break;
                 case EntityType.quote:
                   viewEntityById(
-                    context: context,
+                    appContext: context.getAppContext(),
                     entityId: activity.quoteId,
                     entityType: EntityType.quote,
                     filterEntity: client,
@@ -83,7 +84,7 @@ class ActivityListTile extends StatelessWidget {
                   break;
                 case EntityType.credit:
                   viewEntityById(
-                    context: context,
+                    appContext: context.getAppContext(),
                     entityId: activity.creditId,
                     entityType: EntityType.credit,
                     filterEntity: client,
@@ -91,7 +92,7 @@ class ActivityListTile extends StatelessWidget {
                   break;
                 case EntityType.payment:
                   viewEntityById(
-                    context: context,
+                    appContext: context.getAppContext(),
                     entityId: activity.paymentId,
                     entityType: EntityType.payment,
                     filterEntity: client,
@@ -99,7 +100,7 @@ class ActivityListTile extends StatelessWidget {
                   break;
                 case EntityType.expense:
                   viewEntityById(
-                    context: context,
+                    appContext: context.getAppContext(),
                     entityId: activity.expenseId,
                     entityType: EntityType.expense,
                     filterEntity: client,

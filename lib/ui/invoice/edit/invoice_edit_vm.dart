@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -96,6 +97,7 @@ class InvoiceEditVM extends EntityEditVM {
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       origInvoice: store.state.invoiceState.map[invoice.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final invoice = store.state.invoiceUIState.editing;
           if (invoice.clientId.isEmpty) {
@@ -103,11 +105,11 @@ class InvoiceEditVM extends EntityEditVM {
                 context: context,
                 builder: (BuildContext context) {
                   return ErrorDialog(
-                      AppLocalization.of(context).pleaseSelectAClient);
+                      appContext.localization.pleaseSelectAClient);
                 });
             return null;
           }
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
           store.dispatch(
               SaveInvoiceRequest(completer: completer, invoice: invoice));
@@ -119,16 +121,17 @@ class InvoiceEditVM extends EntityEditVM {
             if (isMobile(context)) {
               store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
               if (invoice.isNew) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(InvoiceViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedInvoice);
+                appContext.navigator.pop(savedInvoice);
               }
             } else {
               if (action != null) {
-                handleEntityAction(context, savedInvoice, action);
+                handleEntityAction(appContext, savedInvoice, action);
               } else {
-                viewEntity(context: context, entity: savedInvoice, force: true);
+                viewEntity(
+                    appContext: appContext, entity: savedInvoice, force: true);
               }
             }
           }).catchError((Object error) {
