@@ -23,7 +23,7 @@ class KanbanScreen extends StatefulWidget {
 }
 
 class _KanbanScreenState extends State<KanbanScreen> {
-  BoardViewController _boardViewController = new BoardViewController();
+  final _boardViewController = new BoardViewController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +33,16 @@ class _KanbanScreenState extends State<KanbanScreen> {
         .where((status) => status.isActive)
         .toList();
 
-    //statuses.sort((statusA, statusB) => statusA.statusOrder.compareTo(statusB.statusOrder));
+    statuses.sort((statusA, statusB) =>
+        (statusA.statusOrder ?? 9999).compareTo(statusB.statusOrder ?? 9999));
 
     final boardList = statuses.map((status) {
       final items = state.taskState.list
           .map((taskId) => state.taskState.get(taskId))
           .where((task) => task.statusId == status.id)
           .toList();
-      //items.sort((taskA, taskB) => taskA.statusOrder.compareTo(taskB.statusOrder));
+      items.sort((taskA, taskB) =>
+          (taskA.statusOrder ?? 9999).compareTo(taskB.statusOrder ?? 9999));
 
       return BoardList(
         header: [
