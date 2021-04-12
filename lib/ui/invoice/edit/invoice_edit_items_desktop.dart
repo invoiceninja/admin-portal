@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/growable_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
@@ -362,17 +363,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         )),
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: TextFormField(
+                      child: GrowableFormField(
                         key: ValueKey('__line_item_${index}_description__'),
                         initialValue: lineItems[index].notes,
                         onChanged: (value) => viewModel.onChangedInvoiceItem(
                             lineItems[index].rebuild((b) => b..notes = value),
                             index),
                         keyboardType: TextInputType.multiline,
-                        minLines: 1,
-                        maxLines: 6,
-                        //maxLines: _focusNodes[index].hasFocus ? 6 : 1,
-                        //focusNode: _focusNodes[index],
                       ),
                     ),
                     if (company.hasCustomField(CustomFieldType.product1))
