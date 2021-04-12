@@ -55,6 +55,7 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
     Function(int) onRemoveInvoiceItemPressed,
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
+    Function(int, int) onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -65,31 +66,35 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
           clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
           onChangedInvoiceItem: onChangedInvoiceItem,
+          onMovedInvoiceItem: onMovedInvoiceItem,
         );
 
   factory RecurringInvoiceEditItemsVM.fromStore(
       Store<AppState> store, bool isTasks) {
     return RecurringInvoiceEditItemsVM(
-        state: store.state,
-        company: store.state.company,
-        invoice: store.state.recurringInvoiceUIState.editing,
-        invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
-        onRemoveInvoiceItemPressed: (index) =>
-            store.dispatch(DeleteRecurringInvoiceItem(index)),
-        onDoneInvoiceItemPressed: () =>
-            store.dispatch(EditRecurringInvoiceItem()),
-        onChangedInvoiceItem: (item, index) {
-          final invoice = store.state.recurringInvoiceUIState.editing;
-          if (index == invoice.lineItems.length) {
-            store.dispatch(AddRecurringInvoiceItem(
-                invoiceItem: item.rebuild((b) => b
-                  ..typeId = isTasks
-                      ? InvoiceItemEntity.TYPE_TASK
-                      : InvoiceItemEntity.TYPE_STANDARD)));
-          } else {
-            store
-                .dispatch(UpdateRecurringInvoiceItem(item: item, index: index));
-          }
-        });
+      state: store.state,
+      company: store.state.company,
+      invoice: store.state.recurringInvoiceUIState.editing,
+      invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
+      onRemoveInvoiceItemPressed: (index) =>
+          store.dispatch(DeleteRecurringInvoiceItem(index)),
+      onDoneInvoiceItemPressed: () =>
+          store.dispatch(EditRecurringInvoiceItem()),
+      onChangedInvoiceItem: (item, index) {
+        final invoice = store.state.recurringInvoiceUIState.editing;
+        if (index == invoice.lineItems.length) {
+          store.dispatch(AddRecurringInvoiceItem(
+              invoiceItem: item.rebuild((b) => b
+                ..typeId = isTasks
+                    ? InvoiceItemEntity.TYPE_TASK
+                    : InvoiceItemEntity.TYPE_STANDARD)));
+        } else {
+          store.dispatch(UpdateRecurringInvoiceItem(item: item, index: index));
+        }
+      },
+      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
+        MoveRecurringInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
+      ),
+    );
   }
 }

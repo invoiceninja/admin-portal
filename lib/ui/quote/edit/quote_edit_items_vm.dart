@@ -53,6 +53,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
     Function(int) onRemoveInvoiceItemPressed,
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
+    Function(int, int) onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -63,24 +64,29 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
           clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
           onChangedInvoiceItem: onChangedInvoiceItem,
+          onMovedInvoiceItem: onMovedInvoiceItem,
         );
 
   factory QuoteEditItemsVM.fromStore(Store<AppState> store) {
     return QuoteEditItemsVM(
-        state: store.state,
-        company: store.state.company,
-        invoice: store.state.quoteUIState.editing,
-        invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
-        onRemoveInvoiceItemPressed: (index) =>
-            store.dispatch(DeleteQuoteItem(index)),
-        onDoneInvoiceItemPressed: () => store.dispatch(EditQuoteItem()),
-        onChangedInvoiceItem: (quoteItem, index) {
-          final quote = store.state.quoteUIState.editing;
-          if (index == quote.lineItems.length) {
-            store.dispatch(AddQuoteItem(quoteItem: quoteItem));
-          } else {
-            store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
-          }
-        });
+      state: store.state,
+      company: store.state.company,
+      invoice: store.state.quoteUIState.editing,
+      invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
+      onRemoveInvoiceItemPressed: (index) =>
+          store.dispatch(DeleteQuoteItem(index)),
+      onDoneInvoiceItemPressed: () => store.dispatch(EditQuoteItem()),
+      onChangedInvoiceItem: (quoteItem, index) {
+        final quote = store.state.quoteUIState.editing;
+        if (index == quote.lineItems.length) {
+          store.dispatch(AddQuoteItem(quoteItem: quoteItem));
+        } else {
+          store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
+        }
+      },
+      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
+        MoveQuoteItem(oldIndex: oldIndex, newIndex: newIndex),
+      ),
+    );
   }
 }

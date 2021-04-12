@@ -217,6 +217,22 @@ abstract class InvoiceEntity extends Object
   @memoized
   int get hashCode;
 
+  InvoiceEntity moveLineItem(int oldIndex, int newIndex) {
+    final lineItem = lineItems[oldIndex];
+    InvoiceEntity invoice = rebuild((b) => b..lineItems.removeAt(oldIndex));
+    invoice = invoice.rebuild((b) => b
+      ..lineItems.replace(<InvoiceItemEntity>[
+        ...invoice.lineItems.sublist(0, newIndex),
+        lineItem,
+        ...invoice.lineItems.sublist(
+          newIndex,
+          invoice.lineItems.length,
+        )
+      ])
+      ..isChanged = true);
+    return invoice;
+  }
+
   InvoiceEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isChanged = false

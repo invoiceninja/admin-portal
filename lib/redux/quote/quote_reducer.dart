@@ -79,6 +79,9 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, AddQuoteItem>((invoice, action) {
     return invoice.rebuild((b) => b..isChanged = true);
   }),
+  TypedReducer<InvoiceEntity, MoveQuoteItem>((invoice, action) {
+    return invoice.moveLineItem(action.oldIndex, action.newIndex);
+  }),
   TypedReducer<InvoiceEntity, DeleteQuoteItem>((invoice, action) {
     return invoice.rebuild((b) => b..isChanged = true);
   }),

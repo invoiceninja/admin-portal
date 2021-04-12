@@ -162,6 +162,16 @@ class AddInvoiceItem implements PersistUI {
   final InvoiceItemEntity invoiceItem;
 }
 
+class MoveInvoiceItem implements PersistUI {
+  MoveInvoiceItem({
+    this.oldIndex,
+    this.newIndex,
+  });
+
+  final int oldIndex;
+  final int newIndex;
+}
+
 class AddInvoiceItems implements PersistUI {
   AddInvoiceItems(this.lineItems);
 

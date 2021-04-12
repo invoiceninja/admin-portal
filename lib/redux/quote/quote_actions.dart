@@ -165,6 +165,16 @@ class AddQuoteItem implements PersistUI {
   final InvoiceItemEntity quoteItem;
 }
 
+class MoveQuoteItem implements PersistUI {
+  MoveQuoteItem({
+    this.oldIndex,
+    this.newIndex,
+  });
+
+  final int oldIndex;
+  final int newIndex;
+}
+
 class AddQuoteItems implements PersistUI {
   AddQuoteItems(this.quoteItems);
 
