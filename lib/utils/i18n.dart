@@ -60190,231 +60190,151 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['new_subscription'] ?? '';
 
   String get createdSubscription =>
-      _localizedValues[localeCode]['created_subscription'] ??
-      _localizedValues['en']['created_subscription'];
+      _localizedValues[localeCode]['created_subscription'] ?? '';
 
   String get updatedSubscription =>
-      _localizedValues[localeCode]['updated_subscription'] ??
-      _localizedValues['en']['updated_subscription'];
+      _localizedValues[localeCode]['updated_subscription'] ?? '';
 
   String get archivedSubscription =>
-      _localizedValues[localeCode]['archived_subscription'] ??
-      _localizedValues['en']['archived_subscription'];
+      _localizedValues[localeCode]['archived_subscription'] ?? '';
 
   String get deletedSubscription =>
-      _localizedValues[localeCode]['deleted_subscription'] ??
-      _localizedValues['en']['deleted_subscription'];
+      _localizedValues[localeCode]['deleted_subscription'] ?? '';
 
   String get restoredSubscription =>
-      _localizedValues[localeCode]['restored_subscription'] ??
-      _localizedValues['en']['restored_subscription'];
+      _localizedValues[localeCode]['restored_subscription'] ?? '';
 
   String get editSubscription =>
-      _localizedValues[localeCode]['edit_subscription'] ??
-      _localizedValues['en']['edit_subscription'];
+      _localizedValues[localeCode]['edit_subscription'] ?? '';
 
   String get searchSubscription =>
-      _localizedValues[localeCode]['search_subscription'] ??
-      _localizedValues['en']['search_subscription'];
+      _localizedValues[localeCode]['search_subscription'] ?? '';
 
   String get searchSubscriptions =>
-      _localizedValues[localeCode]['search_subscriptions'] ??
-      _localizedValues['en']['search_subscriptions'];
+      _localizedValues[localeCode]['search_subscriptions'] ?? '';
 
-  String get security =>
-      _localizedValues[localeCode]['security'] ??
-      _localizedValues['en']['security'];
+  String get security => _localizedValues[localeCode]['security'] ?? '';
 
   String get emailBounced =>
-      _localizedValues[localeCode]['email_bounced'] ??
-      _localizedValues['en']['email_bounced'];
+      _localizedValues[localeCode]['email_bounced'] ?? '';
 
   String get emailSpamComplaint =>
-      _localizedValues[localeCode]['email_spam_complaint'] ??
-      _localizedValues['en']['email_spam_complaint'];
+      _localizedValues[localeCode]['email_spam_complaint'] ?? '';
 
   String get emailDelivery =>
-      _localizedValues[localeCode]['email_delivery'] ??
-      _localizedValues['en']['email_delivery'];
+      _localizedValues[localeCode]['email_delivery'] ?? '';
 
   String get webhookResponse =>
-      _localizedValues[localeCode]['webhook_response'] ??
-      _localizedValues['en']['webhook_response'];
+      _localizedValues[localeCode]['webhook_response'] ?? '';
 
-  String get pdfResponse =>
-      _localizedValues[localeCode]['pdf_response'] ??
-      _localizedValues['en']['pdf_response'];
+  String get pdfResponse => _localizedValues[localeCode]['pdf_response'] ?? '';
 
   String get authenticationFailure =>
-      _localizedValues[localeCode]['authentication_failure'] ??
-      _localizedValues['en']['authentication_failure'];
+      _localizedValues[localeCode]['authentication_failure'] ?? '';
 
-  String get pdfFailed =>
-      _localizedValues[localeCode]['pdf_failed'] ??
-      _localizedValues['en']['pdf_failed'];
+  String get pdfFailed => _localizedValues[localeCode]['pdf_failed'] ?? '';
 
-  String get pdfSuccess =>
-      _localizedValues[localeCode]['pdf_success'] ??
-      _localizedValues['en']['pdf_success'];
+  String get pdfSuccess => _localizedValues[localeCode]['pdf_success'] ?? '';
 
-  String get modified =>
-      _localizedValues[localeCode]['modified'] ??
-      _localizedValues['en']['modified'];
+  String get modified => _localizedValues[localeCode]['modified'] ?? '';
 
   String get recurringProducts =>
-      _localizedValues[localeCode]['recurring_products'] ??
-      _localizedValues['en']['recurring_products'];
+      _localizedValues[localeCode]['recurring_products'] ?? '';
 
-  String get promoCode =>
-      _localizedValues[localeCode]['promo_code'] ??
-      _localizedValues['en']['promo_code'];
+  String get promoCode => _localizedValues[localeCode]['promo_code'] ?? '';
 
   String get promoDiscount =>
-      _localizedValues[localeCode]['promo_discount'] ??
-      _localizedValues['en']['promo_discount'];
+      _localizedValues[localeCode]['promo_discount'] ?? '';
 
   String get allowCancellation =>
-      _localizedValues[localeCode]['allow_cancellation'] ??
-      _localizedValues['en']['allow_cancellation'];
+      _localizedValues[localeCode]['allow_cancellation'] ?? '';
 
   String get perSeatEnabled =>
-      _localizedValues[localeCode]['per_seat_enabled'] ??
-      _localizedValues['en']['per_seat_enabled'];
+      _localizedValues[localeCode]['per_seat_enabled'] ?? '';
 
   String get maxSeatsLimit =>
-      _localizedValues[localeCode]['max_seats_limit'] ??
-      _localizedValues['en']['max_seats_limit'];
+      _localizedValues[localeCode]['max_seats_limit'] ?? '';
 
   String get trialEnabled =>
-      _localizedValues[localeCode]['trial_enabled'] ??
-      _localizedValues['en']['trial_enabled'];
+      _localizedValues[localeCode]['trial_enabled'] ?? '';
 
   String get trialDuration =>
-      _localizedValues[localeCode]['trial_duration'] ??
-      _localizedValues['en']['trial_duration'];
+      _localizedValues[localeCode]['trial_duration'] ?? '';
 
   String get allowQueryOverrides =>
-      _localizedValues[localeCode]['allow_query_overrides'] ??
-      _localizedValues['en']['allow_query_overrides'];
+      _localizedValues[localeCode]['allow_query_overrides'] ?? '';
 
   String get allowPlanChanges =>
-      _localizedValues[localeCode]['allow_plan_changes'] ??
-      _localizedValues['en']['allow_plan_changes'];
+      _localizedValues[localeCode]['allow_plan_changes'] ?? '';
 
-  String get planMap =>
-      _localizedValues[localeCode]['plan_map'] ??
-      _localizedValues['en']['plan_map'];
+  String get planMap => _localizedValues[localeCode]['plan_map'] ?? '';
 
   String get refundPeriod =>
-      _localizedValues[localeCode]['refund_period'] ??
-      _localizedValues['en']['refund_period'];
+      _localizedValues[localeCode]['refund_period'] ?? '';
 
   String get webhookConfiguration =>
-      _localizedValues[localeCode]['webhook_configuration'] ??
-      _localizedValues['en']['webhook_configuration'];
+      _localizedValues[localeCode]['webhook_configuration'] ?? '';
 
   String get purchasePage =>
-      _localizedValues[localeCode]['purchase_page'] ??
-      _localizedValues['en']['purchase_page'];
+      _localizedValues[localeCode]['purchase_page'] ?? '';
 
-  String get returnUrl =>
-      _localizedValues[localeCode]['return_url'] ??
-      _localizedValues['en']['return_url'];
+  String get returnUrl => _localizedValues[localeCode]['return_url'] ?? '';
 
-  String get restMethod =>
-      _localizedValues[localeCode]['rest_method'] ??
-      _localizedValues['en']['rest_method'];
+  String get restMethod => _localizedValues[localeCode]['rest_method'] ?? '';
 
-  String get headerKey =>
-      _localizedValues[localeCode]['header_key'] ??
-      _localizedValues['en']['header_key'];
+  String get headerKey => _localizedValues[localeCode]['header_key'] ?? '';
 
   String get invoicePaymentTerms =>
-      _localizedValues[localeCode]['invoice_payment_terms'] ??
-      _localizedValues['en']['invoice_payment_terms'];
+      _localizedValues[localeCode]['invoice_payment_terms'] ?? '';
 
   String get quoteValidUntil =>
-      _localizedValues[localeCode]['quote_valid_until'] ??
-      _localizedValues['en']['quote_valid_until'];
+      _localizedValues[localeCode]['quote_valid_until'] ?? '';
 
-  String get headerValue =>
-      _localizedValues[localeCode]['header_value'] ??
-      _localizedValues['en']['header_value'];
+  String get headerValue => _localizedValues[localeCode]['header_value'] ?? '';
 
-  String get addHeader =>
-      _localizedValues[localeCode]['add_header'] ??
-      _localizedValues['en']['add_header'];
+  String get addHeader => _localizedValues[localeCode]['add_header'] ?? '';
 
   String get removeHeader =>
-      _localizedValues[localeCode]['remove_header'] ??
-      _localizedValues['en']['remove_header'];
+      _localizedValues[localeCode]['remove_header'] ?? '';
 
-  String get noHeaders =>
-      _localizedValues[localeCode]['no_headers'] ??
-      _localizedValues['en']['no_headers'];
+  String get noHeaders => _localizedValues[localeCode]['no_headers'] ?? '';
 
   String get upgradeToPaidPlan =>
-      _localizedValues[localeCode]['upgrade_to_paid_plan'] ??
-      _localizedValues['en']['upgrade_to_paid_plan'];
+      _localizedValues[localeCode]['upgrade_to_paid_plan'] ?? '';
 
-  String get pageLayout =>
-      _localizedValues[localeCode]['page_layout'] ??
-      _localizedValues['en']['page_layout'];
+  String get pageLayout => _localizedValues[localeCode]['page_layout'] ?? '';
 
-  String get portrait =>
-      _localizedValues[localeCode]['portrait'] ??
-      _localizedValues['en']['portrait'];
+  String get portrait => _localizedValues[localeCode]['portrait'] ?? '';
 
-  String get landscape =>
-      _localizedValues[localeCode]['landscape'] ??
-      _localizedValues['en']['landscape'];
+  String get landscape => _localizedValues[localeCode]['landscape'] ?? '';
 
-  String get letter =>
-      _localizedValues[localeCode]['letter'] ??
-      _localizedValues['en']['letter'];
+  String get letter => _localizedValues[localeCode]['letter'] ?? '';
 
-  String get legal =>
-      _localizedValues[localeCode]['legal'] ?? _localizedValues['en']['legal'];
+  String get legal => _localizedValues[localeCode]['legal'] ?? '';
 
-  String get isViewed =>
-      _localizedValues[localeCode]['is_viewed'] ??
-      _localizedValues['en']['is_viewed'];
+  String get isViewed => _localizedValues[localeCode]['is_viewed'] ?? '';
 
   String get viewDateFormats =>
-      _localizedValues[localeCode]['view_date_formats'] ??
-      _localizedValues['en']['view_date_formats'];
+      _localizedValues[localeCode]['view_date_formats'] ?? '';
 
   String get addBodyVariableMessage =>
-      _localizedValues[localeCode]['add_body_variable_message'] ??
-      _localizedValues['en']['add_body_variable_message'];
+      _localizedValues[localeCode]['add_body_variable_message'] ?? '';
 
   String get bodyVariableMissing =>
-      _localizedValues[localeCode]['body_variable_missing'] ??
-      _localizedValues['en']['body_variable_missing'];
+      _localizedValues[localeCode]['body_variable_missing'] ?? '';
 
   String get subdomainHelp =>
-      _localizedValues[localeCode]['subdomain_help'] ??
-      _localizedValues['en']['subdomain_help'];
+      _localizedValues[localeCode]['subdomain_help'] ?? '';
 
-  String get moveTop =>
-      _localizedValues[localeCode]['move_top'] ??
-      _localizedValues['en']['move_top'];
+  String get moveTop => _localizedValues[localeCode]['move_top'] ?? '';
 
-  String get moveUp =>
-      _localizedValues[localeCode]['move_up'] ??
-      _localizedValues['en']['move_up'];
+  String get moveUp => _localizedValues[localeCode]['move_up'] ?? '';
 
-  String get moveDown =>
-      _localizedValues[localeCode]['move_down'] ??
-      _localizedValues['en']['move_down'];
+  String get moveDown => _localizedValues[localeCode]['move_down'] ?? '';
 
-  String get moveBottom =>
-      _localizedValues[localeCode]['move_bottom'] ??
-      _localizedValues['en']['move_bottom'];
+  String get moveBottom => _localizedValues[localeCode]['move_bottom'] ?? '';
 
-  String get enable =>
-      _localizedValues[localeCode]['enable'] ??
-      _localizedValues['en']['enable'];
+  String get enable => _localizedValues[localeCode]['enable'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
