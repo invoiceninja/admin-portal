@@ -51,6 +51,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final company = state.company;
     final invoice = viewModel.invoice;
     final lineItems = invoice.lineItems.toList();
+    final includedLineItems = lineItems.where((lineItem) {
+      return (lineItem.typeId == InvoiceItemEntity.TYPE_TASK &&
+              widget.isTasks) ||
+          (lineItem.typeId != InvoiceItemEntity.TYPE_TASK && !widget.isTasks) ||
+          lineItem.isEmpty;
+    }).toList();
     final productState = state.productState;
     final productIds = memoizedDropdownProductList(
         productState.map, productState.list, state.userState.map);
@@ -544,30 +550,20 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         textAlign: TextAlign.right,
                       ),
                     ),
-                    /*
-                    IconButton(
-                      icon: Icon(Icons.clear),
-                      tooltip: localization.remove,
-                      onPressed: lineItems[index].isEmpty
-                          ? null
-                          : () {
-                              viewModel.onRemoveInvoiceItemPressed(index);
-                              _updateTable();
-                            },
-                    ),
-                    */
                     PopupMenuButton<String>(
                       icon: Icon(Icons.more_vert),
                       enabled: !lineItems[index].isEmpty,
                       itemBuilder: (BuildContext context) {
+                        final sectionIndex =
+                            includedLineItems.indexOf(lineItems[index]);
                         final options = {
-                          if (index > 0)
+                          if (sectionIndex > 0)
                             localization.moveTop: MdiIcons.chevronDoubleUp,
-                          if (index > 1)
+                          if (sectionIndex > 1)
                             localization.moveUp: MdiIcons.chevronUp,
-                          if (index < lineItems.length - 3)
+                          if (sectionIndex < includedLineItems.length - 2)
                             localization.moveDown: MdiIcons.chevronDown,
-                          if (index < lineItems.length - 2)
+                          if (sectionIndex < includedLineItems.length - 1)
                             localization.moveBottom: MdiIcons.chevronDoubleDown,
                           localization.remove: Icons.clear,
                         };
