@@ -22,8 +22,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'move_bottom': 'Move Bottom',
       'subdomain_help': 'Lowercase letters, numbers and hyphens are supported',
       'body_variable_missing':
-          'Error: the custom email must include a \$body variable',
-      'add_body_variable_message': 'Make sure to include a \$body variable',
+          'Error: the custom email must include a :body variable',
+      'add_body_variable_message': 'Make sure to include a :body variable',
       'view_date_formats': 'View Date Formats',
       'is_viewed': 'Is Viewed',
       'letter': 'Letter',
