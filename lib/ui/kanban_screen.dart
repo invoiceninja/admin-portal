@@ -1,3 +1,4 @@
+import 'package:boardview/board_item.dart';
 import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
@@ -27,10 +28,21 @@ class _KanbanScreenState extends State<KanbanScreen> {
   @override
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
-    final boardList = state.taskStatusState.list
+
+    final statuses = state.taskStatusState.list
         .map((statusId) => state.taskStatusState.get(statusId))
         .where((status) => status.isActive)
-        .map((status) {
+        .toList();
+
+    //statuses.sort((statusA, statusB) => statusA.statusOrder.compareTo(statusB.statusOrder));
+
+    final boardList = statuses.map((status) {
+      final items = state.taskState.list
+          .map((taskId) => state.taskState.get(taskId))
+          .where((task) => task.statusId == status.id)
+          .toList();
+      //items.sort((taskA, taskB) => taskA.statusOrder.compareTo(taskB.statusOrder));
+
       return BoardList(
         header: [
           Expanded(
@@ -40,6 +52,18 @@ class _KanbanScreenState extends State<KanbanScreen> {
             ),
           ),
         ],
+        items: items
+            .map(
+              (task) => BoardItem(
+                item: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(task.description),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
       );
     }).toList();
 
