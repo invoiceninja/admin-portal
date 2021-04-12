@@ -41,6 +41,12 @@ abstract class SettingsEntity
       emailSubjectCustom3: clientSettings?.emailSubjectCustom3 ??
           groupSettings?.emailSubjectCustom3 ??
           companySettings?.emailSubjectCustom3,
+      defaultPaymentTerms: clientSettings?.defaultPaymentTerms ??
+          groupSettings?.defaultPaymentTerms ??
+          companySettings?.defaultPaymentTerms,
+      defaultValidUntil: clientSettings?.defaultValidUntil ??
+          groupSettings?.defaultValidUntil ??
+          companySettings?.defaultValidUntil,
     );
   }
 

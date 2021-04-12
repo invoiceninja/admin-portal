@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class DatePicker extends StatefulWidget {
@@ -15,6 +16,7 @@ class DatePicker extends StatefulWidget {
     this.validator,
     this.autoValidate = false,
     this.allowClearing = false,
+    this.message,
     this.firstDate,
   }) : super(key: key);
 
@@ -24,6 +26,7 @@ class DatePicker extends StatefulWidget {
   final Function validator;
   final bool autoValidate;
   final bool allowClearing;
+  final String message;
   final DateTime firstDate;
 
   @override
@@ -43,7 +46,11 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   void didChangeDependencies() {
-    _textController.text = formatDate(widget.selectedDate, context);
+    if (widget.message != null && (widget.selectedDate ?? '').isEmpty) {
+      _textController.text = widget.message;
+    } else {
+      _textController.text = formatDate(widget.selectedDate, context);
+    }
 
     super.didChangeDependencies();
   }
