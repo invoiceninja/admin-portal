@@ -324,10 +324,17 @@ Future<Response> _loadPDF(
   }
 
   if (response.statusCode >= 400) {
-    showErrorDialog(
-        context: context,
-        message: '${response.statusCode}: ${response.reasonPhrase}');
-    throw '${response.statusCode}: ${response.reasonPhrase}';
+    String errorMessage =
+        '${response.statusCode}: ${response.reasonPhrase}\n\n';
+
+    try {
+      errorMessage += jsonDecode(response.body)['message'];
+    } catch (error) {
+      errorMessage += response.body;
+    }
+
+    showErrorDialog(context: context, message: errorMessage);
+    throw errorMessage;
   }
 
   return response;

@@ -86,11 +86,14 @@ class Debouncer {
     });
   }
 
-  static void runOnComplete(Function callback) {
+  static void complete() {
     if (Debouncer.action != null) {
       Debouncer.action();
     }
+  }
 
+  static void runOnComplete(Function callback) {
+    complete();
     callback();
   }
 }

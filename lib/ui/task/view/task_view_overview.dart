@@ -61,7 +61,7 @@ class _TaskOverviewState extends State<TaskOverview> {
 
     final Map<String, String> fields = {
       TaskFields.rate: formatNumber(task.rate, context,
-          zeroIsNull: true, clientId: client.id),
+          zeroIsNull: true, clientId: client?.id),
     };
 
     if ((task.statusId ?? '').isNotEmpty) {
@@ -108,7 +108,7 @@ class _TaskOverviewState extends State<TaskOverview> {
               ),
             ),
             context,
-            clientId: client.id,
+            clientId: client?.id,
           ),
         ),
         ListDivider(),
