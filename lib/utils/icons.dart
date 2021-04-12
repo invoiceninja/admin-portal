@@ -121,6 +121,8 @@ IconData getEntityIcon(EntityType entityType) {
       return MdiIcons.label;
     case EntityType.subscription:
       return MdiIcons.shopping;
+    case EntityType.kanban:
+      return MdiIcons.abacus;
     default:
       return MdiIcons.crosshairsQuestion;
   }
