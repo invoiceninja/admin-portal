@@ -275,6 +275,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
               ? Icons.check_circle_outline
               : Icons.error_outline),
       onChanged: (value) => _validateSubdomain(),
+      hint: localization.subdomainHelp,
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp(r'[a-z0-9\-]')),
       ],

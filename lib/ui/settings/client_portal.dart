@@ -250,6 +250,11 @@ class _ClientPortalState extends State<ClientPortal>
                     DecoratedFormField(
                       label: localization.subdomain,
                       controller: _subdomainController,
+                      hint: localization.subdomainHelp,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-z0-9\-]')),
+                      ],
                     ),
                   ],
                 ),
