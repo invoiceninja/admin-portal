@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.0"
+  boardview:
+    dependency: "direct main"
+    description:
+      name: boardview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   boolean_selector:
     dependency: transitive
     description:

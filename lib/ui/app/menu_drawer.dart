@@ -386,7 +386,8 @@ class MenuDrawer extends StatelessWidget {
                             iconTooltip: localization.newExpense,
                           ),
                           // STARTER: menu - do not remove comment
-                          if (!kReleaseMode)
+                          if (!kReleaseMode &&
+                              company.isModuleEnabled(EntityType.task))
                             DrawerTile(
                               company: company,
                               icon: getEntityIcon(EntityType.kanban),
