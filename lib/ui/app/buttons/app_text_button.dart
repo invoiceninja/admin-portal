@@ -7,11 +7,13 @@ class AppTextButton extends StatelessWidget {
     this.label,
     this.onPressed,
     this.isInHeader = false,
+    this.color,
   });
 
   final String label;
   final Function onPressed;
   final bool isInHeader;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,13 @@ class AppTextButton extends StatelessWidget {
           style: TextStyle(
             color: onPressed == null
                 ? null
-                : isInHeader
-                    ? state.headerTextColor
-                    : state.prefState.enableDarkMode
-                        ? Colors.white
-                        : Colors.black,
+                : color != null
+                    ? color
+                    : isInHeader
+                        ? state.headerTextColor
+                        : state.prefState.enableDarkMode
+                            ? Colors.white
+                            : Colors.black,
           ),
         ),
       ),
