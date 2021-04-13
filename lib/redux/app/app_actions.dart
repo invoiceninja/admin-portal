@@ -354,7 +354,7 @@ void viewEntitiesByType({
             store.dispatch(ViewRecurringInvoiceList(navigator: navigator));
             break;
           case EntityType.webhook:
-            store.dispatch(ViewWebhookList(navigator: navigator));
+            store.dispatch(ViewWebhookList());
             break;
           case EntityType.token:
             store.dispatch(ViewTokenList(navigator: navigator));
@@ -589,7 +589,6 @@ void viewEntityById({
           case EntityType.webhook:
             store.dispatch(ViewWebhook(
               webhookId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -832,7 +831,6 @@ void createEntityByType({
             break;
           case EntityType.webhook:
             store.dispatch(EditWebhook(
-              navigator: navigator,
               force: force,
               webhook: WebhookEntity(state: state),
             ));
@@ -1056,7 +1054,6 @@ void createEntity({
 
           case EntityType.webhook:
             store.dispatch(EditWebhook(
-              navigator: navigator,
               webhook: entity,
               force: force,
               completer: completer,
@@ -1262,7 +1259,6 @@ void editEntity(
           case EntityType.webhook:
             store.dispatch(EditWebhook(
               webhook: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
@@ -46,8 +46,8 @@ Middleware<AppState> _editWebhook() {
 
     store.dispatch(UpdateCurrentRoute(WebhookEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(WebhookEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(WebhookEditScreen.route);
     }
   };
 }
@@ -61,8 +61,8 @@ Middleware<AppState> _viewWebhook() {
 
     store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(WebhookViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(WebhookViewScreen.route);
     }
   };
 }
@@ -79,8 +79,8 @@ Middleware<AppState> _viewWebhookList() {
 
     store.dispatch(UpdateCurrentRoute(WebhookScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           WebhookScreen.route, (Route<dynamic> route) => false);
     }
   };
