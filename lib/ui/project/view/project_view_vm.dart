@@ -90,7 +90,10 @@ class ProjectViewVM {
               context, [project], EntityAction.newEntityType(entityType));
         } else {
           viewEntitiesByType(
-              context: context, entityType: entityType, filterEntity: project);
+            appContext: context.getAppContext(),
+            entityType: entityType,
+            filterEntity: project,
+          );
         }
       },
       onAddTaskPressed: (context) {

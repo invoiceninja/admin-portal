@@ -254,18 +254,18 @@ void filterByEntity({
 }
 
 void viewEntitiesByType({
-  @required BuildContext context,
+  @required AppContext appContext,
   @required EntityType entityType,
   BaseEntity filterEntity,
 }) {
-  final store = StoreProvider.of<AppState>(context);
+  final store = appContext.store;
+  final navigator = appContext.navigator;
   final uiState = store.state.uiState;
-  final navigator = Navigator.of(context);
   dynamic action;
 
   checkForChanges(
       store: store,
-      context: context,
+      context: appContext.buildContext,
       callback: () {
         if (filterEntity != null) {
           if (uiState.filterEntityType != filterEntity.entityType ||

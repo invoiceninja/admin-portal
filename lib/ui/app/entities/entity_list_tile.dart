@@ -165,7 +165,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
   bool _isHovered = false;
 
   void _onTap(BuildContext context) => viewEntitiesByType(
-      context: context,
+      appContext: context.getAppContext(),
       entityType: widget.entityType,
       filterEntity: widget.entity);
 

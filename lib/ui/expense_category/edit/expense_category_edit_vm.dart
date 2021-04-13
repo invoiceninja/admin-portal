@@ -96,7 +96,7 @@ class ExpenseCategoryEditVM {
               }
             } else {
               viewEntity(
-                  appContext: context.getAppContext(),
+                  appContext: appContext,
                   entity: savedExpenseCategory,
                   force: true);
             }

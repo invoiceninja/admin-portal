@@ -103,7 +103,7 @@ class EntityTopFilter extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     viewEntitiesByType(
-                                      context: context,
+                                      appContext: context.getAppContext(),
                                       entityType: relatedTypes[i],
                                       filterEntity: filterEntity,
                                     );
@@ -159,7 +159,7 @@ class EntityTopFilter extends StatelessWidget {
                                   );
                                 } else {
                                   viewEntitiesByType(
-                                    context: context,
+                                    appContext: context.getAppContext(),
                                     entityType: value,
                                     filterEntity: filterEntity,
                                   );
