@@ -1655,6 +1655,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
           ':user emailed third reminder for invoice :invoice to :contact',
       'activity_66':
           ':user emailed endless reminder for invoice :invoice to :contact',
+      'activity_80': ':user created subscription',
+      'activity_81': ':user updated subscription',
+      'activity_82': ':user archived subscription',
+      'activity_83': ':user deleted subscription',
+      'activity_84': ':user restored subscription',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
       'emailed_credit': 'Successfully emailed credit',
@@ -56961,124 +56966,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get project => _localizedValues[localeCode]['project'] ?? '';
 
   String get projects => _localizedValues[localeCode]['projects'] ?? '';
-
-  String get activity_1 => _localizedValues[localeCode]['activity_1'] ?? '';
-
-  String get activity_2 => _localizedValues[localeCode]['activity_2'] ?? '';
-
-  String get activity_3 => _localizedValues[localeCode]['activity_3'] ?? '';
-
-  String get activity_4 => _localizedValues[localeCode]['activity_4'] ?? '';
-
-  String get activity_5 => _localizedValues[localeCode]['activity_5'] ?? '';
-
-  String get activity_6 => _localizedValues[localeCode]['activity_6'] ?? '';
-
-  String get activity_7 => _localizedValues[localeCode]['activity_7'] ?? '';
-
-  String get activity_8 => _localizedValues[localeCode]['activity_8'] ?? '';
-
-  String get activity_9 => _localizedValues[localeCode]['activity_9'] ?? '';
-
-  String get activity_10 => _localizedValues[localeCode]['activity_10'] ?? '';
-
-  String get activity_11 => _localizedValues[localeCode]['activity_11'] ?? '';
-
-  String get activity_12 => _localizedValues[localeCode]['activity_12'] ?? '';
-
-  String get activity_13 => _localizedValues[localeCode]['activity_13'] ?? '';
-
-  String get activity_14 => _localizedValues[localeCode]['activity_14'] ?? '';
-
-  String get activity_15 => _localizedValues[localeCode]['activity_15'] ?? '';
-
-  String get activity_16 => _localizedValues[localeCode]['activity_16'] ?? '';
-
-  String get activity_17 => _localizedValues[localeCode]['activity_17'] ?? '';
-
-  String get activity_18 => _localizedValues[localeCode]['activity_18'] ?? '';
-
-  String get activity_19 => _localizedValues[localeCode]['activity_19'] ?? '';
-
-  String get activity_20 => _localizedValues[localeCode]['activity_20'] ?? '';
-
-  String get activity_21 => _localizedValues[localeCode]['activity_21'] ?? '';
-
-  String get activity_22 => _localizedValues[localeCode]['activity_22'] ?? '';
-
-  String get activity_23 => _localizedValues[localeCode]['activity_23'] ?? '';
-
-  String get activity_24 => _localizedValues[localeCode]['activity_24'] ?? '';
-
-  String get activity_25 => _localizedValues[localeCode]['activity_25'] ?? '';
-
-  String get activity_26 => _localizedValues[localeCode]['activity_26'] ?? '';
-
-  String get activity_27 => _localizedValues[localeCode]['activity_27'] ?? '';
-
-  String get activity_28 => _localizedValues[localeCode]['activity_28'] ?? '';
-
-  String get activity_29 => _localizedValues[localeCode]['activity_29'] ?? '';
-
-  String get activity_30 => _localizedValues[localeCode]['activity_30'] ?? '';
-
-  String get activity_31 => _localizedValues[localeCode]['activity_31'] ?? '';
-
-  String get activity_32 => _localizedValues[localeCode]['activity_32'] ?? '';
-
-  String get activity_33 => _localizedValues[localeCode]['activity_33'] ?? '';
-
-  String get activity_34 => _localizedValues[localeCode]['activity_34'] ?? '';
-
-  String get activity_35 => _localizedValues[localeCode]['activity_35'] ?? '';
-
-  String get activity_36 => _localizedValues[localeCode]['activity_36'] ?? '';
-
-  String get activity_37 => _localizedValues[localeCode]['activity_37'] ?? '';
-
-  String get activity_38 => _localizedValues[localeCode]['activity_38'] ?? '';
-
-  String get activity_39 => _localizedValues[localeCode]['activity_39'] ?? '';
-
-  String get activity_40 => _localizedValues[localeCode]['activity_40'] ?? '';
-
-  String get activity_41 => _localizedValues[localeCode]['activity_41'] ?? '';
-
-  String get activity_42 => _localizedValues[localeCode]['activity_42'] ?? '';
-
-  String get activity_43 => _localizedValues[localeCode]['activity_43'] ?? '';
-
-  String get activity_44 => _localizedValues[localeCode]['activity_44'] ?? '';
-
-  String get activity_45 => _localizedValues[localeCode]['activity_45'] ?? '';
-
-  String get activity_46 => _localizedValues[localeCode]['activity_46'] ?? '';
-
-  String get activity_47 => _localizedValues[localeCode]['activity_47'] ?? '';
-
-  String get activity_48 => _localizedValues[localeCode]['activity_48'] ?? '';
-
-  String get activity_79 => _localizedValues[localeCode]['activity_49'] ?? '';
-
-  String get activity_50 => _localizedValues[localeCode]['activity_50'] ?? '';
-
-  String get activity_51 => _localizedValues[localeCode]['activity_51'] ?? '';
-
-  String get activity_52 => _localizedValues[localeCode]['activity_52'] ?? '';
-
-  String get activity_53 => _localizedValues[localeCode]['activity_53'] ?? '';
-
-  String get activity_54 => _localizedValues[localeCode]['activity_54'] ?? '';
-
-  String get activity_55 => _localizedValues[localeCode]['activity_55'] ?? '';
-
-  String get activity_56 => _localizedValues[localeCode]['activity_56'] ?? '';
-
-  String get activity_57 => _localizedValues[localeCode]['activity_57'] ?? '';
-
-  String get activity_58 => _localizedValues[localeCode]['activity_58'] ?? '';
-
-  String get activity_59 => _localizedValues[localeCode]['activity_59'] ?? '';
 
   String get oneTimePassword =>
       _localizedValues[localeCode]['one_time_password'] ?? '';
