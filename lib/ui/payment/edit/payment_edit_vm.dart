@@ -97,7 +97,7 @@ class PaymentEditVM {
             showToast(payment.isNew
                 ? localization.createdPayment
                 : localization.updatedPayment);
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
               if (payment.isNew) {
                 appContext.navigator

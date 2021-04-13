@@ -79,7 +79,7 @@ class StubEditVM {
           showToast(stub.isNew
                 ? localization.createdStub
                 : localization.updatedStub);
-          if (isMobile(context)) {
+          if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
               if (stub.isNew) {
                 Navigator.of(context).pushReplacementNamed(StubViewScreen.route);

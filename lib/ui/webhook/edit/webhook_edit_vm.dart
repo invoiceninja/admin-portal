@@ -87,7 +87,7 @@ class WebhookEditVM {
                 ? localization.createdWebhook
                 : localization.updatedWebhook);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
               if (webhook.isNew) {
                 appContext.navigator

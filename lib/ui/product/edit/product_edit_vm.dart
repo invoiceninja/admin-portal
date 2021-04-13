@@ -85,7 +85,7 @@ class ProductEditVM {
                 ? localization.createdProduct
                 : localization.updatedProduct);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
               if (product.isNew) {
                 appContext.navigator

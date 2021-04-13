@@ -85,7 +85,7 @@ class CompanyGatewayEditVM {
                 ? localization.createdCompanyGateway
                 : localization.updatedCompanyGateway);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store
                   .dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
               if (companyGateway.isNew) {

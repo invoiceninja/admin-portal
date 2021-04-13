@@ -94,7 +94,7 @@ class QuoteEditVM extends EntityEditVM {
                 ? localization.createdQuote
                 : localization.updatedQuote);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
               if (quote.isNew) {
                 appContext.navigator

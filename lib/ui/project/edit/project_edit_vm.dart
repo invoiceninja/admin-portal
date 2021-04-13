@@ -105,7 +105,7 @@ class ProjectEditVM {
                 ? localization.createdProject
                 : localization.updatedProject);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
               if (project.isNew && state.projectUIState.saveCompleter == null) {
                 appContext.navigator
@@ -114,7 +114,8 @@ class ProjectEditVM {
                 appContext.navigator.pop(savedProject);
               }
             } else {
-              viewEntity(appContext: appContext, entity: savedProject, force: true);
+              viewEntity(
+                  appContext: appContext, entity: savedProject, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

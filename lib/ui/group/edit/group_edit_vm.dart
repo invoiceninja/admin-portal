@@ -82,7 +82,7 @@ class GroupEditVM {
                 ? localization.createdGroup
                 : localization.updatedGroup);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
               if (group.isNew) {
                 appContext.navigator

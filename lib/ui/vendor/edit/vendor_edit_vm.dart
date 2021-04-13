@@ -96,7 +96,7 @@ class VendorEditVM {
                 ? localization.createdVendor
                 : localization.updatedVendor);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
               if (vendor.isNew && state.vendorUIState.saveCompleter == null) {
                 appContext.navigator

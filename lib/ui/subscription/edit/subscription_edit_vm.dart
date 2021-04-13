@@ -97,7 +97,7 @@ class SubscriptionEditVM {
             showToast(subscription.isNew
                 ? localization.createdSubscription
                 : localization.updatedSubscription);
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
               if (subscription.isNew) {
                 appContext.navigator

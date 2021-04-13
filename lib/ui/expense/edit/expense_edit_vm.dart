@@ -113,7 +113,7 @@ class ExpenseEditVM {
                 ? localization.createdExpense
                 : localization.updatedExpense);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
               if (expense.isNew) {
                 appContext.navigator

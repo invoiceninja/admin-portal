@@ -95,7 +95,7 @@ class CreditEditVM extends EntityEditVM {
                 ? localization.createdCredit
                 : localization.updatedCredit);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
               if (credit.isNew) {
                 appContext.navigator

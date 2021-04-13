@@ -94,7 +94,7 @@ class UserEditVM {
                 ? localization.createdUser
                 : localization.updatedUser);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
               if (user.isNew) {
                 appContext.navigator.pushReplacementNamed(UserViewScreen.route);

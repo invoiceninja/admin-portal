@@ -95,7 +95,7 @@ class TokenEditVM {
                       ? localization.createdToken
                       : localization.updatedToken);
 
-                  if (isMobile(context)) {
+                  if (state.prefState.isMobile) {
                     store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
                     if (token.isNew) {
                       appContext.navigator

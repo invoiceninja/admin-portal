@@ -84,7 +84,7 @@ class TaskStatusEditVM {
                 ? localization.createdTaskStatus
                 : localization.updatedTaskStatus);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TaskStatusViewScreen.route));
               if (taskStatus.isNew) {
                 appContext.navigator

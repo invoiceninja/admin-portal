@@ -84,7 +84,7 @@ class TaxRateEditVM {
                 ? localization.createdTaxRate
                 : localization.updatedTaxRate);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
               if (taxRate.isNew) {
                 appContext.navigator

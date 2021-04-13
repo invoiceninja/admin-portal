@@ -95,7 +95,7 @@ class RecurringInvoiceEditVM extends EntityEditVM {
                 ? localization.createdRecurringInvoice
                 : localization.updatedRecurringInvoice);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(
                   UpdateCurrentRoute(RecurringInvoiceViewScreen.route));
               if (recurringInvoice.isNew) {

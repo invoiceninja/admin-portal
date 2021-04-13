@@ -85,7 +85,7 @@ class ExpenseCategoryEditVM {
                 ? localization.createdExpenseCategory
                 : localization.updatedExpenseCategory);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(
                   UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
               if (expenseCategory.isNew) {

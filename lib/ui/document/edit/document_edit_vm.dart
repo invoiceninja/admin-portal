@@ -68,7 +68,7 @@ class DocumentEditVM {
               showToast(client.isNew
                   ? localization.createdClient
                   : localization.updatedClient);
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
               if (document.isNew) {
                 appContext.navigator

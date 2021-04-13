@@ -111,7 +111,7 @@ class ClientEditVM {
               showToast(client.isNew
                   ? localization.createdClient
                   : localization.updatedClient);
-              if (isMobile(context)) {
+              if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
                 if (client.isNew && state.clientUIState.saveCompleter == null) {
                   appContext.navigator

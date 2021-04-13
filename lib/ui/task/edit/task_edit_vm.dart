@@ -99,7 +99,7 @@ class TaskEditVM {
                 ? localization.createTask
                 : localization.updatedTask);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
               if (task.isNew) {
                 appContext.navigator.pushReplacementNamed(TaskViewScreen.route);

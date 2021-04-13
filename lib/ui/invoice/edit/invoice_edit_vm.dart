@@ -118,7 +118,7 @@ class InvoiceEditVM extends EntityEditVM {
                 ? localization.createdInvoice
                 : localization.updatedInvoice);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
               if (invoice.isNew) {
                 appContext.navigator
