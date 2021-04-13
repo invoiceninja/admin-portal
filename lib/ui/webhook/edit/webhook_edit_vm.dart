@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -97,11 +97,14 @@ class WebhookEditVM {
               }
             } else {
               viewEntity(
-                  appContext: appContext, entity: savedWebhook, force: true);
+                appContext: appContext,
+                entity: savedWebhook,
+                force: true,
+              );
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });

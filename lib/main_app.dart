@@ -90,6 +90,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class InvoiceNinjaApp extends StatefulWidget {
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
   final Store<AppState> store;
@@ -199,6 +201,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   : Colors.white,
             ),
             child: MaterialApp(
+              navigatorKey: navigatorKey,
               supportedLocales: kLanguages
                   .map((String locale) => AppLocalization.createLocale(locale))
                   .toList(),

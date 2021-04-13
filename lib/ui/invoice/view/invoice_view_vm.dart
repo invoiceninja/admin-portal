@@ -142,12 +142,13 @@ class InvoiceViewVM extends EntityViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onPaymentsPressed: (BuildContext context) {
         viewEntitiesByType(
-            context: context,
+            appContext: context.getAppContext(),
             entityType: EntityType.payment,
             filterEntity: invoice);
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context.getAppContext(), [invoice], action, autoPop: true),
+          handleEntitiesActions(context.getAppContext(), [invoice], action,
+              autoPop: true),
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(

@@ -92,7 +92,7 @@ class GroupViewVM {
           handleGroupAction(context, [group], EntityAction.newClient);
         } else {
           viewEntitiesByType(
-              context: context,
+              appContext: context.getAppContext(),
               entityType: EntityType.client,
               filterEntity: group);
         }

@@ -89,7 +89,7 @@ class VendorViewVM {
                   entity: ExpenseEntity(state: state, vendor: vendor));
             } else {
               viewEntitiesByType(
-                  context: context,
+                  appContext: context.getAppContext(),
                   entityType: EntityType.expense,
                   filterEntity: vendor);
             }

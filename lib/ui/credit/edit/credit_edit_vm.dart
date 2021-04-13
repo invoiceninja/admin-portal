@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -11,8 +12,6 @@ import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -79,7 +78,7 @@ class CreditEditVM extends EntityEditVM {
           final credit = store.state.creditUIState.editing;
           if (credit.clientId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
                   return ErrorDialog(
                       appContext.localization.pleaseSelectAClient);
@@ -113,7 +112,7 @@ class CreditEditVM extends EntityEditVM {
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });

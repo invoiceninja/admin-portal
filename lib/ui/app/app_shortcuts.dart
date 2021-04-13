@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class AppShortcuts extends StatefulWidget {
   const AppShortcuts({Key key, this.child}) : super(key: key);
@@ -59,7 +60,8 @@ class AppShortcutsState extends State<AppShortcuts> {
               break;
             case _ShortcutIntentType.list:
               viewEntitiesByType(
-                  context: context, entityType: intent.entityType);
+                  appContext: context.getAppContext(),
+                  entityType: intent.entityType);
               break;
             case _ShortcutIntentType.back:
               Navigator.of(context).maybePop();

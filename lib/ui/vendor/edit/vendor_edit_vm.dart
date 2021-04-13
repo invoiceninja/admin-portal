@@ -14,8 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
@@ -80,7 +79,7 @@ class VendorEditVM {
           final vendor = store.state.vendorUIState.editing;
           if (!vendor.hasNameSet) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
                   return ErrorDialog(appContext.localization.pleaseEnterAName);
                 });
@@ -110,7 +109,7 @@ class VendorEditVM {
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });

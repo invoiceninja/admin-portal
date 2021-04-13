@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -103,7 +104,7 @@ class CompanyGatewayEditVM {
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
