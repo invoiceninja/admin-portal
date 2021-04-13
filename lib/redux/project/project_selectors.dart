@@ -160,7 +160,7 @@ Duration taskDurationForProject(
 ) {
   int total = 0;
   taskMap.forEach((index, task) {
-    if (task.isActive && task.projectId == project.id) {
+    if (!task.isDeleted && task.projectId == project.id) {
       total += task.calculateDuration().inSeconds;
     }
   });
