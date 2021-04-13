@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/data/models/subscription_model.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class SubscriptionEditScreen extends StatelessWidget {
@@ -81,7 +80,7 @@ class SubscriptionEditVM {
           final subscription = store.state.subscriptionUIState.editing;
           if (subscription.name.isEmpty) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
                   return ErrorDialog(appContext.localization.pleaseEnterAName);
                 });
@@ -113,7 +112,7 @@ class SubscriptionEditVM {
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
