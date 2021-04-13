@@ -122,22 +122,4 @@ class DashboardVM {
   final Function(String) onCurrencyChanged;
   final Function(bool) onTaxesChanged;
   final Function onShowSidebar;
-
-/*
-  @override
-  bool operator ==(dynamic other) =>
-      dashboardUIState == other.dashboardUIState &&
-      currencyMap == other.currencyMap &&
-      isLoading == other.isLoading &&
-      filter == other.filter &&
-      filteredList == other.filteredList;
-
-  @override
-  int get hashCode =>
-      dashboardUIState.hashCode ^
-      currencyMap.hashCode ^
-      isLoading.hashCode ^
-      filter.hashCode ^
-      filteredList.hashCode;
-   */
 }

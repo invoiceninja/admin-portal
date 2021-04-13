@@ -83,7 +83,7 @@ class PaymentTermEditVM {
                 ? localization.createdPaymentTerm
                 : localization.updatedPaymentTerm);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
               if (paymentTerm.isNew) {
                 Navigator.of(context)

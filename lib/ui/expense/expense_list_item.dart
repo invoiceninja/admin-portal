@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
@@ -124,8 +125,8 @@ class ExpenseListItem extends StatelessWidget {
                                 isSaving: false,
                                 entity: expense,
                                 onSelected: (context, action) =>
-                                    handleEntityAction(
-                                        context, expense, action),
+                                    handleEntityAction(context.getAppContext(),
+                                        expense, action),
                               ),
                       ),
                       SizedBox(

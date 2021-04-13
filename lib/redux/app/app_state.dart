@@ -279,7 +279,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch map - do not remove comment
       case EntityType.subscription:
         return subscriptionState.map;
-
       case EntityType.taskStatus:
         return taskStatusState.map;
       case EntityType.expenseCategory:

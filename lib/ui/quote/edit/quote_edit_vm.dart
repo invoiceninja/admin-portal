@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -73,6 +74,7 @@ class QuoteEditVM extends EntityEditVM {
       invoiceItemIndex: state.quoteUIState.editingItemIndex,
       origInvoice: store.state.quoteState.map[quote.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final quote = store.state.quoteUIState.editing;
           if (quote.clientId.isEmpty) {
@@ -80,11 +82,11 @@ class QuoteEditVM extends EntityEditVM {
                 context: context,
                 builder: (BuildContext context) {
                   return ErrorDialog(
-                      AppLocalization.of(context).pleaseSelectAClient);
+                      appContext.localization.pleaseSelectAClient);
                 });
             return null;
           }
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
           store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
           return completer.future.then((savedQuote) {
@@ -92,19 +94,20 @@ class QuoteEditVM extends EntityEditVM {
                 ? localization.createdQuote
                 : localization.updatedQuote);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
               if (quote.isNew) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(QuoteViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedQuote);
+                appContext.navigator.pop(savedQuote);
               }
             } else {
               if (action != null) {
-                handleEntityAction(context, savedQuote, action);
+                handleEntityAction(appContext, savedQuote, action);
               } else {
-                viewEntity(context: context, entity: savedQuote, force: true);
+                viewEntity(
+                    appContext: appContext, entity: savedQuote, force: true);
               }
             }
           }).catchError((Object error) {

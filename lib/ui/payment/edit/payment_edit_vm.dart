@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
@@ -73,6 +74,7 @@ class PaymentEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final payment = store.state.paymentUIState.editing;
           double amount = 0;
@@ -83,11 +85,11 @@ class PaymentEditVM {
                 context: context,
                 builder: (BuildContext context) {
                   return ErrorDialog(
-                      AppLocalization.of(context).negativePaymentError);
+                      appContext.localization.negativePaymentError);
                 });
             return null;
           }
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
           store.dispatch(
               SavePaymentRequest(completer: completer, payment: payment));
@@ -95,19 +97,20 @@ class PaymentEditVM {
             showToast(payment.isNew
                 ? localization.createdPayment
                 : localization.updatedPayment);
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
               if (payment.isNew) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(PaymentViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedPayment);
+                appContext.navigator.pop(savedPayment);
               }
             } else {
               if (payment.isApplying == true) {
-                Navigator.of(context).pop();
+                appContext.navigator.pop();
               } else {
-                viewEntity(context: context, entity: savedPayment, force: true);
+                viewEntity(
+                    appContext: appContext, entity: savedPayment, force: true);
               }
             }
           }).catchError((Object error) {

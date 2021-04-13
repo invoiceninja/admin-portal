@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
@@ -75,7 +76,8 @@ class TaskStatusViewVM {
       taskStatus: taskStatus,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [taskStatus], action, autoPop: true),
+          handleEntitiesActions(context.getAppContext(), [taskStatus], action,
+              autoPop: true),
       onBackPressed: () =>
           store.dispatch(UpdateCurrentRoute(TaskStatusScreen.route)),
     );

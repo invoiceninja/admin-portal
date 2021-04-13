@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/kanban/kanban_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -20,6 +21,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class HistoryDrawer extends StatelessWidget {
   const HistoryDrawer({
@@ -110,6 +112,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
     if ([
       EntityType.dashboard,
       EntityType.reports,
+      EntityType.kanban,
       EntityType.settings,
     ].contains(history.entityType)) {
       title = Text(localization.lookup(history.entityType.toString()));
@@ -204,13 +207,16 @@ class _HistoryListTileState extends State<HistoryListTile> {
             case EntityType.reports:
               store.dispatch(ViewReports(navigator: Navigator.of(context)));
               break;
+            case EntityType.kanban:
+              store.dispatch(ViewKanban(navigator: Navigator.of(context)));
+              break;
             case EntityType.settings:
               store.dispatch(ViewSettings(
                   navigator: Navigator.of(context), section: history.id));
               break;
             default:
               viewEntityById(
-                context: context,
+                appContext: context.getAppContext(),
                 entityId: history.id,
                 entityType: history.entityType,
               );

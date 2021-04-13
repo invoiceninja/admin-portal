@@ -304,6 +304,7 @@ const String kMain = 'main';
 const String kSettings = 'settings';
 const String kDashboard = 'dashboard';
 const String kReports = 'reports';
+const String kKanban = 'kanban';
 
 const String kAgeGroup0 = 'age_group_0';
 const String kAgeGroup30 = 'age_group_30';

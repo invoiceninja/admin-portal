@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/kanban/kanban_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -41,8 +42,10 @@ import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
 
@@ -157,6 +160,7 @@ class ResendConfirmation implements StartLoading {}
 
 class ResendConfirmationFailure implements StopLoading {
   ResendConfirmationFailure(this.error);
+
   final dynamic error;
 }
 
@@ -287,6 +291,9 @@ void viewEntitiesByType({
           case EntityType.reports:
             action = ViewReports(navigator: navigator);
             break;
+          case EntityType.kanban:
+            action = ViewKanban(navigator: navigator);
+            break;
           case EntityType.settings:
             action = ViewSettings(
               navigator: navigator,
@@ -370,16 +377,14 @@ void viewEntitiesByType({
 }
 
 void viewEntity({
-  @required NavigatorState navigator,
-  @required BuildContext context,
+  @required AppContext appContext,
   @required BaseEntity entity,
   bool force = false,
   bool addToStack = false,
   BaseEntity filterEntity,
 }) =>
     viewEntityById(
-      context: context,
-      navigator: navigator,
+      appContext: appContext,
       entityId: entity.id,
       entityType: entity.entityType,
       force: force,
@@ -388,23 +393,22 @@ void viewEntity({
     );
 
 void viewEntityById({
-  @required BuildContext context,
+  @required AppContext appContext,
   @required String entityId,
   @required EntityType entityType,
-  @required NavigatorState navigator,
   bool force = false,
   bool showError = true,
   bool addToStack = false,
   BaseEntity filterEntity,
 }) {
-  final store = StoreProvider.of<AppState>(context);
+  final store = appContext.store;
   final state = store.state;
-  final navigator = Navigator.of(context);
+  final navigator = appContext.navigator;
   final uiState = store.state.uiState;
 
   checkForChanges(
       store: store,
-      context: context,
+      context: appContext.buildContext,
       force: force,
       callback: () {
         if (addToStack) {
@@ -441,8 +445,8 @@ void viewEntityById({
             showError &&
             !store.state.getEntityMap(entityType).containsKey(entityId)) {
           showErrorDialog(
-              context: context,
-              message: AppLocalization.of(context).failedToFindRecord);
+              context: appContext.buildContext,
+              message: appContext.localization.failedToFindRecord);
           return;
         }
 
@@ -1299,23 +1303,23 @@ void editEntity(
 }
 
 void handleEntityAction(
-    BuildContext context, BaseEntity entity, EntityAction action,
+    AppContext appContext, BaseEntity entity, EntityAction action,
     {bool autoPop = false}) {
-  handleEntitiesActions(context, [entity], action, autoPop: autoPop);
+  handleEntitiesActions(appContext, [entity], action, autoPop: autoPop);
 }
 
 void handleEntitiesActions(
-    BuildContext context, List<BaseEntity> entities, EntityAction action,
+    AppContext appContext, List<BaseEntity> entities, EntityAction action,
     {bool autoPop = false}) {
   if (entities.isEmpty) {
     return;
   }
 
   if ([EntityAction.archive, EntityAction.delete].contains(action) && autoPop) {
-    if (isMobile(context)) {
-      Navigator.of(context).pop();
+    if (isMobile(appContext.buildContext)) {
+      appContext.navigator.pop();
     } else if (entities.first.entityType.isSetting) {
-      final store = StoreProvider.of<AppState>(context);
+      final store = appContext.store;
       switch (entities.first.entityType) {
         case EntityType.paymentTerm:
           store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
@@ -1347,78 +1351,79 @@ void handleEntitiesActions(
     }
   }
 
+  // TODO: These have to use AppContext too
   switch (entities.first.entityType) {
     case EntityType.client:
-      handleClientAction(context, entities, action);
+      handleClientAction(appContext.buildContext, entities, action);
       break;
     case EntityType.product:
-      handleProductAction(context, entities, action);
+      handleProductAction(appContext.buildContext, entities, action);
       break;
     case EntityType.invoice:
-      handleInvoiceAction(context, entities, action);
+      handleInvoiceAction(appContext.buildContext, entities, action);
       break;
     case EntityType.payment:
-      handlePaymentAction(context, entities, action);
+      handlePaymentAction(appContext.buildContext, entities, action);
       break;
     case EntityType.quote:
-      handleQuoteAction(context, entities, action);
+      handleQuoteAction(appContext.buildContext, entities, action);
       break;
     case EntityType.task:
-      handleTaskAction(context, entities, action);
+      handleTaskAction(appContext.buildContext, entities, action);
       break;
     case EntityType.project:
-      handleProjectAction(context, entities, action);
+      handleProjectAction(appContext.buildContext, entities, action);
       break;
     case EntityType.expense:
-      handleExpenseAction(context, entities, action);
+      handleExpenseAction(appContext.buildContext, entities, action);
       break;
     case EntityType.vendor:
-      handleVendorAction(context, entities, action);
+      handleVendorAction(appContext.buildContext, entities, action);
       break;
     case EntityType.user:
-      handleUserAction(context, entities, action);
+      handleUserAction(appContext.buildContext, entities, action);
       break;
     case EntityType.companyGateway:
-      handleCompanyGatewayAction(context, entities, action);
+      handleCompanyGatewayAction(appContext.buildContext, entities, action);
       break;
     case EntityType.taxRate:
-      handleTaxRateAction(context, entities, action);
+      handleTaxRateAction(appContext.buildContext, entities, action);
       break;
     case EntityType.group:
-      handleGroupAction(context, entities, action);
+      handleGroupAction(appContext.buildContext, entities, action);
       break;
     case EntityType.document:
-      handleDocumentAction(context, entities, action);
+      handleDocumentAction(appContext.buildContext, entities, action);
       break;
     // STARTER: actions - do not remove comment
     case EntityType.subscription:
-      handleSubscriptionAction(context, entities, action);
+      handleSubscriptionAction(appContext.buildContext, entities, action);
       break;
 
     case EntityType.taskStatus:
-      handleTaskStatusAction(context, entities, action);
+      handleTaskStatusAction(appContext.buildContext, entities, action);
       break;
 
     case EntityType.expenseCategory:
-      handleExpenseCategoryAction(context, entities, action);
+      handleExpenseCategoryAction(appContext.buildContext, entities, action);
       break;
     case EntityType.recurringInvoice:
-      handleRecurringInvoiceAction(context, entities, action);
+      handleRecurringInvoiceAction(appContext.buildContext, entities, action);
       break;
     case EntityType.webhook:
-      handleWebhookAction(context, entities, action);
+      handleWebhookAction(appContext.buildContext, entities, action);
       break;
     case EntityType.token:
-      handleTokenAction(context, entities, action);
+      handleTokenAction(appContext.buildContext, entities, action);
       break;
     case EntityType.paymentTerm:
-      handlePaymentTermAction(context, entities, action);
+      handlePaymentTermAction(appContext.buildContext, entities, action);
       break;
     case EntityType.design:
-      handleDesignAction(context, entities, action);
+      handleDesignAction(appContext.buildContext, entities, action);
       break;
     case EntityType.credit:
-      handleCreditAction(context, entities, action);
+      handleCreditAction(appContext.buildContext, entities, action);
       break;
     default:
       print(
@@ -1433,7 +1438,8 @@ void selectEntity({
   bool forceView = false,
   BaseEntity filterEntity,
 }) {
-  final store = StoreProvider.of<AppState>(context);
+  final appContext = context.getAppContext();
+  final store = appContext.store;
   final state = store.state;
   final uiState = state.uiState;
   final entityUIState = state.getUIState(entity.entityType);
@@ -1444,7 +1450,7 @@ void selectEntity({
     final longPressIsSelection =
         state.prefState.longPressSelectionIsDefault ?? true;
     if (longPressIsSelection && !isInMultiselect) {
-      handleEntityAction(context, entity, EntityAction.toggleMultiselect);
+      handleEntityAction(appContext, entity, EntityAction.toggleMultiselect);
     } else {
       showEntityActionsDialog(
         entities: [entity],
@@ -1452,10 +1458,10 @@ void selectEntity({
       );
     }
   } else if (isInMultiselect && forceView != true) {
-    handleEntityAction(context, entity, EntityAction.toggleMultiselect);
+    handleEntityAction(appContext, entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) &&
       (uiState.isEditing || uiState.previewStack.isNotEmpty)) {
-    viewEntity(context: context, entity: entity);
+    viewEntity(appContext: appContext, entity: entity);
   } else if (isDesktop(context) &&
       !forceView &&
       uiState.isViewing &&
@@ -1473,7 +1479,7 @@ void selectEntity({
       client = state.clientState.get((entity as BelongsToClient).clientId);
     }
 
-    viewEntity(context: context, entity: entity, filterEntity: client);
+    viewEntity(appContext: appContext, entity: entity, filterEntity: client);
   }
 }
 
@@ -1482,17 +1488,18 @@ void inspectEntity({
   BaseEntity entity,
   bool longPress = false,
 }) {
-  final store = StoreProvider.of<AppState>(context);
+  final appContext = context.getAppContext();
+  final store = appContext.store;
   final state = store.state;
   final previewStack = state.uiState.previewStack;
 
   if (isDesktop(context)) {
     if (longPress) {
-      viewEntity(context: context, entity: entity);
+      viewEntity(appContext: appContext, entity: entity);
     } else if (previewStack.isNotEmpty) {
       final entityType = previewStack.last;
       viewEntityById(
-        context: context,
+        appContext: appContext,
         filterEntity: entity,
         entityType: entityType,
         entityId: state.getUIState(entityType).selectedId,
@@ -1505,7 +1512,7 @@ void inspectEntity({
     if (longPress) {
       showEntityActionsDialog(context: context, entities: [entity]);
     } else {
-      viewEntity(context: context, entity: entity);
+      viewEntity(appContext: appContext, entity: entity);
     }
   }
 }

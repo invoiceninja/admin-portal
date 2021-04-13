@@ -33,6 +33,7 @@ import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/kanban_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
@@ -302,6 +303,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             appLayout: state.prefState.appLayout,
                             child: DashboardScreenBuilder(),
                           ),
+                      KanbanScreenBuilder.route: (context) =>
+                          KanbanScreenBuilder(),
                       ProductScreen.route: (context) => ProductScreenBuilder(),
                       ProductViewScreen.route: (context) => ProductViewScreen(),
                       ProductEditScreen.route: (context) => ProductEditScreen(),

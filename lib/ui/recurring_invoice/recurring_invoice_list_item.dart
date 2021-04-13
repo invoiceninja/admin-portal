@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -107,7 +108,9 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                     entity: invoice,
                                     onSelected: (context, action) =>
                                         handleEntityAction(
-                                            context, invoice, action),
+                                            context.getAppContext(),
+                                            invoice,
+                                            action),
                                   )),
                         SizedBox(
                           width: kListNumberWidth,

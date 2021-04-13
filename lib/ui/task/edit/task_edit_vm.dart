@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -78,18 +79,19 @@ class TaskEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final task = store.state.taskUIState.editing;
           if (!task.areTimesValid) {
             showDialog<ErrorDialog>(
                 context: context,
                 builder: (BuildContext context) {
-                  return ErrorDialog(AppLocalization.of(context).taskErrors);
+                  return ErrorDialog(appContext.localization.taskErrors);
                 });
             return null;
           }
 
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<TaskEntity> completer = new Completer<TaskEntity>();
           store.dispatch(SaveTaskRequest(completer: completer, task: task));
           return completer.future.then((savedTask) {
@@ -97,16 +99,16 @@ class TaskEditVM {
                 ? localization.createTask
                 : localization.updatedTask);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
               if (task.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(TaskViewScreen.route);
+                appContext.navigator.pushReplacementNamed(TaskViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedTask);
+                appContext.navigator.pop(savedTask);
               }
             } else {
-              viewEntity(context: context, entity: savedTask, force: true);
+              viewEntity(
+                  appContext: appContext, entity: savedTask, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

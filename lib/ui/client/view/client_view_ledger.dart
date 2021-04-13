@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class ClientViewLedger extends StatefulWidget {
   const ClientViewLedger({Key key, this.viewModel}) : super(key: key);
@@ -90,7 +91,8 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
         }
 
         return ListTile(
-          onTap: () => viewEntity(context: context, entity: entity),
+          onTap: () =>
+              viewEntity(appContext: context.getAppContext(), entity: entity),
           onLongPress: () =>
               showEntityActionsDialog(context: context, entities: [entity]),
           title: Row(

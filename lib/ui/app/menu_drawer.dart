@@ -386,6 +386,16 @@ class MenuDrawer extends StatelessWidget {
                             iconTooltip: localization.newExpense,
                           ),
                           // STARTER: menu - do not remove comment
+                          if (!kReleaseMode &&
+                              company.isModuleEnabled(EntityType.task))
+                            DrawerTile(
+                              company: company,
+                              icon: getEntityIcon(EntityType.kanban),
+                              title: localization.kanban,
+                              onTap: () => viewEntitiesByType(
+                                  context: context,
+                                  entityType: EntityType.kanban),
+                            ),
                           DrawerTile(
                             company: company,
                             icon: getEntityIcon(EntityType.reports),
@@ -470,13 +480,19 @@ class _DrawerTileState extends State<DrawerTile> {
 
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
-    final route = widget.title == localization.dashboard
-        ? kDashboard
-        : widget.title == localization.settings
-            ? kSettings
-            : widget.title == localization.reports
-                ? kReports
-                : widget.entityType.name;
+
+    String route;
+    if (widget.title == localization.dashboard) {
+      route = kDashboard;
+    } else if (widget.title == localization.settings) {
+      route = kSettings;
+    } else if (widget.title == localization.reports) {
+      route = kReports;
+    } else if (widget.title == localization.kanban) {
+      route = kKanban;
+    } else {
+      route = widget.entityType.name;
+    }
 
     final isSelected =
         uiState.currentRoute.startsWith('/${toSnakeCase(route)}') &&

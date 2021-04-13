@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -71,9 +72,10 @@ class ExpenseCategoryEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final expenseCategory = store.state.expenseCategoryUIState.editing;
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<ExpenseCategoryEntity> completer =
               new Completer<ExpenseCategoryEntity>();
           store.dispatch(SaveExpenseCategoryRequest(
@@ -83,18 +85,20 @@ class ExpenseCategoryEditVM {
                 ? localization.createdExpenseCategory
                 : localization.updatedExpenseCategory);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(
                   UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
               if (expenseCategory.isNew) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(ExpenseCategoryViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedExpenseCategory);
+                appContext.navigator.pop(savedExpenseCategory);
               }
             } else {
               viewEntity(
-                  context: context, entity: savedExpenseCategory, force: true);
+                  appContext: context.getAppContext(),
+                  entity: savedExpenseCategory,
+                  force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

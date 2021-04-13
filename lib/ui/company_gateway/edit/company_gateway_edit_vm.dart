@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -71,9 +72,10 @@ class CompanyGatewayEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final companyGateway = store.state.companyGatewayUIState.editing;
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<CompanyGatewayEntity> completer =
               new Completer<CompanyGatewayEntity>();
           store.dispatch(SaveCompanyGatewayRequest(
@@ -83,18 +85,18 @@ class CompanyGatewayEditVM {
                 ? localization.createdCompanyGateway
                 : localization.updatedCompanyGateway);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store
                   .dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
               if (companyGateway.isNew) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(CompanyGatewayViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedCompanyGateway);
+                appContext.navigator.pop(savedCompanyGateway);
               }
             } else {
               viewEntityById(
-                  context: context,
+                  appContext: appContext,
                   entityId: savedCompanyGateway.id,
                   entityType: EntityType.companyGateway,
                   force: true);

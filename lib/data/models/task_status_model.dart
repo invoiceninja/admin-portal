@@ -47,7 +47,7 @@ abstract class TaskStatusItemResponse
 class TaskStatusFields {
   static const String name = 'name';
   static const String color = 'color';
-  static const String sortOrder = 'sort_order';
+  static const String statusOrder = 'status_order';
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
@@ -123,7 +123,7 @@ abstract class TaskStatusEntity extends Object
       case TaskStatusFields.name:
         response = taskStatusA.name.compareTo(taskStatusB.name);
         break;
-      case TaskStatusFields.sortOrder:
+      case TaskStatusFields.statusOrder:
         response = taskStatusA.statusOrder.compareTo(taskStatusB.statusOrder);
         break;
       default:

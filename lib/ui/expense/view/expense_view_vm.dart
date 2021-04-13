@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class ExpenseViewScreen extends StatelessWidget {
@@ -92,27 +93,29 @@ class ExpenseViewVM {
                   entities: [vendor],
                 );
               } else {
-                viewEntity(context: context, entity: vendor);
+                viewEntity(appContext: context.getAppContext(), entity: vendor);
               }
               break;
             case EntityType.client:
               if (longPress) {
                 showEntityActionsDialog(context: context, entities: [client]);
               } else {
-                viewEntity(context: context, entity: client);
+                viewEntity(appContext: context.getAppContext(), entity: client);
               }
               break;
             case EntityType.invoice:
               if (longPress) {
                 showEntityActionsDialog(context: context, entities: [invoice]);
               } else {
-                viewEntity(context: context, entity: invoice);
+                viewEntity(
+                    appContext: context.getAppContext(), entity: invoice);
               }
               break;
           }
         },
         onEntityAction: (BuildContext context, EntityAction action) =>
-            handleEntitiesActions(context, [expense], action, autoPop: true),
+            handleEntitiesActions(context.getAppContext(), [expense], action,
+                autoPop: true),
         onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
           final Completer<DocumentEntity> completer =
               Completer<DocumentEntity>();

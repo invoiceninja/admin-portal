@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
@@ -91,9 +92,10 @@ class ProjectEditVM {
         });
       },
       onSavePressed: (BuildContext context) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final project = store.state.projectUIState.editing;
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<ProjectEntity> completer =
               new Completer<ProjectEntity>();
           store.dispatch(
@@ -103,16 +105,17 @@ class ProjectEditVM {
                 ? localization.createdProject
                 : localization.updatedProject);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
               if (project.isNew && state.projectUIState.saveCompleter == null) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(ProjectViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedProject);
+                appContext.navigator.pop(savedProject);
               }
             } else {
-              viewEntity(context: context, entity: savedProject, force: true);
+              viewEntity(
+                  appContext: appContext, entity: savedProject, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

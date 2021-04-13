@@ -32,6 +32,7 @@ import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_e
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/kanban_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
@@ -62,6 +63,7 @@ import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:redux/redux.dart';
 
@@ -115,6 +117,9 @@ class MainScreen extends StatelessWidget {
                 ),
             ],
           );
+          break;
+        case KanbanScreenBuilder.route:
+          screen = KanbanScreenBuilder();
           break;
         case ClientScreen.route:
           screen = EntityScreens(
@@ -262,7 +267,7 @@ class MainScreen extends StatelessWidget {
               break;
             default:
               viewEntityById(
-                context: context,
+                appContext: context.getAppContext(),
                 entityId: history.id,
                 entityType: history.entityType,
               );

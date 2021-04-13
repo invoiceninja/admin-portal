@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -73,6 +74,7 @@ class RecurringInvoiceEditVM extends EntityEditVM {
       invoiceItemIndex: state.recurringInvoiceUIState.editingItemIndex,
       origInvoice: store.state.recurringInvoiceState.map[recurringInvoice.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final recurringInvoice = store.state.recurringInvoiceUIState.editing;
           if (recurringInvoice.clientId.isEmpty) {
@@ -80,11 +82,11 @@ class RecurringInvoiceEditVM extends EntityEditVM {
                 context: context,
                 builder: (BuildContext context) {
                   return ErrorDialog(
-                      AppLocalization.of(context).pleaseSelectAClient);
+                      appContext.localization.pleaseSelectAClient);
                 });
             return null;
           }
-          final localization = AppLocalization.of(context);
+          final localization = appContext.localization;
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
           store.dispatch(SaveRecurringInvoiceRequest(
               completer: completer, recurringInvoice: recurringInvoice));
@@ -93,21 +95,21 @@ class RecurringInvoiceEditVM extends EntityEditVM {
                 ? localization.createdRecurringInvoice
                 : localization.updatedRecurringInvoice);
 
-            if (isMobile(context)) {
+            if (state.prefState.isMobile) {
               store.dispatch(
                   UpdateCurrentRoute(RecurringInvoiceViewScreen.route));
               if (recurringInvoice.isNew) {
-                Navigator.of(context)
+                appContext.navigator
                     .pushReplacementNamed(RecurringInvoiceViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedRecurringInvoice);
+                appContext.navigator.pop(savedRecurringInvoice);
               }
             } else {
               if (action != null) {
-                handleEntityAction(context, savedRecurringInvoice, action);
+                handleEntityAction(appContext, savedRecurringInvoice, action);
               } else {
                 viewEntity(
-                    context: context,
+                    appContext: appContext,
                     entity: savedRecurringInvoice,
                     force: true);
               }

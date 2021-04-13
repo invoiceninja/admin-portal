@@ -100,7 +100,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         columnWidths: {
           0: FractionColumnWidth(.15),
           1: FractionColumnWidth(.25),
-          lastIndex: FixedColumnWidth(kMinInteractiveDimension),
+          lastIndex: FixedColumnWidth(0),
         },
         defaultVerticalAlignment: TableCellVerticalAlignment.top,
         key: ValueKey('__datatable_${_updatedAt}__'),
