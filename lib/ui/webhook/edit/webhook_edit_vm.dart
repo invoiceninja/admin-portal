@@ -97,7 +97,10 @@ class WebhookEditVM {
               }
             } else {
               viewEntity(
-                  appContext: appContext, entity: savedWebhook, force: true);
+                appContext: appContext,
+                entity: savedWebhook,
+                force: true,
+              );
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
