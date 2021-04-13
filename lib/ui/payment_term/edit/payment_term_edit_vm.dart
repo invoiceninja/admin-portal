@@ -93,10 +93,10 @@ class PaymentTermEditVM {
                 Navigator.of(context).pop(savedPaymentTerm);
               }
             } else {
-              viewEntitiesByType(
-                appContext: appContext,
-                entityType: EntityType.paymentTerm,
-              );
+              viewEntity(
+                  appContext: appContext,
+                  entity: savedPaymentTerm,
+                  force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
