@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -74,12 +75,13 @@ class TokenEditVM {
         ));
       },
       onSavePressed: (BuildContext context) {
+        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final token = store.state.tokenUIState.editing;
           passwordCallback(
               context: context,
               callback: (password, idToken) {
-                final localization = AppLocalization.of(context);
+                final localization = appContext.localization;
                 final Completer<TokenEntity> completer =
                     new Completer<TokenEntity>();
                 store.dispatch(SaveTokenRequest(
@@ -96,14 +98,16 @@ class TokenEditVM {
                   if (isMobile(context)) {
                     store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
                     if (token.isNew) {
-                      Navigator.of(context)
+                      appContext.navigator
                           .pushReplacementNamed(TokenViewScreen.route);
                     } else {
-                      Navigator.of(context).pop(savedToken);
+                      appContext.navigator.pop(savedToken);
                     }
                   } else {
                     viewEntity(
-                        context: context, entity: savedToken, force: true);
+                        appContext: appContext,
+                        entity: savedToken,
+                        force: true);
                   }
                 }).catchError((Object error) {
                   showDialog<ErrorDialog>(

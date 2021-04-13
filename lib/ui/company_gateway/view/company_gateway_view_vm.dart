@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class CompanyGatewayViewScreen extends StatelessWidget {
   const CompanyGatewayViewScreen({
@@ -79,7 +80,8 @@ class CompanyGatewayViewVM {
         store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [companyGateway], action,
+          handleEntitiesActions(
+              context.getAppContext(), [companyGateway], action,
               autoPop: true),
     );
   }

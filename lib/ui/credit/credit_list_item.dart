@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class CreditListItem extends StatelessWidget {
   const CreditListItem({
@@ -104,7 +105,9 @@ class CreditListItem extends StatelessWidget {
                                   entity: credit,
                                   onSelected: (context, action) =>
                                       handleEntityAction(
-                                          context, credit, action),
+                                          context.getAppContext(),
+                                          credit,
+                                          action),
                                 )),
                       SizedBox(
                         width: kListNumberWidth,

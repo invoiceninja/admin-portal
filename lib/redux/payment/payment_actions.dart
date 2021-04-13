@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class ViewPaymentList extends AbstractNavigatorAction
     implements PersistUI, StopLoading {
@@ -336,7 +337,7 @@ void handlePaymentAction(
       editEntity(context: context, entity: payment);
       break;
     case EntityAction.apply:
-      viewEntity(context: context, entity: payment);
+      viewEntity(appContext: context.getAppContext(), entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         editEntity(
             context: context,
@@ -345,7 +346,7 @@ void handlePaymentAction(
       break;
     case EntityAction.refund:
       final navigator = Navigator.of(context);
-      viewEntity(context: context, entity: payment);
+      viewEntity(appContext: context.getAppContext(), entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (payment.invoicePaymentables.length == 1) {
           payment = payment.rebuild((b) => b

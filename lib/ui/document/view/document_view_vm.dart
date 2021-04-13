@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/document/view/document_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class DocumentViewScreen extends StatelessWidget {
@@ -73,7 +74,8 @@ class DocumentViewVM {
       document: document,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [document], action, autoPop: true),
+          handleEntitiesActions(context.getAppContext(), [document], action,
+              autoPop: true),
     );
   }
 
