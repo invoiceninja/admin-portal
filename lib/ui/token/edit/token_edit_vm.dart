@@ -69,10 +69,12 @@ class TokenEditVM {
         store.dispatch(UpdateToken(token));
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(ViewSettings(
-          navigator: Navigator.of(context),
-          section: kSettingsTokens,
-        ));
+        createEntity(context: context, entity: TokenEntity(), force: true);
+        if (state.tokenUIState.cancelCompleter != null) {
+          state.tokenUIState.cancelCompleter.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
       onSavePressed: (BuildContext context) {
         final appContext = context.getAppContext();
