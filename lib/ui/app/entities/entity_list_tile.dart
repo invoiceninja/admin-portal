@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class EntityListTile extends StatefulWidget {
   const EntityListTile({
@@ -71,7 +72,7 @@ class _EntityListTileState extends State<EntityListTile> {
       entity: widget.entity,
       onSelected: (context, action) => widget.onEntityActionSelected != null
           ? widget.onEntityActionSelected(context, widget.entity, action)
-          : handleEntityAction(context, widget.entity, action),
+          : handleEntityAction(context.getAppContext(), widget.entity, action),
     );
 
     final trailing = widget.isFilter
@@ -86,7 +87,7 @@ class _EntityListTileState extends State<EntityListTile> {
                   : Icons.filter_list),
               onPressed: () => viewEntity(
                 entity: widget.entity,
-                context: context,
+                appContext: context.getAppContext(),
                 addToStack: isDesktop(context) && !widget.isFilter,
               ),
             ),
@@ -177,8 +178,8 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
       store.dispatch(
           FilterByEntity(entityId: entity.id, entityType: entity.entityType));
     }
-    handleEntityAction(
-        context, entity, EntityAction.newEntityType(widget.entityType));
+    handleEntityAction(context.getAppContext(), entity,
+        EntityAction.newEntityType(widget.entityType));
   }
 
   @override

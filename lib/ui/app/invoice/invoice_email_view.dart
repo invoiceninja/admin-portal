@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class InvoiceEmailView extends StatefulWidget {
   const InvoiceEmailView({
@@ -298,7 +299,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         entity: invoice,
         title: localization.sendEmail,
         onCancelPressed: (context) =>
-            viewEntity(context: context, entity: invoice),
+            viewEntity(appContext: context.getAppContext(), entity: invoice),
         saveLabel: localization.send,
         onSavePressed: (context) {
           viewModel.onSendPressed(context, selectedTemplate,
@@ -367,7 +368,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         entity: invoice,
         title: localization.sendEmail,
         onCancelPressed: (context) =>
-            viewEntity(context: context, entity: invoice),
+            viewEntity(appContext: context.getAppContext(), entity: invoice),
         appBarBottom: TabBar(
           controller: _controller,
           isScrollable: true,

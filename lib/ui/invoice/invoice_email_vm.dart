@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -109,7 +110,7 @@ class EmailInvoiceVM extends EmailEntityVM {
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then((value) {
-            viewEntity(entity: invoice, context: context);
+            viewEntity(entity: invoice, appContext: context.getAppContext());
           });
         }
         store.dispatch(EmailInvoiceRequest(
