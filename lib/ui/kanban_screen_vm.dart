@@ -51,8 +51,10 @@ class KanbanVM {
           final taskStatus = state.taskStatusState.get(statusId);
           final completer = snackBarCompleter<TaskStatusEntity>(
               context, localization.updatedTaskStatus);
-          // TODO remove this
           completer.future.then((value) {
+            // TODO remove this
+            store.dispatch(RefreshData());
+          }).catchError((Object error) {
             store.dispatch(RefreshData());
           });
           store.dispatch(SaveTaskStatusRequest(
