@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/ui/kanban_screen.dart';
@@ -26,7 +27,8 @@ class _KanbanScreenBuilderState extends State<KanbanScreenBuilder> {
         final company = state.company;
         return KanbanScreen(
           viewModel: viewModel,
-          key: ValueKey('__${company.id}__'),
+          key: ValueKey(
+              '__${company.id}_${state.userCompanyState.lastUpdated}_'),
         );
       },
     );
@@ -49,6 +51,10 @@ class KanbanVM {
           final taskStatus = state.taskStatusState.get(statusId);
           final completer = snackBarCompleter<TaskStatusEntity>(
               context, localization.updatedTaskStatus);
+          // TODO remove this
+          completer.future.then((value) {
+            store.dispatch(RefreshData());
+          });
           store.dispatch(SaveTaskStatusRequest(
               completer: completer,
               taskStatus: taskStatus.rebuild((b) => b.statusOrder = index)));
