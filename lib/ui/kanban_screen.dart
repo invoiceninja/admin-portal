@@ -28,7 +28,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
   final _boardViewController = new BoardViewController();
 
   List<TaskStatusEntity> _statuses = [];
-  List<TaskEntity> _tasks = [];
+  Map<String, List<TaskEntity>> _tasks = {};
 
   @override
   void initState() {
@@ -40,7 +40,6 @@ class _KanbanScreenState extends State<KanbanScreen> {
         .map((statusId) => state.taskStatusState.get(statusId))
         .where((status) => status.isActive)
         .toList();
-
     _statuses.sort((statusA, statusB) {
       if (statusA.statusOrder == statusB.statusOrder) {
         return statusB.updatedAt.compareTo(statusA.updatedAt);
@@ -49,28 +48,25 @@ class _KanbanScreenState extends State<KanbanScreen> {
             .compareTo(statusB.statusOrder ?? 9999);
       }
     });
-  }
 
-  @override
-  void didChangeDependencies() {
-    print('## didChangeDependencies: ${_statuses.length}');
-    super.didChangeDependencies();
+    state.taskState.list.forEach((taskId) {
+      final task = state.taskState.map[taskId];
+      if (task.isActive && task.statusId.isNotEmpty) {
+        final status = state.taskStatusState.get(task.statusId);
+        if (!_tasks.containsKey(status.id)) {
+          _tasks[status.id] = [];
+        }
+        _tasks[status.id].add(task);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     print('## BUILD: ${_statuses.length}');
-
     final state = widget.viewModel.state;
+
     final boardList = _statuses.map((status) {
-      final items = state.taskState.list
-          .map((taskId) => state.taskState.get(taskId))
-          .where((task) => task.statusId == status.id)
-          .toList();
-
-      items.sort((taskA, taskB) =>
-          (taskA.statusOrder ?? 9999).compareTo(taskB.statusOrder ?? 9999));
-
       return BoardList(
         backgroundColor: Theme.of(context).cardColor,
         headerBackgroundColor: Theme.of(context).cardColor,
@@ -88,6 +84,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
               ..._statuses.sublist(endIndex),
             ];
           });
+
           widget.viewModel.onStatusOrderChanged(context, status.id, endIndex);
         },
         header: [
@@ -99,16 +96,49 @@ class _KanbanScreenState extends State<KanbanScreen> {
             ),
           ),
         ],
-        items: items
+        items: (_tasks[status.id] ?? [])
             .map(
               (task) => BoardItem(
                 item: Card(
                   color: Theme.of(context).backgroundColor,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(task.description),
+                    child: Text(
+                        '${task.statusOrder} - ${task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(task.updatedAt * 1000))}'),
                   ),
                 ),
+                onDropItem: (
+                  int listIndex,
+                  int itemIndex,
+                  int oldListIndex,
+                  int oldItemIndex,
+                  BoardItemState state,
+                ) {
+                  if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
+                    return;
+                  }
+
+                  final oldStatus = _statuses[oldListIndex];
+                  final newStatus = _statuses[listIndex];
+                  final task = _tasks[status.id][oldItemIndex];
+
+                  setState(() {
+                    if (_tasks[oldStatus.id].contains(task)) {
+                      _tasks[oldStatus.id].remove(task);
+                    }
+                    if (!_tasks.containsKey(newStatus.id)) {
+                      _tasks[newStatus.id] = [];
+                    }
+                    _tasks[newStatus.id] = [
+                      ..._tasks[newStatus.id].sublist(0, itemIndex),
+                      task,
+                      ..._tasks[newStatus.id].sublist(itemIndex),
+                    ];
+                  });
+
+                  widget.viewModel.onTaskOrderChanged(
+                      context, task.id, newStatus.id, itemIndex);
+                },
               ),
             )
             .toList(),
