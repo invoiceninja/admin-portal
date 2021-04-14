@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/kanban_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class KanbanScreen extends StatefulWidget {
   const KanbanScreen({
@@ -42,7 +43,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
 
     _statuses.sort((statusA, statusB) {
       if (statusA.statusOrder == statusB.statusOrder) {
-        return statusA.updatedAt.compareTo(statusB.updatedAt);
+        return statusB.updatedAt.compareTo(statusA.updatedAt);
       } else {
         return (statusA.statusOrder ?? 9999)
             .compareTo(statusB.statusOrder ?? 9999);
@@ -89,7 +90,8 @@ class _KanbanScreenState extends State<KanbanScreen> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: Text('${status.statusOrder} - ${status.name}'),
+              child: Text(
+                  '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}'),
             ),
           ),
         ],
