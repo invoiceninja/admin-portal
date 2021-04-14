@@ -62,16 +62,10 @@ class _KanbanScreenState extends State<KanbanScreen> {
   }
 
   @override
-  void didChangeDependencies() {
-    print('## didChangeDependencies: ${_statuses.length}');
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     print('## BUILD: ${_statuses.length}');
-
     final state = widget.viewModel.state;
+
     final boardList = _statuses.map((status) {
       return BoardList(
         backgroundColor: Theme.of(context).cardColor,
@@ -90,6 +84,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
               ..._statuses.sublist(endIndex),
             ];
           });
+
           widget.viewModel.onStatusOrderChanged(context, status.id, endIndex);
         },
         header: [
