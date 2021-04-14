@@ -13,9 +13,18 @@ Client app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja)
 </p>
 
 ## Setting up the app
-- Run `cp lib/.env.dart.example lib/.env.dart` to create the config file.
-- Run `cp android/app/build.gradle.dev android/app/build.gradle` to support running the code unsigned.
-- Run `flutter run` while you have a device connected to the computer or an emulator running and now you can run it.
+
+- Initialize the config file
+
+    `cp lib/.env.dart.example lib/.env.dart`
+
+- Support running the code unsigned on Android
+
+    `cp android/app/build.gradle.dev android/app/build.gradle`
+
+- Run the app
+
+    `flutter run`
 
 Note: if you don't have an Invoice Ninja backend setup you can test the app with these credentials:
 

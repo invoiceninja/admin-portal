@@ -105,12 +105,13 @@ class EmailInvoiceVM extends EmailEntityVM {
         store.dispatch(LoadClient(clientId: invoice.clientId));
       },
       onSendPressed: (context, template, subject, body) {
+        final appContext = context.getAppContext();
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedInvoice,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then((value) {
-            viewEntity(entity: invoice, appContext: context.getAppContext());
+            viewEntity(entity: invoice, appContext: appContext);
           });
         }
         store.dispatch(EmailInvoiceRequest(

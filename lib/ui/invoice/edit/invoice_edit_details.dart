@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -260,6 +261,16 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 label: localization.partialDeposit,
                 controller: _partialController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                validator: (String value) {
+                  final amount = parseDouble(_partialController.text);
+                  final total = invoice.calculateTotal(
+                      precision: precisionForInvoice(state, invoice));
+                  if (amount < 0 || amount > total) {
+                    return localization.partialValue;
+                  } else {
+                    return null;
+                  }
+                },
               ),
               if (invoice.partial != null && invoice.partial > 0)
                 DatePicker(

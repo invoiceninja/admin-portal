@@ -82,12 +82,13 @@ class EmailQuoteVM extends EmailEntityVM {
         store.dispatch(LoadClient(clientId: quote.clientId));
       },
       onSendPressed: (context, template, subject, body) {
+        final appContext = context.getAppContext();
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedQuote,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then((value) {
-            viewEntity(entity: quote, appContext: context.getAppContext());
+            viewEntity(entity: quote, appContext: appContext);
           });
         }
         store.dispatch(EmailQuoteRequest(
