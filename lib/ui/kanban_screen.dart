@@ -117,10 +117,12 @@ class _KanbanScreenState extends State<KanbanScreen> {
                   if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
                     return;
                   }
+
+                  final oldStatus = _statuses[oldListIndex];
+                  final newStatus = _statuses[listIndex];
+                  final task = _tasks[status.id][oldItemIndex];
+
                   setState(() {
-                    final oldStatus = _statuses[oldListIndex];
-                    final newStatus = _statuses[listIndex];
-                    final task = _tasks[status.id][oldItemIndex];
                     if (_tasks[oldStatus.id].contains(task)) {
                       _tasks[oldStatus.id].remove(task);
                     }
@@ -133,6 +135,9 @@ class _KanbanScreenState extends State<KanbanScreen> {
                       ..._tasks[newStatus.id].sublist(itemIndex),
                     ];
                   });
+
+                  widget.viewModel.onTaskOrderChanged(
+                      context, task.id, newStatus.id, itemIndex);
                 },
               ),
             )
