@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/kanban_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -107,6 +108,18 @@ class _KanbanScreenState extends State<KanbanScreen> {
             ),
           ),
         ],
+        footer: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: TextButton(
+              child: Text(AppLocalization.of(context).newTask),
+              onPressed: () {
+                //
+              },
+            ),
+          ),
+        ),
         items: (_tasks[status.id] ?? [])
             .map(
               (task) => BoardItem(
@@ -120,9 +133,9 @@ class _KanbanScreenState extends State<KanbanScreen> {
                 ),
                 onDropItem: (
                   int listIndex,
+                  int oldItemIndex,
                   int itemIndex,
                   int oldListIndex,
-                  int oldItemIndex,
                   BoardItemState state,
                 ) {
                   if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
