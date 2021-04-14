@@ -28,7 +28,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
   final _boardViewController = new BoardViewController();
 
   List<TaskStatusEntity> _statuses = [];
-  List<TaskEntity> _tasks = [];
+  Map<String, List<TaskEntity>> _tasks = {};
 
   @override
   void initState() {
@@ -40,13 +40,23 @@ class _KanbanScreenState extends State<KanbanScreen> {
         .map((statusId) => state.taskStatusState.get(statusId))
         .where((status) => status.isActive)
         .toList();
-
     _statuses.sort((statusA, statusB) {
       if (statusA.statusOrder == statusB.statusOrder) {
         return statusB.updatedAt.compareTo(statusA.updatedAt);
       } else {
         return (statusA.statusOrder ?? 9999)
             .compareTo(statusB.statusOrder ?? 9999);
+      }
+    });
+
+    state.taskState.list.forEach((taskId) {
+      final task = state.taskState.map[taskId];
+      if (task.isActive && task.statusId.isNotEmpty) {
+        final status = state.taskStatusState.get(task.statusId);
+        if (!_tasks.containsKey(status.id)) {
+          _tasks[status.id] = [];
+        }
+        _tasks[status.id].add(task);
       }
     });
   }
@@ -63,14 +73,6 @@ class _KanbanScreenState extends State<KanbanScreen> {
 
     final state = widget.viewModel.state;
     final boardList = _statuses.map((status) {
-      final items = state.taskState.list
-          .map((taskId) => state.taskState.get(taskId))
-          .where((task) => task.statusId == status.id)
-          .toList();
-
-      items.sort((taskA, taskB) =>
-          (taskA.statusOrder ?? 9999).compareTo(taskB.statusOrder ?? 9999));
-
       return BoardList(
         backgroundColor: Theme.of(context).cardColor,
         headerBackgroundColor: Theme.of(context).cardColor,
@@ -99,7 +101,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
             ),
           ),
         ],
-        items: items
+        items: (_tasks[status.id] ?? [])
             .map(
               (task) => BoardItem(
                 item: Card(
