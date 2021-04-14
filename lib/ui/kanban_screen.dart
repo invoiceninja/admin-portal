@@ -114,24 +114,26 @@ class _KanbanScreenState extends State<KanbanScreen> {
                   BoardItemState state,
                 ) {
                   print(
-                      '## DROPPED - listIndex: $listIndex, listIndex: $listIndex');
+                      '## DROPPED - listIndex: $listIndex, itemIndex: $itemIndex, oldListIndex: $oldListIndex, oldItemIndex: $oldItemIndex');
+
+                  if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
+                    return;
+                  }
                   setState(() {
-                    final oldStatus = _statuses[oldItemIndex];
-                    final newStatus = _statuses[itemIndex];
+                    final oldStatus = _statuses[oldListIndex];
+                    final newStatus = _statuses[listIndex];
                     final task = _tasks[status.id][oldItemIndex];
-                    /*
-                    _tasks[oldStatus.id].removeAt(oldItemIndex);
+                    if (_tasks[oldStatus.id].contains(task)) {
+                      _tasks[oldStatus.id].remove(task);
+                    }
                     if (!_tasks.containsKey(newStatus.id)) {
                       _tasks[newStatus.id] = [];
                     }
-                    */
-                    /*
                     _tasks[newStatus.id] = [
-                      ..._tasks[newStatus.id].sublist(0, listIndex),
+                      ..._tasks[newStatus.id].sublist(0, itemIndex),
                       task,
-                      ..._tasks[newStatus.id].sublist(listIndex),
+                      ..._tasks[newStatus.id].sublist(itemIndex),
                     ];
-                    */
                   });
                 },
               ),
