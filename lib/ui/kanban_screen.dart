@@ -39,8 +39,12 @@ class _KanbanScreenState extends State<KanbanScreen> {
 
     statuses.sort((statusA, statusB) {
       print('## COMPRE: ${statusA.statusOrder}, ${statusB.statusOrder}');
-      return (statusA.statusOrder ?? 9999)
-          .compareTo(statusB.statusOrder ?? 9999);
+      if (statusA.statusOrder == statusB.statusOrder) {
+        return statusA.createdAt.compareTo(statusB.createdAt);
+      } else {
+        return (statusA.statusOrder ?? 9999)
+            .compareTo(statusB.statusOrder ?? 9999);
+      }
     });
 
     final boardList = statuses.map((status) {
@@ -61,7 +65,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: Text(status.name),
+              child: Text('${status.statusOrder} - ${status.name}'),
             ),
           ),
         ],
