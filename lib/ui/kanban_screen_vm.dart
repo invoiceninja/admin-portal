@@ -58,13 +58,6 @@ class KanbanVM {
           store.dispatch(SaveTaskStatusRequest(
               completer: completer,
               taskStatus: taskStatus.rebuild((b) => b.statusOrder = index)));
-          /*
-          store.dispatch(SortTaskStatus(
-            completer: completer,
-            taskStatus: taskStatus,
-            statusOrder: index,
-          ));
-          */
         });
   }
 

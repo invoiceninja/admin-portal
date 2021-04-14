@@ -24,7 +24,6 @@ List<Middleware<AppState>> createStoreTaskStatusesMiddleware([
   final archiveTaskStatus = _archiveTaskStatus(repository);
   final deleteTaskStatus = _deleteTaskStatus(repository);
   final restoreTaskStatus = _restoreTaskStatus(repository);
-  //final sortTaskStatus = _sortTaskStatus(repository);
 
   return [
     TypedMiddleware<AppState, ViewTaskStatusList>(viewTaskStatusList),
