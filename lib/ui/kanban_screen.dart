@@ -113,9 +113,6 @@ class _KanbanScreenState extends State<KanbanScreen> {
                   int oldItemIndex,
                   BoardItemState state,
                 ) {
-                  print(
-                      '## DROPPED - listIndex: $listIndex, itemIndex: $itemIndex, oldListIndex: $oldListIndex, oldItemIndex: $oldItemIndex');
-
                   if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
                     return;
                   }
