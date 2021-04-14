@@ -80,12 +80,13 @@ class EmailCreditVM extends EmailEntityVM {
         store.dispatch(LoadClient(clientId: credit.clientId));
       },
       onSendPressed: (context, template, subject, body) {
+        final appContext = context.getAppContext();
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedCredit,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then((value) {
-            viewEntity(entity: credit, appContext: context.getAppContext());
+            viewEntity(entity: credit, appContext: appContext);
           });
         }
         store.dispatch(EmailCreditRequest(
