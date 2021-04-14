@@ -121,6 +121,20 @@ class LoadTaskStatusesSuccess implements StopLoading {
   }
 }
 
+/*
+class SortTaskStatus {
+  SortTaskStatus({
+    this.completer,
+    this.taskStatus,
+    this.statusOrder,
+  });
+
+  final Completer completer;
+  final TaskStatusEntity taskStatus;
+  final int statusOrder;
+}
+*/
+
 class SaveTaskStatusRequest implements StartSaving {
   SaveTaskStatusRequest({this.completer, this.taskStatus});
 

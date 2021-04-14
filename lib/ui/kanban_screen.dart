@@ -4,6 +4,7 @@ import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
@@ -25,33 +26,47 @@ class KanbanScreen extends StatefulWidget {
 class _KanbanScreenState extends State<KanbanScreen> {
   final _boardViewController = new BoardViewController();
 
+  List<TaskStatusEntity> _statuses = [];
+  List<TaskEntity> _tasks = [];
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    print('## initState: ${_statuses.length}');
+
     final state = widget.viewModel.state;
-    final statuses = state.taskStatusState.list
+    _statuses = state.taskStatusState.list
         .map((statusId) => state.taskStatusState.get(statusId))
         .where((status) => status.isActive)
         .toList();
 
-    statuses.forEach((element) {
-      print('## ${element.name} ${element.statusOrder}');
-    });
-
-    statuses.sort((statusA, statusB) {
-      print('## COMPRE: ${statusA.statusOrder}, ${statusB.statusOrder}');
+    _statuses.sort((statusA, statusB) {
       if (statusA.statusOrder == statusB.statusOrder) {
-        return statusA.createdAt.compareTo(statusB.createdAt);
+        return statusA.updatedAt.compareTo(statusB.updatedAt);
       } else {
         return (statusA.statusOrder ?? 9999)
             .compareTo(statusB.statusOrder ?? 9999);
       }
     });
+  }
 
-    final boardList = statuses.map((status) {
+  @override
+  void didChangeDependencies() {
+    print('## didChangeDependencies: ${_statuses.length}');
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('## BUILD: ${_statuses.length}');
+
+    final state = widget.viewModel.state;
+    final boardList = _statuses.map((status) {
       final items = state.taskState.list
           .map((taskId) => state.taskState.get(taskId))
           .where((task) => task.statusId == status.id)
           .toList();
+
       items.sort((taskA, taskB) =>
           (taskA.statusOrder ?? 9999).compareTo(taskB.statusOrder ?? 9999));
 
@@ -59,6 +74,15 @@ class _KanbanScreenState extends State<KanbanScreen> {
         backgroundColor: Theme.of(context).cardColor,
         headerBackgroundColor: Theme.of(context).cardColor,
         onDropList: (endIndex, startIndex) {
+          setState(() {
+            final status = _statuses[startIndex];
+            _statuses.removeAt(startIndex);
+            _statuses = [
+              ..._statuses.sublist(0, endIndex),
+              status,
+              ..._statuses.sublist(endIndex),
+            ];
+          });
           widget.viewModel.onStatusOrderChanged(context, status.id, endIndex);
         },
         header: [
