@@ -62,18 +62,26 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         productState.map, productState.list, state.userState.map);
 
     final hasTax1 = company.enableFirstItemTaxRate ||
-        invoice.lineItems.any((item) => item.taxName1.isNotEmpty);
+        includedLineItems.any((item) => item.taxName1.isNotEmpty);
     final hasTax2 = company.enableSecondItemTaxRate ||
-        invoice.lineItems.any((item) => item.taxName2.isNotEmpty);
+        includedLineItems.any((item) => item.taxName2.isNotEmpty);
     final hasTax3 = company.enableThirdItemTaxRate ||
-        invoice.lineItems.any((item) => item.taxName3.isNotEmpty);
+        includedLineItems.any((item) => item.taxName3.isNotEmpty);
 
     if (lineItems.where((item) => item.isEmpty).isEmpty) {
       lineItems.add(InvoiceItemEntity());
     }
 
     int lastIndex = 4;
-    lastIndex += company.numberOfItemTaxRates ?? 0;
+    if (hasTax1) {
+      lastIndex++;
+    }
+    if (hasTax2) {
+      lastIndex++;
+    }
+    if (hasTax3) {
+      lastIndex++;
+    }
     if (company.enableProductQuantity || widget.isTasks) {
       lastIndex++;
     }

@@ -68,10 +68,12 @@ class WebhookEditVM {
         store.dispatch(UpdateWebhook(webhook));
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(ViewSettings(
-          navigator: Navigator.of(context),
-          section: kSettingsWebhooks,
-        ));
+        createEntity(context: context, entity: WebhookEntity(), force: true);
+        if (state.webhookUIState.cancelCompleter != null) {
+          state.webhookUIState.cancelCompleter.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
       onSavePressed: (BuildContext context) {
         final appContext = context.getAppContext();

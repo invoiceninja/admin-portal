@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -69,10 +70,12 @@ class TokenEditVM {
         store.dispatch(UpdateToken(token));
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(ViewSettings(
-          navigator: Navigator.of(context),
-          section: kSettingsTokens,
-        ));
+        createEntity(context: context, entity: TokenEntity(), force: true);
+        if (state.tokenUIState.cancelCompleter != null) {
+          state.tokenUIState.cancelCompleter.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
       onSavePressed: (BuildContext context) {
         final appContext = context.getAppContext();
@@ -111,7 +114,7 @@ class TokenEditVM {
                   }
                 }).catchError((Object error) {
                   showDialog<ErrorDialog>(
-                      context: context,
+                      context: navigatorKey.currentContext,
                       builder: (BuildContext context) {
                         return ErrorDialog(error);
                       });
