@@ -16,15 +16,15 @@ Client app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja)
 
 - Initialize the config file
 
-    cp lib/.env.dart.example lib/.env.dart
+    `cp lib/.env.dart.example lib/.env.dart`
 
 - Support running the code unsigned on Android
 
-    cp android/app/build.gradle.dev android/app/build.gradle
+    `cp android/app/build.gradle.dev android/app/build.gradle`
 
 - Run the app
 
-    flutter run
+    `flutter run`
 
 Note: if you don't have an Invoice Ninja backend setup you can test the app with these credentials:
 
