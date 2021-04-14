@@ -404,6 +404,9 @@ class MenuDrawer extends StatelessWidget {
                             onTap: () => viewEntitiesByType(
                                 appContext: context.getAppContext(),
                                 entityType: EntityType.reports),
+                            onLongPress: () => viewEntitiesByType(
+                                appContext: context.getAppContext(),
+                                entityType: EntityType.kanban),
                           ),
                           DrawerTile(
                             company: company,

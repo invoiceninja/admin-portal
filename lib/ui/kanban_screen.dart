@@ -75,6 +75,10 @@ class _KanbanScreenState extends State<KanbanScreen> {
         backgroundColor: Theme.of(context).cardColor,
         headerBackgroundColor: Theme.of(context).cardColor,
         onDropList: (endIndex, startIndex) {
+          if (endIndex == startIndex) {
+            return;
+          }
+
           setState(() {
             final status = _statuses[startIndex];
             _statuses.removeAt(startIndex);
@@ -138,6 +142,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
         child: BoardView(
           boardViewController: _boardViewController,
           lists: boardList,
+          dragDelay: 1,
         ),
       ),
     );
