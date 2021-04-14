@@ -44,8 +44,8 @@ class _KanbanScreenState extends State<KanbanScreen> {
       if (statusA.statusOrder == statusB.statusOrder) {
         return statusB.updatedAt.compareTo(statusA.updatedAt);
       } else {
-        return (statusA.statusOrder ?? 9999)
-            .compareTo(statusB.statusOrder ?? 9999);
+        return (statusA.statusOrder ?? 99999)
+            .compareTo(statusB.statusOrder ?? 99999);
       }
     });
 
@@ -58,6 +58,17 @@ class _KanbanScreenState extends State<KanbanScreen> {
         }
         _tasks[status.id].add(task);
       }
+    });
+
+    _tasks.forEach((key, value) {
+      _tasks[key].sort((taskA, taskB) {
+        if (taskA.statusOrder == taskB.statusOrder) {
+          return taskB.updatedAt.compareTo(taskA.updatedAt);
+        } else {
+          return (taskA.statusOrder ?? 99999)
+              .compareTo(taskB.statusOrder ?? 99999);
+        }
+      });
     });
   }
 
