@@ -103,7 +103,8 @@ class _KanbanScreenState extends State<KanbanScreen> {
                   color: Theme.of(context).backgroundColor,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(task.description),
+                    child: Text(
+                        '${task.statusOrder} - ${task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(task.updatedAt * 1000))}'),
                   ),
                 ),
                 onDropItem: (
