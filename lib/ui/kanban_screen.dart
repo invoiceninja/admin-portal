@@ -106,6 +106,34 @@ class _KanbanScreenState extends State<KanbanScreen> {
                     child: Text(task.description),
                   ),
                 ),
+                onDropItem: (
+                  int listIndex,
+                  int itemIndex,
+                  int oldListIndex,
+                  int oldItemIndex,
+                  BoardItemState state,
+                ) {
+                  print(
+                      '## DROPPED - listIndex: $listIndex, listIndex: $listIndex');
+                  setState(() {
+                    final oldStatus = _statuses[oldItemIndex];
+                    final newStatus = _statuses[itemIndex];
+                    final task = _tasks[status.id][oldItemIndex];
+                    /*
+                    _tasks[oldStatus.id].removeAt(oldItemIndex);
+                    if (!_tasks.containsKey(newStatus.id)) {
+                      _tasks[newStatus.id] = [];
+                    }
+                    */
+                    /*
+                    _tasks[newStatus.id] = [
+                      ..._tasks[newStatus.id].sublist(0, listIndex),
+                      task,
+                      ..._tasks[newStatus.id].sublist(listIndex),
+                    ];
+                    */
+                  });
+                },
               ),
             )
             .toList(),
