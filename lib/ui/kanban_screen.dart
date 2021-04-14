@@ -52,6 +52,8 @@ class _KanbanScreenState extends State<KanbanScreen> {
           (taskA.statusOrder ?? 9999).compareTo(taskB.statusOrder ?? 9999));
 
       return BoardList(
+        backgroundColor: Theme.of(context).cardColor,
+        headerBackgroundColor: Theme.of(context).cardColor,
         onDropList: (endIndex, startIndex) {
           widget.viewModel.onStatusOrderChanged(context, status.id, endIndex);
         },
@@ -67,6 +69,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
             .map(
               (task) => BoardItem(
                 item: Card(
+                  color: Theme.of(context).backgroundColor,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(task.description),
