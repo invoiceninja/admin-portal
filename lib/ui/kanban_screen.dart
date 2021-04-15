@@ -133,9 +133,9 @@ class _KanbanScreenState extends State<KanbanScreen> {
                 ),
                 onDropItem: (
                   int listIndex,
-                  int oldItemIndex,
                   int itemIndex,
                   int oldListIndex,
+                  int oldItemIndex,
                   BoardItemState state,
                 ) {
                   if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
@@ -147,12 +147,15 @@ class _KanbanScreenState extends State<KanbanScreen> {
                   final task = _tasks[status.id][oldItemIndex];
 
                   setState(() {
-                    if (_tasks[oldStatus.id].contains(task)) {
+                    if (_tasks.containsKey(oldStatus.id) &&
+                        _tasks[oldStatus.id].contains(task)) {
                       _tasks[oldStatus.id].remove(task);
                     }
+
                     if (!_tasks.containsKey(newStatus.id)) {
                       _tasks[newStatus.id] = [];
                     }
+
                     _tasks[newStatus.id] = [
                       ..._tasks[newStatus.id].sublist(0, itemIndex),
                       task,
