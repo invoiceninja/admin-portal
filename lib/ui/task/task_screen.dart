@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -45,14 +46,15 @@ class TaskScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        IconButton(
-          icon: Icon(MdiIcons.trello),
-          onPressed: () {
-            store.dispatch(
-              UpdateUserPreferences(showKanban: !state.prefState.showKanban),
-            );
-          },
-        )
+        if (!kReleaseMode)
+          IconButton(
+            icon: Icon(MdiIcons.trello),
+            onPressed: () {
+              store.dispatch(
+                UpdateUserPreferences(showKanban: !state.prefState.showKanban),
+              );
+            },
+          )
       ],
       body:
           state.prefState.showKanban ? KanbanViewBuilder() : TaskListBuilder(),
