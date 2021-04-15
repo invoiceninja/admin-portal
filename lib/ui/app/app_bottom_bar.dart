@@ -35,6 +35,7 @@ class AppBottomBar extends StatefulWidget {
     this.customValues2 = const [],
     this.customValues3 = const [],
     this.customValues4 = const [],
+    this.hideListOptions = false,
   });
 
   final EntityType entityType;
@@ -54,6 +55,7 @@ class AppBottomBar extends StatefulWidget {
   final List<String> customValues4;
   final List<String> tableColumns;
   final List<String> defaultTableColumns;
+  final bool hideListOptions;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
@@ -388,35 +390,39 @@ class _AppBottomBarState extends State<AppBottomBar> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                IconButton(
-                  tooltip: localization.multiselect,
-                  icon: Icon(Icons.check_box),
-                  onPressed: () => widget.onCheckboxPressed(),
-                ),
-                if (!widget.entityType.isSetting)
+                if (!widget.hideListOptions) ...[
                   IconButton(
-                    tooltip:
-                        isList ? localization.showTable : localization.showList,
-                    icon: Icon(isList ? Icons.table_chart : Icons.view_list),
-                    onPressed: () {
-                      store.dispatch(SwitchListTableLayout());
-                    },
+                    tooltip: localization.multiselect,
+                    icon: Icon(Icons.check_box),
+                    onPressed: () => widget.onCheckboxPressed(),
                   ),
-                if (isList && widget.sortFields.isNotEmpty)
-                  IconButton(
-                    tooltip: localization.sort,
-                    icon: Icon(Icons.sort_by_alpha),
-                    onPressed: _showSortSheet,
-                  ),
-                if (!isList && isNotMobile(context))
-                  IconButton(
-                    tooltip: localization.preview,
-                    icon: Icon(Icons.chrome_reader_mode),
-                    onPressed: () {
-                      store.dispatch(UpdateUserPreferences(
-                          isPreviewVisible: !state.prefState.isPreviewVisible));
-                    },
-                  ),
+                  if (!widget.entityType.isSetting)
+                    IconButton(
+                      tooltip: isList
+                          ? localization.showTable
+                          : localization.showList,
+                      icon: Icon(isList ? Icons.table_chart : Icons.view_list),
+                      onPressed: () {
+                        store.dispatch(SwitchListTableLayout());
+                      },
+                    ),
+                  if (isList && widget.sortFields.isNotEmpty)
+                    IconButton(
+                      tooltip: localization.sort,
+                      icon: Icon(Icons.sort_by_alpha),
+                      onPressed: _showSortSheet,
+                    ),
+                  if (!isList && isNotMobile(context))
+                    IconButton(
+                      tooltip: localization.preview,
+                      icon: Icon(Icons.chrome_reader_mode),
+                      onPressed: () {
+                        store.dispatch(UpdateUserPreferences(
+                            isPreviewVisible:
+                                !state.prefState.isPreviewVisible));
+                      },
+                    ),
+                ],
                 IconButton(
                   tooltip: localization.filter,
                   icon: Icon(Icons.filter_list),

@@ -4,21 +4,21 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
-import 'package:invoiceninja_flutter/ui/kanban_screen.dart';
+import 'package:invoiceninja_flutter/ui/task/kanban_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
-class KanbanScreenBuilder extends StatefulWidget {
-  const KanbanScreenBuilder({Key key}) : super(key: key);
-  static const String route = '/kanban';
+class KanbanViewBuilder extends StatefulWidget {
+  const KanbanViewBuilder({Key key}) : super(key: key);
 
   @override
-  _KanbanScreenBuilderState createState() => _KanbanScreenBuilderState();
+  _KanbanViewBuilderState createState() => _KanbanViewBuilderState();
 }
 
-class _KanbanScreenBuilderState extends State<KanbanScreenBuilder> {
+class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, KanbanVM>(
@@ -26,10 +26,10 @@ class _KanbanScreenBuilderState extends State<KanbanScreenBuilder> {
       builder: (context, viewModel) {
         final state = viewModel.state;
         final company = state.company;
-        return KanbanScreen(
+        return KanbanView(
           viewModel: viewModel,
           key: ValueKey(
-              '__${company.id}_${state.userCompanyState.lastUpdated}_'),
+              '__${company.id}_${state.userCompanyState.lastUpdated}_${viewModel.taskList.length}__'),
         );
       },
     );
@@ -39,8 +39,10 @@ class _KanbanScreenBuilderState extends State<KanbanScreenBuilder> {
 class KanbanVM {
   KanbanVM({
     @required this.state,
+    @required this.taskList,
     @required this.onStatusOrderChanged,
     @required this.onTaskOrderChanged,
+    @required this.onSaveTaskPressed,
   });
 
   static KanbanVM fromStore(Store<AppState> store) {
@@ -48,6 +50,15 @@ class KanbanVM {
 
     return KanbanVM(
       state: state,
+      taskList: memoizedFilteredTaskList(
+          state.getUISelection(EntityType.task),
+          state.taskState.map,
+          state.clientState.map,
+          state.userState.map,
+          state.projectState.map,
+          state.invoiceState.map,
+          state.taskState.list,
+          state.taskListState),
       onStatusOrderChanged: (context, statusId, index) {
         final localization = AppLocalization.of(context);
         final taskStatus = state.taskStatusState.get(statusId);
@@ -81,10 +92,22 @@ class KanbanVM {
             ..statusId = statusId),
         ));
       },
+      onSaveTaskPressed: (context, taskId, description) {
+        final localization = AppLocalization.of(context);
+        final task = state.taskState.get(taskId);
+        final completer =
+            snackBarCompleter<TaskEntity>(context, localization.updatedTask);
+        store.dispatch(SaveTaskRequest(
+          completer: completer,
+          task: task.rebuild((b) => b..description = description),
+        ));
+      },
     );
   }
 
   final AppState state;
+  final List<String> taskList;
   final Function(BuildContext, String, int) onStatusOrderChanged;
   final Function(BuildContext, String, String, int) onTaskOrderChanged;
+  final Function(BuildContext, String, String) onSaveTaskPressed;
 }

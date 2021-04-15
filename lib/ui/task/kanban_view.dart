@@ -3,18 +3,16 @@ import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
-import 'package:invoiceninja_flutter/ui/kanban_screen_vm.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class KanbanScreen extends StatefulWidget {
-  const KanbanScreen({
+class KanbanView extends StatefulWidget {
+  const KanbanView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -22,10 +20,10 @@ class KanbanScreen extends StatefulWidget {
   final KanbanVM viewModel;
 
   @override
-  _KanbanScreenState createState() => _KanbanScreenState();
+  _KanbanViewState createState() => _KanbanViewState();
 }
 
-class _KanbanScreenState extends State<KanbanScreen> {
+class _KanbanViewState extends State<KanbanView> {
   final _boardViewController = new BoardViewController();
 
   List<TaskStatusEntity> _statuses = [];
@@ -50,7 +48,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
       }
     });
 
-    state.taskState.list.forEach((taskId) {
+    widget.viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId];
       if (task.isActive && task.statusId.isNotEmpty) {
         final status = state.taskStatusState.get(task.statusId);
@@ -76,7 +74,6 @@ class _KanbanScreenState extends State<KanbanScreen> {
   @override
   Widget build(BuildContext context) {
     print('## BUILD: ${_statuses.length}');
-    final state = widget.viewModel.state;
 
     final boardList = _statuses.map((status) {
       return BoardList(
@@ -115,7 +112,11 @@ class _KanbanScreenState extends State<KanbanScreen> {
             child: TextButton(
               child: Text(AppLocalization.of(context).newTask),
               onPressed: () {
-                //
+                final task = TaskEntity(state: widget.viewModel.state)
+                    .rebuild((b) => b..statusId = status.id);
+                setState(() {
+                  _tasks[status.id].add(task);
+                });
               },
             ),
           ),
@@ -123,13 +124,12 @@ class _KanbanScreenState extends State<KanbanScreen> {
         items: (_tasks[status.id] ?? [])
             .map(
               (task) => BoardItem(
-                item: Card(
-                  color: Theme.of(context).backgroundColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        '${task.statusOrder} - ${task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(task.updatedAt * 1000))}'),
-                  ),
+                item: _TaskCard(
+                  task: task,
+                  onSavePressed: (description) {
+                    widget.viewModel
+                        .onSaveTaskPressed(context, task.id, description);
+                  },
                 ),
                 onDropItem: (
                   int listIndex,
@@ -172,36 +172,102 @@ class _KanbanScreenState extends State<KanbanScreen> {
       );
     }).toList();
 
-    return Scaffold(
-      drawer: isMobile(context) || state.prefState.isMenuFloated
-          ? MenuDrawerBuilder()
-          : null,
-      endDrawer: isMobile(context) || state.prefState.isHistoryFloated
-          ? HistoryDrawerBuilder()
-          : null,
-      appBar: AppBar(
-        centerTitle: false,
-        leading: isMobile(context) || state.prefState.isMenuFloated
-            ? null
-            : SizedBox(),
-        title: ListFilter(
-          key: ValueKey('__cleared_at_${state.uiState.filterClearedAt}__'),
-          entityType: EntityType.kanban,
-          entityIds: [],
-          filter: state.uiState.filter,
-          onFilterChanged: (value) {
-            //store.dispatch(FilterCompany(value));
-          },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: BoardView(
+        boardViewController: _boardViewController,
+        lists: boardList,
+        dragDelay: 1,
+      ),
+    );
+  }
+}
+
+class _TaskCard extends StatefulWidget {
+  const _TaskCard({
+    @required this.task,
+    @required this.onSavePressed,
+  });
+  final TaskEntity task;
+  final Function(String) onSavePressed;
+
+  @override
+  __TaskCardState createState() => __TaskCardState();
+}
+
+class __TaskCardState extends State<_TaskCard> {
+  bool _isEditing = false;
+  String _description = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    _description = widget.task.description;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    if (_isEditing) {
+      return Card(
+        color: Theme.of(context).backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              DecoratedFormField(
+                autofocus: true,
+                initialValue: widget.task.description,
+                minLines: 4,
+                maxLines: 4,
+                onChanged: (value) => _description = value,
+              ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => setState(() => _isEditing = false),
+                    child: Text(localization.cancel),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      viewEntity(
+                          appContext: context.getAppContext(),
+                          entity: widget.task);
+                    },
+                    child: Text(localization.view),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      widget.onSavePressed(_description.trim());
+                    },
+                    child: Text(localization.save),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+    }
+
+    return InkWell(
+      child: Card(
+        color: Theme.of(context).backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+              '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: BoardView(
-          boardViewController: _boardViewController,
-          lists: boardList,
-          dragDelay: 1,
-        ),
-      ),
+      onTap: () {
+        setState(() {
+          _isEditing = true;
+        });
+      },
     );
   }
 }

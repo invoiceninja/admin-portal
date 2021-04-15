@@ -133,6 +133,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'isMenuVisible',
       serializers.serialize(object.isMenuVisible,
           specifiedType: const FullType(bool)),
+      'showKanban',
+      serializers.serialize(object.showKanban,
+          specifiedType: const FullType(bool)),
       'isHistoryVisible',
       serializers.serialize(object.isHistoryVisible,
           specifiedType: const FullType(bool)),
@@ -203,6 +206,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'isMenuVisible':
           result.isMenuVisible = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'showKanban':
+          result.showKanban = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'isHistoryVisible':
@@ -434,6 +441,8 @@ class _$PrefState extends PrefState {
   @override
   final bool isMenuVisible;
   @override
+  final bool showKanban;
+  @override
   final bool isHistoryVisible;
   @override
   final bool enableDarkMode;
@@ -461,6 +470,7 @@ class _$PrefState extends PrefState {
       this.useSidebarEditor,
       this.isPreviewVisible,
       this.isMenuVisible,
+      this.showKanban,
       this.isHistoryVisible,
       this.enableDarkMode,
       this.showFilterSidebar,
@@ -490,6 +500,9 @@ class _$PrefState extends PrefState {
     }
     if (isMenuVisible == null) {
       throw new BuiltValueNullFieldError('PrefState', 'isMenuVisible');
+    }
+    if (showKanban == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'showKanban');
     }
     if (isHistoryVisible == null) {
       throw new BuiltValueNullFieldError('PrefState', 'isHistoryVisible');
@@ -536,6 +549,7 @@ class _$PrefState extends PrefState {
         useSidebarEditor == other.useSidebarEditor &&
         isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
+        showKanban == other.showKanban &&
         isHistoryVisible == other.isHistoryVisible &&
         enableDarkMode == other.enableDarkMode &&
         showFilterSidebar == other.showFilterSidebar &&
@@ -564,18 +578,20 @@ class _$PrefState extends PrefState {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                appLayout
+                                                                $jc(
+                                                                    0,
+                                                                    appLayout
+                                                                        .hashCode),
+                                                                moduleLayout
                                                                     .hashCode),
-                                                            moduleLayout
+                                                            menuSidebarMode
                                                                 .hashCode),
-                                                        menuSidebarMode
+                                                        historySidebarMode
                                                             .hashCode),
-                                                    historySidebarMode
-                                                        .hashCode),
-                                                useSidebarEditor.hashCode),
-                                            isPreviewVisible.hashCode),
-                                        isMenuVisible.hashCode),
+                                                    useSidebarEditor.hashCode),
+                                                isPreviewVisible.hashCode),
+                                            isMenuVisible.hashCode),
+                                        showKanban.hashCode),
                                     isHistoryVisible.hashCode),
                                 enableDarkMode.hashCode),
                             showFilterSidebar.hashCode),
@@ -596,6 +612,7 @@ class _$PrefState extends PrefState {
           ..add('useSidebarEditor', useSidebarEditor)
           ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
+          ..add('showKanban', showKanban)
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('enableDarkMode', enableDarkMode)
           ..add('showFilterSidebar', showFilterSidebar)
@@ -645,6 +662,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   bool get isMenuVisible => _$this._isMenuVisible;
   set isMenuVisible(bool isMenuVisible) =>
       _$this._isMenuVisible = isMenuVisible;
+
+  bool _showKanban;
+  bool get showKanban => _$this._showKanban;
+  set showKanban(bool showKanban) => _$this._showKanban = showKanban;
 
   bool _isHistoryVisible;
   bool get isHistoryVisible => _$this._isHistoryVisible;
@@ -698,6 +719,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _useSidebarEditor = _$v.useSidebarEditor?.toBuilder();
       _isPreviewVisible = _$v.isPreviewVisible;
       _isMenuVisible = _$v.isMenuVisible;
+      _showKanban = _$v.showKanban;
       _isHistoryVisible = _$v.isHistoryVisible;
       _enableDarkMode = _$v.enableDarkMode;
       _showFilterSidebar = _$v.showFilterSidebar;
@@ -737,6 +759,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               useSidebarEditor: useSidebarEditor.build(),
               isPreviewVisible: isPreviewVisible,
               isMenuVisible: isMenuVisible,
+              showKanban: showKanban,
               isHistoryVisible: isHistoryVisible,
               enableDarkMode: enableDarkMode,
               showFilterSidebar: showFilterSidebar,

@@ -20,7 +20,6 @@ import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
 import 'package:invoiceninja_flutter/redux/group/group_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
-import 'package:invoiceninja_flutter/redux/kanban/kanban_middleware.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
 import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
@@ -69,7 +68,6 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreQuotesMiddleware())
         ..addAll(createStoreSettingsMiddleware())
         ..addAll(createStoreReportsMiddleware())
-        ..addAll(createStoreKabanMiddleware())
         // STARTER: middleware - do not remove comment
         ..addAll(createStoreSubscriptionsMiddleware())
         ..addAll(createStoreTaskStatusesMiddleware())

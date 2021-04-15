@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'menu_drawer_vm.dart';
 
 class ListScaffold extends StatelessWidget {

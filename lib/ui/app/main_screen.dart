@@ -32,7 +32,6 @@ import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_e
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
-import 'package:invoiceninja_flutter/ui/kanban_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
@@ -117,9 +116,6 @@ class MainScreen extends StatelessWidget {
                 ),
             ],
           );
-          break;
-        case KanbanScreenBuilder.route:
-          screen = KanbanScreenBuilder();
           break;
         case ClientScreen.route:
           screen = EntityScreens(
@@ -324,8 +320,15 @@ class EntityScreens extends StatelessWidget {
 
     final isFullScreen = state.isFullScreen;
     final isPreviewVisible = prefState.isPreviewVisible;
-    final isPreviewShown =
-        isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
+    bool isPreviewShown = isPreviewVisible;
+
+    if (subRoute != 'view' && subRoute.isNotEmpty) {
+      isPreviewShown = true;
+    } else if (mainRoute == '/task' &&
+        prefState.showKanban &&
+        state.taskUIState.selectedId.isEmpty) {
+      isPreviewShown = false;
+    }
 
     const previewFlex = 2;
     int listFlex = 3;

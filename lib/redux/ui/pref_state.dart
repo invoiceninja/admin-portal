@@ -25,6 +25,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       colorTheme: kColorThemeLight,
       showFilterSidebar: false,
       longPressSelectionIsDefault: true,
+      showKanban: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
     );
   }
@@ -48,6 +49,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get isPreviewVisible;
 
   bool get isMenuVisible;
+
+  bool get showKanban;
 
   bool get isHistoryVisible;
 
@@ -106,6 +109,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
+    ..showKanban = false
     ..colorTheme = kColorThemeLight;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;

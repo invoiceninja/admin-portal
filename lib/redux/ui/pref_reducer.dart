@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/kanban/kanban_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -53,6 +52,7 @@ PrefState prefReducer(
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+      ..showKanban = showKanbanReducer(state.showKanban, action)
       ..showFilterSidebar =
           showFilterSidebarReducer(state.showFilterSidebar, action)
       ..longPressSelectionIsDefault =
@@ -163,6 +163,12 @@ Reducer<bool> darkModeReducer = combineReducers([
   }),
 ]);
 
+Reducer<bool> showKanbanReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((showKanban, action) {
+    return action.showKanban ?? showKanban;
+  }),
+]);
+
 Reducer<bool> showFilterSidebarReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.showFilterSidebar ?? value;
@@ -235,8 +241,6 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewReports>((historyList, action) =>
       _addToHistory(
           historyList, HistoryRecord(entityType: EntityType.reports))),
-  TypedReducer<BuiltList<HistoryRecord>, ViewKanban>((historyList, action) =>
-      _addToHistory(historyList, HistoryRecord(entityType: EntityType.kanban))),
   TypedReducer<BuiltList<HistoryRecord>, ViewSettings>((historyList, action) =>
       _addToHistory(
           historyList,

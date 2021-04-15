@@ -19,7 +19,6 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/kanban/kanban_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -124,6 +123,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.accentColor,
     this.menuMode,
     this.historyMode,
+    this.showKanban,
     this.showFilterSidebar,
     this.alwaysShowFilterSidebar,
     this.rowsPerPage,
@@ -141,6 +141,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool isPreviewVisible;
   final bool showFilterSidebar;
   final bool alwaysShowFilterSidebar;
+  final bool showKanban;
   final String accentColor;
   final int rowsPerPage;
   final String colorTheme;
@@ -290,9 +291,6 @@ void viewEntitiesByType({
             break;
           case EntityType.reports:
             action = ViewReports(navigator: navigator);
-            break;
-          case EntityType.kanban:
-            action = ViewKanban(navigator: navigator);
             break;
           case EntityType.settings:
             action = ViewSettings(
