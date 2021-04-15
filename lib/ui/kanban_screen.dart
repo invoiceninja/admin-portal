@@ -213,22 +213,53 @@ class __TaskCardState extends State<_TaskCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).backgroundColor,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    final localization = AppLocalization.of(context);
+
+    if (_isEditing) {
+      return Card(
+        color: Theme.of(context).backgroundColor,
         child: Column(
           children: [
-            if (_isEditing)
-              DecoratedFormField(
-                minLines: 4,
-              )
-            else
-              Text(
-                  '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
+            DecoratedFormField(
+              minLines: 4,
+              maxLines: 4,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    //
+                  },
+                  child: Text(localization.cancel),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    //
+                  },
+                  child: Text(localization.save),
+                ),
+              ],
+            )
           ],
         ),
+      );
+    }
+
+    return InkWell(
+      child: Card(
+        color: Theme.of(context).backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+              '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
+        ),
       ),
+      onTap: () {
+        setState(() {
+          _isEditing = true;
+        });
+      },
     );
   }
 }
