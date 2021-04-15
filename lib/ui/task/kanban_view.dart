@@ -3,8 +3,10 @@ import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -212,7 +214,9 @@ class __TaskCardState extends State<_TaskCard> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //
+                    viewEntity(
+                        appContext: context.getAppContext(),
+                        entity: widget.task);
                   },
                   child: Text(localization.view),
                 ),

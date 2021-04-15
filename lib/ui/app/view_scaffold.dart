@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -20,6 +21,7 @@ class ViewScaffold extends StatelessWidget {
     this.appBarBottom,
     this.isFilter = false,
     this.onBackPressed,
+    this.showClearSelection = false,
   });
 
   final bool isFilter;
@@ -28,6 +30,7 @@ class ViewScaffold extends StatelessWidget {
   final Function onBackPressed;
   final Widget floatingActionButton;
   final Widget appBarBottom;
+  final bool showClearSelection;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +68,18 @@ class ViewScaffold extends StatelessWidget {
             tooltip: localization.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
+      } else if (showClearSelection) {
+        leading = IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            viewEntityById(
+              appContext: context.getAppContext(),
+              entityId: '',
+              entityType: entity.entityType,
+              showError: false,
+            );
+          },
+        );
       }
     }
 
