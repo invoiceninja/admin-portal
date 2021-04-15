@@ -120,7 +120,13 @@ class _KanbanViewState extends State<KanbanView> {
         items: (_tasks[status.id] ?? [])
             .map(
               (task) => BoardItem(
-                item: _TaskCard(task: task),
+                item: _TaskCard(
+                  task: task,
+                  onSavePressed: (description) {
+                    widget.viewModel
+                        .onSaveTaskPressed(context, task.id, description);
+                  },
+                ),
                 onDropItem: (
                   int listIndex,
                   int itemIndex,
@@ -174,8 +180,12 @@ class _KanbanViewState extends State<KanbanView> {
 }
 
 class _TaskCard extends StatefulWidget {
-  const _TaskCard({this.task});
+  const _TaskCard({
+    @required this.task,
+    @required this.onSavePressed,
+  });
   final TaskEntity task;
+  final Function(String) onSavePressed;
 
   @override
   __TaskCardState createState() => __TaskCardState();
@@ -183,6 +193,14 @@ class _TaskCard extends StatefulWidget {
 
 class __TaskCardState extends State<_TaskCard> {
   bool _isEditing = false;
+  String _description = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    _description = widget.task.description;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +216,7 @@ class __TaskCardState extends State<_TaskCard> {
               initialValue: widget.task.description,
               minLines: 4,
               maxLines: 4,
+              onChanged: (value) => _description = value,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -216,7 +235,7 @@ class __TaskCardState extends State<_TaskCard> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //
+                    widget.onSavePressed(_description.trim());
                   },
                   child: Text(localization.save),
                 ),

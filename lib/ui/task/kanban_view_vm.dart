@@ -42,6 +42,7 @@ class KanbanVM {
     @required this.taskList,
     @required this.onStatusOrderChanged,
     @required this.onTaskOrderChanged,
+    @required this.onSaveTaskPressed,
   });
 
   static KanbanVM fromStore(Store<AppState> store) {
@@ -91,6 +92,16 @@ class KanbanVM {
             ..statusId = statusId),
         ));
       },
+      onSaveTaskPressed: (context, taskId, description) {
+        final localization = AppLocalization.of(context);
+        final task = state.taskState.get(taskId);
+        final completer =
+            snackBarCompleter<TaskEntity>(context, localization.updatedTask);
+        store.dispatch(SaveTaskRequest(
+          completer: completer,
+          task: task.rebuild((b) => b..description = description),
+        ));
+      },
     );
   }
 
@@ -98,4 +109,5 @@ class KanbanVM {
   final List<String> taskList;
   final Function(BuildContext, String, int) onStatusOrderChanged;
   final Function(BuildContext, String, String, int) onTaskOrderChanged;
+  final Function(BuildContext, String, String) onSaveTaskPressed;
 }
