@@ -112,7 +112,11 @@ class _KanbanViewState extends State<KanbanView> {
             child: TextButton(
               child: Text(AppLocalization.of(context).newTask),
               onPressed: () {
-                //
+                final task = TaskEntity(state: widget.viewModel.state)
+                    .rebuild((b) => b..statusId = status.id);
+                setState(() {
+                  _tasks[status.id].add(task);
+                });
               },
             ),
           ),
