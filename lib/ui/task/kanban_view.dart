@@ -130,6 +130,13 @@ class _KanbanViewState extends State<KanbanView> {
                     widget.viewModel
                         .onSaveTaskPressed(context, task.id, description);
                   },
+                  onCancelPressed: () {
+                    if (task.isNew) {
+                      setState(() {
+                        _tasks[status.id].remove(task);
+                      });
+                    }
+                  },
                 ),
                 onDropItem: (
                   int listIndex,
@@ -187,9 +194,11 @@ class _TaskCard extends StatefulWidget {
   const _TaskCard({
     @required this.task,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
   });
   final TaskEntity task;
   final Function(String) onSavePressed;
+  final Function() onCancelPressed;
 
   @override
   __TaskCardState createState() => __TaskCardState();
@@ -235,7 +244,7 @@ class __TaskCardState extends State<_TaskCard> {
                       setState(() {
                         _isEditing = false;
                         if (widget.task.isNew) {
-                          //
+                          widget.onCancelPressed();
                         }
                       });
                     },
