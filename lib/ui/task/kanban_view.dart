@@ -3,6 +3,7 @@ import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -127,8 +128,19 @@ class _KanbanViewState extends State<KanbanView> {
                 item: _TaskCard(
                   task: task,
                   onSavePressed: (description) {
-                    widget.viewModel
-                        .onSaveTaskPressed(context, task.id, description);
+                    widget.viewModel.onSaveTaskPressed(
+                      context,
+                      task.id,
+                      status.id,
+                      description,
+                    );
+                  },
+                  onCancelPressed: () {
+                    if (task.isNew) {
+                      setState(() {
+                        _tasks[status.id].remove(task);
+                      });
+                    }
                   },
                 ),
                 onDropItem: (
@@ -187,9 +199,11 @@ class _TaskCard extends StatefulWidget {
   const _TaskCard({
     @required this.task,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
   });
   final TaskEntity task;
   final Function(String) onSavePressed;
+  final Function() onCancelPressed;
 
   @override
   __TaskCardState createState() => __TaskCardState();
@@ -203,7 +217,9 @@ class __TaskCardState extends State<_TaskCard> {
   void initState() {
     super.initState();
 
-    _description = widget.task.description;
+    final task = widget.task;
+    _description = task.description;
+    _isEditing = task.isNew;
   }
 
   @override
@@ -228,23 +244,34 @@ class __TaskCardState extends State<_TaskCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () => setState(() => _isEditing = false),
-                    child: Text(localization.cancel),
-                  ),
-                  TextButton(
+                  AppTextButton(
                     onPressed: () {
-                      viewEntity(
-                          appContext: context.getAppContext(),
-                          entity: widget.task);
+                      setState(() {
+                        _isEditing = false;
+                        if (widget.task.isNew) {
+                          widget.onCancelPressed();
+                        }
+                      });
                     },
-                    child: Text(localization.view),
+                    label: localization.cancel,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      widget.onSavePressed(_description.trim());
-                    },
-                    child: Text(localization.save),
+                  if (widget.task.isOld)
+                    AppTextButton(
+                      onPressed: () {
+                        viewEntity(
+                            appContext: context.getAppContext(),
+                            entity: widget.task);
+                      },
+                      label: localization.view,
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        widget.onSavePressed(_description.trim());
+                      },
+                      child: Text(localization.save),
+                    ),
                   ),
                 ],
               )
