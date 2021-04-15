@@ -209,42 +209,43 @@ class __TaskCardState extends State<_TaskCard> {
     if (_isEditing) {
       return Card(
         color: Theme.of(context).backgroundColor,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: DecoratedFormField(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              DecoratedFormField(
                 autofocus: true,
                 initialValue: widget.task.description,
                 minLines: 4,
                 maxLines: 4,
                 onChanged: (value) => _description = value,
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () => setState(() => _isEditing = false),
-                  child: Text(localization.cancel),
-                ),
-                TextButton(
-                  onPressed: () {
-                    viewEntity(
-                        appContext: context.getAppContext(),
-                        entity: widget.task);
-                  },
-                  child: Text(localization.view),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    widget.onSavePressed(_description.trim());
-                  },
-                  child: Text(localization.save),
-                ),
-              ],
-            )
-          ],
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => setState(() => _isEditing = false),
+                    child: Text(localization.cancel),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      viewEntity(
+                          appContext: context.getAppContext(),
+                          entity: widget.task);
+                    },
+                    child: Text(localization.view),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      widget.onSavePressed(_description.trim());
+                    },
+                    child: Text(localization.save),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       );
     }
