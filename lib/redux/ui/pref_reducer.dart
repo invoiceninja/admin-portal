@@ -52,7 +52,7 @@ PrefState prefReducer(
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
-      ..showKanban = showKanbanReducer(state.enableDarkMode, action)
+      ..showKanban = showKanbanReducer(state.showKanban, action)
       ..showFilterSidebar =
           showFilterSidebarReducer(state.showFilterSidebar, action)
       ..longPressSelectionIsDefault =
