@@ -5,6 +5,7 @@ import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
@@ -123,14 +124,7 @@ class _KanbanScreenState extends State<KanbanScreen> {
         items: (_tasks[status.id] ?? [])
             .map(
               (task) => BoardItem(
-                item: Card(
-                  color: Theme.of(context).backgroundColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                        '${task.statusOrder} - ${task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(task.updatedAt * 1000))}'),
-                  ),
-                ),
+                item: _TaskCard(task: task),
                 onDropItem: (
                   int listIndex,
                   int itemIndex,
@@ -200,6 +194,39 @@ class _KanbanScreenState extends State<KanbanScreen> {
           boardViewController: _boardViewController,
           lists: boardList,
           dragDelay: 1,
+        ),
+      ),
+    );
+  }
+}
+
+class _TaskCard extends StatefulWidget {
+  const _TaskCard({this.task});
+  final TaskEntity task;
+
+  @override
+  __TaskCardState createState() => __TaskCardState();
+}
+
+class __TaskCardState extends State<_TaskCard> {
+  bool _isEditing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Theme.of(context).backgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            if (_isEditing)
+              DecoratedFormField(
+                minLines: 4,
+              )
+            else
+              Text(
+                  '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
+          ],
         ),
       ),
     );
