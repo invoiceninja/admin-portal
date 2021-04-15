@@ -52,6 +52,7 @@ PrefState prefReducer(
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+      ..showKanban = showKanbanReducer(state.enableDarkMode, action)
       ..showFilterSidebar =
           showFilterSidebarReducer(state.showFilterSidebar, action)
       ..longPressSelectionIsDefault =
@@ -159,6 +160,12 @@ Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
 Reducer<bool> darkModeReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((enableDarkMode, action) {
     return action.enableDarkMode ?? enableDarkMode;
+  }),
+]);
+
+Reducer<bool> showKanbanReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((showKanban, action) {
+    return action.showKanban ?? showKanban;
   }),
 ]);
 
