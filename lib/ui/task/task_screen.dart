@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_presenter.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -12,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({
@@ -42,7 +44,16 @@ class TaskScreen extends StatelessWidget {
           store.dispatch(FilterTasks(value));
         },
       ),
+      appBarActions: [
+        IconButton(
+          icon: Icon(MdiIcons.trello),
+          onPressed: () {
+            //
+          },
+        )
+      ],
       body: TaskListBuilder(),
+      //body: KanbanViewBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,
         tableColumns: TaskPresenter.getAllTableFields(userCompany),

@@ -5,20 +5,19 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
-import 'package:invoiceninja_flutter/ui/kanban_screen.dart';
+import 'package:invoiceninja_flutter/ui/task/kanban_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
-class KanbanScreenBuilder extends StatefulWidget {
-  const KanbanScreenBuilder({Key key}) : super(key: key);
-  static const String route = '/kanban';
+class KanbanViewBuilder extends StatefulWidget {
+  const KanbanViewBuilder({Key key}) : super(key: key);
 
   @override
-  _KanbanScreenBuilderState createState() => _KanbanScreenBuilderState();
+  _KanbanViewBuilderState createState() => _KanbanViewBuilderState();
 }
 
-class _KanbanScreenBuilderState extends State<KanbanScreenBuilder> {
+class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, KanbanVM>(
@@ -26,7 +25,7 @@ class _KanbanScreenBuilderState extends State<KanbanScreenBuilder> {
       builder: (context, viewModel) {
         final state = viewModel.state;
         final company = state.company;
-        return KanbanScreen(
+        return KanbanView(
           viewModel: viewModel,
           key: ValueKey(
               '__${company.id}_${state.userCompanyState.lastUpdated}_'),

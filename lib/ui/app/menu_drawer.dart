@@ -387,16 +387,6 @@ class MenuDrawer extends StatelessWidget {
                             iconTooltip: localization.newExpense,
                           ),
                           // STARTER: menu - do not remove comment
-                          if (!kReleaseMode &&
-                              company.isModuleEnabled(EntityType.task))
-                            DrawerTile(
-                              company: company,
-                              icon: getEntityIcon(EntityType.kanban),
-                              title: localization.kanban,
-                              onTap: () => viewEntitiesByType(
-                                  appContext: context.getAppContext(),
-                                  entityType: EntityType.kanban),
-                            ),
                           DrawerTile(
                             company: company,
                             icon: getEntityIcon(EntityType.reports),
@@ -404,9 +394,6 @@ class MenuDrawer extends StatelessWidget {
                             onTap: () => viewEntitiesByType(
                                 appContext: context.getAppContext(),
                                 entityType: EntityType.reports),
-                            onLongPress: () => viewEntitiesByType(
-                                appContext: context.getAppContext(),
-                                entityType: EntityType.kanban),
                           ),
                           DrawerTile(
                             company: company,

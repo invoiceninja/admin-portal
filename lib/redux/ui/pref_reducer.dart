@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/kanban/kanban_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -235,8 +234,6 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewReports>((historyList, action) =>
       _addToHistory(
           historyList, HistoryRecord(entityType: EntityType.reports))),
-  TypedReducer<BuiltList<HistoryRecord>, ViewKanban>((historyList, action) =>
-      _addToHistory(historyList, HistoryRecord(entityType: EntityType.kanban))),
   TypedReducer<BuiltList<HistoryRecord>, ViewSettings>((historyList, action) =>
       _addToHistory(
           historyList,

@@ -9,13 +9,13 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
-import 'package:invoiceninja_flutter/ui/kanban_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class KanbanScreen extends StatefulWidget {
-  const KanbanScreen({
+class KanbanView extends StatefulWidget {
+  const KanbanView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -23,10 +23,10 @@ class KanbanScreen extends StatefulWidget {
   final KanbanVM viewModel;
 
   @override
-  _KanbanScreenState createState() => _KanbanScreenState();
+  _KanbanViewState createState() => _KanbanViewState();
 }
 
-class _KanbanScreenState extends State<KanbanScreen> {
+class _KanbanViewState extends State<KanbanView> {
   final _boardViewController = new BoardViewController();
 
   List<TaskStatusEntity> _statuses = [];
@@ -166,35 +166,12 @@ class _KanbanScreenState extends State<KanbanScreen> {
       );
     }).toList();
 
-    return Scaffold(
-      drawer: isMobile(context) || state.prefState.isMenuFloated
-          ? MenuDrawerBuilder()
-          : null,
-      endDrawer: isMobile(context) || state.prefState.isHistoryFloated
-          ? HistoryDrawerBuilder()
-          : null,
-      appBar: AppBar(
-        centerTitle: false,
-        leading: isMobile(context) || state.prefState.isMenuFloated
-            ? null
-            : SizedBox(),
-        title: ListFilter(
-          key: ValueKey('__cleared_at_${state.uiState.filterClearedAt}__'),
-          entityType: EntityType.kanban,
-          entityIds: [],
-          filter: state.uiState.filter,
-          onFilterChanged: (value) {
-            //store.dispatch(FilterCompany(value));
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: BoardView(
-          boardViewController: _boardViewController,
-          lists: boardList,
-          dragDelay: 1,
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: BoardView(
+        boardViewController: _boardViewController,
+        lists: boardList,
+        dragDelay: 1,
       ),
     );
   }
