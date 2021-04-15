@@ -3,6 +3,7 @@ import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -239,7 +240,7 @@ class __TaskCardState extends State<_TaskCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
+                  AppTextButton(
                     onPressed: () {
                       setState(() {
                         _isEditing = false;
@@ -248,22 +249,25 @@ class __TaskCardState extends State<_TaskCard> {
                         }
                       });
                     },
-                    child: Text(localization.cancel),
+                    label: localization.cancel,
                   ),
                   if (widget.task.isOld)
-                    TextButton(
+                    AppTextButton(
                       onPressed: () {
                         viewEntity(
                             appContext: context.getAppContext(),
                             entity: widget.task);
                       },
-                      child: Text(localization.view),
+                      label: localization.view,
                     ),
-                  ElevatedButton(
-                    onPressed: () {
-                      widget.onSavePressed(_description.trim());
-                    },
-                    child: Text(localization.save),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        widget.onSavePressed(_description.trim());
+                      },
+                      child: Text(localization.save),
+                    ),
                   ),
                 ],
               )
