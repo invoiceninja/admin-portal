@@ -48,7 +48,7 @@ class _KanbanViewState extends State<KanbanView> {
       }
     });
 
-    state.taskState.list.forEach((taskId) {
+    widget.viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId];
       if (task.isActive && task.statusId.isNotEmpty) {
         final status = state.taskStatusState.get(task.statusId);

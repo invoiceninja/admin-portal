@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -28,7 +29,7 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
         return KanbanView(
           viewModel: viewModel,
           key: ValueKey(
-              '__${company.id}_${state.userCompanyState.lastUpdated}_'),
+              '__${company.id}_${state.userCompanyState.lastUpdated}_${viewModel.taskList.length}__'),
         );
       },
     );
@@ -38,6 +39,7 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
 class KanbanVM {
   KanbanVM({
     @required this.state,
+    @required this.taskList,
     @required this.onStatusOrderChanged,
     @required this.onTaskOrderChanged,
   });
@@ -47,6 +49,15 @@ class KanbanVM {
 
     return KanbanVM(
       state: state,
+      taskList: memoizedFilteredTaskList(
+          state.getUISelection(EntityType.task),
+          state.taskState.map,
+          state.clientState.map,
+          state.userState.map,
+          state.projectState.map,
+          state.invoiceState.map,
+          state.taskState.list,
+          state.taskListState),
       onStatusOrderChanged: (context, statusId, index) {
         final localization = AppLocalization.of(context);
         final taskStatus = state.taskStatusState.get(statusId);
@@ -84,6 +95,7 @@ class KanbanVM {
   }
 
   final AppState state;
+  final List<String> taskList;
   final Function(BuildContext, String, int) onStatusOrderChanged;
   final Function(BuildContext, String, String, int) onTaskOrderChanged;
 }
