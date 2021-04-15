@@ -94,14 +94,32 @@ class KanbanVM {
       },
       onSaveTaskPressed: (context, taskId, statusId, description) {
         final localization = AppLocalization.of(context);
-        final task = state.taskState.get(taskId);
         final completer =
             snackBarCompleter<TaskEntity>(context, localization.updatedTask);
+
+        TaskEntity task = state.taskState.get(taskId);
+        task = task.rebuild((b) => b
+          ..description = description
+          ..statusId = statusId);
+
+        if (task.isNew) {
+          final uiState = state.uiState;
+          if (uiState.filterEntityType == EntityType.client) {
+            task = task.rebuild((b) => b..clientId = uiState.filterEntityId);
+          } else if (uiState.filterEntityType == EntityType.project) {
+            final project = state.projectState.get(uiState.filterEntityId);
+            task = task.rebuild((b) => b
+              ..projectId = uiState.filterEntityId
+              ..clientId = project.clientId);
+          } else if (uiState.filterEntityType == EntityType.user) {
+            task =
+                task.rebuild((b) => b..assignedUserId = uiState.filterEntityId);
+          }
+        }
+
         store.dispatch(SaveTaskRequest(
           completer: completer,
-          task: task.rebuild((b) => b
-            ..description = description
-            ..statusId = statusId),
+          task: task,
         ));
       },
     );
