@@ -211,21 +211,24 @@ class __TaskCardState extends State<_TaskCard> {
         color: Theme.of(context).backgroundColor,
         child: Column(
           children: [
-            DecoratedFormField(
-              autofocus: true,
-              initialValue: widget.task.description,
-              minLines: 4,
-              maxLines: 4,
-              onChanged: (value) => _description = value,
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: DecoratedFormField(
+                autofocus: true,
+                initialValue: widget.task.description,
+                minLines: 4,
+                maxLines: 4,
+                onChanged: (value) => _description = value,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
+                TextButton(
                   onPressed: () => setState(() => _isEditing = false),
                   child: Text(localization.cancel),
                 ),
-                ElevatedButton(
+                TextButton(
                   onPressed: () {
                     viewEntity(
                         appContext: context.getAppContext(),
