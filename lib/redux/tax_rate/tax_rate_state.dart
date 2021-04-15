@@ -17,6 +17,7 @@ abstract class TaxRateState
       list: BuiltList<String>(),
     );
   }
+
   TaxRateState._();
 
   @override
@@ -24,6 +25,7 @@ abstract class TaxRateState
   int get hashCode;
 
   BuiltMap<String, TaxRateEntity> get map;
+
   BuiltList<String> get list;
 
   static Serializer<TaxRateState> get serializer => _$taxRateStateSerializer;
@@ -40,6 +42,7 @@ abstract class TaxRateUIState extends Object
       tabIndex: 0,
     );
   }
+
   TaxRateUIState._();
 
   @override

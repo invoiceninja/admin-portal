@@ -13,6 +13,8 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/project_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreProjectsMiddleware([
   ProjectRepository repository = const ProjectRepository(),
 ]) {
@@ -49,8 +51,8 @@ Middleware<AppState> _editProject() {
 
     store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ProjectEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ProjectEditScreen.route);
     }
   };
 }
@@ -64,8 +66,8 @@ Middleware<AppState> _viewProject() {
 
     store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ProjectViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ProjectViewScreen.route);
     }
   };
 }
@@ -82,8 +84,8 @@ Middleware<AppState> _viewProjectList() {
 
     store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           ProjectScreen.route, (Route<dynamic> route) => false);
     }
   };

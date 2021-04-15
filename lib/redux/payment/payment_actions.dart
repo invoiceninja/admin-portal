@@ -12,48 +12,33 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 
-class ViewPaymentList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewPaymentList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewPaymentList implements PersistUI, StopLoading {
+  ViewPaymentList({this.force = false});
 
   final bool force;
 }
 
-class ViewPayment extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewPayment implements PersistUI, PersistPrefs {
   ViewPayment({
     @required this.paymentId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String paymentId;
   final bool force;
 }
 
-class EditPayment extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
-  EditPayment(
-      {@required this.payment,
-      @required NavigatorState navigator,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+class EditPayment implements PersistUI, PersistPrefs {
+  EditPayment({@required this.payment, this.completer, this.force = false});
 
   final PaymentEntity payment;
   final Completer completer;
   final bool force;
 }
 
-class ViewRefundPayment extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewRefundPayment implements PersistUI, PersistPrefs {
   ViewRefundPayment(
-      {@required this.payment,
-      @required NavigatorState navigator,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+      {@required this.payment, this.completer, this.force = false});
 
   final PaymentEntity payment;
   final Completer completer;
@@ -355,7 +340,6 @@ void handlePaymentAction(
                 amount: payment.completedAmount)));
         }
         store.dispatch(ViewRefundPayment(
-          navigator: navigator,
           payment: payment.rebuild((b) =>
               b..sendEmail = company.settings.clientManualPaymentNotification),
         ));

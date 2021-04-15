@@ -53,8 +53,7 @@ class TaskScreen extends StatelessWidget {
             color: state.prefState.showKanban ? state.accentColor : null,
             onPressed: () {
               if (isDesktop(context) && !state.prefState.showKanban) {
-                store.dispatch(
-                    ViewTask(taskId: '', navigator: Navigator.of(context)));
+                store.dispatch(ViewTask(taskId: ''));
               }
 
               store.dispatch(

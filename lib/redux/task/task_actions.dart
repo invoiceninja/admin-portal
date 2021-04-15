@@ -15,36 +15,29 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewTaskList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewTaskList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewTaskList implements PersistUI, StopLoading {
+  ViewTaskList({this.force = false});
 
   final bool force;
 }
 
-class ViewTask extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewTask implements PersistUI, PersistPrefs {
   ViewTask({
     @required this.taskId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String taskId;
   final bool force;
 }
 
-class EditTask extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditTask implements PersistUI, PersistPrefs {
   EditTask(
       {this.task,
       this.taskTime,
-      @required NavigatorState navigator,
       this.completer,
       this.force = false,
-      this.taskTimeIndex})
-      : super(navigator: navigator);
+      this.taskTimeIndex});
 
   final int taskTimeIndex;
   final TaskEntity task;

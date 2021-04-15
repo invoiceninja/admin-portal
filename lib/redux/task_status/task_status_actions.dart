@@ -9,37 +9,30 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
-class ViewTaskStatusList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
+class ViewTaskStatusList implements PersistUI, StopLoading {
   ViewTaskStatusList({
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final bool force;
 }
 
-class ViewTaskStatus extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewTaskStatus implements PersistUI, PersistPrefs {
   ViewTaskStatus({
-    @required NavigatorState navigator,
     @required this.taskStatusId,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String taskStatusId;
   final bool force;
 }
 
-class EditTaskStatus extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditTaskStatus implements PersistUI, PersistPrefs {
   EditTaskStatus(
       {@required this.taskStatus,
-      @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final TaskStatusEntity taskStatus;
   final Completer completer;

@@ -13,6 +13,8 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/product_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreProductsMiddleware([
   ProductRepository repository = const ProductRepository(),
 ]) {
@@ -49,8 +51,8 @@ Middleware<AppState> _editProduct() {
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ProductEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ProductEditScreen.route);
     }
   };
 }
@@ -64,8 +66,8 @@ Middleware<AppState> _viewProduct() {
 
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ProductViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ProductViewScreen.route);
     }
   };
 }
@@ -82,8 +84,8 @@ Middleware<AppState> _viewProductList() {
 
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           ProductScreen.route, (Route<dynamic> route) => false);
     }
   };

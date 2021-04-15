@@ -140,13 +140,9 @@ class CompanyDetailsVM {
       },
       onConfigurePaymentTermsPressed: (context) {
         if (state.paymentTermState.list.isEmpty) {
-          store.dispatch(ViewSettings(
-              navigator: Navigator.of(context),
-              section: kSettingsPaymentTermEdit));
+          store.dispatch(ViewSettings(section: kSettingsPaymentTermEdit));
         } else {
-          store.dispatch(ViewSettings(
-              navigator: Navigator.of(context),
-              section: kSettingsPaymentTerms));
+          store.dispatch(ViewSettings(section: kSettingsPaymentTerms));
         }
       },
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {

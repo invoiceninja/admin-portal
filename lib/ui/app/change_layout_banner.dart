@@ -93,12 +93,9 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                         WidgetsBinding.instance
                             .addPostFrameCallback((duration) {
                           if (layout == AppLayout.mobile) {
-                            store.dispatch(ViewDashboard(
-                                navigator: Navigator.of(context)));
+                            store.dispatch(ViewDashboard());
                           } else {
-                            store.dispatch(ViewMainScreen(
-                                navigator: Navigator.of(context),
-                                addDelay: true));
+                            store.dispatch(ViewMainScreen(addDelay: true));
                           }
                         });
                       },

@@ -161,7 +161,6 @@ class _EmailSettingsState extends State<EmailSettings> {
                           onPressed: () {
                             final store = StoreProvider.of<AppState>(context);
                             store.dispatch(ViewSettings(
-                              navigator: Navigator.of(context),
                               section: kSettingsUserDetails,
                             ));
                           },

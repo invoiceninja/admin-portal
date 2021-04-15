@@ -12,34 +12,24 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewUserList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewUserList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewUserList implements PersistUI, StopLoading {
+  ViewUserList({this.force = false});
 
   final bool force;
 }
 
-class ViewUser extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewUser implements PersistUI, PersistPrefs {
   ViewUser({
     @required this.userId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String userId;
   final bool force;
 }
 
-class EditUser extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
-  EditUser(
-      {@required this.user,
-      @required NavigatorState navigator,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+class EditUser implements PersistUI, PersistPrefs {
+  EditUser({@required this.user, this.completer, this.force = false});
 
   final UserEntity user;
   final Completer completer;

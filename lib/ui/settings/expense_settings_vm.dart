@@ -54,9 +54,7 @@ class ExpenseSettingsVM {
             completer: completer, company: settingsUIState.company));
       },
       onConfigureCategoriesPressed: (context) {
-        store.dispatch(ViewSettings(
-            navigator: Navigator.of(context),
-            section: kSettingsExpenseCategories));
+        store.dispatch(ViewSettings(section: kSettingsExpenseCategories));
       },
     );
   }

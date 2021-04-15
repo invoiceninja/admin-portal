@@ -123,7 +123,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           entity: DesignEntity(state: state),
                         )
                       : store.dispatch(ViewSettings(
-                          navigator: Navigator.of(context),
                           section: kSettingsCustomDesigns,
                         )),
                   //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),

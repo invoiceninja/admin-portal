@@ -9,37 +9,30 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewDesignList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
+class ViewDesignList implements PersistUI, StopLoading {
   ViewDesignList({
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final bool force;
 }
 
-class ViewDesign extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewDesign implements PersistUI, PersistPrefs {
   ViewDesign({
-    @required NavigatorState navigator,
     @required this.designId,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String designId;
   final bool force;
 }
 
-class EditDesign extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditDesign implements PersistUI, PersistPrefs {
   EditDesign(
       {@required this.design,
-      @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final DesignEntity design;
   final Completer completer;

@@ -13,6 +13,8 @@ import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/user_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreUsersMiddleware([
   UserRepository repository = const UserRepository(),
 ]) {
@@ -51,8 +53,8 @@ Middleware<AppState> _editUser() {
 
     store.dispatch(UpdateCurrentRoute(UserEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(UserEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(UserEditScreen.route);
     }
   };
 }
@@ -66,8 +68,8 @@ Middleware<AppState> _viewUser() {
 
     store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(UserViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(UserViewScreen.route);
     }
   };
 }
@@ -84,8 +86,8 @@ Middleware<AppState> _viewUserList() {
 
     store.dispatch(UpdateCurrentRoute(UserScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           UserScreen.route, (Route<dynamic> route) => false);
     }
   };

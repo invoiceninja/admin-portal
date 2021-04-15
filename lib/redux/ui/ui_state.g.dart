@@ -551,6 +551,7 @@ class _$UIState extends UIState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -638,200 +639,268 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   _$UIState _$v;
 
   int _selectedCompanyIndex;
+
   int get selectedCompanyIndex => _$this._selectedCompanyIndex;
+
   set selectedCompanyIndex(int selectedCompanyIndex) =>
       _$this._selectedCompanyIndex = selectedCompanyIndex;
 
   String _currentRoute;
+
   String get currentRoute => _$this._currentRoute;
+
   set currentRoute(String currentRoute) => _$this._currentRoute = currentRoute;
 
   String _previousRoute;
+
   String get previousRoute => _$this._previousRoute;
+
   set previousRoute(String previousRoute) =>
       _$this._previousRoute = previousRoute;
 
   ListBuilder<EntityType> _previewStack;
+
   ListBuilder<EntityType> get previewStack =>
       _$this._previewStack ??= new ListBuilder<EntityType>();
+
   set previewStack(ListBuilder<EntityType> previewStack) =>
       _$this._previewStack = previewStack;
 
   String _filterEntityId;
+
   String get filterEntityId => _$this._filterEntityId;
+
   set filterEntityId(String filterEntityId) =>
       _$this._filterEntityId = filterEntityId;
 
   EntityType _filterEntityType;
+
   EntityType get filterEntityType => _$this._filterEntityType;
+
   set filterEntityType(EntityType filterEntityType) =>
       _$this._filterEntityType = filterEntityType;
 
   String _filter;
+
   String get filter => _$this._filter;
+
   set filter(String filter) => _$this._filter = filter;
 
   int _filterClearedAt;
+
   int get filterClearedAt => _$this._filterClearedAt;
+
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
   DashboardUIStateBuilder _dashboardUIState;
+
   DashboardUIStateBuilder get dashboardUIState =>
       _$this._dashboardUIState ??= new DashboardUIStateBuilder();
+
   set dashboardUIState(DashboardUIStateBuilder dashboardUIState) =>
       _$this._dashboardUIState = dashboardUIState;
 
   ProductUIStateBuilder _productUIState;
+
   ProductUIStateBuilder get productUIState =>
       _$this._productUIState ??= new ProductUIStateBuilder();
+
   set productUIState(ProductUIStateBuilder productUIState) =>
       _$this._productUIState = productUIState;
 
   ClientUIStateBuilder _clientUIState;
+
   ClientUIStateBuilder get clientUIState =>
       _$this._clientUIState ??= new ClientUIStateBuilder();
+
   set clientUIState(ClientUIStateBuilder clientUIState) =>
       _$this._clientUIState = clientUIState;
 
   InvoiceUIStateBuilder _invoiceUIState;
+
   InvoiceUIStateBuilder get invoiceUIState =>
       _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
+
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
 
   SubscriptionUIStateBuilder _subscriptionUIState;
+
   SubscriptionUIStateBuilder get subscriptionUIState =>
       _$this._subscriptionUIState ??= new SubscriptionUIStateBuilder();
+
   set subscriptionUIState(SubscriptionUIStateBuilder subscriptionUIState) =>
       _$this._subscriptionUIState = subscriptionUIState;
 
   TaskStatusUIStateBuilder _taskStatusUIState;
+
   TaskStatusUIStateBuilder get taskStatusUIState =>
       _$this._taskStatusUIState ??= new TaskStatusUIStateBuilder();
+
   set taskStatusUIState(TaskStatusUIStateBuilder taskStatusUIState) =>
       _$this._taskStatusUIState = taskStatusUIState;
 
   ExpenseCategoryUIStateBuilder _expenseCategoryUIState;
+
   ExpenseCategoryUIStateBuilder get expenseCategoryUIState =>
       _$this._expenseCategoryUIState ??= new ExpenseCategoryUIStateBuilder();
+
   set expenseCategoryUIState(
           ExpenseCategoryUIStateBuilder expenseCategoryUIState) =>
       _$this._expenseCategoryUIState = expenseCategoryUIState;
 
   RecurringInvoiceUIStateBuilder _recurringInvoiceUIState;
+
   RecurringInvoiceUIStateBuilder get recurringInvoiceUIState =>
       _$this._recurringInvoiceUIState ??= new RecurringInvoiceUIStateBuilder();
+
   set recurringInvoiceUIState(
           RecurringInvoiceUIStateBuilder recurringInvoiceUIState) =>
       _$this._recurringInvoiceUIState = recurringInvoiceUIState;
 
   WebhookUIStateBuilder _webhookUIState;
+
   WebhookUIStateBuilder get webhookUIState =>
       _$this._webhookUIState ??= new WebhookUIStateBuilder();
+
   set webhookUIState(WebhookUIStateBuilder webhookUIState) =>
       _$this._webhookUIState = webhookUIState;
 
   TokenUIStateBuilder _tokenUIState;
+
   TokenUIStateBuilder get tokenUIState =>
       _$this._tokenUIState ??= new TokenUIStateBuilder();
+
   set tokenUIState(TokenUIStateBuilder tokenUIState) =>
       _$this._tokenUIState = tokenUIState;
 
   PaymentTermUIStateBuilder _paymentTermUIState;
+
   PaymentTermUIStateBuilder get paymentTermUIState =>
       _$this._paymentTermUIState ??= new PaymentTermUIStateBuilder();
+
   set paymentTermUIState(PaymentTermUIStateBuilder paymentTermUIState) =>
       _$this._paymentTermUIState = paymentTermUIState;
 
   DesignUIStateBuilder _designUIState;
+
   DesignUIStateBuilder get designUIState =>
       _$this._designUIState ??= new DesignUIStateBuilder();
+
   set designUIState(DesignUIStateBuilder designUIState) =>
       _$this._designUIState = designUIState;
 
   CreditUIStateBuilder _creditUIState;
+
   CreditUIStateBuilder get creditUIState =>
       _$this._creditUIState ??= new CreditUIStateBuilder();
+
   set creditUIState(CreditUIStateBuilder creditUIState) =>
       _$this._creditUIState = creditUIState;
 
   UserUIStateBuilder _userUIState;
+
   UserUIStateBuilder get userUIState =>
       _$this._userUIState ??= new UserUIStateBuilder();
+
   set userUIState(UserUIStateBuilder userUIState) =>
       _$this._userUIState = userUIState;
 
   TaxRateUIStateBuilder _taxRateUIState;
+
   TaxRateUIStateBuilder get taxRateUIState =>
       _$this._taxRateUIState ??= new TaxRateUIStateBuilder();
+
   set taxRateUIState(TaxRateUIStateBuilder taxRateUIState) =>
       _$this._taxRateUIState = taxRateUIState;
 
   CompanyGatewayUIStateBuilder _companyGatewayUIState;
+
   CompanyGatewayUIStateBuilder get companyGatewayUIState =>
       _$this._companyGatewayUIState ??= new CompanyGatewayUIStateBuilder();
+
   set companyGatewayUIState(
           CompanyGatewayUIStateBuilder companyGatewayUIState) =>
       _$this._companyGatewayUIState = companyGatewayUIState;
 
   GroupUIStateBuilder _groupUIState;
+
   GroupUIStateBuilder get groupUIState =>
       _$this._groupUIState ??= new GroupUIStateBuilder();
+
   set groupUIState(GroupUIStateBuilder groupUIState) =>
       _$this._groupUIState = groupUIState;
 
   DocumentUIStateBuilder _documentUIState;
+
   DocumentUIStateBuilder get documentUIState =>
       _$this._documentUIState ??= new DocumentUIStateBuilder();
+
   set documentUIState(DocumentUIStateBuilder documentUIState) =>
       _$this._documentUIState = documentUIState;
 
   ExpenseUIStateBuilder _expenseUIState;
+
   ExpenseUIStateBuilder get expenseUIState =>
       _$this._expenseUIState ??= new ExpenseUIStateBuilder();
+
   set expenseUIState(ExpenseUIStateBuilder expenseUIState) =>
       _$this._expenseUIState = expenseUIState;
 
   VendorUIStateBuilder _vendorUIState;
+
   VendorUIStateBuilder get vendorUIState =>
       _$this._vendorUIState ??= new VendorUIStateBuilder();
+
   set vendorUIState(VendorUIStateBuilder vendorUIState) =>
       _$this._vendorUIState = vendorUIState;
 
   TaskUIStateBuilder _taskUIState;
+
   TaskUIStateBuilder get taskUIState =>
       _$this._taskUIState ??= new TaskUIStateBuilder();
+
   set taskUIState(TaskUIStateBuilder taskUIState) =>
       _$this._taskUIState = taskUIState;
 
   ProjectUIStateBuilder _projectUIState;
+
   ProjectUIStateBuilder get projectUIState =>
       _$this._projectUIState ??= new ProjectUIStateBuilder();
+
   set projectUIState(ProjectUIStateBuilder projectUIState) =>
       _$this._projectUIState = projectUIState;
 
   PaymentUIStateBuilder _paymentUIState;
+
   PaymentUIStateBuilder get paymentUIState =>
       _$this._paymentUIState ??= new PaymentUIStateBuilder();
+
   set paymentUIState(PaymentUIStateBuilder paymentUIState) =>
       _$this._paymentUIState = paymentUIState;
 
   QuoteUIStateBuilder _quoteUIState;
+
   QuoteUIStateBuilder get quoteUIState =>
       _$this._quoteUIState ??= new QuoteUIStateBuilder();
+
   set quoteUIState(QuoteUIStateBuilder quoteUIState) =>
       _$this._quoteUIState = quoteUIState;
 
   SettingsUIStateBuilder _settingsUIState;
+
   SettingsUIStateBuilder get settingsUIState =>
       _$this._settingsUIState ??= new SettingsUIStateBuilder();
+
   set settingsUIState(SettingsUIStateBuilder settingsUIState) =>
       _$this._settingsUIState = settingsUIState;
 
   ReportsUIStateBuilder _reportsUIState;
+
   ReportsUIStateBuilder get reportsUIState =>
       _$this._reportsUIState ??= new ReportsUIStateBuilder();
+
   set reportsUIState(ReportsUIStateBuilder reportsUIState) =>
       _$this._reportsUIState = reportsUIState;
 

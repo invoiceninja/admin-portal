@@ -110,7 +110,6 @@ class MenuDrawerVM {
                 }
                 */
                 store.dispatch(ViewSettings(
-                  navigator: Navigator.of(context),
                   company: company,
                   section: uiState.subRoute,
                   force: true,

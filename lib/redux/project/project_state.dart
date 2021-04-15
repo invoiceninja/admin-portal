@@ -18,6 +18,7 @@ abstract class ProjectState
       list: BuiltList<String>(),
     );
   }
+
   ProjectState._();
 
   @override
@@ -62,6 +63,7 @@ abstract class ProjectUIState extends Object
       tabIndex: 0,
     );
   }
+
   ProjectUIState._();
 
   @override

@@ -11,35 +11,25 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewCompanyGatewayList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewCompanyGatewayList(
-      {@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewCompanyGatewayList implements PersistUI, StopLoading {
+  ViewCompanyGatewayList({this.force = false});
 
   final bool force;
 }
 
-class ViewCompanyGateway extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewCompanyGateway implements PersistUI, PersistPrefs {
   ViewCompanyGateway({
     @required this.companyGatewayId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String companyGatewayId;
   final bool force;
 }
 
-class EditCompanyGateway extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditCompanyGateway implements PersistUI, PersistPrefs {
   EditCompanyGateway(
-      {@required this.companyGateway,
-      @required NavigatorState navigator,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+      {@required this.companyGateway, this.completer, this.force = false});
 
   final CompanyGatewayEntity companyGateway;
   final Completer completer;

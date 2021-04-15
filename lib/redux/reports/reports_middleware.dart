@@ -7,6 +7,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreReportsMiddleware() {
   final viewReports = _viewReports();
 
@@ -21,7 +23,7 @@ Middleware<AppState> _viewReports() {
 
     checkForChanges(
         store: store,
-        context: action.context,
+        context: navigatorKey.currentContext,
         force: action.force,
         callback: () {
           const route = ReportsScreen.route;
@@ -30,12 +32,12 @@ Middleware<AppState> _viewReports() {
 
           store.dispatch(UpdateCurrentRoute(route));
 
-          if (isMobile(action.context)) {
+          if (store.state.prefState.isMobile) {
             if (action.report == null) {
-              Navigator.of(action.context).pushNamedAndRemoveUntil(
+              navigatorKey.currentState.pushNamedAndRemoveUntil(
                   ReportsScreen.route, (Route<dynamic> route) => false);
             } else {
-              Navigator.of(action.context).pushNamed(route);
+              navigatorKey.currentState.pushNamed(route);
             }
           }
         });

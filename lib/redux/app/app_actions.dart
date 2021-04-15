@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
@@ -76,9 +77,7 @@ class SwitchListTableLayout implements PersistUI, PersistPrefs {}
 class PopLastHistory {}
 
 class ViewMainScreen {
-  ViewMainScreen({this.navigator, this.addDelay = false});
-
-  NavigatorState navigator;
+  ViewMainScreen({this.addDelay = false});
 
   // This is needed to workaround around a "Duplicate GlobalKey detected
   // in widget tree." error when changing layouts in the settings
@@ -231,14 +230,6 @@ class FilterCompany implements PersistUI {
   final String filter;
 }
 
-abstract class AbstractNavigatorAction {
-  AbstractNavigatorAction({this.navigator});
-
-  final NavigatorState navigator;
-
-  BuildContext get context => navigator.overlay.context ?? navigator.context;
-}
-
 void filterByEntity({
   @required BuildContext context,
   @required BaseEntity entity,
@@ -260,7 +251,6 @@ void viewEntitiesByType({
   BaseEntity filterEntity,
 }) {
   final store = appContext.store;
-  final navigator = appContext.navigator;
   final uiState = store.state.uiState;
   dynamic action;
 
@@ -287,84 +277,83 @@ void viewEntitiesByType({
 
         switch (entityType) {
           case EntityType.dashboard:
-            action = ViewDashboard(navigator: navigator);
+            action = ViewDashboard();
             break;
           case EntityType.reports:
-            action = ViewReports(navigator: navigator);
+            action = ViewReports();
             break;
           case EntityType.settings:
             action = ViewSettings(
-              navigator: navigator,
               company: store.state.company,
               clearFilter: true,
             );
             break;
           case EntityType.client:
-            action = ViewClientList(navigator: navigator);
+            action = ViewClientList();
             break;
           case EntityType.user:
-            action = ViewUserList(navigator: navigator);
+            action = ViewUserList();
             break;
           case EntityType.project:
-            action = ViewProjectList(navigator: navigator);
+            action = ViewProjectList();
             break;
           case EntityType.taxRate:
-            action = ViewTaxRateList(navigator: navigator);
+            action = ViewTaxRateList();
             break;
           case EntityType.companyGateway:
-            action = ViewCompanyGatewayList(navigator: navigator);
+            action = ViewCompanyGatewayList();
             break;
           case EntityType.invoice:
-            action = ViewInvoiceList(navigator: navigator);
+            action = ViewInvoiceList();
             break;
           case EntityType.quote:
-            action = ViewQuoteList(navigator: navigator);
+            action = ViewQuoteList();
             break;
           case EntityType.vendor:
-            action = ViewVendorList(navigator: navigator);
+            action = ViewVendorList();
             break;
           case EntityType.product:
-            action = ViewProductList(navigator: navigator);
+            action = ViewProductList();
             break;
           case EntityType.task:
-            action = ViewTaskList(navigator: navigator);
+            action = ViewTaskList();
             break;
           case EntityType.expense:
-            action = ViewExpenseList(navigator: navigator);
+            action = ViewExpenseList();
             break;
           case EntityType.payment:
-            action = ViewPaymentList(navigator: navigator);
+            action = ViewPaymentList();
             break;
           case EntityType.group:
-            action = ViewGroupList(navigator: navigator);
+            action = ViewGroupList();
             break;
           // STARTER: view list - do not remove comment
           case EntityType.subscription:
-            store.dispatch(ViewSubscriptionList(navigator: navigator));
+            store.dispatch(ViewSubscriptionList());
             break;
           case EntityType.taskStatus:
-            store.dispatch(ViewTaskStatusList(navigator: navigator));
+            store.dispatch(ViewTaskStatusList());
             break;
           case EntityType.expenseCategory:
-            store.dispatch(ViewExpenseCategoryList(navigator: navigator));
+            store.dispatch(ViewExpenseCategoryList());
             break;
           case EntityType.recurringInvoice:
-            store.dispatch(ViewRecurringInvoiceList(navigator: navigator));
+            store.dispatch(ViewRecurringInvoiceList());
             break;
           case EntityType.webhook:
             store.dispatch(ViewWebhookList());
             break;
           case EntityType.token:
-            store.dispatch(ViewTokenList(navigator: navigator));
+            store.dispatch(ViewTokenList());
             break;
           case EntityType.paymentTerm:
-            store.dispatch(ViewPaymentTermList(navigator: navigator));
+            store.dispatch(ViewPaymentTermList());
             break;
           case EntityType.design:
-            action = ViewDesignList(navigator: navigator);
+            action = ViewDesignList();
             break;
           case EntityType.credit:
-            action = ViewCreditList(navigator: navigator);
+            action = ViewCreditList();
             break;
         }
 
@@ -401,7 +390,6 @@ void viewEntityById({
 }) {
   final store = appContext.store;
   final state = store.state;
-  final navigator = appContext.navigator;
   final uiState = store.state.uiState;
 
   checkForChanges(
@@ -457,97 +445,84 @@ void viewEntityById({
           case EntityType.client:
             store.dispatch(ViewClient(
               clientId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.user:
             store.dispatch(ViewUser(
               userId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.project:
             store.dispatch(ViewProject(
               projectId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.taxRate:
             store.dispatch(ViewTaxRate(
               taxRateId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.companyGateway:
             store.dispatch(ViewCompanyGateway(
               companyGatewayId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.invoice:
             store.dispatch(ViewInvoice(
               invoiceId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           //case EntityType.recurringInvoice:
-          //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
+          //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId));
           //break;
           case EntityType.quote:
             store.dispatch(ViewQuote(
               quoteId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.vendor:
             store.dispatch(ViewVendor(
               vendorId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.product:
             store.dispatch(ViewProduct(
               productId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.task:
             store.dispatch(ViewTask(
               taskId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.expense:
             store.dispatch(ViewExpense(
               expenseId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           //case EntityType.expenseCategory:
-          //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
+          //store.dispatch(ViewExpenseCategory(taxRateId: entityId));
           //break;
           case EntityType.payment:
             store.dispatch(ViewPayment(
               paymentId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.group:
             store.dispatch(ViewGroup(
               groupId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -555,7 +530,6 @@ void viewEntityById({
           case EntityType.subscription:
             store.dispatch(ViewSubscription(
               subscriptionId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -563,7 +537,6 @@ void viewEntityById({
           case EntityType.taskStatus:
             store.dispatch(ViewTaskStatus(
               taskStatusId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -571,7 +544,6 @@ void viewEntityById({
           case EntityType.expenseCategory:
             store.dispatch(ViewExpenseCategory(
               expenseCategoryId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -579,7 +551,6 @@ void viewEntityById({
           case EntityType.recurringInvoice:
             store.dispatch(ViewRecurringInvoice(
               recurringInvoiceId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -594,7 +565,6 @@ void viewEntityById({
           case EntityType.token:
             store.dispatch(ViewToken(
               tokenId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -602,14 +572,12 @@ void viewEntityById({
           case EntityType.paymentTerm:
             store.dispatch(ViewPaymentTerm(
               paymentTermId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
           case EntityType.design:
             store.dispatch(ViewDesign(
               designId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -617,7 +585,6 @@ void viewEntityById({
           case EntityType.credit:
             store.dispatch(ViewCredit(
               creditId: entityId,
-              navigator: navigator,
               force: force,
             ));
             break;
@@ -633,7 +600,6 @@ void createEntityByType({
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final navigator = Navigator.of(context);
 
   if (!state.userCompany.canCreate(entityType)) {
     return;
@@ -680,12 +646,10 @@ void createEntityByType({
                   state: state,
                   user: user,
                 ),
-                navigator: navigator,
                 force: force));
             break;
           case EntityType.user:
             store.dispatch(EditUser(
-              navigator: navigator,
               force: force,
               user: UserEntity(
                 state: state,
@@ -695,7 +659,6 @@ void createEntityByType({
             break;
           case EntityType.project:
             store.dispatch(EditProject(
-                navigator: navigator,
                 force: force,
                 project: ProjectEntity(
                   state: state,
@@ -705,19 +668,15 @@ void createEntityByType({
             break;
           case EntityType.taxRate:
             store.dispatch(EditTaxRate(
-                navigator: navigator,
-                force: force,
-                taxRate: TaxRateEntity(state: state)));
+                force: force, taxRate: TaxRateEntity(state: state)));
             break;
           case EntityType.companyGateway:
             store.dispatch(EditCompanyGateway(
-                navigator: navigator,
                 force: force,
                 companyGateway: CompanyGatewayEntity(state: state)));
             break;
           case EntityType.invoice:
             store.dispatch(EditInvoice(
-              navigator: navigator,
               force: force,
               invoice: InvoiceEntity(
                 state: state,
@@ -728,7 +687,6 @@ void createEntityByType({
             break;
           case EntityType.quote:
             store.dispatch(EditQuote(
-                navigator: navigator,
                 force: force,
                 quote: InvoiceEntity(
                   state: state,
@@ -739,7 +697,6 @@ void createEntityByType({
             break;
           case EntityType.vendor:
             store.dispatch(EditVendor(
-                navigator: navigator,
                 force: force,
                 vendor: VendorEntity(
                   state: state,
@@ -748,13 +705,10 @@ void createEntityByType({
             break;
           case EntityType.product:
             store.dispatch(EditProduct(
-                navigator: navigator,
-                force: force,
-                product: ProductEntity(state: state)));
+                force: force, product: ProductEntity(state: state)));
             break;
           case EntityType.task:
             store.dispatch(EditTask(
-              navigator: navigator,
               force: force,
               task: TaskEntity(
                 state: state,
@@ -766,7 +720,6 @@ void createEntityByType({
             break;
           case EntityType.expense:
             store.dispatch(EditExpense(
-                navigator: navigator,
                 force: force,
                 expense: ExpenseEntity(
                   state: state,
@@ -778,7 +731,6 @@ void createEntityByType({
             break;
           case EntityType.payment:
             store.dispatch(EditPayment(
-                navigator: navigator,
                 force: force,
                 payment: PaymentEntity(
                   state: state,
@@ -787,7 +739,6 @@ void createEntityByType({
             break;
           case EntityType.group:
             store.dispatch(EditGroup(
-              navigator: navigator,
               force: force,
               group: GroupEntity(state: state),
             ));
@@ -795,7 +746,6 @@ void createEntityByType({
           // STARTER: create type - do not remove comment
           case EntityType.subscription:
             store.dispatch(EditSubscription(
-              navigator: navigator,
               force: force,
               subscription: SubscriptionEntity(state: state),
             ));
@@ -803,21 +753,18 @@ void createEntityByType({
 
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
-              navigator: navigator,
               force: force,
               taskStatus: TaskStatusEntity(state: state),
             ));
             break;
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
-              navigator: navigator,
               force: force,
               expenseCategory: ExpenseCategoryEntity(state: state),
             ));
             break;
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
-              navigator: navigator,
               force: force,
               recurringInvoice: InvoiceEntity(
                 state: state,
@@ -835,28 +782,24 @@ void createEntityByType({
             break;
           case EntityType.token:
             store.dispatch(EditToken(
-              navigator: navigator,
               force: force,
               token: TokenEntity(state: state),
             ));
             break;
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
-              navigator: navigator,
               force: force,
               paymentTerm: PaymentTermEntity(state: state),
             ));
             break;
           case EntityType.design:
             store.dispatch(EditDesign(
-              navigator: navigator,
               force: force,
               design: DesignEntity(state: state),
             ));
             break;
           case EntityType.credit:
             store.dispatch(EditCredit(
-              navigator: navigator,
               force: force,
               credit: InvoiceEntity(
                 state: state,
@@ -881,7 +824,6 @@ void createEntity({
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final uiState = state.uiState;
-  final navigator = Navigator.of(context);
 
   if (!state.userCompany.canCreate(entity.entityType)) {
     return;
@@ -909,7 +851,6 @@ void createEntity({
           case EntityType.client:
             store.dispatch(EditClient(
               client: entity,
-              navigator: navigator,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
@@ -917,7 +858,6 @@ void createEntity({
             break;
           case EntityType.user:
             store.dispatch(EditUser(
-              navigator: navigator,
               user: entity,
               force: force,
               completer: completer,
@@ -925,7 +865,6 @@ void createEntity({
             break;
           case EntityType.project:
             store.dispatch(EditProject(
-              navigator: navigator,
               project: entity,
               force: force,
               completer: completer,
@@ -934,7 +873,6 @@ void createEntity({
             break;
           case EntityType.taxRate:
             store.dispatch(EditTaxRate(
-              navigator: navigator,
               taxRate: entity,
               force: force,
               completer: completer,
@@ -942,7 +880,6 @@ void createEntity({
             break;
           case EntityType.companyGateway:
             store.dispatch(EditCompanyGateway(
-              navigator: navigator,
               companyGateway: entity,
               force: force,
               completer: completer,
@@ -950,7 +887,6 @@ void createEntity({
             break;
           case EntityType.invoice:
             store.dispatch(EditInvoice(
-              navigator: navigator,
               invoice: entity,
               force: force,
               completer: completer,
@@ -958,7 +894,6 @@ void createEntity({
             break;
           case EntityType.quote:
             store.dispatch(EditQuote(
-              navigator: navigator,
               quote: entity,
               force: force,
               completer: completer,
@@ -966,7 +901,6 @@ void createEntity({
             break;
           case EntityType.vendor:
             store.dispatch(EditVendor(
-              navigator: navigator,
               vendor: entity,
               force: force,
               completer: completer,
@@ -975,7 +909,6 @@ void createEntity({
             break;
           case EntityType.product:
             store.dispatch(EditProduct(
-              navigator: navigator,
               product: entity,
               force: force,
               completer: completer,
@@ -983,7 +916,6 @@ void createEntity({
             break;
           case EntityType.task:
             store.dispatch(EditTask(
-              navigator: navigator,
               task: entity,
               force: force,
               completer: completer,
@@ -991,7 +923,6 @@ void createEntity({
             break;
           case EntityType.expense:
             store.dispatch(EditExpense(
-              navigator: navigator,
               expense: entity,
               force: force,
               completer: completer,
@@ -999,7 +930,6 @@ void createEntity({
             break;
           case EntityType.payment:
             store.dispatch(EditPayment(
-              navigator: navigator,
               payment: entity,
               force: force,
               completer: completer,
@@ -1007,7 +937,6 @@ void createEntity({
             break;
           case EntityType.group:
             store.dispatch(EditGroup(
-              navigator: navigator,
               group: entity,
               force: force,
               completer: completer,
@@ -1016,7 +945,6 @@ void createEntity({
           // STARTER: create - do not remove comment
           case EntityType.subscription:
             store.dispatch(EditSubscription(
-              navigator: navigator,
               subscription: entity,
               force: force,
               completer: completer,
@@ -1025,7 +953,6 @@ void createEntity({
 
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
-              navigator: navigator,
               taskStatus: entity,
               force: force,
               completer: completer,
@@ -1034,7 +961,6 @@ void createEntity({
 
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
-              navigator: navigator,
               expenseCategory: entity,
               force: force,
               completer: completer,
@@ -1043,7 +969,6 @@ void createEntity({
 
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
-              navigator: navigator,
               recurringInvoice: entity,
               force: force,
               completer: completer,
@@ -1060,7 +985,6 @@ void createEntity({
 
           case EntityType.token:
             store.dispatch(EditToken(
-              navigator: navigator,
               token: entity,
               force: force,
               completer: completer,
@@ -1069,7 +993,6 @@ void createEntity({
 
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
-              navigator: navigator,
               paymentTerm: entity,
               force: force,
               completer: completer,
@@ -1078,7 +1001,6 @@ void createEntity({
 
           case EntityType.design:
             store.dispatch(EditDesign(
-              navigator: navigator,
               design: entity,
               force: force,
               completer: completer,
@@ -1087,7 +1009,6 @@ void createEntity({
 
           case EntityType.credit:
             store.dispatch(EditCredit(
-              navigator: navigator,
               credit: entity,
               force: force,
               completer: completer,
@@ -1104,7 +1025,6 @@ void editEntity(
     Completer completer}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final navigator = Navigator.of(context);
   final localization = AppLocalization.of(context);
   final entityType = entity.entityType;
 
@@ -1120,30 +1040,24 @@ void editEntity(
           case EntityType.client:
             store.dispatch(EditClient(
               client: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
           case EntityType.user:
             store.dispatch(EditUser(
               user: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
           case EntityType.project:
-            store.dispatch(EditProject(
-                project: entity, navigator: navigator, completer: completer));
+            store.dispatch(EditProject(project: entity, completer: completer));
             break;
           case EntityType.taxRate:
-            store.dispatch(EditTaxRate(
-                taxRate: entity, navigator: navigator, completer: completer));
+            store.dispatch(EditTaxRate(taxRate: entity, completer: completer));
             break;
           case EntityType.companyGateway:
             store.dispatch(EditCompanyGateway(
-                companyGateway: entity,
-                navigator: navigator,
-                completer: completer));
+                companyGateway: entity, completer: completer));
             break;
           case EntityType.invoice:
             final invoice = entity as InvoiceEntity;
@@ -1168,7 +1082,6 @@ void editEntity(
             } else {
               store.dispatch(EditInvoice(
                 invoice: entity,
-                navigator: navigator,
                 completer: completer,
                 invoiceItemIndex: subIndex,
               ));
@@ -1177,7 +1090,6 @@ void editEntity(
           case EntityType.quote:
             store.dispatch(EditQuote(
               quote: entity,
-              navigator: navigator,
               completer: completer,
               quoteItemIndex: subIndex,
             ));
@@ -1185,55 +1097,46 @@ void editEntity(
           case EntityType.vendor:
             store.dispatch(EditVendor(
               vendor: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
           case EntityType.product:
-            store.dispatch(EditProduct(
-                product: entity, navigator: navigator, completer: completer));
+            store.dispatch(EditProduct(product: entity, completer: completer));
             break;
           case EntityType.task:
             store.dispatch(EditTask(
               task: (entity as TaskEntity).rebuild(
                   (b) => b..showAsRunning = (entity as TaskEntity).isRunning),
-              navigator: navigator,
               taskTimeIndex: subIndex,
               completer: completer,
             ));
             break;
           case EntityType.expense:
             store.dispatch(
-              EditExpense(
-                  expense: entity, navigator: navigator, completer: completer),
+              EditExpense(expense: entity, completer: completer),
             );
             break;
           case EntityType.payment:
             store.dispatch(EditPayment(
               payment: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
           case EntityType.group:
             store.dispatch(EditGroup(
               group: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
           // STARTER: edit - do not remove comment
           case EntityType.subscription:
-            store.dispatch(EditSubscription(
-                subscription: entity,
-                navigator: navigator,
-                completer: completer));
+            store.dispatch(
+                EditSubscription(subscription: entity, completer: completer));
             break;
 
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               taskStatus: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
@@ -1241,7 +1144,6 @@ void editEntity(
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
               expenseCategory: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
@@ -1249,7 +1151,6 @@ void editEntity(
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
               recurringInvoice: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
@@ -1264,7 +1165,6 @@ void editEntity(
           case EntityType.token:
             store.dispatch(EditToken(
               token: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
@@ -1272,7 +1172,6 @@ void editEntity(
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
               paymentTerm: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
@@ -1280,7 +1179,6 @@ void editEntity(
           case EntityType.design:
             store.dispatch(EditDesign(
               design: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
@@ -1288,7 +1186,6 @@ void editEntity(
           case EntityType.credit:
             store.dispatch(EditCredit(
               credit: entity,
-              navigator: navigator,
               completer: completer,
             ));
             break;
@@ -1311,7 +1208,7 @@ void handleEntitiesActions(
 
   if ([EntityAction.archive, EntityAction.delete].contains(action) && autoPop) {
     if (isMobile(appContext.buildContext)) {
-      appContext.navigator.pop();
+      navigatorKey.currentState.pop();
     } else if (entities.first.entityType.isSetting) {
       final store = appContext.store;
       switch (entities.first.entityType) {

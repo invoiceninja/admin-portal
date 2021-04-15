@@ -14,6 +14,8 @@ import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_a
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/recurring_invoice_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
   RecurringInvoiceRepository repository = const RecurringInvoiceRepository(),
 ]) {
@@ -64,8 +66,8 @@ Middleware<AppState> _editRecurringInvoice() {
 
     store.dispatch(UpdateCurrentRoute(RecurringInvoiceEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(RecurringInvoiceEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(RecurringInvoiceEditScreen.route);
     }
   };
 }
@@ -79,8 +81,8 @@ Middleware<AppState> _viewRecurringInvoice() {
 
     store.dispatch(UpdateCurrentRoute(RecurringInvoiceViewScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(RecurringInvoiceViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(RecurringInvoiceViewScreen.route);
     }
   };
 }
@@ -97,8 +99,8 @@ Middleware<AppState> _viewRecurringInvoiceList() {
 
     store.dispatch(UpdateCurrentRoute(RecurringInvoiceScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           RecurringInvoiceScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -113,8 +115,8 @@ Middleware<AppState> _showPdfRecurringInvoice() {
 
     store.dispatch(UpdateCurrentRoute(RecurringInvoicePdfScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(RecurringInvoicePdfScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(RecurringInvoicePdfScreen.route);
     }
   };
 }

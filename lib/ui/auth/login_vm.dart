@@ -95,9 +95,9 @@ class LoginVM {
             store.dispatch(
                 UpdateUserPreferences(moduleLayout: ModuleLayout.list));
           }
-          store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+          store.dispatch(ViewDashboard());
         } else {
-          store.dispatch(ViewMainScreen(navigator: Navigator.of(context)));
+          store.dispatch(ViewMainScreen());
         }
       });
     }

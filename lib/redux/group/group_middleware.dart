@@ -13,6 +13,8 @@ import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/group_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreGroupsMiddleware([
   GroupRepository repository = const GroupRepository(),
 ]) {
@@ -49,8 +51,8 @@ Middleware<AppState> _editGroup() {
 
     store.dispatch(UpdateCurrentRoute(GroupEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(GroupEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(GroupEditScreen.route);
     }
   };
 }
@@ -64,8 +66,8 @@ Middleware<AppState> _viewGroup() {
 
     store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(GroupViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(GroupViewScreen.route);
     }
   };
 }
@@ -82,8 +84,8 @@ Middleware<AppState> _viewGroupList() {
 
     store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           GroupSettingsScreen.route, (Route<dynamic> route) => false);
     }
   };

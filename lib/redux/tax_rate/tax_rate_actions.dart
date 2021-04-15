@@ -10,32 +10,24 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewTaxRateList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewTaxRateList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewTaxRateList implements PersistUI, StopLoading {
+  ViewTaxRateList({this.force = false});
 
   final bool force;
 }
 
-class ViewTaxRate extends AbstractNavigatorAction implements PersistUI {
+class ViewTaxRate implements PersistUI {
   ViewTaxRate({
     @required this.taxRateId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String taxRateId;
   final bool force;
 }
 
-class EditTaxRate extends AbstractNavigatorAction implements PersistUI {
-  EditTaxRate(
-      {@required this.taxRate,
-      @required NavigatorState navigator,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+class EditTaxRate implements PersistUI {
+  EditTaxRate({@required this.taxRate, this.completer, this.force = false});
 
   final TaxRateEntity taxRate;
   final Completer completer;
