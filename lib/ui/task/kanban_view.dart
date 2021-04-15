@@ -116,6 +116,9 @@ class _KanbanViewState extends State<KanbanView> {
                 final task = TaskEntity(state: widget.viewModel.state)
                     .rebuild((b) => b..statusId = status.id);
                 setState(() {
+                  if (!_tasks.containsKey(status.id)) {
+                    _tasks[status.id] = [];
+                  }
                   _tasks[status.id].add(task);
                 });
               },
