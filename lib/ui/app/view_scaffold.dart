@@ -74,8 +74,8 @@ class ViewScaffold extends StatelessWidget {
           onPressed: () {
             viewEntityById(
               appContext: context.getAppContext(),
-              entityId: '',
               entityType: entity.entityType,
+              entityId: '',
               showError: false,
             );
           },
