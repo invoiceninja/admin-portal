@@ -203,7 +203,9 @@ class __TaskCardState extends State<_TaskCard> {
   void initState() {
     super.initState();
 
-    _description = widget.task.description;
+    final task = widget.task;
+    _description = task.description;
+    _isEditing = task.isNew;
   }
 
   @override
@@ -229,17 +231,25 @@ class __TaskCardState extends State<_TaskCard> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () => setState(() => _isEditing = false),
+                    onPressed: () {
+                      setState(() {
+                        _isEditing = false;
+                        if (widget.task.isNew) {
+                          //
+                        }
+                      });
+                    },
                     child: Text(localization.cancel),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      viewEntity(
-                          appContext: context.getAppContext(),
-                          entity: widget.task);
-                    },
-                    child: Text(localization.view),
-                  ),
+                  if (widget.task.isOld)
+                    TextButton(
+                      onPressed: () {
+                        viewEntity(
+                            appContext: context.getAppContext(),
+                            entity: widget.task);
+                      },
+                      child: Text(localization.view),
+                    ),
                   ElevatedButton(
                     onPressed: () {
                       widget.onSavePressed(_description.trim());
