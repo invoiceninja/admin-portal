@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TaskScreen extends StatelessWidget {
@@ -51,7 +52,7 @@ class TaskScreen extends StatelessWidget {
             icon: Icon(MdiIcons.trello),
             color: state.prefState.showKanban ? state.accentColor : null,
             onPressed: () {
-              if (!state.prefState.showKanban) {
+              if (isDesktop(context) && !state.prefState.showKanban) {
                 store.dispatch(
                     ViewTask(taskId: '', navigator: Navigator.of(context)));
               }
