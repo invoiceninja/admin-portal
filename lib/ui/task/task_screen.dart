@@ -50,6 +50,11 @@ class TaskScreen extends StatelessWidget {
           IconButton(
             icon: Icon(MdiIcons.trello),
             onPressed: () {
+              if (!state.prefState.showKanban) {
+                store.dispatch(
+                    ViewTask(taskId: '', navigator: Navigator.of(context)));
+              }
+
               store.dispatch(
                 UpdateUserPreferences(showKanban: !state.prefState.showKanban),
               );

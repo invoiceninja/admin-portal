@@ -320,8 +320,15 @@ class EntityScreens extends StatelessWidget {
 
     final isFullScreen = state.isFullScreen;
     final isPreviewVisible = prefState.isPreviewVisible;
-    final isPreviewShown =
-        isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
+    bool isPreviewShown = isPreviewVisible;
+
+    if (subRoute != 'view' && subRoute.isNotEmpty) {
+      isPreviewShown = true;
+    } else if (mainRoute == '/task' &&
+        prefState.showKanban &&
+        state.taskUIState.selectedId.isEmpty) {
+      isPreviewShown = false;
+    }
 
     const previewFlex = 2;
     int listFlex = 3;
