@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/kanban_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -107,6 +108,18 @@ class _KanbanScreenState extends State<KanbanScreen> {
             ),
           ),
         ],
+        footer: Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: TextButton(
+              child: Text(AppLocalization.of(context).newTask),
+              onPressed: () {
+                //
+              },
+            ),
+          ),
+        ),
         items: (_tasks[status.id] ?? [])
             .map(
               (task) => BoardItem(
@@ -134,12 +147,15 @@ class _KanbanScreenState extends State<KanbanScreen> {
                   final task = _tasks[status.id][oldItemIndex];
 
                   setState(() {
-                    if (_tasks[oldStatus.id].contains(task)) {
+                    if (_tasks.containsKey(oldStatus.id) &&
+                        _tasks[oldStatus.id].contains(task)) {
                       _tasks[oldStatus.id].remove(task);
                     }
+
                     if (!_tasks.containsKey(newStatus.id)) {
                       _tasks[newStatus.id] = [];
                     }
+
                     _tasks[newStatus.id] = [
                       ..._tasks[newStatus.id].sublist(0, itemIndex),
                       task,
