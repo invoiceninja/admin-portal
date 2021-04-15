@@ -221,6 +221,8 @@ class __TaskCardState extends State<_TaskCard> {
         child: Column(
           children: [
             DecoratedFormField(
+              autofocus: true,
+              initialValue: widget.task.description,
               minLines: 4,
               maxLines: 4,
             ),
@@ -228,10 +230,14 @@ class __TaskCardState extends State<_TaskCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
+                  onPressed: () => setState(() => _isEditing = false),
+                  child: Text(localization.cancel),
+                ),
+                ElevatedButton(
                   onPressed: () {
                     //
                   },
-                  child: Text(localization.cancel),
+                  child: Text(localization.view),
                 ),
                 ElevatedButton(
                   onPressed: () {
