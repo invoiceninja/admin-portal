@@ -128,8 +128,12 @@ class _KanbanViewState extends State<KanbanView> {
                 item: _TaskCard(
                   task: task,
                   onSavePressed: (description) {
-                    widget.viewModel
-                        .onSaveTaskPressed(context, task.id, description);
+                    widget.viewModel.onSaveTaskPressed(
+                      context,
+                      task.id,
+                      status.id,
+                      description,
+                    );
                   },
                   onCancelPressed: () {
                     if (task.isNew) {
