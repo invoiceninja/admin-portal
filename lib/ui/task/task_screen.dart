@@ -47,7 +47,7 @@ class TaskScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        if (!kReleaseMode)
+        if (!kReleaseMode || state.isHosted)
           IconButton(
             icon: Icon(MdiIcons.trello),
             color: state.prefState.showKanban ? state.accentColor : null,
