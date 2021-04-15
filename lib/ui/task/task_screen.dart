@@ -49,6 +49,7 @@ class TaskScreen extends StatelessWidget {
         if (!kReleaseMode)
           IconButton(
             icon: Icon(MdiIcons.trello),
+            color: state.prefState.showKanban ? state.accentColor : null,
             onPressed: () {
               if (!state.prefState.showKanban) {
                 store.dispatch(
@@ -65,6 +66,7 @@ class TaskScreen extends StatelessWidget {
           state.prefState.showKanban ? KanbanViewBuilder() : TaskListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,
+        hideListOptions: state.prefState.showKanban,
         tableColumns: TaskPresenter.getAllTableFields(userCompany),
         defaultTableColumns: TaskPresenter.getDefaultTableFields(userCompany),
         onSelectedSortField: (value) => store.dispatch(SortTasks(value)),

@@ -4,16 +4,11 @@ import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class KanbanView extends StatefulWidget {
@@ -79,7 +74,6 @@ class _KanbanViewState extends State<KanbanView> {
   @override
   Widget build(BuildContext context) {
     print('## BUILD: ${_statuses.length}');
-    final state = widget.viewModel.state;
 
     final boardList = _statuses.map((status) {
       return BoardList(
