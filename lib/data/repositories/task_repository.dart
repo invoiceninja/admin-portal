@@ -59,6 +59,8 @@ class TaskRepository {
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'status_ids': statusIds, 'task_ids': taskIds}));
 
+    return null;
+
     final KanbanResponse taskResponse =
         serializers.deserializeWith(KanbanResponse.serializer, response);
 

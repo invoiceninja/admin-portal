@@ -209,7 +209,7 @@ class _KanbanViewState extends State<KanbanView> {
             lists: boardList,
             dragDelay: 1,
           ),
-          if (state.isLoading) LinearProgressIndicator(),
+          if (state.isLoading || state.isSaving) LinearProgressIndicator(),
         ],
       ),
     );

@@ -243,9 +243,9 @@ class SortTasksSuccess implements StopSaving, PersistData {
 }
 
 class SortTasksFailure implements StopSaving {
-  SortTasksFailure(this.taskStatuses);
+  SortTasksFailure(this.error);
 
-  final List<TaskStatusEntity> taskStatuses;
+  final Object error;
 }
 
 class FilterTasks implements PersistUI {
