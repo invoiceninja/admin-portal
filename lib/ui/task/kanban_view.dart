@@ -81,12 +81,15 @@ class _KanbanViewState extends State<KanbanView> {
   @override
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
+    final color = state.prefState.enableDarkMode
+        ? Theme.of(context).cardColor
+        : Colors.grey.shade300;
 
     final boardList = _statuses.map((statusId) {
       final status = state.taskStatusState.get(statusId);
       return BoardList(
-        backgroundColor: Theme.of(context).cardColor,
-        headerBackgroundColor: Theme.of(context).cardColor,
+        backgroundColor: color,
+        headerBackgroundColor: color,
         onDropList: (endIndex, startIndex) {
           if (endIndex == startIndex) {
             return;
