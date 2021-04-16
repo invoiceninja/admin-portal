@@ -60,16 +60,17 @@ class _KanbanViewState extends State<KanbanView> {
       }
     });
 
+    _statuses = ['', ..._statuses];
+
     _tasks = {};
     viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId];
-      if (task.statusId.isNotEmpty) {
-        final status = state.taskStatusState.get(task.statusId);
-        if (!_tasks.containsKey(status.id)) {
-          _tasks[status.id] = [];
-        }
-        _tasks[status.id].add(task.id);
+      final status = state.taskStatusState.get(task.statusId);
+      final statusId = status.isNew ? '' : status.id;
+      if (!_tasks.containsKey(statusId)) {
+        _tasks[statusId] = [];
       }
+      _tasks[statusId].add(task.id);
     });
 
     _tasks.forEach((key, value) {
@@ -99,7 +100,6 @@ class _KanbanViewState extends State<KanbanView> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final state = widget.viewModel.state;
     final color = state.prefState.enableDarkMode
         ? Theme.of(context).cardColor
@@ -108,6 +108,7 @@ class _KanbanViewState extends State<KanbanView> {
     final boardList = _statuses.map((statusId) {
       final status = state.taskStatusState.get(statusId);
       return BoardList(
+        draggable: status.isOld,
         backgroundColor: color,
         headerBackgroundColor: color,
         onDropList: (endIndex, startIndex) {
@@ -385,7 +386,6 @@ class __StatusCardState extends State<_StatusCard> {
 
     final status = widget.status;
     _name = status.name;
-    _isEditing = status.isNew;
   }
 
   void _onSavePressed() {
@@ -456,15 +456,19 @@ class __StatusCardState extends State<_StatusCard> {
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Text(
-          '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}',
+          status.isNew
+              ? localization.unassigned
+              : '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
-      onTap: () {
-        setState(() {
-          _isEditing = true;
-        });
-      },
+      onTap: status.isNew
+          ? null
+          : () {
+              setState(() {
+                _isEditing = true;
+              });
+            },
     );
   }
 }
