@@ -4,6 +4,8 @@ import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -145,7 +147,7 @@ class _KanbanViewState extends State<KanbanView> {
         footer: Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: const EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 8, top: 2, bottom: 4),
             child: TextButton(
               child: Text(AppLocalization.of(context).newTask),
               onPressed: () {
@@ -282,7 +284,6 @@ class __TaskCardState extends State<_TaskCard> {
 
     if (_isEditing) {
       return Card(
-        color: Theme.of(context).backgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
@@ -404,6 +405,10 @@ class __StatusCardState extends State<_StatusCard> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final status = widget.status;
+    final state = StoreProvider.of<AppState>(context).state;
+    final color = state.prefState.enableDarkMode
+        ? Theme.of(context).cardColor
+        : Colors.grey.shade300;
 
     if (_isEditing) {
       return Padding(
@@ -448,11 +453,11 @@ class __StatusCardState extends State<_StatusCard> {
     }
 
     return InkWell(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Text(
-              '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}'),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Text(
+          '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}',
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
       onTap: () {
