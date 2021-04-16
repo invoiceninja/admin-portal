@@ -489,7 +489,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         : null,
                   ),
                 if (!state.prefState.isMenuFloated) Spacer(),
-                if (!widget.entityType.isSetting && !isList)
+                if (!widget.entityType.isSetting &&
+                    !isList &&
+                    !widget.hideListOptions)
                   if (state.prefState.isDesktop)
                     AppTextButton(
                       label: localization.columns,
