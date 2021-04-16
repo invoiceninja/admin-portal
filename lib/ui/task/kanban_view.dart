@@ -136,63 +136,68 @@ class _KanbanViewState extends State<KanbanView> {
         items: (_tasks[status.id] ?? [])
             .map((taskId) => widget.viewModel.state.taskState.get(taskId))
             .map(
-              (task) => BoardItem(
-                item: _TaskCard(
-                  task: task,
-                  onSavePressed: (description) {
-                    widget.viewModel.onSaveTaskPressed(
-                      context,
-                      task.id,
-                      status.id,
-                      description,
-                    );
-                  },
-                  onCancelPressed: () {
-                    if (task.isNew) {
-                      setState(() {
-                        _tasks[status.id].remove(task.id);
-                      });
-                    }
-                  },
-                ),
-                onDropItem: (
-                  int listIndex,
-                  int itemIndex,
-                  int oldListIndex,
-                  int oldItemIndex,
-                  BoardItemState state,
-                ) {
-                  if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
-                    return;
+          (task) {
+            final isVisible =
+                widget.viewModel.filteredTaskList.contains(task.id);
+            return BoardItem(
+              item: !isVisible
+                  ? SizedBox()
+                  : _TaskCard(
+                      task: task,
+                      onSavePressed: (description) {
+                        widget.viewModel.onSaveTaskPressed(
+                          context,
+                          task.id,
+                          status.id,
+                          description,
+                        );
+                      },
+                      onCancelPressed: () {
+                        if (task.isNew) {
+                          setState(() {
+                            _tasks[status.id].remove(task.id);
+                          });
+                        }
+                      },
+                    ),
+              onDropItem: (
+                int listIndex,
+                int itemIndex,
+                int oldListIndex,
+                int oldItemIndex,
+                BoardItemState state,
+              ) {
+                if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
+                  return;
+                }
+
+                final oldStatusId = _statuses[oldListIndex];
+                final newStatusId = _statuses[listIndex];
+                final taskId = _tasks[status.id][oldItemIndex];
+
+                setState(() {
+                  if (_tasks.containsKey(oldStatusId) &&
+                      _tasks[oldStatusId].contains(taskId)) {
+                    _tasks[oldStatusId].remove(taskId);
                   }
 
-                  final oldStatusId = _statuses[oldListIndex];
-                  final newStatusId = _statuses[listIndex];
-                  final taskId = _tasks[status.id][oldItemIndex];
+                  if (!_tasks.containsKey(newStatusId)) {
+                    _tasks[newStatusId] = [];
+                  }
 
-                  setState(() {
-                    if (_tasks.containsKey(oldStatusId) &&
-                        _tasks[oldStatusId].contains(taskId)) {
-                      _tasks[oldStatusId].remove(taskId);
-                    }
+                  _tasks[newStatusId] = [
+                    ..._tasks[newStatusId].sublist(0, itemIndex),
+                    taskId,
+                    ..._tasks[newStatusId].sublist(itemIndex),
+                  ];
+                });
 
-                    if (!_tasks.containsKey(newStatusId)) {
-                      _tasks[newStatusId] = [];
-                    }
-
-                    _tasks[newStatusId] = [
-                      ..._tasks[newStatusId].sublist(0, itemIndex),
-                      taskId,
-                      ..._tasks[newStatusId].sublist(itemIndex),
-                    ];
-                  });
-
-                  widget.viewModel.onTaskOrderChanged(
-                      context, taskId, newStatusId, itemIndex);
-                },
-              ),
-            )
-            .toList(),
+                widget.viewModel.onTaskOrderChanged(
+                    context, taskId, newStatusId, itemIndex);
+              },
+            );
+          },
+        ).toList(),
       );
     }).toList();
 

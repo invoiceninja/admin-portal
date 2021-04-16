@@ -228,6 +228,26 @@ class RestoreTaskFailure implements StopSaving {
   final List<TaskEntity> tasks;
 }
 
+class SortTasksRequest implements StartSaving {
+  SortTasksRequest(this.completer, this.taskStatusIds, this.taskIds);
+
+  final Completer completer;
+  final List<String> taskStatusIds;
+  final Map<String, List<String>> taskIds;
+}
+
+class SortTasksSuccess implements StopSaving, PersistData {
+  SortTasksSuccess(this.taskStatuses);
+
+  final List<TaskStatusEntity> taskStatuses;
+}
+
+class SortTasksFailure implements StopSaving {
+  SortTasksFailure(this.taskStatuses);
+
+  final List<TaskStatusEntity> taskStatuses;
+}
+
 class FilterTasks implements PersistUI {
   FilterTasks(this.filter);
 

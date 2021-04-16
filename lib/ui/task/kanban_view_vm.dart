@@ -29,7 +29,7 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
         return KanbanView(
           viewModel: viewModel,
           key: ValueKey(
-              '__${company.id}_${state.userCompanyState.lastUpdated}_${viewModel.taskList.length}__'),
+              '__${company.id}_${state.userCompanyState.lastUpdated}_${viewModel.filteredTaskList.length}__'),
         );
       },
     );
@@ -40,9 +40,11 @@ class KanbanVM {
   KanbanVM({
     @required this.state,
     @required this.taskList,
+    @required this.filteredTaskList,
     @required this.onStatusOrderChanged,
     @required this.onTaskOrderChanged,
     @required this.onSaveTaskPressed,
+    @required this.onBoardChanged,
   });
 
   static KanbanVM fromStore(Store<AppState> store) {
@@ -50,7 +52,7 @@ class KanbanVM {
 
     return KanbanVM(
       state: state,
-      taskList: memoizedFilteredTaskList(
+      taskList: memoizedKanbanTaskList(
           state.getUISelection(EntityType.task),
           state.taskState.map,
           state.clientState.map,
@@ -59,6 +61,18 @@ class KanbanVM {
           state.invoiceState.map,
           state.taskState.list,
           state.taskListState),
+      filteredTaskList: memoizedFilteredTaskList(
+          state.getUISelection(EntityType.task),
+          state.taskState.map,
+          state.clientState.map,
+          state.userState.map,
+          state.projectState.map,
+          state.invoiceState.map,
+          state.taskState.list,
+          state.taskListState),
+      onBoardChanged: (context, statusIds, taskIds) {
+        print('## onBoardChanged...\nstatusIds: $statusIds\ntaskIds: $taskIds');
+      },
       onStatusOrderChanged: (context, statusId, index) {
         final localization = AppLocalization.of(context);
         final taskStatus = state.taskStatusState.get(statusId);
@@ -127,7 +141,10 @@ class KanbanVM {
 
   final AppState state;
   final List<String> taskList;
+  final List<String> filteredTaskList;
   final Function(BuildContext, String, int) onStatusOrderChanged;
   final Function(BuildContext, String, String, int) onTaskOrderChanged;
+  final Function(BuildContext, List<String>, Map<String, List<String>>)
+      onBoardChanged;
   final Function(BuildContext, String, String, String) onSaveTaskPressed;
 }
