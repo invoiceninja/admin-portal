@@ -80,7 +80,6 @@ class _KanbanViewState extends State<KanbanView> {
 
   @override
   Widget build(BuildContext context) {
-    print('## BUILD: ${_statuses.length}');
     final state = widget.viewModel.state;
 
     final boardList = _statuses.map((statusId) {
@@ -140,7 +139,7 @@ class _KanbanViewState extends State<KanbanView> {
             final isVisible =
                 widget.viewModel.filteredTaskList.contains(task.id);
             return BoardItem(
-              item: !isVisible
+              item: !isVisible && task.isOld
                   ? SizedBox()
                   : _TaskCard(
                       task: task,
