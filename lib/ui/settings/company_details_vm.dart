@@ -102,34 +102,36 @@ class CompanyDetailsVM {
         }
       },
       onSavePressed: (context) {
-        final settingsUIState = state.uiState.settingsUIState;
-        if (settingsUIState.entityType == EntityType.company &&
-            settingsUIState.company.settings.countryId == null) {
-          showErrorDialog(
-              context: context,
-              message: AppLocalization.of(context).pleaseSelectACountry);
-          return;
-        }
-        switch (settingsUIState.entityType) {
-          case EntityType.company:
-            final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context).savedSettings);
-            store.dispatch(SaveCompanyRequest(
-                completer: completer, company: settingsUIState.company));
-            break;
-          case EntityType.group:
-            final completer = snackBarCompleter<GroupEntity>(
-                context, AppLocalization.of(context).savedSettings);
-            store.dispatch(SaveGroupRequest(
-                completer: completer, group: settingsUIState.group));
-            break;
-          case EntityType.client:
-            final completer = snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).savedSettings);
-            store.dispatch(SaveClientRequest(
-                completer: completer, client: settingsUIState.client));
-            break;
-        }
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
+          if (settingsUIState.entityType == EntityType.company &&
+              settingsUIState.company.settings.countryId == null) {
+            showErrorDialog(
+                context: context,
+                message: AppLocalization.of(context).pleaseSelectACountry);
+            return;
+          }
+          switch (settingsUIState.entityType) {
+            case EntityType.company:
+              final completer = snackBarCompleter<Null>(
+                  context, AppLocalization.of(context).savedSettings);
+              store.dispatch(SaveCompanyRequest(
+                  completer: completer, company: settingsUIState.company));
+              break;
+            case EntityType.group:
+              final completer = snackBarCompleter<GroupEntity>(
+                  context, AppLocalization.of(context).savedSettings);
+              store.dispatch(SaveGroupRequest(
+                  completer: completer, group: settingsUIState.group));
+              break;
+            case EntityType.client:
+              final completer = snackBarCompleter<ClientEntity>(
+                  context, AppLocalization.of(context).savedSettings);
+              store.dispatch(SaveClientRequest(
+                  completer: completer, client: settingsUIState.client));
+              break;
+          }
+        });
       },
       onUploadLogo: (context, multipartFile) {
         final type = state.uiState.settingsUIState.entityType;

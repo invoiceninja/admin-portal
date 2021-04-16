@@ -52,39 +52,42 @@ class CompanyGatewayScreenVM {
     final state = store.state;
 
     return CompanyGatewayScreenVM(
-      companyGatewayMap: state.companyGatewayState.map,
-      companyGatewayList: memoizedFilteredCompanyGatewayList(
-        state.companyGatewayState.map,
-        state.companyGatewayState.list,
-        state.companyGatewayListState,
-        state.uiState.settingsUIState.settings.companyGatewayIds,
-        !state.uiState.settingsUIState.isFiltered,
-      ),
-      userCompany: state.userCompany,
-      isInMultiselect: state.companyGatewayListState.isInMultiselect(),
-      onSavePressed: (context) {
-        final settingsUIState = state.uiState.settingsUIState;
-        switch (settingsUIState.entityType) {
-          case EntityType.company:
-            final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context).savedSettings);
-            store.dispatch(SaveCompanyRequest(
-                completer: completer, company: settingsUIState.company));
-            break;
-          case EntityType.group:
-            final completer = snackBarCompleter<GroupEntity>(
-                context, AppLocalization.of(context).savedSettings);
-            store.dispatch(SaveGroupRequest(
-                completer: completer, group: settingsUIState.group));
-            break;
-          case EntityType.client:
-            final completer = snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).savedSettings);
-            store.dispatch(SaveClientRequest(
-                completer: completer, client: settingsUIState.client));
-            break;
-        }
-      },
-    );
+        companyGatewayMap: state.companyGatewayState.map,
+        companyGatewayList: memoizedFilteredCompanyGatewayList(
+          state.companyGatewayState.map,
+          state.companyGatewayState.list,
+          state.companyGatewayListState,
+          state.uiState.settingsUIState.settings.companyGatewayIds,
+          !state.uiState.settingsUIState.isFiltered,
+        ),
+        userCompany: state.userCompany,
+        isInMultiselect: state.companyGatewayListState.isInMultiselect(),
+        onSavePressed: (context) {
+          Debouncer.runOnComplete(
+            () {
+              final settingsUIState = store.state.uiState.settingsUIState;
+              switch (settingsUIState.entityType) {
+                case EntityType.company:
+                  final completer = snackBarCompleter<Null>(
+                      context, AppLocalization.of(context).savedSettings);
+                  store.dispatch(SaveCompanyRequest(
+                      completer: completer, company: settingsUIState.company));
+                  break;
+                case EntityType.group:
+                  final completer = snackBarCompleter<GroupEntity>(
+                      context, AppLocalization.of(context).savedSettings);
+                  store.dispatch(SaveGroupRequest(
+                      completer: completer, group: settingsUIState.group));
+                  break;
+                case EntityType.client:
+                  final completer = snackBarCompleter<ClientEntity>(
+                      context, AppLocalization.of(context).savedSettings);
+                  store.dispatch(SaveClientRequest(
+                      completer: completer, client: settingsUIState.client));
+                  break;
+              }
+            },
+          );
+        });
   }
 }

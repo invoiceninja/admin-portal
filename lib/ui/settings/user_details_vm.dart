@@ -200,33 +200,36 @@ class UserDetailsVM {
             });
       },
       onSavePressed: (context) {
-        final localization = AppLocalization.of(context);
-        final completer =
-            snackBarCompleter<Null>(context, localization.savedSettings);
-        completer.future.then((_) {
-          AppBuilder.of(context).rebuild();
-        });
+        Debouncer.runOnComplete(() {
+          final localization = AppLocalization.of(context);
+          final completer =
+              snackBarCompleter<Null>(context, localization.savedSettings);
 
-        confirmCallback(
-            context: context,
-            message: localization.changingPhoneDisablesTwoFactor,
-            skip:
-                state.user.phone == state.uiState.settingsUIState.user.phone ||
-                    !state.user.isTwoFactorEnabled,
-            callback: () {
-              passwordCallback(
-                  context: context,
-                  callback: (password, idToken) {
-                    store.dispatch(
-                      SaveAuthUserRequest(
-                        completer: completer,
-                        user: state.uiState.settingsUIState.user,
-                        password: password,
-                        idToken: idToken,
-                      ),
-                    );
-                  });
-            });
+          completer.future.then((_) {
+            AppBuilder.of(context).rebuild();
+          });
+
+          confirmCallback(
+              context: context,
+              message: localization.changingPhoneDisablesTwoFactor,
+              skip: state.user.phone ==
+                      state.uiState.settingsUIState.user.phone ||
+                  !state.user.isTwoFactorEnabled,
+              callback: () {
+                passwordCallback(
+                    context: context,
+                    callback: (password, idToken) {
+                      store.dispatch(
+                        SaveAuthUserRequest(
+                          completer: completer,
+                          user: store.state.uiState.settingsUIState.user,
+                          password: password,
+                          idToken: idToken,
+                        ),
+                      );
+                    });
+              });
+        });
       },
     );
   }

@@ -24,7 +24,6 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -246,55 +245,58 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         ? localization.pleaseEnterAName
                         : null,
                     autovalidate: autoValidate,
-                    onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DecoratedFormField(
                     label: localization.idNumber,
                     controller: _idNumberController,
-                    onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DecoratedFormField(
                     label: localization.vatNumber,
                     controller: _vatNumberController,
-                    onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DecoratedFormField(
                     label: localization.website,
                     controller: _websiteController,
-                    onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DecoratedFormField(
                     label: localization.email,
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
-                    onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   DecoratedFormField(
                     label: localization.phone,
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
-                    //textInputAction: TextInputAction.next,
-                    //onFieldSubmitted: (String value) => _node.nextFocus(),
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom1Controller,
                     field: CustomFieldType.company1,
                     value: settings.customValue1,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom2Controller,
                     field: CustomFieldType.company2,
                     value: settings.customValue2,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom3Controller,
                     field: CustomFieldType.company3,
                     value: settings.customValue3,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   CustomField(
                     controller: _custom4Controller,
                     field: CustomFieldType.company4,
                     value: settings.customValue4,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                 ],
               ),
@@ -342,36 +344,31 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.address1,
                       controller: _address1Controller,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.streetAddressLine1],
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                     DecoratedFormField(
                       label: localization.address2,
                       controller: _address2Controller,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.streetAddressLine2],
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                     DecoratedFormField(
                       label: localization.city,
                       controller: _cityController,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
+                      onSavePressed: viewModel.onSavePressed,
                       autofillHints: [AutofillHints.addressCity],
                     ),
                     DecoratedFormField(
                       label: localization.state,
                       controller: _stateController,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
+                      onSavePressed: viewModel.onSavePressed,
                       autofillHints: [AutofillHints.addressState],
                     ),
                     DecoratedFormField(
                       label: localization.postalCode,
                       controller: _postalCodeController,
-                      onFieldSubmitted: (String value) =>
-                          _focusNode.nextFocus(),
+                      onSavePressed: viewModel.onSavePressed,
                       autofillHints: [AutofillHints.postalCode],
                     ),
                     EntityDropdown(
