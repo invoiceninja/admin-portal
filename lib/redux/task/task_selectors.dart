@@ -143,11 +143,19 @@ List<String> kanbanTasksSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltList<String> taskList,
     ListUIState taskListState) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = taskList.where((taskId) {
     final task = taskMap[taskId];
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
 
-    if (!client.isActive || task.isDeleted || task.isInvoiced) {
+    if (!client.isActive &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
+      return false;
+    }
+
+    if (task.isInvoiced) {
       return false;
     }
 
