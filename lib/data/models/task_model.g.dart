@@ -10,6 +10,10 @@ Serializer<TaskListResponse> _$taskListResponseSerializer =
     new _$TaskListResponseSerializer();
 Serializer<TaskItemResponse> _$taskItemResponseSerializer =
     new _$TaskItemResponseSerializer();
+Serializer<KanbanResponse> _$kanbanResponseSerializer =
+    new _$KanbanResponseSerializer();
+Serializer<KanbanResponseData> _$kanbanResponseDataSerializer =
+    new _$KanbanResponseDataSerializer();
 Serializer<TaskTime> _$taskTimeSerializer = new _$TaskTimeSerializer();
 Serializer<TaskEntity> _$taskEntitySerializer = new _$TaskEntitySerializer();
 
@@ -92,6 +96,109 @@ class _$TaskItemResponseSerializer
         case 'data':
           result.data.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaskEntity)) as TaskEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$KanbanResponseSerializer
+    implements StructuredSerializer<KanbanResponse> {
+  @override
+  final Iterable<Type> types = const [KanbanResponse, _$KanbanResponse];
+  @override
+  final String wireName = 'KanbanResponse';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, KanbanResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'data',
+      serializers.serialize(object.data,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(KanbanResponseData)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  KanbanResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new KanbanResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(KanbanResponseData)]))
+              as BuiltList<Object>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$KanbanResponseDataSerializer
+    implements StructuredSerializer<KanbanResponseData> {
+  @override
+  final Iterable<Type> types = const [KanbanResponseData, _$KanbanResponseData];
+  @override
+  final String wireName = 'KanbanResponseData';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, KanbanResponseData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'status_ids',
+      serializers.serialize(object.statusIds,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
+      'task_ids',
+      serializers.serialize(object.taskIds,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
+    ];
+
+    return result;
+  }
+
+  @override
+  KanbanResponseData deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new KanbanResponseDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'status_ids':
+          result.statusIds.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(String)]))
+              as BuiltList<Object>);
+          break;
+        case 'task_ids':
+          result.taskIds.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])));
           break;
       }
     }
@@ -549,6 +656,215 @@ class TaskItemResponseBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'TaskItemResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$KanbanResponse extends KanbanResponse {
+  @override
+  final BuiltList<KanbanResponseData> data;
+
+  factory _$KanbanResponse([void Function(KanbanResponseBuilder) updates]) =>
+      (new KanbanResponseBuilder()..update(updates)).build();
+
+  _$KanbanResponse._({this.data}) : super._() {
+    if (data == null) {
+      throw new BuiltValueNullFieldError('KanbanResponse', 'data');
+    }
+  }
+
+  @override
+  KanbanResponse rebuild(void Function(KanbanResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  KanbanResponseBuilder toBuilder() =>
+      new KanbanResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is KanbanResponse && data == other.data;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(0, data.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('KanbanResponse')..add('data', data))
+        .toString();
+  }
+}
+
+class KanbanResponseBuilder
+    implements Builder<KanbanResponse, KanbanResponseBuilder> {
+  _$KanbanResponse _$v;
+
+  ListBuilder<KanbanResponseData> _data;
+  ListBuilder<KanbanResponseData> get data =>
+      _$this._data ??= new ListBuilder<KanbanResponseData>();
+  set data(ListBuilder<KanbanResponseData> data) => _$this._data = data;
+
+  KanbanResponseBuilder();
+
+  KanbanResponseBuilder get _$this {
+    if (_$v != null) {
+      _data = _$v.data?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(KanbanResponse other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$KanbanResponse;
+  }
+
+  @override
+  void update(void Function(KanbanResponseBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$KanbanResponse build() {
+    _$KanbanResponse _$result;
+    try {
+      _$result = _$v ?? new _$KanbanResponse._(data: data.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'data';
+        data.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'KanbanResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$KanbanResponseData extends KanbanResponseData {
+  @override
+  final BuiltList<String> statusIds;
+  @override
+  final BuiltMap<String, BuiltList<String>> taskIds;
+
+  factory _$KanbanResponseData(
+          [void Function(KanbanResponseDataBuilder) updates]) =>
+      (new KanbanResponseDataBuilder()..update(updates)).build();
+
+  _$KanbanResponseData._({this.statusIds, this.taskIds}) : super._() {
+    if (statusIds == null) {
+      throw new BuiltValueNullFieldError('KanbanResponseData', 'statusIds');
+    }
+    if (taskIds == null) {
+      throw new BuiltValueNullFieldError('KanbanResponseData', 'taskIds');
+    }
+  }
+
+  @override
+  KanbanResponseData rebuild(
+          void Function(KanbanResponseDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  KanbanResponseDataBuilder toBuilder() =>
+      new KanbanResponseDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is KanbanResponseData &&
+        statusIds == other.statusIds &&
+        taskIds == other.taskIds;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??=
+        $jf($jc($jc(0, statusIds.hashCode), taskIds.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('KanbanResponseData')
+          ..add('statusIds', statusIds)
+          ..add('taskIds', taskIds))
+        .toString();
+  }
+}
+
+class KanbanResponseDataBuilder
+    implements Builder<KanbanResponseData, KanbanResponseDataBuilder> {
+  _$KanbanResponseData _$v;
+
+  ListBuilder<String> _statusIds;
+  ListBuilder<String> get statusIds =>
+      _$this._statusIds ??= new ListBuilder<String>();
+  set statusIds(ListBuilder<String> statusIds) => _$this._statusIds = statusIds;
+
+  MapBuilder<String, BuiltList<String>> _taskIds;
+  MapBuilder<String, BuiltList<String>> get taskIds =>
+      _$this._taskIds ??= new MapBuilder<String, BuiltList<String>>();
+  set taskIds(MapBuilder<String, BuiltList<String>> taskIds) =>
+      _$this._taskIds = taskIds;
+
+  KanbanResponseDataBuilder();
+
+  KanbanResponseDataBuilder get _$this {
+    if (_$v != null) {
+      _statusIds = _$v.statusIds?.toBuilder();
+      _taskIds = _$v.taskIds?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(KanbanResponseData other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$KanbanResponseData;
+  }
+
+  @override
+  void update(void Function(KanbanResponseDataBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$KanbanResponseData build() {
+    _$KanbanResponseData _$result;
+    try {
+      _$result = _$v ??
+          new _$KanbanResponseData._(
+              statusIds: statusIds.build(), taskIds: taskIds.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'statusIds';
+        statusIds.build();
+        _$failedField = 'taskIds';
+        taskIds.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'KanbanResponseData', _$failedField, e.toString());
       }
       rethrow;
     }
