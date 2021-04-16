@@ -72,11 +72,7 @@ class KanbanVM {
           state.invoiceState.map,
           state.taskState.list,
           state.taskListState),
-      onBoardChanged: (context, statusIds, taskIds) {
-        print('## onBoardChanged...\nstatusIds: $statusIds\ntaskIds: $taskIds');
-        final localization = AppLocalization.of(context);
-        final completer = snackBarCompleter<TaskStatusEntity>(
-            context, localization.updatedTaskStatus);
+      onBoardChanged: (completer, statusIds, taskIds) {
         store.dispatch(SortTasksRequest(
           completer: completer,
           taskIds: taskIds,
@@ -129,7 +125,7 @@ class KanbanVM {
   final AppState state;
   final List<String> taskList;
   final List<String> filteredTaskList;
-  final Function(BuildContext, List<String>, Map<String, List<String>>)
+  final Function(Completer<Null>, List<String>, Map<String, List<String>>)
       onBoardChanged;
   final Function(Completer<TaskEntity>, String, String, String, int)
       onSaveTaskPressed;

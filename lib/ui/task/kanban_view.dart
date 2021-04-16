@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:boardview/board_item.dart';
 import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
@@ -13,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class KanbanView extends StatefulWidget {
@@ -31,14 +29,17 @@ class KanbanView extends StatefulWidget {
 class _KanbanViewState extends State<KanbanView> {
   final _boardViewController = new BoardViewController();
 
-  List<String> _statuses = [];
-  Map<String, List<String>> _tasks = {};
+  List<String> _statuses;
+  Map<String, List<String>> _tasks;
 
   @override
   void initState() {
     super.initState();
-    print('## initState: ${_statuses.length}');
+    _initBoard();
+  }
 
+  void _initBoard() {
+    print('## INIT BOARD');
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
@@ -57,6 +58,7 @@ class _KanbanViewState extends State<KanbanView> {
       }
     });
 
+    _tasks = {};
     viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId];
       if (task.statusId.isNotEmpty) {
@@ -80,6 +82,17 @@ class _KanbanViewState extends State<KanbanView> {
         }
       });
     });
+  }
+
+  void _onBoardChanged() {
+    final localization = AppLocalization.of(context);
+    final completer =
+        snackBarCompleter<Null>(context, localization.updatedTaskStatus);
+    completer.future.catchError((Object error) {
+      _initBoard();
+    });
+
+    widget.viewModel.onBoardChanged(completer, _statuses, _tasks);
   }
 
   @override
@@ -110,7 +123,7 @@ class _KanbanViewState extends State<KanbanView> {
             ];
           });
 
-          widget.viewModel.onBoardChanged(context, _statuses, _tasks);
+          _onBoardChanged();
         },
         header: [
           Expanded(
@@ -211,7 +224,7 @@ class _KanbanViewState extends State<KanbanView> {
                   ];
                 });
 
-                widget.viewModel.onBoardChanged(context, _statuses, _tasks);
+                _onBoardChanged();
               },
             );
           },
