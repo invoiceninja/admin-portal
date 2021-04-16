@@ -119,7 +119,7 @@ class KanbanVM {
       */
       onSaveStatusPressed: (context, statusId, name) {
         final localization = AppLocalization.of(context);
-        final completer = snackBarCompleter<TaskEntity>(
+        final completer = snackBarCompleter<TaskStatusEntity>(
             context, localization.updatedTaskStatus);
 
         TaskStatusEntity status = state.taskStatusState.get(statusId);
