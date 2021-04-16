@@ -12,34 +12,21 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProductList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewProductList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewProductList implements PersistUI, StopLoading {
+  ViewProductList({this.force = false});
 
   final bool force;
 }
 
-class ViewProduct extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
-  ViewProduct(
-      {@required this.productId,
-      @required NavigatorState navigator,
-      this.force = false})
-      : super(navigator: navigator);
+class ViewProduct implements PersistUI, PersistPrefs {
+  ViewProduct({@required this.productId, this.force = false});
 
   final String productId;
   final bool force;
 }
 
-class EditProduct extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
-  EditProduct(
-      {@required this.product,
-      @required NavigatorState navigator,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+class EditProduct implements PersistUI, PersistPrefs {
+  EditProduct({@required this.product, this.completer, this.force = false});
 
   final ProductEntity product;
   final Completer completer;

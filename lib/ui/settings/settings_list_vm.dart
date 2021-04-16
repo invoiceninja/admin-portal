@@ -39,7 +39,6 @@ class SettingsListVM {
         state: state,
         loadSection: (context, section, tabIndex) {
           store.dispatch(ViewSettings(
-            navigator: Navigator.of(context),
             section: section,
             company: state.company,
             user: state.user,

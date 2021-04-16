@@ -13,6 +13,8 @@ import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dar
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/payment_term_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStorePaymentTermsMiddleware([
   PaymentTermRepository repository = const PaymentTermRepository(),
 ]) {
@@ -47,8 +49,8 @@ Middleware<AppState> _editPaymentTerm() {
 
     store.dispatch(UpdateCurrentRoute(PaymentTermEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(PaymentTermEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(PaymentTermEditScreen.route);
     }
   };
 }
@@ -62,8 +64,8 @@ Middleware<AppState> _viewPaymentTerm() {
 
     store.dispatch(UpdateCurrentRoute(PaymentTermViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(PaymentTermViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(PaymentTermViewScreen.route);
     }
   };
 }
@@ -80,8 +82,8 @@ Middleware<AppState> _viewPaymentTermList() {
 
     store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           PaymentTermScreen.route, (Route<dynamic> route) => false);
     }
   };

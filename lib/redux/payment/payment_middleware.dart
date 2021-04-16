@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -13,6 +12,8 @@ import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/payment_repository.dart';
+
+import 'package:invoiceninja_flutter/main_app.dart';
 
 List<Middleware<AppState>> createStorePaymentsMiddleware([
   PaymentRepository repository = const PaymentRepository(),
@@ -52,15 +53,15 @@ Middleware<AppState> _editPayment() {
 
     next(action);
 
-    if (isMobile(action.context) || action.payment.isApplying != true) {
+    if (store.state.prefState.isMobile || action.payment.isApplying != true) {
       store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
 
-      if (isMobile(action.context)) {
-        action.navigator.pushNamed(PaymentEditScreen.route);
+      if (store.state.prefState.isMobile) {
+        navigatorKey.currentState.pushNamed(PaymentEditScreen.route);
       }
     } else {
       showDialog<PaymentEditScreen>(
-          context: action.context,
+          context: navigatorKey.currentContext,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentEditScreen();
@@ -75,12 +76,12 @@ Middleware<AppState> _viewRefundPayment() {
 
     next(action);
 
-    if (isMobile(action.context)) {
+    if (store.state.prefState.isMobile) {
       store.dispatch(UpdateCurrentRoute(PaymentRefundScreen.route));
-      action.navigator.pushNamed(PaymentRefundScreen.route);
+      navigatorKey.currentState.pushNamed(PaymentRefundScreen.route);
     } else {
       showDialog<PaymentRefundScreen>(
-          context: action.context,
+          context: navigatorKey.currentContext,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentRefundScreen();
@@ -95,8 +96,8 @@ Middleware<AppState> _viewPayment() {
 
     store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(PaymentViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(PaymentViewScreen.route);
     }
   };
 }
@@ -113,8 +114,8 @@ Middleware<AppState> _viewPaymentList() {
 
     store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           PaymentScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -250,9 +251,9 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EmailPaymentRequest;
     repository
-        .saveData(store.state.credentials, action.payment, sendEmail: true)
-        .then((PaymentEntity payment) {
-      store.dispatch(SavePaymentSuccess(payment));
+        .bulkAction(store.state.credentials, action.paymentIds,
+            EntityAction.emailPayment)
+        .then((List<PaymentEntity> payments) {
       action.completer.complete(null);
     }).catchError((Object error) {
       print(error);

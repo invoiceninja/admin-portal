@@ -11,29 +11,24 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewDocumentList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewDocumentList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewDocumentList implements PersistUI, StopLoading {
+  ViewDocumentList({this.force = false});
 
   final bool force;
 }
 
-class ViewDocument extends AbstractNavigatorAction implements PersistUI {
-  ViewDocument(
-      {@required NavigatorState navigator, this.documentId, this.force})
-      : super(navigator: navigator);
+class ViewDocument implements PersistUI {
+  ViewDocument({this.documentId, this.force});
 
   final String documentId;
   final bool force;
 }
 
-class EditDocument extends AbstractNavigatorAction implements PersistUI {
+class EditDocument implements PersistUI {
   EditDocument({
-    @required NavigatorState navigator,
     this.document,
     this.completer,
-  }) : super(navigator: navigator);
+  });
 
   final DocumentEntity document;
   final Completer completer;

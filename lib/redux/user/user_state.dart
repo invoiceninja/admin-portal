@@ -16,6 +16,7 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
       list: BuiltList<String>(),
     );
   }
+
   UserState._();
 
   UserEntity get(String userId) {
@@ -31,6 +32,7 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
   int get hashCode;
 
   BuiltMap<String, UserEntity> get map;
+
   BuiltList<String> get list;
 
   static Serializer<UserState> get serializer => _$userStateSerializer;
@@ -47,6 +49,7 @@ abstract class UserUIState extends Object
       tabIndex: 0,
     );
   }
+
   UserUIState._();
 
   @override

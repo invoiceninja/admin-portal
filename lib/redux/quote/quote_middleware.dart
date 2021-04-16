@@ -14,6 +14,8 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/quote_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreQuotesMiddleware([
   QuoteRepository repository = const QuoteRepository(),
 ]) {
@@ -63,8 +65,8 @@ Middleware<AppState> _viewQuote() {
 
     store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
 
-    if (isMobile(action.context)) {
-      await action.navigator.pushNamed(QuoteViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      await navigatorKey.currentState.pushNamed(QuoteViewScreen.route);
     }
   };
 }
@@ -81,8 +83,8 @@ Middleware<AppState> _viewQuoteList() {
 
     store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           QuoteScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -96,8 +98,8 @@ Middleware<AppState> _editQuote() {
 
     store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(QuoteEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(QuoteEditScreen.route);
     }
   };
 }
@@ -111,9 +113,9 @@ Middleware<AppState> _showEmailQuote() {
 
     store.dispatch(UpdateCurrentRoute(QuoteEmailScreen.route));
 
-    if (isMobile(action.context)) {
+    if (store.state.prefState.isMobile) {
       final emailWasSent =
-          await Navigator.of(action.context).pushNamed(QuoteEmailScreen.route);
+          await navigatorKey.currentState.pushNamed(QuoteEmailScreen.route);
 
       if (action.completer != null && emailWasSent != null && emailWasSent) {
         action.completer.complete(null);
@@ -131,8 +133,8 @@ Middleware<AppState> _showPdfQuote() {
 
     store.dispatch(UpdateCurrentRoute(QuotePdfScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(QuotePdfScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(QuotePdfScreen.route);
     }
   };
 }

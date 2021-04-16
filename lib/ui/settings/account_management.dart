@@ -315,7 +315,6 @@ class _AccountOverview extends StatelessWidget {
                   iconData: getEntityIcon(EntityType.token),
                   onPressed: () {
                     store.dispatch(ViewSettings(
-                      navigator: Navigator.of(context),
                       section: kSettingsTokens,
                     ));
                   },
@@ -328,7 +327,6 @@ class _AccountOverview extends StatelessWidget {
                   iconData: getEntityIcon(EntityType.webhook),
                   onPressed: () {
                     store.dispatch(ViewSettings(
-                      navigator: Navigator.of(context),
                       section: kSettingsWebhooks,
                     ));
                   },

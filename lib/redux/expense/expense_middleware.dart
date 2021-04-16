@@ -12,6 +12,8 @@ import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/expense_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreExpensesMiddleware([
   ExpenseRepository repository = const ExpenseRepository(),
 ]) {
@@ -48,8 +50,8 @@ Middleware<AppState> _editExpense() {
 
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ExpenseEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ExpenseEditScreen.route);
     }
   };
 }
@@ -63,8 +65,8 @@ Middleware<AppState> _viewExpense() {
 
     store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ExpenseViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ExpenseViewScreen.route);
     }
   };
 }
@@ -81,8 +83,8 @@ Middleware<AppState> _viewExpenseList() {
 
     store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           ExpenseScreen.route, (Route<dynamic> route) => false);
     }
   };

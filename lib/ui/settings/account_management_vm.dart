@@ -78,8 +78,7 @@ class AccountManagementVM {
                 final refreshCompleter = Completer<Null>()
                   ..future.then((value) {
                     store.dispatch(SelectCompany(companyIndex: 0));
-                    store.dispatch(
-                        ViewDashboard(navigator: Navigator.of(context)));
+                    store.dispatch(ViewDashboard());
 
                     if (Navigator.of(context).canPop()) {
                       Navigator.of(context).pop();
@@ -102,11 +101,13 @@ class AccountManagementVM {
           ));
         },
         onSavePressed: (context) {
-          final settingsUIState = state.uiState.settingsUIState;
-          final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).savedSettings);
-          store.dispatch(SaveCompanyRequest(
-              completer: completer, company: settingsUIState.company));
+          Debouncer.runOnComplete(() {
+            final settingsUIState = store.state.uiState.settingsUIState;
+            final completer = snackBarCompleter<Null>(
+                context, AppLocalization.of(context).savedSettings);
+            store.dispatch(SaveCompanyRequest(
+                completer: completer, company: settingsUIState.company));
+          });
         },
         onPurgeData: (context, password, idToken) {
           final completer = snackBarCompleter<Null>(

@@ -15,35 +15,25 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewQuoteList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewQuoteList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewQuoteList implements PersistUI, StopLoading {
+  ViewQuoteList({this.force = false});
 
   final bool force;
 }
 
-class ViewQuote extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewQuote implements PersistUI, PersistPrefs {
   ViewQuote({
     this.quoteId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String quoteId;
   final bool force;
 }
 
-class EditQuote extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditQuote implements PersistUI, PersistPrefs {
   EditQuote(
-      {this.quote,
-      @required NavigatorState navigator,
-      this.quoteItemIndex,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+      {this.quote, this.quoteItemIndex, this.completer, this.force = false});
 
   final InvoiceEntity quote;
   final int quoteItemIndex;

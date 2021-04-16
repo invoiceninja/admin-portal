@@ -11,9 +11,8 @@ import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 
-class ViewSettings extends AbstractNavigatorAction implements PersistUI {
+class ViewSettings implements PersistUI {
   ViewSettings({
-    @required NavigatorState navigator,
     this.company,
     this.group,
     this.client,
@@ -22,7 +21,7 @@ class ViewSettings extends AbstractNavigatorAction implements PersistUI {
     this.clearFilter = false,
     this.section,
     this.tabIndex,
-  }) : super(navigator: navigator);
+  });
 
   final CompanyEntity company;
   final GroupEntity group;

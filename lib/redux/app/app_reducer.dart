@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/redux/app/loading_reducer.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_reducer.dart';
 import 'package:invoiceninja_flutter/redux/static/static_reducer.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
 

@@ -16,6 +16,7 @@ abstract class TokenState implements Built<TokenState, TokenStateBuilder> {
       list: BuiltList<String>(),
     );
   }
+
   TokenState._();
 
   @override
@@ -23,6 +24,7 @@ abstract class TokenState implements Built<TokenState, TokenStateBuilder> {
   int get hashCode;
 
   BuiltMap<String, TokenEntity> get map;
+
   BuiltList<String> get list;
 
   TokenState loadTokens(BuiltList<TokenEntity> clients) {
@@ -51,6 +53,7 @@ abstract class TokenUIState extends Object
       tabIndex: 0,
     );
   }
+
   TokenUIState._();
 
   @override

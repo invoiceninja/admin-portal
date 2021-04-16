@@ -14,6 +14,8 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/credit_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreCreditsMiddleware([
   CreditRepository repository = const CreditRepository(),
 ]) {
@@ -61,8 +63,8 @@ Middleware<AppState> _viewCredit() {
 
     store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
 
-    if (isMobile(action.context)) {
-      await action.navigator.pushNamed(CreditViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      await navigatorKey.currentState.pushNamed(CreditViewScreen.route);
     }
   };
 }
@@ -79,8 +81,8 @@ Middleware<AppState> _viewCreditList() {
 
     store.dispatch(UpdateCurrentRoute(CreditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           CreditScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -94,8 +96,8 @@ Middleware<AppState> _editCredit() {
 
     store.dispatch(UpdateCurrentRoute(CreditEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(CreditEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(CreditEditScreen.route);
     }
   };
 }
@@ -109,9 +111,9 @@ Middleware<AppState> _showEmailCredit() {
 
     store.dispatch(UpdateCurrentRoute(CreditEmailScreen.route));
 
-    if (isMobile(action.context)) {
+    if (store.state.prefState.isMobile) {
       final emailWasSent =
-          await Navigator.of(action.context).pushNamed(CreditEmailScreen.route);
+          await navigatorKey.currentState.pushNamed(CreditEmailScreen.route);
 
       if (action.completer != null && emailWasSent != null && emailWasSent) {
         action.completer.complete(null);
@@ -129,8 +131,8 @@ Middleware<AppState> _showPdfCredit() {
 
     store.dispatch(UpdateCurrentRoute(CreditPdfScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(CreditPdfScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(CreditPdfScreen.route);
     }
   };
 }

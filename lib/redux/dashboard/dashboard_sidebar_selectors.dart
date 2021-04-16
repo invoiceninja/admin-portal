@@ -22,7 +22,9 @@ List<InvoiceEntity> _upcomingInvoices({
   invoiceMap.forEach((index, invoice) {
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    if (invoice.isDeleted || client.isDeleted) {
+    if (invoice.isDeleted ||
+        invoice.isCancelledOrReversed ||
+        client.isDeleted) {
       // do noting
     } else if (invoice.isUpcoming) {
       invoices.add(invoice);
@@ -52,7 +54,9 @@ List<InvoiceEntity> _pastDueInvoices({
   invoiceMap.forEach((index, invoice) {
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    if (invoice.isDeleted || client.isDeleted) {
+    if (invoice.isDeleted ||
+        invoice.isCancelledOrReversed ||
+        client.isDeleted) {
       // do noting
     } else if (invoice.isPastDue) {
       invoices.add(invoice);

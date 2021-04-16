@@ -28,14 +28,16 @@ class _KanbanViewState extends State<KanbanView> {
   final _boardViewController = new BoardViewController();
 
   List<TaskStatusEntity> _statuses = [];
-  Map<String, List<TaskEntity>> _tasks = {};
+  Map<String, List<String>> _tasks = {};
 
   @override
   void initState() {
     super.initState();
     print('## initState: ${_statuses.length}');
 
-    final state = widget.viewModel.state;
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
+
     _statuses = state.taskStatusState.list
         .map((statusId) => state.taskStatusState.get(statusId))
         .where((status) => status.isActive)
@@ -49,19 +51,21 @@ class _KanbanViewState extends State<KanbanView> {
       }
     });
 
-    widget.viewModel.taskList.forEach((taskId) {
+    viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId];
       if (task.isActive && task.statusId.isNotEmpty) {
         final status = state.taskStatusState.get(task.statusId);
         if (!_tasks.containsKey(status.id)) {
           _tasks[status.id] = [];
         }
-        _tasks[status.id].add(task);
+        _tasks[status.id].add(task.id);
       }
     });
 
     _tasks.forEach((key, value) {
-      _tasks[key].sort((taskA, taskB) {
+      _tasks[key].sort((taskIdA, taskIdB) {
+        final taskA = state.taskState.get(taskIdA);
+        final taskB = state.taskState.get(taskIdB);
         if (taskA.statusOrder == taskB.statusOrder) {
           return taskB.updatedAt.compareTo(taskA.updatedAt);
         } else {
@@ -119,13 +123,14 @@ class _KanbanViewState extends State<KanbanView> {
                   if (!_tasks.containsKey(status.id)) {
                     _tasks[status.id] = [];
                   }
-                  _tasks[status.id].add(task);
+                  _tasks[status.id].add(task.id);
                 });
               },
             ),
           ),
         ),
         items: (_tasks[status.id] ?? [])
+            .map((taskId) => widget.viewModel.state.taskState.get(taskId))
             .map(
               (task) => BoardItem(
                 item: _TaskCard(
@@ -141,7 +146,7 @@ class _KanbanViewState extends State<KanbanView> {
                   onCancelPressed: () {
                     if (task.isNew) {
                       setState(() {
-                        _tasks[status.id].remove(task);
+                        _tasks[status.id].remove(task.id);
                       });
                     }
                   },
@@ -159,12 +164,12 @@ class _KanbanViewState extends State<KanbanView> {
 
                   final oldStatus = _statuses[oldListIndex];
                   final newStatus = _statuses[listIndex];
-                  final task = _tasks[status.id][oldItemIndex];
+                  final taskId = _tasks[status.id][oldItemIndex];
 
                   setState(() {
                     if (_tasks.containsKey(oldStatus.id) &&
-                        _tasks[oldStatus.id].contains(task)) {
-                      _tasks[oldStatus.id].remove(task);
+                        _tasks[oldStatus.id].contains(taskId)) {
+                      _tasks[oldStatus.id].remove(taskId);
                     }
 
                     if (!_tasks.containsKey(newStatus.id)) {
@@ -173,13 +178,13 @@ class _KanbanViewState extends State<KanbanView> {
 
                     _tasks[newStatus.id] = [
                       ..._tasks[newStatus.id].sublist(0, itemIndex),
-                      task,
+                      taskId,
                       ..._tasks[newStatus.id].sublist(itemIndex),
                     ];
                   });
 
                   widget.viewModel.onTaskOrderChanged(
-                      context, task.id, newStatus.id, itemIndex);
+                      context, taskId, newStatus.id, itemIndex);
                 },
               ),
             )

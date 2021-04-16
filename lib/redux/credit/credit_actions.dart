@@ -15,35 +15,25 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewCreditList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewCreditList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewCreditList implements PersistUI, StopLoading {
+  ViewCreditList({this.force = false});
 
   final bool force;
 }
 
-class ViewCredit extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewCredit implements PersistUI, PersistPrefs {
   ViewCredit({
     this.creditId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String creditId;
   final bool force;
 }
 
-class EditCredit extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditCredit implements PersistUI, PersistPrefs {
   EditCredit(
-      {this.credit,
-      @required NavigatorState navigator,
-      this.creditItemIndex,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+      {this.credit, this.creditItemIndex, this.completer, this.force = false});
 
   final InvoiceEntity credit;
   final int creditItemIndex;

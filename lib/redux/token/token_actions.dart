@@ -13,37 +13,30 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewTokenList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
+class ViewTokenList implements PersistUI, StopLoading {
   ViewTokenList({
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final bool force;
 }
 
-class ViewToken extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewToken implements PersistUI, PersistPrefs {
   ViewToken({
-    @required NavigatorState navigator,
     @required this.tokenId,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String tokenId;
   final bool force;
 }
 
-class EditToken extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditToken implements PersistUI, PersistPrefs {
   EditToken(
       {@required this.token,
-      @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final TokenEntity token;
   final Completer completer;

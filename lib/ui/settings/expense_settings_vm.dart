@@ -47,16 +47,16 @@ class ExpenseSettingsVM {
       onCompanyChanged: (company) =>
           store.dispatch(UpdateCompany(company: company)),
       onSavePressed: (context) {
-        final settingsUIState = state.uiState.settingsUIState;
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).savedSettings);
-        store.dispatch(SaveCompanyRequest(
-            completer: completer, company: settingsUIState.company));
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
+          final completer = snackBarCompleter<Null>(
+              context, AppLocalization.of(context).savedSettings);
+          store.dispatch(SaveCompanyRequest(
+              completer: completer, company: settingsUIState.company));
+        });
       },
       onConfigureCategoriesPressed: (context) {
-        store.dispatch(ViewSettings(
-            navigator: Navigator.of(context),
-            section: kSettingsExpenseCategories));
+        store.dispatch(ViewSettings(section: kSettingsExpenseCategories));
       },
     );
   }

@@ -7,6 +7,8 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreDashboardMiddleware() {
   final viewDashboard = _createViewDashboard();
 
@@ -21,7 +23,7 @@ Middleware<AppState> _createViewDashboard() {
 
     checkForChanges(
         store: store,
-        context: action.context,
+        context: navigatorKey.currentContext,
         force: action.force,
         callback: () {
           if (store.state.isStale) {
@@ -32,8 +34,8 @@ Middleware<AppState> _createViewDashboard() {
 
           store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
 
-          if (isMobile(action.context)) {
-            Navigator.of(action.context).pushNamedAndRemoveUntil(
+          if (store.state.prefState.isMobile) {
+            navigatorKey.currentState.pushNamedAndRemoveUntil(
                 DashboardScreenBuilder.route, (Route<dynamic> route) => false);
           }
         });

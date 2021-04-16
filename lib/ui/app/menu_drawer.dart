@@ -271,7 +271,6 @@ class MenuDrawer extends StatelessWidget {
                                       const EdgeInsets.only(left: 20),
                                   onTap: () {
                                     store.dispatch(ViewSettings(
-                                        navigator: Navigator.of(context),
                                         section: kSettingsAccountManagement));
                                   },
                                   leading:
@@ -295,7 +294,6 @@ class MenuDrawer extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   store.dispatch(ViewSettings(
-                                      navigator: Navigator.of(context),
                                       section: kSettingsAccountManagement));
                                 },
                               ),
@@ -306,8 +304,8 @@ class MenuDrawer extends StatelessWidget {
                             onTap: () => viewEntitiesByType(
                                 appContext: context.getAppContext(),
                                 entityType: EntityType.dashboard),
-                            onLongPress: () => store.dispatch(ViewDashboard(
-                                navigator: Navigator.of(context), filter: '')),
+                            onLongPress: () =>
+                                store.dispatch(ViewDashboard(filter: '')),
                           ),
                           DrawerTile(
                             company: company,
@@ -509,7 +507,6 @@ class _DrawerTileState extends State<DrawerTile> {
               navigator.pop();
             }
             store.dispatch(ViewDashboard(
-                navigator: Navigator.of(context),
                 filter: uiState.mainRoute == 'dashboard' && uiState.filter == ''
                     ? null
                     : ''));

@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -49,8 +50,8 @@ Middleware<AppState> _editClient() {
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ClientEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ClientEditScreen.route);
     }
   };
 }
@@ -64,8 +65,8 @@ Middleware<AppState> _viewClient() {
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ClientViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ClientViewScreen.route);
     }
   };
 }
@@ -82,8 +83,8 @@ Middleware<AppState> _viewClientList() {
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           ClientScreen.route, (Route<dynamic> route) => false);
     }
   };

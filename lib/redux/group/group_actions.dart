@@ -14,34 +14,24 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewGroupList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewGroupList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewGroupList implements PersistUI, StopLoading {
+  ViewGroupList({this.force = false});
 
   final bool force;
 }
 
-class ViewGroup extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewGroup implements PersistUI, PersistPrefs {
   ViewGroup({
     @required this.groupId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String groupId;
   final bool force;
 }
 
-class EditGroup extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
-  EditGroup(
-      {@required this.group,
-      @required NavigatorState navigator,
-      this.completer,
-      this.force = false})
-      : super(navigator: navigator);
+class EditGroup implements PersistUI, PersistPrefs {
+  EditGroup({@required this.group, this.completer, this.force = false});
 
   final GroupEntity group;
   final Completer completer;
@@ -251,7 +241,6 @@ void handleGroupAction(
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(
-        navigator: Navigator.of(context),
         group: group,
         section: kSettingsCompanyDetails,
       ));

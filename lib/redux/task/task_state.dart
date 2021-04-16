@@ -17,6 +17,7 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
       list: BuiltList<String>(),
     );
   }
+
   TaskState._();
 
   @override
@@ -32,6 +33,7 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   }
 
   BuiltMap<String, TaskEntity> get map;
+
   BuiltList<String> get list;
 
   TaskState loadTasks(BuiltList<TaskEntity> clients) {
@@ -60,6 +62,7 @@ abstract class TaskUIState extends Object
       tabIndex: 0,
     );
   }
+
   TaskUIState._();
 
   @override

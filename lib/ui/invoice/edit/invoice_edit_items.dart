@@ -203,7 +203,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     }
 
     if (invoiceItem != widget.invoiceItem) {
-      widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
+      _debouncer.run(() {
+        widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
+      });
     }
   }
 

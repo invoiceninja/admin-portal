@@ -9,37 +9,30 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
-class ViewExpenseCategoryList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
+class ViewExpenseCategoryList implements PersistUI, StopLoading {
   ViewExpenseCategoryList({
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final bool force;
 }
 
-class ViewExpenseCategory extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewExpenseCategory implements PersistUI, PersistPrefs {
   ViewExpenseCategory({
-    @required NavigatorState navigator,
     @required this.expenseCategoryId,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String expenseCategoryId;
   final bool force;
 }
 
-class EditExpenseCategory extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditExpenseCategory implements PersistUI, PersistPrefs {
   EditExpenseCategory(
       {@required this.expenseCategory,
-      @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final ExpenseCategoryEntity expenseCategory;
   final Completer completer;

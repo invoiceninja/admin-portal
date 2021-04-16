@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/file_storage.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/repositories/persistence_repository.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -228,7 +229,7 @@ Middleware<AppState> _createLoadState(
 
       if (uiState.currentRoute != LoginScreen.route &&
           uiState.currentRoute.isNotEmpty) {
-        final NavigatorState navigator = Navigator.of(action.context);
+        final NavigatorState navigator = navigatorKey.currentState;
         final routes = _getRoutes(appState);
         if (appState.prefState.appLayout == AppLayout.mobile) {
           bool isFirst = true;
@@ -242,14 +243,12 @@ Middleware<AppState> _createLoadState(
           });
         } else {
           if (routes.isEmpty || routes.last == DashboardScreenBuilder.route) {
-            store.dispatch(
-                ViewDashboard(navigator: Navigator.of(action.context)));
+            store.dispatch(ViewDashboard());
           } else {
             store.dispatch(UpdateCurrentRoute(routes.last));
           }
 
-          store.dispatch(
-              ViewMainScreen(navigator: Navigator.of(action.context)));
+          store.dispatch(ViewMainScreen());
         }
       } else {
         throw 'Unknown page: ${uiState.currentRoute}';
@@ -285,12 +284,10 @@ Middleware<AppState> _createLoadState(
             store.dispatch(UpdateUserPreferences(appLayout: AppLayout.mobile));
             AppBuilder.of(action.context).rebuild();
             WidgetsBinding.instance.addPostFrameCallback((duration) {
-              store.dispatch(
-                  ViewDashboard(navigator: Navigator.of(action.context)));
+              store.dispatch(ViewDashboard());
             });
           } else {
-            store.dispatch(
-                ViewMainScreen(navigator: Navigator.of(action.context)));
+            store.dispatch(ViewMainScreen());
           }
         }).catchError((Object error) {
           print('Error (app_middleware - refresh): $error');
@@ -515,12 +512,12 @@ Middleware<AppState> _createViewMainScreen() {
       store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
     }
 
-    while (action.navigator.canPop()) {
-      action.navigator.pop();
+    while (navigatorKey.currentState.canPop()) {
+      navigatorKey.currentState.pop();
     }
 
     WidgetsBinding.instance.addPostFrameCallback((duration) {
-      action.navigator.pushNamed(MainScreen.route);
+      navigatorKey.currentState.pushNamed(MainScreen.route);
     });
 
     next(action);

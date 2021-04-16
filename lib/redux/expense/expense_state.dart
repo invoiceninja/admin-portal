@@ -18,6 +18,7 @@ abstract class ExpenseState
       list: BuiltList<String>(),
     );
   }
+
   ExpenseState._();
 
   @override
@@ -33,6 +34,7 @@ abstract class ExpenseState
   }
 
   BuiltMap<String, ExpenseEntity> get map;
+
   BuiltList<String> get list;
 
   ExpenseState loadExpenses(BuiltList<ExpenseEntity> clients) {
@@ -61,6 +63,7 @@ abstract class ExpenseUIState extends Object
       tabIndex: 0,
     );
   }
+
   ExpenseUIState._();
 
   @override

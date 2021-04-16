@@ -17,6 +17,7 @@ abstract class CompanyGatewayState
       list: BuiltList<String>(),
     );
   }
+
   CompanyGatewayState._();
 
   @override
@@ -32,6 +33,7 @@ abstract class CompanyGatewayState
   }
 
   BuiltMap<String, CompanyGatewayEntity> get map;
+
   BuiltList<String> get list;
 
   static Serializer<CompanyGatewayState> get serializer =>
@@ -49,6 +51,7 @@ abstract class CompanyGatewayUIState extends Object
       tabIndex: 0,
     );
   }
+
   CompanyGatewayUIState._();
 
   @override

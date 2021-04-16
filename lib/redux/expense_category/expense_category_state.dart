@@ -16,6 +16,7 @@ abstract class ExpenseCategoryState
       list: BuiltList<String>(),
     );
   }
+
   ExpenseCategoryState._();
 
   @override
@@ -62,6 +63,7 @@ abstract class ExpenseCategoryUIState extends Object
       tabIndex: 0,
     );
   }
+
   ExpenseCategoryUIState._();
 
   @override

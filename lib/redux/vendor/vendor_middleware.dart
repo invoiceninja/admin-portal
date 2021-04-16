@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -49,8 +50,8 @@ Middleware<AppState> _editVendor() {
 
     store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(VendorEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(VendorEditScreen.route);
     }
   };
 }
@@ -64,8 +65,8 @@ Middleware<AppState> _viewVendor() {
 
     store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(VendorViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(VendorViewScreen.route);
     }
   };
 }
@@ -82,8 +83,8 @@ Middleware<AppState> _viewVendorList() {
 
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           VendorScreen.route, (Route<dynamic> route) => false);
     }
   };
