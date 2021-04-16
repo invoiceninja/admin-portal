@@ -117,8 +117,7 @@ class _$KanbanResponseSerializer
     final result = <Object>[
       'data',
       serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(KanbanResponseData)])),
+          specifiedType: const FullType(KanbanResponseData)),
     ];
 
     return result;
@@ -138,9 +137,8 @@ class _$KanbanResponseSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(KanbanResponseData)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(KanbanResponseData))
+              as KanbanResponseData);
           break;
       }
     }
@@ -666,7 +664,7 @@ class TaskItemResponseBuilder
 
 class _$KanbanResponse extends KanbanResponse {
   @override
-  final BuiltList<KanbanResponseData> data;
+  final KanbanResponseData data;
 
   factory _$KanbanResponse([void Function(KanbanResponseBuilder) updates]) =>
       (new KanbanResponseBuilder()..update(updates)).build();
@@ -708,10 +706,10 @@ class KanbanResponseBuilder
     implements Builder<KanbanResponse, KanbanResponseBuilder> {
   _$KanbanResponse _$v;
 
-  ListBuilder<KanbanResponseData> _data;
-  ListBuilder<KanbanResponseData> get data =>
-      _$this._data ??= new ListBuilder<KanbanResponseData>();
-  set data(ListBuilder<KanbanResponseData> data) => _$this._data = data;
+  KanbanResponseDataBuilder _data;
+  KanbanResponseDataBuilder get data =>
+      _$this._data ??= new KanbanResponseDataBuilder();
+  set data(KanbanResponseDataBuilder data) => _$this._data = data;
 
   KanbanResponseBuilder();
 
