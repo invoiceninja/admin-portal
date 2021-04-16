@@ -58,7 +58,7 @@ abstract class KanbanResponse
   @memoized
   int get hashCode;
 
-  BuiltList<KanbanResponseData> get data;
+  KanbanResponseData get data;
 
   static Serializer<KanbanResponse> get serializer =>
       _$kanbanResponseSerializer;

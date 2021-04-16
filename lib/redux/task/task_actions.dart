@@ -229,7 +229,7 @@ class RestoreTaskFailure implements StopSaving {
 }
 
 class SortTasksRequest implements StartSaving {
-  SortTasksRequest(this.completer, this.taskStatusIds, this.taskIds);
+  SortTasksRequest({this.completer, this.taskStatusIds, this.taskIds});
 
   final Completer completer;
   final List<String> taskStatusIds;

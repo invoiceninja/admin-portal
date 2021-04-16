@@ -72,6 +72,14 @@ class KanbanVM {
           state.taskListState),
       onBoardChanged: (context, statusIds, taskIds) {
         print('## onBoardChanged...\nstatusIds: $statusIds\ntaskIds: $taskIds');
+        final localization = AppLocalization.of(context);
+        final completer = snackBarCompleter<TaskStatusEntity>(
+            context, localization.updatedTaskStatus);
+        store.dispatch(SortTasksRequest(
+          completer: completer,
+          taskIds: taskIds,
+          taskStatusIds: statusIds,
+        ));
       },
       onStatusOrderChanged: (context, statusId, index) {
         final localization = AppLocalization.of(context);

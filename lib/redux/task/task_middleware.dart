@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -28,6 +27,7 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
   final deleteTask = _deleteTask(repository);
   final restoreTask = _restoreTask(repository);
   final saveDocument = _saveDocument(repository);
+  final sortTasks = _sortTasks(repository);
 
   return [
     TypedMiddleware<AppState, ViewTaskList>(viewTaskList),
@@ -40,6 +40,7 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
     TypedMiddleware<AppState, DeleteTaskRequest>(deleteTask),
     TypedMiddleware<AppState, RestoreTaskRequest>(restoreTask),
     TypedMiddleware<AppState, SaveTaskDocumentRequest>(saveDocument),
+    TypedMiddleware<AppState, SortTasksRequest>(sortTasks),
   ];
 }
 
@@ -259,6 +260,29 @@ Middleware<AppState> _saveDocument(TaskRepository repository) {
       store.dispatch(SaveTaskDocumentFailure(error));
       action.completer.completeError(error);
     }
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _sortTasks(TaskRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SortTasksRequest;
+
+    repository
+        .sortTasks(store.state.credentials, action.statusIds, action.taskIds)
+        .then((KanbanResponseData data) {
+      print('## DONE: $data');
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SortTasksFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
 
     next(action);
   };
