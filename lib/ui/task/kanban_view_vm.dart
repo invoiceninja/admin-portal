@@ -78,7 +78,7 @@ class KanbanVM {
         store.dispatch(SortTasksRequest(
           completer: completer,
           taskIds: taskIds,
-          taskStatusIds: statusIds,
+          statusIds: statusIds,
         ));
       },
       onStatusOrderChanged: (context, statusId, index) {
