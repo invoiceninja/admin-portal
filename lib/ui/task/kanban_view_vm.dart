@@ -86,7 +86,7 @@ class KanbanVM {
         TaskStatusEntity status = state.taskStatusState.get(statusId);
         status = status.rebuild((b) => b
           ..name = name
-          ..statusOrder = statusOrder);
+          ..statusOrder = status.isNew ? statusOrder : status.statusOrder);
 
         store.dispatch(SaveTaskStatusRequest(
           completer: completer,
@@ -98,7 +98,7 @@ class KanbanVM {
         TaskEntity task = state.taskState.get(taskId);
         task = task.rebuild((b) => b
           ..description = description
-          ..statusOrder = statusOrder
+          ..statusOrder = task.isNew ? statusOrder : task.statusOrder
           ..statusId = statusId);
 
         if (task.isNew) {
