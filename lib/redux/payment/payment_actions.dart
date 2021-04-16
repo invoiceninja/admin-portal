@@ -227,10 +227,10 @@ class RestorePaymentsFailure implements StopSaving {
 }
 
 class EmailPaymentRequest implements StartSaving {
-  EmailPaymentRequest(this.completer, this.payment);
+  EmailPaymentRequest(this.completer, this.paymentIds);
 
   final Completer completer;
-  final PaymentEntity payment;
+  final List<String> paymentIds;
 }
 
 class EmailPaymentSuccess implements StopSaving, PersistData {}
@@ -348,7 +348,7 @@ void handlePaymentAction(
     case EntityAction.emailPayment:
       store.dispatch(EmailPaymentRequest(
           snackBarCompleter<Null>(context, localization.emailedPayment),
-          payment));
+          paymentIds));
       break;
     case EntityAction.restore:
       final message = paymentIds.length > 1
