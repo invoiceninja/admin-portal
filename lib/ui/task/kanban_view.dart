@@ -140,10 +140,11 @@ class _KanbanViewState extends State<KanbanView> {
             .map(
           (task) {
             final isVisible =
-                widget.viewModel.filteredTaskList.contains(task.id);
+                widget.viewModel.filteredTaskList.contains(task.id) ||
+                    task.isNew;
             return BoardItem(
               draggable: task.isOld,
-              item: !isVisible && task.isOld
+              item: !isVisible
                   ? SizedBox()
                   : _TaskCard(
                       task: task,
