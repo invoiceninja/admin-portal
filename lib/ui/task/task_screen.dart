@@ -46,7 +46,7 @@ class TaskScreen extends StatelessWidget {
           store.dispatch(FilterTasks(value));
         },
       ),
-      appBarActions: [
+      appBarLeadingActions: [
         if (!kReleaseMode || state.isHosted)
           IconButton(
             icon: Icon(MdiIcons.trello),

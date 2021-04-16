@@ -27,7 +27,7 @@ class KanbanView extends StatefulWidget {
 class _KanbanViewState extends State<KanbanView> {
   final _boardViewController = new BoardViewController();
 
-  List<TaskStatusEntity> _statuses = [];
+  List<String> _statuses = [];
   Map<String, List<String>> _tasks = {};
 
   @override
@@ -39,10 +39,12 @@ class _KanbanViewState extends State<KanbanView> {
     final state = viewModel.state;
 
     _statuses = state.taskStatusState.list
-        .map((statusId) => state.taskStatusState.get(statusId))
-        .where((status) => status.isActive)
+        .where((statusId) => state.taskStatusState.get(statusId).isActive)
         .toList();
-    _statuses.sort((statusA, statusB) {
+
+    _statuses.sort((statusIdA, statusIdB) {
+      final statusA = state.taskStatusState.get(statusIdA);
+      final statusB = state.taskStatusState.get(statusIdB);
       if (statusA.statusOrder == statusB.statusOrder) {
         return statusB.updatedAt.compareTo(statusA.updatedAt);
       } else {
@@ -79,8 +81,10 @@ class _KanbanViewState extends State<KanbanView> {
   @override
   Widget build(BuildContext context) {
     print('## BUILD: ${_statuses.length}');
+    final state = widget.viewModel.state;
 
-    final boardList = _statuses.map((status) {
+    final boardList = _statuses.map((statusId) {
+      final status = state.taskStatusState.get(statusId);
       return BoardList(
         backgroundColor: Theme.of(context).cardColor,
         headerBackgroundColor: Theme.of(context).cardColor,
@@ -99,7 +103,7 @@ class _KanbanViewState extends State<KanbanView> {
             ];
           });
 
-          widget.viewModel.onStatusOrderChanged(context, status.id, endIndex);
+          widget.viewModel.onStatusOrderChanged(context, statusId, endIndex);
         },
         header: [
           Expanded(
@@ -162,29 +166,29 @@ class _KanbanViewState extends State<KanbanView> {
                     return;
                   }
 
-                  final oldStatus = _statuses[oldListIndex];
-                  final newStatus = _statuses[listIndex];
+                  final oldStatusId = _statuses[oldListIndex];
+                  final newStatusId = _statuses[listIndex];
                   final taskId = _tasks[status.id][oldItemIndex];
 
                   setState(() {
-                    if (_tasks.containsKey(oldStatus.id) &&
-                        _tasks[oldStatus.id].contains(taskId)) {
-                      _tasks[oldStatus.id].remove(taskId);
+                    if (_tasks.containsKey(oldStatusId) &&
+                        _tasks[oldStatusId].contains(taskId)) {
+                      _tasks[oldStatusId].remove(taskId);
                     }
 
-                    if (!_tasks.containsKey(newStatus.id)) {
-                      _tasks[newStatus.id] = [];
+                    if (!_tasks.containsKey(newStatusId)) {
+                      _tasks[newStatusId] = [];
                     }
 
-                    _tasks[newStatus.id] = [
-                      ..._tasks[newStatus.id].sublist(0, itemIndex),
+                    _tasks[newStatusId] = [
+                      ..._tasks[newStatusId].sublist(0, itemIndex),
                       taskId,
-                      ..._tasks[newStatus.id].sublist(itemIndex),
+                      ..._tasks[newStatusId].sublist(itemIndex),
                     ];
                   });
 
                   widget.viewModel.onTaskOrderChanged(
-                      context, taskId, newStatus.id, itemIndex);
+                      context, taskId, newStatusId, itemIndex);
                 },
               ),
             )
