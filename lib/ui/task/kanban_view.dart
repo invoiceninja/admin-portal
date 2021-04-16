@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:boardview/board_item.dart';
 import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
@@ -9,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -80,6 +83,7 @@ class _KanbanViewState extends State<KanbanView> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final state = widget.viewModel.state;
     final color = state.prefState.enableDarkMode
         ? Theme.of(context).cardColor
@@ -111,8 +115,8 @@ class _KanbanViewState extends State<KanbanView> {
           Expanded(
             child: _StatusCard(
               status: status,
-              onSavePressed: (name) {
-                widget.viewModel.onSaveStatusPressed(context, statusId, name);
+              onSavePressed: (completer, name) {
+                widget.viewModel.onSaveStatusPressed(completer, statusId, name);
               },
             ),
           ),
@@ -149,9 +153,9 @@ class _KanbanViewState extends State<KanbanView> {
                   ? SizedBox()
                   : _TaskCard(
                       task: task,
-                      onSavePressed: (description) {
+                      onSavePressed: (completer, description) {
                         widget.viewModel.onSaveTaskPressed(
-                          context,
+                          completer,
                           task.id,
                           status.id,
                           description,
@@ -229,7 +233,7 @@ class _TaskCard extends StatefulWidget {
     @required this.onCancelPressed,
   });
   final TaskEntity task;
-  final Function(String) onSavePressed;
+  final Function(Completer<TaskEntity>, String) onSavePressed;
   final Function() onCancelPressed;
 
   @override
@@ -295,7 +299,14 @@ class __TaskCardState extends State<_TaskCard> {
                     padding: const EdgeInsets.only(left: 8),
                     child: ElevatedButton(
                       onPressed: () {
-                        widget.onSavePressed(_description.trim());
+                        final completer = snackBarCompleter<TaskEntity>(
+                            context, localization.updatedTask);
+                        completer.future.then((value) {
+                          setState(() {
+                            _isEditing = false;
+                          });
+                        });
+                        widget.onSavePressed(completer, _description.trim());
                       },
                       child: Text(localization.save),
                     ),
@@ -333,7 +344,7 @@ class _StatusCard extends StatefulWidget {
     @required this.onCancelPressed,
   });
   final TaskStatusEntity status;
-  final Function(String) onSavePressed;
+  final Function(Completer<TaskStatusEntity>, String) onSavePressed;
   final Function() onCancelPressed;
 
   @override
@@ -398,7 +409,15 @@ class __StatusCardState extends State<_StatusCard> {
                   padding: const EdgeInsets.only(left: 8),
                   child: ElevatedButton(
                     onPressed: () {
-                      widget.onSavePressed(_name.trim());
+                      final completer = snackBarCompleter<TaskStatusEntity>(
+                          context, localization.updatedTaskStatus);
+                      completer.future.then((value) {
+                        setState(() {
+                          _isEditing = false;
+                        });
+                      });
+
+                      widget.onSavePressed(completer, _name.trim());
                     },
                     child: Text(localization.save),
                   ),

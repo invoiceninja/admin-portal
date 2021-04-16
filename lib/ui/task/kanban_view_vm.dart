@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -41,8 +43,6 @@ class KanbanVM {
     @required this.state,
     @required this.taskList,
     @required this.filteredTaskList,
-    //@required this.onStatusOrderChanged,
-    //@required this.onTaskOrderChanged,
     @required this.onSaveTaskPressed,
     @required this.onSaveStatusPressed,
     @required this.onBoardChanged,
@@ -82,46 +82,7 @@ class KanbanVM {
           statusIds: statusIds,
         ));
       },
-      /*
-      onStatusOrderChanged: (context, statusId, index) {
-        final localization = AppLocalization.of(context);
-        final taskStatus = state.taskStatusState.get(statusId);
-        final completer = snackBarCompleter<TaskStatusEntity>(
-            context, localization.updatedTaskStatus);
-        completer.future.then((value) {
-          // TODO remove this
-          store.dispatch(RefreshData());
-        }).catchError((Object error) {
-          store.dispatch(RefreshData());
-        });
-        store.dispatch(SaveTaskStatusRequest(
-            completer: completer,
-            taskStatus: taskStatus.rebuild((b) => b.statusOrder = index)));
-      },
-      onTaskOrderChanged: (context, taskId, statusId, index) {
-        final localization = AppLocalization.of(context);
-        final task = state.taskState.get(taskId);
-        final completer =
-            snackBarCompleter<TaskEntity>(context, localization.updatedTask);
-        completer.future.then((value) {
-          // TODO remove this
-          store.dispatch(RefreshData());
-        }).catchError((Object error) {
-          store.dispatch(RefreshData());
-        });
-        store.dispatch(SaveTaskRequest(
-          completer: completer,
-          task: task.rebuild((b) => b
-            ..statusOrder = index
-            ..statusId = statusId),
-        ));
-      },
-      */
-      onSaveStatusPressed: (context, statusId, name) {
-        final localization = AppLocalization.of(context);
-        final completer = snackBarCompleter<TaskStatusEntity>(
-            context, localization.updatedTaskStatus);
-
+      onSaveStatusPressed: (completer, statusId, name) {
         TaskStatusEntity status = state.taskStatusState.get(statusId);
         status = status.rebuild((b) => b..name = name);
 
@@ -130,11 +91,7 @@ class KanbanVM {
           taskStatus: status,
         ));
       },
-      onSaveTaskPressed: (context, taskId, statusId, description) {
-        final localization = AppLocalization.of(context);
-        final completer =
-            snackBarCompleter<TaskEntity>(context, localization.updatedTask);
-
+      onSaveTaskPressed: (completer, taskId, statusId, description) {
         TaskEntity task = state.taskState.get(taskId);
         task = task.rebuild((b) => b
           ..description = description
@@ -166,10 +123,10 @@ class KanbanVM {
   final AppState state;
   final List<String> taskList;
   final List<String> filteredTaskList;
-  //final Function(BuildContext, String, int) onStatusOrderChanged;
-  //final Function(BuildContext, String, String, int) onTaskOrderChanged;
   final Function(BuildContext, List<String>, Map<String, List<String>>)
       onBoardChanged;
-  final Function(BuildContext, String, String, String) onSaveTaskPressed;
-  final Function(BuildContext, String, String) onSaveStatusPressed;
+  final Function(Completer<TaskEntity>, String, String, String)
+      onSaveTaskPressed;
+  final Function(Completer<TaskStatusEntity>, String, String)
+      onSaveStatusPressed;
 }
