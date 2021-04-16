@@ -102,7 +102,7 @@ class _KanbanViewState extends State<KanbanView> {
             ];
           });
 
-          widget.viewModel.onStatusOrderChanged(context, statusId, endIndex);
+          widget.viewModel.onBoardChanged(context, _statuses, _tasks);
         },
         header: [
           Expanded(
@@ -191,8 +191,7 @@ class _KanbanViewState extends State<KanbanView> {
                   ];
                 });
 
-                widget.viewModel.onTaskOrderChanged(
-                    context, taskId, newStatusId, itemIndex);
+                widget.viewModel.onBoardChanged(context, _statuses, _tasks);
               },
             );
           },

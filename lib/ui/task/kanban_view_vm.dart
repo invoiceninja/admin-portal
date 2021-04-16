@@ -41,8 +41,8 @@ class KanbanVM {
     @required this.state,
     @required this.taskList,
     @required this.filteredTaskList,
-    @required this.onStatusOrderChanged,
-    @required this.onTaskOrderChanged,
+    //@required this.onStatusOrderChanged,
+    //@required this.onTaskOrderChanged,
     @required this.onSaveTaskPressed,
     @required this.onBoardChanged,
   });
@@ -81,6 +81,7 @@ class KanbanVM {
           statusIds: statusIds,
         ));
       },
+      /*
       onStatusOrderChanged: (context, statusId, index) {
         final localization = AppLocalization.of(context);
         final taskStatus = state.taskStatusState.get(statusId);
@@ -114,6 +115,7 @@ class KanbanVM {
             ..statusId = statusId),
         ));
       },
+      */
       onSaveTaskPressed: (context, taskId, statusId, description) {
         final localization = AppLocalization.of(context);
         final completer =
@@ -150,8 +152,8 @@ class KanbanVM {
   final AppState state;
   final List<String> taskList;
   final List<String> filteredTaskList;
-  final Function(BuildContext, String, int) onStatusOrderChanged;
-  final Function(BuildContext, String, String, int) onTaskOrderChanged;
+  //final Function(BuildContext, String, int) onStatusOrderChanged;
+  //final Function(BuildContext, String, String, int) onTaskOrderChanged;
   final Function(BuildContext, List<String>, Map<String, List<String>>)
       onBoardChanged;
   final Function(BuildContext, String, String, String) onSaveTaskPressed;
