@@ -52,6 +52,21 @@ class TaskRepository {
     return taskResponse.data.toList();
   }
 
+  Future<KanbanResponseData> sortTasks(Credentials credentials,
+      List<String> statusIds, Map<String, List<String>> taskIds) async {
+    final url = credentials.url + '/tasks/sort';
+
+    final dynamic response = await webClient.post(url, credentials.token,
+        data: json.encode({'status_ids': statusIds, 'task_ids': taskIds}));
+
+    return null;
+
+    final KanbanResponse taskResponse =
+        serializers.deserializeWith(KanbanResponse.serializer, response);
+
+    return taskResponse.data;
+  }
+
   Future<TaskEntity> saveData(Credentials credentials, TaskEntity task) async {
     final data = serializers.serializeWith(TaskEntity.serializer, task);
 

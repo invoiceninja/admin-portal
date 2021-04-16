@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:boardview/board_item.dart';
 import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
@@ -9,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -27,14 +29,17 @@ class KanbanView extends StatefulWidget {
 class _KanbanViewState extends State<KanbanView> {
   final _boardViewController = new BoardViewController();
 
-  List<String> _statuses = [];
-  Map<String, List<String>> _tasks = {};
+  List<String> _statuses;
+  Map<String, List<String>> _tasks;
 
   @override
   void initState() {
     super.initState();
-    print('## initState: ${_statuses.length}');
+    _initBoard();
+  }
 
+  void _initBoard() {
+    print('## INIT BOARD');
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
@@ -53,9 +58,10 @@ class _KanbanViewState extends State<KanbanView> {
       }
     });
 
+    _tasks = {};
     viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId];
-      if (task.isActive && task.statusId.isNotEmpty) {
+      if (task.statusId.isNotEmpty) {
         final status = state.taskStatusState.get(task.statusId);
         if (!_tasks.containsKey(status.id)) {
           _tasks[status.id] = [];
@@ -78,16 +84,30 @@ class _KanbanViewState extends State<KanbanView> {
     });
   }
 
+  void _onBoardChanged() {
+    final localization = AppLocalization.of(context);
+    final completer =
+        snackBarCompleter<Null>(context, localization.updatedTaskStatus);
+    completer.future.catchError((Object error) {
+      _initBoard();
+    });
+
+    widget.viewModel.onBoardChanged(completer, _statuses, _tasks);
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('## BUILD: ${_statuses.length}');
+    final localization = AppLocalization.of(context);
     final state = widget.viewModel.state;
+    final color = state.prefState.enableDarkMode
+        ? Theme.of(context).cardColor
+        : Colors.grey.shade300;
 
     final boardList = _statuses.map((statusId) {
       final status = state.taskStatusState.get(statusId);
       return BoardList(
-        backgroundColor: Theme.of(context).cardColor,
-        headerBackgroundColor: Theme.of(context).cardColor,
+        backgroundColor: color,
+        headerBackgroundColor: color,
         onDropList: (endIndex, startIndex) {
           if (endIndex == startIndex) {
             return;
@@ -103,14 +123,22 @@ class _KanbanViewState extends State<KanbanView> {
             ];
           });
 
-          widget.viewModel.onStatusOrderChanged(context, statusId, endIndex);
+          _onBoardChanged();
         },
         header: [
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                  '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}'),
+            child: _StatusCard(
+              status: status,
+              onSavePressed: (completer, name) {
+                final statusOrder = _statuses.indexOf(statusId);
+                widget.viewModel.onSaveStatusPressed(
+                    completer, statusId, name, statusOrder);
+              },
+              onCancelPressed: () {
+                if (status.isNew) {
+                  _statuses.remove(status.id);
+                }
+              },
             ),
           ),
         ],
@@ -136,72 +164,86 @@ class _KanbanViewState extends State<KanbanView> {
         items: (_tasks[status.id] ?? [])
             .map((taskId) => widget.viewModel.state.taskState.get(taskId))
             .map(
-              (task) => BoardItem(
-                item: _TaskCard(
-                  task: task,
-                  onSavePressed: (description) {
-                    widget.viewModel.onSaveTaskPressed(
-                      context,
-                      task.id,
-                      status.id,
-                      description,
-                    );
-                  },
-                  onCancelPressed: () {
-                    if (task.isNew) {
-                      setState(() {
-                        _tasks[status.id].remove(task.id);
-                      });
-                    }
-                  },
-                ),
-                onDropItem: (
-                  int listIndex,
-                  int itemIndex,
-                  int oldListIndex,
-                  int oldItemIndex,
-                  BoardItemState state,
-                ) {
-                  if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
-                    return;
+          (task) {
+            final isVisible =
+                widget.viewModel.filteredTaskList.contains(task.id) ||
+                    task.isNew;
+            return BoardItem(
+              draggable: task.isOld,
+              item: !isVisible
+                  ? SizedBox()
+                  : _TaskCard(
+                      task: task,
+                      onSavePressed: (completer, description) {
+                        final statusOrder = _tasks[status.id].indexOf(task.id);
+                        widget.viewModel.onSaveTaskPressed(
+                          completer,
+                          task.id,
+                          status.id,
+                          description,
+                          statusOrder,
+                        );
+                      },
+                      onCancelPressed: () {
+                        if (task.isNew) {
+                          setState(() {
+                            _tasks[status.id].remove(task.id);
+                          });
+                        }
+                      },
+                    ),
+              onDropItem: (
+                int listIndex,
+                int itemIndex,
+                int oldListIndex,
+                int oldItemIndex,
+                BoardItemState state,
+              ) {
+                if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
+                  return;
+                }
+
+                final oldStatusId = _statuses[oldListIndex];
+                final newStatusId = _statuses[listIndex];
+                final taskId = _tasks[status.id][oldItemIndex];
+
+                setState(() {
+                  if (_tasks.containsKey(oldStatusId) &&
+                      _tasks[oldStatusId].contains(taskId)) {
+                    _tasks[oldStatusId].remove(taskId);
                   }
 
-                  final oldStatusId = _statuses[oldListIndex];
-                  final newStatusId = _statuses[listIndex];
-                  final taskId = _tasks[status.id][oldItemIndex];
+                  if (!_tasks.containsKey(newStatusId)) {
+                    _tasks[newStatusId] = [];
+                  }
 
-                  setState(() {
-                    if (_tasks.containsKey(oldStatusId) &&
-                        _tasks[oldStatusId].contains(taskId)) {
-                      _tasks[oldStatusId].remove(taskId);
-                    }
+                  _tasks[newStatusId] = [
+                    ..._tasks[newStatusId].sublist(0, itemIndex),
+                    taskId,
+                    ..._tasks[newStatusId].sublist(itemIndex),
+                  ];
+                });
 
-                    if (!_tasks.containsKey(newStatusId)) {
-                      _tasks[newStatusId] = [];
-                    }
-
-                    _tasks[newStatusId] = [
-                      ..._tasks[newStatusId].sublist(0, itemIndex),
-                      taskId,
-                      ..._tasks[newStatusId].sublist(itemIndex),
-                    ];
-                  });
-
-                  widget.viewModel.onTaskOrderChanged(
-                      context, taskId, newStatusId, itemIndex);
-                },
-              ),
-            )
-            .toList(),
+                _onBoardChanged();
+              },
+            );
+          },
+        ).toList(),
       );
     }).toList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: BoardView(
-        boardViewController: _boardViewController,
-        lists: boardList,
-        dragDelay: 1,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          BoardView(
+            boardViewController: _boardViewController,
+            lists: boardList,
+            dragDelay: 1,
+          ),
+          if (state.isLoading || state.isSaving) LinearProgressIndicator(),
+        ],
       ),
     );
   }
@@ -214,7 +256,7 @@ class _TaskCard extends StatefulWidget {
     @required this.onCancelPressed,
   });
   final TaskEntity task;
-  final Function(String) onSavePressed;
+  final Function(Completer<TaskEntity>, String) onSavePressed;
   final Function() onCancelPressed;
 
   @override
@@ -247,7 +289,7 @@ class __TaskCardState extends State<_TaskCard> {
             children: [
               DecoratedFormField(
                 autofocus: true,
-                initialValue: widget.task.description,
+                initialValue: _description,
                 minLines: 4,
                 maxLines: 4,
                 onChanged: (value) => _description = value,
@@ -280,7 +322,14 @@ class __TaskCardState extends State<_TaskCard> {
                     padding: const EdgeInsets.only(left: 8),
                     child: ElevatedButton(
                       onPressed: () {
-                        widget.onSavePressed(_description.trim());
+                        final completer = snackBarCompleter<TaskEntity>(
+                            context, localization.updatedTask);
+                        completer.future.then((value) {
+                          setState(() {
+                            _isEditing = false;
+                          });
+                        });
+                        widget.onSavePressed(completer, _description.trim());
                       },
                       child: Text(localization.save),
                     ),
@@ -300,6 +349,110 @@ class __TaskCardState extends State<_TaskCard> {
           padding: const EdgeInsets.all(8),
           child: Text(
               '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          _isEditing = true;
+        });
+      },
+    );
+  }
+}
+
+class _StatusCard extends StatefulWidget {
+  const _StatusCard({
+    @required this.status,
+    @required this.onSavePressed,
+    @required this.onCancelPressed,
+  });
+  final TaskStatusEntity status;
+  final Function(Completer<TaskStatusEntity>, String) onSavePressed;
+  final Function() onCancelPressed;
+
+  @override
+  __StatusCardState createState() => __StatusCardState();
+}
+
+class __StatusCardState extends State<_StatusCard> {
+  bool _isEditing = false;
+  String _name = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    final status = widget.status;
+    _name = status.name;
+    _isEditing = status.isNew;
+  }
+
+  void _onSavePressed() {
+    final localization = AppLocalization.of(context);
+    final completer = snackBarCompleter<TaskStatusEntity>(
+        context, localization.updatedTaskStatus);
+    completer.future.then((value) {
+      setState(() {
+        _isEditing = false;
+      });
+    });
+
+    widget.onSavePressed(completer, _name.trim());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final status = widget.status;
+
+    if (_isEditing) {
+      return Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            DecoratedFormField(
+              autofocus: true,
+              initialValue: _name,
+              minLines: 1,
+              maxLines: 1,
+              onChanged: (value) => _name = value,
+              onSavePressed: (context) => _onSavePressed(),
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppTextButton(
+                  onPressed: () {
+                    setState(() {
+                      _isEditing = false;
+                      if (widget.status.isNew) {
+                        widget.onCancelPressed();
+                      }
+                    });
+                  },
+                  label: localization.cancel,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: ElevatedButton(
+                    child: Text(localization.save),
+                    onPressed: _onSavePressed,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
+
+    return InkWell(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+              '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}'),
         ),
       ),
       onTap: () {

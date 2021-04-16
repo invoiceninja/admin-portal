@@ -193,7 +193,6 @@ class _$AppState extends AppState {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -219,62 +218,44 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState _$v;
 
   bool _isLoading;
-
   bool get isLoading => _$this._isLoading;
-
   set isLoading(bool isLoading) => _$this._isLoading = isLoading;
 
   bool _isSaving;
-
   bool get isSaving => _$this._isSaving;
-
   set isSaving(bool isSaving) => _$this._isSaving = isSaving;
 
   bool _isTesting;
-
   bool get isTesting => _$this._isTesting;
-
   set isTesting(bool isTesting) => _$this._isTesting = isTesting;
 
   String _lastError;
-
   String get lastError => _$this._lastError;
-
   set lastError(String lastError) => _$this._lastError = lastError;
 
   AuthStateBuilder _authState;
-
   AuthStateBuilder get authState =>
       _$this._authState ??= new AuthStateBuilder();
-
   set authState(AuthStateBuilder authState) => _$this._authState = authState;
 
   StaticStateBuilder _staticState;
-
   StaticStateBuilder get staticState =>
       _$this._staticState ??= new StaticStateBuilder();
-
   set staticState(StaticStateBuilder staticState) =>
       _$this._staticState = staticState;
 
   PrefStateBuilder _prefState;
-
   PrefStateBuilder get prefState =>
       _$this._prefState ??= new PrefStateBuilder();
-
   set prefState(PrefStateBuilder prefState) => _$this._prefState = prefState;
 
   UIStateBuilder _uiState;
-
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
-
   set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
 
   ListBuilder<UserCompanyState> _userCompanyStates;
-
   ListBuilder<UserCompanyState> get userCompanyStates =>
       _$this._userCompanyStates ??= new ListBuilder<UserCompanyState>();
-
   set userCompanyStates(ListBuilder<UserCompanyState> userCompanyStates) =>
       _$this._userCompanyStates = userCompanyStates;
 

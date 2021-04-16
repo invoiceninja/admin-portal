@@ -123,6 +123,61 @@ List<String> dropdownTasksSelector(
   return list;
 }
 
+var memoizedKanbanTaskList = memo8((SelectionState selectionState,
+        BuiltMap<String, TaskEntity> taskMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, UserEntity> userMap,
+        BuiltMap<String, ProjectEntity> projectMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltList<String> taskList,
+        ListUIState taskListState) =>
+    kanbanTasksSelector(selectionState, taskMap, clientMap, userMap, projectMap,
+        invoiceMap, taskList, taskListState));
+
+List<String> kanbanTasksSelector(
+    SelectionState selectionState,
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltList<String> taskList,
+    ListUIState taskListState) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
+  final list = taskList.where((taskId) {
+    final task = taskMap[taskId];
+    final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
+
+    if (!client.isActive &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
+      return false;
+    }
+
+    if (task.isInvoiced) {
+      return false;
+    }
+
+    return true;
+  }).toList();
+
+  list.sort((taskAId, taskBId) {
+    final taskA = taskMap[taskAId];
+    final taskB = taskMap[taskBId];
+    return taskA.compareTo(
+        taskB,
+        taskListState.sortField,
+        taskListState.sortAscending,
+        userMap,
+        clientMap,
+        projectMap,
+        invoiceMap);
+  });
+
+  return list;
+}
+
 var memoizedFilteredTaskList = memo8((SelectionState selectionState,
         BuiltMap<String, TaskEntity> taskMap,
         BuiltMap<String, ClientEntity> clientMap,

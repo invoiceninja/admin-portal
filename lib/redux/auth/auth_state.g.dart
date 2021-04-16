@@ -161,7 +161,6 @@ class _$AuthState extends AuthState {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -194,47 +193,33 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   _$AuthState _$v;
 
   String _email;
-
   String get email => _$this._email;
-
   set email(String email) => _$this._email = email;
 
   String _password;
-
   String get password => _$this._password;
-
   set password(String password) => _$this._password = password;
 
   String _url;
-
   String get url => _$this._url;
-
   set url(String url) => _$this._url = url;
 
   String _secret;
-
   String get secret => _$this._secret;
-
   set secret(String secret) => _$this._secret = secret;
 
   bool _isInitialized;
-
   bool get isInitialized => _$this._isInitialized;
-
   set isInitialized(bool isInitialized) =>
       _$this._isInitialized = isInitialized;
 
   bool _isAuthenticated;
-
   bool get isAuthenticated => _$this._isAuthenticated;
-
   set isAuthenticated(bool isAuthenticated) =>
       _$this._isAuthenticated = isAuthenticated;
 
   int _lastEnteredPasswordAt;
-
   int get lastEnteredPasswordAt => _$this._lastEnteredPasswordAt;
-
   set lastEnteredPasswordAt(int lastEnteredPasswordAt) =>
       _$this._lastEnteredPasswordAt = lastEnteredPasswordAt;
 

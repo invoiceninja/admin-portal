@@ -36,6 +36,7 @@ class AppBottomBar extends StatefulWidget {
     this.customValues3 = const [],
     this.customValues4 = const [],
     this.hideListOptions = false,
+    this.iconButtons = const [],
   });
 
   final EntityType entityType;
@@ -56,6 +57,7 @@ class AppBottomBar extends StatefulWidget {
   final List<String> tableColumns;
   final List<String> defaultTableColumns;
   final bool hideListOptions;
+  final List<IconButton> iconButtons;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
@@ -390,6 +392,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                ...widget.iconButtons,
                 if (!widget.hideListOptions) ...[
                   IconButton(
                     tooltip: localization.multiselect,
@@ -489,7 +492,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         : null,
                   ),
                 if (!state.prefState.isMenuFloated) Spacer(),
-                if (!widget.entityType.isSetting && !isList)
+                if (!widget.entityType.isSetting &&
+                    !isList &&
+                    !widget.hideListOptions)
                   if (state.prefState.isDesktop)
                     AppTextButton(
                       label: localization.columns,

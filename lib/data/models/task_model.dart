@@ -47,6 +47,44 @@ abstract class TaskItemResponse
       _$taskItemResponseSerializer;
 }
 
+abstract class KanbanResponse
+    implements Built<KanbanResponse, KanbanResponseBuilder> {
+  factory KanbanResponse([void updates(KanbanResponseBuilder b)]) =
+      _$KanbanResponse;
+
+  KanbanResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  KanbanResponseData get data;
+
+  static Serializer<KanbanResponse> get serializer =>
+      _$kanbanResponseSerializer;
+}
+
+abstract class KanbanResponseData
+    implements Built<KanbanResponseData, KanbanResponseDataBuilder> {
+  factory KanbanResponseData([void updates(KanbanResponseDataBuilder b)]) =
+      _$KanbanResponseData;
+
+  KanbanResponseData._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'status_ids')
+  BuiltList<String> get statusIds;
+
+  @BuiltValueField(wireName: 'task_ids')
+  BuiltMap<String, BuiltList<String>> get taskIds;
+
+  static Serializer<KanbanResponseData> get serializer =>
+      _$kanbanResponseDataSerializer;
+}
+
 class TaskFields {
   static const String number = 'number';
   static const String rate = 'rate';

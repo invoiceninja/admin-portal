@@ -147,10 +147,11 @@ class LoadTasksSuccess implements StopLoading {
 }
 
 class SaveTaskRequest implements StartSaving {
-  SaveTaskRequest({this.completer, this.task});
+  SaveTaskRequest({this.completer, this.task, this.autoSelect = true});
 
   final Completer completer;
   final TaskEntity task;
+  final bool autoSelect;
 }
 
 class SaveTaskSuccess implements StopSaving, PersistData, PersistUI {
@@ -160,9 +161,10 @@ class SaveTaskSuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class AddTaskSuccess implements StopSaving, PersistData, PersistUI {
-  AddTaskSuccess(this.task);
+  AddTaskSuccess({this.task, this.autoSelect = true});
 
   final TaskEntity task;
+  final bool autoSelect;
 }
 
 class SaveTaskFailure implements StopSaving {
@@ -226,6 +228,26 @@ class RestoreTaskFailure implements StopSaving {
   RestoreTaskFailure(this.tasks);
 
   final List<TaskEntity> tasks;
+}
+
+class SortTasksRequest implements StartSaving {
+  SortTasksRequest({this.completer, this.statusIds, this.taskIds});
+
+  final Completer completer;
+  final List<String> statusIds;
+  final Map<String, List<String>> taskIds;
+}
+
+class SortTasksSuccess implements StopSaving, PersistData {
+  SortTasksSuccess(this.data);
+
+  final KanbanResponseData data;
+}
+
+class SortTasksFailure implements StopSaving {
+  SortTasksFailure(this.error);
+
+  final Object error;
 }
 
 class FilterTasks implements PersistUI {

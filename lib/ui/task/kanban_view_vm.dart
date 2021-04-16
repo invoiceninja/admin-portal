@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
@@ -29,7 +32,7 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
         return KanbanView(
           viewModel: viewModel,
           key: ValueKey(
-              '__${company.id}_${state.userCompanyState.lastUpdated}_${viewModel.taskList.length}__'),
+              '__${company.id}_${state.userCompanyState.lastUpdated}_${viewModel.filteredTaskList.length}__'),
         );
       },
     );
@@ -40,9 +43,10 @@ class KanbanVM {
   KanbanVM({
     @required this.state,
     @required this.taskList,
-    @required this.onStatusOrderChanged,
-    @required this.onTaskOrderChanged,
+    @required this.filteredTaskList,
     @required this.onSaveTaskPressed,
+    @required this.onSaveStatusPressed,
+    @required this.onBoardChanged,
   });
 
   static KanbanVM fromStore(Store<AppState> store) {
@@ -50,7 +54,7 @@ class KanbanVM {
 
     return KanbanVM(
       state: state,
-      taskList: memoizedFilteredTaskList(
+      taskList: memoizedKanbanTaskList(
           state.getUISelection(EntityType.task),
           state.taskState.map,
           state.clientState.map,
@@ -59,47 +63,39 @@ class KanbanVM {
           state.invoiceState.map,
           state.taskState.list,
           state.taskListState),
-      onStatusOrderChanged: (context, statusId, index) {
-        final localization = AppLocalization.of(context);
-        final taskStatus = state.taskStatusState.get(statusId);
-        final completer = snackBarCompleter<TaskStatusEntity>(
-            context, localization.updatedTaskStatus);
-        completer.future.then((value) {
-          // TODO remove this
-          store.dispatch(RefreshData());
-        }).catchError((Object error) {
-          store.dispatch(RefreshData());
-        });
-        store.dispatch(SaveTaskStatusRequest(
-            completer: completer,
-            taskStatus: taskStatus.rebuild((b) => b.statusOrder = index)));
-      },
-      onTaskOrderChanged: (context, taskId, statusId, index) {
-        final localization = AppLocalization.of(context);
-        final task = state.taskState.get(taskId);
-        final completer =
-            snackBarCompleter<TaskEntity>(context, localization.updatedTask);
-        completer.future.then((value) {
-          // TODO remove this
-          store.dispatch(RefreshData());
-        }).catchError((Object error) {
-          store.dispatch(RefreshData());
-        });
-        store.dispatch(SaveTaskRequest(
+      filteredTaskList: memoizedFilteredTaskList(
+          state.getUISelection(EntityType.task),
+          state.taskState.map,
+          state.clientState.map,
+          state.userState.map,
+          state.projectState.map,
+          state.invoiceState.map,
+          state.taskState.list,
+          state.taskListState),
+      onBoardChanged: (completer, statusIds, taskIds) {
+        store.dispatch(SortTasksRequest(
           completer: completer,
-          task: task.rebuild((b) => b
-            ..statusOrder = index
-            ..statusId = statusId),
+          taskIds: taskIds,
+          statusIds: statusIds,
         ));
       },
-      onSaveTaskPressed: (context, taskId, statusId, description) {
-        final localization = AppLocalization.of(context);
-        final completer =
-            snackBarCompleter<TaskEntity>(context, localization.updatedTask);
+      onSaveStatusPressed: (completer, statusId, name, statusOrder) {
+        TaskStatusEntity status = state.taskStatusState.get(statusId);
+        status = status.rebuild((b) => b
+          ..name = name
+          ..statusOrder = status.isNew ? statusOrder : status.statusOrder);
 
+        store.dispatch(SaveTaskStatusRequest(
+          completer: completer,
+          taskStatus: status,
+        ));
+      },
+      onSaveTaskPressed:
+          (completer, taskId, statusId, description, statusOrder) {
         TaskEntity task = state.taskState.get(taskId);
         task = task.rebuild((b) => b
           ..description = description
+          ..statusOrder = task.isNew ? statusOrder : task.statusOrder
           ..statusId = statusId);
 
         if (task.isNew) {
@@ -120,6 +116,7 @@ class KanbanVM {
         store.dispatch(SaveTaskRequest(
           completer: completer,
           task: task,
+          autoSelect: false,
         ));
       },
     );
@@ -127,7 +124,11 @@ class KanbanVM {
 
   final AppState state;
   final List<String> taskList;
-  final Function(BuildContext, String, int) onStatusOrderChanged;
-  final Function(BuildContext, String, String, int) onTaskOrderChanged;
-  final Function(BuildContext, String, String, String) onSaveTaskPressed;
+  final List<String> filteredTaskList;
+  final Function(Completer<Null>, List<String>, Map<String, List<String>>)
+      onBoardChanged;
+  final Function(Completer<TaskEntity>, String, String, String, int)
+      onSaveTaskPressed;
+  final Function(Completer<TaskStatusEntity>, String, String, int)
+      onSaveStatusPressed;
 }
