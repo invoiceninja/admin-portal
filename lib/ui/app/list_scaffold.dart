@@ -19,6 +19,7 @@ class ListScaffold extends StatelessWidget {
     @required this.body,
     @required this.entityType,
     this.appBarActions,
+    this.appBarLeadingActions,
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.onHamburgerLongPress,
@@ -32,6 +33,7 @@ class ListScaffold extends StatelessWidget {
   final FloatingActionButton floatingActionButton;
   final Widget appBarTitle;
   final List<Widget> appBarActions;
+  final List<Widget> appBarLeadingActions;
   final Function() onHamburgerLongPress;
   final String onCancelSettingsSection;
   final int onCancelSettingsIndex;
@@ -78,6 +80,15 @@ class ListScaffold extends StatelessWidget {
       );
     }
 
+    if ((appBarLeadingActions ?? []).isNotEmpty) {
+      leading = Row(
+        children: [
+          Expanded(child: leading),
+          ...appBarLeadingActions,
+        ],
+      );
+    }
+
     return WillPopScope(
         onWillPop: () async {
           store.dispatch(ViewDashboard());
@@ -95,6 +106,7 @@ class ListScaffold extends StatelessWidget {
             centerTitle: false,
             automaticallyImplyLeading: false,
             leading: leading,
+            leadingWidth: appBarLeadingActions == null ? null : 100,
             title: appBarTitle,
             actions: [
               ...appBarActions ?? <Widget>[],
