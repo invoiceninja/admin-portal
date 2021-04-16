@@ -198,10 +198,16 @@ class _KanbanViewState extends State<KanbanView> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: BoardView(
-        boardViewController: _boardViewController,
-        lists: boardList,
-        dragDelay: 1,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          BoardView(
+            boardViewController: _boardViewController,
+            lists: boardList,
+            dragDelay: 1,
+          ),
+          if (state.isLoading) LinearProgressIndicator(),
+        ],
       ),
     );
   }
