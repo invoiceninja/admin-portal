@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -47,8 +48,8 @@ Middleware<AppState> _editSubscription() {
 
     store.dispatch(UpdateCurrentRoute(SubscriptionEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(SubscriptionEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(SubscriptionEditScreen.route);
     }
   };
 }
@@ -62,8 +63,8 @@ Middleware<AppState> _viewSubscription() {
 
     store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(SubscriptionViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(SubscriptionViewScreen.route);
     }
   };
 }
@@ -80,8 +81,8 @@ Middleware<AppState> _viewSubscriptionList() {
 
     store.dispatch(UpdateCurrentRoute(SubscriptionScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           SubscriptionScreen.route, (Route<dynamic> route) => false);
     }
   };

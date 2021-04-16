@@ -17,6 +17,7 @@ abstract class ProductState
       list: BuiltList<String>(),
     );
   }
+
   ProductState._();
 
   @override
@@ -24,6 +25,7 @@ abstract class ProductState
   int get hashCode;
 
   BuiltMap<String, ProductEntity> get map;
+
   BuiltList<String> get list;
 
   ProductEntity get(String productId) {
@@ -60,6 +62,7 @@ abstract class ProductUIState extends Object
       tabIndex: 0,
     );
   }
+
   ProductUIState._();
 
   @override

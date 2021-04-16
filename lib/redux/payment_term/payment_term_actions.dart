@@ -10,37 +10,30 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewPaymentTermList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
+class ViewPaymentTermList implements PersistUI, StopLoading {
   ViewPaymentTermList({
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final bool force;
 }
 
-class ViewPaymentTerm extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewPaymentTerm implements PersistUI, PersistPrefs {
   ViewPaymentTerm({
-    @required NavigatorState navigator,
     @required this.paymentTermId,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String paymentTermId;
   final bool force;
 }
 
-class EditPaymentTerm extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditPaymentTerm implements PersistUI, PersistPrefs {
   EditPaymentTerm(
       {@required this.paymentTerm,
-      @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final PaymentTermEntity paymentTerm;
   final Completer completer;

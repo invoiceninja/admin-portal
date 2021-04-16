@@ -61,8 +61,7 @@ class TaxSettingsVM {
             completer: completer, company: settingsUIState.company));
       },
       onConfigureRatesPressed: (context) {
-        store.dispatch(ViewSettings(
-            navigator: Navigator.of(context), section: kSettingsTaxRates));
+        store.dispatch(ViewSettings(section: kSettingsTaxRates));
       },
     );
   }

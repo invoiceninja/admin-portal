@@ -246,20 +246,19 @@ class MainScreen extends StatelessWidget {
           }
 
           if (history == null) {
-            store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+            store.dispatch(ViewDashboard());
             return false;
           }
 
           switch (history.entityType) {
             case EntityType.dashboard:
-              store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+              store.dispatch(ViewDashboard());
               break;
             case EntityType.reports:
-              store.dispatch(ViewReports(navigator: Navigator.of(context)));
+              store.dispatch(ViewReports());
               break;
             case EntityType.settings:
-              store.dispatch(ViewSettings(
-                  navigator: Navigator.of(context), section: history.id));
+              store.dispatch(ViewSettings(section: history.id));
               break;
             default:
               viewEntityById(

@@ -15,6 +15,8 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/invoice_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreInvoicesMiddleware([
   InvoiceRepository repository = const InvoiceRepository(),
 ]) {
@@ -71,8 +73,8 @@ Middleware<AppState> _viewInvoiceList() {
 
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           InvoiceScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -87,8 +89,8 @@ Middleware<AppState> _viewInvoice() {
 
     store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
 
-    if (isMobile(action.context)) {
-      await action.navigator.pushNamed(InvoiceViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      await navigatorKey.currentState.pushNamed(InvoiceViewScreen.route);
     }
   };
 }
@@ -101,8 +103,8 @@ Middleware<AppState> _editInvoice() {
 
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(InvoiceEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(InvoiceEditScreen.route);
     }
   };
 }
@@ -116,9 +118,9 @@ Middleware<AppState> _showEmailInvoice() {
 
     store.dispatch(UpdateCurrentRoute(InvoiceEmailScreen.route));
 
-    if (isMobile(action.context)) {
-      final emailWasSent = await Navigator.of(action.context)
-          .pushNamed(InvoiceEmailScreen.route);
+    if (store.state.prefState.isMobile) {
+      final emailWasSent =
+          await navigatorKey.currentState.pushNamed(InvoiceEmailScreen.route);
 
       if (action.completer != null && emailWasSent != null && emailWasSent) {
         action.completer.complete(null);
@@ -136,8 +138,8 @@ Middleware<AppState> _showPdfInvoice() {
 
     store.dispatch(UpdateCurrentRoute(InvoicePdfScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(InvoicePdfScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(InvoicePdfScreen.route);
     }
   };
 }

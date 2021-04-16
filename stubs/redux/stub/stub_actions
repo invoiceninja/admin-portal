@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
-class ViewStubList extends AbstractNavigatorAction implements PersistUI, StopLoading {
+class ViewStubList  implements PersistUI, StopLoading {
   ViewStubList({
     @required NavigatorState navigator,
     this.force = false,
@@ -18,7 +18,7 @@ class ViewStubList extends AbstractNavigatorAction implements PersistUI, StopLoa
   final bool force;
 }
 
-class ViewStub extends AbstractNavigatorAction
+class ViewStub
     implements PersistUI, PersistPrefs {
   ViewStub({
     @required NavigatorState navigator,
@@ -30,7 +30,7 @@ class ViewStub extends AbstractNavigatorAction
   final bool force;
 }
 
-class EditStub extends AbstractNavigatorAction
+class EditStub
     implements PersistUI, PersistPrefs {
   EditStub(
       {@required this.stub,

@@ -112,10 +112,9 @@ class DeviceSettingsVM {
         AppBuilder.of(context).rebuild();
         WidgetsBinding.instance.addPostFrameCallback((duration) {
           if (value == AppLayout.mobile) {
-            store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+            store.dispatch(ViewDashboard());
           } else {
-            store.dispatch(ViewMainScreen(
-                navigator: Navigator.of(context), addDelay: true));
+            store.dispatch(ViewMainScreen(addDelay: true));
           }
         });
       },

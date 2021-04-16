@@ -78,8 +78,7 @@ class AccountManagementVM {
                 final refreshCompleter = Completer<Null>()
                   ..future.then((value) {
                     store.dispatch(SelectCompany(companyIndex: 0));
-                    store.dispatch(
-                        ViewDashboard(navigator: Navigator.of(context)));
+                    store.dispatch(ViewDashboard());
 
                     if (Navigator.of(context).canPop()) {
                       Navigator.of(context).pop();

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -57,7 +58,7 @@ Middleware<AppState> _createUserLogout() {
     next(action);
 
     if (action.navigate) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           LoginScreen.route, (Route<dynamic> route) => false);
     }
 
@@ -319,8 +320,7 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
         completer: Completer<Null>()
           ..future.then<Null>((_) {
             store.dispatch(SelectCompany(companyIndex: state.companies.length));
-            store.dispatch(ViewDashboard(
-                navigator: Navigator.of(action.context), force: true));
+            store.dispatch(ViewDashboard(force: true));
 
             action.completer.complete();
           }),

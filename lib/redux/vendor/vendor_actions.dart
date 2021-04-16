@@ -11,36 +11,29 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewVendorList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewVendorList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewVendorList implements PersistUI, StopLoading {
+  ViewVendorList({this.force = false});
 
   final bool force;
 }
 
-class ViewVendor extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewVendor implements PersistUI, PersistPrefs {
   ViewVendor({
     @required this.vendorId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String vendorId;
   final bool force;
 }
 
-class EditVendor extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditVendor implements PersistUI, PersistPrefs {
   EditVendor(
       {@required this.vendor,
-      @required NavigatorState navigator,
       this.contact,
       this.completer,
       this.cancelCompleter,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final VendorEntity vendor;
   final VendorContactEntity contact;

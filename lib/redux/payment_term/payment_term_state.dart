@@ -17,6 +17,7 @@ abstract class PaymentTermState
       list: BuiltList<String>(),
     );
   }
+
   PaymentTermState._();
 
   @override
@@ -24,6 +25,7 @@ abstract class PaymentTermState
   int get hashCode;
 
   BuiltMap<String, PaymentTermEntity> get map;
+
   BuiltList<String> get list;
 
   PaymentTermState loadPaymentTerms(BuiltList<PaymentTermEntity> clients) {
@@ -53,6 +55,7 @@ abstract class PaymentTermUIState extends Object
       tabIndex: 0,
     );
   }
+
   PaymentTermUIState._();
 
   @override

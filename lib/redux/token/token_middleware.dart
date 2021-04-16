@@ -13,6 +13,8 @@ import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/token_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreTokensMiddleware([
   TokenRepository repository = const TokenRepository(),
 ]) {
@@ -47,8 +49,8 @@ Middleware<AppState> _editToken() {
 
     store.dispatch(UpdateCurrentRoute(TokenEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(TokenEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(TokenEditScreen.route);
     }
   };
 }
@@ -62,8 +64,8 @@ Middleware<AppState> _viewToken() {
 
     store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(TokenViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(TokenViewScreen.route);
     }
   };
 }
@@ -80,8 +82,8 @@ Middleware<AppState> _viewTokenList() {
 
     store.dispatch(UpdateCurrentRoute(TokenScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           TokenScreen.route, (Route<dynamic> route) => false);
     }
   };

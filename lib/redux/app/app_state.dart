@@ -485,8 +485,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   SubscriptionState get subscriptionState => userCompanyState.subscriptionState;
+
   ListUIState get subscriptionListState =>
       uiState.subscriptionUIState.listUIState;
+
   SubscriptionUIState get subscriptionUIState => uiState.subscriptionUIState;
 
   TaskStatusState get taskStatusState => userCompanyState.taskStatusState;
@@ -731,6 +733,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isEnterprisePlan =>
       !kReleaseMode || !isProduction || account.plan == kPlanEnterprise;
+
   //bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
 
   bool get isUserConfirmed {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -46,8 +47,8 @@ Middleware<AppState> _editTaskStatus() {
 
     store.dispatch(UpdateCurrentRoute(TaskStatusEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(TaskStatusEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(TaskStatusEditScreen.route);
     }
   };
 }
@@ -61,8 +62,8 @@ Middleware<AppState> _viewTaskStatus() {
 
     store.dispatch(UpdateCurrentRoute(TaskStatusViewScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(TaskStatusViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(TaskStatusViewScreen.route);
     }
   };
 }
@@ -79,8 +80,8 @@ Middleware<AppState> _viewTaskStatusList() {
 
     store.dispatch(UpdateCurrentRoute(TaskStatusScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           TaskStatusScreen.route, (Route<dynamic> route) => false);
     }
   };

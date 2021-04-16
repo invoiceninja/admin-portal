@@ -59,8 +59,7 @@ class TaxRateScreenVM {
         if (isMobile(context)) {
           Navigator.pop(context);
         } else {
-          store.dispatch(ViewSettings(
-              navigator: Navigator.of(context), section: kSettingsTaxSettings));
+          store.dispatch(ViewSettings(section: kSettingsTaxSettings));
         }
       },
     );

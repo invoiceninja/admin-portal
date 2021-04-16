@@ -12,6 +12,8 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/document_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreDocumentsMiddleware([
   DocumentRepository repository = const DocumentRepository(),
 ]) {
@@ -44,8 +46,8 @@ Middleware<AppState> _editDocument() {
 
     store.dispatch(UpdateCurrentRoute(DocumentEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(DocumentEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(DocumentEditScreen.route);
     }
   };
 }
@@ -58,7 +60,7 @@ Middleware<AppState> _viewDocument() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-    action.navigator.pushNamed(DocumentViewScreen.route);
+    navigatorKey.currentState.pushNamed(DocumentViewScreen.route);
   };
 }
 
@@ -74,7 +76,7 @@ Middleware<AppState> _viewDocumentList() {
 
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
 
-    action.navigator.pushNamedAndRemoveUntil(
+    navigatorKey.currentState.pushNamedAndRemoveUntil(
         DocumentScreen.route, (Route<dynamic> route) => false);
   };
 }
@@ -145,7 +147,7 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
       if (action.completer != null) {
         action.completer.completeError(error);
       }
-    });    
+    });
      */
 
     next(action);

@@ -12,6 +12,8 @@ import 'package:invoiceninja_flutter/redux/expense_category/expense_category_act
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/expense_category_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreExpenseCategoriesMiddleware([
   ExpenseCategoryRepository repository = const ExpenseCategoryRepository(),
 ]) {
@@ -49,8 +51,8 @@ Middleware<AppState> _editExpenseCategory() {
 
     store.dispatch(UpdateCurrentRoute(ExpenseCategoryEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(ExpenseCategoryEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ExpenseCategoryEditScreen.route);
     }
   };
 }
@@ -64,8 +66,8 @@ Middleware<AppState> _viewExpenseCategory() {
 
     store.dispatch(UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ExpenseCategoryViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ExpenseCategoryViewScreen.route);
     }
   };
 }
@@ -82,8 +84,8 @@ Middleware<AppState> _viewExpenseCategoryList() {
 
     store.dispatch(UpdateCurrentRoute(ExpenseCategoryScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           ExpenseCategoryScreen.route, (Route<dynamic> route) => false);
     }
   };

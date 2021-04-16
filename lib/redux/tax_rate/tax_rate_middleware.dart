@@ -12,6 +12,8 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/tax_rate_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreTaxRatesMiddleware([
   TaxRateRepository repository = const TaxRateRepository(),
 ]) {
@@ -46,8 +48,8 @@ Middleware<AppState> _editTaxRate() {
 
     store.dispatch(UpdateCurrentRoute(TaxRateEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(TaxRateEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(TaxRateEditScreen.route);
     }
   };
 }
@@ -61,8 +63,8 @@ Middleware<AppState> _viewTaxRate() {
 
     store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(TaxRateViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(TaxRateViewScreen.route);
     }
   };
 }
@@ -79,8 +81,8 @@ Middleware<AppState> _viewTaxRateList() {
 
     store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           TaxRateSettingsScreen.route, (Route<dynamic> route) => false);
     }
   };

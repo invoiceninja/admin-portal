@@ -13,38 +13,31 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class ViewClientList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
+class ViewClientList implements PersistUI, StopLoading {
   ViewClientList({
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final bool force;
 }
 
-class ViewClient extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewClient implements PersistUI, PersistPrefs {
   ViewClient({
-    @required NavigatorState navigator,
     @required this.clientId,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String clientId;
   final bool force;
 }
 
-class EditClient extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditClient implements PersistUI, PersistPrefs {
   EditClient(
       {@required this.client,
-      @required NavigatorState navigator,
       this.contact,
       this.completer,
       this.cancelCompleter,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final ClientEntity client;
   final ContactEntity contact;
@@ -294,7 +287,6 @@ void handleClientAction(
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(
-        navigator: Navigator.of(context),
         client: client,
         section: isMobile(context) ? null : kSettingsCompanyDetails,
       ));

@@ -14,6 +14,8 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actio
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/company_gateway_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreCompanyGatewaysMiddleware([
   CompanyGatewayRepository repository = const CompanyGatewayRepository(),
 ]) {
@@ -51,8 +53,8 @@ Middleware<AppState> _editCompanyGateway() {
 
     store.dispatch(UpdateCurrentRoute(CompanyGatewayEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(CompanyGatewayEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(CompanyGatewayEditScreen.route);
     }
   };
 }
@@ -66,8 +68,8 @@ Middleware<AppState> _viewCompanyGateway() {
 
     store.dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(CompanyGatewayViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(CompanyGatewayViewScreen.route);
     }
   };
 }
@@ -84,8 +86,8 @@ Middleware<AppState> _viewCompanyGatewayList() {
 
     store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           CompanyGatewayScreen.route, (Route<dynamic> route) => false);
     }
   };

@@ -91,9 +91,8 @@ class CompanyGatewayScreen extends StatelessWidget {
                     if (settingsUIState.isChanged) {
                       store.dispatch(ResetSettings());
                     } else {
-                      store.dispatch(ViewSettings(
-                          navigator: Navigator.of(context),
-                          section: kSettingsOnlinePayments));
+                      store.dispatch(
+                          ViewSettings(section: kSettingsOnlinePayments));
                     }
                   },
           )

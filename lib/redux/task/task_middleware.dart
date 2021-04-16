@@ -13,6 +13,8 @@ import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/task_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreTasksMiddleware([
   TaskRepository repository = const TaskRepository(),
 ]) {
@@ -49,8 +51,8 @@ Middleware<AppState> _editTask() {
 
     store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(TaskEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(TaskEditScreen.route);
     }
   };
 }
@@ -64,8 +66,8 @@ Middleware<AppState> _viewTask() {
 
     store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(TaskViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(TaskViewScreen.route);
     }
   };
 }
@@ -82,8 +84,8 @@ Middleware<AppState> _viewTaskList() {
 
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           TaskScreen.route, (Route<dynamic> route) => false);
     }
   };

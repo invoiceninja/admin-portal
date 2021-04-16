@@ -81,9 +81,7 @@ class OnlinePaymentsVM {
         }
       },
       onConfigureGatewaysPressed: (context) {
-        store.dispatch(ViewSettings(
-            navigator: Navigator.of(context),
-            section: kSettingsCompanyGateways));
+        store.dispatch(ViewSettings(section: kSettingsCompanyGateways));
       },
     );
   }

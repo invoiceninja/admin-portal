@@ -17,6 +17,7 @@ abstract class SubscriptionState
       list: BuiltList<String>(),
     );
   }
+
   SubscriptionState._();
 
   @override
@@ -24,6 +25,7 @@ abstract class SubscriptionState
   int get hashCode;
 
   BuiltMap<String, SubscriptionEntity> get map;
+
   BuiltList<String> get list;
 
   SubscriptionEntity get(String subscriptionId) {
@@ -61,6 +63,7 @@ abstract class SubscriptionUIState extends Object
       tabIndex: 0,
     );
   }
+
   SubscriptionUIState._();
 
   @override

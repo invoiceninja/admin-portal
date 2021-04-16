@@ -180,7 +180,7 @@ class ReportsScreen extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+        store.dispatch(ViewDashboard());
         return false;
       },
       child: Scaffold(

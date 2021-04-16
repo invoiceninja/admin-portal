@@ -14,33 +14,26 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewInvoiceList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewInvoiceList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewInvoiceList implements PersistUI, StopLoading {
+  ViewInvoiceList({this.force = false});
 
   final bool force;
 }
 
-class ViewInvoice extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
-  ViewInvoice(
-      {this.invoiceId, @required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewInvoice implements PersistUI, PersistPrefs {
+  ViewInvoice({this.invoiceId, this.force = false});
 
   final String invoiceId;
   final bool force;
 }
 
-class EditInvoice extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditInvoice implements PersistUI, PersistPrefs {
   EditInvoice({
     this.invoice,
-    @required NavigatorState navigator,
     this.completer,
     this.invoiceItemIndex,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final InvoiceEntity invoice;
   final int invoiceItemIndex;

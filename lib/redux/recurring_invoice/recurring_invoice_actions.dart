@@ -13,38 +13,31 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewRecurringInvoiceList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
+class ViewRecurringInvoiceList implements PersistUI, StopLoading {
   ViewRecurringInvoiceList({
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final bool force;
 }
 
-class ViewRecurringInvoice extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewRecurringInvoice implements PersistUI, PersistPrefs {
   ViewRecurringInvoice({
-    @required NavigatorState navigator,
     @required this.recurringInvoiceId,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String recurringInvoiceId;
   final bool force;
 }
 
-class EditRecurringInvoice extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditRecurringInvoice implements PersistUI, PersistPrefs {
   EditRecurringInvoice(
       {@required this.recurringInvoice,
-      @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
       this.itemIndex,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final InvoiceEntity recurringInvoice;
   final int itemIndex;

@@ -17,6 +17,7 @@ abstract class WebhookState
       list: BuiltList<String>(),
     );
   }
+
   WebhookState._();
 
   @override
@@ -24,6 +25,7 @@ abstract class WebhookState
   int get hashCode;
 
   BuiltMap<String, WebhookEntity> get map;
+
   BuiltList<String> get list;
 
   WebhookState loadWebhooks(BuiltList<WebhookEntity> clients) {
@@ -52,6 +54,7 @@ abstract class WebhookUIState extends Object
       tabIndex: 0,
     );
   }
+
   WebhookUIState._();
 
   @override

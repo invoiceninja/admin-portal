@@ -17,6 +17,7 @@ abstract class TaskStatusState
       list: BuiltList<String>(),
     );
   }
+
   TaskStatusState._();
 
   @override
@@ -62,6 +63,7 @@ abstract class TaskStatusUIState extends Object
       tabIndex: 0,
     );
   }
+
   TaskStatusUIState._();
 
   @override

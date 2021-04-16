@@ -174,6 +174,7 @@ class _$VendorState extends VendorState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
@@ -192,12 +193,16 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
   _$VendorState _$v;
 
   MapBuilder<String, VendorEntity> _map;
+
   MapBuilder<String, VendorEntity> get map =>
       _$this._map ??= new MapBuilder<String, VendorEntity>();
+
   set map(MapBuilder<String, VendorEntity> map) => _$this._map = map;
 
   ListBuilder<String> _list;
+
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+
   set list(ListBuilder<String> list) => _$this._list = list;
 
   VendorStateBuilder();
@@ -305,6 +310,7 @@ class _$VendorUIState extends VendorUIState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -338,37 +344,51 @@ class VendorUIStateBuilder
   _$VendorUIState _$v;
 
   VendorEntityBuilder _editing;
+
   VendorEntityBuilder get editing =>
       _$this._editing ??= new VendorEntityBuilder();
+
   set editing(VendorEntityBuilder editing) => _$this._editing = editing;
 
   VendorContactEntityBuilder _editingContact;
+
   VendorContactEntityBuilder get editingContact =>
       _$this._editingContact ??= new VendorContactEntityBuilder();
+
   set editingContact(VendorContactEntityBuilder editingContact) =>
       _$this._editingContact = editingContact;
 
   ListUIStateBuilder _listUIState;
+
   ListUIStateBuilder get listUIState =>
       _$this._listUIState ??= new ListUIStateBuilder();
+
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
   String _selectedId;
+
   String get selectedId => _$this._selectedId;
+
   set selectedId(String selectedId) => _$this._selectedId = selectedId;
 
   int _tabIndex;
+
   int get tabIndex => _$this._tabIndex;
+
   set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
 
   Completer<SelectableEntity> _saveCompleter;
+
   Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
+
   set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
       _$this._saveCompleter = saveCompleter;
 
   Completer<Null> _cancelCompleter;
+
   Completer<Null> get cancelCompleter => _$this._cancelCompleter;
+
   set cancelCompleter(Completer<Null> cancelCompleter) =>
       _$this._cancelCompleter = cancelCompleter;
 

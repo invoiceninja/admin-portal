@@ -165,6 +165,7 @@ class _$TaxRateState extends TaxRateState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
@@ -184,12 +185,16 @@ class TaxRateStateBuilder
   _$TaxRateState _$v;
 
   MapBuilder<String, TaxRateEntity> _map;
+
   MapBuilder<String, TaxRateEntity> get map =>
       _$this._map ??= new MapBuilder<String, TaxRateEntity>();
+
   set map(MapBuilder<String, TaxRateEntity> map) => _$this._map = map;
 
   ListBuilder<String> _list;
+
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+
   set list(ListBuilder<String> list) => _$this._list = list;
 
   TaxRateStateBuilder();
@@ -294,6 +299,7 @@ class _$TaxRateUIState extends TaxRateUIState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -324,31 +330,43 @@ class TaxRateUIStateBuilder
   _$TaxRateUIState _$v;
 
   TaxRateEntityBuilder _editing;
+
   TaxRateEntityBuilder get editing =>
       _$this._editing ??= new TaxRateEntityBuilder();
+
   set editing(TaxRateEntityBuilder editing) => _$this._editing = editing;
 
   ListUIStateBuilder _listUIState;
+
   ListUIStateBuilder get listUIState =>
       _$this._listUIState ??= new ListUIStateBuilder();
+
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
   String _selectedId;
+
   String get selectedId => _$this._selectedId;
+
   set selectedId(String selectedId) => _$this._selectedId = selectedId;
 
   int _tabIndex;
+
   int get tabIndex => _$this._tabIndex;
+
   set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
 
   Completer<SelectableEntity> _saveCompleter;
+
   Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
+
   set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
       _$this._saveCompleter = saveCompleter;
 
   Completer<Null> _cancelCompleter;
+
   Completer<Null> get cancelCompleter => _$this._cancelCompleter;
+
   set cancelCompleter(Completer<Null> cancelCompleter) =>
       _$this._cancelCompleter = cancelCompleter;
 

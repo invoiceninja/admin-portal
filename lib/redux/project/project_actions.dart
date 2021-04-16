@@ -13,35 +13,28 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProjectList extends AbstractNavigatorAction
-    implements PersistUI, StopLoading {
-  ViewProjectList({@required NavigatorState navigator, this.force = false})
-      : super(navigator: navigator);
+class ViewProjectList implements PersistUI, StopLoading {
+  ViewProjectList({this.force = false});
 
   final bool force;
 }
 
-class ViewProject extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class ViewProject implements PersistUI, PersistPrefs {
   ViewProject({
     @required this.projectId,
-    @required NavigatorState navigator,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final String projectId;
   final bool force;
 }
 
-class EditProject extends AbstractNavigatorAction
-    implements PersistUI, PersistPrefs {
+class EditProject implements PersistUI, PersistPrefs {
   EditProject(
       {@required this.project,
-      @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
-      this.force = false})
-      : super(navigator: navigator);
+      this.force = false});
 
   final ProjectEntity project;
   final Completer completer;

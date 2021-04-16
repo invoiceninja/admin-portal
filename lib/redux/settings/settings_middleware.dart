@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/repositories/settings_repository.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -48,7 +49,7 @@ Middleware<AppState> _viewSettings() {
 
     checkForChanges(
         store: store,
-        context: action.context,
+        context: navigatorKey.currentContext,
         force: action.force,
         callback: () {
           String route = SettingsScreen.route;
@@ -69,12 +70,12 @@ Middleware<AppState> _viewSettings() {
 
           store.dispatch(UpdateCurrentRoute(route));
 
-          if (isMobile(action.context)) {
+          if (store.state.prefState.isMobile) {
             if (action.section == null) {
-              Navigator.of(action.context).pushNamedAndRemoveUntil(
+              navigatorKey.currentState.pushNamedAndRemoveUntil(
                   SettingsScreen.route, (Route<dynamic> route) => false);
             } else {
-              Navigator.of(action.context).pushNamed(route);
+              navigatorKey.currentState.pushNamed(route);
             }
           }
         });

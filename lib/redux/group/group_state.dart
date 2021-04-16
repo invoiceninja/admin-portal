@@ -16,6 +16,7 @@ abstract class GroupState implements Built<GroupState, GroupStateBuilder> {
       list: BuiltList<String>(),
     );
   }
+
   GroupState._();
 
   @override
@@ -31,6 +32,7 @@ abstract class GroupState implements Built<GroupState, GroupStateBuilder> {
   }
 
   BuiltMap<String, GroupEntity> get map;
+
   BuiltList<String> get list;
 
   static Serializer<GroupState> get serializer => _$groupStateSerializer;
@@ -47,6 +49,7 @@ abstract class GroupUIState extends Object
       tabIndex: 0,
     );
   }
+
   GroupUIState._();
 
   @override

@@ -2,12 +2,11 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
-class ViewReports extends AbstractNavigatorAction implements PersistUI {
+class ViewReports implements PersistUI {
   ViewReports({
-    @required NavigatorState navigator,
     this.report,
     this.force = false,
-  }) : super(navigator: navigator);
+  });
 
   final bool force;
   final String report;

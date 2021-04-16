@@ -12,6 +12,8 @@ import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/design_repository.dart';
 
+import 'package:invoiceninja_flutter/main_app.dart';
+
 List<Middleware<AppState>> createStoreDesignsMiddleware([
   DesignRepository repository = const DesignRepository(),
 ]) {
@@ -46,8 +48,8 @@ Middleware<AppState> _editDesign() {
 
     store.dispatch(UpdateCurrentRoute(DesignEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(DesignEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(DesignEditScreen.route);
     }
   };
 }
@@ -61,8 +63,8 @@ Middleware<AppState> _viewDesign() {
 
     store.dispatch(UpdateCurrentRoute(DesignViewScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(DesignViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(DesignViewScreen.route);
     }
   };
 }
@@ -79,8 +81,8 @@ Middleware<AppState> _viewDesignList() {
 
     store.dispatch(UpdateCurrentRoute(DesignScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           DesignScreen.route, (Route<dynamic> route) => false);
     }
   };

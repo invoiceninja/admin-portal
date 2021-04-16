@@ -82,8 +82,7 @@ class TaskSettingsVM {
         }
       },
       onConfigureStatusesPressed: (context) {
-        store.dispatch(ViewSettings(
-            navigator: Navigator.of(context), section: kSettingsTaskStatuses));
+        store.dispatch(ViewSettings(section: kSettingsTaskStatuses));
       },
     );
   }

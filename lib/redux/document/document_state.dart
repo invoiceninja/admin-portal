@@ -18,6 +18,7 @@ abstract class DocumentState
       list: BuiltList<String>(),
     );
   }
+
   DocumentState._();
 
   @override
@@ -25,6 +26,7 @@ abstract class DocumentState
   int get hashCode;
 
   BuiltMap<String, DocumentEntity> get map;
+
   BuiltList<String> get list;
 
   static Serializer<DocumentState> get serializer => _$documentStateSerializer;
@@ -41,6 +43,7 @@ abstract class DocumentUIState extends Object
       tabIndex: 0,
     );
   }
+
   DocumentUIState._();
 
   @override
