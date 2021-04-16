@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class KanbanView extends StatefulWidget {
@@ -369,6 +370,19 @@ class __StatusCardState extends State<_StatusCard> {
     _isEditing = status.isNew;
   }
 
+  void _onSavePressed() {
+    final localization = AppLocalization.of(context);
+    final completer = snackBarCompleter<TaskStatusEntity>(
+        context, localization.updatedTaskStatus);
+    completer.future.then((value) {
+      setState(() {
+        _isEditing = false;
+      });
+    });
+
+    widget.onSavePressed(completer, _name.trim());
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -385,6 +399,7 @@ class __StatusCardState extends State<_StatusCard> {
               minLines: 1,
               maxLines: 1,
               onChanged: (value) => _name = value,
+              onSavePressed: (context) => _onSavePressed(),
             ),
             SizedBox(height: 8),
             Row(
@@ -404,18 +419,8 @@ class __StatusCardState extends State<_StatusCard> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: ElevatedButton(
-                    onPressed: () {
-                      final completer = snackBarCompleter<TaskStatusEntity>(
-                          context, localization.updatedTaskStatus);
-                      completer.future.then((value) {
-                        setState(() {
-                          _isEditing = false;
-                        });
-                      });
-
-                      widget.onSavePressed(completer, _name.trim());
-                    },
                     child: Text(localization.save),
+                    onPressed: _onSavePressed,
                   ),
                 ),
               ],
