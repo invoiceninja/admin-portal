@@ -118,6 +118,11 @@ class _KanbanViewState extends State<KanbanView> {
               onSavePressed: (completer, name) {
                 widget.viewModel.onSaveStatusPressed(completer, statusId, name);
               },
+              onCancelPressed: () {
+                if (status.isNew) {
+                  _statuses.remove(status.id);
+                }
+              },
             ),
           ),
         ],
@@ -396,15 +401,6 @@ class __StatusCardState extends State<_StatusCard> {
                   },
                   label: localization.cancel,
                 ),
-                if (widget.status.isOld)
-                  AppTextButton(
-                    onPressed: () {
-                      viewEntity(
-                          appContext: context.getAppContext(),
-                          entity: widget.status);
-                    },
-                    label: localization.view,
-                  ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: ElevatedButton(
