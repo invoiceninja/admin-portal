@@ -82,19 +82,23 @@ class KanbanVM {
           statusIds: statusIds,
         ));
       },
-      onSaveStatusPressed: (completer, statusId, name) {
+      onSaveStatusPressed: (completer, statusId, name, statusOrder) {
         TaskStatusEntity status = state.taskStatusState.get(statusId);
-        status = status.rebuild((b) => b..name = name);
+        status = status.rebuild((b) => b
+          ..name = name
+          ..statusOrder = statusOrder);
 
         store.dispatch(SaveTaskStatusRequest(
           completer: completer,
           taskStatus: status,
         ));
       },
-      onSaveTaskPressed: (completer, taskId, statusId, description) {
+      onSaveTaskPressed:
+          (completer, taskId, statusId, description, statusOrder) {
         TaskEntity task = state.taskState.get(taskId);
         task = task.rebuild((b) => b
           ..description = description
+          ..statusOrder = statusOrder
           ..statusId = statusId);
 
         if (task.isNew) {
@@ -125,8 +129,8 @@ class KanbanVM {
   final List<String> filteredTaskList;
   final Function(BuildContext, List<String>, Map<String, List<String>>)
       onBoardChanged;
-  final Function(Completer<TaskEntity>, String, String, String)
+  final Function(Completer<TaskEntity>, String, String, String, int)
       onSaveTaskPressed;
-  final Function(Completer<TaskStatusEntity>, String, String)
+  final Function(Completer<TaskStatusEntity>, String, String, int)
       onSaveStatusPressed;
 }

@@ -117,7 +117,9 @@ class _KanbanViewState extends State<KanbanView> {
             child: _StatusCard(
               status: status,
               onSavePressed: (completer, name) {
-                widget.viewModel.onSaveStatusPressed(completer, statusId, name);
+                final statusOrder = _statuses.indexOf(statusId);
+                widget.viewModel.onSaveStatusPressed(
+                    completer, statusId, name, statusOrder);
               },
               onCancelPressed: () {
                 if (status.isNew) {
@@ -160,11 +162,13 @@ class _KanbanViewState extends State<KanbanView> {
                   : _TaskCard(
                       task: task,
                       onSavePressed: (completer, description) {
+                        final statusOrder = _tasks[status.id].indexOf(task.id);
                         widget.viewModel.onSaveTaskPressed(
                           completer,
                           task.id,
                           status.id,
                           description,
+                          statusOrder,
                         );
                       },
                       onCancelPressed: () {
