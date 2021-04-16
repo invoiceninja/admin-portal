@@ -332,7 +332,7 @@ class EntityScreens extends StatelessWidget {
     const previewFlex = 2;
     int listFlex = 3;
 
-    if (prefState.isModuleTable && !isPreviewShown) {
+    if ((prefState.isModuleTable || mainRoute == '/task') && !isPreviewShown) {
       listFlex = 5;
     } else if (prefState.isMenuCollapsed) {
       listFlex += 1;
@@ -642,7 +642,7 @@ class EntityScreens extends StatelessWidget {
             ),
             flex: listFlex,
           ),
-        if (prefState.isModuleList || isPreviewShown)
+        if ((prefState.isModuleList && mainRoute != '/task') || isPreviewShown)
           Expanded(
             flex: isFullScreen ? (listFlex + previewFlex) : previewFlex,
             child: AppBorder(
