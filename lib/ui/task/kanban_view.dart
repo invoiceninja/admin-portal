@@ -109,10 +109,11 @@ class _KanbanViewState extends State<KanbanView> {
         },
         header: [
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                  '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}'),
+            child: _StatusCard(
+              status: status,
+              onSavePressed: (name) {
+                widget.viewModel.onSaveStatusPressed(context, statusId, name);
+              },
             ),
           ),
         ],
@@ -261,7 +262,7 @@ class __TaskCardState extends State<_TaskCard> {
             children: [
               DecoratedFormField(
                 autofocus: true,
-                initialValue: widget.task.description,
+                initialValue: _description,
                 minLines: 4,
                 maxLines: 4,
                 onChanged: (value) => _description = value,
@@ -314,6 +315,107 @@ class __TaskCardState extends State<_TaskCard> {
           padding: const EdgeInsets.all(8),
           child: Text(
               '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          _isEditing = true;
+        });
+      },
+    );
+  }
+}
+
+class _StatusCard extends StatefulWidget {
+  const _StatusCard({
+    @required this.status,
+    @required this.onSavePressed,
+    @required this.onCancelPressed,
+  });
+  final TaskStatusEntity status;
+  final Function(String) onSavePressed;
+  final Function() onCancelPressed;
+
+  @override
+  __StatusCardState createState() => __StatusCardState();
+}
+
+class __StatusCardState extends State<_StatusCard> {
+  bool _isEditing = false;
+  String _name = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    final status = widget.status;
+    _name = status.name;
+    _isEditing = status.isNew;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final status = widget.status;
+
+    if (_isEditing) {
+      return Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            DecoratedFormField(
+              autofocus: true,
+              initialValue: _name,
+              minLines: 1,
+              maxLines: 1,
+              onChanged: (value) => _name = value,
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppTextButton(
+                  onPressed: () {
+                    setState(() {
+                      _isEditing = false;
+                      if (widget.status.isNew) {
+                        widget.onCancelPressed();
+                      }
+                    });
+                  },
+                  label: localization.cancel,
+                ),
+                if (widget.status.isOld)
+                  AppTextButton(
+                    onPressed: () {
+                      viewEntity(
+                          appContext: context.getAppContext(),
+                          entity: widget.status);
+                    },
+                    label: localization.view,
+                  ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      widget.onSavePressed(_name.trim());
+                    },
+                    child: Text(localization.save),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
+
+    return InkWell(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Text(
+              '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}'),
         ),
       ),
       onTap: () {

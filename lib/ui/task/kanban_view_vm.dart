@@ -44,6 +44,7 @@ class KanbanVM {
     //@required this.onStatusOrderChanged,
     //@required this.onTaskOrderChanged,
     @required this.onSaveTaskPressed,
+    @required this.onSaveStatusPressed,
     @required this.onBoardChanged,
   });
 
@@ -116,6 +117,19 @@ class KanbanVM {
         ));
       },
       */
+      onSaveStatusPressed: (context, statusId, name) {
+        final localization = AppLocalization.of(context);
+        final completer = snackBarCompleter<TaskEntity>(
+            context, localization.updatedTaskStatus);
+
+        TaskStatusEntity status = state.taskStatusState.get(statusId);
+        status = status.rebuild((b) => b..name = name);
+
+        store.dispatch(SaveTaskStatusRequest(
+          completer: completer,
+          taskStatus: status,
+        ));
+      },
       onSaveTaskPressed: (context, taskId, statusId, description) {
         final localization = AppLocalization.of(context);
         final completer =
@@ -157,4 +171,5 @@ class KanbanVM {
   final Function(BuildContext, List<String>, Map<String, List<String>>)
       onBoardChanged;
   final Function(BuildContext, String, String, String) onSaveTaskPressed;
+  final Function(BuildContext, String, String) onSaveStatusPressed;
 }
