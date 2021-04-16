@@ -48,7 +48,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.task ? action.entityId : selectedId),
   TypedReducer<String, ViewTask>((selectedId, action) => action.taskId),
-  TypedReducer<String, AddTaskSuccess>((selectedId, action) => action.task.id),
+  TypedReducer<String, AddTaskSuccess>((selectedId, action) =>
+      selectedId.isNotEmpty || action.autoSelect ? action.task.id : ''),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),

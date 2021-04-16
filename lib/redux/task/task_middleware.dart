@@ -177,7 +177,8 @@ Middleware<AppState> _saveTask(TaskRepository repository) {
         .saveData(store.state.credentials, action.task)
         .then((TaskEntity task) {
       if (action.task.isNew) {
-        store.dispatch(AddTaskSuccess(task));
+        store.dispatch(
+            AddTaskSuccess(task: task, autoSelect: action.autoSelect));
       } else {
         store.dispatch(SaveTaskSuccess(task));
       }
