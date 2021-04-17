@@ -190,8 +190,9 @@ class _KanbanViewState extends State<KanbanView> {
                   ? SizedBox()
                   : _TaskCard(
                       task: task,
-                      isSaving: task.statusOrder !=
-                          _tasks[status.id].indexOf(task.id),
+                      isSaving: (task.statusOrder !=
+                              _tasks[status.id].indexOf(task.id)) ||
+                          task.statusId != statusId,
                       onSavePressed: (completer, description) {
                         final statusOrder = _tasks[status.id].indexOf(task.id);
                         widget.viewModel.onSaveTaskPressed(
