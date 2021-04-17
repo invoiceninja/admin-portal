@@ -114,9 +114,11 @@ class _KanbanViewState extends State<KanbanView> {
       final status = state.taskStatusState.get(statusId);
       final hasNewTask =
           _tasks[statusId]?.any((taskId) => parseDouble(taskId) < 0) ?? false;
+      final hasCorectOrder = statusId.isEmpty ||
+          status.statusOrder == _statuses.indexOf(status.id) - 1;
 
       return BoardList(
-        draggable: status.isOld,
+        draggable: status.isOld && hasCorectOrder,
         backgroundColor: color,
         headerBackgroundColor: color,
         onDropList: (endIndex, startIndex) {
@@ -140,6 +142,7 @@ class _KanbanViewState extends State<KanbanView> {
           Expanded(
             child: _StatusCard(
               status: status,
+              isSaving: !hasCorectOrder,
               onSavePressed: (completer, name) {
                 final statusOrder = _statuses.indexOf(statusId);
                 widget.viewModel.onSaveStatusPressed(
@@ -187,6 +190,8 @@ class _KanbanViewState extends State<KanbanView> {
                   ? SizedBox()
                   : _TaskCard(
                       task: task,
+                      isSaving: task.statusOrder !=
+                          _tasks[status.id].indexOf(task.id),
                       onSavePressed: (completer, description) {
                         final statusOrder = _tasks[status.id].indexOf(task.id);
                         widget.viewModel.onSaveTaskPressed(
@@ -267,10 +272,12 @@ class _TaskCard extends StatefulWidget {
     @required this.task,
     @required this.onSavePressed,
     @required this.onCancelPressed,
+    @required this.isSaving,
   });
   final TaskEntity task;
   final Function(Completer<TaskEntity>, String) onSavePressed;
   final Function() onCancelPressed;
+  final bool isSaving;
 
   @override
   __TaskCardState createState() => __TaskCardState();
@@ -355,12 +362,15 @@ class __TaskCardState extends State<_TaskCard> {
     }
 
     return InkWell(
-      child: Card(
-        color: Theme.of(context).backgroundColor,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Text(
-              '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
+      child: Opacity(
+        opacity: widget.isSaving ? .5 : 1,
+        child: Card(
+          color: Theme.of(context).backgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Text(
+                '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
+          ),
         ),
       ),
       onTap: () {
@@ -377,10 +387,12 @@ class _StatusCard extends StatefulWidget {
     @required this.status,
     @required this.onSavePressed,
     @required this.onCancelPressed,
+    @required this.isSaving,
   });
   final TaskStatusEntity status;
   final Function(Completer<TaskStatusEntity>, String) onSavePressed;
   final Function() onCancelPressed;
+  final bool isSaving;
 
   @override
   __StatusCardState createState() => __StatusCardState();
@@ -465,11 +477,14 @@ class __StatusCardState extends State<_StatusCard> {
     return InkWell(
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: Text(
-          status.isNew
-              ? localization.unassigned
-              : '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        child: Opacity(
+          opacity: widget.isSaving ? .5 : 1,
+          child: Text(
+            status.isNew
+                ? localization.unassigned
+                : '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
         ),
       ),
       onTap: status.isNew
