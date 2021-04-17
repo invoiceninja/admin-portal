@@ -95,7 +95,11 @@ class _KanbanViewState extends State<KanbanView> {
       _initBoard();
     });
 
-    widget.viewModel.onBoardChanged(completer, _statuses, _tasks);
+    // remove 'unassigned' status
+    final statusIds =
+        _statuses.where((statusId) => statusId.isNotEmpty).toList();
+
+    widget.viewModel.onBoardChanged(completer, statusIds, _tasks);
   }
 
   @override
