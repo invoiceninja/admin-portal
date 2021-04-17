@@ -307,11 +307,11 @@ class __TaskCardState extends State<_TaskCard> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
-              DecoratedFormField(
+              TextFormField(
                 autofocus: true,
                 initialValue: _description,
-                minLines: 4,
-                maxLines: 4,
+                minLines: 3,
+                maxLines: null,
                 onChanged: (value) => _description = value,
               ),
               SizedBox(height: 8),
@@ -369,8 +369,7 @@ class __TaskCardState extends State<_TaskCard> {
           color: Theme.of(context).backgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(8),
-            child: Text(
-                '${widget.task.statusOrder} - ${widget.task.id} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.task.updatedAt * 1000))}'),
+            child: Text(widget.task.description),
           ),
         ),
       ),
@@ -481,9 +480,7 @@ class __StatusCardState extends State<_StatusCard> {
         child: Opacity(
           opacity: widget.isSaving ? .5 : 1,
           child: Text(
-            status.isNew
-                ? localization.unassigned
-                : '${status.statusOrder} - ${status.name} - ${timeago.format(DateTime.fromMillisecondsSinceEpoch(status.updatedAt * 1000))}',
+            status.isNew ? localization.unassigned : status.name,
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
         ),
