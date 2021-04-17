@@ -307,11 +307,11 @@ class __TaskCardState extends State<_TaskCard> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
-              TextFormField(
+              DecoratedFormField(
                 autofocus: true,
                 initialValue: _description,
                 minLines: 3,
-                maxLines: null,
+                maxLines: 10,
                 onChanged: (value) => _description = value,
               ),
               SizedBox(height: 8),
@@ -369,7 +369,7 @@ class __TaskCardState extends State<_TaskCard> {
           color: Theme.of(context).backgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(8),
-            child: Text(widget.task.description),
+            child: Text(widget.task.description, maxLines: 3),
           ),
         ),
       ),
