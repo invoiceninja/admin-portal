@@ -296,7 +296,7 @@ class __TaskCardState extends State<_TaskCard> {
     if (_isEditing) {
       return Card(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
               DecoratedFormField(
