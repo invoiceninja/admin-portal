@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -111,6 +112,9 @@ class _KanbanViewState extends State<KanbanView> {
 
     final boardList = _statuses.map((statusId) {
       final status = state.taskStatusState.get(statusId);
+      final hasNewTask =
+          _tasks[statusId]?.any((taskId) => parseDouble(taskId) < 0) ?? false;
+
       return BoardList(
         draggable: status.isOld,
         backgroundColor: color,
@@ -153,19 +157,21 @@ class _KanbanViewState extends State<KanbanView> {
           alignment: Alignment.centerLeft,
           child: Padding(
             padding: const EdgeInsets.only(left: 8, top: 2, bottom: 4),
-            child: TextButton(
-              child: Text(AppLocalization.of(context).newTask),
-              onPressed: () {
-                final task = TaskEntity(state: widget.viewModel.state)
-                    .rebuild((b) => b..statusId = status.id);
-                setState(() {
-                  if (!_tasks.containsKey(status.id)) {
-                    _tasks[status.id] = [];
-                  }
-                  _tasks[status.id].add(task.id);
-                });
-              },
-            ),
+            child: hasNewTask
+                ? SizedBox()
+                : TextButton(
+                    child: Text(AppLocalization.of(context).newTask),
+                    onPressed: () {
+                      final task = TaskEntity(state: widget.viewModel.state)
+                          .rebuild((b) => b..statusId = status.id);
+                      setState(() {
+                        if (!_tasks.containsKey(status.id)) {
+                          _tasks[status.id] = [];
+                        }
+                        _tasks[status.id].add(task.id);
+                      });
+                    },
+                  ),
           ),
         ),
         items: (_tasks[status.id] ?? [])
