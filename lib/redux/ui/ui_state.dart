@@ -53,7 +53,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       subscriptionUIState: SubscriptionUIState(),
-
       taskStatusUIState: TaskStatusUIState(),
       expenseCategoryUIState: ExpenseCategoryUIState(),
       recurringInvoiceUIState: RecurringInvoiceUIState(),

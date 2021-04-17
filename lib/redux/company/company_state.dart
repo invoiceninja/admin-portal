@@ -53,11 +53,8 @@ abstract class UserCompanyState
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
       subscriptionState: SubscriptionState(),
-
       taskStatusState: TaskStatusState(),
-
       expenseCategoryState: ExpenseCategoryState(),
-
       recurringInvoiceState: RecurringInvoiceState(),
       webhookState: WebhookState(),
       tokenState: TokenState(),

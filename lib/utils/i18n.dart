@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'order': 'Order',
       'unassigned': 'Unassigned',
       'partial_value': 'Must be greater than zero and less than the total',
       'search_kanban': 'Search Kanban',
@@ -60248,6 +60249,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['unassigned'] ??
       _localizedValues['en']['unassigned'];
 
+  String get order =>
+      _localizedValues[localeCode]['order'] ??
+      _localizedValues['en']['order'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
