@@ -478,13 +478,10 @@ class __TaskCardState extends State<_TaskCard> {
                         SizedBox(
                           width: 8,
                         ),
-                        Tooltip(
-                          message: project.name,
-                          child: Icon(
-                            MdiIcons.briefcaseOutline,
-                            color: color,
-                            size: 16,
-                          ),
+                        Icon(
+                          MdiIcons.briefcaseOutline,
+                          color: color,
+                          size: 16,
                         ),
                       ],
                     ),
