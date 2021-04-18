@@ -406,38 +406,45 @@ class __TaskCardState extends State<_TaskCard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        TextButton(
-                          onPressed: task.isNew
-                              ? null
-                              : () {
-                                  if (state.taskUIState.selectedId == task.id) {
-                                    viewEntityById(
-                                        appContext: context.getAppContext(),
-                                        entityId: '',
-                                        entityType: EntityType.task,
-                                        showError: false);
-                                  } else {
-                                    viewEntity(
-                                        appContext: context.getAppContext(),
-                                        entity: task);
-                                  }
-                                },
-                          child: Text(localization.viewTask),
+                        Expanded(
+                          child: InkWell(
+                            child: Center(child: Text(localization.viewTask)),
+                            onTap: task.isNew
+                                ? null
+                                : () {
+                                    if (state.taskUIState.selectedId ==
+                                        task.id) {
+                                      viewEntityById(
+                                          appContext: context.getAppContext(),
+                                          entityId: '',
+                                          entityType: EntityType.task,
+                                          showError: false);
+                                    } else {
+                                      viewEntity(
+                                          appContext: context.getAppContext(),
+                                          entity: task);
+                                    }
+                                  },
+                          ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            handleEntityAction(
-                                context.getAppContext(),
-                                task,
-                                task.isRunning
-                                    ? EntityAction.stop
-                                    : EntityAction.start);
-                          },
-                          child: Text(task.isRunning
-                              ? localization.stopTask
-                              : task.getTaskTimes().isEmpty
-                                  ? localization.startTask
-                                  : localization.resumeTask),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              handleEntityAction(
+                                  context.getAppContext(),
+                                  task,
+                                  task.isRunning
+                                      ? EntityAction.stop
+                                      : EntityAction.start);
+                            },
+                            child: Center(
+                              child: Text(task.isRunning
+                                  ? localization.stopTask
+                                  : task.getTaskTimes().isEmpty
+                                      ? localization.startTask
+                                      : localization.resumeTask),
+                            ),
+                          ),
                         ),
                       ],
                     )
