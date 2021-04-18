@@ -192,7 +192,20 @@ final tasksReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, ArchiveTaskSuccess>(_archiveTaskSuccess),
   TypedReducer<TaskState, DeleteTaskSuccess>(_deleteTaskSuccess),
   TypedReducer<TaskState, RestoreTaskSuccess>(_restoreTaskSuccess),
+  TypedReducer<TaskState, SortTasksSuccess>(_sortTasksSuccess),
 ]);
+
+TaskState _sortTasksSuccess(TaskState taskState, SortTasksSuccess action) {
+  return taskState.rebuild((b) {
+    for (final statusId in action.taskIds.keys) {
+      for (final taskId in action.taskIds[statusId]) {
+        b.map[taskId] = taskState.map[taskId].rebuild((b) => b
+          ..statusId = statusId
+          ..statusOrder = action.taskIds[statusId].indexOf(taskId));
+      }
+    }
+  });
+}
 
 TaskState _archiveTaskSuccess(TaskState taskState, ArchiveTaskSuccess action) {
   return taskState.rebuild((b) {

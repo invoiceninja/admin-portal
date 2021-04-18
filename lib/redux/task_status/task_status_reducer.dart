@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -165,7 +166,18 @@ final taskStatusesReducer = combineReducers<TaskStatusState>([
       _deleteTaskStatusSuccess),
   TypedReducer<TaskStatusState, RestoreTaskStatusesSuccess>(
       _restoreTaskStatusSuccess),
+  TypedReducer<TaskStatusState, SortTasksSuccess>(_sortTaskStatusSuccess),
 ]);
+
+TaskStatusState _sortTaskStatusSuccess(
+    TaskStatusState taskStatusState, SortTasksSuccess action) {
+  return taskStatusState.rebuild((b) {
+    for (final statusId in action.statusIds) {
+      b.map[statusId] = taskStatusState.map[statusId]
+          .rebuild((b) => b..statusOrder = action.statusIds.indexOf(statusId));
+    }
+  });
+}
 
 TaskStatusState _archiveTaskStatusSuccess(
     TaskStatusState taskStatusState, ArchiveTaskStatusesSuccess action) {
