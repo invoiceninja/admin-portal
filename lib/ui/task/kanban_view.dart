@@ -459,9 +459,21 @@ class __TaskCardState extends State<_TaskCard> {
                         ),
                         Spacer(),
                         if (task.documents.isNotEmpty)
-                          Icon(
-                            MdiIcons.paperclip,
-                            size: 16,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Icon(
+                              MdiIcons.paperclip,
+                              size: 16,
+                            ),
+                          ),
+                        if (task.isRunning)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Icon(
+                              Icons.play_arrow,
+                              size: 16,
+                              color: state.accentColor,
+                            ),
                           ),
                         SizedBox(
                           width: 8,
