@@ -254,6 +254,7 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
         .bulkAction(store.state.credentials, action.paymentIds,
             EntityAction.emailPayment)
         .then((List<PaymentEntity> payments) {
+      store.dispatch(EmailPaymentSuccess());
       action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
