@@ -137,6 +137,7 @@ class KanbanViewState extends State<KanbanView> {
           Expanded(
             child: KanbanStatusCard(
               status: status,
+              isSaving: state.isSaving,
               isCorrectOrder: hasCorectOrder,
               onSavePressed: (completer, name) {
                 final statusOrder = _statuses.indexOf(statusId);
@@ -185,6 +186,7 @@ class KanbanViewState extends State<KanbanView> {
                   ? SizedBox()
                   : KanbanTaskCard(
                       task: task,
+                      isSaving: state.isSaving,
                       isDragging: isDragging,
                       isCorrectOrder: (task.statusOrder ==
                               _tasks[status.id].indexOf(task.id)) &&

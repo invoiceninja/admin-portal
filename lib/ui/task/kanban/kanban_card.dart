@@ -22,12 +22,14 @@ class KanbanTaskCard extends StatefulWidget {
     @required this.onCancelPressed,
     @required this.isCorrectOrder,
     @required this.isDragging,
+    @required this.isSaving,
   });
   final TaskEntity task;
   final Function(Completer<TaskEntity>, String) onSavePressed;
   final Function() onCancelPressed;
   final bool isCorrectOrder;
   final bool isDragging;
+  final bool isSaving;
 
   @override
   _KanbanTaskCardState createState() => _KanbanTaskCardState();
@@ -96,16 +98,19 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: ElevatedButton(
-                      onPressed: () {
-                        final completer = snackBarCompleter<TaskEntity>(
-                            context, localization.updatedTask);
-                        completer.future.then((value) {
-                          setState(() {
-                            _isEditing = false;
-                          });
-                        });
-                        widget.onSavePressed(completer, _description.trim());
-                      },
+                      onPressed: widget.isSaving
+                          ? null
+                          : () {
+                              final completer = snackBarCompleter<TaskEntity>(
+                                  context, localization.updatedTask);
+                              completer.future.then((value) {
+                                setState(() {
+                                  _isEditing = false;
+                                });
+                              });
+                              widget.onSavePressed(
+                                  completer, _description.trim());
+                            },
                       child: Text(localization.save),
                     ),
                   ),

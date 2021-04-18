@@ -14,11 +14,13 @@ class KanbanStatusCard extends StatefulWidget {
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.isCorrectOrder,
+    @required this.isSaving,
   });
   final TaskStatusEntity status;
   final Function(Completer<TaskStatusEntity>, String) onSavePressed;
   final Function() onCancelPressed;
   final bool isCorrectOrder;
+  final bool isSaving;
 
   @override
   _KanbanStatusCardState createState() => _KanbanStatusCardState();
@@ -90,7 +92,7 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
                   padding: const EdgeInsets.only(left: 8),
                   child: ElevatedButton(
                     child: Text(localization.save),
-                    onPressed: _onSavePressed,
+                    onPressed: widget.isSaving ? null : _onSavePressed,
                   ),
                 ),
               ],
