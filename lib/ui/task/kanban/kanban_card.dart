@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
@@ -136,7 +137,12 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                    top: 8,
+                    right: 8,
+                    bottom: 4,
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -188,7 +194,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                       Expanded(
                         child: InkWell(
                           child: Container(
-                            height: 24,
+                            height: 28,
                             child: Center(
                               child: Text(
                                 localization.edit,
@@ -232,7 +238,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                 else
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 8, bottom: 8, right: 8),
+                        const EdgeInsets.only(left: 8, bottom: 12, right: 8),
                     child: Row(
                       children: [
                         LiveText(
