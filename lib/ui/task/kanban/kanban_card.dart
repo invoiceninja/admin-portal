@@ -72,7 +72,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     if (_isEditing && !isDragging) {
       return Card(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.only(left: 8, bottom: 8, right: 8),
           child: Column(
             children: [
               DecoratedFormField(
