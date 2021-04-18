@@ -76,7 +76,6 @@ class TaskListItem extends StatelessWidget {
                     getEntityActionIcon(task.isRunning
                         ? EntityAction.stop
                         : EntityAction.start),
-                    color: task.isRunning ? state.accentColor : null,
                   ),
             onPressed: task.isInvoiced
                 ? null

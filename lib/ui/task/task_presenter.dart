@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -25,6 +26,7 @@ class TaskPresenter extends EntityPresenter {
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
       TaskFields.number,
+      TaskFields.isInvoiced,
       TaskFields.rate,
       TaskFields.calculatedRate,
       TaskFields.invoice,
@@ -42,6 +44,7 @@ class TaskPresenter extends EntityPresenter {
 
   @override
   Widget getField({String field, BuildContext context}) {
+    final localization = AppLocalization.of(context);
     final task = entity as TaskEntity;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -88,7 +91,9 @@ class TaskPresenter extends EntityPresenter {
         });
         return Text(notes.join('\n'));
       case TaskFields.isRunning:
-        return Text(task.isRunning.toString());
+        return Text(task.isRunning ? localization.yes : localization.no);
+      case TaskFields.isInvoiced:
+        return Text(task.isInvoiced ? localization.yes : localization.no);
       case TaskFields.customValue1:
         return Text(presentCustomField(task.customValue1));
       case TaskFields.customValue2:
