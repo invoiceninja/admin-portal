@@ -130,7 +130,21 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Text(task.description, maxLines: 3),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: Text(task.description, maxLines: 3)),
+                      if (task.isRunning)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Icon(
+                            Icons.play_arrow,
+                            size: 16,
+                            color: state.accentColor,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
                 if (_isHovered && !isDragging)
                   Row(
@@ -234,15 +248,6 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                             child: Icon(
                               MdiIcons.paperclip,
                               size: 16,
-                            ),
-                          ),
-                        if (task.isRunning)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Icon(
-                              Icons.play_arrow,
-                              size: 16,
-                              color: state.accentColor,
                             ),
                           ),
                         SizedBox(
