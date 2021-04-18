@@ -187,6 +187,10 @@ class KanbanViewState extends State<KanbanView> {
                       task: task,
                       isSaving: state.isSaving,
                       isDragging: isDragging,
+                      isSelected: (state.uiState.isEditing
+                              ? state.taskUIState.editingId
+                              : state.taskUIState.selectedId) ==
+                          task.id,
                       isCorrectOrder: (task.statusOrder ==
                               _tasks[status.id].indexOf(task.id)) &&
                           task.statusId == statusId,
