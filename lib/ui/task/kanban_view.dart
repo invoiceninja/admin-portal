@@ -307,7 +307,7 @@ class __TaskCardState extends State<_TaskCard> {
     final state = store.state;
     final task = widget.task;
     final project = state.projectState.get(task.projectId);
-    final client = state.projectState.get(task.clientId);
+    final client = state.clientState.get(task.clientId);
 
     var color = Colors.grey;
     if (task.projectId.isNotEmpty) {
@@ -391,9 +391,12 @@ class __TaskCardState extends State<_TaskCard> {
                   children: [
                     Text(
                       formatDuration(task.calculateDuration()) +
-                          ' ' +
-                          client.name,
-                      style: TextStyle(fontSize: 12),
+                          (client.isOld ? ' • ' + client.displayName : '') +
+                          (project.isOld ? ' • ' + project.name : ''),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                      ),
                     ),
                     Spacer(),
                     if (task.documents.isNotEmpty)
