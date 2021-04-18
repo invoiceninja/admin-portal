@@ -84,6 +84,12 @@ class KanbanViewState extends State<KanbanView> {
   }
 
   void _onBoardChanged() {
+    // check a status wasn't dragged before 'unassigned'
+    if (_statuses.length < 1 || _statuses[0].isNotEmpty) {
+      _initBoard();
+      return;
+    }
+
     final localization = AppLocalization.of(context);
     final completer =
         snackBarCompleter<Null>(context, localization.updatedTaskStatus);
