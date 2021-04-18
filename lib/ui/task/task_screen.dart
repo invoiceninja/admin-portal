@@ -49,20 +49,19 @@ class TaskScreen extends StatelessWidget {
         },
       ),
       appBarLeadingActions: [
-        if (!kReleaseMode || state.isHosted)
-          IconButton(
-            icon: Icon(MdiIcons.trello),
-            color: state.prefState.showKanban ? state.accentColor : null,
-            onPressed: () {
-              if (isDesktop(context) && !state.prefState.showKanban) {
-                store.dispatch(ViewTask(taskId: ''));
-              }
+        IconButton(
+          icon: Icon(MdiIcons.trello),
+          color: state.prefState.showKanban ? state.accentColor : null,
+          onPressed: () {
+            if (isDesktop(context) && !state.prefState.showKanban) {
+              store.dispatch(ViewTask(taskId: ''));
+            }
 
-              store.dispatch(
-                UpdateUserPreferences(showKanban: !state.prefState.showKanban),
-              );
-            },
-          )
+            store.dispatch(
+              UpdateUserPreferences(showKanban: !state.prefState.showKanban),
+            );
+          },
+        )
       ],
       body:
           state.prefState.showKanban ? KanbanViewBuilder() : TaskListBuilder(),
