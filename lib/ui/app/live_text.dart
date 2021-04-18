@@ -36,6 +36,8 @@ class _LiveTextState extends State<LiveText> {
     return Text(
       widget.value(),
       style: widget.style,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
