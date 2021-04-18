@@ -127,3 +127,23 @@ bool hasTaskStatusChanges(TaskStatusEntity taskStatus,
     taskStatus.isNew
         ? taskStatus.isChanged
         : taskStatus != taskStatusMap[taskStatus.id];
+
+String defaultTaskStatusId(BuiltMap<String, TaskStatusEntity> taskStatusMap) {
+  final statusIds = taskStatusMap.keys.where((statusId) {
+    final status = taskStatusMap[statusId];
+    return status.isActive;
+  }).toList();
+
+  statusIds.sort((statusIdA, statusIdB) {
+    final statusA = taskStatusMap[statusIdA];
+    final statusB = taskStatusMap[statusIdB];
+
+    return (statusA.statusOrder ?? 9999).compareTo(statusB.statusOrder ?? 9999);
+  });
+
+  if (statusIds.isNotEmpty) {
+    return statusIds.first;
+  } else {
+    return '';
+  }
+}

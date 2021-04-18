@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -45,44 +46,6 @@ abstract class TaskItemResponse
 
   static Serializer<TaskItemResponse> get serializer =>
       _$taskItemResponseSerializer;
-}
-
-abstract class KanbanResponse
-    implements Built<KanbanResponse, KanbanResponseBuilder> {
-  factory KanbanResponse([void updates(KanbanResponseBuilder b)]) =
-      _$KanbanResponse;
-
-  KanbanResponse._();
-
-  @override
-  @memoized
-  int get hashCode;
-
-  KanbanResponseData get data;
-
-  static Serializer<KanbanResponse> get serializer =>
-      _$kanbanResponseSerializer;
-}
-
-abstract class KanbanResponseData
-    implements Built<KanbanResponseData, KanbanResponseDataBuilder> {
-  factory KanbanResponseData([void updates(KanbanResponseDataBuilder b)]) =
-      _$KanbanResponseData;
-
-  KanbanResponseData._();
-
-  @override
-  @memoized
-  int get hashCode;
-
-  @BuiltValueField(wireName: 'status_ids')
-  BuiltList<String> get statusIds;
-
-  @BuiltValueField(wireName: 'task_ids')
-  BuiltMap<String, BuiltList<String>> get taskIds;
-
-  static Serializer<KanbanResponseData> get serializer =>
-      _$kanbanResponseDataSerializer;
 }
 
 class TaskFields {
@@ -250,6 +213,7 @@ abstract class TaskEntity extends Object
     ProjectEntity project,
   }) {
     final isRunning = state?.company?.autoStartTasks ?? false;
+
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
       number: '',
@@ -273,7 +237,8 @@ abstract class TaskEntity extends Object
       assignedUserId: user?.id ?? '',
       createdAt: 0,
       createdUserId: '',
-      statusId: '',
+      statusId: defaultTaskStatusId(
+          state?.taskStatusState?.map ?? BuiltMap<String, TaskStatusEntity>()),
       documents: BuiltList<DocumentEntity>(),
       showAsRunning: state?.company?.autoStartTasks ?? false,
     );

@@ -106,7 +106,9 @@ class ListScaffold extends StatelessWidget {
             centerTitle: false,
             automaticallyImplyLeading: false,
             leading: leading,
-            leadingWidth: appBarLeadingActions == null ? null : 100,
+            leadingWidth: appBarLeadingActions == null
+                ? null
+                : kMinInteractiveDimension * (appBarLeadingActions.length + 1),
             title: appBarTitle,
             actions: [
               ...appBarActions ?? <Widget>[],

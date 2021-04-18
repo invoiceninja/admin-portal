@@ -54,7 +54,7 @@ class TaskStatusScreen extends StatelessWidget {
         },
         sortFields: [
           TaskStatusFields.name,
-          TaskStatusFields.statusOrder,
+          TaskStatusFields.order,
           TaskStatusFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {

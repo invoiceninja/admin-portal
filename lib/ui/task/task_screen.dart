@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_presenter.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -105,9 +105,10 @@ class TaskScreen extends StatelessWidget {
           TaskFields.updatedAt,
         ],
         statuses: [
-          TaskStatusEntity().rebuild((b) => b
-            ..id = kTaskStatusInvoiced
-            ..name = localization.invoiced),
+          if (!state.prefState.showKanban)
+            TaskStatusEntity().rebuild((b) => b
+              ..id = kTaskStatusInvoiced
+              ..name = localization.invoiced),
           TaskStatusEntity().rebuild((b) => b
             ..id = kTaskStatusLogged
             ..name = localization.logged),

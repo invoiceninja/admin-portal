@@ -23,3 +23,8 @@ String convertColorToHexString(Color color) {
     return null;
   }
 }
+
+Color getColorByIndex(int index) {
+  final colorIndex = index % Colors.primaries.length;
+  return Colors.primaries[colorIndex];
+}

@@ -171,7 +171,6 @@ part 'serializers.g.dart';
   ImportRequest,
   ImportRequestMapping,
   UserTwoFactorResponse,
-  KanbanResponse,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

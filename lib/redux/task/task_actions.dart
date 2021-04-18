@@ -239,9 +239,10 @@ class SortTasksRequest implements StartSaving {
 }
 
 class SortTasksSuccess implements StopSaving, PersistData {
-  SortTasksSuccess(this.data);
+  SortTasksSuccess({this.statusIds, this.taskIds});
 
-  final KanbanResponseData data;
+  final List<String> statusIds;
+  final Map<String, List<String>> taskIds;
 }
 
 class SortTasksFailure implements StopSaving {

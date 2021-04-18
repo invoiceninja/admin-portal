@@ -47,7 +47,7 @@ abstract class TaskStatusItemResponse
 class TaskStatusFields {
   static const String name = 'name';
   static const String color = 'color';
-  static const String statusOrder = 'status_order';
+  static const String order = 'order';
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
@@ -123,8 +123,12 @@ abstract class TaskStatusEntity extends Object
       case TaskStatusFields.name:
         response = taskStatusA.name.compareTo(taskStatusB.name);
         break;
-      case TaskStatusFields.statusOrder:
-        response = taskStatusA.statusOrder.compareTo(taskStatusB.statusOrder);
+      case TaskStatusFields.order:
+        response = (taskStatusA.statusOrder ?? 99999)
+            .compareTo(taskStatusB.statusOrder ?? 99999);
+        break;
+      case TaskStatusFields.updatedAt:
+        response = taskStatusA.updatedAt.compareTo(taskStatusB.updatedAt);
         break;
       default:
         print('## ERROR: sort by taskStatus.$sortField is not implemented');
