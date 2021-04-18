@@ -15,10 +15,8 @@ import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class KanbanView extends StatefulWidget {
   const KanbanView({
@@ -37,6 +35,7 @@ class _KanbanViewState extends State<KanbanView> {
 
   List<String> _statuses;
   Map<String, List<String>> _tasks;
+  bool isDragging = false;
 
   @override
   void initState() {
@@ -193,6 +192,7 @@ class _KanbanViewState extends State<KanbanView> {
                   ? SizedBox()
                   : _TaskCard(
                       task: task,
+                      isDragging: isDragging,
                       isSaving: (task.statusOrder !=
                               _tasks[status.id].indexOf(task.id)) ||
                           task.statusId != statusId,
@@ -214,6 +214,16 @@ class _KanbanViewState extends State<KanbanView> {
                         }
                       },
                     ),
+              onStartDragItem: (listIndex, itemIndex, state) {
+                print('## START DRAG');
+                setState(() => isDragging = true);
+              },
+              /*
+              onDragItem: (oldListIndex, oldItemIndex, newListIndex,
+                  newItemIndex, state) {
+                setState(() => _isDragging = true);
+              },
+              */
               onDropItem: (
                 int listIndex,
                 int itemIndex,
@@ -221,6 +231,9 @@ class _KanbanViewState extends State<KanbanView> {
                 int oldItemIndex,
                 BoardItemState state,
               ) {
+                print('## STOP DRAG');
+                setState(() => isDragging = false);
+
                 if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
                   return;
                 }
@@ -277,11 +290,13 @@ class _TaskCard extends StatefulWidget {
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.isSaving,
+    @required this.isDragging,
   });
   final TaskEntity task;
   final Function(Completer<TaskEntity>, String) onSavePressed;
   final Function() onCancelPressed;
   final bool isSaving;
+  final bool isDragging;
 
   @override
   __TaskCardState createState() => __TaskCardState();
@@ -316,7 +331,12 @@ class __TaskCardState extends State<_TaskCard> {
       color = getColorByIndex(projectIndex);
     }
 
-    if (_isEditing) {
+    final isDragging =
+        context.findAncestorStateOfType<_KanbanViewState>().isDragging;
+
+    print('## BUILD: task: ${widget.task.id}, dragging: ${isDragging}');
+
+    if (_isEditing && !widget.isDragging) {
       return Card(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -391,7 +411,7 @@ class __TaskCardState extends State<_TaskCard> {
                 children: [
                   Text(task.description, maxLines: 3),
                   SizedBox(height: 8),
-                  if (_isHovered)
+                  if (_isHovered && !isDragging)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
