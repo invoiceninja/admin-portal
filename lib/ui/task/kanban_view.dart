@@ -435,9 +435,9 @@ class __TaskCardState extends State<_TaskCard> {
                           },
                           child: Text(task.isRunning
                               ? localization.stopTask
-                              : task.duration > 0
-                                  ? localization.resumeTask
-                                  : localization.startTask),
+                              : task.getTaskTimes().isEmpty
+                                  ? localization.startTask
+                                  : localization.resumeTask),
                         ),
                       ],
                     )
