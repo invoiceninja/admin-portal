@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'view_task': 'View Task',
+      'hide_task': 'Hide Task',
+      'start_task': 'Start Task',
+      'stop_task': 'Stop Task',
       'order': 'Order',
       'unassigned': 'Unassigned',
       'partial_value': 'Must be greater than zero and less than the total',
@@ -60252,6 +60256,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get order =>
       _localizedValues[localeCode]['order'] ??
       _localizedValues['en']['order'];
+
+  String get viewTask =>
+      _localizedValues[localeCode]['view_task'] ??
+      _localizedValues['en']['view_task'];
+
+  String get hideTask =>
+      _localizedValues[localeCode]['hide_task'] ??
+      _localizedValues['en']['hide_task'];
+
+  String get startTask =>
+      _localizedValues[localeCode]['start_task'] ??
+      _localizedValues['en']['start_task'];
+
+  String get stopTask =>
+      _localizedValues[localeCode]['stop_task'] ??
+      _localizedValues['en']['stop_task'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

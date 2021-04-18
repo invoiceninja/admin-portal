@@ -289,6 +289,7 @@ class _TaskCard extends StatefulWidget {
 
 class __TaskCardState extends State<_TaskCard> {
   bool _isEditing = false;
+  bool _isHovered = false;
   String _description = '';
 
   @override
@@ -375,58 +376,85 @@ class __TaskCardState extends State<_TaskCard> {
       );
     }
 
-    return InkWell(
-      child: Opacity(
-        opacity: widget.isSaving ? .5 : 1,
-        child: Card(
-          color: Theme.of(context).backgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(task.description, maxLines: 3),
-                SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text(
-                      formatDuration(task.calculateDuration()) +
-                          (client.isOld ? ' • ' + client.displayName : '') +
-                          (project.isOld ? ' • ' + project.name : ''),
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                      ),
+    return MouseRegion(
+      onEnter: (event) => setState(() => _isHovered = true),
+      onExit: (event) => setState(() => _isHovered = false),
+      child: InkWell(
+        child: Opacity(
+          opacity: widget.isSaving ? .5 : 1,
+          child: Card(
+            color: Theme.of(context).backgroundColor,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(task.description, maxLines: 3),
+                  SizedBox(height: 8),
+                  if (_isHovered)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            //
+                            //
+                          },
+                          child: Text(localization.viewTask),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            //
+                            //
+                          },
+                          child: Text(task.isRunning
+                              ? localization.stopTask
+                              : localization.startTask),
+                        ),
+                      ],
+                    )
+                  else
+                    Row(
+                      children: [
+                        Text(
+                          formatDuration(task.calculateDuration()) +
+                              (client.isOld ? ' • ' + client.displayName : '') +
+                              (project.isOld ? ' • ' + project.name : ''),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        Spacer(),
+                        if (task.documents.isNotEmpty)
+                          Icon(
+                            MdiIcons.paperclip,
+                            size: 16,
+                          ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Tooltip(
+                          message: project.name,
+                          child: Icon(
+                            MdiIcons.briefcaseOutline,
+                            color: color,
+                            size: 16,
+                          ),
+                        ),
+                      ],
                     ),
-                    Spacer(),
-                    if (task.documents.isNotEmpty)
-                      Icon(
-                        MdiIcons.paperclip,
-                        size: 16,
-                      ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Tooltip(
-                      message: project.name,
-                      child: Icon(
-                        MdiIcons.briefcaseOutline,
-                        color: color,
-                        size: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
+        onTap: () {
+          setState(() {
+            _isEditing = true;
+          });
+        },
       ),
-      onTap: () {
-        setState(() {
-          _isEditing = true;
-        });
-      },
     );
   }
 }
