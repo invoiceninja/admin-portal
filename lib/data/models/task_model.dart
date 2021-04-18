@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -212,6 +213,7 @@ abstract class TaskEntity extends Object
     ProjectEntity project,
   }) {
     final isRunning = state?.company?.autoStartTasks ?? false;
+
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
       number: '',
@@ -235,7 +237,8 @@ abstract class TaskEntity extends Object
       assignedUserId: user?.id ?? '',
       createdAt: 0,
       createdUserId: '',
-      statusId: '',
+      statusId: defaultTaskStatusId(
+          state?.taskStatusState?.map ?? BuiltMap<String, TaskStatusEntity>()),
       documents: BuiltList<DocumentEntity>(),
       showAsRunning: state?.company?.autoStartTasks ?? false,
     );

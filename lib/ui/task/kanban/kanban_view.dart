@@ -56,8 +56,6 @@ class KanbanViewState extends State<KanbanView> {
       }
     });
 
-    _statuses = ['', ..._statuses];
-
     _tasks = {};
     viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId];
@@ -84,12 +82,6 @@ class KanbanViewState extends State<KanbanView> {
   }
 
   void _onBoardChanged() {
-    // check a status wasn't dragged before 'unassigned'
-    if (_statuses.length < 1 || _statuses[0].isNotEmpty) {
-      _initBoard();
-      return;
-    }
-
     final localization = AppLocalization.of(context);
     final completer =
         snackBarCompleter<Null>(context, localization.updatedTaskStatus);
@@ -97,11 +89,7 @@ class KanbanViewState extends State<KanbanView> {
       _initBoard();
     });
 
-    // remove 'unassigned' status
-    final statusIds =
-        _statuses.where((statusId) => statusId.isNotEmpty).toList();
-
-    widget.viewModel.onBoardChanged(completer, statusIds, _tasks);
+    widget.viewModel.onBoardChanged(completer, _statuses, _tasks);
   }
 
   @override
@@ -120,12 +108,8 @@ class KanbanViewState extends State<KanbanView> {
       final hasNewTask =
           _tasks[statusId]?.any((taskId) => parseDouble(taskId) < 0) ?? false;
 
-      final offset =
-          filteredStatusIds.isNotEmpty && filteredStatusIds.first.isEmpty
-              ? 1
-              : 0;
       final hasCorectOrder = statusId.isEmpty ||
-          status.statusOrder == filteredStatusIds.indexOf(status.id) - offset;
+          status.statusOrder == filteredStatusIds.indexOf(status.id);
 
       return BoardList(
         draggable: status.isOld && hasCorectOrder,
