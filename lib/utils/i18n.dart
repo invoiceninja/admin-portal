@@ -16,7 +16,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'view_task': 'View Task',
-      'hide_task': 'Hide Task',
       'start_task': 'Start Task',
       'stop_task': 'Stop Task',
       'order': 'Order',
@@ -60260,10 +60259,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get viewTask =>
       _localizedValues[localeCode]['view_task'] ??
       _localizedValues['en']['view_task'];
-
-  String get hideTask =>
-      _localizedValues[localeCode]['hide_task'] ??
-      _localizedValues['en']['hide_task'];
 
   String get startTask =>
       _localizedValues[localeCode]['start_task'] ??

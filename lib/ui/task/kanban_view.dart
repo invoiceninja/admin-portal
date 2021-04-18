@@ -334,8 +334,6 @@ class __TaskCardState extends State<_TaskCard> {
     final isDragging =
         context.findAncestorStateOfType<_KanbanViewState>().isDragging;
 
-    print('## BUILD: task: ${widget.task.id}, dragging: ${isDragging}');
-
     if (_isEditing && !widget.isDragging) {
       return Card(
         child: Padding(
@@ -364,14 +362,6 @@ class __TaskCardState extends State<_TaskCard> {
                     },
                     label: localization.cancel,
                   ),
-                  if (task.isOld)
-                    AppTextButton(
-                      onPressed: () {
-                        viewEntity(
-                            appContext: context.getAppContext(), entity: task);
-                      },
-                      label: localization.view,
-                    ),
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: ElevatedButton(
@@ -416,10 +406,21 @@ class __TaskCardState extends State<_TaskCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         TextButton(
-                          onPressed: () {
-                            //
-                            //
-                          },
+                          onPressed: task.isNew
+                              ? null
+                              : () {
+                                  if (state.taskUIState.selectedId == task.id) {
+                                    viewEntityById(
+                                        appContext: context.getAppContext(),
+                                        entityId: '',
+                                        entityType: EntityType.task,
+                                        showError: false);
+                                  } else {
+                                    viewEntity(
+                                        appContext: context.getAppContext(),
+                                        entity: task);
+                                  }
+                                },
                           child: Text(localization.viewTask),
                         ),
                         TextButton(
