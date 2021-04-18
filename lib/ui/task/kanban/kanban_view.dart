@@ -3,7 +3,6 @@ import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_card.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_status.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view_vm.dart';
@@ -112,12 +111,21 @@ class KanbanViewState extends State<KanbanView> {
         ? Theme.of(context).cardColor
         : Colors.grey.shade300;
 
-    final boardList = _statuses.map((statusId) {
+    final filteredStatusIds = _statuses.where((statusId) {
+      return statusId.isNotEmpty || _tasks.containsKey(statusId);
+    }).toList();
+
+    final boardList = filteredStatusIds.map((statusId) {
       final status = state.taskStatusState.get(statusId);
       final hasNewTask =
           _tasks[statusId]?.any((taskId) => parseDouble(taskId) < 0) ?? false;
+
+      final offset =
+          filteredStatusIds.isNotEmpty && filteredStatusIds.first.isEmpty
+              ? 1
+              : 0;
       final hasCorectOrder = statusId.isEmpty ||
-          status.statusOrder == _statuses.indexOf(status.id) - 1;
+          status.statusOrder == filteredStatusIds.indexOf(status.id) - offset;
 
       return BoardList(
         draggable: status.isOld && hasCorectOrder,
