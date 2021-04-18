@@ -142,7 +142,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                             height: 24,
                             child: Center(
                               child: Text(
-                                localization.viewTask,
+                                localization.view,
                                 style: TextStyle(fontSize: 12),
                               ),
                             ),
@@ -162,7 +162,20 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                                         entity: task);
                                   }
                                 },
-                          onLongPress: task.isNew
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          child: Container(
+                            height: 24,
+                            child: Center(
+                              child: Text(
+                                localization.edit,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ),
+                          ),
+                          onTap: task.isNew
                               ? null
                               : () {
                                   editEntity(context: context, entity: task);
@@ -184,10 +197,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                             child: Center(
                               child: Text(
                                   task.isRunning
-                                      ? localization.stopTask
+                                      ? localization.stop
                                       : task.getTaskTimes().isEmpty
-                                          ? localization.startTask
-                                          : localization.resumeTask,
+                                          ? localization.start
+                                          : localization.resume,
                                   style: TextStyle(fontSize: 12)),
                             ),
                           ),
