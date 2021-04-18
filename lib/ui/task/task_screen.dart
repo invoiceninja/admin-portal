@@ -105,9 +105,10 @@ class TaskScreen extends StatelessWidget {
           TaskFields.updatedAt,
         ],
         statuses: [
-          TaskStatusEntity().rebuild((b) => b
-            ..id = kTaskStatusInvoiced
-            ..name = localization.invoiced),
+          if (!state.prefState.showKanban)
+            TaskStatusEntity().rebuild((b) => b
+              ..id = kTaskStatusInvoiced
+              ..name = localization.invoiced),
           TaskStatusEntity().rebuild((b) => b
             ..id = kTaskStatusLogged
             ..name = localization.logged),
