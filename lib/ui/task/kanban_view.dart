@@ -408,7 +408,11 @@ class __TaskCardState extends State<_TaskCard> {
                       children: [
                         Expanded(
                           child: InkWell(
-                            child: Center(child: Text(localization.viewTask)),
+                            child: Center(
+                                child: Text(
+                              localization.viewTask,
+                              style: TextStyle(fontSize: 12),
+                            )),
                             onTap: task.isNew
                                 ? null
                                 : () {
@@ -438,11 +442,13 @@ class __TaskCardState extends State<_TaskCard> {
                                       : EntityAction.start);
                             },
                             child: Center(
-                              child: Text(task.isRunning
-                                  ? localization.stopTask
-                                  : task.getTaskTimes().isEmpty
-                                      ? localization.startTask
-                                      : localization.resumeTask),
+                              child: Text(
+                                  task.isRunning
+                                      ? localization.stopTask
+                                      : task.getTaskTimes().isEmpty
+                                          ? localization.startTask
+                                          : localization.resumeTask,
+                                  style: TextStyle(fontSize: 12)),
                             ),
                           ),
                         ),
