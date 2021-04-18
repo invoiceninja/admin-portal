@@ -65,7 +65,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     final isDragging =
         context.findAncestorStateOfType<KanbanViewState>().isDragging;
 
-    if (_isEditing && !widget.isDragging) {
+    if (_isEditing && !isDragging) {
       return Card(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -118,7 +118,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     }
 
     return MouseRegion(
-      onEnter: (event) => setState(() => _isHovered = true),
+      onHover: (event) => setState(() => _isHovered = true),
       onExit: (event) => setState(() => _isHovered = false),
       child: InkWell(
         child: Opacity(
