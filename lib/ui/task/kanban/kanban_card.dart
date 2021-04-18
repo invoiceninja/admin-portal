@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
@@ -57,6 +58,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     final task = widget.task;
     final project = state.projectState.get(task.projectId);
     final client = state.clientState.get(task.clientId);
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     var color = Colors.grey;
     if (task.projectId.isNotEmpty) {
@@ -127,7 +129,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
       onExit: (event) => setState(() => _isHovered = false),
       child: InkWell(
         child: Opacity(
-          opacity: widget.isCorrectOrder ? 1 : .5,
+          opacity: widget.isCorrectOrder ? 1 : .7,
           child: Card(
             color: Theme.of(context).backgroundColor,
             child: Column(
@@ -243,7 +245,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           },
                           style: TextStyle(
                             fontSize: 12,
-                            fontWeight: FontWeight.w300,
+                            color: textColor.withOpacity(kLighterOpacity),
                           ),
                         ),
                         Spacer(),

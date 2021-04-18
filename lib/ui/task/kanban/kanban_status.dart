@@ -106,7 +106,7 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Opacity(
-          opacity: widget.isCorrectOrder ? 1 : .5,
+          opacity: widget.isCorrectOrder ? 1 : .7,
           child: Text(
             status.isNew ? localization.unassigned : status.name,
             style: TextStyle(fontWeight: FontWeight.w600),
