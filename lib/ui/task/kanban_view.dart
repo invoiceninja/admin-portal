@@ -303,7 +303,17 @@ class __TaskCardState extends State<_TaskCard> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final task = widget.task;
+    final project = state.projectState.get(task.projectId);
+    final client = state.projectState.get(task.clientId);
+
+    var color = Colors.grey;
+    if (task.projectId.isNotEmpty) {
+      final projectIndex = state.projectState.list.indexOf(task.projectId);
+      color = getColorByIndex(projectIndex);
+    }
 
     if (_isEditing) {
       return Card(
@@ -365,14 +375,6 @@ class __TaskCardState extends State<_TaskCard> {
       );
     }
 
-    var color = Colors.grey;
-    if (task.projectId.isNotEmpty) {
-      final store = StoreProvider.of<AppState>(context);
-      final projectIndex =
-          store.state.projectState.list.indexOf(task.projectId);
-      color = getColorByIndex(projectIndex);
-    }
-
     return InkWell(
       child: Opacity(
         opacity: widget.isSaving ? .5 : 1,
@@ -387,6 +389,12 @@ class __TaskCardState extends State<_TaskCard> {
                 SizedBox(height: 8),
                 Row(
                   children: [
+                    Text(
+                      formatDuration(task.calculateDuration()) +
+                          ' ' +
+                          client.name,
+                      style: TextStyle(fontSize: 12),
+                    ),
                     Spacer(),
                     if (task.documents.isNotEmpty)
                       Icon(
@@ -396,10 +404,13 @@ class __TaskCardState extends State<_TaskCard> {
                     SizedBox(
                       width: 8,
                     ),
-                    Icon(
-                      MdiIcons.briefcaseOutline,
-                      color: color,
-                      size: 16,
+                    Tooltip(
+                      message: project.name,
+                      child: Icon(
+                        MdiIcons.briefcaseOutline,
+                        color: color,
+                        size: 16,
+                      ),
                     ),
                   ],
                 ),
