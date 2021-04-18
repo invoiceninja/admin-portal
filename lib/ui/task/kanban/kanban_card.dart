@@ -257,14 +257,15 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                               size: 16,
                             ),
                           ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Icon(
-                          MdiIcons.briefcaseOutline,
-                          color: color,
-                          size: 16,
-                        ),
+                        if (task.projectId.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Icon(
+                              MdiIcons.briefcaseOutline,
+                              color: color,
+                              size: 16,
+                            ),
+                          ),
                       ],
                     ),
                   ),
