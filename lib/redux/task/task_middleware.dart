@@ -272,9 +272,11 @@ Middleware<AppState> _sortTasks(TaskRepository repository) {
 
     repository
         .sortTasks(store.state.credentials, action.statusIds, action.taskIds)
-        .then((KanbanResponseData data) {
-      print('## DONE: $data');
-      store.dispatch(SortTasksSuccess(data));
+        .then((_) {
+      store.dispatch(SortTasksSuccess(
+        statusIds: action.statusIds,
+        taskIds: action.taskIds,
+      ));
       if (action.completer != null) {
         action.completer.complete(null);
       }
