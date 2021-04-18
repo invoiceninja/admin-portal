@@ -137,7 +137,7 @@ class KanbanViewState extends State<KanbanView> {
           Expanded(
             child: KanbanStatusCard(
               status: status,
-              isSaving: !hasCorectOrder,
+              isCorrectOrder: hasCorectOrder,
               onSavePressed: (completer, name) {
                 final statusOrder = _statuses.indexOf(statusId);
                 widget.viewModel.onSaveStatusPressed(
@@ -186,9 +186,9 @@ class KanbanViewState extends State<KanbanView> {
                   : KanbanTaskCard(
                       task: task,
                       isDragging: isDragging,
-                      isSaving: (task.statusOrder !=
-                              _tasks[status.id].indexOf(task.id)) ||
-                          task.statusId != statusId,
+                      isCorrectOrder: (task.statusOrder ==
+                              _tasks[status.id].indexOf(task.id)) &&
+                          task.statusId == statusId,
                       onSavePressed: (completer, description) {
                         final statusOrder = _tasks[status.id].indexOf(task.id);
                         widget.viewModel.onSaveTaskPressed(

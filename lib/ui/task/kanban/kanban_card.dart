@@ -20,13 +20,13 @@ class KanbanTaskCard extends StatefulWidget {
     @required this.task,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.isSaving,
+    @required this.isCorrectOrder,
     @required this.isDragging,
   });
   final TaskEntity task;
   final Function(Completer<TaskEntity>, String) onSavePressed;
   final Function() onCancelPressed;
-  final bool isSaving;
+  final bool isCorrectOrder;
   final bool isDragging;
 
   @override
@@ -122,7 +122,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
       onExit: (event) => setState(() => _isHovered = false),
       child: InkWell(
         child: Opacity(
-          opacity: widget.isSaving ? .5 : 1,
+          opacity: widget.isCorrectOrder ? 1 : .5,
           child: Card(
             color: Theme.of(context).backgroundColor,
             child: Column(
