@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -364,6 +365,14 @@ class __TaskCardState extends State<_TaskCard> {
       );
     }
 
+    var color = Colors.grey;
+    if (task.projectId.isNotEmpty) {
+      final store = StoreProvider.of<AppState>(context);
+      final projectIndex =
+          store.state.projectState.list.indexOf(task.projectId);
+      color = getColorByIndex(projectIndex);
+    }
+
     return InkWell(
       child: Opacity(
         opacity: widget.isSaving ? .5 : 1,
@@ -389,7 +398,7 @@ class __TaskCardState extends State<_TaskCard> {
                     ),
                     Icon(
                       MdiIcons.briefcaseOutline,
-                      color: Colors.red,
+                      color: color,
                       size: 16,
                     ),
                   ],
