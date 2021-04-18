@@ -125,67 +125,69 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
           opacity: widget.isSaving ? .5 : 1,
           child: Card(
             color: Theme.of(context).backgroundColor,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(task.description, maxLines: 3),
-                  SizedBox(height: 8),
-                  if (_isHovered && !isDragging)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            child: Center(
-                                child: Text(
-                              localization.viewTask,
-                              style: TextStyle(fontSize: 12),
-                            )),
-                            onTap: task.isNew
-                                ? null
-                                : () {
-                                    if (state.taskUIState.selectedId ==
-                                        task.id) {
-                                      viewEntityById(
-                                          appContext: context.getAppContext(),
-                                          entityId: '',
-                                          entityType: EntityType.task,
-                                          showError: false);
-                                    } else {
-                                      viewEntity(
-                                          appContext: context.getAppContext(),
-                                          entity: task);
-                                    }
-                                  },
-                          ),
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              handleEntityAction(
-                                  context.getAppContext(),
-                                  task,
-                                  task.isRunning
-                                      ? EntityAction.stop
-                                      : EntityAction.start);
-                            },
-                            child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(task.description, maxLines: 3),
+                ),
+                if (_isHovered && !isDragging)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          child: Center(
                               child: Text(
-                                  task.isRunning
-                                      ? localization.stopTask
-                                      : task.getTaskTimes().isEmpty
-                                          ? localization.startTask
-                                          : localization.resumeTask,
-                                  style: TextStyle(fontSize: 12)),
-                            ),
+                            localization.viewTask,
+                            style: TextStyle(fontSize: 12),
+                          )),
+                          onTap: task.isNew
+                              ? null
+                              : () {
+                                  if (state.taskUIState.selectedId == task.id) {
+                                    viewEntityById(
+                                        appContext: context.getAppContext(),
+                                        entityId: '',
+                                        entityType: EntityType.task,
+                                        showError: false);
+                                  } else {
+                                    viewEntity(
+                                        appContext: context.getAppContext(),
+                                        entity: task);
+                                  }
+                                },
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            handleEntityAction(
+                                context.getAppContext(),
+                                task,
+                                task.isRunning
+                                    ? EntityAction.stop
+                                    : EntityAction.start);
+                          },
+                          child: Center(
+                            child: Text(
+                                task.isRunning
+                                    ? localization.stopTask
+                                    : task.getTaskTimes().isEmpty
+                                        ? localization.startTask
+                                        : localization.resumeTask,
+                                style: TextStyle(fontSize: 12)),
                           ),
                         ),
-                      ],
-                    )
-                  else
-                    Row(
+                      ),
+                    ],
+                  )
+                else
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 8, bottom: 8, right: 8),
+                    child: Row(
                       children: [
                         LiveText(
                           () {
@@ -228,8 +230,8 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                         ),
                       ],
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
           ),
         ),
