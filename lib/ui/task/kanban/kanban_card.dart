@@ -159,7 +159,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                       Expanded(child: Text(task.description, maxLines: 3)),
                       if (task.isRunning)
                         Padding(
-                          padding: const EdgeInsets.only(left: 8),
+                          padding: const EdgeInsets.only(left: 4, right: 1),
                           child: Icon(
                             Icons.play_arrow,
                             size: 16,

@@ -60250,9 +60250,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']['unassigned'];
 
   String get order =>
-      _localizedValues[localeCode]['order'] ??
-      _localizedValues['en']['order'];
-
+      _localizedValues[localeCode]['order'] ?? _localizedValues['en']['order'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

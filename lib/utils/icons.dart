@@ -118,6 +118,7 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.webhook:
       return MdiIcons.link;
     case EntityType.expenseCategory:
+    case EntityType.taskStatus:
       return MdiIcons.label;
     case EntityType.subscription:
       return MdiIcons.shopping;
