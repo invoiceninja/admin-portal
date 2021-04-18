@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -425,22 +426,32 @@ class __TaskCardState extends State<_TaskCard> {
                         ),
                         TextButton(
                           onPressed: () {
-                            //
-                            //
+                            handleEntityAction(
+                                context.getAppContext(),
+                                task,
+                                task.isRunning
+                                    ? EntityAction.stop
+                                    : EntityAction.start);
                           },
                           child: Text(task.isRunning
                               ? localization.stopTask
-                              : localization.startTask),
+                              : task.duration > 0
+                                  ? localization.resumeTask
+                                  : localization.startTask),
                         ),
                       ],
                     )
                   else
                     Row(
                       children: [
-                        Text(
-                          formatDuration(task.calculateDuration()) +
-                              (client.isOld ? ' • ' + client.displayName : '') +
-                              (project.isOld ? ' • ' + project.name : ''),
+                        LiveText(
+                          () {
+                            return formatDuration(task.calculateDuration()) +
+                                (client.isOld
+                                    ? ' • ' + client.displayName
+                                    : '') +
+                                (project.isOld ? ' • ' + project.name : '');
+                          },
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w300,
