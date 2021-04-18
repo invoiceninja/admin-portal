@@ -14,7 +14,9 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class KanbanView extends StatefulWidget {
@@ -300,6 +302,7 @@ class __TaskCardState extends State<_TaskCard> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final task = widget.task;
 
     if (_isEditing) {
       return Card(
@@ -322,19 +325,18 @@ class __TaskCardState extends State<_TaskCard> {
                     onPressed: () {
                       setState(() {
                         _isEditing = false;
-                        if (widget.task.isNew) {
+                        if (task.isNew) {
                           widget.onCancelPressed();
                         }
                       });
                     },
                     label: localization.cancel,
                   ),
-                  if (widget.task.isOld)
+                  if (task.isOld)
                     AppTextButton(
                       onPressed: () {
                         viewEntity(
-                            appContext: context.getAppContext(),
-                            entity: widget.task);
+                            appContext: context.getAppContext(), entity: task);
                       },
                       label: localization.view,
                     ),
@@ -369,7 +371,31 @@ class __TaskCardState extends State<_TaskCard> {
           color: Theme.of(context).backgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(8),
-            child: Text(widget.task.description, maxLines: 3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(task.description, maxLines: 3),
+                SizedBox(height: 8),
+                Row(
+                  children: [
+                    Spacer(),
+                    if (task.documents.isNotEmpty)
+                      Icon(
+                        MdiIcons.paperclip,
+                        size: 16,
+                      ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Icon(
+                      MdiIcons.briefcaseOutline,
+                      color: Colors.red,
+                      size: 16,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
