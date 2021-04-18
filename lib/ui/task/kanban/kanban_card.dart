@@ -24,6 +24,7 @@ class KanbanTaskCard extends StatefulWidget {
     @required this.isCorrectOrder,
     @required this.isDragging,
     @required this.isSaving,
+    @required this.isSelected,
   });
   final TaskEntity task;
   final Function(Completer<TaskEntity>, String) onSavePressed;
@@ -31,6 +32,7 @@ class KanbanTaskCard extends StatefulWidget {
   final bool isCorrectOrder;
   final bool isDragging;
   final bool isSaving;
+  final bool isSelected;
 
   @override
   _KanbanTaskCardState createState() => _KanbanTaskCardState();
@@ -128,9 +130,18 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
       onHover: (event) => setState(() => _isHovered = true),
       onExit: (event) => setState(() => _isHovered = false),
       child: InkWell(
+        borderRadius: BorderRadius.circular(5),
         child: Opacity(
           opacity: widget.isCorrectOrder ? 1 : .7,
           child: Card(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                  color: widget.isSelected
+                      ? state.accentColor
+                      : Colors.transparent,
+                  width: 1),
+              borderRadius: BorderRadius.circular(5),
+            ),
             color: Theme.of(context).backgroundColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
