@@ -162,6 +162,11 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                                         entity: task);
                                   }
                                 },
+                          onLongPress: task.isNew
+                              ? null
+                              : () {
+                                  editEntity(context: context, entity: task);
+                                },
                         ),
                       ),
                       Expanded(
