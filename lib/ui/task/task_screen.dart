@@ -50,8 +50,8 @@ class TaskScreen extends StatelessWidget {
       ),
       appBarLeadingActions: [
         IconButton(
-          icon: Icon(MdiIcons.trello),
-          color: state.prefState.showKanban ? state.accentColor : null,
+          icon: Icon(
+              state.prefState.showKanban ? Icons.view_list : MdiIcons.trello),
           onPressed: () {
             if (isDesktop(context) && !state.prefState.showKanban) {
               store.dispatch(ViewTask(taskId: ''));
