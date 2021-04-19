@@ -72,10 +72,5 @@ bool isSelfHosted(BuildContext context) =>
 bool isHosted(BuildContext context) =>
     StoreProvider.of<AppState>(context).state.isHosted;
 
-bool isPaidAccount(BuildContext context) {
-  final state = StoreProvider.of<AppState>(context).state;
-
-  return state.isSelfHosted
-      ? state.isWhiteLabeled
-      : (state.isProPlan || state.isEnterprisePlan);
-}
+bool isPaidAccount(BuildContext context) =>
+    StoreProvider.of<AppState>(context).state.isPaidAccount;

@@ -280,7 +280,8 @@ class _CustomTabBarView extends StatelessWidget {
               subtitle: Text(subtitle != null
                   ? subtitle
                   : localization.lookup('${entity.entityType}')),
-              onTap: () => viewEntity(appContext: context.getAppContext(), entity: entity),
+              onTap: () => viewEntity(
+                  appContext: context.getAppContext(), entity: entity),
             );
           });
     }

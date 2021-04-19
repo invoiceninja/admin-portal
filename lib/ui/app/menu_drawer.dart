@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/ui/app/subscription_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -669,6 +672,22 @@ class SidebarFooter extends StatelessWidget {
                   ),
                   onPressed: () => _showUpdate(context),
                 ),
+            if (!kReleaseMode || (isHosted(context) && !isPaidAccount(context)))
+              IconButton(
+                icon: Icon(Icons.arrow_circle_up),
+                color: Colors.green,
+                onPressed: () {
+                  showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+                          return UpgradeDialog();
+                        } else {
+                          return SubscriptionDialog();
+                        }
+                      });
+                },
+              ),
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => state.uiState.isShowingPdf && kIsWeb
@@ -705,14 +724,7 @@ class SidebarFooter extends StatelessWidget {
                     }),
               ),
              */
-            /*
-            IconButton(
-              icon: Icon(Icons.filter),
-              onPressed: () => viewPdf(InvoiceEntity(), context),
-            ),
-             */
-            //if (state.lastError.isNotEmpty && (state.isSelfHosted || !kReleaseMode))
-            if (state.lastError.isNotEmpty && !Config.DEMO_MODE)
+            if (!kReleaseMode && state.lastError.isNotEmpty)
               IconButton(
                 icon: Icon(
                   Icons.warning,
@@ -728,22 +740,6 @@ class SidebarFooter extends StatelessWidget {
                       );
                     }),
               ),
-            /*
-          if (isHosted(context) &&
-              !isPaidAccount(context)) ...[
-            Spacer(),
-            TextButton(
-              child: Text(localization.upgrade),
-              color: Colors.green,
-              onPressed: () => showDialog<UpgradeDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return UpgradeDialog();
-                  }),
-            ),
-            SizedBox(width: 14)
-          ],
-           */
             Spacer(),
             if (isNotMobile(context) &&
                 state.prefState.menuSidebarMode == AppSidebarMode.collapse)
