@@ -246,7 +246,7 @@ class _AccountOverview extends StatelessWidget {
                   iconData: Icons.cloud_download,
                   onPressed: () async {
                     if (await canLaunch(kWhiteLabelUrl)) {
-                      launch(kWhiteLabelUrl, forceSafariVC: false);
+                      launch(kWhiteLabelUrl);
                     }
                   },
                 ),

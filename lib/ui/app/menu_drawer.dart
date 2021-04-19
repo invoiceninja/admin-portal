@@ -674,18 +674,28 @@ class SidebarFooter extends StatelessWidget {
                 ),
             if (!kReleaseMode || (isHosted(context) && !isPaidAccount(context)))
               IconButton(
+                tooltip: isHosted(context)
+                    ? localization.upgrade
+                    : localization.purchaseLicense,
                 icon: Icon(Icons.arrow_circle_up),
                 color: Colors.green,
-                onPressed: () {
-                  showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
-                          return UpgradeDialog();
-                        } else {
-                          return SubscriptionDialog();
-                        }
-                      });
+                onPressed: () async {
+                  if (isHosted(context)) {
+                    showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          if (!kIsWeb &&
+                              (Platform.isIOS || Platform.isAndroid)) {
+                            return UpgradeDialog();
+                          } else {
+                            return SubscriptionDialog();
+                          }
+                        });
+                  } else {
+                    if (await canLaunch(kWhiteLabelUrl)) {
+                      launch(kWhiteLabelUrl);
+                    }
+                  }
                 },
               ),
             IconButton(
