@@ -99,6 +99,12 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
         ..add(serializers.serialize(object.selectedId,
             specifiedType: const FullType(String)));
     }
+    if (object.forceSelected != null) {
+      result
+        ..add('forceSelected')
+        ..add(serializers.serialize(object.forceSelected,
+            specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -130,6 +136,10 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'forceSelected':
+          result.forceSelected = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'tabIndex':
           result.tabIndex = serializers.deserialize(value,
@@ -258,6 +268,8 @@ class _$VendorUIState extends VendorUIState {
   @override
   final String selectedId;
   @override
+  final bool forceSelected;
+  @override
   final int tabIndex;
   @override
   final Completer<SelectableEntity> saveCompleter;
@@ -272,6 +284,7 @@ class _$VendorUIState extends VendorUIState {
       this.editingContact,
       this.listUIState,
       this.selectedId,
+      this.forceSelected,
       this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
@@ -299,6 +312,7 @@ class _$VendorUIState extends VendorUIState {
         editingContact == other.editingContact &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
+        forceSelected == other.forceSelected &&
         tabIndex == other.tabIndex &&
         saveCompleter == other.saveCompleter &&
         cancelCompleter == other.cancelCompleter;
@@ -311,9 +325,13 @@ class _$VendorUIState extends VendorUIState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, editing.hashCode), editingContact.hashCode),
-                        listUIState.hashCode),
-                    selectedId.hashCode),
+                    $jc(
+                        $jc(
+                            $jc($jc(0, editing.hashCode),
+                                editingContact.hashCode),
+                            listUIState.hashCode),
+                        selectedId.hashCode),
+                    forceSelected.hashCode),
                 tabIndex.hashCode),
             saveCompleter.hashCode),
         cancelCompleter.hashCode));
@@ -326,6 +344,7 @@ class _$VendorUIState extends VendorUIState {
           ..add('editingContact', editingContact)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
+          ..add('forceSelected', forceSelected)
           ..add('tabIndex', tabIndex)
           ..add('saveCompleter', saveCompleter)
           ..add('cancelCompleter', cancelCompleter))
@@ -358,6 +377,11 @@ class VendorUIStateBuilder
   String get selectedId => _$this._selectedId;
   set selectedId(String selectedId) => _$this._selectedId = selectedId;
 
+  bool _forceSelected;
+  bool get forceSelected => _$this._forceSelected;
+  set forceSelected(bool forceSelected) =>
+      _$this._forceSelected = forceSelected;
+
   int _tabIndex;
   int get tabIndex => _$this._tabIndex;
   set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
@@ -380,6 +404,7 @@ class VendorUIStateBuilder
       _editingContact = _$v.editingContact?.toBuilder();
       _listUIState = _$v.listUIState?.toBuilder();
       _selectedId = _$v.selectedId;
+      _forceSelected = _$v.forceSelected;
       _tabIndex = _$v.tabIndex;
       _saveCompleter = _$v.saveCompleter;
       _cancelCompleter = _$v.cancelCompleter;
@@ -411,6 +436,7 @@ class VendorUIStateBuilder
               editingContact: _editingContact?.build(),
               listUIState: listUIState.build(),
               selectedId: selectedId,
+              forceSelected: forceSelected,
               tabIndex: tabIndex,
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
