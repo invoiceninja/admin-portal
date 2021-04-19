@@ -6,6 +6,8 @@ import 'package:redux/redux.dart';
 class WebUtils {
   static String get browserUrl => null;
 
+  static String get browserRoute => null;
+
   static String getHtmlValue(String field) => null;
 
   static void downloadTextFile(String filename, String data) {}

@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -66,9 +67,11 @@ class AccountManagementVM {
           final companyLength = state.companies.length;
           final deleteCompleter = Completer<Null>()
             ..future.then((value) {
+              final context = navigatorKey.currentContext;
+              final state = store.state;
               if (companyLength == 1) {
                 store.dispatch(UserLogout(context));
-                if (store.state.user.isConnectedToGoogle) {
+                if (state.user.isConnectedToGoogle) {
                   GoogleOAuth.disconnect();
                 }
               } else {
@@ -88,8 +91,12 @@ class AccountManagementVM {
                     RefreshData(clearData: true, completer: refreshCompleter));
               }
             }).catchError((Object error) {
+              if (Navigator.of(navigatorKey.currentContext).canPop()) {
+                Navigator.of(navigatorKey.currentContext).pop();
+              }
+
               showDialog<ErrorDialog>(
-                  context: context,
+                  context: navigatorKey.currentContext,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });

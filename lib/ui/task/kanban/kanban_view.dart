@@ -33,11 +33,17 @@ class KanbanViewState extends State<KanbanView> {
   @override
   void initState() {
     super.initState();
+
     _initBoard();
+
+    /*
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      _checkBoard();
+    });
+    */
   }
 
   void _initBoard() {
-    print('## INIT BOARD');
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
@@ -79,6 +85,38 @@ class KanbanViewState extends State<KanbanView> {
         }
       });
     });
+  }
+
+  void _checkBoard() {
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
+
+    final filteredStatusIds = _statuses.where((statusId) {
+      return statusId.isNotEmpty || _tasks.containsKey(statusId);
+    }).toList();
+
+    bool isCorrect = true;
+
+    filteredStatusIds.forEach((statusId) {
+      final status = state.taskStatusState.get(statusId);
+
+      if (status.statusOrder != filteredStatusIds.indexOf(status.id)) {
+        isCorrect = false;
+      }
+
+      (_tasks[status.id] ?? []).forEach((taskId) {
+        final task = state.taskState.get(taskId);
+
+        if (task.statusOrder != _tasks[status.id].indexOf(task.id) ||
+            task.statusId != statusId) {
+          isCorrect = false;
+        }
+      });
+    });
+
+    if (!isCorrect) {
+      _onBoardChanged();
+    }
   }
 
   void _onBoardChanged() {

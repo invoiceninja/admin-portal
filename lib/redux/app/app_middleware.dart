@@ -35,6 +35,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository authRepository = const PersistenceRepository(
@@ -202,6 +204,7 @@ Middleware<AppState> _createLoadState(
         throw 'New app version - clearing state';
       }
 
+      var prefState = store.state.prefState;
       authState = await authRepository.loadAuthState();
       uiState = await uiRepository.loadUIState();
       staticState = await staticRepository.loadStaticState();
@@ -209,8 +212,22 @@ Middleware<AppState> _createLoadState(
         companyStates.add(await companyRepositories[i].loadCompanyState(i));
       }
 
+      if (kIsWeb && prefState.isDesktop) {
+        var browserRoute = WebUtils.browserRoute;
+        if (browserRoute.isNotEmpty) {
+          if (browserRoute == '/kanban') {
+            browserRoute = '/task';
+            prefState = prefState.rebuild((b) => b
+              ..showKanban = true
+              ..useSidebarEditor[EntityType.task] = false);
+          }
+
+          uiState = uiState.rebuild((b) => b..currentRoute = browserRoute);
+        }
+      }
+
       final AppState appState = AppState(
-              prefState: store.state.prefState,
+              prefState: prefState,
               reportErrors: store.state.account.reportErrors)
           .rebuild((b) => b
             ..authState.replace(authState)
