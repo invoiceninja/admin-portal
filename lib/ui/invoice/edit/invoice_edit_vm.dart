@@ -126,11 +126,11 @@ class InvoiceEditVM extends EntityEditVM {
                 appContext.navigator.pop(savedInvoice);
               }
             } else {
+              viewEntity(
+                  appContext: appContext, entity: savedInvoice, force: true);
+
               if (action != null) {
                 handleEntityAction(appContext, savedInvoice, action);
-              } else {
-                viewEntity(
-                    appContext: appContext, entity: savedInvoice, force: true);
               }
             }
           }).catchError((Object error) {
