@@ -100,10 +100,11 @@ class InvoiceOverview extends StatelessWidget {
             : (invoice.isQuote || invoice.isRecurringInvoice)
                 ? null
                 : localization.balanceDue,
-        secondValue: [EntityType.invoice, EntityType.credit]
-                .contains(invoice.entityType)
-            ? formatNumber(invoice.balance, context, clientId: invoice.clientId)
-            : null,
+        secondValue:
+            [EntityType.invoice, EntityType.credit].contains(invoice.entityType)
+                ? formatNumber(invoice.balanceOrAmount, context,
+                    clientId: invoice.clientId)
+                : null,
       ),
       ListDivider(),
     ];
