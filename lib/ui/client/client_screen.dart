@@ -35,6 +35,7 @@ class ClientScreen extends StatelessWidget {
       entityType: EntityType.client,
       onHamburgerLongPress: () => store.dispatch(StartClientMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.clientListState.filterClearedAt}__'),
         entityType: EntityType.client,
         entityIds: viewModel.clientList,
         filter: state.clientListState.filter,

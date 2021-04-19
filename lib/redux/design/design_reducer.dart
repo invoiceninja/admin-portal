@@ -65,7 +65,15 @@ final designListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromDesignMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearDesignMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewDesignList>(_viewDesignList),
 ]);
+
+ListUIState _viewDesignList(
+    ListUIState designListState, ViewDesignList action) {
+  return designListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterDesignsByCustom1(
     ListUIState designListState, FilterDesignsByCustom1 action) {

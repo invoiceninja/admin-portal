@@ -37,6 +37,7 @@ class TokenScreen extends StatelessWidget {
       onHamburgerLongPress: () => store.dispatch(StartTokenMultiselect()),
       onCancelSettingsSection: kSettingsAccountManagement,
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.tokenListState.filterClearedAt}__'),
         entityType: EntityType.token,
         entityIds: viewModel.tokenList,
         filter: state.tokenListState.filter,

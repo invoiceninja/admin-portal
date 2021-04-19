@@ -36,6 +36,7 @@ class ExpenseScreen extends StatelessWidget {
       entityType: EntityType.expense,
       onHamburgerLongPress: () => store.dispatch(StartExpenseMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.expenseListState.filterClearedAt}__'),
         entityType: EntityType.expense,
         entityIds: viewModel.expenseList,
         filter: state.expenseListState.filter,

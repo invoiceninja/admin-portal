@@ -34,6 +34,7 @@ class GroupSettingsScreen extends StatelessWidget {
       entityType: EntityType.group,
       onHamburgerLongPress: () => store.dispatch(StartGroupMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.groupListState.filterClearedAt}__'),
         entityType: EntityType.group,
         entityIds: viewModel.groupList,
         filter: state.groupListState.filter,

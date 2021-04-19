@@ -167,7 +167,14 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromQuoteMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearQuoteMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewQuoteList>(_viewQuoteList),
 ]);
+
+ListUIState _viewQuoteList(ListUIState quoteListState, ViewQuoteList action) {
+  return quoteListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterQuotesByCustom1(
     ListUIState quoteListState, FilterQuotesByCustom1 action) {

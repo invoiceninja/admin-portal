@@ -85,7 +85,15 @@ final stubListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromStubMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearStubMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewStubList>(_viewStubList),
 ]);
+
+ListUIState _viewStubList(
+    ListUIState stubListState, ViewStubList action) {
+  return stubListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterStubsByCustom1(
     ListUIState stubListState, FilterStubsByCustom1 action) {

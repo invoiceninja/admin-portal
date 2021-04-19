@@ -85,7 +85,15 @@ final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromPaymentMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearPaymentMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewPaymentList>(_viewPaymentList),
 ]);
+
+ListUIState _viewPaymentList(
+    ListUIState paymentListState, ViewPaymentList action) {
+  return paymentListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterPaymentsByCustom1(
     ListUIState paymentListState, FilterPaymentsByCustom1 action) {

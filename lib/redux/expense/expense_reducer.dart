@@ -77,7 +77,15 @@ final expenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromExpenseMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearExpenseMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewExpenseList>(_viewExpenseList),
 ]);
+
+ListUIState _viewExpenseList(
+    ListUIState expenseListState, ViewExpenseList action) {
+  return expenseListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterExpensesByCustom1(
     ListUIState expenseListState, FilterExpensesByCustom1 action) {

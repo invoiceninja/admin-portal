@@ -34,6 +34,7 @@ class DesignScreen extends StatelessWidget {
       onHamburgerLongPress: () => store.dispatch(StartDesignMultiselect()),
       onCancelSettingsSection: kSettingsInvoiceDesign,
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.designListState.filterClearedAt}__'),
         entityType: EntityType.design,
         entityIds: viewModel.designList,
         filter: state.designListState.filter,

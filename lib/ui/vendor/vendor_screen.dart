@@ -34,6 +34,7 @@ class VendorScreen extends StatelessWidget {
       entityType: EntityType.vendor,
       onHamburgerLongPress: () => store.dispatch(StartVendorMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.vendorListState.filterClearedAt}__'),
         entityType: EntityType.vendor,
         entityIds: viewModel.vendorList,
         filter: state.vendorListState.filter,

@@ -36,6 +36,8 @@ class PaymentTermScreen extends StatelessWidget {
       onCancelSettingsSection: kSettingsCompanyDetails,
       onCancelSettingsIndex: 3,
       appBarTitle: ListFilter(
+        key: ValueKey(
+            '__filter_${state.paymentTermListState.filterClearedAt}__'),
         entityType: EntityType.paymentTerm,
         entityIds: viewModel.paymentTermList,
         filter: state.paymentTermListState.filter,

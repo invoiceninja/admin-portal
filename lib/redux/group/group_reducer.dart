@@ -74,7 +74,14 @@ final groupListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromGroupMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearGroupMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewGroupList>(_viewGroupList),
 ]);
+
+ListUIState _viewGroupList(ListUIState groupListState, ViewGroupList action) {
+  return groupListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterGroupsByCustom1(
     ListUIState groupListState, FilterGroupsByCustom1 action) {

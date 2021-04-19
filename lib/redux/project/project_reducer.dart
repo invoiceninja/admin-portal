@@ -98,7 +98,15 @@ final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromProjectMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearProjectMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewProjectList>(_viewProjectList),
 ]);
+
+ListUIState _viewProjectList(
+    ListUIState projectListState, ViewProjectList action) {
+  return projectListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterProjectsByCustom1(
     ListUIState projectListState, FilterProjectsByCustom1 action) {

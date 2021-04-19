@@ -74,7 +74,14 @@ final userListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromUserMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearUserMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewUserList>(_viewUserList),
 ]);
+
+ListUIState _viewUserList(ListUIState userListState, ViewUserList action) {
+  return userListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterUsersByCustom1(
     ListUIState userListState, FilterUsersByCustom1 action) {

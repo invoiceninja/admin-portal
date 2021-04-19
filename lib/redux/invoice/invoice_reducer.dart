@@ -173,7 +173,15 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromInvoiceMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearInvoiceMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewInvoiceList>(_viewInvoiceList),
 ]);
+
+ListUIState _viewInvoiceList(
+    ListUIState invoiceListState, ViewInvoiceList action) {
+  return invoiceListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterInvoicesByCustom1(
     ListUIState invoiceListState, FilterInvoicesByCustom1 action) {

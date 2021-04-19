@@ -54,7 +54,15 @@ final documentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromDocumentMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearDocumentMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewDocumentList>(_viewDocumentList),
 ]);
+
+ListUIState _viewDocumentList(
+    ListUIState documentListState, ViewDocumentList action) {
+  return documentListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterDocumentsByCustom1(
     ListUIState documentListState, FilterDocumentsByCustom1 action) {

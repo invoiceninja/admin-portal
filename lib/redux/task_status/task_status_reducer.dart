@@ -81,7 +81,15 @@ final taskStatusListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromTaskStatusMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTaskStatusMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewTaskStatusList>(_viewTaskStatusList),
 ]);
+
+ListUIState _viewTaskStatusList(
+    ListUIState taskStatusListState, ViewTaskStatusList action) {
+  return taskStatusListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterTaskStatusesByCustom1(
     ListUIState taskStatusListState, FilterTaskStatusesByCustom1 action) {

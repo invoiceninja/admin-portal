@@ -33,6 +33,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
       onHamburgerLongPress: () => store.dispatch(StartTaxRateMultiselect()),
       onCancelSettingsSection: kSettingsTaxSettings,
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.taxRateListState.filterClearedAt}__'),
         entityType: EntityType.taxRate,
         entityIds: viewModel.taxRateList,
         filter: state.taxRateListState.filter,

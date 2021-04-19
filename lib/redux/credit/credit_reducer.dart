@@ -167,7 +167,15 @@ final creditListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromCreditMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearCreditMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewCreditList>(_viewCreditList),
 ]);
+
+ListUIState _viewCreditList(
+    ListUIState creditListState, ViewCreditList action) {
+  return creditListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterCreditsByCustom1(
     ListUIState creditListState, FilterCreditsByCustom1 action) {

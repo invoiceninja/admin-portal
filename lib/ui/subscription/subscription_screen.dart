@@ -38,6 +38,7 @@ class SubscriptionScreen extends StatelessWidget {
       onHamburgerLongPress: () =>
           store.dispatch(StartSubscriptionMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.subscriptionListState.filterClearedAt}__'),
         entityType: EntityType.subscription,
         entityIds: viewModel.subscriptionList,
         filter: state.subscriptionListState.filter,

@@ -133,7 +133,15 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromClientMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearClientMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewClientList>(_viewClientList),
 ]);
+
+ListUIState _viewClientList(
+    ListUIState clientListState, ViewClientList action) {
+  return clientListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterClientsByCustom1(
     ListUIState clientListState, FilterClientsByCustom1 action) {

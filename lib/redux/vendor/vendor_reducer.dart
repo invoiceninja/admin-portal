@@ -126,7 +126,15 @@ final vendorListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromVendorMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearVendorMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewVendorList>(_viewVendorList),
 ]);
+
+ListUIState _viewVendorList(
+    ListUIState vendorListState, ViewVendorList action) {
+  return vendorListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterVendorsByCustom1(
     ListUIState vendorListState, FilterVendorsByCustom1 action) {

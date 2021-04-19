@@ -35,6 +35,7 @@ class CreditScreen extends StatelessWidget {
       entityType: EntityType.credit,
       onHamburgerLongPress: () => store.dispatch(StartCreditMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.creditListState.filterClearedAt}__'),
         entityType: EntityType.credit,
         entityIds: viewModel.creditList,
         filter: state.creditListState.filter,
