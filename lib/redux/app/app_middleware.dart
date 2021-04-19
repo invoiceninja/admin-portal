@@ -214,7 +214,7 @@ Middleware<AppState> _createLoadState(
 
       if (kIsWeb && prefState.isDesktop) {
         var browserRoute = WebUtils.browserRoute;
-        if (browserRoute.isNotEmpty) {
+        if (browserRoute.isNotEmpty && browserRoute.length > 4) {
           if (browserRoute == '/kanban') {
             browserRoute = '/task';
             prefState = prefState.rebuild((b) => b
