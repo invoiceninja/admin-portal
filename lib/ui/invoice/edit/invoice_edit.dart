@@ -98,6 +98,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
       actions: [
         EntityAction.viewPdf,
         EntityAction.emailInvoice,
+        EntityAction.markSent,
+        EntityAction.markPaid,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: isFullscreen

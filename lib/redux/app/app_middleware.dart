@@ -184,6 +184,7 @@ Middleware<AppState> _createLoadState(
     final action = dynamicAction as LoadStateRequest;
 
     try {
+      final state = store.state;
       final prefs = await SharedPreferences.getInstance();
       final appVersion = prefs.getString(kSharedPrefAppVersion);
 
@@ -204,7 +205,7 @@ Middleware<AppState> _createLoadState(
         throw 'New app version - clearing state';
       }
 
-      var prefState = store.state.prefState;
+      final prefState = state.prefState;
       authState = await authRepository.loadAuthState();
       uiState = await uiRepository.loadUIState();
       staticState = await staticRepository.loadStaticState();
@@ -212,18 +213,10 @@ Middleware<AppState> _createLoadState(
         companyStates.add(await companyRepositories[i].loadCompanyState(i));
       }
 
-      if (kIsWeb && prefState.isDesktop) {
-        var browserRoute = WebUtils.browserRoute;
-        if (browserRoute.isNotEmpty && browserRoute.length > 4) {
-          if (browserRoute == '/kanban') {
-            browserRoute = '/task';
-            prefState = prefState.rebuild((b) => b
-              ..showKanban = true
-              ..useSidebarEditor[EntityType.task] = true);
-          }
-
-          uiState = uiState.rebuild((b) => b..currentRoute = browserRoute);
-        }
+      // Carry over a deeplink URL on the web
+      if (state.uiState.currentRoute != LoginScreen.route) {
+        uiState = uiState
+            .rebuild((b) => b..currentRoute = state.uiState.currentRoute);
       }
 
       final AppState appState = AppState(

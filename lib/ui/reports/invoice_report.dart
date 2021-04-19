@@ -120,13 +120,13 @@ ReportResult invoiceReport(
           value = invoice.amount;
           break;
         case InvoiceReportFields.balance:
-          value = invoice.balance;
+          value = invoice.balanceOrAmount;
           break;
         case InvoiceReportFields.converted_amount:
           value = invoice.amount * 1 / invoice.exchangeRate;
           break;
         case InvoiceReportFields.converted_balance:
-          value = invoice.balance * 1 / invoice.exchangeRate;
+          value = invoice.balanceOrAmount * 1 / invoice.exchangeRate;
           break;
         case InvoiceReportFields.client:
           value = client?.displayName ?? '';
@@ -234,7 +234,7 @@ ReportResult invoiceReport(
           value = invoice.netAmount;
           break;
         case InvoiceReportFields.net_balance:
-          value = invoice.netBalance;
+          value = invoice.netBalanceOrAmount;
           break;
         case InvoiceReportFields.exchange_rate:
           value = invoice.exchangeRate;

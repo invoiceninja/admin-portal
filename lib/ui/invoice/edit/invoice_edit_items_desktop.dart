@@ -68,6 +68,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final hasTax3 = company.enableThirdItemTaxRate ||
         includedLineItems.any((item) => item.taxName3.isNotEmpty);
 
+    final customField1 =
+        widget.isTasks ? CustomFieldType.task1 : CustomFieldType.product1;
+    final customField2 =
+        widget.isTasks ? CustomFieldType.task2 : CustomFieldType.product2;
+    final customField3 =
+        widget.isTasks ? CustomFieldType.task3 : CustomFieldType.product3;
+    final customField4 =
+        widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
+
     if (lineItems.where((item) => item.isEmpty).isEmpty) {
       lineItems.add(InvoiceItemEntity());
     }
@@ -88,16 +97,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     if (company.enableProductDiscount) {
       lastIndex++;
     }
-    if (company.hasCustomField(CustomFieldType.product1)) {
+    if (company.hasCustomField(customField1)) {
       lastIndex++;
     }
-    if (company.hasCustomField(CustomFieldType.product2)) {
+    if (company.hasCustomField(customField2)) {
       lastIndex++;
     }
-    if (company.hasCustomField(CustomFieldType.product3)) {
+    if (company.hasCustomField(customField3)) {
       lastIndex++;
     }
-    if (company.hasCustomField(CustomFieldType.product4)) {
+    if (company.hasCustomField(customField4)) {
       lastIndex++;
     }
 
@@ -116,18 +125,14 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           TableRow(children: [
             TableHeader(localization.item),
             TableHeader(localization.description),
-            if (company.hasCustomField(CustomFieldType.product1))
-              TableHeader(
-                  company.getCustomFieldLabel(CustomFieldType.product1)),
-            if (company.hasCustomField(CustomFieldType.product2))
-              TableHeader(
-                  company.getCustomFieldLabel(CustomFieldType.product2)),
-            if (company.hasCustomField(CustomFieldType.product3))
-              TableHeader(
-                  company.getCustomFieldLabel(CustomFieldType.product3)),
-            if (company.hasCustomField(CustomFieldType.product4))
-              TableHeader(
-                  company.getCustomFieldLabel(CustomFieldType.product4)),
+            if (company.hasCustomField(customField1))
+              TableHeader(company.getCustomFieldLabel(customField1)),
+            if (company.hasCustomField(customField2))
+              TableHeader(company.getCustomFieldLabel(customField2)),
+            if (company.hasCustomField(customField3))
+              TableHeader(company.getCustomFieldLabel(customField3)),
+            if (company.hasCustomField(customField4))
+              TableHeader(company.getCustomFieldLabel(customField4)),
             if (hasTax1) TableHeader(localization.tax),
             if (hasTax2) TableHeader(localization.tax),
             if (hasTax3) TableHeader(localization.tax),
@@ -388,11 +393,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         keyboardType: TextInputType.multiline,
                       ),
                     ),
-                    if (company.hasCustomField(CustomFieldType.product1))
+                    if (company.hasCustomField(customField1))
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: CustomField(
-                          field: CustomFieldType.product1,
+                          field: customField1,
                           value: lineItems[index].customValue1,
                           hideFieldLabel: true,
                           onChanged: (value) => viewModel.onChangedInvoiceItem(
@@ -402,11 +407,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           onSavePressed: widget.entityViewModel.onSavePressed,
                         ),
                       ),
-                    if (company.hasCustomField(CustomFieldType.product2))
+                    if (company.hasCustomField(customField2))
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: CustomField(
-                          field: CustomFieldType.product2,
+                          field: customField2,
                           value: lineItems[index].customValue2,
                           hideFieldLabel: true,
                           onChanged: (value) => viewModel.onChangedInvoiceItem(
@@ -430,11 +435,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           onSavePressed: widget.entityViewModel.onSavePressed,
                         ),
                       ),
-                    if (company.hasCustomField(CustomFieldType.product4))
+                    if (company.hasCustomField(customField4))
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: CustomField(
-                          field: CustomFieldType.product4,
+                          field: customField4,
                           value: lineItems[index].customValue4,
                           hideFieldLabel: true,
                           onChanged: (value) => viewModel.onChangedInvoiceItem(

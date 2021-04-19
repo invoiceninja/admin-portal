@@ -94,6 +94,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     @required PrefState prefState,
     @required bool reportErrors,
     String url,
+    String currentRoute,
   }) {
     return _$AppState._(
       isLoading: false,
@@ -106,7 +107,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
               .map((index) => UserCompanyState(reportErrors))
               .toList()),
-      uiState: UIState(),
+      uiState: UIState(currentRoute: currentRoute),
       prefState: prefState ?? PrefState(),
     );
   }
@@ -734,6 +735,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       !kReleaseMode || !isProduction || account.plan == kPlanEnterprise;
 
   //bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
+
+  bool get isPaidAccount =>
+      isSelfHosted ? isWhiteLabeled : (isProPlan || isEnterprisePlan);
 
   bool get isUserConfirmed {
     if (!kReleaseMode) {

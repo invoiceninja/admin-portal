@@ -33,6 +33,7 @@ class CustomField extends StatefulWidget {
 
 class _CustomFieldState extends State<CustomField> {
   TextEditingController _controller;
+  String _value;
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _CustomFieldState extends State<CustomField> {
 
     _controller = widget.controller ?? TextEditingController();
     _controller.text = widget.value ?? '';
+    _value = widget.value;
   }
 
   @override
@@ -110,7 +112,7 @@ class _CustomFieldState extends State<CustomField> {
         );
       case kFieldTypeDropdown:
         return AppDropdownButton<String>(
-          value: widget.value,
+          value: _value,
           items: fieldOptions
               .map((option) => DropdownMenuItem<String>(
                     value: option,
@@ -118,7 +120,9 @@ class _CustomFieldState extends State<CustomField> {
                   ))
               .toList(),
           onChanged: (dynamic value) {
-            _controller.text = value;
+            setState(() {
+              _controller.text = _value = value;
+            });
             Debouncer.complete();
             if (widget.onChanged != null) {
               widget.onChanged(value);

@@ -250,27 +250,35 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              field: CustomFieldType.product1,
-              value: widget.invoiceItem.customValue1,
+              field: widget.invoiceItem.isTask
+                  ? CustomFieldType.task1
+                  : CustomFieldType.product1,
               onSavePressed: widget.entityViewModel.onSavePressed,
+              value: _custom1Controller.text,
             ),
             CustomField(
               controller: _custom2Controller,
-              field: CustomFieldType.product2,
-              value: widget.invoiceItem.customValue2,
+              field: widget.invoiceItem.isTask
+                  ? CustomFieldType.task2
+                  : CustomFieldType.product2,
               onSavePressed: widget.entityViewModel.onSavePressed,
+              value: _custom2Controller.text,
             ),
             CustomField(
               controller: _custom3Controller,
-              field: CustomFieldType.product3,
-              value: widget.invoiceItem.customValue3,
+              field: widget.invoiceItem.isTask
+                  ? CustomFieldType.task3
+                  : CustomFieldType.product3,
               onSavePressed: widget.entityViewModel.onSavePressed,
+              value: _custom3Controller.text,
             ),
             CustomField(
               controller: _custom4Controller,
-              field: CustomFieldType.product4,
-              value: widget.invoiceItem.customValue4,
+              field: widget.invoiceItem.isTask
+                  ? CustomFieldType.task4
+                  : CustomFieldType.product4,
               onSavePressed: widget.entityViewModel.onSavePressed,
+              value: _custom4Controller.text,
             ),
             DecoratedFormField(
               label: localization.unitCost,

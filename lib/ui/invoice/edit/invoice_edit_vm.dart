@@ -110,8 +110,12 @@ class InvoiceEditVM extends EntityEditVM {
           }
           final localization = appContext.localization;
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-          store.dispatch(
-              SaveInvoiceRequest(completer: completer, invoice: invoice));
+          final refreshData =
+              ![EntityAction.markSent, EntityAction.markPaid].contains(action);
+          store.dispatch(SaveInvoiceRequest(
+              completer: completer,
+              invoice: invoice,
+              refreshData: refreshData));
           return completer.future.then((savedInvoice) {
             showToast(invoice.isNew
                 ? localization.createdInvoice
@@ -126,11 +130,11 @@ class InvoiceEditVM extends EntityEditVM {
                 appContext.navigator.pop(savedInvoice);
               }
             } else {
+              viewEntity(
+                  appContext: appContext, entity: savedInvoice, force: true);
+
               if (action != null) {
                 handleEntityAction(appContext, savedInvoice, action);
-              } else {
-                viewEntity(
-                    appContext: appContext, entity: savedInvoice, force: true);
               }
             }
           }).catchError((Object error) {

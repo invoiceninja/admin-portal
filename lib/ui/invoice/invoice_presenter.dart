@@ -79,7 +79,7 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.balance:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(invoice.balance, context,
+          child: Text(formatNumber(invoice.balanceOrAmount, context,
               clientId: invoice.clientId)),
         );
       case InvoiceFields.dueDate:

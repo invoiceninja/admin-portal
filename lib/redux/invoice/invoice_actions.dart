@@ -185,10 +185,15 @@ class DeleteInvoiceItem implements PersistUI {
 }
 
 class SaveInvoiceRequest implements StartSaving {
-  SaveInvoiceRequest({this.completer, this.invoice});
+  SaveInvoiceRequest({
+    this.completer,
+    this.invoice,
+    this.refreshData = true,
+  });
 
   final Completer completer;
   final InvoiceEntity invoice;
+  final bool refreshData;
 }
 
 class SaveInvoiceSuccess implements StopSaving, PersistData, PersistUI {
