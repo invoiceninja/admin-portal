@@ -341,6 +341,7 @@ abstract class PaymentEntity extends Object
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
+        number,
         transactionReference,
         privateNotes,
         customValue1,
@@ -356,6 +357,7 @@ abstract class PaymentEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
+        number,
         transactionReference,
         privateNotes,
         customValue1,
