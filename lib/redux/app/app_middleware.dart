@@ -219,7 +219,7 @@ Middleware<AppState> _createLoadState(
             browserRoute = '/task';
             prefState = prefState.rebuild((b) => b
               ..showKanban = true
-              ..useSidebarEditor[EntityType.task] = false);
+              ..useSidebarEditor[EntityType.task] = true);
           }
 
           uiState = uiState.rebuild((b) => b..currentRoute = browserRoute);
