@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
@@ -139,6 +140,21 @@ Future<AppState> _initialState(bool isTesting) async {
     }
   }
 
+  String browserRoute;
+  if (kIsWeb && prefState.isDesktop) {
+    browserRoute = WebUtils.browserRoute;
+    if (browserRoute.isNotEmpty && browserRoute.length > 4) {
+      if (browserRoute == '/kanban') {
+        browserRoute = '/task';
+        prefState = prefState.rebuild((b) => b
+          ..showKanban = true
+          ..useSidebarEditor[EntityType.task] = true);
+      }
+    } else {
+      browserRoute = null;
+    }
+  }
+
   bool reportErrors = false;
   if (kIsWeb) {
     reportErrors = WebUtils.getHtmlValue('report-errors') == '1';
@@ -151,5 +167,6 @@ Future<AppState> _initialState(bool isTesting) async {
     prefState: prefState,
     url: Config.DEMO_MODE ? '' : url,
     reportErrors: reportErrors,
+    currentRoute: browserRoute,
   );
 }

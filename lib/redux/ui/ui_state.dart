@@ -40,11 +40,11 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
-  factory UIState() {
+  factory UIState({String currentRoute}) {
     return _$UIState._(
       selectedCompanyIndex: 0,
       filterClearedAt: 0,
-      currentRoute: LoginScreen.route,
+      currentRoute: currentRoute ?? LoginScreen.route,
       previousRoute: '',
       previewStack: BuiltList<EntityType>(),
       dashboardUIState: DashboardUIState(),
