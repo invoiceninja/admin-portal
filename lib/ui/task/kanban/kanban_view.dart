@@ -251,7 +251,6 @@ class KanbanViewState extends State<KanbanView> {
                       },
                     ),
               onStartDragItem: (listIndex, itemIndex, state) {
-                print('## START DRAG');
                 setState(() => isDragging = true);
               },
               /*
@@ -267,7 +266,6 @@ class KanbanViewState extends State<KanbanView> {
                 int oldItemIndex,
                 BoardItemState state,
               ) {
-                print('## STOP DRAG');
                 setState(() => isDragging = false);
 
                 if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
