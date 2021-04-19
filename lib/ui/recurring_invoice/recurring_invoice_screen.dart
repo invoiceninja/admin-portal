@@ -37,6 +37,8 @@ class RecurringInvoiceScreen extends StatelessWidget {
       onHamburgerLongPress: () =>
           store.dispatch(StartRecurringInvoiceMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey(
+            '__filter_${state.recurringInvoiceListState.filterClearedAt}__'),
         entityType: EntityType.recurringInvoice,
         entityIds: viewModel.recurringInvoiceList,
         filter: state.recurringInvoiceListState.filter,

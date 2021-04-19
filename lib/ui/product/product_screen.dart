@@ -34,6 +34,7 @@ class ProductScreen extends StatelessWidget {
       entityType: EntityType.product,
       onHamburgerLongPress: () => store.dispatch(StartProductMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.productListState.filterClearedAt}__'),
         entityType: EntityType.product,
         entityIds: viewModel.productList,
         filter: state.productListState.filter,

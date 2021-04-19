@@ -314,6 +314,18 @@ class FilterUsersByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterUsersByCustom3 implements PersistUI {
+  FilterUsersByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterUsersByCustom4 implements PersistUI {
+  FilterUsersByCustom4(this.value);
+
+  final String value;
+}
+
 void handleUserAction(
     BuildContext context, List<BaseEntity> users, EntityAction action) {
   if (users.isEmpty) {

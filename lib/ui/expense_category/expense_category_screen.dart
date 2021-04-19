@@ -37,6 +37,8 @@ class ExpenseCategoryScreen extends StatelessWidget {
           store.dispatch(StartExpenseCategoryMultiselect()),
       onCancelSettingsSection: kSettingsExpenses,
       appBarTitle: ListFilter(
+        key: ValueKey(
+            '__filter_${state.expenseCategoryListState.filterClearedAt}__'),
         entityType: EntityType.expenseCategory,
         entityIds: viewModel.expenseCategoryList,
         filter: state.expenseCategoryListState.filter,

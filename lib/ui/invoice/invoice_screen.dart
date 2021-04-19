@@ -36,6 +36,7 @@ class InvoiceScreen extends StatelessWidget {
       entityType: EntityType.invoice,
       onHamburgerLongPress: () => store.dispatch(StartInvoiceMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.invoiceListState.filterClearedAt}__'),
         entityType: EntityType.invoice,
         entityIds: viewModel.invoiceList,
         filter: state.invoiceListState.filter,

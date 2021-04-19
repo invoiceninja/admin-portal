@@ -32,6 +32,7 @@ class PaymentScreen extends StatelessWidget {
       entityType: EntityType.payment,
       onHamburgerLongPress: () => store.dispatch(StartPaymentMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.paymentListState.filterClearedAt}__'),
         entityType: EntityType.payment,
         entityIds: viewModel.paymentList,
         filter: state.paymentListState.filter,

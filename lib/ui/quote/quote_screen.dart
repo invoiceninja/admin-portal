@@ -36,6 +36,7 @@ class QuoteScreen extends StatelessWidget {
       entityType: EntityType.quote,
       onHamburgerLongPress: () => store.dispatch(StartQuoteMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.quoteListState.filterClearedAt}__'),
         entityType: EntityType.quote,
         entityIds: viewModel.quoteList,
         filter: state.quoteListState.filter,

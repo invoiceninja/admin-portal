@@ -41,6 +41,7 @@ class TaskScreen extends StatelessWidget {
       entityType: EntityType.task,
       onHamburgerLongPress: () => store.dispatch(StartTaskMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.taskListState.filterClearedAt}__'),
         entityType: EntityType.task,
         entityIds: viewModel.taskList,
         filter: state.taskListState.filter,

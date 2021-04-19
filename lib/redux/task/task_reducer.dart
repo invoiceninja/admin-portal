@@ -14,8 +14,20 @@ EntityUIState taskUIReducer(TaskUIState state, dynamic action) {
     ..editing.replace(editingReducer(state.editing, action))
     ..editingTimeIndex = editingTimeReducer(state.editingTimeIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewTask>((completer, action) => true),
+  TypedReducer<bool, ViewTaskList>((completer, action) => false),
+  TypedReducer<bool, FilterTasksByState>((completer, action) => false),
+  TypedReducer<bool, FilterTasks>((completer, action) => false),
+  TypedReducer<bool, FilterTasksByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterTasksByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterTasksByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterTasksByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateTaskTab>((completer, action) {
@@ -97,7 +109,14 @@ final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromTaskMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTaskMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewTaskList>(_viewTaskList),
 ]);
+
+ListUIState _viewTaskList(ListUIState taskListState, ViewTaskList action) {
+  return taskListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterTasksByCustom1(
     ListUIState taskListState, FilterTasksByCustom1 action) {

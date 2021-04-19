@@ -17,10 +17,27 @@ EntityUIState recurringInvoiceUIReducer(
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemIndexReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..historyActivityId =
         historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewRecurringInvoice>((completer, action) => true),
+  TypedReducer<bool, ViewRecurringInvoiceList>((completer, action) => false),
+  TypedReducer<bool, FilterRecurringInvoicesByState>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterRecurringInvoices>((completer, action) => false),
+  TypedReducer<bool, FilterRecurringInvoicesByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterRecurringInvoicesByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterRecurringInvoicesByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterRecurringInvoicesByCustom4>(
+      (completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateRecurringInvoiceTab>((completer, action) {

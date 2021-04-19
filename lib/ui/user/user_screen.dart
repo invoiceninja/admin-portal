@@ -34,6 +34,7 @@ class UserScreen extends StatelessWidget {
       entityType: EntityType.user,
       onHamburgerLongPress: () => store.dispatch(StartUserMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.userListState.filterClearedAt}__'),
         entityType: EntityType.user,
         entityIds: viewModel.userList,
         filter: state.userListState.filter,

@@ -13,8 +13,20 @@ EntityUIState paymentTermUIReducer(PaymentTermUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(paymentTermListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewPaymentTerm>((completer, action) => true),
+  TypedReducer<bool, ViewPaymentTermList>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentTermsByState>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentTerms>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentTermsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentTermsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentTermsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentTermsByCustom4>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
@@ -75,7 +87,15 @@ final paymentTermListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromPaymentTermMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearPaymentTermMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewPaymentTermList>(_viewPaymentTermList),
 ]);
+
+ListUIState _viewPaymentTermList(
+    ListUIState paymentTermListState, ViewPaymentTermList action) {
+  return paymentTermListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterPaymentTermsByCustom1(
     ListUIState paymentTermListState, FilterPaymentTermsByCustom1 action) {

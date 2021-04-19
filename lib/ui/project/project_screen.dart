@@ -34,6 +34,7 @@ class ProjectScreen extends StatelessWidget {
       entityType: EntityType.project,
       onHamburgerLongPress: () => store.dispatch(StartProjectMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.projectListState.filterClearedAt}__'),
         entityType: EntityType.project,
         entityIds: viewModel.projectList,
         filter: state.projectListState.filter,

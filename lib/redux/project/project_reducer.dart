@@ -15,10 +15,22 @@ EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
     ..listUIState.replace(projectListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
     ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewProject>((completer, action) => true),
+  TypedReducer<bool, ViewProjectList>((completer, action) => false),
+  TypedReducer<bool, FilterProjectsByState>((completer, action) => false),
+  TypedReducer<bool, FilterProjects>((completer, action) => false),
+  TypedReducer<bool, FilterProjectsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterProjectsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterProjectsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterProjectsByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateProjectTab>((completer, action) {
@@ -98,7 +110,15 @@ final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromProjectMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearProjectMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewProjectList>(_viewProjectList),
 ]);
+
+ListUIState _viewProjectList(
+    ListUIState projectListState, ViewProjectList action) {
+  return projectListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterProjectsByCustom1(
     ListUIState projectListState, FilterProjectsByCustom1 action) {

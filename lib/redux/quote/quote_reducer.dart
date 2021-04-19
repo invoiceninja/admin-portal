@@ -16,10 +16,22 @@ EntityUIState quoteUIReducer(QuoteUIState state, dynamic action) {
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..historyActivityId =
         historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewQuote>((completer, action) => true),
+  TypedReducer<bool, ViewQuoteList>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByState>((completer, action) => false),
+  TypedReducer<bool, FilterQuotes>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateQuoteTab>((completer, action) {
@@ -167,7 +179,14 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromQuoteMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearQuoteMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewQuoteList>(_viewQuoteList),
 ]);
+
+ListUIState _viewQuoteList(ListUIState quoteListState, ViewQuoteList action) {
+  return quoteListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterQuotesByCustom1(
     ListUIState quoteListState, FilterQuotesByCustom1 action) {

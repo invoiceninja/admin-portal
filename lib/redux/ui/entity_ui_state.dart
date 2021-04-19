@@ -14,6 +14,9 @@ abstract class EntityUIState {
   @nullable
   String get selectedId;
 
+  @nullable
+  bool get forceSelected;
+
   int get tabIndex;
 
   @nullable

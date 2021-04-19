@@ -13,8 +13,20 @@ EntityUIState webhookUIReducer(WebhookUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(webhookListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewWebhook>((completer, action) => true),
+  TypedReducer<bool, ViewWebhookList>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByState>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooks>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByCustom4>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
@@ -72,7 +84,15 @@ final webhookListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromWebhookMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearWebhookMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewWebhookList>(_viewWebhookList),
 ]);
+
+ListUIState _viewWebhookList(
+    ListUIState webhookListState, ViewWebhookList action) {
+  return webhookListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterWebhooksByCustom1(
     ListUIState webhookListState, FilterWebhooksByCustom1 action) {

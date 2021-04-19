@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
@@ -400,7 +401,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final entityUIState = getUIState(type);
 
     return SelectionState(
-      selectedId: entityUIState.selectedId,
+      selectedId:
+          entityUIState.forceSelected == true ? entityUIState.selectedId : null,
       filterEntityId: uiState.filterEntityId,
       filterEntityType: uiState.filterEntityType,
     );
@@ -830,7 +832,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'FREQ: ${recurringInvoiceUIState.editing.frequencyId}';
     //return '## Logs: ${company.systemLogs}';
 
-    return '\n\nURL: ${authState.url}'
+    return '\n\nForce: ${clientUIState.forceSelected}'
+        '\n\nURL: ${authState.url}'
         '\nRoute: ${uiState.currentRoute}'
         '\nPrevious: ${uiState.previousRoute}'
         '\nPreview: ${uiState.previewStack}'
@@ -852,8 +855,11 @@ class Credentials {
 }
 
 class SelectionState {
-  const SelectionState(
-      {this.selectedId, this.filterEntityId, this.filterEntityType});
+  const SelectionState({
+    this.selectedId,
+    this.filterEntityId,
+    this.filterEntityType,
+  });
 
   final String selectedId;
   final String filterEntityId;

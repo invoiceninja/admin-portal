@@ -14,8 +14,20 @@ EntityUIState userUIReducer(UserUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(userListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewUser>((completer, action) => true),
+  TypedReducer<bool, ViewUserList>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByState>((completer, action) => false),
+  TypedReducer<bool, FilterUsers>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByCustom4>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
@@ -74,7 +86,14 @@ final userListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromUserMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearUserMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewUserList>(_viewUserList),
 ]);
+
+ListUIState _viewUserList(ListUIState userListState, ViewUserList action) {
+  return userListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterUsersByCustom1(
     ListUIState userListState, FilterUsersByCustom1 action) {

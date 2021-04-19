@@ -14,8 +14,20 @@ EntityUIState productUIReducer(ProductUIState state, dynamic action) {
     ..listUIState.replace(productListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewProduct>((completer, action) => true),
+  TypedReducer<bool, ViewProductList>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByState>((completer, action) => false),
+  TypedReducer<bool, FilterProducts>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateProductTab>((completer, action) {
@@ -86,7 +98,15 @@ final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromProductMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearProductMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewProductList>(_viewClientList),
 ]);
+
+ListUIState _viewClientList(
+    ListUIState productListState, ViewProductList action) {
+  return productListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterProductsByState(
     ListUIState productListState, FilterProductsByState action) {

@@ -36,6 +36,7 @@ class WebhookScreen extends StatelessWidget {
       onHamburgerLongPress: () => store.dispatch(StartWebhookMultiselect()),
       onCancelSettingsSection: kSettingsAccountManagement,
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.webhookListState.filterClearedAt}__'),
         entityType: EntityType.webhook,
         entityIds: viewModel.webhookList,
         filter: state.webhookListState.filter,

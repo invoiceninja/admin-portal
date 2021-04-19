@@ -14,8 +14,25 @@ EntityUIState expenseCategoryUIReducer(
   return state.rebuild((b) => b
     ..listUIState.replace(expenseCategoryListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewExpenseCategory>((completer, action) => true),
+  TypedReducer<bool, ViewExpenseCategoryList>((completer, action) => false),
+  TypedReducer<bool, FilterExpenseCategoriesByState>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterExpenseCategories>((completer, action) => false),
+  TypedReducer<bool, FilterExpenseCategoriesByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterExpenseCategoriesByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterExpenseCategoriesByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterExpenseCategoriesByCustom4>(
+      (completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>

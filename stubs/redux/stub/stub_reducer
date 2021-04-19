@@ -14,9 +14,22 @@ EntityUIState stubUIReducer(StubUIState state, dynamic action) {
     ..listUIState.replace(stubListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
      ..tabIndex = tabIndexReducer(state.tabIndex, action)
     );
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewStub>((completer, action) => true),
+  TypedReducer<bool, ViewStubList>((completer, action) => false),
+  TypedReducer<bool, FilterStubsByState>((completer, action) => false),
+  TypedReducer<bool, FilterStubs>((completer, action) => false),
+  TypedReducer<bool, FilterStubsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterStubsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterStubsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterStubsByCustom4>((completer, action) => false),
+]);
+
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateStubTab>((completer, action) {
@@ -85,7 +98,15 @@ final stubListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromStubMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearStubMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewStubList>(_viewStubList),
 ]);
+
+ListUIState _viewStubList(
+    ListUIState stubListState, ViewStubList action) {
+  return stubListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterStubsByCustom1(
     ListUIState stubListState, FilterStubsByCustom1 action) {

@@ -33,6 +33,7 @@ class DocumentScreen extends StatelessWidget {
       entityType: EntityType.document,
       onHamburgerLongPress: () => store.dispatch(StartDocumentMultiselect()),
       appBarTitle: ListFilter(
+        key: ValueKey('__filter_${state.documentListState.filterClearedAt}__'),
         entityType: EntityType.document,
         entityIds: viewModel.documentList,
         filter: state.documentListState.filter,

@@ -13,8 +13,20 @@ EntityUIState tokenUIReducer(TokenUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(tokenListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewToken>((completer, action) => true),
+  TypedReducer<bool, ViewTokenList>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByState>((completer, action) => false),
+  TypedReducer<bool, FilterTokens>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByCustom4>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
@@ -72,7 +84,14 @@ final tokenListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromTokenMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTokenMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ViewTokenList>(_viewTokenList),
 ]);
+
+ListUIState _viewTokenList(ListUIState tokenListState, ViewTokenList action) {
+  return tokenListState.rebuild((b) => b
+    ..filter = null
+    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+}
 
 ListUIState _filterTokensByCustom1(
     ListUIState tokenListState, FilterTokensByCustom1 action) {
