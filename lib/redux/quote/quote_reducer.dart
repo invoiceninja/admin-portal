@@ -16,10 +16,21 @@ EntityUIState quoteUIReducer(QuoteUIState state, dynamic action) {
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..historyActivityId =
         historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewQuote>((completer, action) => true),
+  TypedReducer<bool, FilterQuotesByState>((completer, action) => false),
+  TypedReducer<bool, FilterQuotes>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateQuoteTab>((completer, action) {

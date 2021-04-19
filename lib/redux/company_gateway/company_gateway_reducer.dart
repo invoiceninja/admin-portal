@@ -14,8 +14,24 @@ EntityUIState companyGatewayUIReducer(
   return state.rebuild((b) => b
     ..listUIState.replace(companyGatewayListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewCompanyGateway>((completer, action) => true),
+  TypedReducer<bool, FilterCompanyGatewaysByState>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterCompanyGateways>((completer, action) => false),
+  TypedReducer<bool, FilterCompanyGatewaysByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterCompanyGatewaysByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterCompanyGatewaysByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterCompanyGatewaysByCustom4>(
+      (completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>

@@ -15,10 +15,21 @@ EntityUIState creditUIReducer(CreditUIState state, dynamic action) {
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..historyActivityId =
         historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewCredit>((completer, action) => true),
+  TypedReducer<bool, FilterCreditsByState>((completer, action) => false),
+  TypedReducer<bool, FilterCredits>((completer, action) => false),
+  TypedReducer<bool, FilterCreditsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterCreditsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterCreditsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterCreditsByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateCreditTab>((completer, action) {

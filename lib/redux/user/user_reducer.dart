@@ -14,8 +14,19 @@ EntityUIState userUIReducer(UserUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(userListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewUser>((completer, action) => true),
+  TypedReducer<bool, FilterUsersByState>((completer, action) => false),
+  TypedReducer<bool, FilterUsers>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterUsersByCustom4>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>

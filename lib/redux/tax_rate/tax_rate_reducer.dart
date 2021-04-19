@@ -12,8 +12,17 @@ EntityUIState taxRateUIReducer(TaxRateUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(taxRateListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewTaxRate>((completer, action) => true),
+  TypedReducer<bool, FilterTaxRatesByState>((completer, action) => false),
+  TypedReducer<bool, FilterTaxRates>((completer, action) => false),
+  TypedReducer<bool, FilterTaxRatesByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterTaxRatesByCustom2>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>

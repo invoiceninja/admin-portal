@@ -13,8 +13,19 @@ EntityUIState paymentUIReducer(PaymentUIState state, dynamic action) {
     ..listUIState.replace(paymentListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewPayment>((completer, action) => true),
+  TypedReducer<bool, FilterPaymentsByState>((completer, action) => false),
+  TypedReducer<bool, FilterPayments>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentsByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdatePaymentTab>((completer, action) {

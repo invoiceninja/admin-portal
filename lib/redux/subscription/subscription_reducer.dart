@@ -14,8 +14,23 @@ EntityUIState subscriptionUIReducer(SubscriptionUIState state, dynamic action) {
     ..listUIState.replace(subscriptionListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewSubscription>((completer, action) => true),
+  TypedReducer<bool, FilterSubscriptionsByState>((completer, action) => false),
+  TypedReducer<bool, FilterSubscriptions>((completer, action) => false),
+  TypedReducer<bool, FilterSubscriptionsByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterSubscriptionsByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterSubscriptionsByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool, FilterSubscriptionsByCustom4>(
+      (completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateSubscriptionTab>((completer, action) {

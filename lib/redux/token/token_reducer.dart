@@ -13,8 +13,19 @@ EntityUIState tokenUIReducer(TokenUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(tokenListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewToken>((completer, action) => true),
+  TypedReducer<bool, FilterTokensByState>((completer, action) => false),
+  TypedReducer<bool, FilterTokens>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterTokensByCustom4>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>

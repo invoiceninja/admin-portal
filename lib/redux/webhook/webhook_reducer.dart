@@ -13,8 +13,19 @@ EntityUIState webhookUIReducer(WebhookUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(webhookListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewWebhook>((completer, action) => true),
+  TypedReducer<bool, FilterWebhooksByState>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooks>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterWebhooksByCustom4>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>

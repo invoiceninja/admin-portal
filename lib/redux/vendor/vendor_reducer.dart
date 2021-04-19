@@ -17,10 +17,21 @@ EntityUIState vendorUIReducer(VendorUIState state, dynamic action) {
     ..editingContact
         .replace(editingVendorContactReducer(state.editingContact, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
     ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewVendor>((completer, action) => true),
+  TypedReducer<bool, FilterVendorsByState>((completer, action) => false),
+  TypedReducer<bool, FilterVendors>((completer, action) => false),
+  TypedReducer<bool, FilterVendorsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterVendorsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterVendorsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterVendorsByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateVendorTab>((completer, action) {

@@ -14,8 +14,19 @@ EntityUIState productUIReducer(ProductUIState state, dynamic action) {
     ..listUIState.replace(productListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewProduct>((completer, action) => true),
+  TypedReducer<bool, FilterProductsByState>((completer, action) => false),
+  TypedReducer<bool, FilterProducts>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterProductsByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateProductTab>((completer, action) {

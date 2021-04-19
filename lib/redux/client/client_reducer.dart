@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:redux/redux.dart';
 
 EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
@@ -17,10 +18,21 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
     ..editingContact
         .replace(editingContactReducer(state.editingContact, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
     ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewClient>((completer, action) => true),
+  TypedReducer<bool, FilterClientsByState>((completer, action) => false),
+  TypedReducer<bool, FilterClients>((completer, action) => false),
+  TypedReducer<bool, FilterClientsByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterClientsByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterClientsByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterClientsByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateClientTab>((completer, action) {

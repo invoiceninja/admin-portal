@@ -14,8 +14,19 @@ EntityUIState taskStatusUIReducer(TaskStatusUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(taskStatusListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action));
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewTaskStatus>((completer, action) => true),
+  TypedReducer<bool, FilterTaskStatusesByState>((completer, action) => false),
+  TypedReducer<bool, FilterTaskStatuses>((completer, action) => false),
+  TypedReducer<bool, FilterTaskStatusesByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterTaskStatusesByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterTaskStatusesByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterTaskStatusesByCustom4>((completer, action) => false),
+]);
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, PreviewEntity>((selectedId, action) =>

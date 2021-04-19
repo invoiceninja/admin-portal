@@ -16,10 +16,21 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
     ..editing.replace(editingReducer(state.editing, action))
     ..editingItemIndex = editingItemIndexReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..historyActivityId =
         historyActivityIdReducer(state.historyActivityId, action));
 }
+
+final forceSelectedReducer = combineReducers<bool>([
+  TypedReducer<bool, ViewInvoice>((completer, action) => true),
+  TypedReducer<bool, FilterInvoicesByState>((completer, action) => false),
+  TypedReducer<bool, FilterInvoices>((completer, action) => false),
+  TypedReducer<bool, FilterInvoicesByCustom1>((completer, action) => false),
+  TypedReducer<bool, FilterInvoicesByCustom2>((completer, action) => false),
+  TypedReducer<bool, FilterInvoicesByCustom3>((completer, action) => false),
+  TypedReducer<bool, FilterInvoicesByCustom4>((completer, action) => false),
+]);
 
 final tabIndexReducer = combineReducers<int>([
   TypedReducer<int, UpdateInvoiceTab>((completer, action) {
