@@ -34,13 +34,9 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/subscription/subscription_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/task_status/task_status_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
 import 'package:invoiceninja_flutter/redux/token/token_reducer.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_reducer.dart';
