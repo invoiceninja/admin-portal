@@ -761,7 +761,7 @@ abstract class UserCompanyEntity
     }
 
     return permissions.contains('${permission}_all') ||
-        permissions.contains('${permission}_$entityType');
+        permissions.contains('${permission}_${entityType.snakeCase}');
   }
 
   bool receivesAllNotifications(String channel) =>
