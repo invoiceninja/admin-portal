@@ -93,7 +93,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     @required PrefState prefState,
     @required bool reportErrors,
-    String currentRoute,
     String url,
   }) {
     return _$AppState._(
@@ -107,7 +106,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
               .map((index) => UserCompanyState(reportErrors))
               .toList()),
-      uiState: UIState(currentRoute: currentRoute),
+      uiState: UIState(),
       prefState: prefState ?? PrefState(),
     );
   }

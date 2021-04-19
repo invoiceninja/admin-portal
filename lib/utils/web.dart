@@ -10,6 +10,8 @@ class WebUtils {
   static String get browserUrl =>
       formatApiUrl(window.location.href.split('#')[0]);
 
+  static String get browserRoute => window.location.hash.replaceFirst('#', '');
+
   static String getHtmlValue(String field) =>
       window.document.documentElement.dataset[field];
 

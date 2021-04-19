@@ -40,7 +40,6 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/subscription/subscription_middleware.dart';
-
 import 'package:invoiceninja_flutter/redux/task_status/task_status_middleware.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_middleware.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_middleware.dart';
@@ -140,17 +139,6 @@ Future<AppState> _initialState(bool isTesting) async {
     }
   }
 
-  String currentRoute;
-
-  /*
-  if (kIsWeb && prefState.isDesktop) {
-    currentRoute = html.window.location.hash.replaceFirst('#', '');
-    if (currentRoute.isEmpty || currentRoute == '/') {
-      currentRoute = DashboardScreenBuilder.route;
-    }
-  }
-   */
-
   bool reportErrors = false;
   if (kIsWeb) {
     reportErrors = WebUtils.getHtmlValue('report-errors') == '1';
@@ -161,7 +149,6 @@ Future<AppState> _initialState(bool isTesting) async {
 
   return AppState(
     prefState: prefState,
-    currentRoute: currentRoute,
     url: Config.DEMO_MODE ? '' : url,
     reportErrors: reportErrors,
   );
