@@ -80,7 +80,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
               DecoratedFormField(
                 autofocus: true,
                 initialValue: _description,
-                minLines: 3,
+                minLines: 2,
                 maxLines: 10,
                 onChanged: (value) => _description = value,
               ),
