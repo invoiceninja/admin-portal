@@ -24,6 +24,7 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewInvoice>((completer, action) => true),
+  TypedReducer<bool, ViewInvoiceList>((completer, action) => false),
   TypedReducer<bool, FilterInvoicesByState>((completer, action) => false),
   TypedReducer<bool, FilterInvoices>((completer, action) => false),
   TypedReducer<bool, FilterInvoicesByCustom1>((completer, action) => false),

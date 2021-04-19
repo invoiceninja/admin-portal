@@ -26,6 +26,7 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewClient>((completer, action) => true),
+  TypedReducer<bool, ViewClientList>((completer, action) => false),
   TypedReducer<bool, FilterClientsByState>((completer, action) => false),
   TypedReducer<bool, FilterClients>((completer, action) => false),
   TypedReducer<bool, FilterClientsByCustom1>((completer, action) => false),

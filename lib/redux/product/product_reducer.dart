@@ -20,6 +20,7 @@ EntityUIState productUIReducer(ProductUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewProduct>((completer, action) => true),
+  TypedReducer<bool, ViewProductList>((completer, action) => false),
   TypedReducer<bool, FilterProductsByState>((completer, action) => false),
   TypedReducer<bool, FilterProducts>((completer, action) => false),
   TypedReducer<bool, FilterProductsByCustom1>((completer, action) => false),

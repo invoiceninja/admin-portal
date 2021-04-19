@@ -25,6 +25,7 @@ EntityUIState recurringInvoiceUIReducer(
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewRecurringInvoice>((completer, action) => true),
+  TypedReducer<bool, ViewRecurringInvoiceList>((completer, action) => false),
   TypedReducer<bool, FilterRecurringInvoicesByState>(
       (completer, action) => false),
   TypedReducer<bool, FilterRecurringInvoices>((completer, action) => false),

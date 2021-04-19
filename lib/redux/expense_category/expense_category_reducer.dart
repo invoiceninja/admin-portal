@@ -20,6 +20,7 @@ EntityUIState expenseCategoryUIReducer(
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewExpenseCategory>((completer, action) => true),
+  TypedReducer<bool, ViewExpenseCategoryList>((completer, action) => false),
   TypedReducer<bool, FilterExpenseCategoriesByState>(
       (completer, action) => false),
   TypedReducer<bool, FilterExpenseCategories>((completer, action) => false),

@@ -19,6 +19,7 @@ EntityUIState paymentUIReducer(PaymentUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewPayment>((completer, action) => true),
+  TypedReducer<bool, ViewPaymentList>((completer, action) => false),
   TypedReducer<bool, FilterPaymentsByState>((completer, action) => false),
   TypedReducer<bool, FilterPayments>((completer, action) => false),
   TypedReducer<bool, FilterPaymentsByCustom1>((completer, action) => false),

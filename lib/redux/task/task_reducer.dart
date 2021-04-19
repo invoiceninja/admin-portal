@@ -20,6 +20,7 @@ EntityUIState taskUIReducer(TaskUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewTask>((completer, action) => true),
+  TypedReducer<bool, ViewTaskList>((completer, action) => false),
   TypedReducer<bool, FilterTasksByState>((completer, action) => false),
   TypedReducer<bool, FilterTasks>((completer, action) => false),
   TypedReducer<bool, FilterTasksByCustom1>((completer, action) => false),

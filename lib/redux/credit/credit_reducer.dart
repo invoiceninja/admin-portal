@@ -23,6 +23,7 @@ EntityUIState creditUIReducer(CreditUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewCredit>((completer, action) => true),
+  TypedReducer<bool, ViewCreditList>((completer, action) => false),
   TypedReducer<bool, FilterCreditsByState>((completer, action) => false),
   TypedReducer<bool, FilterCredits>((completer, action) => false),
   TypedReducer<bool, FilterCreditsByCustom1>((completer, action) => false),

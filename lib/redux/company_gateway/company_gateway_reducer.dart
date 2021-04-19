@@ -20,6 +20,7 @@ EntityUIState companyGatewayUIReducer(
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewCompanyGateway>((completer, action) => true),
+  TypedReducer<bool, ViewCompanyGatewayList>((completer, action) => false),
   TypedReducer<bool, FilterCompanyGatewaysByState>(
       (completer, action) => false),
   TypedReducer<bool, FilterCompanyGateways>((completer, action) => false),

@@ -23,6 +23,7 @@ EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewProject>((completer, action) => true),
+  TypedReducer<bool, ViewProjectList>((completer, action) => false),
   TypedReducer<bool, FilterProjectsByState>((completer, action) => false),
   TypedReducer<bool, FilterProjects>((completer, action) => false),
   TypedReducer<bool, FilterProjectsByCustom1>((completer, action) => false),

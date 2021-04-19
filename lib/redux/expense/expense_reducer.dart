@@ -19,6 +19,7 @@ EntityUIState expenseUIReducer(ExpenseUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewExpense>((completer, action) => true),
+  TypedReducer<bool, ViewExpenseList>((completer, action) => false),
   TypedReducer<bool, FilterExpensesByState>((completer, action) => false),
   TypedReducer<bool, FilterExpenses>((completer, action) => false),
   TypedReducer<bool, FilterExpensesByCustom1>((completer, action) => false),

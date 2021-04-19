@@ -19,6 +19,7 @@ EntityUIState tokenUIReducer(TokenUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewToken>((completer, action) => true),
+  TypedReducer<bool, ViewTokenList>((completer, action) => false),
   TypedReducer<bool, FilterTokensByState>((completer, action) => false),
   TypedReducer<bool, FilterTokens>((completer, action) => false),
   TypedReducer<bool, FilterTokensByCustom1>((completer, action) => false),

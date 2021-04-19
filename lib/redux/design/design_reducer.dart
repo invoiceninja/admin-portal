@@ -18,6 +18,7 @@ EntityUIState designUIReducer(DesignUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewDesign>((completer, action) => true),
+  TypedReducer<bool, ViewDesignList>((completer, action) => false),
   TypedReducer<bool, FilterDesignsByState>((completer, action) => false),
   TypedReducer<bool, FilterDesigns>((completer, action) => false),
   TypedReducer<bool, FilterDesignsByCustom1>((completer, action) => false),

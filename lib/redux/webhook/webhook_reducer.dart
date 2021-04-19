@@ -19,6 +19,7 @@ EntityUIState webhookUIReducer(WebhookUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewWebhook>((completer, action) => true),
+  TypedReducer<bool, ViewWebhookList>((completer, action) => false),
   TypedReducer<bool, FilterWebhooksByState>((completer, action) => false),
   TypedReducer<bool, FilterWebhooks>((completer, action) => false),
   TypedReducer<bool, FilterWebhooksByCustom1>((completer, action) => false),

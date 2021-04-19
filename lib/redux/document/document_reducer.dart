@@ -18,6 +18,7 @@ EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewDocument>((completer, action) => true),
+  TypedReducer<bool, ViewDocumentList>((completer, action) => false),
   TypedReducer<bool, FilterDocumentsByState>((completer, action) => false),
   TypedReducer<bool, FilterDocuments>((completer, action) => false),
   TypedReducer<bool, FilterDocumentsByCustom1>((completer, action) => false),

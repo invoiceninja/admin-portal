@@ -25,6 +25,7 @@ EntityUIState vendorUIReducer(VendorUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewVendor>((completer, action) => true),
+  TypedReducer<bool, ViewVendorList>((completer, action) => false),
   TypedReducer<bool, FilterVendorsByState>((completer, action) => false),
   TypedReducer<bool, FilterVendors>((completer, action) => false),
   TypedReducer<bool, FilterVendorsByCustom1>((completer, action) => false),

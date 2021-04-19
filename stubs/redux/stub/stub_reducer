@@ -21,6 +21,7 @@ EntityUIState stubUIReducer(StubUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewStub>((completer, action) => true),
+  TypedReducer<bool, ViewStubList>((completer, action) => false),
   TypedReducer<bool, FilterStubsByState>((completer, action) => false),
   TypedReducer<bool, FilterStubs>((completer, action) => false),
   TypedReducer<bool, FilterStubsByCustom1>((completer, action) => false),

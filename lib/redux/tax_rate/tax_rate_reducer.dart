@@ -18,6 +18,7 @@ EntityUIState taxRateUIReducer(TaxRateUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewTaxRate>((completer, action) => true),
+  TypedReducer<bool, ViewTaxRateList>((completer, action) => false),
   TypedReducer<bool, FilterTaxRatesByState>((completer, action) => false),
   TypedReducer<bool, FilterTaxRates>((completer, action) => false),
   TypedReducer<bool, FilterTaxRatesByCustom1>((completer, action) => false),

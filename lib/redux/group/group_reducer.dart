@@ -19,6 +19,7 @@ EntityUIState groupUIReducer(GroupUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewGroup>((completer, action) => true),
+  TypedReducer<bool, ViewGroupList>((completer, action) => false),
   TypedReducer<bool, FilterGroupsByState>((completer, action) => false),
   TypedReducer<bool, FilterGroups>((completer, action) => false),
   TypedReducer<bool, FilterGroupsByCustom1>((completer, action) => false),

@@ -20,6 +20,7 @@ EntityUIState subscriptionUIReducer(SubscriptionUIState state, dynamic action) {
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewSubscription>((completer, action) => true),
+  TypedReducer<bool, ViewSubscriptionList>((completer, action) => false),
   TypedReducer<bool, FilterSubscriptionsByState>((completer, action) => false),
   TypedReducer<bool, FilterSubscriptions>((completer, action) => false),
   TypedReducer<bool, FilterSubscriptionsByCustom1>(
