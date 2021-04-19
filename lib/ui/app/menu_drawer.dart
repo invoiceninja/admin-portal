@@ -19,7 +19,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/app/subscription_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -680,17 +679,20 @@ class SidebarFooter extends StatelessWidget {
                 icon: Icon(Icons.arrow_circle_up),
                 color: Colors.green,
                 onPressed: () async {
-                  if (isHosted(context)) {
+                  if (isHosted(context) &&
+                      !kIsWeb &&
+                      (Platform.isIOS || Platform.isAndroid)) {
                     showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
-                          if (!kIsWeb &&
-                              (Platform.isIOS || Platform.isAndroid)) {
-                            return UpgradeDialog();
-                          } else {
-                            return SubscriptionDialog();
-                          }
+                          return UpgradeDialog();
                         });
+                  }
+
+                  if (isHosted(context)) {
+                    if (await canLaunch(kAppPlansURL)) {
+                      launch(kAppPlansURL);
+                    }
                   } else {
                     if (await canLaunch(kWhiteLabelUrl)) {
                       launch(kWhiteLabelUrl);
