@@ -81,6 +81,8 @@ final userListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterUsers>(_filterUsers),
   TypedReducer<ListUIState, FilterUsersByCustom1>(_filterUsersByCustom1),
   TypedReducer<ListUIState, FilterUsersByCustom2>(_filterUsersByCustom2),
+  TypedReducer<ListUIState, FilterUsersByCustom3>(_filterUsersByCustom3),
+  TypedReducer<ListUIState, FilterUsersByCustom4>(_filterUsersByCustom4),
   TypedReducer<ListUIState, StartUserMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToUserMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromUserMultiselect>(
@@ -110,6 +112,24 @@ ListUIState _filterUsersByCustom2(
     return userListState.rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return userListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterUsersByCustom3(
+    ListUIState userListState, FilterUsersByCustom3 action) {
+  if (userListState.custom3Filters.contains(action.value)) {
+    return userListState.rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return userListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterUsersByCustom4(
+    ListUIState userListState, FilterUsersByCustom4 action) {
+  if (userListState.custom4Filters.contains(action.value)) {
+    return userListState.rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return userListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 
