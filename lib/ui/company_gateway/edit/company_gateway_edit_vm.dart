@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actio
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CompanyGatewayEditScreen extends StatelessWidget {
   const CompanyGatewayEditScreen({Key key}) : super(key: key);
@@ -119,6 +120,8 @@ class CompanyGatewayEditVM {
 
           webClient.post(url, credentials.token).then((dynamic response) {
             print('## RESPONSE: $response');
+            // TODO parse 'hash'
+            //launch('${credentials.url}/stripe-connect/');
           }).catchError((dynamic error) {
             showErrorDialog(
                 context: navigatorKey.currentContext, message: '$error');
