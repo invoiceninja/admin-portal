@@ -8,8 +8,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -51,6 +49,7 @@ class CompanyGatewayEditVM {
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.isLoading,
+    @required this.onStripeConnectPressed,
   });
 
   factory CompanyGatewayEditVM.fromStore(Store<AppState> store) {
@@ -58,60 +57,62 @@ class CompanyGatewayEditVM {
     final state = store.state;
 
     return CompanyGatewayEditVM(
-      state: state,
-      isLoading: state.isLoading,
-      isSaving: state.isSaving,
-      origCompanyGateway: state.companyGatewayState.map[companyGateway.id],
-      companyGateway: companyGateway,
-      company: state.company,
-      onChanged: (CompanyGatewayEntity companyGateway) {
-        store.dispatch(UpdateCompanyGateway(companyGateway));
-      },
-      onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: CompanyGatewayEntity(), force: true);
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
-      },
-      onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
-        Debouncer.runOnComplete(() {
-          final companyGateway = store.state.companyGatewayUIState.editing;
-          final localization = appContext.localization;
-          final Completer<CompanyGatewayEntity> completer =
-              new Completer<CompanyGatewayEntity>();
-          store.dispatch(SaveCompanyGatewayRequest(
-              completer: completer, companyGateway: companyGateway));
-          return completer.future.then((savedCompanyGateway) {
-            showToast(companyGateway.isNew
-                ? localization.createdCompanyGateway
-                : localization.updatedCompanyGateway);
+        state: state,
+        isLoading: state.isLoading,
+        isSaving: state.isSaving,
+        origCompanyGateway: state.companyGatewayState.map[companyGateway.id],
+        companyGateway: companyGateway,
+        company: state.company,
+        onChanged: (CompanyGatewayEntity companyGateway) {
+          store.dispatch(UpdateCompanyGateway(companyGateway));
+        },
+        onCancelPressed: (BuildContext context) {
+          createEntity(
+              context: context, entity: CompanyGatewayEntity(), force: true);
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        },
+        onSavePressed: (BuildContext context) {
+          final appContext = context.getAppContext();
+          Debouncer.runOnComplete(() {
+            final companyGateway = store.state.companyGatewayUIState.editing;
+            final localization = appContext.localization;
+            final Completer<CompanyGatewayEntity> completer =
+                new Completer<CompanyGatewayEntity>();
+            store.dispatch(SaveCompanyGatewayRequest(
+                completer: completer, companyGateway: companyGateway));
+            return completer.future.then((savedCompanyGateway) {
+              showToast(companyGateway.isNew
+                  ? localization.createdCompanyGateway
+                  : localization.updatedCompanyGateway);
 
-            if (state.prefState.isMobile) {
-              store
-                  .dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
-              if (companyGateway.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(CompanyGatewayViewScreen.route);
+              if (state.prefState.isMobile) {
+                store.dispatch(
+                    UpdateCurrentRoute(CompanyGatewayViewScreen.route));
+                if (companyGateway.isNew) {
+                  appContext.navigator
+                      .pushReplacementNamed(CompanyGatewayViewScreen.route);
+                } else {
+                  appContext.navigator.pop(savedCompanyGateway);
+                }
               } else {
-                appContext.navigator.pop(savedCompanyGateway);
+                viewEntityById(
+                    appContext: appContext,
+                    entityId: savedCompanyGateway.id,
+                    entityType: EntityType.companyGateway,
+                    force: true);
               }
-            } else {
-              viewEntityById(
-                  appContext: appContext,
-                  entityId: savedCompanyGateway.id,
-                  entityType: EntityType.companyGateway,
-                  force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
           });
+        },
+        onStripeConnectPressed: () {
+          //
         });
-      },
-    );
   }
 
   final CompanyGatewayEntity companyGateway;
@@ -123,4 +124,5 @@ class CompanyGatewayEditVM {
   final bool isSaving;
   final CompanyGatewayEntity origCompanyGateway;
   final AppState state;
+  final Function onStripeConnectPressed;
 }

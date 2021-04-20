@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -105,6 +106,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ScrollableListView(
             children: <Widget>[
               FormCard(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   if (companyGateway.isNew)
                     EntityDropdown(
@@ -127,13 +129,21 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                             ..label = gateway.listDisplayName),
                         );
                       },
-                      //onFieldSubmitted: (String value) => _node.nextFocus(),
                     ),
-                  GatewayConfigSettings(
-                    key: ValueKey('__${companyGateway.gatewayId}__'),
-                    companyGateway: companyGateway,
-                    viewModel: viewModel,
-                  ),
+                  if (!kReleaseMode ||
+                      companyGateway.gatewayId == kGatewayStripeConnect)
+                    AppButton(
+                      label: localization.stripeConnect.toUpperCase(),
+                      onPressed: () {
+                        viewModel.onStripeConnectPressed();
+                      },
+                    )
+                  else
+                    GatewayConfigSettings(
+                      key: ValueKey('__${companyGateway.gatewayId}__'),
+                      companyGateway: companyGateway,
+                      viewModel: viewModel,
+                    ),
                 ],
               ),
             ],
