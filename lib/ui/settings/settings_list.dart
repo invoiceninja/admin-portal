@@ -340,7 +340,7 @@ class SettingsSearch extends StatelessWidget {
     ],
     kSettingsOnlinePayments: [
       [
-        'custom_labels',
+        'company_gateways',
         'auto_bill_on',
         'use_available_credits',
         'allow_over_payment',
