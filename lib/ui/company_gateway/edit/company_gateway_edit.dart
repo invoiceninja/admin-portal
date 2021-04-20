@@ -134,9 +134,11 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       companyGateway.gatewayId == kGatewayStripeConnect)
                     AppButton(
                       label: localization.stripeConnect.toUpperCase(),
-                      onPressed: () {
-                        viewModel.onStripeConnectPressed();
-                      },
+                      onPressed: viewModel.state.isSaving
+                          ? null
+                          : () {
+                              viewModel.onStripeConnectPressed();
+                            },
                     )
                   else
                     GatewayConfigSettings(

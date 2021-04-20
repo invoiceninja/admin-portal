@@ -118,11 +118,15 @@ class CompanyGatewayEditVM {
           final credentials = state.credentials;
           final url = '${credentials.url}/one_time_token';
 
+          store.dispatch(StartSaving());
+
           webClient.post(url, credentials.token).then((dynamic response) {
+            store.dispatch(StopSaving());
             print('## RESPONSE: $response');
             // TODO parse 'hash'
             //launch('${credentials.url}/stripe-connect/');
           }).catchError((dynamic error) {
+            store.dispatch(StopSaving());
             showErrorDialog(
                 context: navigatorKey.currentContext, message: '$error');
           });
