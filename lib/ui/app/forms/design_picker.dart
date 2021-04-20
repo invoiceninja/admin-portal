@@ -26,6 +26,8 @@ class DesignPicker extends StatelessWidget {
       value: initialValue,
       onChanged: (dynamic value) => onSelected(designState.map[value]),
       items: designState.list
+          .where((designId) =>
+              designState.map[designId].isActive || designId == initialValue)
           .map((value) => DropdownMenuItem(
                 value: value,
                 child: Text(designState.map[value].displayName),
