@@ -50,6 +50,10 @@ class UserScreen extends StatelessWidget {
             store.dispatch(FilterUsersByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterUsersByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterUsersByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterUsersByCustom4(value)),
         sortFields: [
           UserFields.firstName,
           UserFields.lastName,

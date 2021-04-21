@@ -251,20 +251,21 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                         const EdgeInsets.only(left: 8, bottom: 12, right: 8),
                     child: Row(
                       children: [
-                        LiveText(
-                          () {
-                            return formatDuration(task.calculateDuration()) +
-                                (client.isOld
-                                    ? ' • ' + client.displayName
-                                    : '') +
-                                (project.isOld ? ' • ' + project.name : '');
-                          },
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: textColor.withOpacity(kLighterOpacity),
+                        Expanded(
+                          child: LiveText(
+                            () {
+                              return formatDuration(task.calculateDuration()) +
+                                  (client.isOld
+                                      ? ' • ' + client.displayName
+                                      : '') +
+                                  (project.isOld ? ' • ' + project.name : '');
+                            },
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: textColor.withOpacity(kLighterOpacity),
+                            ),
                           ),
                         ),
-                        Spacer(),
                         if (task.documents.isNotEmpty)
                           Padding(
                             padding: const EdgeInsets.only(left: 8),

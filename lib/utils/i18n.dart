@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'stripe_connect': 'Stripe Connect',
       'order': 'Order',
       'unassigned': 'Unassigned',
       'partial_value': 'Must be greater than zero and less than the total',
@@ -60251,6 +60252,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get order =>
       _localizedValues[localeCode]['order'] ?? _localizedValues['en']['order'];
+
+  String get stripeConnect =>
+      _localizedValues[localeCode]['stripe_connect'] ??
+      _localizedValues['en']['stripe_connect'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

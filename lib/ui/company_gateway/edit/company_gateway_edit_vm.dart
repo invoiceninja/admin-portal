@@ -1,16 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -19,6 +20,7 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actio
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CompanyGatewayEditScreen extends StatelessWidget {
   const CompanyGatewayEditScreen({Key key}) : super(key: key);
@@ -51,6 +53,7 @@ class CompanyGatewayEditVM {
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.isLoading,
+    @required this.onStripeConnectPressed,
   });
 
   factory CompanyGatewayEditVM.fromStore(Store<AppState> store) {
@@ -58,60 +61,82 @@ class CompanyGatewayEditVM {
     final state = store.state;
 
     return CompanyGatewayEditVM(
-      state: state,
-      isLoading: state.isLoading,
-      isSaving: state.isSaving,
-      origCompanyGateway: state.companyGatewayState.map[companyGateway.id],
-      companyGateway: companyGateway,
-      company: state.company,
-      onChanged: (CompanyGatewayEntity companyGateway) {
-        store.dispatch(UpdateCompanyGateway(companyGateway));
-      },
-      onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: CompanyGatewayEntity(), force: true);
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
-      },
-      onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
-        Debouncer.runOnComplete(() {
-          final companyGateway = store.state.companyGatewayUIState.editing;
-          final localization = appContext.localization;
-          final Completer<CompanyGatewayEntity> completer =
-              new Completer<CompanyGatewayEntity>();
-          store.dispatch(SaveCompanyGatewayRequest(
-              completer: completer, companyGateway: companyGateway));
-          return completer.future.then((savedCompanyGateway) {
-            showToast(companyGateway.isNew
-                ? localization.createdCompanyGateway
-                : localization.updatedCompanyGateway);
+        state: state,
+        isLoading: state.isLoading,
+        isSaving: state.isSaving,
+        origCompanyGateway: state.companyGatewayState.map[companyGateway.id],
+        companyGateway: companyGateway,
+        company: state.company,
+        onChanged: (CompanyGatewayEntity companyGateway) {
+          store.dispatch(UpdateCompanyGateway(companyGateway));
+        },
+        onCancelPressed: (BuildContext context) {
+          createEntity(
+              context: context, entity: CompanyGatewayEntity(), force: true);
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        },
+        onSavePressed: (BuildContext context) {
+          final appContext = context.getAppContext();
+          Debouncer.runOnComplete(() {
+            final companyGateway = store.state.companyGatewayUIState.editing;
+            final localization = appContext.localization;
+            final Completer<CompanyGatewayEntity> completer =
+                new Completer<CompanyGatewayEntity>();
+            store.dispatch(SaveCompanyGatewayRequest(
+                completer: completer, companyGateway: companyGateway));
+            return completer.future.then((savedCompanyGateway) {
+              showToast(companyGateway.isNew
+                  ? localization.createdCompanyGateway
+                  : localization.updatedCompanyGateway);
 
-            if (state.prefState.isMobile) {
-              store
-                  .dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
-              if (companyGateway.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(CompanyGatewayViewScreen.route);
+              if (state.prefState.isMobile) {
+                store.dispatch(
+                    UpdateCurrentRoute(CompanyGatewayViewScreen.route));
+                if (companyGateway.isNew) {
+                  appContext.navigator
+                      .pushReplacementNamed(CompanyGatewayViewScreen.route);
+                } else {
+                  appContext.navigator.pop(savedCompanyGateway);
+                }
               } else {
-                appContext.navigator.pop(savedCompanyGateway);
+                viewEntityById(
+                    appContext: appContext,
+                    entityId: savedCompanyGateway.id,
+                    entityType: EntityType.companyGateway,
+                    force: true);
               }
-            } else {
-              viewEntityById(
-                  appContext: appContext,
-                  entityId: savedCompanyGateway.id,
-                  entityType: EntityType.companyGateway,
-                  force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          });
+        },
+        onStripeConnectPressed: () async {
+          final webClient = WebClient();
+          final credentials = state.credentials;
+          final url = '${credentials.url}/one_time_token';
+
+          store.dispatch(StartSaving());
+
+          webClient
+              .post(url, credentials.token,
+                  data: jsonEncode({
+                    'context': {'return_url': ''}
+                  }))
+              .then((dynamic response) {
+            store.dispatch(StopSaving());
+            print('## RESPONSE: $response');
+            // TODO parse 'hash'
+            //launch('${credentials.url}/stripe-connect/');
+          }).catchError((dynamic error) {
+            store.dispatch(StopSaving());
+            showErrorDialog(
+                context: navigatorKey.currentContext, message: '$error');
           });
         });
-      },
-    );
   }
 
   final CompanyGatewayEntity companyGateway;
@@ -123,4 +148,5 @@ class CompanyGatewayEditVM {
   final bool isSaving;
   final CompanyGatewayEntity origCompanyGateway;
   final AppState state;
+  final Function onStripeConnectPressed;
 }
