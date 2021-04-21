@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 
@@ -50,7 +51,8 @@ class _GrowableFormFieldState extends State<GrowableFormField> {
       onChanged: widget.onChanged,
       keyboardType: widget.keyboardType,
       minLines: 1,
-      maxLines: _hasFocus ? 20 : 1,
+      // TODO remove this isWeb check/needed to prevent overflow
+      maxLines: _hasFocus ? 20 : (kIsWeb ? 2 : 1),
     );
   }
 }
