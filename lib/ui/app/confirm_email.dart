@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -23,12 +24,16 @@ class ConfirmEmail extends StatelessWidget {
       child: state.isLoading || state.isSaving
           ? LoadingIndicator()
           : Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   localization.confirmYourEmailAddress,
                   style: Theme.of(context).textTheme.headline6,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16, bottom: 100),
+                  child: HelpText(state.user.email),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
