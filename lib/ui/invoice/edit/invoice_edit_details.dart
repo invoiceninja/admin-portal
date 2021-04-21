@@ -182,12 +182,14 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                           ))
                       .toList()),
               DatePicker(
-                  labelText: (invoice.lastSentDate ?? '').isNotEmpty
-                      ? localization.nextSendDate
-                      : localization.startDate,
-                  onSelected: (date) => viewModel.onChanged(
-                      invoice.rebuild((b) => b..nextSendDate = date)),
-                  selectedDate: invoice.nextSendDate),
+                labelText: (invoice.lastSentDate ?? '').isNotEmpty
+                    ? localization.nextSendDate
+                    : localization.startDate,
+                onSelected: (date) => viewModel
+                    .onChanged(invoice.rebuild((b) => b..nextSendDate = date)),
+                selectedDate: invoice.nextSendDate,
+                firstDate: DateTime.now(),
+              ),
               AppDropdownButton<int>(
                 showUseDefault: true,
                 labelText: localization.remainingCycles,
