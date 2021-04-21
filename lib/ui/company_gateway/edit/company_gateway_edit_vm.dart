@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -120,7 +121,12 @@ class CompanyGatewayEditVM {
 
           store.dispatch(StartSaving());
 
-          webClient.post(url, credentials.token).then((dynamic response) {
+          webClient
+              .post(url, credentials.token,
+                  data: jsonEncode({
+                    'context': {'return_url': ''}
+                  }))
+              .then((dynamic response) {
             store.dispatch(StopSaving());
             print('## RESPONSE: $response');
             // TODO parse 'hash'
