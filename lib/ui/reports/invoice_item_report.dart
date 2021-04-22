@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:memoize/memoize.dart';
 
-enum LineItemReportFields {
+enum InvoiceItemReportFields {
   productKey,
   notes,
   price,
@@ -28,7 +28,7 @@ enum LineItemReportFields {
   client,
 }
 
-var memoizedLineItemReport = memo6((
+var memoizedInvoiceItemReport = memo6((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ProductEntity> productMap,
@@ -48,25 +48,25 @@ ReportResult lineItemReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
-  BuiltList<LineItemReportFields> columns;
+  BuiltList<InvoiceItemReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
   final lineItemReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportLineItem)
-          ? reportSettings[kReportLineItem]
+      reportSettings != null && reportSettings.containsKey(kReportInvoiceItem)
+          ? reportSettings[kReportInvoiceItem]
           : ReportSettingsEntity();
 
   final defaultColumns = [
-    LineItemReportFields.invoiceNumber,
-    LineItemReportFields.invoiceDate,
-    LineItemReportFields.productKey,
-    LineItemReportFields.quantity,
-    LineItemReportFields.price,
+    InvoiceItemReportFields.invoiceNumber,
+    InvoiceItemReportFields.invoiceDate,
+    InvoiceItemReportFields.productKey,
+    InvoiceItemReportFields.quantity,
+    InvoiceItemReportFields.price,
   ];
 
   if (lineItemReportSettings.columns.isNotEmpty) {
     columns = BuiltList(lineItemReportSettings.columns
-        .map((e) => EnumUtils.fromString(LineItemReportFields.values, e))
+        .map((e) => EnumUtils.fromString(InvoiceItemReportFields.values, e))
         .where((element) => element != null)
         .toList());
   } else {
@@ -95,51 +95,51 @@ ReportResult lineItemReport(
         final productId = productKeyMap[lineItem.productKey];
 
         switch (column) {
-          case LineItemReportFields.price:
+          case InvoiceItemReportFields.price:
             value = lineItem.cost;
             break;
-          case LineItemReportFields.quantity:
+          case InvoiceItemReportFields.quantity:
             value = lineItem.quantity;
             break;
-          case LineItemReportFields.cost:
+          case InvoiceItemReportFields.cost:
             value = productId == null ? 0.0 : productMap[productId].cost;
             break;
-          case LineItemReportFields.profit:
+          case InvoiceItemReportFields.profit:
             value = productId == null
                 ? 0.0
                 : lineItem.total - productMap[productId].cost;
             break;
-          case LineItemReportFields.custom1:
+          case InvoiceItemReportFields.custom1:
             value = lineItem.customValue1;
             break;
-          case LineItemReportFields.custom2:
+          case InvoiceItemReportFields.custom2:
             value = lineItem.customValue2;
             break;
-          case LineItemReportFields.custom3:
+          case InvoiceItemReportFields.custom3:
             value = lineItem.customValue3;
             break;
-          case LineItemReportFields.custom4:
+          case InvoiceItemReportFields.custom4:
             value = lineItem.customValue4;
             break;
-          case LineItemReportFields.notes:
+          case InvoiceItemReportFields.notes:
             value = lineItem.notes;
             break;
-          case LineItemReportFields.lineTotal:
+          case InvoiceItemReportFields.lineTotal:
             value = lineItem.total;
             break;
-          case LineItemReportFields.productKey:
+          case InvoiceItemReportFields.productKey:
             value = lineItem.productKey;
             break;
-          case LineItemReportFields.discount:
+          case InvoiceItemReportFields.discount:
             value = lineItem.discount;
             break;
-          case LineItemReportFields.invoiceNumber:
+          case InvoiceItemReportFields.invoiceNumber:
             value = invoice.number;
             break;
-          case LineItemReportFields.invoiceDate:
+          case InvoiceItemReportFields.invoiceDate:
             value = invoice.date;
             break;
-          case LineItemReportFields.client:
+          case InvoiceItemReportFields.client:
             value = client.displayName;
             break;
         }
@@ -178,7 +178,7 @@ ReportResult lineItemReport(
 
   return ReportResult(
     allColumns:
-        LineItemReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+        InvoiceItemReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
