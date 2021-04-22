@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -128,9 +129,8 @@ class CompanyGatewayEditVM {
                   }))
               .then((dynamic response) {
             store.dispatch(StopSaving());
-            print('## RESPONSE: $response');
-            // TODO parse 'hash'
-            //launch('${credentials.url}/stripe-connect/');
+            launch(
+                '${cleanApiUrl(credentials.url)}/stripe_connect/${response['hash']}');
           }).catchError((dynamic error) {
             store.dispatch(StopSaving());
             showErrorDialog(
