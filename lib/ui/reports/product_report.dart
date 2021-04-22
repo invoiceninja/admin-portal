@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/product_model.dart';
@@ -7,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 enum ProductReportFields {
@@ -131,6 +133,12 @@ ReportResult productReport(
 
       if (value.runtimeType == bool) {
         row.add(product.getReportBool(value: value));
+      } else if (column == ProductReportFields.quantity) {
+        row.add(product.getReportDouble(
+          value: value,
+          currencyId: userCompany.company.currencyId,
+          formatNumberType: FormatNumberType.double,
+        ));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(product.getReportDouble(
             value: value, currencyId: userCompany.company.currencyId));
