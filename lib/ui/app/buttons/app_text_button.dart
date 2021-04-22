@@ -20,25 +20,27 @@ class AppTextButton extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    return TextButton(
-      onPressed: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: onPressed == null
-                ? null
-                : color != null
-                    ? color
-                    : isInHeader
-                        ? state.headerTextColor
-                        : state.prefState.enableDarkMode
-                            ? Colors.white
-                            : Colors.black,
-          ),
-        ),
+    final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+      primary: onPressed == null
+          ? null
+          : color != null
+              ? color
+              : isInHeader
+                  ? state.headerTextColor
+                  : state.prefState.enableDarkMode
+                      ? Colors.white
+                      : Colors.black87,
+      minimumSize: Size(88, 36),
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(2)),
       ),
+    );
+
+    return TextButton(
+      style: flatButtonStyle,
+      onPressed: onPressed,
+      child: Text(label),
     );
   }
 }

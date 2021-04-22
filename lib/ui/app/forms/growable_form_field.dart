@@ -52,7 +52,7 @@ class _GrowableFormFieldState extends State<GrowableFormField> {
       keyboardType: widget.keyboardType,
       minLines: 1,
       // TODO remove this isWeb check/needed to prevent overflow
-      maxLines: _hasFocus ? 20 : (kIsWeb ? 2 : 1),
+      maxLines: _hasFocus ? 20 : 2,
     );
   }
 }

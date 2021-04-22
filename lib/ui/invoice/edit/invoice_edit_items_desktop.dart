@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -34,6 +35,7 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 }
 
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
+  final _debouncer = Debouncer();
   int _updatedAt;
   String _filter = '';
 
@@ -41,6 +43,19 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     setState(() {
       _updatedAt = DateTime.now().millisecondsSinceEpoch;
     });
+  }
+
+  void _onChanged(InvoiceItemEntity lineItem, int index) {
+    final viewModel = widget.viewModel;
+    final lineItems = viewModel.invoice.lineItems;
+
+    if (index == lineItems.length) {
+      viewModel.onChangedInvoiceItem(lineItem, index);
+    } else if (lineItem != lineItems[index]) {
+      _debouncer.run(() {
+        viewModel.onChangedInvoiceItem(lineItem, index);
+      });
+    }
   }
 
   @override
@@ -119,7 +134,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           1: FractionColumnWidth(.25),
           lastIndex: FixedColumnWidth(0),
         },
-        defaultVerticalAlignment: TableCellVerticalAlignment.top,
+        // TODO change to top once we can set maxLines to 2
+        defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
         key: ValueKey('__datatable_${_updatedAt}__'),
         children: [
           TableRow(children: [
@@ -216,7 +232,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             ..taxName2 = product.taxName2
                             ..taxRate3 = product.taxRate3
                             ..taxName3 = product.taxName3);
-                          viewModel.onChangedInvoiceItem(updatedItem, index);
+                          _onChanged(updatedItem, index);
                           _updateTable();
                         },
                         fieldViewBuilder: (BuildContext context,
@@ -233,7 +249,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             },
                             onChanged: (value) {
                               _filter = value;
-                              viewModel.onChangedInvoiceItem(
+                              _onChanged(
                                   lineItems[index]
                                       .rebuild((b) => b..productKey = value),
                                   index);
@@ -319,8 +335,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   ..taxName2 = product.taxName2
                                   ..taxRate3 = product.taxRate3
                                   ..taxName3 = product.taxName3);
-                                viewModel.onChangedInvoiceItem(
-                                    updatedItem, index);
+                                _onChanged(updatedItem, index);
                                 _updateTable();
                               },
                             );
@@ -368,12 +383,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               ..taxName2 = product.taxName2
                               ..taxRate3 = product.taxRate3
                               ..taxName3 = product.taxName3);
-                            viewModel.onChangedInvoiceItem(updatedItem, index);
+                            _onChanged(updatedItem, index);
                             _updateTable();
                           },
                           textFieldConfiguration:
                               TextFieldConfiguration(onChanged: (value) {
-                            viewModel.onChangedInvoiceItem(
+                            _onChanged(
                                 lineItems[index]
                                     .rebuild((b) => b..productKey = value),
                                 index);
@@ -387,7 +402,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       child: GrowableFormField(
                         key: ValueKey('__line_item_${index}_description__'),
                         initialValue: lineItems[index].notes,
-                        onChanged: (value) => viewModel.onChangedInvoiceItem(
+                        onChanged: (value) => _onChanged(
                             lineItems[index].rebuild((b) => b..notes = value),
                             index),
                         keyboardType: TextInputType.multiline,
@@ -400,7 +415,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           field: customField1,
                           value: lineItems[index].customValue1,
                           hideFieldLabel: true,
-                          onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          onChanged: (value) => _onChanged(
                               lineItems[index]
                                   .rebuild((b) => b..customValue1 = value),
                               index),
@@ -414,7 +429,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           field: customField2,
                           value: lineItems[index].customValue2,
                           hideFieldLabel: true,
-                          onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          onChanged: (value) => _onChanged(
                               lineItems[index]
                                   .rebuild((b) => b..customValue2 = value),
                               index),
@@ -428,7 +443,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           field: CustomFieldType.product3,
                           value: lineItems[index].customValue3,
                           hideFieldLabel: true,
-                          onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          onChanged: (value) => _onChanged(
                               lineItems[index]
                                   .rebuild((b) => b..customValue3 = value),
                               index),
@@ -442,7 +457,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           field: customField4,
                           value: lineItems[index].customValue4,
                           hideFieldLabel: true,
-                          onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          onChanged: (value) => _onChanged(
                               lineItems[index]
                                   .rebuild((b) => b..customValue4 = value),
                               index),
@@ -453,12 +468,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: TaxRateDropdown(
-                          onSelected: (taxRate) =>
-                              viewModel.onChangedInvoiceItem(
-                                  lineItems[index].rebuild((b) => b
-                                    ..taxName1 = taxRate.name
-                                    ..taxRate1 = taxRate.rate),
-                                  index),
+                          onSelected: (taxRate) => _onChanged(
+                              lineItems[index].rebuild((b) => b
+                                ..taxName1 = taxRate.name
+                                ..taxRate1 = taxRate.rate),
+                              index),
                           labelText: null,
                           initialTaxName: lineItems[index].taxName1,
                           initialTaxRate: lineItems[index].taxRate1,
@@ -468,12 +482,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: TaxRateDropdown(
-                          onSelected: (taxRate) =>
-                              viewModel.onChangedInvoiceItem(
-                                  lineItems[index].rebuild((b) => b
-                                    ..taxName2 = taxRate.name
-                                    ..taxRate2 = taxRate.rate),
-                                  index),
+                          onSelected: (taxRate) => _onChanged(
+                              lineItems[index].rebuild((b) => b
+                                ..taxName2 = taxRate.name
+                                ..taxRate2 = taxRate.rate),
+                              index),
                           labelText: null,
                           initialTaxName: lineItems[index].taxName2,
                           initialTaxRate: lineItems[index].taxRate2,
@@ -483,12 +496,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: TaxRateDropdown(
-                          onSelected: (taxRate) =>
-                              viewModel.onChangedInvoiceItem(
-                                  lineItems[index].rebuild((b) => b
-                                    ..taxName3 = taxRate.name
-                                    ..taxRate3 = taxRate.rate),
-                                  index),
+                          onSelected: (taxRate) => _onChanged(
+                              lineItems[index].rebuild((b) => b
+                                ..taxName3 = taxRate.name
+                                ..taxRate3 = taxRate.rate),
+                              index),
                           labelText: null,
                           initialTaxName: lineItems[index].taxName3,
                           initialTaxRate: lineItems[index].taxRate3,
@@ -503,7 +515,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             lineItems[index].cost, context,
                             formatNumberType: FormatNumberType.inputMoney,
                             clientId: invoice.clientId),
-                        onChanged: (value) => viewModel.onChangedInvoiceItem(
+                        onChanged: (value) => _onChanged(
                             lineItems[index]
                                 .rebuild((b) => b..cost = parseDouble(value)),
                             index),
@@ -522,7 +534,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               lineItems[index].quantity, context,
                               formatNumberType: FormatNumberType.inputAmount,
                               clientId: invoice.clientId),
-                          onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          onChanged: (value) => _onChanged(
                               lineItems[index].rebuild(
                                   (b) => b..quantity = parseDouble(value)),
                               index),
@@ -541,7 +553,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               lineItems[index].discount, context,
                               formatNumberType: FormatNumberType.inputAmount,
                               clientId: invoice.clientId),
-                          onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          onChanged: (value) => _onChanged(
                               lineItems[index].rebuild(
                                   (b) => b..discount = parseDouble(value)),
                               index),

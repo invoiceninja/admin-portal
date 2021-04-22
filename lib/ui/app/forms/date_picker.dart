@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class DatePicker extends StatefulWidget {
@@ -207,6 +206,13 @@ class _DatePickerState extends State<DatePicker> {
               date = parseDate(value, context);
             } catch (e) {
               return;
+            }
+          }
+
+          if (widget.firstDate != null) {
+            final firstDateSql = convertDateTimeToSqlDate(widget.firstDate);
+            if (firstDateSql.compareTo(date) > 0) {
+              date = firstDateSql;
             }
           }
 
