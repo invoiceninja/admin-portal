@@ -2,15 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class KanbanViewBuilder extends StatefulWidget {
@@ -91,13 +87,11 @@ class KanbanVM {
       },
       onSaveTaskPressed:
           (completer, taskId, statusId, description, statusOrder) {
-        print('## 1');
         TaskEntity task = state.taskState.get(taskId);
         task = task.rebuild((b) => b
           ..description = description
           ..statusOrder = task.isNew ? statusOrder : task.statusOrder
           ..statusId = statusId);
-        print('## 2');
         if (task.isNew) {
           final uiState = state.uiState;
           if (uiState.filterEntityType == EntityType.client) {
