@@ -84,7 +84,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                 maxLines: 10,
                 onChanged: (value) => _description = value,
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
