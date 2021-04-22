@@ -67,7 +67,7 @@ class CompanyGatewayListItem extends StatelessWidget {
                   activeColor: Theme.of(context).accentColor,
                 ),
               )
-            : Icon(Icons.drag_handle),
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
