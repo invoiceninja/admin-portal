@@ -4,11 +4,13 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AppScrollbar extends StatefulWidget {
   const AppScrollbar({
-    this.child,
-    this.controller,
+    @required this.child,
+    @required this.controller,
+    this.hideMobileThumb = false,
   });
   final Widget child;
   final ScrollController controller;
+  final bool hideMobileThumb;
 
   @override
   _AppScrollbarState createState() => _AppScrollbarState();
@@ -19,7 +21,7 @@ class _AppScrollbarState extends State<AppScrollbar> {
 
   @override
   Widget build(BuildContext context) {
-    if (isMobile(context)) {
+    if (isMobile(context) && !widget.hideMobileThumb) {
       return DraggableScrollbar.semicircle(
         scrollbarTimeToFade: const Duration(milliseconds: 1500),
         child: widget.child,
