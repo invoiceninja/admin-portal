@@ -91,12 +91,13 @@ class KanbanVM {
       },
       onSaveTaskPressed:
           (completer, taskId, statusId, description, statusOrder) {
+        print('## 1');
         TaskEntity task = state.taskState.get(taskId);
         task = task.rebuild((b) => b
           ..description = description
           ..statusOrder = task.isNew ? statusOrder : task.statusOrder
           ..statusId = statusId);
-
+        print('## 2');
         if (task.isNew) {
           final uiState = state.uiState;
           if (uiState.filterEntityType == EntityType.client) {

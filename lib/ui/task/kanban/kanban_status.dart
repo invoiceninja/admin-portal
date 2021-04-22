@@ -12,13 +12,11 @@ class KanbanStatusCard extends StatefulWidget {
   const KanbanStatusCard({
     @required this.status,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.isCorrectOrder,
     @required this.isSaving,
   });
   final TaskStatusEntity status;
   final Function(Completer<TaskStatusEntity>, String) onSavePressed;
-  final Function() onCancelPressed;
   final bool isCorrectOrder;
   final bool isSaving;
 
@@ -81,9 +79,6 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
                   onPressed: () {
                     setState(() {
                       _isEditing = false;
-                      if (widget.status.isNew) {
-                        widget.onCancelPressed();
-                      }
                     });
                   },
                   label: localization.cancel,

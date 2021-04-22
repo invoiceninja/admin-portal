@@ -21,10 +21,10 @@ class KanbanTaskCard extends StatefulWidget {
     @required this.task,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.isCorrectOrder,
     @required this.isDragging,
     @required this.isSaving,
-    @required this.isSelected,
+    this.isCorrectOrder = true,
+    this.isSelected = false,
   });
   final TaskEntity task;
   final Function(Completer<TaskEntity>, String) onSavePressed;
