@@ -1340,7 +1340,9 @@ void selectEntity({
   if (longPress == true) {
     final longPressIsSelection =
         state.prefState.longPressSelectionIsDefault ?? true;
-    if (longPressIsSelection && !isInMultiselect) {
+    if (longPressIsSelection &&
+        !isInMultiselect &&
+        state.uiState.currentRoute != DashboardScreenBuilder.route) {
       handleEntityAction(appContext, entity, EntityAction.toggleMultiselect);
     } else {
       showEntityActionsDialog(
