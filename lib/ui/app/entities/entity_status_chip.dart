@@ -12,7 +12,7 @@ class EntityStatusChip extends StatelessWidget {
   const EntityStatusChip({
     @required this.entity,
     this.addGap = false,
-    this.width = 100,
+    this.width = 105,
   });
 
   final BaseEntity entity;
@@ -115,7 +115,7 @@ class EntityStatusChip extends StatelessWidget {
             maxWidth: width ?? 200,
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
             child: Text(
               label.toUpperCase(),
               style: TextStyle(fontSize: 14, color: Colors.white),
