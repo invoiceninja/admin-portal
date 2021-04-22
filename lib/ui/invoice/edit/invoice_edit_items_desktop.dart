@@ -134,7 +134,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           1: FractionColumnWidth(.25),
           lastIndex: FixedColumnWidth(0),
         },
-        defaultVerticalAlignment: TableCellVerticalAlignment.top,
+        // TODO change to top once we can set maxLines to 2
+        defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
         key: ValueKey('__datatable_${_updatedAt}__'),
         children: [
           TableRow(children: [
