@@ -130,8 +130,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         );
                       },
                     ),
-                  if (!kReleaseMode ||
-                      companyGateway.gatewayId == kGatewayStripeConnect)
+                  if (companyGateway.gatewayId == kGatewayStripeConnect)
                     AppButton(
                       label: localization.stripeConnect.toUpperCase(),
                       onPressed: viewModel.state.isSaving

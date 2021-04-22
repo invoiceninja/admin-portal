@@ -100,6 +100,10 @@ class EntityPresenter {
         'status',
       ].contains(field);
 
+  static bool isFieldAmount(String field) {
+    return ['quantity'].contains(field);
+  }
+
   static bool isFieldNumeric(String field) {
     if (field.startsWith('converted_')) {
       return true;

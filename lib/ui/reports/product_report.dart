@@ -12,6 +12,7 @@ import 'package:memoize/memoize.dart';
 enum ProductReportFields {
   name,
   price,
+  notes,
   cost,
   quantity,
   tax_rate1,
@@ -89,6 +90,9 @@ ReportResult productReport(
           break;
         case ProductReportFields.cost:
           value = product.cost;
+          break;
+        case ProductReportFields.notes:
+          value = product.notes;
           break;
         case ProductReportFields.quantity:
           value = product.quantity;

@@ -1255,7 +1255,7 @@ class ReportResult {
           } else {
             value = formatNumber(amount, context,
                 currencyId: currencyId,
-                formatNumberType: field == 'quantity'
+                formatNumberType: EntityPresenter.isFieldAmount(field)
                     ? FormatNumberType.double
                     : FormatNumberType.money);
           }
