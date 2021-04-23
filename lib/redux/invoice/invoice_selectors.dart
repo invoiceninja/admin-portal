@@ -195,6 +195,27 @@ EntityStats invoiceStatsForClient(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedInvoiceStatsForDesign = memo2(
+    (String designId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        invoiceStatsForDesign(designId, invoiceMap));
+
+EntityStats invoiceStatsForDesign(
+    String designId, BuiltMap<String, InvoiceEntity> invoiceMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  invoiceMap.forEach((invoiceId, invoice) {
+    if (invoice.designId == designId) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 var memoizedInvoiceStatsForSubscription = memo2(
     (String subscriptionId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
         invoiceStatsForSubscription(subscriptionId, invoiceMap));

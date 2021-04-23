@@ -140,6 +140,27 @@ List<String> filteredCreditsSelector(
   return list;
 }
 
+var memoizedCreditStatsForDesign = memo2(
+    (String designId, BuiltMap<String, InvoiceEntity> creditMap) =>
+        creditStatsForDesign(designId, creditMap));
+
+EntityStats creditStatsForDesign(
+    String designId, BuiltMap<String, InvoiceEntity> creditMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  creditMap.forEach((creditId, credit) {
+    if (credit.designId == designId) {
+      if (credit.isActive) {
+        countActive++;
+      } else if (credit.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 var memoizedCreditStatsForClient = memo2(
     (String clientId, BuiltMap<String, InvoiceEntity> creditMap) =>
         creditStatsForClient(clientId, creditMap));
