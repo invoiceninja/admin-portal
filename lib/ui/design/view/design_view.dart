@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class DesignView extends StatefulWidget {
   const DesignView({
@@ -69,12 +70,9 @@ class _DesignViewState extends State<DesignView> {
               entity: design,
               value: '$count',
               label: localization.count,
-              secondLabel: localization.updatedAt,
-              secondValue: formatDate(
-                convertTimestampToDateString(design.updatedAt),
-                context,
-                showTime: true,
-              ),
+              secondLabel: localization.lastUpdated,
+              secondValue:
+                  timeago.format(convertTimestampToDate(design.updatedAt)),
             ),
             ListDivider(),
             if (company.isModuleEnabled(EntityType.invoice))
