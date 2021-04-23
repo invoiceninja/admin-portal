@@ -140,9 +140,22 @@ abstract class DesignEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
-      if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted && !multiselect) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
+      }
+
+      if (userCompany.canCreate(EntityType.invoice)) {
+        actions.add(EntityAction.newInvoice);
+      }
+      if (userCompany.canCreate(EntityType.quote)) {
+        actions.add(EntityAction.newQuote);
+      }
+      if (userCompany.canCreate(EntityType.credit)) {
+        actions.add(EntityAction.newClient);
+      }
+      if (userCompany.canCreate(EntityType.recurringInvoice)) {
+        actions.add(EntityAction.newRecurringInvoice);
       }
     }
 
