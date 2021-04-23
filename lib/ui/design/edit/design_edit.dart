@@ -164,12 +164,9 @@ class _DesignEditState extends State<DesignEdit>
         design: design,
         isDraftMode: _isDraftMode,
         onComplete: (response) async {
-          if (!mounted) {
-            return;
-          }
-
           setState(() {
             _isLoading = false;
+
             if (response != null) {
               if (_isDraftMode) {
                 _html = response.body;
@@ -219,21 +216,23 @@ class _DesignEditState extends State<DesignEdit>
                 ],
               )
             : null,
-        onSavePressed: (context) {
-          final bool isValid = _formKey.currentState.validate();
+        onSavePressed: _isLoading
+            ? null
+            : (context) {
+                final bool isValid = _formKey.currentState.validate();
 
-          /*
+                /*
         setState(() {
           _autoValidate = !isValid;
         });
         */
 
-          if (!isValid) {
-            return;
-          }
+                if (!isValid) {
+                  return;
+                }
 
-          viewModel.onSavePressed(context);
-        },
+                viewModel.onSavePressed(context);
+              },
         body: isMobile(context)
             ? AppTabForm(
                 tabController: _tabController,
