@@ -192,12 +192,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                   ..statusOrder = null));
               },
             ),
-            DecoratedFormField(
-              maxLines: 4,
-              controller: _descriptionController,
-              keyboardType: TextInputType.multiline,
-              label: localization.description,
-            ),
             CustomField(
               controller: _custom1Controller,
               field: CustomFieldType.task1,
@@ -217,6 +211,12 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               controller: _custom4Controller,
               field: CustomFieldType.task4,
               value: task.customValue4,
+            ),
+            DecoratedFormField(
+              maxLines: 4,
+              controller: _descriptionController,
+              keyboardType: TextInputType.multiline,
+              label: localization.description,
             ),
           ],
         ),
