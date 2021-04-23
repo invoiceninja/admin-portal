@@ -1,6 +1,7 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -50,7 +51,7 @@ class DesignListItem extends StatelessWidget {
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()
-            : editEntity(entity: design, context: context),
+            : viewEntity(appContext: context.getAppContext(), entity: design),
         onLongPress: () => onLongPress != null
             ? onLongPress()
             : selectEntity(entity: design, context: context, longPress: true),
