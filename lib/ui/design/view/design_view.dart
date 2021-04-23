@@ -32,6 +32,7 @@ class _DesignViewState extends State<DesignView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = state.company;
     final design = viewModel.design;
     final localization = AppLocalization.of(context);
 
@@ -69,42 +70,46 @@ class _DesignViewState extends State<DesignView> {
               label: localization.count,
             ),
             ListDivider(),
-            EntitiesListTile(
-              entity: design,
-              isFilter: widget.isFilter,
-              title: localization.invoices,
-              entityType: EntityType.invoice,
-              subtitle: memoizedInvoiceStatsForDesign(
-                      design.id, state.invoiceState.map)
-                  .present(localization.active, localization.archived),
-            ),
-            EntitiesListTile(
-              entity: design,
-              isFilter: widget.isFilter,
-              title: localization.recurringInvoices,
-              entityType: EntityType.recurringInvoice,
-              subtitle: memoizedRecurringInvoiceStatsForDesign(
-                      design.id, state.recurringInvoiceState.map)
-                  .present(localization.active, localization.archived),
-            ),
-            EntitiesListTile(
-              entity: design,
-              isFilter: widget.isFilter,
-              title: localization.quotes,
-              entityType: EntityType.quote,
-              subtitle:
-                  memoizedQuoteStatsForDesign(design.id, state.quoteState.map)
-                      .present(localization.active, localization.archived),
-            ),
-            EntitiesListTile(
-              entity: design,
-              isFilter: widget.isFilter,
-              title: localization.credits,
-              entityType: EntityType.credit,
-              subtitle:
-                  memoizedCreditStatsForDesign(design.id, state.creditState.map)
-                      .present(localization.active, localization.archived),
-            ),
+            if (company.isModuleEnabled(EntityType.invoice))
+              EntitiesListTile(
+                entity: design,
+                isFilter: widget.isFilter,
+                title: localization.invoices,
+                entityType: EntityType.invoice,
+                subtitle: memoizedInvoiceStatsForDesign(
+                        design.id, state.invoiceState.map)
+                    .present(localization.active, localization.archived),
+              ),
+            if (company.isModuleEnabled(EntityType.quote))
+              EntitiesListTile(
+                entity: design,
+                isFilter: widget.isFilter,
+                title: localization.quotes,
+                entityType: EntityType.quote,
+                subtitle:
+                    memoizedQuoteStatsForDesign(design.id, state.quoteState.map)
+                        .present(localization.active, localization.archived),
+              ),
+            if (company.isModuleEnabled(EntityType.credit))
+              EntitiesListTile(
+                entity: design,
+                isFilter: widget.isFilter,
+                title: localization.credits,
+                entityType: EntityType.credit,
+                subtitle: memoizedCreditStatsForDesign(
+                        design.id, state.creditState.map)
+                    .present(localization.active, localization.archived),
+              ),
+            if (company.isModuleEnabled(EntityType.recurringInvoice))
+              EntitiesListTile(
+                entity: design,
+                isFilter: widget.isFilter,
+                title: localization.recurringInvoices,
+                entityType: EntityType.recurringInvoice,
+                subtitle: memoizedRecurringInvoiceStatsForDesign(
+                        design.id, state.recurringInvoiceState.map)
+                    .present(localization.active, localization.archived),
+              ),
           ],
         ));
   }
