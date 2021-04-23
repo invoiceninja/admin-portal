@@ -245,6 +245,7 @@ void handleDesignAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final design = designs.first as DesignEntity;
   final designIds = designs.map((design) => design.id).toList();
@@ -255,6 +256,39 @@ void handleDesignAction(
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: design.clone);
+      break;
+    case EntityAction.newInvoice:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(state: state)
+              .rebuild((b) => b.designId = design.id),
+          filterEntity: design);
+      break;
+    case EntityAction.newRecurringInvoice:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(
+                  state: state, entityType: EntityType.recurringInvoice)
+              .rebuild((b) => b.designId = design.id),
+          filterEntity: design);
+      break;
+    case EntityAction.newQuote:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(
+            state: state,
+            entityType: EntityType.quote,
+          ).rebuild((b) => b.designId = design.id),
+          filterEntity: design);
+      break;
+    case EntityAction.newCredit:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(
+            state: state,
+            entityType: EntityType.credit,
+          ).rebuild((b) => b.designId = design.id),
+          filterEntity: design);
       break;
     case EntityAction.restore:
       final message = designIds.length > 1
