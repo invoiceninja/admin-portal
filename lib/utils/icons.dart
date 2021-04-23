@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 
 IconData getEntityActionIcon(EntityAction entityAction) {
   switch (entityAction) {
@@ -207,5 +208,22 @@ IconData getSettingIcon(String section) {
       return getEntityIcon(EntityType.subscription);
     default:
       return null;
+  }
+}
+
+IconData getActivityIcon(int categoryId) {
+  switch (categoryId) {
+    case SystemLogEntity.CATEGORY_EMAIL:
+      return Icons.email;
+    case SystemLogEntity.CATEGORY_PAYMENT:
+      return Icons.credit_card;
+    case SystemLogEntity.CATEGORY_PDF:
+      return Icons.picture_as_pdf;
+    case SystemLogEntity.CATEGORY_SECURITY:
+      return Icons.security;
+    case SystemLogEntity.CATEGORY_WEBHOOK:
+      return MdiIcons.link;
+    default:
+      return MdiIcons.crosshairsQuestion;
   }
 }
