@@ -214,18 +214,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                     label: localization.taskRate,
                     onSavePressed: viewModel.onSavePressed,
                   ),
-                  DecoratedFormField(
-                    maxLines: 4,
-                    controller: _publicNotesController,
-                    keyboardType: TextInputType.multiline,
-                    label: localization.publicNotes,
-                  ),
-                  DecoratedFormField(
-                    maxLines: 4,
-                    controller: _privateNotesController,
-                    keyboardType: TextInputType.multiline,
-                    label: localization.privateNotes,
-                  ),
                   CustomField(
                     controller: _custom1Controller,
                     field: CustomFieldType.project1,
@@ -249,6 +237,18 @@ class _ProjectEditState extends State<ProjectEdit> {
                     field: CustomFieldType.project4,
                     value: project.customValue4,
                     onSavePressed: viewModel.onSavePressed,
+                  ),
+                  DecoratedFormField(
+                    maxLines: 4,
+                    controller: _publicNotesController,
+                    keyboardType: TextInputType.multiline,
+                    label: localization.publicNotes,
+                  ),
+                  DecoratedFormField(
+                    maxLines: 4,
+                    controller: _privateNotesController,
+                    keyboardType: TextInputType.multiline,
+                    label: localization.privateNotes,
                   ),
                 ],
               ),

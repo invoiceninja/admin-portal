@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/task/kanban/kanban_status.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class KanbanView extends StatefulWidget {
@@ -27,6 +26,7 @@ class KanbanViewState extends State<KanbanView> {
   final _boardViewController = new BoardViewController();
 
   List<String> _statuses;
+  TaskEntity _newTask;
   Map<String, List<String>> _tasks;
   bool isDragging = false;
 
@@ -63,6 +63,7 @@ class KanbanViewState extends State<KanbanView> {
     });
 
     _tasks = {};
+
     viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId];
       final status = state.taskStatusState.get(task.statusId);
@@ -143,9 +144,6 @@ class KanbanViewState extends State<KanbanView> {
 
     final boardList = filteredStatusIds.map((statusId) {
       final status = state.taskStatusState.get(statusId);
-      final hasNewTask =
-          _tasks[statusId]?.any((taskId) => parseDouble(taskId) < 0) ?? false;
-
       final hasCorectOrder = statusId.isEmpty ||
           status.statusOrder == filteredStatusIds.indexOf(status.id);
 
@@ -181,34 +179,44 @@ class KanbanViewState extends State<KanbanView> {
                 widget.viewModel.onSaveStatusPressed(
                     completer, statusId, name, statusOrder);
               },
-              onCancelPressed: () {
-                if (status.isNew) {
-                  _statuses.remove(status.id);
-                }
-              },
             ),
           ),
         ],
         footer: Align(
           alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, top: 2, bottom: 4),
-            child: hasNewTask
-                ? SizedBox()
-                : TextButton(
+          child: _newTask?.statusId == status.id
+              ? KanbanTaskCard(
+                  task: _newTask,
+                  isSaving: state.isSaving,
+                  isDragging: isDragging,
+                  onSavePressed: (completer, description) {
+                    final statusOrder = _tasks[status.id]?.length ?? 0;
+                    widget.viewModel.onSaveTaskPressed(
+                      completer,
+                      _newTask.id,
+                      status.id,
+                      description,
+                      statusOrder,
+                    );
+                  },
+                  onCancelPressed: () {
+                    setState(() {
+                      _newTask = null;
+                    });
+                  },
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(left: 8, top: 2, bottom: 4),
+                  child: TextButton(
                     child: Text(AppLocalization.of(context).newTask),
                     onPressed: () {
-                      final task = TaskEntity(state: widget.viewModel.state)
-                          .rebuild((b) => b..statusId = status.id);
                       setState(() {
-                        if (!_tasks.containsKey(status.id)) {
-                          _tasks[status.id] = [];
-                        }
-                        _tasks[status.id].add(task.id);
+                        _newTask = TaskEntity(state: widget.viewModel.state)
+                            .rebuild((b) => b..statusId = status.id);
                       });
                     },
                   ),
-          ),
+                ),
         ),
         items: (_tasks[status.id] ?? [])
             .map((taskId) => widget.viewModel.state.taskState.get(taskId))
@@ -245,7 +253,7 @@ class KanbanViewState extends State<KanbanView> {
                       onCancelPressed: () {
                         if (task.isNew) {
                           setState(() {
-                            _tasks[status.id].remove(task.id);
+                            _newTask = null;
                           });
                         }
                       },

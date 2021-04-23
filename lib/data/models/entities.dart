@@ -151,6 +151,13 @@ class EntityType extends EnumClass {
         return [
           EntityType.expense,
         ];
+      case EntityType.design:
+        return [
+          EntityType.invoice,
+          EntityType.quote,
+          EntityType.credit,
+          EntityType.recurringInvoice,
+        ];
       default:
         return [];
     }

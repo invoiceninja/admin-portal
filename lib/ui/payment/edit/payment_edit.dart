@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -42,6 +43,10 @@ class _PaymentEditState extends State<PaymentEdit> {
   final _numberController = TextEditingController();
   final _transactionReferenceController = TextEditingController();
   final _privateNotesController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -54,6 +59,10 @@ class _PaymentEditState extends State<PaymentEdit> {
       _numberController,
       _transactionReferenceController,
       _privateNotesController,
+      _custom1Controller,
+      _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -65,6 +74,10 @@ class _PaymentEditState extends State<PaymentEdit> {
     _numberController.text = payment.number;
     _transactionReferenceController.text = payment.transactionReference;
     _privateNotesController.text = payment.privateNotes;
+    _custom1Controller.text = payment.customValue1;
+    _custom2Controller.text = payment.customValue2;
+    _custom3Controller.text = payment.customValue3;
+    _custom4Controller.text = payment.customValue4;
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
@@ -85,7 +98,11 @@ class _PaymentEditState extends State<PaymentEdit> {
       ..amount = parseDouble(_amountController.text)
       ..number = _numberController.text.trim()
       ..transactionReference = _transactionReferenceController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim());
+      ..privateNotes = _privateNotesController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
     if (payment != widget.viewModel.payment) {
       _debouncer.run(() {
         widget.viewModel.onChanged(payment);
@@ -245,6 +262,30 @@ class _PaymentEditState extends State<PaymentEdit> {
                   label: localization.transactionReference,
                   onSavePressed: viewModel.onSavePressed,
                 ),
+              CustomField(
+                controller: _custom1Controller,
+                field: CustomFieldType.payment1,
+                value: payment.customValue1,
+                onSavePressed: viewModel.onSavePressed,
+              ),
+              CustomField(
+                controller: _custom2Controller,
+                field: CustomFieldType.payment2,
+                value: payment.customValue2,
+                onSavePressed: viewModel.onSavePressed,
+              ),
+              CustomField(
+                controller: _custom3Controller,
+                field: CustomFieldType.payment3,
+                value: payment.customValue3,
+                onSavePressed: viewModel.onSavePressed,
+              ),
+              CustomField(
+                controller: _custom4Controller,
+                field: CustomFieldType.payment4,
+                value: payment.customValue4,
+                onSavePressed: viewModel.onSavePressed,
+              ),
               if (payment.isApplying != true)
                 DecoratedFormField(
                   controller: _privateNotesController,

@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -32,6 +33,11 @@ class DashboardScreenBuilder extends StatelessWidget {
       builder: (context, viewModel) {
         final state = viewModel.state;
         final company = state.company;
+
+        if (!state.isUserConfirmed) {
+          return ConfirmEmailBuilder();
+        }
+
         return DashboardScreen(
           viewModel: viewModel,
           key: ValueKey(

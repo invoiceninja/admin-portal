@@ -96,7 +96,7 @@ List<PaymentEntity> _recentPayments({
   });
 
   payments.sort(
-      (paymentA, paymentB) => paymentA.createdAt.compareTo(paymentB.createdAt));
+      (paymentA, paymentB) => paymentB.createdAt.compareTo(paymentA.createdAt));
 
   return payments;
 }

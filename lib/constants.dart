@@ -394,7 +394,8 @@ const String kReportTask = 'task';
 const String kReportTax = 'tax';
 const String kReportPaymentTax = 'payment_tax';
 const String kReportQuote = 'quote';
-const String kReportLineItem = 'line_item';
+const String kReportInvoiceItem = 'invoice_item';
+const String kReportQuoteItem = 'quote_item';
 
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';

@@ -118,6 +118,9 @@ List<String> filteredInvoicesSelector(
     } else if (filterEntityType == EntityType.subscription &&
         invoice.subscriptionId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.design &&
+        invoice.designId != filterEntityId) {
+      return false;
     } else if (filterEntityType == EntityType.payment) {
       bool isMatch = false;
       (invoicePaymentMap[invoiceId] ?? []).forEach((paymentId) {
@@ -184,6 +187,27 @@ EntityStats invoiceStatsForClient(
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
     if (invoice.clientId == clientId) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedInvoiceStatsForDesign = memo2(
+    (String designId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        invoiceStatsForDesign(designId, invoiceMap));
+
+EntityStats invoiceStatsForDesign(
+    String designId, BuiltMap<String, InvoiceEntity> invoiceMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  invoiceMap.forEach((invoiceId, invoice) {
+    if (invoice.designId == designId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {

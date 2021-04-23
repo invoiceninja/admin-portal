@@ -51,6 +51,8 @@ enum ClientReportFields {
   id_number,
   vat_number,
   contact_full_name,
+  contact_first_name,
+  contact_last_name,
   contact_email,
   contact_phone,
   contact1,
@@ -224,6 +226,12 @@ ReportResult clientReport(
           break;
         case ClientReportFields.contact_full_name:
           value = contact.fullName;
+          break;
+        case ClientReportFields.contact_first_name:
+          value = contact.firstName;
+          break;
+        case ClientReportFields.contact_last_name:
+          value = contact.lastName;
           break;
         case ClientReportFields.contact_email:
           value = contact.email;

@@ -560,6 +560,9 @@ class EntityScreens extends StatelessWidget {
                 ? ProjectEditScreen()
                 : ProjectViewScreen(isFilter: true);
             break;
+          case EntityType.design:
+            leftFilterChild = DesignViewScreen(isFilter: true);
+            break;
           default:
             print(
                 'Error: filter view not implemented for ${uiState.filterEntityType}');

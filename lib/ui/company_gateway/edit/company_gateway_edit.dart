@@ -136,6 +136,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       onPressed: viewModel.state.isSaving
                           ? null
                           : () {
+                              viewModel.onCancelPressed(context);
                               viewModel.onStripeConnectPressed();
                             },
                     )
