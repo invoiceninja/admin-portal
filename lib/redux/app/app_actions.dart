@@ -48,7 +48,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
