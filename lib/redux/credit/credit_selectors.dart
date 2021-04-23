@@ -104,6 +104,9 @@ List<String> filteredCreditsSelector(
     } else if (filterEntityType == EntityType.user &&
         credit.assignedUserId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.design &&
+        credit.designId != filterEntityId) {
+      return false;
     }
 
     if (!credit.matchesStates(creditListState.stateFilters)) {

@@ -118,6 +118,9 @@ List<String> filteredInvoicesSelector(
     } else if (filterEntityType == EntityType.subscription &&
         invoice.subscriptionId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.design &&
+        invoice.designId != filterEntityId) {
+      return false;
     } else if (filterEntityType == EntityType.payment) {
       bool isMatch = false;
       (invoicePaymentMap[invoiceId] ?? []).forEach((paymentId) {

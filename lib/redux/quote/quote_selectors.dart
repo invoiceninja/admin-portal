@@ -51,23 +51,24 @@ List<String> filteredQuotesSelector(
     } else if (filterEntityType == EntityType.user &&
         quote.assignedUserId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.design &&
+        quote.designId != filterEntityId) {
+      return false;
     }
 
     if (!quote.matchesStates(quoteListState.stateFilters)) {
       return false;
-    }
-    if (!quote.matchesStatuses(quoteListState.statusFilters)) {
+    } else if (!quote.matchesStatuses(quoteListState.statusFilters)) {
       return false;
-    }
-    if (!quote.matchesFilter(quoteListState.filter) &&
+    } else if (!quote.matchesFilter(quoteListState.filter) &&
         !client.matchesFilter(quoteListState.filter)) {
       return false;
     }
+
     if (quoteListState.custom1Filters.isNotEmpty &&
         !quoteListState.custom1Filters.contains(quote.customValue1)) {
       return false;
-    }
-    if (quoteListState.custom2Filters.isNotEmpty &&
+    } else if (quoteListState.custom2Filters.isNotEmpty &&
         !quoteListState.custom2Filters.contains(quote.customValue2)) {
       return false;
     }
