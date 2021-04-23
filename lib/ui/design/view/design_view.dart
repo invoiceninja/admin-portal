@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DesignView extends StatefulWidget {
@@ -68,6 +69,12 @@ class _DesignViewState extends State<DesignView> {
               entity: design,
               value: '$count',
               label: localization.count,
+              secondLabel: localization.updatedAt,
+              secondValue: formatDate(
+                convertTimestampToDateString(design.updatedAt),
+                context,
+                showTime: true,
+              ),
             ),
             ListDivider(),
             if (company.isModuleEnabled(EntityType.invoice))
