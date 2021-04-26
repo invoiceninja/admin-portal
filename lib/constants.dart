@@ -107,11 +107,11 @@ const int kCardTypeAmEx = 4;
 const int kCardTypeDiners = 8;
 const int kCardTypeDiscover = 16;
 
-const String kPaymentTypeVisa = '6';
-const String kPaymentTypeMasterCard = '7';
-const String kPaymentTypeAmEx = '8';
+const String kPaymentTypeVisa = '5';
+const String kPaymentTypeMasterCard = '6';
+const String kPaymentTypeAmEx = '7';
 const String kPaymentTypeDiners = '9';
-const String kPaymentTypeDiscover = '10';
+const String kPaymentTypeDiscover = '8';
 
 const String kPlanFree = '';
 const String kPlanPro = 'pro';
