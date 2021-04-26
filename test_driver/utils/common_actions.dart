@@ -1,9 +1,9 @@
-/*
 import 'dart:math';
 
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 import 'localizations.dart';
 
@@ -54,10 +54,11 @@ Future<void> login(FlutterDriver driver,
   if (selfHosted) {
     await fillTextFields(driver, <String, dynamic>{
       localization.url: loginUrl,
-      localization.secret: loginSecret,
+      '${localization.secret} (${localization.optional})': loginSecret,
     });
   }
 
+  print(localization.emailSignIn);
   await driver.tap(find.text(localization.emailSignIn));
 
   if (loginEmail.isNotEmpty) {
@@ -75,8 +76,10 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization,
   }
 
   //await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
-  await driver.tap(find.text(localization.settings));
-  await driver.tap(find.text(localization.deviceSettings));
+  //await driver.tap(find.text(localization.settings));
+  //await driver.tap(find.text(localization.deviceSettings));
+
+  await driver.tap(find.byValueKey(kSelectCompanyDropdownKey));
 
   // Tap on Log Out
   await driver.tap(find.text(localization.logout));
@@ -129,7 +132,7 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
   await fillTextFields(driver, values);
 
   // Await for Debouncer
-  await Future<dynamic>.delayed(Duration(milliseconds: 400));
+  await Future<dynamic>.delayed(Duration(milliseconds: 1000));
 
   print('Check for updated values');
   await checkTextFields(driver, values, except: skipCheckFor);
@@ -145,6 +148,7 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
 Future<void> testArchiveAndDelete(
     {FlutterDriver driver,
     String archivedMessage,
+    String name,
     String deletedMessage,
     String restoredMessage}) async {
   final localization = TestLocalization('en');
@@ -164,6 +168,7 @@ Future<void> testArchiveAndDelete(
   //await driver.waitFor(find.text(localization.archived));
 
   print('Restore record');
+  await driver.tap(find.text(name));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.byType('Snackbar'));
@@ -174,6 +179,7 @@ Future<void> testArchiveAndDelete(
   //await driver.waitFor(find.text(localization.deleted));
 
   print('Restore record');
+  await driver.tap(find.text(name));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.byType('Snackbar'));
@@ -189,4 +195,3 @@ String makeUnique(String value) =>
 
 String getLineItemKey(String key, int index) =>
     '${Keys.invoiceLineItemBaseKey}_${index}_${key}__';
-*/

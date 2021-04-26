@@ -45,7 +45,7 @@ class _GrowableFormFieldState extends State<GrowableFormField> {
   @override
   Widget build(BuildContext context) {
     return DecoratedFormField(
-      key: widget.key,
+      formKey: widget.key,
       focusNode: _focusNode,
       initialValue: widget.initialValue,
       onChanged: widget.onChanged,

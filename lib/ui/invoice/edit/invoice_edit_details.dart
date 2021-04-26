@@ -389,7 +389,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   .onChanged(invoice.rebuild((b) => b..designId = value?.id)),
             ),
             DecoratedFormField(
-              key: ValueKey('__exchange_rate_${invoice.clientId}__'),
+              formKey: ValueKey('__exchange_rate_${invoice.clientId}__'),
               label: localization.exchangeRate,
               initialValue: formatNumber(invoice.exchangeRate, context,
                   formatNumberType: FormatNumberType.inputAmount),
