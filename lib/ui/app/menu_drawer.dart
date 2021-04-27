@@ -275,7 +275,9 @@ class MenuDrawer extends StatelessWidget {
                                       const EdgeInsets.only(left: 20),
                                   onTap: () {
                                     store.dispatch(ViewSettings(
-                                        section: kSettingsAccountManagement));
+                                      section: kSettingsAccountManagement,
+                                      company: company,
+                                    ));
                                   },
                                   leading:
                                       Icon(Icons.warning, color: Colors.orange),
@@ -298,7 +300,9 @@ class MenuDrawer extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   store.dispatch(ViewSettings(
-                                      section: kSettingsAccountManagement));
+                                    section: kSettingsAccountManagement,
+                                    company: company,
+                                  ));
                                 },
                               ),
                           DrawerTile(

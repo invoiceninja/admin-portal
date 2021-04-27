@@ -116,6 +116,7 @@ class ListScaffold extends StatelessWidget {
                 TextButton(
                     onPressed: () {
                       store.dispatch(ViewSettings(
+                        company: state.company,
                         section: onCancelSettingsSection,
                         tabIndex: onCancelSettingsIndex,
                       ));
