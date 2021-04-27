@@ -198,11 +198,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       currentRoute.endsWith('/edit') ||
       currentRoute.endsWith('refund');
 
-  bool get isShowingPdf =>
-      isEmailing ||
-      currentRoute.endsWith('/pdf') ||
-      currentRoute.endsWith('/custom_designs_edit');
-
   bool get isEmailing => currentRoute.endsWith('/email');
 
   bool get isViewing => !isEditing && !isEmailing;

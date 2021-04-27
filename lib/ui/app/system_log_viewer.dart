@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SystemLogViewer extends StatefulWidget {
@@ -42,10 +43,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
-                  leading: Icon(
-                      systemLog.categoryId == SystemLogEntity.CATEGORY_EMAIL
-                          ? Icons.email
-                          : Icons.credit_card),
+                  leading: Icon(getActivityIcon(systemLog.categoryId)),
                   title: Text(localization.lookup(systemLog.category) +
                       '  ›  ' +
                       localization.lookup(systemLog.type)),
