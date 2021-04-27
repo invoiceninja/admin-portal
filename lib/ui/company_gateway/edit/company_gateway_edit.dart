@@ -788,12 +788,11 @@ class _FeesEditorState extends State<FeesEditor> {
     final amount = parseDouble(_amountController.text.trim());
     final percent = parseDouble(_percentController.text.trim());
     final cap = parseDouble(_capController.text.trim());
-    final feesEnabled = amount != 0 || percent != 0;
 
     final updatedSettings = settings.rebuild((b) => b
-      ..feeAmount = feesEnabled ? amount : null
-      ..feePercent = feesEnabled ? percent : null
-      ..feeCap = feesEnabled ? cap : null);
+      ..feeAmount = amount
+      ..feePercent = percent
+      ..feeCap = cap);
 
     if (settings != updatedSettings) {
       _debouncer.run(() {
