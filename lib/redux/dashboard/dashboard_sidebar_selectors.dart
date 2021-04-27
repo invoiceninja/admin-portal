@@ -22,9 +22,9 @@ List<InvoiceEntity> _upcomingInvoices({
   invoiceMap.forEach((index, invoice) {
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    if (invoice.isDeleted ||
+    if (invoice.isNotActive ||
         invoice.isCancelledOrReversed ||
-        client.isDeleted) {
+        client.isNotActive) {
       // do noting
     } else if (invoice.isUpcoming) {
       invoices.add(invoice);
@@ -54,9 +54,9 @@ List<InvoiceEntity> _pastDueInvoices({
   invoiceMap.forEach((index, invoice) {
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    if (invoice.isDeleted ||
+    if (invoice.isNotActive ||
         invoice.isCancelledOrReversed ||
-        client.isDeleted) {
+        client.isNotActive) {
       // do noting
     } else if (invoice.isPastDue) {
       invoices.add(invoice);
@@ -88,7 +88,7 @@ List<PaymentEntity> _recentPayments({
   paymentMap.forEach((index, payment) {
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
-    if (payment.isDeleted || client.isDeleted) {
+    if (payment.isNotActive || client.isNotActive) {
       // do noting
     } else if (payment.isActive && payment.createdAt > oneMonthAgo) {
       payments.add(payment);
@@ -118,7 +118,7 @@ List<InvoiceEntity> _upcomingQuotes({
   quoteMap.forEach((index, quote) {
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
-    if (quote.isDeleted || client.isDeleted) {
+    if (quote.isNotActive || client.isNotActive) {
       // do noting
     } else if (quote.isUpcoming) {
       quotes.add(quote);
@@ -147,7 +147,7 @@ List<InvoiceEntity> _expiredQuotes({
   quoteMap.forEach((index, quote) {
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
-    if (quote.isDeleted || client.isDeleted) {
+    if (quote.isNotActive || client.isNotActive) {
       // do noting
     } else if (quote.isPastDue) {
       quotes.add(quote);
@@ -175,7 +175,7 @@ List<TaskEntity> _runningTasks({
   final tasks = <TaskEntity>[];
   taskMap.forEach((index, task) {
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
-    if (task.isDeleted || client.isDeleted) {
+    if (task.isNotActive || client.isNotActive) {
       // do noting
     } else if (task.isRunning) {
       tasks.add(task);
@@ -204,7 +204,7 @@ List<TaskEntity> _recentTasks({
   final tasks = <TaskEntity>[];
   taskMap.forEach((index, task) {
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
-    if (task.isDeleted || client.isDeleted) {
+    if (task.isNotActive || client.isNotActive) {
       // do noting
     } else if (!task.isRunning) {
       tasks.add(task);
@@ -235,7 +235,7 @@ List<ExpenseEntity> _upcomingExpenses({
   expenseMap.forEach((index, expense) {
     final client =
         expenseMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
-    if (expense.isDeleted || client.isDeleted) {
+    if (expense.isNotActive || client.isNotActive) {
       // do noting
     } else if (expense.isUpcoming) {
       expenses.add(expense);
@@ -266,7 +266,7 @@ List<ExpenseEntity> _recentExpenses({
   expenseMap.forEach((index, expense) {
     final client =
         clientMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
-    if (expense.isDeleted || client.isDeleted) {
+    if (expense.isNotActive || client.isNotActive) {
       // do noting
     } else {
       expenses.add(expense);
