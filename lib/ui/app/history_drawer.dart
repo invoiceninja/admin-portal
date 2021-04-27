@@ -206,7 +206,10 @@ class _HistoryListTileState extends State<HistoryListTile> {
               store.dispatch(ViewReports());
               break;
             case EntityType.settings:
-              store.dispatch(ViewSettings(section: history.id));
+              store.dispatch(ViewSettings(
+                section: history.id,
+                company: state.company,
+              ));
               break;
             default:
               viewEntityById(

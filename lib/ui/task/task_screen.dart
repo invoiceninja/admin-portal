@@ -73,7 +73,10 @@ class TaskScreen extends StatelessWidget {
             IconButton(
                 icon: Icon(getEntityIcon(EntityType.settings)),
                 onPressed: () {
-                  store.dispatch(ViewSettings(section: kSettingsTaskStatuses));
+                  store.dispatch(ViewSettings(
+                    section: kSettingsTaskStatuses,
+                    company: state.company,
+                  ));
                 })
         ],
         hideListOptions: state.prefState.showKanban,

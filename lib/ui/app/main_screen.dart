@@ -258,7 +258,10 @@ class MainScreen extends StatelessWidget {
               store.dispatch(ViewReports());
               break;
             case EntityType.settings:
-              store.dispatch(ViewSettings(section: history.id));
+              store.dispatch(ViewSettings(
+                section: history.id,
+                company: state.company,
+              ));
               break;
             default:
               viewEntityById(
