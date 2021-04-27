@@ -360,6 +360,7 @@ class _LoginState extends State<LoginView> {
                                       ? localization.pleaseEnterYourEmail
                                       : null,
                               autofillHints: [AutofillHints.email],
+                              autofocus: true,
                               onSavePressed: (_) => _submitLoginForm(),
                             ),
                           if (_emailLogin && !_recoverPassword)
