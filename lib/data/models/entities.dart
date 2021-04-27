@@ -694,6 +694,14 @@ abstract class ActivityEntity
       kActivityRestoreTask,
     ].contains(activityTypeId)) {
       return EntityType.task;
+    } else if ([
+      kActivityCreateUser,
+      kActivityUpdateUser,
+      kActivityArchiveUser,
+      kActivityDeleteUser,
+      kActivityRestoreUser,
+    ].contains(activityTypeId)) {
+      return EntityType.user;
     } else {
       print(
           '## ERROR: failed to resolve entity type - activity_type_id: $activityTypeId');

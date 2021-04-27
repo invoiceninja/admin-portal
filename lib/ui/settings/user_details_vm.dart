@@ -204,9 +204,10 @@ class UserDetailsVM {
           final localization = AppLocalization.of(context);
           final completer =
               snackBarCompleter<Null>(context, localization.savedSettings);
+          final appBuilder = AppBuilder.of(context);
 
           completer.future.then((_) {
-            AppBuilder.of(context).rebuild();
+            appBuilder.rebuild();
           });
 
           confirmCallback(

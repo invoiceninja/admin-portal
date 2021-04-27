@@ -376,7 +376,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'allow_under_payment': 'Allow Under Payment',
       'allow_under_payment_help': 'Support paying a minimum amount',
       'test_mode': 'Test Mode',
-      'opened': 'opened',
+      'opened': 'Opened',
       'payment_reconciliation_failure': 'Reconciliation Failure',
       'payment_reconciliation_success': 'Reconciliation Success',
       'gateway_success': 'Gateway Success',
@@ -60285,13 +60285,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']['last_updated'];
 
   String get pro =>
-      _localizedValues[localeCode]['pro'] ??
-      _localizedValues['en']['pro'];
+      _localizedValues[localeCode]['pro'] ?? _localizedValues['en']['pro'];
 
   String get enterprise =>
       _localizedValues[localeCode]['enterprise'] ??
       _localizedValues['en']['enterprise'];
-
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
