@@ -61,10 +61,28 @@ jobs:
           cp -r ../build/web/* ./public/
           rm ./public/index.html
           git add .
-          git commit -m 'New admin portal build'
+          git commit -m 'New admin portal [hosted]'
           git push      
-      - name: Create Sentry release
-        run: |
+
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps ../build/web/main.dart.js.map
+
+          cd ..
+          cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
+          cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
+          cp pubspec.foss.yaml pubspec.yaml 
+          rm pubspec.lock
+
+	        flutter build web --web-renderer html --release
+
+          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
+          cd invoiceninja_foss
+          git checkout v5-develop
+          cp ../build/web/main.dart.js ./public/main.foss.dart.js
+          git add .
+          git commit -m 'New admin portal [self-host]'
+          git push
+
+          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps ../build/web/main.foss.dart.js.map
+          
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production
