@@ -54,11 +54,9 @@ jobs:
           git add .
           git commit -m 'New admin portal build'
           git push      
-      - name: Install Sentry
-        run: |
+
           curl -sL https://sentry.io/get-cli/ | bash
-      - name: Create Sentry release
-        run: |
+
           export SENTRY_RELEASE=$(sentry-cli releases propose-version)
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
