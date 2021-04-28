@@ -928,7 +928,7 @@ void _showAbout(BuildContext context) async {
                       child: apppIcon,
                     ),
                     title: Text(
-                      'Invoice Ninja',
+                      'Invoice Ninja v5',
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     subtitle: Text(state.appVersion),
