@@ -72,14 +72,14 @@ jobs:
           cp pubspec.foss.yaml pubspec.yaml 
           rm pubspec.lock
 
-          flutter build web --web-renderer html --release
+          flutter build web --web-renderer html --release --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
           cd invoiceninja_foss
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.foss.dart.js
           git add .
-          git commit -m 'New admin portal [self-host]'
+          git commit -m 'New admin portal [selfhosted]'
           git push
 
           cp ../build/web/main.dart.js.map ../build/web/main.foss.dart.js.map
