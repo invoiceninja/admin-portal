@@ -60,7 +60,7 @@ jobs:
       - name: Create Sentry release
         run: |
           export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-          sentry-cli releases new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
+          sentry-cli releases new $SENTRY_RELEASE --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}}
           sentry-cli releases set-commits --auto $SENTRY_RELEASE
           sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ./build/web/main.dart.js.map
           sentry-cli releases finalize $SENTRY_RELEASE
