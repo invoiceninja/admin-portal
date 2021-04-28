@@ -267,7 +267,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   final amount = parseDouble(_partialController.text);
                   final total = invoice.calculateTotal(
                       precision: precisionForInvoice(state, invoice));
-                  if (amount < 0 || amount > total) {
+                  if (amount < 0 || (amount != 0 && amount > total)) {
                     return localization.partialValue;
                   } else {
                     return null;
