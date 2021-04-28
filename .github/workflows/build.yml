@@ -24,6 +24,10 @@ jobs:
         with:
           channel: 'stable' # TODO change to beta/stable
           #flutter-version: '1.26.0-17.2.pre'
+      - name: Install Sentry
+        run: |
+          curl -sL https://sentry.io/get-cli/ | bash
+          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
       - name: Setup Flutter
         run: flutter doctor -v
       - run: flutter pub get
@@ -38,7 +42,7 @@ jobs:
       - run: flutter upgrade
       - run: flutter config --enable-web
       - name: Build App
-        run: flutter build web --web-renderer html --release
+        run: flutter build web --web-renderer html --release --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
       - run: |
           sed -i '/index.html/d' build/web/flutter_service_worker.js
 
@@ -54,10 +58,8 @@ jobs:
           git add .
           git commit -m 'New admin portal build'
           git push      
-
-          curl -sL https://sentry.io/get-cli/ | bash
-
-          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
+      - name: Create Sentry release
+        run: |
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps ../build/web/main.dart.js.map
