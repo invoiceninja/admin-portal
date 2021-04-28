@@ -91,7 +91,7 @@ void main({bool isTesting = false}) async {
                 ),
               ]));
 
-  if (kIsWeb || !kReleaseMode) {
+  if (!kReleaseMode) {
     runApp(InvoiceNinjaApp(store: store));
   } else {
     await SentryFlutter.init(
