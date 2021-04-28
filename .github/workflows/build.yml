@@ -60,10 +60,8 @@ jobs:
       - name: Create Sentry release
         run: |
           export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-          export SENTRY_AUTH_TOKEN=${{secrets.sentry_auth_token}}
-          export SENTRY_URL=${{secrets.sentry_url}}
-          sentry-cli releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
-          sentry-cli releases set-commits --auto $SENTRY_RELEASE
-          sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ./build/web/main.dart.js.map
-          sentry-cli releases finalize $SENTRY_RELEASE
-          sentry-cli releases deploys $SENTRY_RELEASE new -e production
+          sentry-cli --url ${{secrets.sentry_url}} --auth-token ${{secrets.sentry_auth_token}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
+          sentry-cli --url ${{secrets.sentry_url}} --auth-token ${{secrets.sentry_auth_token}} releases set-commits --auto $SENTRY_RELEASE
+          sentry-cli --url ${{secrets.sentry_url}} --auth-token ${{secrets.sentry_auth_token}} releases files $SENTRY_RELEASE upload-sourcemaps ./build/web/main.dart.js.map
+          sentry-cli --url ${{secrets.sentry_url}} --auth-token ${{secrets.sentry_auth_token}} releases finalize $SENTRY_RELEASE
+          sentry-cli --url ${{secrets.sentry_url}} --auth-token ${{secrets.sentry_auth_token}} releases deploys $SENTRY_RELEASE new -e production
