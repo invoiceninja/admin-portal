@@ -45,16 +45,24 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     });
   }
 
-  void _onChanged(InvoiceItemEntity lineItem, int index) {
+  void _onChanged(
+    InvoiceItemEntity lineItem,
+    int index, {
+    bool debounce = true,
+  }) {
     final viewModel = widget.viewModel;
     final lineItems = viewModel.invoice.lineItems;
 
     if (index == lineItems.length) {
       viewModel.onChangedInvoiceItem(lineItem, index);
     } else if (lineItem != lineItems[index]) {
-      _debouncer.run(() {
+      if (debounce) {
+        _debouncer.run(() {
+          viewModel.onChangedInvoiceItem(lineItem, index);
+        });
+      } else {
         viewModel.onChangedInvoiceItem(lineItem, index);
-      });
+      }
     }
   }
 
@@ -298,6 +306,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 if (!kIsWeb) {
                                   return;
                                 }
+
                                 final item = lineItems[index];
                                 final product = productState.map[productId];
                                 final client =
@@ -335,7 +344,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   ..taxName2 = product.taxName2
                                   ..taxRate3 = product.taxRate3
                                   ..taxName3 = product.taxName3);
-                                _onChanged(updatedItem, index);
+                                _onChanged(updatedItem, index, debounce: false);
                                 _updateTable();
                               },
                             );
@@ -344,6 +353,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             if (kIsWeb) {
                               return;
                             }
+
                             final item = lineItems[index];
                             final product = productState.map[suggestion];
                             final client =
@@ -361,7 +371,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                           company.currencyId]
                                       .precision);
                             }
-
                             final updatedItem = item.rebuild((b) => b
                               ..productKey = product.productKey
                               ..notes = item.isTask ? item.notes : product.notes
@@ -383,7 +392,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               ..taxName2 = product.taxName2
                               ..taxRate3 = product.taxRate3
                               ..taxName3 = product.taxName3);
-                            _onChanged(updatedItem, index);
+                            _onChanged(updatedItem, index, debounce: false);
                             _updateTable();
                           },
                           textFieldConfiguration:

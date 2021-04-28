@@ -317,7 +317,7 @@ class InvoiceOverview extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: Padding(
           padding:
-              const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 8),
+              const EdgeInsets.only(left: 20, top: 10, right: 56, bottom: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
