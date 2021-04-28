@@ -72,7 +72,7 @@ jobs:
           cp pubspec.foss.yaml pubspec.yaml 
           rm pubspec.lock
 
-          flutter build web --web-renderer html --release
+          flutter build web --web-renderer html --release --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
           cd invoiceninja_foss
