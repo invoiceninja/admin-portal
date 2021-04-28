@@ -13,7 +13,7 @@ jobs:
       commit_name: ${{secrets.commit_name}}
       app_sentry: ${{secrets.app_sentry}}
       api_secret: ${{secrets.api_secret}}
-      sentry_auth_token: ${{secrets.sentry_auth_token}}
+      SENTRY_AUTH_TOKEN: ${{secrets.sentry_auth_token}}
       sentry_org: ${{secrets.sentry_org}}
       sentry_project: ${{secrets.sentry_project}}
       sentry_url: ${{secrets.sentry_url}}
