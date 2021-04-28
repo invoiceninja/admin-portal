@@ -13,10 +13,10 @@ jobs:
       commit_name: ${{secrets.commit_name}}
       app_sentry: ${{secrets.app_sentry}}
       api_secret: ${{secrets.api_secret}}
-      SENTRY_AUTH_TOKEN: ${{secrets.sentry_auth_token}}
-      sentry_org: ${{secrets.sentry_org}}
-      sentry_project: ${{secrets.sentry_project}}
-      sentry_url: ${{secrets.sentry_url}}
+      #sentry_auth_token: ${{secrets.sentry_auth_token}}
+      #sentry_org: ${{secrets.sentry_org}}
+      #sentry_project: ${{secrets.sentry_project}}
+      #sentry_url: ${{secrets.sentry_url}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -60,8 +60,13 @@ jobs:
       - name: Create Sentry release
         run: |
           export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-          sentry-cli releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
+          sentry-cli releases new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
           sentry-cli releases set-commits --auto $SENTRY_RELEASE
           sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ./build/web/main.dart.js.map
           sentry-cli releases finalize $SENTRY_RELEASE
           sentry-cli releases deploys $SENTRY_RELEASE new -e production
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_URL: ${{ secrets.SENTRY_URL }}
