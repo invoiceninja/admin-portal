@@ -82,7 +82,8 @@ jobs:
           git commit -m 'New admin portal [self-host]'
           git push
 
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps ../build/web/main.foss.dart.js.map
+          cp ../build/web/main.dart.js.map ../build/web/main.foss.dart.js.map
+          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps ../build/web//main.foss.dart.js.map
 
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production
