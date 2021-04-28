@@ -79,7 +79,7 @@ jobs:
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.foss.dart.js
           git add .
-          git commit -m 'New admin portal [self-host]'
+          git commit -m 'New admin portal [selfhosted]'
           git push
 
           cp ../build/web/main.dart.js.map ../build/web/main.foss.dart.js.map
