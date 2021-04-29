@@ -189,7 +189,7 @@ Map<String, String> _getHeaders(
     'X-CLIENT-VERSION': kClientVersion,
     'X-API-SECRET': secret,
     'X-Requested-With': 'XMLHttpRequest',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
   };
 
   if ((token ?? '').isNotEmpty) {
