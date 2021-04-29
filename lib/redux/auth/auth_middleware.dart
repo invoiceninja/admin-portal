@@ -268,8 +268,6 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       currentCompany: hasToken,
     )
         .then((data) {
-      print('## REFRESH RESPONSE: ${data.userCompanies.length}');
-
       bool permissionsWereChanged = false;
       data.userCompanies.forEach((userCompany) {
         state.userCompanyStates.forEach((userCompanyState) {

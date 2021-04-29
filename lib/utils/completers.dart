@@ -65,7 +65,7 @@ class Debouncer {
 
   final int milliseconds;
   static VoidCallback action;
-  Timer _timer;
+  static Timer timer;
 
   void run(VoidCallback action) {
     if (milliseconds == null) {
@@ -73,23 +73,25 @@ class Debouncer {
       return;
     }
 
-    if (_timer != null) {
-      _timer.cancel();
+    if (timer == null) {
+      action();
+    } else {
+      timer.cancel();
+      Debouncer.action = action;
     }
 
-    Debouncer.action = action;
-
-    _timer = Timer(Duration(milliseconds: milliseconds), () {
-      if (Debouncer.action != null) {
-        Debouncer.action();
+    timer = Timer(Duration(milliseconds: milliseconds), () {
+      if (action != null) {
+        action();
       }
-      Debouncer.action = null;
+      action = null;
+      timer = null;
     });
   }
 
   static void complete() {
-    if (Debouncer.action != null) {
-      Debouncer.action();
+    if (action != null) {
+      action();
     }
   }
 
