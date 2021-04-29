@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -37,6 +38,11 @@ class _DeviceSettingsState extends State<DeviceSettings> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final prefState = state.prefState;
+    final countSessions = state.tokenState.list
+        .map((tokenId) => state.tokenState.map[tokenId])
+        .where(
+            (token) => token.isSystem && token.createdUserId == state.user.id)
+        .length;
 
     return Scaffold(
       appBar: AppBar(
@@ -247,6 +253,21 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     },
                   );
                 }),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text(localization.endAllSessions),
+                  subtitle: Text(countSessions == 1
+                      ? localization.countSession
+                      : localization.countSession
+                          .replaceFirst(':count', '$countSessions')),
+                  onTap: () {
+                    confirmCallback(
+                        context: context,
+                        callback: () {
+                          viewModel.onLogoutTap(context);
+                        });
+                  },
+                ),
               ],
             )
           ],

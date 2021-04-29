@@ -70,7 +70,7 @@ class AccountManagementVM {
               final context = navigatorKey.currentContext;
               final state = store.state;
               if (companyLength == 1) {
-                store.dispatch(UserLogout(context));
+                store.dispatch(UserLogout());
                 if (state.user.isConnectedToGoogle) {
                   GoogleOAuth.disconnect();
                 }

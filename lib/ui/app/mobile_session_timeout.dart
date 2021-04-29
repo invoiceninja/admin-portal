@@ -43,10 +43,7 @@ class _MobileSessionTimeoutState extends State<MobileSessionTimeout> {
             state.userCompanyState.lastUpdated;
 
         if (sessionLength > sessionTimeout) {
-          store.dispatch(UserLogout(context, navigate: false));
-          WidgetsBinding.instance.addPostFrameCallback((duration) {
-            WebUtils.reloadBrowser();
-          });
+          store.dispatch(UserLogout());
         }
       },
     );

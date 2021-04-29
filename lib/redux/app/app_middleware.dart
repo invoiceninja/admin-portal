@@ -236,7 +236,7 @@ Middleware<AppState> _createLoadState(
       store.dispatch(RefreshData(
           completer: Completer<Null>()
             ..future.catchError((Object error) {
-              store.dispatch(UserLogout(action.context));
+              store.dispatch(UserLogout());
             })));
 
       if (uiState.currentRoute != LoginScreen.route &&
@@ -303,11 +303,11 @@ Middleware<AppState> _createLoadState(
           }
         }).catchError((Object error) {
           print('Error (app_middleware - refresh): $error');
-          store.dispatch(UserLogout(action.context));
+          store.dispatch(UserLogout());
         });
         store.dispatch(RefreshData(completer: completer, clearData: true));
       } else {
-        store.dispatch(UserLogout(action.context));
+        store.dispatch(UserLogout());
       }
     }
 
@@ -372,9 +372,6 @@ Middleware<AppState> _createUserLoggedIn(
   };
 }
 
-final _persistDataDebouncer =
-    Debouncer(milliseconds: kMillisecondsToDebounceSave);
-
 Middleware<AppState> _createPersistData(
   List<PersistenceRepository> companyRepositories,
 ) {
@@ -383,30 +380,11 @@ Middleware<AppState> _createPersistData(
 
     next(action);
 
-    void saveState() {
-      final AppState state = store.state;
-      final index = state.uiState.selectedCompanyIndex;
-      companyRepositories[index]
-          .saveCompanyState(state.userCompanyStates[index]);
-    }
-
-    // When a company is deleted the app switches to another company
-    // so we need to save it immediately before the selection changes
-    if (action is DeleteCompanySuccess) {
-      saveState();
-    } else {
-      _persistDataDebouncer.run(() {
-        if (!store.state.isLoaded) {
-          return;
-        }
-        saveState();
-      });
-    }
+    final state = store.state;
+    final index = state.uiState.selectedCompanyIndex;
+    companyRepositories[index].saveCompanyState(state.userCompanyStates[index]);
   };
 }
-
-final _persistUIDebouncer =
-    Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
@@ -414,9 +392,7 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
     next(action);
 
-    _persistUIDebouncer.run(() {
-      uiRepository.saveUIState(store.state.uiState);
-    });
+    uiRepository.saveUIState(store.state.uiState);
   };
 }
 

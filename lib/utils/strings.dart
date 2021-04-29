@@ -121,7 +121,7 @@ bool matchesString({String haystack, String needle}) {
 
   String regExp = '';
   needle.toLowerCase().runes.forEach((int rune) {
-    final character = String.fromCharCode(rune);
+    final character = RegExp.escape(String.fromCharCode(rune));
     regExp += character + '.*?';
   });
   return RegExp(regExp).hasMatch(haystack.toLowerCase());
@@ -155,7 +155,7 @@ String matchesStringValue({String haystack, String needle}) {
 
   String regExp = '';
   needle.toLowerCase().runes.forEach((int rune) {
-    final character = String.fromCharCode(rune);
+    final character = RegExp.escape(String.fromCharCode(rune));
     regExp += character + '.*?';
   });
 

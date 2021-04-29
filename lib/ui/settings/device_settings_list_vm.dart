@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -34,6 +35,7 @@ class DeviceSettingsVM {
   DeviceSettingsVM({
     @required this.state,
     @required this.onRefreshTap,
+    @required this.onLogoutTap,
     @required this.onDarkModeChanged,
     @required this.onLayoutChanged,
     @required this.onRequireAuthenticationChanged,
@@ -71,6 +73,11 @@ class DeviceSettingsVM {
     return DeviceSettingsVM(
       state: store.state,
       onRefreshTap: (BuildContext context) => _refreshData(context),
+      onLogoutTap: (BuildContext context) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).endedAllSessions);
+        store.dispatch(UserLogoutAll(completer: completer));
+      },
       onDarkModeChanged: (BuildContext context, bool value) async {
         store.dispatch(UpdateUserPreferences(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
@@ -151,6 +158,7 @@ class DeviceSettingsVM {
 
   final AppState state;
   final Function(BuildContext) onRefreshTap;
+  final Function(BuildContext) onLogoutTap;
   final Function(BuildContext, bool) onDarkModeChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;

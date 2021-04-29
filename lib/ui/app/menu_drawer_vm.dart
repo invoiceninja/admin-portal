@@ -73,7 +73,7 @@ class MenuDrawerVM {
             message: AppLocalization.of(context).logout,
             context: context,
             callback: () async {
-              store.dispatch(UserLogout(context));
+              store.dispatch(UserLogout());
               if (store.state.user.isConnectedToGoogle) {
                 GoogleOAuth.signOut();
               }
