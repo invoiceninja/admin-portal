@@ -92,11 +92,18 @@ class RecoverPasswordFailure implements StopLoading {
   final Object error;
 }
 
-class UserLogout implements PersistData, PersistUI {
-  UserLogout(this.context, {this.navigate = true});
+class UserLogout implements PersistData, PersistUI {}
 
-  final BuildContext context;
-  final bool navigate;
+class UserLogoutAll implements StartLoading {
+  const UserLogoutAll({this.completer});
+  final Completer completer;
+}
+
+class UserLogoutAllSuccess implements StopLoading {}
+
+class UserLogoutAllFailure implements StopLoading {
+  const UserLogoutAllFailure(this.error);
+  final Object error;
 }
 
 class UserSignUpRequest implements StartLoading {

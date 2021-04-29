@@ -20,6 +20,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepository repository = const AuthRepository(),
 ]) {
   final userLogout = _createUserLogout();
+  final userLogoutAll = _createUserLogoutAll(repository);
   final loginRequest = _createLoginRequest(repository);
   final oauthLoginRequest = _createOAuthLoginRequest(repository);
   final signUpRequest = _createSignUpRequest(repository);
@@ -33,6 +34,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 
   return [
     TypedMiddleware<AppState, UserLogout>(userLogout),
+    TypedMiddleware<AppState, UserLogoutAll>(userLogoutAll),
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
     TypedMiddleware<AppState, OAuthLoginRequest>(oauthLoginRequest),
     TypedMiddleware<AppState, UserSignUpRequest>(signUpRequest),
@@ -57,12 +59,32 @@ Middleware<AppState> _createUserLogout() {
 
     next(action);
 
-    if (action.navigate) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
-          LoginScreen.route, (Route<dynamic> route) => false);
-    }
+    navigatorKey.currentState.pushNamedAndRemoveUntil(
+        LoginScreen.route, (Route<dynamic> route) => false);
 
     store.dispatch(UpdateCurrentRoute(LoginScreen.route));
+  };
+}
+
+Middleware<AppState> _createUserLogoutAll(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UserLogoutAll;
+
+    repository
+        .logout(credentials: store.state.credentials)
+        .then((dynamic response) {
+      print('## DONE MIDDLE');
+
+      store.dispatch(UserLogoutAllSuccess());
+      store.dispatch(UserLogout());
+    }).catchError((Object error) {
+      if (action.completer != null) {
+        //action.completer.completeError(error);
+      }
+      store.dispatch(UserLogoutAllFailure(error));
+    });
+
+    next(action);
   };
 }
 

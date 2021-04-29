@@ -38,7 +38,7 @@ class ErrorDialog extends StatelessWidget {
                   confirmCallback(
                       context: context,
                       callback: () {
-                        store.dispatch(UserLogout(context));
+                        store.dispatch(UserLogout());
                       });
                 }),
           TextButton(

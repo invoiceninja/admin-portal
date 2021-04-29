@@ -44,7 +44,7 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
             state.userCompanyState.lastUpdated;
 
         if (sessionLength > sessionTimeout) {
-          store.dispatch(UserLogout(context));
+          store.dispatch(UserLogout());
         } else if (sessionLength > (sessionTimeout - (1000 * 60 * 2))) {
           setState(() {
             _isWarned = true;

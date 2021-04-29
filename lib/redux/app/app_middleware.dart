@@ -236,7 +236,7 @@ Middleware<AppState> _createLoadState(
       store.dispatch(RefreshData(
           completer: Completer<Null>()
             ..future.catchError((Object error) {
-              store.dispatch(UserLogout(action.context));
+              store.dispatch(UserLogout());
             })));
 
       if (uiState.currentRoute != LoginScreen.route &&
@@ -303,11 +303,11 @@ Middleware<AppState> _createLoadState(
           }
         }).catchError((Object error) {
           print('Error (app_middleware - refresh): $error');
-          store.dispatch(UserLogout(action.context));
+          store.dispatch(UserLogout());
         });
         store.dispatch(RefreshData(completer: completer, clearData: true));
       } else {
-        store.dispatch(UserLogout(action.context));
+        store.dispatch(UserLogout());
       }
     }
 

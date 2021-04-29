@@ -37,6 +37,11 @@ class _DeviceSettingsState extends State<DeviceSettings> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final prefState = state.prefState;
+    final countSessions = state.tokenState.list
+        .map((tokenId) => state.tokenState.map[tokenId])
+        .where(
+            (token) => token.isSystem && token.createdUserId == state.user.id)
+        .length;
 
     return Scaffold(
       appBar: AppBar(
@@ -247,6 +252,15 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     },
                   );
                 }),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text(localization.endAllSessions),
+                  subtitle: Text(countSessions == 1
+                      ? localization.countSession
+                      : localization.countSession
+                          .replaceFirst(':count', '$countSessions')),
+                  onTap: () => viewModel.onLogoutTap(context),
+                ),
               ],
             )
           ],

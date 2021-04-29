@@ -79,6 +79,13 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, secret: secret);
   }
 
+  Future<dynamic> logout({@required Credentials credentials}) async {
+    return webClient.post(
+      '${credentials.url}/logout',
+      credentials.token,
+    );
+  }
+
   Future<LoginResponse> oauthLogin(
       {@required String idToken,
       @required String accessToken,
@@ -87,7 +94,6 @@ class AuthRepository {
       @required String platform}) async {
     final credentials = {
       'id_token': idToken,
-      //'access_token': accessToken,
       'provider': 'google',
     };
     url = formatApiUrl(url) + '/oauth_login';
