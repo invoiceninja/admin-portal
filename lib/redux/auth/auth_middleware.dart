@@ -243,6 +243,8 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       includeStatic: action.includeStatic || state.staticState.isStale,
     )
         .then((data) {
+      print('## REFRESH RESPONSE: ${data.userCompanies.length}');
+
       bool permissionsWereChanged = false;
       data.userCompanies.forEach((userCompany) {
         state.userCompanyStates.forEach((userCompanyState) {
@@ -264,9 +266,10 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         if (action.clearData && !company.isLarge) {
           store.dispatch(ClearData());
         }
-        store.dispatch(LoadAccountSuccess(
+
+        store.dispatch(RefreshDataSuccess(
           completer: action.completer,
-          loginResponse: data,
+          data: data,
         ));
       }
     }).catchError((Object error) {

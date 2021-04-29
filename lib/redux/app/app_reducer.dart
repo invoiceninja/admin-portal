@@ -48,10 +48,8 @@ AppState appReducer(AppState state, dynamic action) {
       ..isSaving = false);
   } else if (action is ClearData) {
     return state.rebuild((b) => b
-      ..userCompanyStates.replace(BuiltList<UserCompanyState>(
-          List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
-              .map((index) => UserCompanyState(state.account.reportErrors))
-              .toList())));
+      ..userCompanyStates[state.uiState.selectedCompanyIndex] =
+          UserCompanyState(state.account.reportErrors));
   }
 
   return state.rebuild((b) => b

@@ -128,6 +128,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   );
 
   final accountLoaded = _createAccountLoaded();
+  final dataRefreshed = _createDataRefreshed();
 
   final persistData = _createPersistData(
     companyRepositories,
@@ -160,6 +161,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
     TypedMiddleware<AppState, LoadAccountSuccess>(accountLoaded),
+    TypedMiddleware<AppState, RefreshDataSuccess>(dataRefreshed),
     TypedMiddleware<AppState, PersistData>(persistData),
     TypedMiddleware<AppState, PersistStatic>(persistStatic),
     TypedMiddleware<AppState, PersistUI>(persistUI),
@@ -479,6 +481,35 @@ Middleware<AppState> _createAccountLoaded() {
     if (action.completer != null) {
       action.completer.complete(null);
     }
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _createDataRefreshed() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as RefreshDataSuccess;
+    final response = action.data;
+    final loadedStaticData = response.static.currencies.isNotEmpty;
+
+    if (loadedStaticData) {
+      store.dispatch(LoadStaticSuccess(data: response.static));
+    }
+
+    try {
+      final userCompany = response.userCompanies.first;
+      store.dispatch(LoadCompanySuccess(userCompany));
+    } catch (error) {
+      action.completer?.completeError(error);
+      rethrow;
+    }
+
+    if (action.completer != null) {
+      action.completer.complete(null);
+    }
+
+    next(action);
   };
 }
 

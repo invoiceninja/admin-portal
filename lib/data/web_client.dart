@@ -69,7 +69,7 @@ class WebClient {
     }
 
     print('POST: $url');
-    if (!kReleaseMode) {
+    if (!kReleaseMode && Config.DEBUG_REQUESTS) {
       printWrapped('Data: $data');
     }
     http.Response response;
@@ -117,7 +117,7 @@ class WebClient {
     }
 
     print('PUT: $url');
-    if (!kReleaseMode) {
+    if (!kReleaseMode && Config.DEBUG_REQUESTS) {
       printWrapped('Data: $data');
     }
     http.Response response;
@@ -189,7 +189,7 @@ Map<String, String> _getHeaders(
     'X-CLIENT-VERSION': kClientVersion,
     'X-API-SECRET': secret,
     'X-Requested-With': 'XMLHttpRequest',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json; charset=utf-8',
   };
 
   if ((token ?? '').isNotEmpty) {
@@ -215,7 +215,7 @@ void _checkResponse(http.Response response) {
   debugPrint('response: ${response.statusCode} ${response.body}');
    */
 
-  if (!kReleaseMode) {
+  if (!kReleaseMode && Config.DEBUG_REQUESTS) {
     printWrapped('${response.statusCode} ${response.body}');
     print('headers: ${response.headers}');
   }
