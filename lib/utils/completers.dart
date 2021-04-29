@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 
 Completer<T> snackBarCompleter<T>(BuildContext context, String message,
@@ -19,7 +20,7 @@ Completer<T> snackBarCompleter<T>(BuildContext context, String message,
       Navigator.of(context).pop();
     }
     showDialog<ErrorDialog>(
-        context: context,
+        context: navigatorKey.currentContext,
         builder: (BuildContext context) {
           return ErrorDialog(error);
         });
@@ -35,7 +36,7 @@ Completer<Null> popCompleter(BuildContext context, dynamic result) {
     Navigator.of(context).pop<dynamic>(result);
   }).catchError((Object error) {
     showDialog<ErrorDialog>(
-        context: context,
+        context: navigatorKey.currentContext,
         builder: (BuildContext context) {
           return ErrorDialog(error);
         });
@@ -49,7 +50,7 @@ Completer<Null> errorCompleter(BuildContext context) {
 
   completer.future.catchError((Object error) {
     showDialog<ErrorDialog>(
-        context: context,
+        context: navigatorKey.currentContext,
         builder: (BuildContext context) {
           return ErrorDialog(error);
         });

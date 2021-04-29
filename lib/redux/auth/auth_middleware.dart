@@ -79,7 +79,7 @@ Middleware<AppState> _createUserLogoutAll(AuthRepository repository) {
       store.dispatch(UserLogout());
     }).catchError((Object error) {
       if (action.completer != null) {
-        //action.completer.completeError(error);
+        action.completer.completeError(error);
       }
       store.dispatch(UserLogoutAllFailure(error));
     });
