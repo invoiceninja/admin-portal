@@ -489,7 +489,6 @@ Middleware<AppState> _createDataRefreshed() {
       NextDispatcher next) async {
     final action = dynamicAction as RefreshDataSuccess;
     final response = action.data;
-    final selectedCompanyIndex = store.state.uiState.selectedCompanyIndex;
     final loadedStaticData = response.static.currencies.isNotEmpty;
 
     if (loadedStaticData) {
@@ -497,28 +496,12 @@ Middleware<AppState> _createDataRefreshed() {
     }
 
     try {
-      for (int i = 0; i < response.userCompanies.length; i++) {
-        final UserCompanyEntity userCompany = response.userCompanies[i];
-
-        if (i == 0) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
-        }
-
-        store.dispatch(
-            SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
-        store.dispatch(LoadCompanySuccess(userCompany));
-        if (!userCompany.company.isLarge) {
-          store.dispatch(PersistData());
-        }
-      }
+      final userCompany = response.userCompanies.first;
+      store.dispatch(LoadCompanySuccess(userCompany));
     } catch (error) {
       action.completer?.completeError(error);
       rethrow;
     }
-
-    store.dispatch(SelectCompany(
-        companyIndex: selectedCompanyIndex, clearSelection: loadedStaticData));
 
     if (action.completer != null) {
       action.completer.complete(null);

@@ -5,12 +5,15 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class DeviceSettings extends StatefulWidget {
   const DeviceSettings({
@@ -200,8 +203,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData && snapshot.data == true) {
                       return SwitchListTile(
-                        title: Text(AppLocalization.of(context)
-                            .biometricAuthentication),
+                        title: Text(localization.biometricAuthentication),
                         value: prefState.requireAuthentication,
                         onChanged: (value) => viewModel
                             .onRequireAuthenticationChanged(context, value),
@@ -232,7 +234,14 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 Builder(builder: (BuildContext context) {
                   return ListTile(
                     leading: Icon(Icons.refresh),
-                    title: Text(AppLocalization.of(context).refreshData),
+                    title: Text(localization.refreshData),
+                    subtitle: LiveText(() {
+                      return localization.lastUpdated +
+                          ' ' +
+                          timeago.format(convertTimestampToDate(
+                              (state.userCompanyState.lastUpdated / 1000)
+                                  .round()));
+                    }),
                     onTap: () {
                       viewModel.onRefreshTap(context);
                     },

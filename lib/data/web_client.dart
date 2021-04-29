@@ -217,7 +217,7 @@ void _checkResponse(http.Response response) {
 
   if (!kReleaseMode && Config.DEBUG_REQUESTS) {
     printWrapped('${response.statusCode} ${response.body}');
-    //print('headers: ${response.headers}');
+    print('headers: ${response.headers}');
   }
 
   final serverVersion = response.headers['x-app-version'];
