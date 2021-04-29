@@ -481,6 +481,8 @@ Middleware<AppState> _createAccountLoaded() {
     if (action.completer != null) {
       action.completer.complete(null);
     }
+
+    next(action);
   };
 }
 
@@ -506,6 +508,8 @@ Middleware<AppState> _createDataRefreshed() {
     if (action.completer != null) {
       action.completer.complete(null);
     }
+
+    next(action);
   };
 }
 

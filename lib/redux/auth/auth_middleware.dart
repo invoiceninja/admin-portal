@@ -266,6 +266,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         if (action.clearData && !company.isLarge) {
           store.dispatch(ClearData());
         }
+
         store.dispatch(RefreshDataSuccess(
           completer: action.completer,
           data: data,
