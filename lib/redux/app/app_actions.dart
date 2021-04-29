@@ -166,7 +166,7 @@ class ResendConfirmationFailure implements StopLoading {
 class ResendConfirmationSuccess implements StopLoading {}
 
 class RefreshData implements StartLoading {
-  RefreshData({
+  const RefreshData({
     this.completer,
     this.clearData = false,
     this.includeStatic = false,
@@ -175,6 +175,19 @@ class RefreshData implements StartLoading {
   final Completer completer;
   final bool clearData;
   final bool includeStatic;
+}
+
+class RefreshDataSuccess implements StopLoading {
+  const RefreshDataSuccess({this.completer, this.data});
+
+  final Completer completer;
+  final LoginResponse data;
+}
+
+class RefreshDataFailure implements StopLoading {
+  const RefreshDataFailure(this.error);
+
+  final dynamic error;
 }
 
 class PreviewEntity {
@@ -192,12 +205,6 @@ class ClearPreviewStack {}
 class PopPreviewStack {}
 
 class ClearData {}
-
-class RefreshDataFailure implements StopLoading {
-  const RefreshDataFailure(this.error);
-
-  final dynamic error;
-}
 
 class ClearLastError {}
 

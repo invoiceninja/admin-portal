@@ -100,10 +100,10 @@ class AuthRepository {
       @required String token,
       @required int updatedAt,
       @required bool includeStatic}) async {
-    url = formatApiUrl(url) + '/refresh';
+    url = formatApiUrl(url) + '/refresh?current_company=true';
 
     if (updatedAt > 0) {
-      url += '?updated_at=$updatedAt';
+      url += '&updated_at=$updatedAt';
       includeStatic = includeStatic ||
           DateTime.now().millisecondsSinceEpoch - (updatedAt * 1000) >
               kMillisecondsToRefreshStaticData;

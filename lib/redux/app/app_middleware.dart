@@ -128,6 +128,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   );
 
   final accountLoaded = _createAccountLoaded();
+  final dataRefreshed = _createDataRefreshed();
 
   final persistData = _createPersistData(
     companyRepositories,
@@ -160,6 +161,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
     TypedMiddleware<AppState, UserLoginSuccess>(userLoggedIn),
     TypedMiddleware<AppState, LoadAccountSuccess>(accountLoaded),
+    TypedMiddleware<AppState, RefreshDataSuccess>(dataRefreshed),
     TypedMiddleware<AppState, PersistData>(persistData),
     TypedMiddleware<AppState, PersistStatic>(persistStatic),
     TypedMiddleware<AppState, PersistUI>(persistUI),
@@ -475,6 +477,48 @@ Middleware<AppState> _createAccountLoaded() {
         response.userCompanies[selectedCompanyIndex].company.isLarge) {
       store.dispatch(LoadClients());
     }
+
+    if (action.completer != null) {
+      action.completer.complete(null);
+    }
+  };
+}
+
+Middleware<AppState> _createDataRefreshed() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as RefreshDataSuccess;
+    final response = action.data;
+    final selectedCompanyIndex = store.state.uiState.selectedCompanyIndex;
+    final loadedStaticData = response.static.currencies.isNotEmpty;
+
+    if (loadedStaticData) {
+      store.dispatch(LoadStaticSuccess(data: response.static));
+    }
+
+    try {
+      for (int i = 0; i < response.userCompanies.length; i++) {
+        final UserCompanyEntity userCompany = response.userCompanies[i];
+
+        if (i == 0) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
+        }
+
+        store.dispatch(
+            SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
+        store.dispatch(LoadCompanySuccess(userCompany));
+        if (!userCompany.company.isLarge) {
+          store.dispatch(PersistData());
+        }
+      }
+    } catch (error) {
+      action.completer?.completeError(error);
+      rethrow;
+    }
+
+    store.dispatch(SelectCompany(
+        companyIndex: selectedCompanyIndex, clearSelection: loadedStaticData));
 
     if (action.completer != null) {
       action.completer.complete(null);
