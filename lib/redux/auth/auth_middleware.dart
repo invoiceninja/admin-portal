@@ -220,8 +220,10 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         formatApiUrl(prefs.getString(kSharedPrefUrl) ?? state.authState.url);
 
     String token;
+    bool hasToken = false;
     if ((state?.userCompany?.token?.token ?? '').isNotEmpty) {
       token = state.userCompany.token.token;
+      hasToken = true;
     } else {
       token = TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
           'TOKEN';
@@ -241,6 +243,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       token: token,
       updatedAt: updatedAt - kUpdatedAtBufferSeconds,
       includeStatic: action.includeStatic || state.staticState.isStale,
+      currentCompany: hasToken,
     )
         .then((data) {
       print('## REFRESH RESPONSE: ${data.userCompanies.length}');

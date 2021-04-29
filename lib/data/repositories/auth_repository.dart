@@ -95,12 +95,14 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, secret: secret);
   }
 
-  Future<LoginResponse> refresh(
-      {@required String url,
-      @required String token,
-      @required int updatedAt,
-      @required bool includeStatic}) async {
-    url = formatApiUrl(url) + '/refresh?current_company=true';
+  Future<LoginResponse> refresh({
+    @required String url,
+    @required String token,
+    @required int updatedAt,
+    @required bool currentCompany,
+    @required bool includeStatic,
+  }) async {
+    url = formatApiUrl(url) + '/refresh?current_company=$currentCompany';
 
     if (updatedAt > 0) {
       url += '&updated_at=$updatedAt';
