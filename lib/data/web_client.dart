@@ -69,7 +69,7 @@ class WebClient {
     }
 
     print('POST: $url');
-    if (!kReleaseMode) {
+    if (!kReleaseMode && Config.DEBUG_REQUESTS) {
       printWrapped('Data: $data');
     }
     http.Response response;
@@ -117,7 +117,7 @@ class WebClient {
     }
 
     print('PUT: $url');
-    if (!kReleaseMode) {
+    if (!kReleaseMode && Config.DEBUG_REQUESTS) {
       printWrapped('Data: $data');
     }
     http.Response response;
@@ -215,9 +215,9 @@ void _checkResponse(http.Response response) {
   debugPrint('response: ${response.statusCode} ${response.body}');
    */
 
-  if (!kReleaseMode) {
+  if (!kReleaseMode && Config.DEBUG_REQUESTS) {
     printWrapped('${response.statusCode} ${response.body}');
-    print('headers: ${response.headers}');
+    //print('headers: ${response.headers}');
   }
 
   final serverVersion = response.headers['x-app-version'];
