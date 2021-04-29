@@ -97,8 +97,8 @@ void main({bool isTesting = false}) async {
     await SentryFlutter.init(
       (options) {
         options.dsn = Config.SENTRY_DNS;
-        options.release =
-            String.fromEnvironment('SENTRY_RELEASE', defaultValue: 'Unknown');
+        options.release = const String.fromEnvironment('SENTRY_RELEASE',
+            defaultValue: kClientVersion);
         options.dist = kClientVersion;
         options.beforeSend = (SentryEvent event, {dynamic hint}) {
           final state = store.state;
