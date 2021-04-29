@@ -237,7 +237,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     title: Text(localization.refreshData),
                     subtitle: LiveText(() {
                       return localization.lastUpdated +
-                          ' ' +
+                          ': ' +
                           timeago.format(convertTimestampToDate(
                               (state.userCompanyState.lastUpdated / 1000)
                                   .round()));
