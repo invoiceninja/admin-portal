@@ -105,10 +105,19 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       );
     }
   }),
-  TypedReducer<UserCompanyEntity, SaveAuthUserSuccess>((userCompany, action) =>
-      userCompany.rebuild((b) => b
-        ..user.replace(action.user)
-        ..settings.replace(action.user.userCompany.settings))),
+  TypedReducer<UserCompanyEntity, SaveAuthUserSuccess>(
+    (userCompany, action) => userCompany.rebuild((b) => b
+      ..user.replace(action.user)
+      ..settings.replace(action.user.userCompany.settings)),
+  ),
+  TypedReducer<UserCompanyEntity, ConnecOAuthUserSuccess>(
+    (userCompany, action) =>
+        userCompany.rebuild((b) => b..user.replace(action.user)),
+  ),
+  TypedReducer<UserCompanyEntity, ConnecGmailUserSuccess>(
+    (userCompany, action) =>
+        userCompany.rebuild((b) => b..user.replace(action.user)),
+  ),
   TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(
       (userCompany, action) => userCompany
           .rebuild((b) => b..settings.replace(action.userCompany.settings))),

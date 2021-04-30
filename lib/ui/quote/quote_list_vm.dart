@@ -101,7 +101,6 @@ class QuoteListVM extends EntityListVM {
           state.quoteState.list,
           state.clientState.map,
           state.quoteListState,
-          state.staticState,
           state.userState.map),
       invoiceMap: state.quoteState.map,
       clientMap: state.clientState.map,

@@ -108,7 +108,6 @@ class CreditListVM extends EntityListVM {
           state.creditState.list,
           state.clientState.map,
           state.creditListState,
-          state.staticState,
           state.userState.map),
       invoiceMap: state.creditState.map,
       clientMap: state.clientState.map,

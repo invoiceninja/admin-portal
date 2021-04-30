@@ -533,21 +533,34 @@ abstract class InvoiceEntity extends Object
   //String get last_login;
   //String get custom_messages;
 
-  int compareTo(
-      {InvoiceEntity invoice,
-      String sortField,
-      bool sortAscending,
-      BuiltMap<String, ClientEntity> clientMap,
-      StaticState staticState,
-      BuiltMap<String, UserEntity> userMap}) {
+  int compareTo({
+    InvoiceEntity invoice,
+    String sortField,
+    bool sortAscending,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    String recurringPrefix = '',
+  }) {
     int response = 0;
     final InvoiceEntity invoiceA = sortAscending ? this : invoice;
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
     switch (sortField) {
       case InvoiceFields.number:
-        response = (invoiceA.number ?? '')
+        var invoiceANumber = invoiceA.number ?? '';
+        var invoiceBNumber = invoiceB.number ?? '';
+        invoiceANumber = recurringPrefix.isNotEmpty &&
+                (invoiceA.recurringId ?? '').isNotEmpty &&
+                invoiceANumber.startsWith(recurringPrefix)
+            ? invoiceANumber.replaceFirst(recurringPrefix, '')
+            : invoiceANumber;
+        invoiceBNumber = recurringPrefix.isNotEmpty &&
+                (invoiceB.recurringId ?? '').isNotEmpty &&
+                invoiceBNumber.startsWith(recurringPrefix)
+            ? invoiceBNumber.replaceFirst(recurringPrefix, '')
+            : invoiceBNumber;
+        response = invoiceANumber
             .toLowerCase()
-            .compareTo((invoiceB.number ?? '').toLowerCase());
+            .compareTo(invoiceBNumber.toLowerCase());
         break;
       case InvoiceFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);

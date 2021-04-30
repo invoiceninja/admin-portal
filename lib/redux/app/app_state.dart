@@ -336,6 +336,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return staticState.dateFormatMap;
       case EntityType.timezone:
         return staticState.timezoneMap;
+      case EntityType.dashboard:
+      case EntityType.reports:
+      case EntityType.settings:
+        return null;
       default:
         print('Error: getEntityMap $type not found');
         return null;

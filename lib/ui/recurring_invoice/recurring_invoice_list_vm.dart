@@ -89,7 +89,6 @@ class RecurringInvoiceListVM {
           state.clientState.map,
           state.recurringInvoiceState.list,
           state.recurringInvoiceListState,
-          state.staticState,
           state.userState.map),
       recurringInvoiceMap: state.recurringInvoiceState.map,
       isLoading: state.isLoading,

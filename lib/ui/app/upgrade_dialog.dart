@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -57,9 +58,15 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     };
 
     try {
-      final dynamic response = await webClient.post(
-          '$kAppProductionUrl/api/v1/upgrade', state.credentials.token,
-          data: json.encode(data));
+      final dynamic response = await webClient
+          .post(
+        '$kAppProductionUrl/api/v1/upgrade',
+        state.credentials.token,
+        data: json.encode(data),
+      )
+          .catchError((dynamic error) {
+        showErrorDialog(context: context, message: error);
+      });
       final String message = response['message'];
 
       if (message == 'success') {

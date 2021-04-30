@@ -201,8 +201,10 @@ IconData getSettingIcon(String section) {
     case kSettingsProducts:
       return getEntityIcon(EntityType.product);
     case kSettingsExpenses:
+    case kSettingsExpenseCategories:
       return getEntityIcon(EntityType.expense);
     case kSettingsTasks:
+    case kSettingsTaskStatuses:
       return getEntityIcon(EntityType.task);
     case kSettingsSubscriptions:
       return getEntityIcon(EntityType.subscription);

@@ -6,13 +6,12 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedFilteredRecurringInvoiceList = memo7((
+var memoizedFilteredRecurringInvoiceList = memo6((
   SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> recurringInvoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltList<String> recurringInvoiceList,
   ListUIState recurringInvoiceListState,
-  StaticState staticState,
   BuiltMap<String, UserEntity> userMap,
 ) =>
     filteredRecurringInvoicesSelector(
@@ -21,7 +20,6 @@ var memoizedFilteredRecurringInvoiceList = memo7((
       clientMap,
       recurringInvoiceList,
       recurringInvoiceListState,
-      staticState,
       userMap,
     ));
 
@@ -31,7 +29,6 @@ List<String> filteredRecurringInvoicesSelector(
   BuiltMap<String, ClientEntity> clientMap,
   BuiltList<String> recurringInvoiceList,
   ListUIState invoiceListState,
-  StaticState staticState,
   BuiltMap<String, UserEntity> userMap,
 ) {
   final filterEntityId = selectionState.filterEntityId;
@@ -102,7 +99,6 @@ List<String> filteredRecurringInvoicesSelector(
       sortField: invoiceListState.sortField,
       sortAscending: invoiceListState.sortAscending,
       clientMap: clientMap,
-      staticState: staticState,
       userMap: userMap,
     );
   });

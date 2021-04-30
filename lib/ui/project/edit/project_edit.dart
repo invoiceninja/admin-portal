@@ -123,6 +123,8 @@ class _ProjectEditState extends State<ProjectEdit> {
     final state = viewModel.state;
     final project = viewModel.project;
 
+    print('## BUILD: ${project.clientId}');
+
     return EditScaffold(
       entity: project,
       title: project.isNew ? localization.newProject : localization.editProject,
@@ -161,7 +163,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                   project.isNew
                       ? EntityDropdown(
                           key: ValueKey('__client_${project.clientId}__'),
-                          //autofocus: true,
                           entityType: EntityType.client,
                           labelText: localization.client,
                           entityId: project.clientId,

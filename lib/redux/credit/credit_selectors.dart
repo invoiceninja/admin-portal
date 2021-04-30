@@ -5,23 +5,21 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownCreditList = memo7(
+var memoizedDropdownCreditList = memo6(
     (BuiltMap<String, InvoiceEntity> creditMap,
             BuiltMap<String, ClientEntity> clientMap,
             BuiltList<String> creditList,
             String clientId,
-            StaticState staticState,
             BuiltMap<String, UserEntity> userMap,
             List<String> excludedIds) =>
-        dropdownCreditSelector(creditMap, clientMap, creditList, clientId,
-            staticState, userMap, excludedIds));
+        dropdownCreditSelector(
+            creditMap, clientMap, creditList, clientId, userMap, excludedIds));
 
 List<String> dropdownCreditSelector(
     BuiltMap<String, InvoiceEntity> creditMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> creditList,
     String clientId,
-    StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     List<String> excludedIds) {
   final list = creditList.where((creditId) {
@@ -52,7 +50,6 @@ List<String> dropdownCreditSelector(
         clientMap: clientMap,
         sortAscending: true,
         sortField: ClientFields.name,
-        staticState: staticState,
         userMap: userMap);
   });
 
@@ -64,15 +61,14 @@ ClientEntity creditClientSelector(
   return clientMap[credit.clientId];
 }
 
-var memoizedFilteredCreditList = memo7((SelectionState selectionState,
+var memoizedFilteredCreditList = memo6((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> creditMap,
         BuiltList<String> creditList,
         BuiltMap<String, ClientEntity> clientMap,
         ListUIState creditListState,
-        StaticState staticState,
         BuiltMap<String, UserEntity> userMap) =>
     filteredCreditsSelector(selectionState, creditMap, creditList, clientMap,
-        creditListState, staticState, userMap));
+        creditListState, userMap));
 
 List<String> filteredCreditsSelector(
     SelectionState selectionState,
@@ -80,7 +76,6 @@ List<String> filteredCreditsSelector(
     BuiltList<String> creditList,
     BuiltMap<String, ClientEntity> clientMap,
     ListUIState creditListState,
-    StaticState staticState,
     BuiltMap<String, UserEntity> userMap) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
@@ -136,7 +131,6 @@ List<String> filteredCreditsSelector(
         sortField: creditListState.sortField,
         sortAscending: creditListState.sortAscending,
         clientMap: clientMap,
-        staticState: staticState,
         userMap: userMap);
   });
 
