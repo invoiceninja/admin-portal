@@ -140,7 +140,15 @@ class ListScaffold extends StatelessWidget {
                       }
                     },
                   ),
-                )
+                ),
+              if (isMobile(context) ||
+                  (state.prefState.isHistoryFloated && !isSettings))
+                Builder(
+                  builder: (context) => IconButton(
+                    icon: Icon(Icons.history),
+                    onPressed: () => Scaffold.of(context).openEndDrawer(),
+                  ),
+                ),
             ],
           ),
           body: ClipRect(
