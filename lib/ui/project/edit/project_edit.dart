@@ -123,8 +123,6 @@ class _ProjectEditState extends State<ProjectEdit> {
     final state = viewModel.state;
     final project = viewModel.project;
 
-    print('## BUILD: ${project.clientId}');
-
     return EditScaffold(
       entity: project,
       title: project.isNew ? localization.newProject : localization.editProject,
