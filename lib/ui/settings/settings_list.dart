@@ -376,10 +376,20 @@ class SettingsSearch extends StatelessWidget {
         'show_tasks_table',
       ],
     ],
+    kSettingsTaskStatuses: [
+      [
+        'task_statuses',
+      ],
+    ],
     kSettingsExpenses: [
       [
         'should_be_invoiced',
         'mark_paid',
+      ],
+    ],
+    kSettingsExpenseCategories: [
+      [
+        'expense_categories',
       ],
     ],
     kSettingsImportExport: [
@@ -426,8 +436,7 @@ class SettingsSearch extends StatelessWidget {
       [
         'all_pages_header',
         'all_pages_footer',
-        //'hide_paid_to_date',
-        //'invoice_embed_documents',
+        'empty_columns',
       ],
     ],
     kSettingsCustomDesigns: [
