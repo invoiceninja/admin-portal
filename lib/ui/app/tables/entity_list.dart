@@ -24,6 +24,7 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
+import 'package:overflow_view/overflow_view.dart';
 
 class EntityList extends StatefulWidget {
   EntityList({
@@ -291,6 +292,14 @@ class _EntityListState extends State<EntityList> {
       }
     };
 
+    final entities = listUIState.selectedIds == null
+        ? <BaseEntity>[]
+        : listUIState.selectedIds
+            .map<BaseEntity>((entityId) => entityMap[entityId])
+            .toList();
+
+    print('## ENTITIES: $entities');
+
     return RefreshIndicator(
         onRefresh: () => widget.onRefreshed(context),
         child: Column(
@@ -328,34 +337,50 @@ class _EntityListState extends State<EntityList> {
                               (listUIState.selectedIds ?? <String>[]).length,
                         ),
                       SizedBox(width: 16),
-                      Expanded(
-                        child: Text(localization.countSelected
-                            .replaceFirst(':count', '$countSelected')),
-                      ),
-                      SaveCancelButtons(
-                        isHeader: false,
-                        saveLabel: localization.actions,
-                        onSavePressed: (context) async {
-                          final entities = listUIState.selectedIds
-                              .map<BaseEntity>(
-                                  (entityId) => entityMap[entityId])
-                              .toList();
-
-                          if (entities.isEmpty) {
-                            return;
-                          }
-
-                          await showEntityActionsDialog(
-                            entities: entities,
-                            context: context,
-                            multiselect: true,
-                            completer: Completer<Null>()
-                              ..future.then<dynamic>(
-                                  (_) => widget.onClearMultiselect()),
-                          );
-                        },
-                        onCancelPressed: (_) => widget.onClearMultiselect(),
-                      ),
+                      if (isDesktop(context)) ...[
+                        Flexible(
+                          child: Text(localization.countSelected
+                              .replaceFirst(':count', '$countSelected')),
+                        ),
+                        SizedBox(width: 16),
+                        OverflowView.flexible(
+                            spacing: 4,
+                            children: [],
+                            builder: (context, remaining) {
+                              return PopupMenuButton<EntityAction>(
+                                child: Text('test'),
+                                itemBuilder: (BuildContext context) {
+                                  return [
+                                    PopupMenuItem(
+                                      child: Text('test'),
+                                    )
+                                  ];
+                                },
+                              );
+                            })
+                      ] else ...[
+                        Expanded(
+                          child: Text(localization.countSelected
+                              .replaceFirst(':count', '$countSelected')),
+                        ),
+                        SaveCancelButtons(
+                          isHeader: false,
+                          saveLabel: localization.actions,
+                          isEnabled: entities.isNotEmpty,
+                          isCancelEnabled: true,
+                          onSavePressed: (context) async {
+                            await showEntityActionsDialog(
+                              entities: entities,
+                              context: context,
+                              multiselect: true,
+                              completer: Completer<Null>()
+                                ..future.then<dynamic>(
+                                    (_) => widget.onClearMultiselect()),
+                            );
+                          },
+                          onCancelPressed: (_) => widget.onClearMultiselect(),
+                        ),
+                      ]
                     ],
                   ),
                 ),
