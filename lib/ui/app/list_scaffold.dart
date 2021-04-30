@@ -141,6 +141,7 @@ class ListScaffold extends StatelessWidget {
                     },
                   ),
                 ),
+              /*
               if (isMobile(context) ||
                   (state.prefState.isHistoryFloated && !isSettings))
                 Builder(
@@ -149,6 +150,7 @@ class ListScaffold extends StatelessWidget {
                     onPressed: () => Scaffold.of(context).openEndDrawer(),
                   ),
                 ),
+                */
             ],
           ),
           body: ClipRect(
