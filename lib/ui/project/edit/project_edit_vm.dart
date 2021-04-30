@@ -66,7 +66,6 @@ class ProjectEditVM {
       state: state,
       origProject: state.projectState.map[project.id],
       onChanged: (ProjectEntity project) {
-        print('## VM - onChanged: ${project.clientId}');
         store.dispatch(UpdateProject(project));
       },
       onCancelPressed: (BuildContext context) {

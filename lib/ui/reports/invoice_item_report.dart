@@ -82,7 +82,7 @@ ReportResult lineItemReport(
     final invoice = entry.value;
     final client = clientMap[invoice.clientId];
 
-    if (invoice.isDeleted) {
+    if (invoice.isDeleted || client.isDeleted) {
       continue;
     }
 

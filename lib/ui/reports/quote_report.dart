@@ -96,7 +96,7 @@ ReportResult quoteReport(
     final client = clientMap[quote.clientId];
     //final vendor = vendorMap[quote.vendorId];
 
-    if (quote.isDeleted) {
+    if (quote.isDeleted || client.isDeleted) {
       continue;
     }
 
