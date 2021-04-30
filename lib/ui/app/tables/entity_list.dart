@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -21,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
@@ -297,6 +299,7 @@ class _EntityListState extends State<EntityList> {
         : listUIState.selectedIds
             .map<BaseEntity>((entityId) => entityMap[entityId])
             .toList();
+    final firstEntity = entities.isEmpty ? null : entities.first;
 
     print('## ENTITIES: $entities');
 
@@ -345,7 +348,31 @@ class _EntityListState extends State<EntityList> {
                         SizedBox(width: 16),
                         OverflowView.flexible(
                             spacing: 4,
-                            children: [],
+                            children: entities.isEmpty
+                                ? []
+                                : firstEntity
+                                    .getActions(
+                                      includeEdit: false,
+                                      multiselect: true,
+                                      userCompany: state.userCompany,
+                                      client: (firstEntity is BelongsToClient)
+                                          ? state.clientState.get(
+                                              (firstEntity as BelongsToClient)
+                                                  .clientId)
+                                          : null,
+                                    )
+                                    .map(
+                                      (action) => OutlinedButton(
+                                        child: IconText(
+                                          icon: getEntityActionIcon(action),
+                                          text: localization.lookup('$action'),
+                                        ),
+                                        onPressed: () {
+                                          //
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
                             builder: (context, remaining) {
                               return PopupMenuButton<EntityAction>(
                                 child: Text('test'),
