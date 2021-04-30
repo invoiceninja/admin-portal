@@ -180,7 +180,7 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitLoginForm() {
-    final bool isValid = true;
+    final isValid = _formKey.currentState.validate();
     final viewModel = widget.viewModel;
 
     setState(() {
@@ -194,10 +194,8 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-
     completer.future.then((_) {
       setState(() {
-        //_buttonController.reset();
         _loginError = '';
         if (_recoverPassword) {
           _recoverPassword = false;
