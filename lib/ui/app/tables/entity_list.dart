@@ -329,9 +329,7 @@ class _EntityListState extends State<EntityList> {
                         ),
                       SizedBox(width: 16),
                       Expanded(
-                        child: Text((countSelected == 1
-                                ? localization.countRecordSelected
-                                : localization.countRecordsSelected)
+                        child: Text(localization.countSelected
                             .replaceFirst(':count', '$countSelected')),
                       ),
                       SaveCancelButtons(

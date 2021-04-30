@@ -438,8 +438,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company_key': 'Company Key',
       'storefront': 'Storefront',
       'storefront_help': 'Enable third-party apps to create invoices',
-      'count_records_selected': ':count records selected',
-      'count_record_selected': ':count record selected',
       'client_created': 'Client Created',
       'online_payment_email': 'Online Payment Email',
       'manual_payment_email': 'Manual Payment Email',
@@ -59392,12 +59390,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get clientCreated =>
       _localizedValues[localeCode]['client_created'] ?? '';
-
-  String get countRecordsSelected =>
-      _localizedValues[localeCode]['count_records_selected'] ?? '';
-
-  String get countRecordSelected =>
-      _localizedValues[localeCode]['count_record_selected'] ?? '';
 
   String get storefront => _localizedValues[localeCode]['storefront'] ?? '';
 
