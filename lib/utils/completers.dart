@@ -84,8 +84,8 @@ class Debouncer {
       if (action != null) {
         action();
       }
-      action = null;
-      timer = null;
+      Debouncer.action = null;
+      Debouncer.timer = null;
     });
   }
 

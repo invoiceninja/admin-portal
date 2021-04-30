@@ -71,7 +71,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
       _showOptions();
     }
 
-    if (!_focusNode.hasFocus) {
+    if (!_focusNode.hasFocus && !hasValue) {
       _textController.text = '';
     }
   }
