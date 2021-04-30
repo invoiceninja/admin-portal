@@ -549,10 +549,12 @@ abstract class InvoiceEntity extends Object
         var invoiceANumber = invoiceA.number ?? '';
         var invoiceBNumber = invoiceB.number ?? '';
         invoiceANumber = recurringPrefix.isNotEmpty &&
+                (invoiceA.recurringId ?? '').isNotEmpty &&
                 invoiceANumber.startsWith(recurringPrefix)
             ? invoiceANumber.replaceFirst(recurringPrefix, '')
             : invoiceANumber;
         invoiceBNumber = recurringPrefix.isNotEmpty &&
+                (invoiceB.recurringId ?? '').isNotEmpty &&
                 invoiceBNumber.startsWith(recurringPrefix)
             ? invoiceBNumber.replaceFirst(recurringPrefix, '')
             : invoiceBNumber;
