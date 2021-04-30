@@ -78,7 +78,7 @@ ReportResult paymentReport(
     final payment = paymentMap[paymentId];
     final client = clientMap[payment.clientId];
 
-    if (payment.isDeleted) {
+    if (payment.isDeleted || client.isDeleted) {
       continue;
     }
 

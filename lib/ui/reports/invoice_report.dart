@@ -105,7 +105,7 @@ ReportResult invoiceReport(
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId];
-    if (invoice.isDeleted) {
+    if (invoice.isDeleted || client.isDeleted) {
       continue;
     }
 
