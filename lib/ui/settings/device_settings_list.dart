@@ -256,10 +256,12 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 ListTile(
                   leading: Icon(Icons.logout),
                   title: Text(localization.endAllSessions),
+                  /*
                   subtitle: Text(countSessions == 1
                       ? localization.countSession
                       : localization.countSession
                           .replaceFirst(':count', '$countSessions')),
+                          */
                   onTap: () {
                     confirmCallback(
                         context: context,

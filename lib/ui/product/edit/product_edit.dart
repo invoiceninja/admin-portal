@@ -159,7 +159,7 @@ class _ProductEditState extends State<ProductEdit> {
                   keyboardType: TextInputType.multiline,
                   label: localization.description,
                   controller: _notesController,
-                  maxLines: 4,
+                  maxLines: 6,
                 ),
                 DecoratedFormField(
                   label: localization.price,
