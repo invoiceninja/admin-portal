@@ -53,7 +53,6 @@ class RecurringInvoiceScreenVM {
           state.clientState.map,
           state.recurringInvoiceState.list,
           state.recurringInvoiceListState,
-          state.staticState,
           state.userState.map),
       userCompany: state.userCompany,
       isInMultiselect: state.recurringInvoiceListState.isInMultiselect(),

@@ -45,14 +45,15 @@ class InvoiceScreenVM {
     return InvoiceScreenVM(
       invoiceMap: state.invoiceState.map,
       invoiceList: memoizedFilteredInvoiceList(
-          state.getUISelection(EntityType.invoice),
-          state.invoiceState.map,
-          state.invoiceState.list,
-          state.clientState.map,
-          state.paymentState.map,
-          state.invoiceListState,
-          state.staticState,
-          state.userState.map),
+        state.getUISelection(EntityType.invoice),
+        state.invoiceState.map,
+        state.invoiceState.list,
+        state.clientState.map,
+        state.paymentState.map,
+        state.invoiceListState,
+        state.userState.map,
+        state.company.settings.recurringNumberPrefix,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.invoiceListState.isInMultiselect(),
     );

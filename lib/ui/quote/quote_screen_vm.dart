@@ -50,7 +50,6 @@ class QuoteScreenVM {
           state.quoteState.list,
           state.clientState.map,
           state.quoteListState,
-          state.staticState,
           state.userState.map),
       userCompany: state.userCompany,
       isInMultiselect: state.quoteListState.isInMultiselect(),

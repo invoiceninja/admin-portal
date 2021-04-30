@@ -1,5 +1,4 @@
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -10,20 +9,21 @@ var memoizedDropdownInvoiceList = memo7(
             BuiltMap<String, ClientEntity> clientMap,
             BuiltList<String> invoiceList,
             String clientId,
-            StaticState staticState,
             BuiltMap<String, UserEntity> userMap,
-            List<String> excludedIds) =>
+            List<String> excludedIds,
+            String recurringPrefix) =>
         dropdownInvoiceSelector(invoiceMap, clientMap, invoiceList, clientId,
-            staticState, userMap, excludedIds));
+            userMap, excludedIds, recurringPrefix));
 
 List<String> dropdownInvoiceSelector(
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltList<String> invoiceList,
-    String clientId,
-    StaticState staticState,
-    BuiltMap<String, UserEntity> userMap,
-    List<String> excludedIds) {
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltList<String> invoiceList,
+  String clientId,
+  BuiltMap<String, UserEntity> userMap,
+  List<String> excludedIds,
+  String recurringPrefix,
+) {
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     if (excludedIds.contains(invoiceId)) {
@@ -47,12 +47,13 @@ List<String> dropdownInvoiceSelector(
     final invoiceA = invoiceMap[invoiceAId];
     final invoiceB = invoiceMap[invoiceBId];
     return invoiceA.compareTo(
-        invoice: invoiceB,
-        clientMap: clientMap,
-        sortAscending: false,
-        sortField: InvoiceFields.number,
-        staticState: staticState,
-        userMap: userMap);
+      invoice: invoiceB,
+      clientMap: clientMap,
+      sortAscending: false,
+      sortField: InvoiceFields.number,
+      recurringPrefix: recurringPrefix,
+      userMap: userMap,
+    );
   });
 
   return list;
@@ -64,20 +65,21 @@ var memoizedFilteredInvoiceList = memo8((SelectionState selectionState,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, PaymentEntity> paymentMap,
         ListUIState invoiceListState,
-        StaticState staticState,
-        BuiltMap<String, UserEntity> userMap) =>
+        BuiltMap<String, UserEntity> userMap,
+        String recurringPrefix) =>
     filteredInvoicesSelector(selectionState, invoiceMap, invoiceList, clientMap,
-        paymentMap, invoiceListState, staticState, userMap));
+        paymentMap, invoiceListState, userMap, recurringPrefix));
 
 List<String> filteredInvoicesSelector(
-    SelectionState selectionState,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltList<String> invoiceList,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, PaymentEntity> paymentMap,
-    ListUIState invoiceListState,
-    StaticState staticState,
-    BuiltMap<String, UserEntity> userMap) {
+  SelectionState selectionState,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltList<String> invoiceList,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  ListUIState invoiceListState,
+  BuiltMap<String, UserEntity> userMap,
+  String recurringPrefix,
+) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
@@ -169,8 +171,8 @@ List<String> filteredInvoicesSelector(
       sortField: invoiceListState.sortField,
       sortAscending: invoiceListState.sortAscending,
       clientMap: clientMap,
-      staticState: staticState,
       userMap: userMap,
+      recurringPrefix: recurringPrefix,
     );
   });
 

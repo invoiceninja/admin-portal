@@ -53,7 +53,6 @@ class CreditScreenVM {
           state.creditState.list,
           state.clientState.map,
           state.creditListState,
-          state.staticState,
           state.userState.map),
       userCompany: state.userCompany,
       isInMultiselect: state.creditListState.isInMultiselect(),

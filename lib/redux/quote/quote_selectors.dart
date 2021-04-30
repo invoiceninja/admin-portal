@@ -10,15 +10,14 @@ ClientEntity quoteClientSelector(
   return clientMap[quote.clientId];
 }
 
-var memoizedFilteredQuoteList = memo7((SelectionState selectionState,
+var memoizedFilteredQuoteList = memo6((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> quoteMap,
         BuiltList<String> quoteList,
         BuiltMap<String, ClientEntity> clientMap,
         ListUIState quoteListState,
-        StaticState staticState,
         BuiltMap<String, UserEntity> userMap) =>
     filteredQuotesSelector(selectionState, quoteMap, quoteList, clientMap,
-        quoteListState, staticState, userMap));
+        quoteListState, userMap));
 
 List<String> filteredQuotesSelector(
     SelectionState selectionState,
@@ -26,7 +25,6 @@ List<String> filteredQuotesSelector(
     BuiltList<String> quoteList,
     BuiltMap<String, ClientEntity> clientMap,
     ListUIState quoteListState,
-    StaticState staticState,
     BuiltMap<String, UserEntity> userMap) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
@@ -81,7 +79,6 @@ List<String> filteredQuotesSelector(
         sortField: quoteListState.sortField,
         sortAscending: quoteListState.sortAscending,
         clientMap: clientMap,
-        staticState: staticState,
         userMap: userMap);
   });
 
