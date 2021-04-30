@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HealthCheckDialog extends StatefulWidget {
@@ -43,11 +44,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
             HealthCheckResponse.serializer, response);
       });
     }).catchError((dynamic error) {
-      showDialog<ErrorDialog>(
-          context: context,
-          builder: (BuildContext context) {
-            return ErrorDialog(error);
-          });
+      showErrorDialog(context: context, message: error);
     });
   }
 
@@ -69,11 +66,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
               runCheck();
             })));
     }).catchError((dynamic error) {
-      showDialog<ErrorDialog>(
-          context: context,
-          builder: (BuildContext context) {
-            return ErrorDialog(error);
-          });
+      showErrorDialog(context: context, message: error);
     });
   }
 

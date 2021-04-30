@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -352,6 +353,9 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
         _qrCode = response.data.qrCode;
         _secret = response.data.secret;
       });
+    }).catchError((dynamic error) {
+      Navigator.of(context).pop();
+      showErrorDialog(context: context, message: error);
     });
   }
 
