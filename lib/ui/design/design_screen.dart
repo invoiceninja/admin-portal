@@ -42,6 +42,13 @@ class DesignScreen extends StatelessWidget {
           store.dispatch(FilterDesigns(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.designListState.isInMultiselect()) {
+          store.dispatch(ClearDesignMultiselect());
+        } else {
+          store.dispatch(StartDesignMultiselect());
+        }
+      },
       body: DesignListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.design,

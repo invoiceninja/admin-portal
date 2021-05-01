@@ -44,6 +44,13 @@ class StubScreen extends StatelessWidget {
           store.dispatch(FilterStubs(value));
         },
       ),
+        onCheckboxPressed: () {
+          if (store.state.stubListState.isInMultiselect()) {
+            store.dispatch(ClearStubMultiselect());
+          } else {
+            store.dispatch(StartStubMultiselect());
+          }
+        },
       body: StubListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.stub,

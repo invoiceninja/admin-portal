@@ -44,6 +44,13 @@ class QuoteScreen extends StatelessWidget {
           store.dispatch(FilterQuotes(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.quoteListState.isInMultiselect()) {
+          store.dispatch(ClearQuoteMultiselect());
+        } else {
+          store.dispatch(StartQuoteMultiselect());
+        }
+      },
       body: QuoteListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.quote,

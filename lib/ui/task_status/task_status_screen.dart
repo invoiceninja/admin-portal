@@ -45,6 +45,13 @@ class TaskStatusScreen extends StatelessWidget {
           store.dispatch(FilterTaskStatuses(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.taskStatusListState.isInMultiselect()) {
+          store.dispatch(ClearTaskStatusMultiselect());
+        } else {
+          store.dispatch(StartTaskStatusMultiselect());
+        }
+      },
       body: TaskStatusListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.taskStatus,

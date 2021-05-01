@@ -43,6 +43,13 @@ class ClientScreen extends StatelessWidget {
           store.dispatch(FilterClients(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.clientListState.isInMultiselect()) {
+          store.dispatch(ClearClientMultiselect());
+        } else {
+          store.dispatch(StartClientMultiselect());
+        }
+      },
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.client,

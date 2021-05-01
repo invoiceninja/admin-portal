@@ -42,6 +42,13 @@ class ProjectScreen extends StatelessWidget {
           store.dispatch(FilterProjects(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.projectListState.isInMultiselect()) {
+          store.dispatch(ClearProjectMultiselect());
+        } else {
+          store.dispatch(StartProjectMultiselect());
+        }
+      },
       body: ProjectListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.project,

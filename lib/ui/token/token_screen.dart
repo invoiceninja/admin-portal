@@ -45,6 +45,13 @@ class TokenScreen extends StatelessWidget {
           store.dispatch(FilterTokens(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.tokenListState.isInMultiselect()) {
+          store.dispatch(ClearTokenMultiselect());
+        } else {
+          store.dispatch(StartTokenMultiselect());
+        }
+      },
       body: TokenListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.token,

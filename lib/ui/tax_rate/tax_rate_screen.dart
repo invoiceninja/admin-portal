@@ -41,6 +41,13 @@ class TaxRateSettingsScreen extends StatelessWidget {
           store.dispatch(FilterTaxRates(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.taxRateListState.isInMultiselect()) {
+          store.dispatch(ClearTaxRateMultiselect());
+        } else {
+          store.dispatch(StartTaxRateMultiselect());
+        }
+      },
       body: TaxRateListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.taxRate,

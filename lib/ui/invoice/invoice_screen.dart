@@ -44,6 +44,13 @@ class InvoiceScreen extends StatelessWidget {
           store.dispatch(FilterInvoices(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.invoiceListState.isInMultiselect()) {
+          store.dispatch(ClearInvoiceMultiselect());
+        } else {
+          store.dispatch(StartInvoiceMultiselect());
+        }
+      },
       body: InvoiceListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.invoice,

@@ -41,6 +41,13 @@ class DocumentScreen extends StatelessWidget {
           store.dispatch(FilterDocuments(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.documentListState.isInMultiselect()) {
+          store.dispatch(ClearDocumentMultiselect());
+        } else {
+          store.dispatch(StartDocumentMultiselect());
+        }
+      },
       body: DocumentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.document,

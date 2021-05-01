@@ -49,19 +49,28 @@ class TaskScreen extends StatelessWidget {
           store.dispatch(FilterTasks(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.taskListState.isInMultiselect()) {
+          store.dispatch(ClearTaskMultiselect());
+        } else {
+          store.dispatch(StartTaskMultiselect());
+        }
+      },
       appBarLeadingActions: [
-        IconButton(
-          icon: Icon(
-              state.prefState.showKanban ? Icons.view_list : MdiIcons.trello),
-          onPressed: () {
-            if (isDesktop(context) && !state.prefState.showKanban) {
-              store.dispatch(ViewTask(taskId: ''));
-            }
+        Expanded(
+          child: IconButton(
+            icon: Icon(
+                state.prefState.showKanban ? Icons.view_list : MdiIcons.trello),
+            onPressed: () {
+              if (isDesktop(context) && !state.prefState.showKanban) {
+                store.dispatch(ViewTask(taskId: ''));
+              }
 
-            store.dispatch(
-              UpdateUserPreferences(showKanban: !state.prefState.showKanban),
-            );
-          },
+              store.dispatch(
+                UpdateUserPreferences(showKanban: !state.prefState.showKanban),
+              );
+            },
+          ),
         )
       ],
       body:

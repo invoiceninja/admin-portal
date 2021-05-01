@@ -43,6 +43,13 @@ class CreditScreen extends StatelessWidget {
           store.dispatch(FilterCredits(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.creditListState.isInMultiselect()) {
+          store.dispatch(ClearCreditMultiselect());
+        } else {
+          store.dispatch(StartCreditMultiselect());
+        }
+      },
       body: CreditListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.credit,

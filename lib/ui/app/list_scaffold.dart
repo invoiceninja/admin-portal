@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'menu_drawer_vm.dart';
 
 class ListScaffold extends StatelessWidget {
@@ -18,8 +17,9 @@ class ListScaffold extends StatelessWidget {
     @required this.appBarTitle,
     @required this.body,
     @required this.entityType,
+    this.onCheckboxPressed,
     this.appBarActions,
-    this.appBarLeadingActions,
+    this.appBarLeadingActions = const [],
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.onHamburgerLongPress,
@@ -37,6 +37,7 @@ class ListScaffold extends StatelessWidget {
   final Function() onHamburgerLongPress;
   final String onCancelSettingsSection;
   final int onCancelSettingsIndex;
+  final Function onCheckboxPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +81,18 @@ class ListScaffold extends StatelessWidget {
       );
     }
 
-    if ((appBarLeadingActions ?? []).isNotEmpty) {
-      leading = Row(
-        children: [
-          Expanded(child: leading),
-          ...appBarLeadingActions,
-        ],
-      );
-    }
+    leading = Row(
+      children: [
+        Expanded(child: leading),
+        if (onCheckboxPressed != null)
+          Expanded(
+              child: IconButton(
+            icon: Icon(Icons.check_box),
+            onPressed: () => onCheckboxPressed(),
+          )),
+        ...appBarLeadingActions,
+      ],
+    );
 
     return WillPopScope(
         onWillPop: () async {
@@ -106,9 +111,9 @@ class ListScaffold extends StatelessWidget {
             centerTitle: false,
             automaticallyImplyLeading: false,
             leading: leading,
-            leadingWidth: appBarLeadingActions == null
-                ? null
-                : kMinInteractiveDimension * (appBarLeadingActions.length + 1),
+            leadingWidth: kMinInteractiveDimension *
+                (appBarLeadingActions.length +
+                    (onCheckboxPressed == null ? 1 : 2)),
             title: appBarTitle,
             actions: [
               ...appBarActions ?? <Widget>[],

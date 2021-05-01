@@ -40,6 +40,13 @@ class PaymentScreen extends StatelessWidget {
           store.dispatch(FilterPayments(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.paymentListState.isInMultiselect()) {
+          store.dispatch(ClearPaymentMultiselect());
+        } else {
+          store.dispatch(StartPaymentMultiselect());
+        }
+      },
       body: PaymentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.payment,

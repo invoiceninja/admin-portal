@@ -42,6 +42,13 @@ class UserScreen extends StatelessWidget {
           store.dispatch(FilterUsers(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.userListState.isInMultiselect()) {
+          store.dispatch(ClearUserMultiselect());
+        } else {
+          store.dispatch(StartUserMultiselect());
+        }
+      },
       body: UserListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.user,
