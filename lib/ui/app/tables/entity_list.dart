@@ -300,6 +300,17 @@ class _EntityListState extends State<EntityList> {
             .map<BaseEntity>((entityId) => entityMap[entityId])
             .toList();
     final firstEntity = entities.isEmpty ? null : entities.first;
+    final actions = (firstEntity?.getActions(
+              includeEdit: false,
+              multiselect: entities.length > 1,
+              userCompany: state.userCompany,
+              client: (firstEntity is BelongsToClient)
+                  ? state.clientState
+                      .get((firstEntity as BelongsToClient).clientId)
+                  : null,
+            ) ??
+            [])
+        .where((action) => action != null);
 
     print('## ENTITIES: $entities');
 
@@ -355,49 +366,72 @@ class _EntityListState extends State<EntityList> {
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: OverflowView.flexible(
-                                spacing: 4,
-                                children: entities.isEmpty
-                                    ? []
-                                    : firstEntity
-                                        .getActions(
-                                          includeEdit: false,
-                                          multiselect: entities.length > 1,
-                                          userCompany: state.userCompany,
-                                          client: (firstEntity
-                                                  is BelongsToClient)
-                                              ? state.clientState.get(
-                                                  (firstEntity
-                                                          as BelongsToClient)
-                                                      .clientId)
-                                              : null,
-                                        )
-                                        .where((action) => action != null)
-                                        .map(
-                                          (action) => OutlinedButton(
-                                            child: IconText(
-                                              icon: getEntityActionIcon(action),
-                                              text: localization
-                                                  .lookup('$action'),
-                                            ),
-                                            onPressed: () {
-                                              handleEntitiesActions(
-                                                  context.getAppContext(),
-                                                  entities,
-                                                  action);
-                                              widget.onClearMultiselect();
-                                            },
-                                          ),
-                                        )
-                                        .toList(),
+                                spacing: 8,
+                                children: actions
+                                    .map(
+                                      (action) => OutlinedButton(
+                                        child: IconText(
+                                          icon: getEntityActionIcon(action),
+                                          text: localization.lookup('$action'),
+                                        ),
+                                        onPressed: () {
+                                          handleEntitiesActions(
+                                              context.getAppContext(),
+                                              entities,
+                                              action);
+                                          widget.onClearMultiselect();
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
                                 builder: (context, remaining) {
                                   return PopupMenuButton<EntityAction>(
-                                    child: Text(localization.more),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            localization.more,
+                                            style: TextStyle(
+                                                color: state.headerTextColor),
+                                          ),
+                                          SizedBox(width: 4),
+                                          Icon(Icons.arrow_drop_down,
+                                              color: state.headerTextColor),
+                                        ],
+                                      ),
+                                    ),
+                                    onSelected: (EntityAction action) {
+                                      handleEntitiesActions(
+                                          context.getAppContext(),
+                                          entities,
+                                          action);
+                                      widget.onClearMultiselect();
+                                    },
                                     itemBuilder: (BuildContext context) {
-                                      return [
-                                        PopupMenuItem(
-                                          child: Text('test'),
-                                        )
-                                      ];
+                                      return actions
+                                          .toList()
+                                          .sublist(actions.length - remaining)
+                                          .map((action) {
+                                        return PopupMenuItem<EntityAction>(
+                                          value: action,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Icon(
+                                                getEntityActionIcon(action),
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                              ),
+                                              SizedBox(width: 16.0),
+                                              Text(AppLocalization.of(context)
+                                                      .lookup(
+                                                          action.toString()) ??
+                                                  ''),
+                                            ],
+                                          ),
+                                        );
+                                      }).toList();
                                     },
                                   );
                                 }),
