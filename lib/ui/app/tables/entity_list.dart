@@ -351,13 +351,6 @@ class _EntityListState extends State<EntityList> {
                               (listUIState.selectedIds ?? <String>[]).length,
                         ),
                       if (isDesktop(context)) ...[
-                        /*
-                        Flexible(
-                          child: Text(localization.countSelected
-                              .replaceFirst(':count', '$countSelected')),
-                        ),
-                        SizedBox(width: 16),
-                        */
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text('($countSelected)'),
