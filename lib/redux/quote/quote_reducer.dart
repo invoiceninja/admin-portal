@@ -184,6 +184,7 @@ final quoteListReducer = combineReducers<ListUIState>([
 
 ListUIState _viewQuoteList(ListUIState quoteListState, ViewQuoteList action) {
   return quoteListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

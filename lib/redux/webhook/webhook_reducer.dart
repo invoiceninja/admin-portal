@@ -90,6 +90,7 @@ final webhookListReducer = combineReducers<ListUIState>([
 ListUIState _viewWebhookList(
     ListUIState webhookListState, ViewWebhookList action) {
   return webhookListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

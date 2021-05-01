@@ -152,6 +152,7 @@ final clientListReducer = combineReducers<ListUIState>([
 ListUIState _viewClientList(
     ListUIState clientListState, ViewClientList action) {
   return clientListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

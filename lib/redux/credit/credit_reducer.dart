@@ -185,6 +185,7 @@ final creditListReducer = combineReducers<ListUIState>([
 ListUIState _viewCreditList(
     ListUIState creditListState, ViewCreditList action) {
   return creditListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

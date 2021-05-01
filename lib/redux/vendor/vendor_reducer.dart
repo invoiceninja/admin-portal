@@ -144,6 +144,7 @@ final vendorListReducer = combineReducers<ListUIState>([
 ListUIState _viewVendorList(
     ListUIState vendorListState, ViewVendorList action) {
   return vendorListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

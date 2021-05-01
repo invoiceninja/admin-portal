@@ -95,6 +95,7 @@ final expenseListReducer = combineReducers<ListUIState>([
 ListUIState _viewExpenseList(
     ListUIState expenseListState, ViewExpenseList action) {
   return expenseListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

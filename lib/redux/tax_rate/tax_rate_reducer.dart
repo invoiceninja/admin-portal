@@ -81,6 +81,7 @@ final taxRateListReducer = combineReducers<ListUIState>([
 ListUIState _viewTaxRateList(
     ListUIState taxRateListState, ViewTaxRateList action) {
   return taxRateListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }
