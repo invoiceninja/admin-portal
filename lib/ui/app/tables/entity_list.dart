@@ -339,7 +339,6 @@ class _EntityListState extends State<EntityList> {
                           value: entityList.length ==
                               (listUIState.selectedIds ?? <String>[]).length,
                         ),
-                      SizedBox(width: 16),
                       if (isDesktop(context)) ...[
                         /*
                         Flexible(
@@ -348,6 +347,10 @@ class _EntityListState extends State<EntityList> {
                         ),
                         SizedBox(width: 16),
                         */
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text('($countSelected)'),
+                        ),
                         Expanded(
                           child: Align(
                             alignment: Alignment.centerRight,
@@ -377,7 +380,11 @@ class _EntityListState extends State<EntityList> {
                                                   .lookup('$action'),
                                             ),
                                             onPressed: () {
-                                              //
+                                              handleEntitiesActions(
+                                                  context.getAppContext(),
+                                                  entities,
+                                                  action);
+                                              widget.onClearMultiselect();
                                             },
                                           ),
                                         )
@@ -397,6 +404,7 @@ class _EntityListState extends State<EntityList> {
                           ),
                         )
                       ] else ...[
+                        SizedBox(width: 16),
                         Expanded(
                           child: Text(localization.countSelected
                               .replaceFirst(':count', '$countSelected')),
