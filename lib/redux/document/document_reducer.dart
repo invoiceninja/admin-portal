@@ -72,6 +72,7 @@ final documentListReducer = combineReducers<ListUIState>([
 ListUIState _viewDocumentList(
     ListUIState documentListState, ViewDocumentList action) {
   return documentListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

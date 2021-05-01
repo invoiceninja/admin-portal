@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -21,9 +22,11 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
+import 'package:overflow_view/overflow_view.dart';
 
 class EntityList extends StatefulWidget {
   EntityList({
@@ -291,6 +294,26 @@ class _EntityListState extends State<EntityList> {
       }
     };
 
+    final entities = listUIState.selectedIds == null
+        ? <BaseEntity>[]
+        : listUIState.selectedIds
+            .map<BaseEntity>((entityId) => entityMap[entityId])
+            .toList();
+    final firstEntity = entities.isEmpty ? null : entities.first;
+    final actions = (firstEntity?.getActions(
+              includeEdit: false,
+              multiselect: entities.length > 1,
+              userCompany: state.userCompany,
+              client: (firstEntity is BelongsToClient)
+                  ? state.clientState
+                      .get((firstEntity as BelongsToClient).clientId)
+                  : null,
+            ) ??
+            [])
+        .where((action) => action != null);
+
+    print('## ENTITIES: $entities');
+
     return RefreshIndicator(
         onRefresh: () => widget.onRefreshed(context),
         child: Column(
@@ -327,37 +350,110 @@ class _EntityListState extends State<EntityList> {
                           value: entityList.length ==
                               (listUIState.selectedIds ?? <String>[]).length,
                         ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: Text((countSelected == 1
-                                ? localization.countRecordSelected
-                                : localization.countRecordsSelected)
-                            .replaceFirst(':count', '$countSelected')),
-                      ),
-                      SaveCancelButtons(
-                        isHeader: false,
-                        saveLabel: localization.actions,
-                        onSavePressed: (context) async {
-                          final entities = listUIState.selectedIds
-                              .map<BaseEntity>(
-                                  (entityId) => entityMap[entityId])
-                              .toList();
-
-                          if (entities.isEmpty) {
-                            return;
-                          }
-
-                          await showEntityActionsDialog(
-                            entities: entities,
-                            context: context,
-                            multiselect: true,
-                            completer: Completer<Null>()
-                              ..future.then<dynamic>(
-                                  (_) => widget.onClearMultiselect()),
-                          );
-                        },
-                        onCancelPressed: (_) => widget.onClearMultiselect(),
-                      ),
+                      if (isDesktop(context)) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text('($countSelected)'),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: OverflowView.flexible(
+                                spacing: 8,
+                                children: actions
+                                    .map(
+                                      (action) => OutlinedButton(
+                                        child: IconText(
+                                          icon: getEntityActionIcon(action),
+                                          text: localization.lookup('$action'),
+                                        ),
+                                        onPressed: () {
+                                          handleEntitiesActions(
+                                              context.getAppContext(),
+                                              entities,
+                                              action);
+                                          widget.onClearMultiselect();
+                                        },
+                                      ),
+                                    )
+                                    .toList(),
+                                builder: (context, remaining) {
+                                  return PopupMenuButton<EntityAction>(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            localization.more,
+                                            style: TextStyle(
+                                                color: state.headerTextColor),
+                                          ),
+                                          SizedBox(width: 4),
+                                          Icon(Icons.arrow_drop_down,
+                                              color: state.headerTextColor),
+                                        ],
+                                      ),
+                                    ),
+                                    onSelected: (EntityAction action) {
+                                      handleEntitiesActions(
+                                          context.getAppContext(),
+                                          entities,
+                                          action);
+                                      widget.onClearMultiselect();
+                                    },
+                                    itemBuilder: (BuildContext context) {
+                                      return actions
+                                          .toList()
+                                          .sublist(actions.length - remaining)
+                                          .map((action) {
+                                        return PopupMenuItem<EntityAction>(
+                                          value: action,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Icon(
+                                                getEntityActionIcon(action),
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                              ),
+                                              SizedBox(width: 16.0),
+                                              Text(AppLocalization.of(context)
+                                                      .lookup(
+                                                          action.toString()) ??
+                                                  ''),
+                                            ],
+                                          ),
+                                        );
+                                      }).toList();
+                                    },
+                                  );
+                                }),
+                          ),
+                        )
+                      ] else ...[
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: Text(localization.countSelected
+                              .replaceFirst(':count', '$countSelected')),
+                        ),
+                        SaveCancelButtons(
+                          isHeader: false,
+                          saveLabel: localization.actions,
+                          isEnabled: entities.isNotEmpty,
+                          isCancelEnabled: true,
+                          onSavePressed: (context) async {
+                            await showEntityActionsDialog(
+                              entities: entities,
+                              context: context,
+                              multiselect: true,
+                              completer: Completer<Null>()
+                                ..future.then<dynamic>(
+                                    (_) => widget.onClearMultiselect()),
+                            );
+                          },
+                          onCancelPressed: (_) => widget.onClearMultiselect(),
+                        ),
+                      ]
                     ],
                   ),
                 ),

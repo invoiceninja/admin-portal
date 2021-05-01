@@ -83,6 +83,7 @@ final designListReducer = combineReducers<ListUIState>([
 ListUIState _viewDesignList(
     ListUIState designListState, ViewDesignList action) {
   return designListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

@@ -42,6 +42,13 @@ class ProductScreen extends StatelessWidget {
           store.dispatch(FilterProducts(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.productListState.isInMultiselect()) {
+          store.dispatch(ClearProductMultiselect());
+        } else {
+          store.dispatch(StartProductMultiselect());
+        }
+      },
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,

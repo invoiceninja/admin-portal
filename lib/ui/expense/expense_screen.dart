@@ -44,6 +44,13 @@ class ExpenseScreen extends StatelessWidget {
           store.dispatch(FilterExpenses(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.expenseListState.isInMultiselect()) {
+          store.dispatch(ClearExpenseMultiselect());
+        } else {
+          store.dispatch(StartExpenseMultiselect());
+        }
+      },
       body: ExpenseListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.expense,

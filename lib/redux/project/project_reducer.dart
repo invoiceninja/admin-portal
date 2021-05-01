@@ -116,6 +116,7 @@ final projectListReducer = combineReducers<ListUIState>([
 ListUIState _viewProjectList(
     ListUIState projectListState, ViewProjectList action) {
   return projectListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

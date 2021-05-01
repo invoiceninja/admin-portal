@@ -42,6 +42,13 @@ class CompanyGatewayScreen extends StatelessWidget {
       onHamburgerLongPress: () =>
           store.dispatch(StartCompanyGatewayMultiselect()),
       appBarTitle: Text(localization.companyGateways),
+      onCheckboxPressed: () {
+        if (store.state.companyGatewayListState.isInMultiselect()) {
+          store.dispatch(ClearCompanyGatewayMultiselect());
+        } else {
+          store.dispatch(StartCompanyGatewayMultiselect());
+        }
+      },
       appBarActions: [
         if (viewModel.isInMultiselect)
           SaveCancelButtons(

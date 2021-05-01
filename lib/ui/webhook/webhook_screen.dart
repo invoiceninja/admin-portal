@@ -44,6 +44,13 @@ class WebhookScreen extends StatelessWidget {
           store.dispatch(FilterWebhooks(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.webhookListState.isInMultiselect()) {
+          store.dispatch(ClearWebhookMultiselect());
+        } else {
+          store.dispatch(StartWebhookMultiselect());
+        }
+      },
       body: WebhookListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.webhook,

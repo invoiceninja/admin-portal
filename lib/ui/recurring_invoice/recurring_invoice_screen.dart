@@ -46,6 +46,13 @@ class RecurringInvoiceScreen extends StatelessWidget {
           store.dispatch(FilterRecurringInvoices(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.recurringInvoiceListState.isInMultiselect()) {
+          store.dispatch(ClearRecurringInvoiceMultiselect());
+        } else {
+          store.dispatch(StartRecurringInvoiceMultiselect());
+        }
+      },
       body: RecurringInvoiceListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.recurringInvoice,

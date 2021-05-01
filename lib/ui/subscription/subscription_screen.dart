@@ -38,7 +38,8 @@ class SubscriptionScreen extends StatelessWidget {
       onHamburgerLongPress: () =>
           store.dispatch(StartSubscriptionMultiselect()),
       appBarTitle: ListFilter(
-        key: ValueKey('__filter_${state.subscriptionListState.filterClearedAt}__'),
+        key: ValueKey(
+            '__filter_${state.subscriptionListState.filterClearedAt}__'),
         entityType: EntityType.subscription,
         entityIds: viewModel.subscriptionList,
         filter: state.subscriptionListState.filter,
@@ -46,6 +47,13 @@ class SubscriptionScreen extends StatelessWidget {
           store.dispatch(FilterSubscriptions(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.subscriptionListState.isInMultiselect()) {
+          store.dispatch(ClearSubscriptionMultiselect());
+        } else {
+          store.dispatch(StartSubscriptionMultiselect());
+        }
+      },
       body: SubscriptionListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.subscription,

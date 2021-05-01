@@ -93,6 +93,7 @@ final paymentTermListReducer = combineReducers<ListUIState>([
 ListUIState _viewPaymentTermList(
     ListUIState paymentTermListState, ViewPaymentTermList action) {
   return paymentTermListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

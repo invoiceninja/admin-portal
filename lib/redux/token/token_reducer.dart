@@ -89,6 +89,7 @@ final tokenListReducer = combineReducers<ListUIState>([
 
 ListUIState _viewTokenList(ListUIState tokenListState, ViewTokenList action) {
   return tokenListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

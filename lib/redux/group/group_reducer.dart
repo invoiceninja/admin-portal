@@ -89,6 +89,7 @@ final groupListReducer = combineReducers<ListUIState>([
 
 ListUIState _viewGroupList(ListUIState groupListState, ViewGroupList action) {
   return groupListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

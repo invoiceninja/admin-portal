@@ -394,11 +394,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
               children: <Widget>[
                 ...widget.iconButtons,
                 if (!widget.hideListOptions) ...[
-                  IconButton(
-                    tooltip: localization.multiselect,
-                    icon: Icon(Icons.check_box),
-                    onPressed: () => widget.onCheckboxPressed(),
-                  ),
+                  if (isMobile(context))
+                    IconButton(
+                      tooltip: localization.multiselect,
+                      icon: Icon(Icons.check_box),
+                      onPressed: () => widget.onCheckboxPressed(),
+                    ),
                   if (!widget.entityType.isSetting)
                     IconButton(
                       tooltip: isList

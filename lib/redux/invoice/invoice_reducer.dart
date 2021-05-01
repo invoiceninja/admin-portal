@@ -191,6 +191,7 @@ final invoiceListReducer = combineReducers<ListUIState>([
 ListUIState _viewInvoiceList(
     ListUIState invoiceListState, ViewInvoiceList action) {
   return invoiceListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

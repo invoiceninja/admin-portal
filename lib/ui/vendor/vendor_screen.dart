@@ -42,6 +42,13 @@ class VendorScreen extends StatelessWidget {
           store.dispatch(FilterVendors(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.vendorListState.isInMultiselect()) {
+          store.dispatch(ClearVendorMultiselect());
+        } else {
+          store.dispatch(StartVendorMultiselect());
+        }
+      },
       body: VendorListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.vendor,

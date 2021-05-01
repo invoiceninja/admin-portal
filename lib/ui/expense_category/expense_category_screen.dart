@@ -36,6 +36,13 @@ class ExpenseCategoryScreen extends StatelessWidget {
       onHamburgerLongPress: () =>
           store.dispatch(StartExpenseCategoryMultiselect()),
       onCancelSettingsSection: kSettingsExpenses,
+      onCheckboxPressed: () {
+        if (store.state.expenseCategoryListState.isInMultiselect()) {
+          store.dispatch(ClearExpenseCategoryMultiselect());
+        } else {
+          store.dispatch(StartExpenseCategoryMultiselect());
+        }
+      },
       appBarTitle: ListFilter(
         key: ValueKey(
             '__filter_${state.expenseCategoryListState.filterClearedAt}__'),

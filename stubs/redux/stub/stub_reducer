@@ -104,6 +104,7 @@ final stubListReducer = combineReducers<ListUIState>([
 ListUIState _viewStubList(
     ListUIState stubListState, ViewStubList action) {
   return stubListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

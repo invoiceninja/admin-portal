@@ -93,6 +93,7 @@ final userListReducer = combineReducers<ListUIState>([
 
 ListUIState _viewUserList(ListUIState userListState, ViewUserList action) {
   return userListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }

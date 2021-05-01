@@ -45,6 +45,13 @@ class PaymentTermScreen extends StatelessWidget {
           store.dispatch(FilterPaymentTerms(value));
         },
       ),
+      onCheckboxPressed: () {
+        if (store.state.paymentTermListState.isInMultiselect()) {
+          store.dispatch(ClearPaymentTermMultiselect());
+        } else {
+          store.dispatch(StartPaymentTermMultiselect());
+        }
+      },
       body: PaymentTermListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.paymentTerm,

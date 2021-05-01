@@ -99,6 +99,7 @@ final taskStatusListReducer = combineReducers<ListUIState>([
 ListUIState _viewTaskStatusList(
     ListUIState taskStatusListState, ViewTaskStatusList action) {
   return taskStatusListState.rebuild((b) => b
+    ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
 }
