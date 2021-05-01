@@ -341,50 +341,61 @@ class _EntityListState extends State<EntityList> {
                         ),
                       SizedBox(width: 16),
                       if (isDesktop(context)) ...[
+                        /*
                         Flexible(
                           child: Text(localization.countSelected
                               .replaceFirst(':count', '$countSelected')),
                         ),
                         SizedBox(width: 16),
-                        OverflowView.flexible(
-                            spacing: 4,
-                            children: entities.isEmpty
-                                ? []
-                                : firstEntity
-                                    .getActions(
-                                      includeEdit: false,
-                                      multiselect: true,
-                                      userCompany: state.userCompany,
-                                      client: (firstEntity is BelongsToClient)
-                                          ? state.clientState.get(
-                                              (firstEntity as BelongsToClient)
-                                                  .clientId)
-                                          : null,
-                                    )
-                                    .map(
-                                      (action) => OutlinedButton(
-                                        child: IconText(
-                                          icon: getEntityActionIcon(action),
-                                          text: localization.lookup('$action'),
-                                        ),
-                                        onPressed: () {
-                                          //
-                                        },
-                                      ),
-                                    )
-                                    .toList(),
-                            builder: (context, remaining) {
-                              return PopupMenuButton<EntityAction>(
-                                child: Text('test'),
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    PopupMenuItem(
-                                      child: Text('test'),
-                                    )
-                                  ];
-                                },
-                              );
-                            })
+                        */
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: OverflowView.flexible(
+                                spacing: 4,
+                                children: entities.isEmpty
+                                    ? []
+                                    : firstEntity
+                                        .getActions(
+                                          includeEdit: false,
+                                          multiselect: entities.length > 1,
+                                          userCompany: state.userCompany,
+                                          client: (firstEntity
+                                                  is BelongsToClient)
+                                              ? state.clientState.get(
+                                                  (firstEntity
+                                                          as BelongsToClient)
+                                                      .clientId)
+                                              : null,
+                                        )
+                                        .where((action) => action != null)
+                                        .map(
+                                          (action) => OutlinedButton(
+                                            child: IconText(
+                                              icon: getEntityActionIcon(action),
+                                              text: localization
+                                                  .lookup('$action'),
+                                            ),
+                                            onPressed: () {
+                                              //
+                                            },
+                                          ),
+                                        )
+                                        .toList(),
+                                builder: (context, remaining) {
+                                  return PopupMenuButton<EntityAction>(
+                                    child: Text(localization.more),
+                                    itemBuilder: (BuildContext context) {
+                                      return [
+                                        PopupMenuItem(
+                                          child: Text('test'),
+                                        )
+                                      ];
+                                    },
+                                  );
+                                }),
+                          ),
+                        )
                       ] else ...[
                         Expanded(
                           child: Text(localization.countSelected
