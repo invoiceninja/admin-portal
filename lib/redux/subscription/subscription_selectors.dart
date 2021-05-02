@@ -58,7 +58,7 @@ List<String> filteredSubscriptionsSelector(
     BuiltList<String> subscriptionList,
     ListUIState subscriptionListState) {
   final filterEntityId = selectionState.filterEntityId;
-  final filterEntityType = selectionState.filterEntityType;
+  //final filterEntityType = selectionState.filterEntityType;
 
   final list = subscriptionList.where((subscriptionId) {
     final subscription = subscriptionMap[subscriptionId];

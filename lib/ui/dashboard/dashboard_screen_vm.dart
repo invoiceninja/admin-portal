@@ -82,8 +82,6 @@ class DashboardVM {
 
     final state = store.state;
     final filter = state.uiState.filter;
-    final settings = state.dashboardUIState.settings;
-    final endDate = convertSqlDateToDateTime(settings.endDate(state.company));
 
     return DashboardVM(
       state: state,

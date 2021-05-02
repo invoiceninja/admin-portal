@@ -271,7 +271,6 @@ void handleSubscriptionAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
   final localization = AppLocalization.of(context);
   final subscription = subscriptions.first as SubscriptionEntity;
   final subscriptionIds =

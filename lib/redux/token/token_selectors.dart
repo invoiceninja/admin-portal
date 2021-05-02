@@ -44,7 +44,7 @@ List<String> filteredTokensSelector(
   BuiltList<String> tokenList,
   ListUIState tokenListState,
 ) {
-  final filterEntityId = selectionState.filterEntityId;
+  //final filterEntityId = selectionState.filterEntityId;
 
   final list = tokenList.where((tokenId) {
     final token = tokenMap[tokenId];
