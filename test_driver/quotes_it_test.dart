@@ -1,4 +1,3 @@
-/*
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -19,6 +18,8 @@ void runTestSuite({bool batchMode = false}) {
     final poNumber =
         faker.randomGenerator.integer(999999, min: 100000).toString();
     final productKey = makeUnique(faker.food.cuisine());
+    final clientKey = faker.randomGenerator.integer(999999, min: 100000)
+        .toString();
     final description = faker.lorem.sentences(5).toString();
     final cost =
         faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
@@ -72,27 +73,48 @@ void runTestSuite({bool batchMode = false}) {
       await driver.tap(find.byTooltip(localization.newQuote));
 
       print('Create new client: $clientName');
-      await driver.tap(find.byValueKey(localization.client));
+      if (await isMobile(driver)) {
+        await driver.tap(find.byValueKey(Keys.clientPickerEmptyKey));
+      }
       await driver.tap(find.byTooltip(localization.createNew));
 
       print('Fill the client form');
-      await fillTextField(
-          driver: driver, field: localization.name, value: clientName);
+      await fillTextFields(driver, <String, String>{
+        localization.name: clientName,
+        localization.idNumber: clientKey
+      });
+      // Await for Debouncer
+      await Future<dynamic>.delayed(Duration(milliseconds: 500));
       await driver.tap(find.text(localization.save));
 
+      // Await for Screen change
+      await driver.waitFor(find.text(localization.newQuote));
+
       print('Fill the quote form');
-      await driver.tap(find.byTooltip(localization.addItem));
-      await driver.tap(find.byTooltip(localization.createNew));
+      if(await isMobile(driver)) {
+        await driver.tap(find.byTooltip(localization.addItem));
+        await driver.tap(find.byTooltip(localization.createNew));
 
-      await fillTextFields(driver, <String, String>{
-        localization.product: productKey,
-        localization.description: description,
-        localization.unitCost: cost,
-        localization.quantity: '1',
-      });
+        await fillTextFields(driver, <String, String>{
+          localization.product: productKey,
+          localization.description: description,
+          localization.unitCost: cost,
+          localization.quantity: '1',
+        });
 
-      await driver.tap(find.text(localization.done));
-      await driver.tap(find.text(localization.details));
+        // Await for Debouncer
+        await Future<dynamic>.delayed(Duration(milliseconds: 500));
+        await driver.tap(find.text(localization.done.toUpperCase()));
+        await driver.tap(find.text(localization.details));
+
+      } else {
+        await fillTextFields(driver, <String, String>{
+          getLineItemKey('name', 0): productKey,
+          getLineItemKey('description', 0): description,
+          getLineItemKey('cost', 0): cost,
+          getLineItemKey('quantity', 0): '1'
+        });
+      }
 
       await fillAndSaveForm(driver, <String, String>{
         localization.poNumber: poNumber,
@@ -127,21 +149,10 @@ void runTestSuite({bool batchMode = false}) {
     test('Archive/delete quote test', () async {
       await testArchiveAndDelete(
           driver: driver,
+          rowText: clientName,
           archivedMessage: localization.archivedQuote,
           deletedMessage: localization.deletedQuote,
           restoredMessage: localization.restoredQuote);
     });
-
-    // Convert to invoice
-    test('Convert to invoice', () async {
-      await selectAction(driver, localization.convert);
-      await driver.waitFor(find.byType('InvoiceView'));
-
-      if (await isMobile(driver)) {
-        await driver.tap(find.pageBack());
-        await driver.tap(find.pageBack());
-      }
-    });
   });
 }
-*/

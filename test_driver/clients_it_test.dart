@@ -98,7 +98,7 @@ void runTestSuite({bool batchMode = false}) {
     test('Archive/delete client test', () async {
       await testArchiveAndDelete(
           driver: driver,
-          name: updatedName,
+          rowText: updatedName,
           archivedMessage: localization.archivedClient,
           deletedMessage: localization.deletedClient,
           restoredMessage: localization.restoredClient);

@@ -148,27 +148,28 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
 Future<void> testArchiveAndDelete(
     {FlutterDriver driver,
     String archivedMessage,
-    String name,
+    String rowText,
     String deletedMessage,
     String restoredMessage}) async {
   final localization = TestLocalization('en');
   final mobile = await isMobile(driver);
-
-  if (!mobile) {
-    // Show archived and deleted entries on tablet/web
-    await driver.tap(find.byTooltip(localization.filter));
-    await driver.tap(find.text(localization.archived));
-    await driver.tap(find.text(localization.deleted));
-    await driver.tap(find.byTooltip(localization.filter));
-  }
 
   print('Archive record');
   await selectAction(driver, localization.archive);
   await driver.waitFor(find.text(archivedMessage));
   //await driver.waitFor(find.text(localization.archived));
 
+  print('Show archived/deleted records');
+  await driver.tap(find.byTooltip(localization.filter));
+  await driver.tap(find.text(localization.archived));
+  await driver.tap(find.text(localization.deleted));
+  await driver.tap(find.byTooltip(localization.filter));
+
   print('Restore record');
-  await driver.tap(find.text(name));
+  if (mobile)
+    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText),
+        dyScroll: -300);
+  await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.byType('Snackbar'));
@@ -179,7 +180,10 @@ Future<void> testArchiveAndDelete(
   //await driver.waitFor(find.text(localization.deleted));
 
   print('Restore record');
-  await driver.tap(find.text(name));
+  if (mobile)
+    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText),
+        dyScroll: -300);
+  await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.byType('Snackbar'));
