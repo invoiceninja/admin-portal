@@ -803,6 +803,7 @@ abstract class UserSettingsEntity
   factory UserSettingsEntity() {
     return _$UserSettingsEntity._(
       accentColor: kDefaultAccentColor,
+      numberYearsActive: 3,
       tableColumns: BuiltMap<String, BuiltList<String>>(),
       reportSettings: BuiltMap<String, ReportSettingsEntity>(),
     );
@@ -824,6 +825,9 @@ abstract class UserSettingsEntity
   @BuiltValueField(wireName: 'report_settings')
   BuiltMap<String, ReportSettingsEntity> get reportSettings;
 
+  @BuiltValueField(wireName: 'number_years_active')
+  int numberYearsActive;
+
   List<String> getTableColumns(EntityType entityType) {
     if (tableColumns != null && tableColumns.containsKey('$entityType')) {
       return tableColumns['$entityType'].toList();
@@ -831,6 +835,10 @@ abstract class UserSettingsEntity
       return null;
     }
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(ReportSettingsEntityBuilder builder) =>
+      builder..numberYearsActive = 3;
 
   static Serializer<UserSettingsEntity> get serializer =>
       _$userSettingsEntitySerializer;
