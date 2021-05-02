@@ -1360,6 +1360,8 @@ void selectEntity({
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(appContext, entity, EntityAction.toggleMultiselect);
+  } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
+    editEntity(context: context, entity: entity);
   } else if (isDesktop(context) &&
       (uiState.isEditing || uiState.previewStack.isNotEmpty)) {
     viewEntity(appContext: appContext, entity: entity);

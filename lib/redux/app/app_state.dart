@@ -241,6 +241,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile ||
+        !prefState.isPreviewEnabled ||
         (!prefState.isPreviewVisible &&
             prefState.moduleLayout == ModuleLayout.table) ||
         uiState.isEditing ||
