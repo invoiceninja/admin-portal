@@ -302,7 +302,7 @@ class _EntityListState extends State<EntityList> {
     final firstEntity = entities.isEmpty ? null : entities.first;
     final actions = (firstEntity?.getActions(
               includeEdit: false,
-              multiselect: entities.length > 1,
+              multiselect: true,
               userCompany: state.userCompany,
               client: (firstEntity is BelongsToClient)
                   ? state.clientState
