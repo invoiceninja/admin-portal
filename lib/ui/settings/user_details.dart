@@ -295,26 +295,27 @@ class _UserDetailsState extends State<UserDetails>
                           (b) => b..userCompany.settings.accentColor = value));
                     },
                   ),
-                  AppDropdownButton<int>(
-                    labelText: localization.numberYearsActive,
-                    value: user.userCompany.settings.numberYearsActive,
-                    onChanged: (dynamic value) {
-                      widget.viewModel.onChanged(user.rebuild((b) =>
-                          b..userCompany.settings.numberYearsActive = value));
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(localization.all),
-                        value: 0,
-                      ),
-                      ...List<int>.generate(10, (i) => i + 1)
-                          .map((value) => DropdownMenuItem(
-                                child: Text('$value'),
-                                value: value,
-                              ))
-                          .toList()
-                    ],
-                  ),
+                  if (state.company.isLarge)
+                    AppDropdownButton<int>(
+                      labelText: localization.numberYearsActive,
+                      value: user.userCompany.settings.numberYearsActive,
+                      onChanged: (dynamic value) {
+                        widget.viewModel.onChanged(user.rebuild((b) =>
+                            b..userCompany.settings.numberYearsActive = value));
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.all),
+                          value: 0,
+                        ),
+                        ...List<int>.generate(10, (i) => i + 1)
+                            .map((value) => DropdownMenuItem(
+                                  child: Text('$value'),
+                                  value: value,
+                                ))
+                            .toList()
+                      ],
+                    ),
                 ],
               ),
             ],
