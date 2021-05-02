@@ -51,7 +51,6 @@ export 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/data_visualizations_vm.dart';
-export 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
