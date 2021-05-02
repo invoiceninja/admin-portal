@@ -189,6 +189,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           Intl.defaultLocale = localeSelector(state);
           final locale = AppLocalization.createLocale(localeSelector(state));
 
+          final textButtonTheme = TextButton.styleFrom(
+            minimumSize: Size(88, 36),
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(2)),
+            ),
+          );
+
           return StyledToast(
             locale: locale,
             duration: Duration(seconds: 3),
@@ -235,6 +243,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       bottomAppBarColor: const Color(0xFF1B1C1E),
                       primaryColorDark: Colors.black,
                       buttonColor: accentColor,
+                      textButtonTheme:
+                          TextButtonThemeData(style: textButtonTheme),
                     )
                   : ThemeData(
                       pageTransitionsTheme: pageTransitionsTheme,
@@ -292,6 +302,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                                   ),
                         ),
                       ),
+                      textButtonTheme:
+                          TextButtonThemeData(style: textButtonTheme),
                     ),
               title: kAppName,
               onGenerateRoute: isMobile(context) ? null : generateRoute,

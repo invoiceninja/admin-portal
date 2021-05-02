@@ -84,7 +84,7 @@ class ListScaffold extends StatelessWidget {
     leading = Row(
       children: [
         Expanded(child: leading),
-        if (onCheckboxPressed != null)
+        if (isDesktop(context) && onCheckboxPressed != null)
           Expanded(
               child: IconButton(
             icon: Icon(Icons.check_box),
@@ -113,7 +113,7 @@ class ListScaffold extends StatelessWidget {
             leading: leading,
             leadingWidth: kMinInteractiveDimension *
                 (appBarLeadingActions.length +
-                    (onCheckboxPressed == null ? 1 : 2)),
+                    (onCheckboxPressed == null || isMobile(context) ? 1 : 2)),
             title: appBarTitle,
             actions: [
               ...appBarActions ?? <Widget>[],
@@ -134,7 +134,9 @@ class ListScaffold extends StatelessWidget {
                   (isMobile(context) || !state.prefState.isHistoryVisible))
                 Builder(
                   builder: (context) => IconButton(
-                    icon: Icon(Icons.menu),
+                    padding: const EdgeInsets.only(left: 4, right: 20),
+                    tooltip: localization.history,
+                    icon: Icon(Icons.history),
                     onPressed: () {
                       if (isMobile(context) ||
                           state.prefState.isHistoryFloated) {
@@ -146,16 +148,6 @@ class ListScaffold extends StatelessWidget {
                     },
                   ),
                 ),
-              /*
-              if (isMobile(context) ||
-                  (state.prefState.isHistoryFloated && !isSettings))
-                Builder(
-                  builder: (context) => IconButton(
-                    icon: Icon(Icons.history),
-                    onPressed: () => Scaffold.of(context).openEndDrawer(),
-                  ),
-                ),
-                */
             ],
           ),
           body: ClipRect(

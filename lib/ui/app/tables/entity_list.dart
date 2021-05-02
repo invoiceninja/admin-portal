@@ -312,8 +312,6 @@ class _EntityListState extends State<EntityList> {
             [])
         .where((action) => action != null);
 
-    print('## ENTITIES: $entities');
-
     return RefreshIndicator(
         onRefresh: () => widget.onRefreshed(context),
         child: Column(

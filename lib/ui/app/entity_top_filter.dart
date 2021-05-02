@@ -79,6 +79,9 @@ class EntityTopFilter extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
+                        style: TextButton.styleFrom(
+                          minimumSize: Size(0, 36),
+                        ),
                         onPressed: () => viewEntity(
                           entity: filterEntity,
                           appContext: context.getAppContext(),
@@ -100,6 +103,11 @@ class EntityTopFilter extends StatelessWidget {
                                     style: TextStyle(
                                       color: state.headerTextColor,
                                     ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 12),
+                                    minimumSize: Size(0, 36),
                                   ),
                                   onPressed: () {
                                     viewEntitiesByType(

@@ -295,7 +295,10 @@ abstract class ExpenseEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this) && !multiselect) {
+      if (includeEdit &&
+          !multiselect &&
+          userCompany.canEditEntity(this) &&
+          !multiselect) {
         actions.add(EntityAction.edit);
       }
 

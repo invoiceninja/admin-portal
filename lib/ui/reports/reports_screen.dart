@@ -239,7 +239,9 @@ class ReportsScreen extends StatelessWidget {
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
                 builder: (context) => IconButton(
-                  icon: Icon(Icons.menu),
+                  icon: Icon(Icons.history),
+                  padding: const EdgeInsets.only(left: 4, right: 20),
+                  tooltip: localization.history,
                   onPressed: () {
                     if (isMobile(context) || state.prefState.isHistoryFloated) {
                       Scaffold.of(context).openEndDrawer();

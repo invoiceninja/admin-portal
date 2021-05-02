@@ -99,7 +99,10 @@ abstract class TaskStatusEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted && includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted &&
+        !multiselect &&
+        includeEdit &&
+        userCompany.canEditEntity(this)) {
       actions.add(EntityAction.edit);
     }
 
