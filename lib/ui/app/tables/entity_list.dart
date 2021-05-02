@@ -108,7 +108,7 @@ class _EntityListState extends State<EntityList> {
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
     final countSelected = (listUIState.selectedIds ?? <String>[]).length;
-    final isList = entityType.isSetting || state.prefState.isListLayout;
+    final isList = entityType.isSetting || state.prefState.isModuleList;
 
     if (!state.isLoaded && entityList.isEmpty) {
       return LoadingIndicator();

@@ -86,9 +86,15 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isNotMobile => !isMobile;
 
-  bool get isModuleList => moduleLayout == ModuleLayout.list;
+  bool get isModuleList {
+    if (isDesktop && !isPreviewEnabled) {
+      return false;
+    }
 
-  bool get isModuleTable => moduleLayout == ModuleLayout.table;
+    return moduleLayout == ModuleLayout.list;
+  }
+
+  bool get isModuleTable => !isModuleList;
 
   bool get isMenuFloated =>
       appLayout == AppLayout.mobile || menuSidebarMode == AppSidebarMode.float;
@@ -108,14 +114,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isNotMobile &&
       menuSidebarMode == AppSidebarMode.collapse &&
       !isMenuVisible;
-
-  bool get isListLayout {
-    if (isDesktop && !isPreviewEnabled) {
-      return false;
-    }
-
-    return moduleLayout == ModuleLayout.list;
-  }
 
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder

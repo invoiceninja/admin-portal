@@ -348,7 +348,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       final localization = AppLocalization.of(context);
       final prefState = store.state.prefState;
       final isList =
-          widget.entityType.isSetting || state.prefState.isListLayout;
+          widget.entityType.isSetting || state.prefState.isModuleList;
 
       void _onColumnsPressed() {
         multiselectDialog(
