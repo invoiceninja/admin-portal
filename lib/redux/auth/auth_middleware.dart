@@ -301,7 +301,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(RefreshDataFailure(message));
-      if ('$error'.startsWith('Error ::')) {
+      if ('$error'.startsWith('403')) {
+        store.dispatch(UserLogout());
+      } else if ('$error'.startsWith('Error ::')) {
         throw error;
       }
     });
