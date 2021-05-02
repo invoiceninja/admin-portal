@@ -209,6 +209,7 @@ class UserDetailsVM {
             appBuilder.rebuild();
           });
 
+          print('## HERE 1');
           confirmCallback(
               context: context,
               message: localization.changingPhoneDisablesTwoFactor,

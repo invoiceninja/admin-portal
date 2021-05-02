@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
@@ -130,6 +131,7 @@ class _UserDetailsState extends State<UserDetails>
     final viewModel = widget.viewModel;
     final user = viewModel.user;
     final state = viewModel.state;
+    final settings = viewModel.state.userCompany.settings;
 
     return EditScaffold(
       title: localization.userDetails,
@@ -287,12 +289,31 @@ class _UserDetailsState extends State<UserDetails>
                 children: <Widget>[
                   FormColorPicker(
                     labelText: localization.accentColor,
-                    initialValue:
-                        viewModel.state.userCompany.settings.accentColor,
+                    initialValue: user.userCompany.settings.accentColor,
                     onSelected: (value) {
                       widget.viewModel.onChanged(user.rebuild(
                           (b) => b..userCompany.settings.accentColor = value));
                     },
+                  ),
+                  AppDropdownButton<int>(
+                    labelText: localization.numberYearsActive,
+                    value: user.userCompany.settings.numberYearsActive,
+                    onChanged: (dynamic value) {
+                      widget.viewModel.onChanged(user.rebuild((b) =>
+                          b..userCompany.settings.numberYearsActive = value));
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.all),
+                        value: 0,
+                      ),
+                      ...List<int>.generate(10, (i) => i + 1)
+                          .map((value) => DropdownMenuItem(
+                                child: Text('$value'),
+                                value: value,
+                              ))
+                          .toList()
+                    ],
                   ),
                 ],
               ),

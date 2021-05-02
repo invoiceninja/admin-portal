@@ -116,6 +116,7 @@ void passwordCallback({
   Function(String, String) callback,
   bool alwaysRequire = false,
 }) {
+  print('## HERE 2a');
   final state = StoreProvider.of<AppState>(context).state;
   if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
     print('## hasRecentlyEnteredPassword...');
@@ -124,7 +125,8 @@ void passwordCallback({
   }
 
   if (state.user.oauthProvider.isEmpty) {
-    showDialog<AlertDialog>(
+    print('## HERE 2b');
+    showDialog<Null>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {

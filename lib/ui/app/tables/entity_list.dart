@@ -437,7 +437,7 @@ class _EntityListState extends State<EntityList> {
                               .replaceFirst(':count', '$countSelected')),
                         ),
                         SaveCancelButtons(
-                          isHeader: false,
+                          isHeader: true,
                           saveLabel: localization.actions,
                           isEnabled: entities.isNotEmpty,
                           isCancelEnabled: true,
