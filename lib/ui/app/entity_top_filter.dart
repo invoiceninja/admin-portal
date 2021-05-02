@@ -54,6 +54,7 @@ class EntityTopFilter extends StatelessWidget {
                   color: backgroundColor,
                 )
               : Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(width: 8),
                     if (!state.prefState.showFilterSidebar)
