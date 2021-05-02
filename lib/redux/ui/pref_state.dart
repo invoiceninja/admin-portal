@@ -13,6 +13,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.table,
+      isPreviewEnabled: true,
       isPreviewVisible: true,
       useSidebarEditor: BuiltMap<EntityType, bool>(),
       menuSidebarMode: AppSidebarMode.collapse,
@@ -47,6 +48,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   BuiltMap<EntityType, bool> get useSidebarEditor;
 
   bool get isPreviewVisible;
+
+  bool get isPreviewEnabled;
 
   bool get isMenuVisible;
 
@@ -110,6 +113,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..showKanban = false
+    ..isPreviewEnabled = true
     ..colorTheme = kColorThemeLight;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
