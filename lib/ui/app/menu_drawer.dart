@@ -56,7 +56,6 @@ class MenuDrawer extends StatelessWidget {
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
-    final account = state.account;
     final company = viewModel.selectedCompany;
 
     if (company == null) {

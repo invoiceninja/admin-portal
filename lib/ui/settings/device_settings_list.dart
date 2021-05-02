@@ -38,12 +38,14 @@ class _DeviceSettingsState extends State<DeviceSettings> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final prefState = state.prefState;
+    /*
     final countSessions = state.tokenState.list
         .map((tokenId) => state.tokenState.map[tokenId])
         .where(
             (token) => token.isSystem && token.createdUserId == state.user.id)
         .length;
-
+    */
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
