@@ -347,8 +347,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final localization = AppLocalization.of(context);
       final prefState = store.state.prefState;
-      final isList = prefState.moduleLayout == ModuleLayout.list ||
-          widget.entityType.isSetting;
+      final isList =
+          widget.entityType.isSetting || state.prefState.isListLayout;
 
       void _onColumnsPressed() {
         multiselectDialog(
@@ -400,7 +400,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       icon: Icon(Icons.check_box),
                       onPressed: () => widget.onCheckboxPressed(),
                     ),
-                  if (!widget.entityType.isSetting)
+                  if (!widget.entityType.isSetting &&
+                      prefState.isPreviewEnabled)
                     IconButton(
                       tooltip: isList
                           ? localization.showTable
@@ -410,22 +411,24 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         store.dispatch(SwitchListTableLayout());
                       },
                     ),
-                  if (isList && widget.sortFields.isNotEmpty)
-                    IconButton(
-                      tooltip: localization.sort,
-                      icon: Icon(Icons.sort_by_alpha),
-                      onPressed: _showSortSheet,
-                    ),
-                  if (!isList && isNotMobile(context))
-                    IconButton(
-                      tooltip: localization.preview,
-                      icon: Icon(Icons.chrome_reader_mode),
-                      onPressed: () {
-                        store.dispatch(UpdateUserPreferences(
-                            isPreviewVisible:
-                                !state.prefState.isPreviewVisible));
-                      },
-                    ),
+                  if (prefState.isPreviewEnabled) ...[
+                    if (isList && widget.sortFields.isNotEmpty)
+                      IconButton(
+                        tooltip: localization.sort,
+                        icon: Icon(Icons.sort_by_alpha),
+                        onPressed: _showSortSheet,
+                      ),
+                    if (!isList && isDesktop(context))
+                      IconButton(
+                        tooltip: localization.preview,
+                        icon: Icon(Icons.chrome_reader_mode),
+                        onPressed: () {
+                          store.dispatch(UpdateUserPreferences(
+                              isPreviewVisible:
+                                  !state.prefState.isPreviewVisible));
+                        },
+                      ),
+                  ],
                 ],
                 IconButton(
                   tooltip: localization.filter,

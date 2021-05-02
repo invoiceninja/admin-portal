@@ -99,8 +99,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     onChanged: (value) {
                       viewModel.onPreviewSidebarChanged(context, value);
                     },
-                    enabledLabel: localization.disabled,
-                    disabledLabel: localization.enabled,
+                    enabledLabel: localization.enabled,
+                    disabledLabel: localization.disabled,
                   ),
                 ],
               ],

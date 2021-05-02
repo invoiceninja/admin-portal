@@ -109,6 +109,14 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       menuSidebarMode == AppSidebarMode.collapse &&
       !isMenuVisible;
 
+  bool get isListLayout {
+    if (isDesktop && !isPreviewEnabled) {
+      return false;
+    }
+
+    return moduleLayout == ModuleLayout.list;
+  }
+
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
