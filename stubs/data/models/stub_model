@@ -85,7 +85,7 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
+    if (!isDeleted && !multiselect) {
       if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }

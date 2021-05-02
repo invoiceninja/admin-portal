@@ -154,7 +154,7 @@ abstract class TokenEntity extends Object
       actions.add(EntityAction.copy);
     }
 
-    if (!isDeleted) {
+    if (!isDeleted && !multiselect) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }

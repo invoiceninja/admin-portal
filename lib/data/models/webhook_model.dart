@@ -227,7 +227,7 @@ abstract class WebhookEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
+    if (!isDeleted && !multiselect) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }

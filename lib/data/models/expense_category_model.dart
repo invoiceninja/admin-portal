@@ -87,12 +87,14 @@ abstract class ExpenseCategoryEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted && includeEdit && userCompany.canEditEntity(this)) {
-      actions.add(EntityAction.edit);
-    }
+    if (!isDeleted && !multiselect) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
 
-    if (actions.isNotEmpty) {
-      actions.add(null);
+      if (actions.isNotEmpty) {
+        actions.add(null);
+      }
     }
 
     return actions..addAll(super.getActions(userCompany: userCompany));

@@ -731,7 +731,7 @@ abstract class InvoiceEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
+    if (!isDeleted && !multiselect) {
       if (userCompany.canEditEntity(this)) {
         if (includeEdit && !multiselect) {
           actions.add(EntityAction.edit);
