@@ -88,6 +88,7 @@ class KanbanViewState extends State<KanbanView> {
     });
   }
 
+  /*
   void _checkBoard() {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
@@ -119,6 +120,7 @@ class KanbanViewState extends State<KanbanView> {
       _onBoardChanged();
     }
   }
+  */
 
   void _onBoardChanged() {
     final localization = AppLocalization.of(context);
