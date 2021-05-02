@@ -837,7 +837,7 @@ abstract class UserSettingsEntity
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(ReportSettingsEntityBuilder builder) =>
+  static void _initializeBuilder(UserEntityBuilder builder) =>
       builder..numberYearsActive = 3;
 
   static Serializer<UserSettingsEntity> get serializer =>
