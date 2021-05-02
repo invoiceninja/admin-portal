@@ -46,6 +46,8 @@ PrefState prefReducer(
       ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
       ..isPreviewVisible =
           isPreviewVisibleReducer(state.isPreviewVisible, action)
+      ..isPreviewEnabled =
+          isPreviewEnabledReducer(state.isPreviewEnabled, action)
       ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
       ..historySidebarMode =
           historySidebarReducer(state.historySidebarMode, action)
@@ -185,6 +187,12 @@ Reducer<bool> longPressReducer = combineReducers([
 Reducer<bool> isPreviewVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((isPreviewVisible, action) {
     return action.isPreviewVisible ?? isPreviewVisible;
+  }),
+]);
+
+Reducer<bool> isPreviewEnabledReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((isPreviewEnabled, action) {
+    return action.isPreviewEnabled ?? isPreviewEnabled;
   }),
 ]);
 

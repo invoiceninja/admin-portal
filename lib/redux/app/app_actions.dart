@@ -118,6 +118,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.requireAuthentication,
     this.longPressSelectionIsDefault,
     this.isPreviewVisible,
+    this.isPreviewEnabled,
     this.accentColor,
     this.menuMode,
     this.historyMode,
@@ -137,6 +138,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
   final bool isPreviewVisible;
+  final bool isPreviewEnabled;
   final bool showFilterSidebar;
   final bool alwaysShowFilterSidebar;
   final bool showKanban;

@@ -68,7 +68,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   enabledLabel: localization.mobile,
                   disabledLabel: localization.desktop,
                 ),
-                if (state.prefState.isNotMobile) ...[
+                if (state.prefState.isDesktop) ...[
                   BoolDropdownButton(
                     label: localization.menuSidebar,
                     value: prefState.menuSidebarMode == AppSidebarMode.float,
@@ -92,6 +92,15 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     },
                     enabledLabel: localization.float,
                     disabledLabel: localization.showOrHide,
+                  ),
+                  BoolDropdownButton(
+                    label: localization.previewSidebar,
+                    value: prefState.isPreviewEnabled,
+                    onChanged: (value) {
+                      viewModel.onPreviewSidebarChanged(context, value);
+                    },
+                    enabledLabel: localization.disabled,
+                    disabledLabel: localization.enabled,
                   ),
                 ],
                 BoolDropdownButton(
