@@ -228,9 +228,10 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
 Middleware<AppState> _loadProjects(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadProjects;
+    final state = store.state;
 
     store.dispatch(LoadProjectsRequest());
-    repository.loadList(store.state.credentials).then((data) {
+    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
       store.dispatch(LoadProjectsSuccess(data));
 
       if (action.completer != null) {

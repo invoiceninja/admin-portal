@@ -756,6 +756,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return (user.emailVerifiedAt ?? 0) > 0;
   }
 
+  int get createdAtLimit {
+    if (!company.isLarge) {
+      return 0;
+    }
+
+    final offset =
+        userCompany.settings.numberYearsActive * (60 * 60 * 24 * 365);
+
+    return (DateTime.now().millisecondsSinceEpoch * 1000) - offset;
+  }
+
   bool get canAddCompany => userCompany.isOwner && companies.length < 10;
 
   bool get isMenuCollapsed =>

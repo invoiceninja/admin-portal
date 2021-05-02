@@ -29,8 +29,9 @@ class ProjectRepository {
     return projectResponse.data;
   }
 
-  Future<BuiltList<ProjectEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/projects?';
+  Future<BuiltList<ProjectEntity>> loadList(
+      Credentials credentials, int createdAt) async {
+    final url = credentials.url + '/projects?created_at=$createdAt';
 
     final dynamic response = await webClient.get(url, credentials.token);
 

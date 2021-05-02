@@ -295,7 +295,7 @@ class _UserDetailsState extends State<UserDetails>
                           (b) => b..userCompany.settings.accentColor = value));
                     },
                   ),
-                  if (state.company.isLarge)
+                  if (state.company.isLarge || !kReleaseMode)
                     AppDropdownButton<int>(
                       labelText: localization.numberYearsActive,
                       value: user.userCompany.settings.numberYearsActive,

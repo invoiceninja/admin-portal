@@ -29,8 +29,9 @@ class ExpenseRepository {
     return expenseResponse.data;
   }
 
-  Future<BuiltList<ExpenseEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/expenses?';
+  Future<BuiltList<ExpenseEntity>> loadList(
+      Credentials credentials, int createdAt) async {
+    final url = credentials.url + '/expenses?created_at=$createdAt';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
