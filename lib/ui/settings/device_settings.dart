@@ -58,59 +58,51 @@ class _DeviceSettingsState extends State<DeviceSettings> {
           children: <Widget>[
             FormCard(
               children: <Widget>[
-                AppDropdownButton<AppLayout>(
-                  showUseDefault: true,
-                  labelText: localization.layout,
-                  value: viewModel.state.prefState.appLayout,
-                  onChanged: (dynamic value) =>
-                      viewModel.onLayoutChanged(context, value),
-                  items: [
-                    DropdownMenuItem(
-                      child: Text(localization.desktop),
-                      value: AppLayout.desktop,
-                    ),
-                    DropdownMenuItem(
-                      child: Text(localization.mobile),
-                      value: AppLayout.mobile,
-                    ),
-                  ],
+                BoolDropdownButton(
+                  label: localization.layout,
+                  value: prefState.appLayout == AppLayout.mobile,
+                  onChanged: (value) {
+                    viewModel.onLayoutChanged(
+                        context, value ? AppLayout.mobile : AppLayout.desktop);
+                  },
+                  enabledLabel: localization.mobile,
+                  disabledLabel: localization.desktop,
                 ),
                 if (state.prefState.isNotMobile) ...[
-                  AppDropdownButton<AppSidebarMode>(
-                    showUseDefault: true,
-                    labelText: localization.menuSidebar,
-                    value: state.prefState.menuSidebarMode,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(localization.collapse),
-                        value: AppSidebarMode.collapse,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.float),
-                        value: AppSidebarMode.float,
-                      ),
-                    ],
-                    onChanged: (dynamic value) =>
-                        viewModel.onMenuModeChanged(context, value),
+                  BoolDropdownButton(
+                    label: localization.menuSidebar,
+                    value: prefState.menuSidebarMode == AppSidebarMode.float,
+                    onChanged: (value) {
+                      viewModel.onMenuModeChanged(
+                        context,
+                        value ? AppSidebarMode.float : AppSidebarMode.collapse,
+                      );
+                    },
+                    enabledLabel: localization.float,
+                    disabledLabel: localization.collapse,
                   ),
-                  AppDropdownButton<AppSidebarMode>(
-                    showUseDefault: true,
-                    labelText: localization.historySidebar,
-                    value: state.prefState.historySidebarMode,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(localization.showOrHide),
-                        value: AppSidebarMode.visible,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.float),
-                        value: AppSidebarMode.float,
-                      ),
-                    ],
-                    onChanged: (dynamic value) =>
-                        viewModel.onHistoryModeChanged(context, value),
+                  BoolDropdownButton(
+                    label: localization.historySidebar,
+                    value: prefState.historySidebarMode == AppSidebarMode.float,
+                    onChanged: (value) {
+                      viewModel.onHistoryModeChanged(
+                        context,
+                        value ? AppSidebarMode.float : AppSidebarMode.visible,
+                      );
+                    },
+                    enabledLabel: localization.float,
+                    disabledLabel: localization.showOrHide,
                   ),
                 ],
+                BoolDropdownButton(
+                  label: localization.listLongPress,
+                  value: !prefState.longPressSelectionIsDefault,
+                  onChanged: (value) {
+                    viewModel.onLongPressSelectionIsDefault(context, !value);
+                  },
+                  enabledLabel: localization.showActions,
+                  disabledLabel: localization.startMultiselect,
+                ),
                 AppDropdownButton<int>(
                   labelText: localization.rowsPerPage,
                   value: prefState.rowsPerPage,
@@ -129,15 +121,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         ),
                       )
                       .toList(),
-                ),
-                BoolDropdownButton(
-                  label: localization.listLongPress,
-                  value: !prefState.longPressSelectionIsDefault,
-                  onChanged: (value) {
-                    viewModel.onLongPressSelectionIsDefault(context, !value);
-                  },
-                  enabledLabel: localization.showActions,
-                  disabledLabel: localization.startMultiselect,
                 ),
               ],
             ),
