@@ -103,6 +103,10 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     disabledLabel: localization.enabled,
                   ),
                 ],
+              ],
+            ),
+            FormCard(
+              children: <Widget>[
                 BoolDropdownButton(
                   label: localization.listLongPress,
                   value: !prefState.longPressSelectionIsDefault,
