@@ -134,7 +134,9 @@ class ListScaffold extends StatelessWidget {
                   (isMobile(context) || !state.prefState.isHistoryVisible))
                 Builder(
                   builder: (context) => IconButton(
-                    icon: Icon(Icons.menu),
+                    padding: const EdgeInsets.only(left: 4, right: 20),
+                    tooltip: localization.history,
+                    icon: Icon(Icons.history),
                     onPressed: () {
                       if (isMobile(context) ||
                           state.prefState.isHistoryFloated) {
@@ -146,16 +148,6 @@ class ListScaffold extends StatelessWidget {
                     },
                   ),
                 ),
-              /*
-              if (isMobile(context) ||
-                  (state.prefState.isHistoryFloated && !isSettings))
-                Builder(
-                  builder: (context) => IconButton(
-                    icon: Icon(Icons.history),
-                    onPressed: () => Scaffold.of(context).openEndDrawer(),
-                  ),
-                ),
-                */
             ],
           ),
           body: ClipRect(

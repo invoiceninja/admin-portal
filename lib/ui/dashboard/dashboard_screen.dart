@@ -166,7 +166,9 @@ class _DashboardScreenState extends State<DashboardScreen>
           if (isMobile(context) || !state.prefState.isHistoryVisible)
             Builder(
               builder: (context) => IconButton(
-                icon: Icon(Icons.menu),
+                padding: const EdgeInsets.only(left: 4, right: 20),
+                tooltip: localization.history,
+                icon: Icon(Icons.history),
                 onPressed: () {
                   if (isMobile(context) || state.prefState.isHistoryFloated) {
                     Scaffold.of(context).openEndDrawer();
