@@ -330,7 +330,6 @@ void handlePaymentAction(
       });
       break;
     case EntityAction.refund:
-      final navigator = Navigator.of(context);
       viewEntity(appContext: context.getAppContext(), entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (payment.invoicePaymentables.length == 1) {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -31,7 +29,8 @@ class SaveCancelButtons extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment:
+          isHeader ? CrossAxisAlignment.stretch : CrossAxisAlignment.center,
       children: <Widget>[
         if (onCancelPressed != null && !isSaving)
           Builder(builder: (BuildContext context) {

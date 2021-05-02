@@ -33,7 +33,7 @@ class GoogleOAuth {
   }
 
   static Future<bool> signUp(Function(String, String) callback) async {
-    var account = await _googleSignIn.signIn();
+    final account = await _googleSignIn.signIn();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
         callback(value.idToken, value.accessToken);
@@ -53,7 +53,7 @@ class GoogleOAuth {
 
   static Future<bool> grantOfflineAccess(
       Function(String, String, String) callback) async {
-    var account = await _googleSignIn.grantOfflineAccess();
+    final account = await _googleSignIn.grantOfflineAccess();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
         callback(value.idToken, value.accessToken, value.serverAuthCode);

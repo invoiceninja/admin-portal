@@ -56,7 +56,7 @@ class TaskRepository {
       Map<String, List<String>> taskIds) async {
     final url = credentials.url + '/tasks/sort';
 
-    final dynamic response = await webClient.post(url, credentials.token,
+    await webClient.post(url, credentials.token,
         data: json.encode({'status_ids': statusIds, 'task_ids': taskIds}));
 
     return true;

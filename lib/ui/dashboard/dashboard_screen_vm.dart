@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -82,8 +81,6 @@ class DashboardVM {
 
     final state = store.state;
     final filter = state.uiState.filter;
-    final settings = state.dashboardUIState.settings;
-    final endDate = convertSqlDateToDateTime(settings.endDate(state.company));
 
     return DashboardVM(
       state: state,

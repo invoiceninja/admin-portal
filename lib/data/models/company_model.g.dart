@@ -1022,6 +1022,9 @@ class _$UserSettingsEntitySerializer
             const FullType(String),
             const FullType(ReportSettingsEntity)
           ])),
+      'number_years_active',
+      serializers.serialize(object.numberYearsActive,
+          specifiedType: const FullType(int)),
     ];
     if (object.accentColor != null) {
       result
@@ -1061,6 +1064,10 @@ class _$UserSettingsEntitySerializer
                 const FullType(String),
                 const FullType(ReportSettingsEntity)
               ])));
+          break;
+        case 'number_years_active':
+          result.numberYearsActive = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -3163,13 +3170,18 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   final BuiltMap<String, BuiltList<String>> tableColumns;
   @override
   final BuiltMap<String, ReportSettingsEntity> reportSettings;
+  @override
+  final int numberYearsActive;
 
   factory _$UserSettingsEntity(
           [void Function(UserSettingsEntityBuilder) updates]) =>
       (new UserSettingsEntityBuilder()..update(updates)).build();
 
   _$UserSettingsEntity._(
-      {this.accentColor, this.tableColumns, this.reportSettings})
+      {this.accentColor,
+      this.tableColumns,
+      this.reportSettings,
+      this.numberYearsActive})
       : super._() {
     if (tableColumns == null) {
       throw new BuiltValueNullFieldError('UserSettingsEntity', 'tableColumns');
@@ -3177,6 +3189,10 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     if (reportSettings == null) {
       throw new BuiltValueNullFieldError(
           'UserSettingsEntity', 'reportSettings');
+    }
+    if (numberYearsActive == null) {
+      throw new BuiltValueNullFieldError(
+          'UserSettingsEntity', 'numberYearsActive');
     }
   }
 
@@ -3195,15 +3211,17 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     return other is UserSettingsEntity &&
         accentColor == other.accentColor &&
         tableColumns == other.tableColumns &&
-        reportSettings == other.reportSettings;
+        reportSettings == other.reportSettings &&
+        numberYearsActive == other.numberYearsActive;
   }
 
   int __hashCode;
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
-        reportSettings.hashCode));
+        $jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
+            reportSettings.hashCode),
+        numberYearsActive.hashCode));
   }
 
   @override
@@ -3211,7 +3229,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     return (newBuiltValueToStringHelper('UserSettingsEntity')
           ..add('accentColor', accentColor)
           ..add('tableColumns', tableColumns)
-          ..add('reportSettings', reportSettings))
+          ..add('reportSettings', reportSettings)
+          ..add('numberYearsActive', numberYearsActive))
         .toString();
   }
 }
@@ -3236,13 +3255,21 @@ class UserSettingsEntityBuilder
   set reportSettings(MapBuilder<String, ReportSettingsEntity> reportSettings) =>
       _$this._reportSettings = reportSettings;
 
-  UserSettingsEntityBuilder();
+  int _numberYearsActive;
+  int get numberYearsActive => _$this._numberYearsActive;
+  set numberYearsActive(int numberYearsActive) =>
+      _$this._numberYearsActive = numberYearsActive;
+
+  UserSettingsEntityBuilder() {
+    UserSettingsEntity._initializeBuilder(this);
+  }
 
   UserSettingsEntityBuilder get _$this {
     if (_$v != null) {
       _accentColor = _$v.accentColor;
       _tableColumns = _$v.tableColumns?.toBuilder();
       _reportSettings = _$v.reportSettings?.toBuilder();
+      _numberYearsActive = _$v.numberYearsActive;
       _$v = null;
     }
     return this;
@@ -3269,7 +3296,8 @@ class UserSettingsEntityBuilder
           new _$UserSettingsEntity._(
               accentColor: accentColor,
               tableColumns: tableColumns.build(),
-              reportSettings: reportSettings.build());
+              reportSettings: reportSettings.build(),
+              numberYearsActive: numberYearsActive);
     } catch (_) {
       String _$failedField;
       try {

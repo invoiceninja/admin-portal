@@ -16,7 +16,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
   final group = state.groupState.get(client.groupId);
 
   var notes = task.description;
-  Set dates = <String>{};
+  final dates = <String>{};
 
   if (state.company.invoiceTaskDatelog || state.company.invoiceTaskTimelog) {
     if (notes.trim().isNotEmpty) {

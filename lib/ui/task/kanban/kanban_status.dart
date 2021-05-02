@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -53,10 +51,6 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final status = widget.status;
-    final state = StoreProvider.of<AppState>(context).state;
-    final color = state.prefState.enableDarkMode
-        ? Theme.of(context).cardColor
-        : Colors.grey.shade300;
 
     if (_isEditing) {
       return Padding(

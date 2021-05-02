@@ -37,8 +37,7 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   final _debouncer = Debouncer();
   int _updatedAt;
-  String _filter = '';
-
+  
   void _updateTable() {
     setState(() {
       _updatedAt = DateTime.now().millisecondsSinceEpoch;
