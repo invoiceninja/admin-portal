@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/app_context.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 void showErrorDialog({
   @required BuildContext context,
