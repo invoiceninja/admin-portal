@@ -32,6 +32,7 @@ class SaveCancelButtons extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         if (onCancelPressed != null && !isSaving)
           Builder(builder: (BuildContext context) {
