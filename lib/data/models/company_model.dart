@@ -826,7 +826,7 @@ abstract class UserSettingsEntity
   BuiltMap<String, ReportSettingsEntity> get reportSettings;
 
   @BuiltValueField(wireName: 'number_years_active')
-  int numberYearsActive;
+  int get numberYearsActive;
 
   List<String> getTableColumns(EntityType entityType) {
     if (tableColumns != null && tableColumns.containsKey('$entityType')) {
