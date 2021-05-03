@@ -139,9 +139,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 Column(
                   children: EntityState.values.map<Widget>((state) {
                     return CheckboxListTile(
-                      key: Key(state.toString()),
-                      title: Text(
-                          AppLocalization.of(context).lookup(state.toString())),
+                      key: ValueKey('state_' +
+                          AppLocalization.of(context).lookup('$state')),
+                      title: Text(AppLocalization.of(context).lookup('$state')),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: stateFilters.contains(state),
                       activeColor: Theme.of(context).accentColor,

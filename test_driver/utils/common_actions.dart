@@ -161,15 +161,16 @@ Future<void> testArchiveAndDelete(
 
   print('Show archived/deleted records');
   await driver.tap(find.byTooltip(localization.filter));
-  await driver.tap(find.text(localization.archived));
-  await driver.tap(find.text(localization.deleted));
+  await driver.tap(find.byValueKey('state_' + localization.archived));
+  await driver.tap(find.byValueKey('state_' + localization.deleted));
   await driver.tap(find.byTooltip(localization.filter));
 
   print('Restore record');
   if (mobile)
     await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText),
         dyScroll: -300);
-  await driver.tap(find.text(rowText));
+
+  //await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.byType('Snackbar'));
@@ -183,7 +184,7 @@ Future<void> testArchiveAndDelete(
   if (mobile)
     await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText),
         dyScroll: -300);
-  await driver.tap(find.text(rowText));
+  //await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.byType('Snackbar'));

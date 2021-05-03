@@ -7,7 +7,7 @@ import 'vendors_it_test.dart' as vendors;
 
 void main() {
   login.main();
-  //products.runTestSuite(batchMode: true);
+  products.runTestSuite(batchMode: true);
   //clients.runTestSuite(batchMode: true);
   //invoices.runTestSuite(batchMode: true);
   //quotes.runTestSuite(batchMode: true);
