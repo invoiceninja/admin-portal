@@ -206,7 +206,7 @@ class _FileImportState extends State<_FileImport> {
 
       final field = DecoratedFormField(
           enabled: false,
-          formKey: ValueKey(uploadPart.key +
+          key: ValueKey(uploadPart.key +
               (multipartFile != null ? multipartFile.filename : '')),
           label: localization.lookup(uploadPart.value),
           initialValue: !_multipartFiles.containsKey(uploadPart.key)

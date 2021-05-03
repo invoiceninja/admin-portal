@@ -9,7 +9,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class DecoratedFormField extends StatelessWidget {
   const DecoratedFormField({
-    this.formKey,
+    Key key,
     this.controller,
     this.label,
     this.onSavePressed,
@@ -36,9 +36,8 @@ class DecoratedFormField extends StatelessWidget {
     this.isPercent = false,
     this.showClear = true,
     this.inputFormatters,
-  });
+  }) : super(key: key);
 
-  final Key formKey;
   final TextEditingController controller;
   final String label;
   final String hint;
@@ -119,7 +118,7 @@ class DecoratedFormField extends StatelessWidget {
     }
 
     return TextFormField(
-      key: formKey ?? ValueKey(label),
+      key: ValueKey(label), // Enables tests to find fields
       focusNode: focusNode,
       controller: controller,
       autofocus: autofocus,

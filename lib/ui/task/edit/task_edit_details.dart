@@ -171,7 +171,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               autocorrect: false,
             ),
             DecoratedFormField(
-              formKey: ValueKey('__rate__'),
+              key: ValueKey('__rate__'),
               controller: _rateController,
               label: rateLabel,
               keyboardType:

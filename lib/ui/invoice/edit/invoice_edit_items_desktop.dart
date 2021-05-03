@@ -37,7 +37,7 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   final _debouncer = Debouncer();
   int _updatedAt;
-  
+
   void _updateTable() {
     setState(() {
       _updatedAt = DateTime.now().millisecondsSinceEpoch;
@@ -517,7 +517,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: DecoratedFormField(
-                        formKey: ValueKey('__line_item_${index}_cost__'),
+                        key: ValueKey('__line_item_${index}_cost__'),
                         textAlign: TextAlign.right,
                         initialValue: formatNumber(
                             lineItems[index].cost, context,
@@ -536,7 +536,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: DecoratedFormField(
-                          formKey: ValueKey('__line_item_${index}_quantity__'),
+                          key: ValueKey('__line_item_${index}_quantity__'),
                           textAlign: TextAlign.right,
                           initialValue: formatNumber(
                               lineItems[index].quantity, context,
@@ -555,7 +555,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: DecoratedFormField(
-                          formKey: ValueKey('__line_item_${index}_discount__'),
+                          key: ValueKey('__line_item_${index}_discount__'),
                           textAlign: TextAlign.right,
                           initialValue: formatNumber(
                               lineItems[index].discount, context,
