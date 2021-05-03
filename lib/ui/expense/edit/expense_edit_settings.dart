@@ -215,7 +215,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                             _setCurrency(currency),
                       ),
                       DecoratedFormField(
-                        key: ValueKey('__${expense.invoiceCurrencyId}__'),
+                        formKey: ValueKey('__${expense.invoiceCurrencyId}__'),
                         controller: _exchangeRateController,
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),

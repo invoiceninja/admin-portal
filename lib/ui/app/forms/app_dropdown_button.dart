@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class AppDropdownButton<T> extends StatelessWidget {
   const AppDropdownButton({
+    Key key,
     @required this.value,
     @required this.onChanged,
     @required this.items,
@@ -13,7 +14,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     this.blankValue = '',
     this.enabled = true,
     this.showUseDefault = false,
-  });
+  }) : super(key: key);
 
   final String labelText;
   final dynamic value;

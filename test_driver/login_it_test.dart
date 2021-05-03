@@ -1,4 +1,3 @@
-/*
 // Import Flutter Driver API
 import 'dart:async';
 
@@ -58,4 +57,3 @@ void main() {
     });
   });
 }
-*/

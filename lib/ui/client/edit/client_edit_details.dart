@@ -131,6 +131,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
         FormCard(
           children: <Widget>[
             DecoratedFormField(
+              formKey: ValueKey(localization.name),
               autofocus: true,
               controller: _nameController,
               validator: (String val) => !viewModel.client.hasNameSet

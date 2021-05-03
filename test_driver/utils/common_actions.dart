@@ -1,9 +1,9 @@
-/*
 import 'dart:math';
 
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 import 'localizations.dart';
 
@@ -54,10 +54,11 @@ Future<void> login(FlutterDriver driver,
   if (selfHosted) {
     await fillTextFields(driver, <String, dynamic>{
       localization.url: loginUrl,
-      localization.secret: loginSecret,
+      '${localization.secret} (${localization.optional})': loginSecret,
     });
   }
 
+  print(localization.emailSignIn);
   await driver.tap(find.text(localization.emailSignIn));
 
   if (loginEmail.isNotEmpty) {
@@ -75,8 +76,10 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization,
   }
 
   //await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
-  await driver.tap(find.text(localization.settings));
-  await driver.tap(find.text(localization.deviceSettings));
+  //await driver.tap(find.text(localization.settings));
+  //await driver.tap(find.text(localization.deviceSettings));
+
+  await driver.tap(find.byValueKey(kSelectCompanyDropdownKey));
 
   // Tap on Log Out
   await driver.tap(find.text(localization.logout));
@@ -129,7 +132,7 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
   await fillTextFields(driver, values);
 
   // Await for Debouncer
-  await Future<dynamic>.delayed(Duration(milliseconds: 400));
+  await Future<dynamic>.delayed(Duration(milliseconds: 1000));
 
   print('Check for updated values');
   await checkTextFields(driver, values, except: skipCheckFor);
@@ -145,25 +148,28 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
 Future<void> testArchiveAndDelete(
     {FlutterDriver driver,
     String archivedMessage,
+    String rowText,
     String deletedMessage,
     String restoredMessage}) async {
   final localization = TestLocalization('en');
   final mobile = await isMobile(driver);
-
-  if (!mobile) {
-    // Show archived and deleted entries on tablet/web
-    await driver.tap(find.byTooltip(localization.filter));
-    await driver.tap(find.text(localization.archived));
-    await driver.tap(find.text(localization.deleted));
-    await driver.tap(find.byTooltip(localization.filter));
-  }
 
   print('Archive record');
   await selectAction(driver, localization.archive);
   await driver.waitFor(find.text(archivedMessage));
   //await driver.waitFor(find.text(localization.archived));
 
+  print('Show archived/deleted records');
+  await driver.tap(find.byTooltip(localization.filter));
+  await driver.tap(find.text(localization.archived));
+  await driver.tap(find.text(localization.deleted));
+  await driver.tap(find.byTooltip(localization.filter));
+
   print('Restore record');
+  if (mobile)
+    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText),
+        dyScroll: -300);
+  await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.byType('Snackbar'));
@@ -174,6 +180,10 @@ Future<void> testArchiveAndDelete(
   //await driver.waitFor(find.text(localization.deleted));
 
   print('Restore record');
+  if (mobile)
+    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText),
+        dyScroll: -300);
+  await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.byType('Snackbar'));
@@ -189,4 +199,3 @@ String makeUnique(String value) =>
 
 String getLineItemKey(String key, int index) =>
     '${Keys.invoiceLineItemBaseKey}_${index}_${key}__';
-*/
