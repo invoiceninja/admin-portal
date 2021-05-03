@@ -43,25 +43,29 @@ Future<void> login(FlutterDriver driver,
   }
    */
   if (selfHosted) {
+    print('Tap ' + localization.selfhosted.toUpperCase());
     await driver.tap(find.text(localization.selfhosted.toUpperCase()));
   }
 
+  print('Fill in email/password');
   await fillTextFields(driver, <String, dynamic>{
     localization.email: loginEmail,
     localization.password: loginPassword,
   });
 
   if (selfHosted) {
+    print('Fill in url/secret');
     await fillTextFields(driver, <String, dynamic>{
       localization.url: loginUrl,
       '${localization.secret} (${localization.optional})': loginSecret,
     });
   }
 
-  print(localization.emailSignIn);
+  print('Tap ' + localization.emailSignIn);
   await driver.tap(find.text(localization.emailSignIn));
 
   if (loginEmail.isNotEmpty) {
+    print('Wait for  ' + localization.overview);
     await driver.waitFor(find.text(localization.overview),
         timeout: new Duration(seconds: 60));
   }
@@ -97,7 +101,7 @@ Future<void> viewSection({FlutterDriver driver, String name}) async {
     await driver.tap(find.byTooltip(Keys.openAppDrawer));
   }
 
-  await driver.tap(find.text(name));
+  await driver.tap(find.byValueKey('menu_' + name));
 }
 
 Future<void> fillTextField(

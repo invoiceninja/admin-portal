@@ -559,6 +559,7 @@ class _DrawerTileState extends State<DrawerTile> {
         ),
         title: Text(
           widget.title,
+          key: ValueKey('menu_${widget.title}'),
           style: Theme.of(context).textTheme.bodyText1.copyWith(
                 fontSize: 16,
                 color: textColor,

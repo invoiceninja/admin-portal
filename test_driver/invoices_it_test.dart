@@ -16,16 +16,16 @@ void runTestSuite({bool batchMode = false}) {
 
     final clientName = makeUnique(faker.company.name());
     final poNumber =
-    faker.randomGenerator.integer(999999, min: 100000).toString();
+        faker.randomGenerator.integer(999999, min: 100000).toString();
     final productKey = makeUnique(faker.food.cuisine());
-    final clientKey = faker.randomGenerator.integer(999999, min: 100000)
-        .toString();
+    final clientKey =
+        faker.randomGenerator.integer(999999, min: 100000).toString();
     final description = faker.lorem.sentences(5).toString();
     final cost =
-    faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
+        faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
 
     final updatedPoNumber =
-    faker.randomGenerator.integer(999999, min: 100000).toString();
+        faker.randomGenerator.integer(999999, min: 100000).toString();
 
     setUpAll(() async {
       localization = TestLocalization('en');
@@ -73,7 +73,7 @@ void runTestSuite({bool batchMode = false}) {
       await driver.tap(find.byTooltip(localization.newInvoice));
 
       print('Create new client: $clientName');
-      if(await isMobile(driver)) {
+      if (await isMobile(driver)) {
         await driver.tap(find.byValueKey(Keys.clientPickerEmptyKey));
       }
       await driver.tap(find.byTooltip(localization.createNew));
@@ -91,7 +91,7 @@ void runTestSuite({bool batchMode = false}) {
       await driver.waitFor(find.text(localization.newInvoice));
 
       print('Fill the invoice form');
-      if(await isMobile(driver)) {
+      if (await isMobile(driver)) {
         await driver.tap(find.byTooltip(localization.addItem));
         await driver.tap(find.byTooltip(localization.createNew));
 
@@ -106,7 +106,6 @@ void runTestSuite({bool batchMode = false}) {
         await Future<dynamic>.delayed(Duration(milliseconds: 500));
         await driver.tap(find.text(localization.done.toUpperCase()));
         await driver.tap(find.text(localization.details));
-
       } else {
         await fillTextFields(driver, <String, String>{
           getLineItemKey('name', 0): productKey,
@@ -160,8 +159,8 @@ void runTestSuite({bool batchMode = false}) {
       await selectAction(driver, localization.enterPayment);
       await driver.tap(find.text(localization.save));
       // "Completed" status
-      await driver.waitFor(
-          find.text(localization.paymentStatus4.toUpperCase()));
+      await driver
+          .waitFor(find.text(localization.paymentStatus4.toUpperCase()));
 
       if (await isMobile(driver)) {
         await driver.tap(find.pageBack());
