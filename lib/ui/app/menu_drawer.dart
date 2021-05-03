@@ -164,6 +164,7 @@ class MenuDrawer extends StatelessWidget {
     final _expandedCompanySelector = state.companies.isEmpty
         ? SizedBox()
         : AppDropdownButton<String>(
+            key: ValueKey(kSelectCompanyDropdownKey),
             value: viewModel.selectedCompanyIndex,
             items: [
               ...state.companies

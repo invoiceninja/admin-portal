@@ -1,4 +1,3 @@
-/*
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -70,7 +69,6 @@ void runTestSuite({bool batchMode = false}) {
 
     // Create a new invoice
     test('Add a new invoice', () async {
-
       print('Tap new invoice');
       await driver.tap(find.byTooltip(localization.newInvoice));
 
@@ -106,7 +104,7 @@ void runTestSuite({bool batchMode = false}) {
 
         // Await for Debouncer
         await Future<dynamic>.delayed(Duration(milliseconds: 500));
-        await driver.tap(find.text(localization.done));
+        await driver.tap(find.text(localization.done.toUpperCase()));
         await driver.tap(find.text(localization.details));
 
       } else {
@@ -151,6 +149,7 @@ void runTestSuite({bool batchMode = false}) {
     test('Archive/delete invoice test', () async {
       await testArchiveAndDelete(
           driver: driver,
+          rowText: clientName,
           archivedMessage: localization.archivedInvoice,
           deletedMessage: localization.deletedInvoice,
           restoredMessage: localization.restoredInvoice);
@@ -171,4 +170,3 @@ void runTestSuite({bool batchMode = false}) {
     });
   });
 }
-*/

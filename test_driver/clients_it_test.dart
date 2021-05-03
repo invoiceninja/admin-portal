@@ -1,4 +1,3 @@
-/*
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -96,9 +95,10 @@ void runTestSuite({bool batchMode = false}) {
     });
 
     // Archive the edited client
-    test('Archieve/delete client test', () async {
+    test('Archive/delete client test', () async {
       await testArchiveAndDelete(
           driver: driver,
+          rowText: updatedName,
           archivedMessage: localization.archivedClient,
           deletedMessage: localization.deletedClient,
           restoredMessage: localization.restoredClient);
@@ -109,4 +109,3 @@ void runTestSuite({bool batchMode = false}) {
     });
   });
 }
-*/

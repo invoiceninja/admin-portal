@@ -1,4 +1,3 @@
-/*
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -68,7 +67,6 @@ void runTestSuite({bool batchMode = false}) {
       await fillAndSaveForm(driver, <String, dynamic>{
         localization.name: name,
       });
-      print('Form filled');
 
       if (await isMobile(driver)) {
         print('Click back');
@@ -99,6 +97,7 @@ void runTestSuite({bool batchMode = false}) {
     test('Archieve/delete vendor test', () async {
       await testArchiveAndDelete(
           driver: driver,
+          rowText: updatedName,
           archivedMessage: localization.archivedVendor,
           deletedMessage: localization.deletedVendor,
           restoredMessage: localization.restoredVendor);
@@ -109,4 +108,3 @@ void runTestSuite({bool batchMode = false}) {
     });
   });
 }
-*/

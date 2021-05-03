@@ -517,7 +517,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: DecoratedFormField(
-                        key: ValueKey('__line_item_${index}_cost__'),
+                        formKey: ValueKey('__line_item_${index}_cost__'),
                         textAlign: TextAlign.right,
                         initialValue: formatNumber(
                             lineItems[index].cost, context,
@@ -536,7 +536,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: DecoratedFormField(
-                          key: ValueKey('__line_item_${index}_quantity__'),
+                          formKey: ValueKey('__line_item_${index}_quantity__'),
                           textAlign: TextAlign.right,
                           initialValue: formatNumber(
                               lineItems[index].quantity, context,
@@ -555,7 +555,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: DecoratedFormField(
-                          key: ValueKey('__line_item_${index}_discount__'),
+                          formKey: ValueKey('__line_item_${index}_discount__'),
                           textAlign: TextAlign.right,
                           initialValue: formatNumber(
                               lineItems[index].discount, context,
