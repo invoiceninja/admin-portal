@@ -463,9 +463,9 @@ class _EntityListState extends State<EntityList> {
                 alignment: Alignment.topCenter,
                 children: <Widget>[
                   listOrTable(),
-                  if (state.isLoading ||
-                      ((entityType.isSetting || isMobile(context)) &&
-                          state.isSaving))
+                  if ((state.isLoading &&
+                          (isMobile(context) || !entityType.isSetting)) ||
+                      (state.isSaving && entityType.isSetting))
                     LinearProgressIndicator(),
                 ],
               ),
