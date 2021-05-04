@@ -41,6 +41,13 @@ Future<void> login(FlutterDriver driver,
     await driver.tap(find.byValueKey(localization.selfhostLogin));
   }
    */
+
+  if (await isMobile(driver)) {
+    print('Login mobile...');
+  } else {
+    print('Login desktop...');
+  }
+
   if (selfHosted) {
     print('Tap ' + localization.selfhosted.toUpperCase());
     await driver.tap(find.text(localization.selfhosted.toUpperCase()));
