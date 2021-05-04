@@ -47,10 +47,7 @@ jobs:
           channel: 'stable'
       - name: Setup App
         run: |
-          cp android/app/build.gradle.dev android/app/build.gradle
           cp lib/.env.dart.example lib/.env.dart
-          sed -i -e 's/user/medium/g' lib/.env.dart
-          sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run iOS Flutter Driver tests
         run: flutter drive --target=test_driver/login_it.dart
@@ -75,9 +72,6 @@ jobs:
         run: |
           cp android/app/build.gradle.dev android/app/build.gradle
           cp lib/.env.dart.example lib/.env.dart
-          sed -i -e 's/user/medium/g' lib/.env.dart
-          sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
-          echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run Android Flutter Driver tests
         uses: reactivecircus/android-emulator-runner@v1
         with:
