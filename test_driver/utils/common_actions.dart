@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'localizations.dart';
 
 class Keys {
-  static const String openAppDrawer = 'Open navigation menu';
   static const String clientPickerEmptyKey = '__client___';
   static const String invoiceLineItemBaseKey = '__line_item';
 }
@@ -71,12 +70,9 @@ Future<void> login(FlutterDriver driver,
   }
 }
 
-Future<void> logout(FlutterDriver driver, TestLocalization localization,
-    {bool fromDashboard = false}) async {
+Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
   if (await isMobile(driver)) {
-    await driver.tap(fromDashboard
-        ? find.byTooltip(Keys.openAppDrawer)
-        : find.byTooltip(localization.menuSidebar));
+    await driver.tap(find.byTooltip(localization.menuSidebar));
   }
 
   //await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
@@ -96,9 +92,10 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization,
   await driver.waitFor(find.text(localization.selfhosted.toUpperCase()));
 }
 
-Future<void> viewSection({FlutterDriver driver, String name}) async {
+Future<void> viewSection(
+    {FlutterDriver driver, String name, TestLocalization localization}) async {
   if (await isMobile(driver)) {
-    await driver.tap(find.byTooltip(Keys.openAppDrawer));
+    await driver.tap(find.byTooltip('Menu Sidebar'));
   }
 
   await driver.tap(find.byValueKey('menu_' + name));

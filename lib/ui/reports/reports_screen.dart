@@ -50,6 +50,22 @@ class ReportsScreen extends StatelessWidget {
     final reportsState = viewModel.reportState;
     final reportResult = viewModel.reportResult;
 
+    Widget leading = SizedBox();
+
+    if (isMobile(context) || state.prefState.isMenuFloated) {
+      leading = Builder(
+        builder: (context) => InkWell(
+          child: IconButton(
+            tooltip: localization.menuSidebar,
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+        ),
+      );
+    }
+
     final hasCustomDate = reportsState.filters.keys.where((column) {
       final filter = reportsState.filters[column];
       return (getReportColumnType(column, context) ==
@@ -195,8 +211,8 @@ class ReportsScreen extends StatelessWidget {
             : null,
         appBar: AppBar(
           centerTitle: false,
-          automaticallyImplyLeading:
-              isMobile(context) || state.prefState.isMenuFloated,
+          automaticallyImplyLeading: false,
+          leading: leading,
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
