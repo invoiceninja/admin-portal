@@ -328,7 +328,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       entityId: company.industryId,
                       onSelected: (SelectableEntity industry) =>
                           viewModel.onCompanyChanged(
-                        company.rebuild((b) => b..industryId = industry?.id),
+                        company
+                            .rebuild((b) => b..industryId = industry?.id ?? ''),
                       ),
                       showUseDefault: state.settingsUIState.isFiltered,
                     ),
