@@ -1,39 +1,82 @@
 name: Run Tests
 on: [push, pull_request]
+
 jobs:
-  drive:
-    env:
-      staging_secret: ${{secrets.staging_secret}}
-      staging_url: ${{secrets.staging_url}}
-      firebase_ios: ${{secrets.firebase_ios}}
+
+  test:
+    runs-on: macos-latest
+    #sequence of tasks called
+    steps:
+      - uses: actions/checkout@v1
+      # Setup a flutter environment.
+      # https://github.com/marketplace/actions/flutter-action
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.0.5'
+          channel: 'stable'
+      - run: flutter pub get
+      # run static analys code
+      - run: flutter analyze
+
+
+  drive_ios:
     strategy:
       matrix:
         device:
-          - "iPhone 11"
-          - "iPad Air"
+          - "iPhone 8 (13.3)"
+          - "iPhone 11 Pro (13.3)"
       fail-fast: false
-    runs-on: macOS-latest
+    runs-on: macos-latest
+    needs: test
     steps:
       - name: List all simulators
-        run: "xcrun instruments -s"
+        run: xcrun instruments -s
+      # get UUID  simulator and boot a simulator on mac from  command line
       - name: Start Simulator
         run: |
           UDID=$(
-            xcrun instruments -s | grep "${{ matrix.device }} (" | cut -d'[' -f 2 | cut -d']' -f 1
+            xcrun instruments -s |
+            awk \
+              -F ' *[][]' \
+              -v 'device=${{ matrix.device }}' \
+              '$1 == device { print $2 }'
           )
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
+          flutter-version: '2.0.5'
           channel: 'stable'
-          #flutter-version: '1.15.17'
-      - run: flutter pub get
-      - run: rm ios/Podfile
-      - run: |
+      - name: Run iOS Flutter Driver tests
+        run: flutter drive --target=test_driver/login_it.dart
+
+  drive_android:
+    runs-on: macos-latest
+    #creates a build matrix for your jobs
+    strategy:
+      #set of different configurations of the virtual environment.
+      matrix:
+        api-level: [21, 29]
+        target: [default]
+    needs: test
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.0.5'
+          channel: 'stable'
+      - name: Setup App
+        run: |
           cp android/app/build.gradle.prod android/app/build.gradle
           cp lib/.env.dart.example lib/.env.dart
           sed -i -e 's/user/medium/g' lib/.env.dart
           sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
-      - name: Run Tests
-        run: flutter drive --target=test_driver/login_it.dart
+      - name: Run Android Flutter Driver tests
+        uses: reactivecircus/android-emulator-runner@v1
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: x86_64
+          profile: Nexus 6
+          script: flutter drive --target=test_driver/login_it.dart
