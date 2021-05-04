@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         device:
-          #- "iPad Pro (11-inch)"
+          - "iPad Pro (12.9-inch)"
           - "iPhone 11 Pro (14.4)"
       fail-fast: false
     runs-on: macos-latest
@@ -58,8 +58,7 @@ jobs:
     strategy:
       #set of different configurations of the virtual environment.
       matrix:
-        #api-level: [21, 29]
-        api-level: [21]
+        api-level: [21, 29]
         target: [default]
     needs: test
     steps:
