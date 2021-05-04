@@ -1609,7 +1609,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user deleted client :client',
       'activity_4': ':user created invoice :invoice',
       'activity_5': ':user updated invoice :invoice',
-      'activity_6': ':user emailed invoice :invoice to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice',
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
@@ -1623,7 +1623,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user deleted :credit credit',
       'activity_18': ':user created quote :quote',
       'activity_19': ':user updated quote :quote',
-      'activity_20': ':user emailed quote :quote to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact viewed quote :quote',
       'activity_22': ':user archived quote :quote',
       'activity_23': ':user deleted quote :quote',
@@ -1666,13 +1666,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'activity_80': ':user created subscription',
       'activity_81': ':user updated subscription',
       'activity_82': ':user archived subscription',
@@ -3367,7 +3367,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user ka fshirë klientin :client',
       'activity_4': ':user ka krijuar faturën :invoice',
       'activity_5': ':user ka perditesuar faturën :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user ka arkivuar faturën :invoice',
       'activity_9': ':user ka fshirë faturën :invoice',
@@ -3382,7 +3382,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user ka fshirë:credit kredit',
       'activity_18': ':user ka krijuar ofertë :quote',
       'activity_19': ':user ka perditesuar ofertën :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact ka shikuar ofertën :quote',
       'activity_22': ':user ka arkivuar ofertën :quote',
       'activity_23': ':user ka fshirë ofertën :quote',
@@ -3426,13 +3426,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Oferta është dërguar me sukses me email',
       'emailed_credit': 'Successfully emailed credit',
@@ -5179,13 +5179,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Еднократна парола',
       'emailed_quote': 'Успешно изпратена Оферта',
       'emailed_credit': 'Successfully emailed credit',
@@ -6848,7 +6848,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user 已刪除用戶 :client',
       'activity_4': ':user 已建立發票 :invoice',
       'activity_5': ':user 已更新發票 :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user 已將發票 :invoice 歸檔',
       'activity_9': ':user 已刪除發票 :invoice',
@@ -6863,7 +6863,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user 已刪除 :credit 貸款資料',
       'activity_18': ':user 已建立報價單 :quote',
       'activity_19': ':user 已更新報價單 :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact 已檢視報價單 :quote',
       'activity_22': ':user 已將報價單 :quote 歸檔',
       'activity_23': ':user 已刪除發票 :quote',
@@ -6906,13 +6906,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': '一次性密碼',
       'emailed_quote': '以電子郵件寄出報價單成功',
       'emailed_credit': 'Successfully emailed credit',
@@ -8655,13 +8655,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Ponuda uspješno poslana e-poštom',
       'emailed_credit': 'Successfully emailed credit',
@@ -10359,7 +10359,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user smazal :credit kredit',
       'activity_18': ':user vytvořil nabídku :quote',
       'activity_19': ':user změnil nabídku :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact zobrazil nabídku :quote',
       'activity_22': ':user archivoval nabídku :quote',
       'activity_23': ':user smazal nabídku :quote',
@@ -10403,13 +10403,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Nabídka úspěšně odeslána',
       'emailed_credit': 'Successfully emailed credit',
@@ -12090,8 +12090,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user slettede kunde :client',
       'activity_4': ':user oprettede faktura :invoice',
       'activity_5': ':user ajourførte faktura :invoice',
-      'activity_6':
-          ':user emailede fakturaen :invoice for :client til :contact',
+      'activity_6': ':user emailede fakturaen :invoice til :contact',
       'activity_7': ':contact læste faktura :invoice for :client',
       'activity_8': ':user arkiverede faktura :invoice',
       'activity_9': ':user slettede faktura :invoice',
@@ -12106,7 +12105,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user slettede :credit kredit',
       'activity_18': ':user oprettede tilbud :quote',
       'activity_19': ':user ajourførte tilbud :quote',
-      'activity_20': ':user emailede tilbuddet :quote for :client til :contact',
+      'activity_20': ':user emailede tilbuddet :quote til :contact',
       'activity_21': ':contact læste tilbud :quote',
       'activity_22': ':user arkiverede tilbud :quote',
       'activity_23': ':user slettede tilbud:quote',
@@ -12150,13 +12149,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Tilbud sendt som e-mail',
       'emailed_credit': 'Successfully emailed credit',
@@ -13909,13 +13908,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Eenmalig wachtwoord',
       'emailed_quote': 'De offerte is gemaild',
       'emailed_credit': 'Krediet is verzonden',
@@ -15599,7 +15598,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user deleted customer :client',
       'activity_4': ':user created invoice :invoice',
       'activity_5': ':user updated invoice :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
@@ -15614,7 +15613,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user deleted :credit credit',
       'activity_18': ':user created quote :quote',
       'activity_19': ':user updated quote :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact viewed quote :quote',
       'activity_22': ':user archived quote :quote',
       'activity_23': ':user deleted quote :quote',
@@ -15658,13 +15657,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated customer :client',
       'activity_62': ':user updated supplier :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
       'emailed_credit': 'Successfully emailed credit',
@@ -17346,7 +17345,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user deleted client :client',
       'activity_4': ':user created invoice :invoice',
       'activity_5': ':user updated invoice :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
@@ -17361,7 +17360,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user deleted :credit credit',
       'activity_18': ':user created quote :quote',
       'activity_19': ':user updated quote :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact viewed quote :quote',
       'activity_22': ':user archived quote :quote',
       'activity_23': ':user deleted quote :quote',
@@ -17405,13 +17404,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
       'emailed_credit': 'Successfully emailed credit',
@@ -19154,13 +19153,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Kertakäyttöinen salasana',
       'emailed_quote': 'Tarjous on lähetetty onnistuneesti',
       'emailed_credit': 'Successfully emailed credit',
@@ -20912,13 +20911,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Mot de passe à usage unique',
       'emailed_quote': 'Devis envoyé par courriel avec succès',
       'emailed_credit': 'Successfully emailed credit',
@@ -28031,13 +28030,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Preventivo inviato con successo',
       'emailed_credit': 'Successfully emailed credit',
@@ -29717,7 +29716,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user は 顧客 :client を削除しました。',
       'activity_4': ':user は 請求書 :invoice を作成しました。',
       'activity_5': ':user は 請求書 :invoice をアーカイブしました。',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user は 請求書 :invoice をアーカイブしました。',
       'activity_9': ':user は 請求書 :invoice をアーカイブしました。',
@@ -29732,7 +29731,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user deleted :credit credit',
       'activity_18': ':user created quote :quote',
       'activity_19': ':user updated quote :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact viewed quote :quote',
       'activity_22': ':user archived quote :quote',
       'activity_23': ':user deleted quote :quote',
@@ -29776,13 +29775,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'ワンタイムパスワード',
       'emailed_quote': '見積書をメールしました。',
       'emailed_credit': 'Successfully emailed credit',
@@ -31464,7 +31463,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user deleted client :client',
       'activity_4': ':user sukurta sąskaita :invoice',
       'activity_5': ':user updated invoice :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
@@ -31479,7 +31478,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user deleted :credit credit',
       'activity_18': ':user created quote :quote',
       'activity_19': ':user updated quote :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact viewed quote :quote',
       'activity_22': ':user archived quote :quote',
       'activity_23': ':user deleted quote :quote',
@@ -31523,13 +31522,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Vienkartinis Slaptažodis',
       'emailed_quote': 'Successfully emailed quote',
       'emailed_credit': 'Successfully emailed credit',
@@ -33217,7 +33216,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user го избриша клиентот :client',
       'activity_4': ':user ја креираше фактурата :invoice',
       'activity_5': ':user ја ажурираше фактурата :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user ја архивира фактурата :invoice',
       'activity_9': ':user ја избриша фактурата :invoice',
@@ -33232,7 +33231,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user избриша :credit кредит',
       'activity_18': ':user ја креира понудата :quote',
       'activity_19': ':user ја ажурира понудата :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact ја виде понудата :quote',
       'activity_22': ':user ја архивира понудата :quote',
       'activity_23': ':user ја избриша понудата :quote',
@@ -33276,13 +33275,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Еднократна лозинка',
       'emailed_quote': 'Успешно пратена понуда по ел. пошта',
       'emailed_credit': 'Successfully emailed credit',
@@ -34963,7 +34962,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user slettet kunde :client',
       'activity_4': ':user opprettet faktura :invoice',
       'activity_5': ':user oppdaterte faktura :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user arkiverte faktura :invoice',
       'activity_9': ':user slettet faktura :invoice',
@@ -34978,7 +34977,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user slettet :credit kredit',
       'activity_18': ':user opprettet tilbud :quote',
       'activity_19': ':user oppdaterte tilbud :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact viste tilbud :quote',
       'activity_22': ':user arkiverte tilbud :quote',
       'activity_23': ':user slettet tilbud :quote',
@@ -35022,13 +35021,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Tilbud sendt som e-post',
       'emailed_credit': 'Successfully emailed credit',
@@ -36710,7 +36709,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user usunął klienta :client',
       'activity_4': ':user stworzył fakturę :invoice',
       'activity_5': ':user zaktualizował fakturę :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user zarchiwizował fakturę :invoice',
       'activity_9': ':user usunął fakturę :invoice',
@@ -36725,7 +36724,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user usunął kredyt :credit',
       'activity_18': ':user stworzył ofertę :quote',
       'activity_19': ':user zakatualizował ofertę :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact wyświetlił ofertę :quote',
       'activity_22': ':user zarchiwizował ofertę :quote',
       'activity_23': ':user usunął ofertę :quote',
@@ -36769,13 +36768,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Oferta została wysłana',
       'emailed_credit': 'Successfully emailed credit',
@@ -38484,7 +38483,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user criou o orçamento :quote',
       'activity_19': ':user atualizou o orçamento :quote',
       'activity_20':
-          ':user enviou o orçamento :quote do cliente :client para o contato :contact',
+          ':user enviou o orçamento :quote do cliente :client para o contato :client',
       'activity_21': ':contact visualizou o orçamento :quote',
       'activity_22': ':user arquivou o orçamento :quote',
       'activity_23': ':user excluiu o orçamento :quote',
@@ -38530,13 +38529,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Senha One-Time (OTP)',
       'emailed_quote': 'Orçamento enviado por email com sucesso',
       'emailed_credit': 'Crédito enviado com sucesso',
@@ -40222,7 +40221,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user removeu o cliente :client',
       'activity_4': ':user criou a nota de pagamento :invoice',
       'activity_5': ':user atualizou a nota de pagamento :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user arquivou a nota de pagamento :invoice',
       'activity_9': ':user removeu a nota de pagamento :invoice',
@@ -40237,7 +40236,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user removeu crédito :credit',
       'activity_18': ':user adicionou o orçamento :quote',
       'activity_19': ':user atualizou  o orçamento :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact visualizou o orçamento :quote',
       'activity_22': ':user arquivou o orçamento :quote',
       'activity_23': ':user removeu o orçamento :quote',
@@ -40281,13 +40280,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Orçamento enviado',
       'emailed_credit': 'Successfully emailed credit',
@@ -42031,13 +42030,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Proformă trimisă cu succes',
       'emailed_credit': 'Successfully emailed credit',
@@ -43720,7 +43719,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user deleted client :client',
       'activity_4': ':user Создал Счёт :invoice',
       'activity_5': ':user Обновил счёт :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
@@ -43735,7 +43734,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user deleted :credit credit',
       'activity_18': ':user created quote :quote',
       'activity_19': ':user updated quote :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact viewed quote :quote',
       'activity_22': ':user archived quote :quote',
       'activity_23': ':user deleted quote :quote',
@@ -43779,13 +43778,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Прайс-лист успешно отправлен',
       'emailed_credit': 'Successfully emailed credit',
@@ -45486,7 +45485,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user obrisao :credit kredit',
       'activity_18': ':user kreirao predračun :quote',
       'activity_19': ':user ažurirao predračun :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact pregledao predračun :quote',
       'activity_22': ':user arhivirao predračun :quote',
       'activity_23': ':user obrisao predračun :quote',
@@ -45530,13 +45529,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Jednokratna lozinka',
       'emailed_quote': 'Predračun je uspešno poslan e-poštom',
       'emailed_credit': 'Successfully emailed credit',
@@ -47281,13 +47280,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Geslo za enkratno uporabo',
       'emailed_quote': 'Predračun uspešno poslan',
       'emailed_credit': 'Successfully emailed credit',
@@ -49038,13 +49037,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Contraseña de una sola vez',
       'emailed_quote': 'Cotización enviada con éxito',
       'emailed_credit': 'Crédito enviado por correo electrónico con éxito',
@@ -52566,13 +52565,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'Engångs lösenord',
       'emailed_quote': 'Offert e-postad',
       'emailed_credit': 'Successfully emailed credit',
@@ -54252,7 +54251,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user ได้ลบผู้ใช้ :client',
       'activity_4': ':user ได้สร้างใบแจ้งหนี้ :invoice',
       'activity_5': ':user ได้อัปเดทแจ้งหนี้ :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user บันทึกใบแจ้งหนี้ :invoice',
       'activity_9': ':user ได้ลบใบแจ้งหนี้ :invoice',
@@ -54267,7 +54266,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user ลบแล้ว :credit เครดิต',
       'activity_18': ':user สร้างใบเสนอราคา :quote',
       'activity_19': ';user อัปเดตใบเสนอราคา :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact ดูใบเสนอราคา :quote',
       'activity_22': ':user เก็บบันทึกใบเสนอราคา :quote',
       'activity_23': ':user ลบใบเสนอราคา :quote',
@@ -54311,13 +54310,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'อีเมล์ใบเสนอราคาเรียบร้อย',
       'emailed_credit': 'Successfully emailed credit',
@@ -56001,7 +56000,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user :client müştei hesabını sildi',
       'activity_4': ':user :invoice nolu faturayı oluşturdu',
       'activity_5': ':user :invoice nolu faturayı güncelledi',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
+      'activity_6': ':user emailed invoice :invoice to :client',
       'activity_7': ':contact viewed invoice :invoice for :client',
       'activity_8': ':user :invoice nolu faturayı arşivledi',
       'activity_9': ':user :invoice nolu faturayı sildi',
@@ -56016,7 +56015,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user :credit kredi sildi',
       'activity_18': ':user :quote nolu teklifi oluşturdu',
       'activity_19': ':user :quote nolu teklifi güncelledi',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user emailed quote :quote to :client',
       'activity_21': ':contact adlı yetkili :quote nolu teklifi görüntüledi',
       'activity_22': ':user :quote nolu teklifi arşivledi',
       'activity_23': ':user :quote nolu teklifi sildi',
@@ -56060,13 +56059,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_61': ':user updated client :client',
       'activity_62': ':user updated vendor :vendor',
       'activity_63':
-          ':user emailed first reminder for invoice :invoice to :contact',
+          ':user emailed first reminder for invoice :invoice to :client',
       'activity_64':
-          ':user emailed second reminder for invoice :invoice to :contact',
+          ':user emailed second reminder for invoice :invoice to :client',
       'activity_65':
-          ':user emailed third reminder for invoice :invoice to :contact',
+          ':user emailed third reminder for invoice :invoice to :client',
       'activity_66':
-          ':user emailed endless reminder for invoice :invoice to :contact',
+          ':user emailed endless reminder for invoice :invoice to :client',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Teklif başarıyla e-posta ile gönderildi',
       'emailed_credit': 'Successfully emailed credit',
