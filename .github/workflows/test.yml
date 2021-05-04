@@ -15,21 +15,14 @@ jobs:
           flutter-version: '2.0.5'
           channel: 'stable'
       - run: flutter pub get
-      - name: Setup App
-        run: |
-          cp android/app/build.gradle.prod android/app/build.gradle
-          cp lib/.env.dart.example lib/.env.dart
-          sed -i -e 's/user/medium/g' lib/.env.dart
-          sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
-          echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       #- run: flutter analyze
 
   drive_ios:
     strategy:
       matrix:
         device:
-          - "iPad"
-          - "iPhone 11"
+          - "iPad Pro (11-inch)"
+          - "iPhone 11 Pro (14.4)"
       fail-fast: false
     runs-on: macos-latest
     needs: test
@@ -52,6 +45,13 @@ jobs:
         with:
           flutter-version: '2.0.5'
           channel: 'stable'
+      - name: Setup App
+        run: |
+          cp android/app/build.gradle.prod android/app/build.gradle
+          cp lib/.env.dart.example lib/.env.dart
+          sed -i -e 's/user/medium/g' lib/.env.dart
+          sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
+          echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run iOS Flutter Driver tests
         run: flutter drive --target=test_driver/login_it.dart
 
@@ -70,6 +70,13 @@ jobs:
         with:
           flutter-version: '2.0.5'
           channel: 'stable'
+      - name: Setup App
+        run: |
+          cp android/app/build.gradle.prod android/app/build.gradle
+          cp lib/.env.dart.example lib/.env.dart
+          sed -i -e 's/user/medium/g' lib/.env.dart
+          sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
+          echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run Android Flutter Driver tests
         uses: reactivecircus/android-emulator-runner@v1
         with:
