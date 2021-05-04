@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         device:
-          - "iPad Pro (11-inch)"
+          #- "iPad Pro (11-inch)"
           - "iPhone 11 Pro (14.4)"
       fail-fast: false
     runs-on: macos-latest
@@ -47,7 +47,7 @@ jobs:
           channel: 'stable'
       - name: Setup App
         run: |
-          cp android/app/build.gradle.prod android/app/build.gradle
+          cp android/app/build.gradle.dev android/app/build.gradle
           cp lib/.env.dart.example lib/.env.dart
           sed -i -e 's/user/medium/g' lib/.env.dart
           sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
@@ -61,7 +61,8 @@ jobs:
     strategy:
       #set of different configurations of the virtual environment.
       matrix:
-        api-level: [21, 29]
+        #api-level: [21, 29]
+        api-level: [21]
         target: [default]
     needs: test
     steps:
@@ -72,7 +73,7 @@ jobs:
           channel: 'stable'
       - name: Setup App
         run: |
-          cp android/app/build.gradle.prod android/app/build.gradle
+          cp android/app/build.gradle.dev android/app/build.gradle
           cp lib/.env.dart.example lib/.env.dart
           sed -i -e 's/user/medium/g' lib/.env.dart
           sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
