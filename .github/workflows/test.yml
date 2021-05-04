@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'dev' # TODO change to beta/stable
+          channel: 'stable'
           #flutter-version: '1.15.17'
       - run: flutter pub get
       - run: rm ios/Podfile
@@ -34,7 +34,6 @@ jobs:
           cp lib/.env.dart.example lib/.env.dart
           sed -i -e 's/user/medium/g' lib/.env.dart
           sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
-          sed -i -e 's/secret/${{secrets.staging_secret}}/g' lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run Tests
         run: flutter drive --target=test_driver/login_it.dart
