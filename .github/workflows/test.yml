@@ -22,7 +22,7 @@ jobs:
           sed -i -e 's/user/medium/g' lib/.env.dart
           sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
-      - run: flutter analyze
+      #- run: flutter analyze
 
   drive_ios:
     strategy:
