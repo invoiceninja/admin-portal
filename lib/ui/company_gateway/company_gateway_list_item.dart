@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -53,9 +54,12 @@ class CompanyGatewayListItem extends StatelessWidget {
         onTap: () => selectEntity(entity: companyGateway, context: context),
         trailing: onRemovePressed == null
             ? null
-            : TextButton(
-                child: Text(AppLocalization.of(context).remove),
-                onPressed: onRemovePressed,
+            : Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: AppTextButton(
+                  label: AppLocalization.of(context).remove,
+                  onPressed: onRemovePressed,
+                ),
               ),
         leading: showCheckbox
             ? IgnorePointer(

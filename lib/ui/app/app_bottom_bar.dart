@@ -139,9 +139,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 Column(
                   children: EntityState.values.map<Widget>((state) {
                     return CheckboxListTile(
-                      key: Key(state.toString()),
-                      title: Text(
-                          AppLocalization.of(context).lookup(state.toString())),
+                      key: ValueKey('state_' +
+                          AppLocalization.of(context).lookup('$state')),
+                      title: Text(AppLocalization.of(context).lookup('$state')),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: stateFilters.contains(state),
                       activeColor: Theme.of(context).accentColor,
@@ -347,8 +347,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final localization = AppLocalization.of(context);
       final prefState = store.state.prefState;
-      final isList = prefState.moduleLayout == ModuleLayout.list ||
-          widget.entityType.isSetting;
+      final isList =
+          widget.entityType.isSetting || state.prefState.isModuleList;
 
       void _onColumnsPressed() {
         multiselectDialog(
@@ -400,7 +400,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       icon: Icon(Icons.check_box),
                       onPressed: () => widget.onCheckboxPressed(),
                     ),
-                  if (!widget.entityType.isSetting)
+                  if (!widget.entityType.isSetting &&
+                      prefState.isPreviewEnabled)
                     IconButton(
                       tooltip: isList
                           ? localization.showTable
@@ -410,22 +411,24 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         store.dispatch(SwitchListTableLayout());
                       },
                     ),
-                  if (isList && widget.sortFields.isNotEmpty)
-                    IconButton(
-                      tooltip: localization.sort,
-                      icon: Icon(Icons.sort_by_alpha),
-                      onPressed: _showSortSheet,
-                    ),
-                  if (!isList && isNotMobile(context))
-                    IconButton(
-                      tooltip: localization.preview,
-                      icon: Icon(Icons.chrome_reader_mode),
-                      onPressed: () {
-                        store.dispatch(UpdateUserPreferences(
-                            isPreviewVisible:
-                                !state.prefState.isPreviewVisible));
-                      },
-                    ),
+                  if (prefState.isPreviewEnabled) ...[
+                    if (isList && widget.sortFields.isNotEmpty)
+                      IconButton(
+                        tooltip: localization.sort,
+                        icon: Icon(Icons.sort_by_alpha),
+                        onPressed: _showSortSheet,
+                      ),
+                    if (!isList && isDesktop(context))
+                      IconButton(
+                        tooltip: localization.preview,
+                        icon: Icon(Icons.chrome_reader_mode),
+                        onPressed: () {
+                          store.dispatch(UpdateUserPreferences(
+                              isPreviewVisible:
+                                  !state.prefState.isPreviewVisible));
+                        },
+                      ),
+                  ],
                 ],
                 IconButton(
                   tooltip: localization.filter,
@@ -439,7 +442,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 ),
                 if (widget.statuses.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
+                    tooltip: localization.status,
                     icon: Icon(Icons.filter),
                     onPressed: _showFilterStatusSheet,
                     color: store.state
@@ -450,7 +453,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues1.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
+                    tooltip: localization.filteredBy,
                     icon: Icon(Icons.looks_one),
                     onPressed: _showFilterCustom1Sheet,
                     color: store.state
@@ -461,7 +464,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues2.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
+                    tooltip: localization.filteredBy,
                     icon: Icon(Icons.looks_two),
                     onPressed: _showFilterCustom2Sheet,
                     color: store.state
@@ -472,7 +475,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues3.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
+                    tooltip: localization.filteredBy,
                     icon: Icon(Icons.looks_3),
                     onPressed: _showFilterCustom3Sheet,
                     color: store.state
@@ -483,7 +486,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues4.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
+                    tooltip: localization.filteredBy,
                     icon: Icon(Icons.looks_4),
                     onPressed: _showFilterCustom4Sheet,
                     color: store.state

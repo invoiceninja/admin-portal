@@ -130,6 +130,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'isPreviewVisible',
       serializers.serialize(object.isPreviewVisible,
           specifiedType: const FullType(bool)),
+      'isPreviewEnabled',
+      serializers.serialize(object.isPreviewEnabled,
+          specifiedType: const FullType(bool)),
       'isMenuVisible',
       serializers.serialize(object.isMenuVisible,
           specifiedType: const FullType(bool)),
@@ -202,6 +205,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'isPreviewVisible':
           result.isPreviewVisible = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'isPreviewEnabled':
+          result.isPreviewEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'isMenuVisible':
@@ -439,6 +446,8 @@ class _$PrefState extends PrefState {
   @override
   final bool isPreviewVisible;
   @override
+  final bool isPreviewEnabled;
+  @override
   final bool isMenuVisible;
   @override
   final bool showKanban;
@@ -469,6 +478,7 @@ class _$PrefState extends PrefState {
       this.historySidebarMode,
       this.useSidebarEditor,
       this.isPreviewVisible,
+      this.isPreviewEnabled,
       this.isMenuVisible,
       this.showKanban,
       this.isHistoryVisible,
@@ -497,6 +507,9 @@ class _$PrefState extends PrefState {
     }
     if (isPreviewVisible == null) {
       throw new BuiltValueNullFieldError('PrefState', 'isPreviewVisible');
+    }
+    if (isPreviewEnabled == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'isPreviewEnabled');
     }
     if (isMenuVisible == null) {
       throw new BuiltValueNullFieldError('PrefState', 'isMenuVisible');
@@ -548,6 +561,7 @@ class _$PrefState extends PrefState {
         historySidebarMode == other.historySidebarMode &&
         useSidebarEditor == other.useSidebarEditor &&
         isPreviewVisible == other.isPreviewVisible &&
+        isPreviewEnabled == other.isPreviewEnabled &&
         isMenuVisible == other.isMenuVisible &&
         showKanban == other.showKanban &&
         isHistoryVisible == other.isHistoryVisible &&
@@ -579,17 +593,20 @@ class _$PrefState extends PrefState {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    appLayout
+                                                                    $jc(
+                                                                        0,
+                                                                        appLayout
+                                                                            .hashCode),
+                                                                    moduleLayout
                                                                         .hashCode),
-                                                                moduleLayout
+                                                                menuSidebarMode
                                                                     .hashCode),
-                                                            menuSidebarMode
+                                                            historySidebarMode
                                                                 .hashCode),
-                                                        historySidebarMode
+                                                        useSidebarEditor
                                                             .hashCode),
-                                                    useSidebarEditor.hashCode),
-                                                isPreviewVisible.hashCode),
+                                                    isPreviewVisible.hashCode),
+                                                isPreviewEnabled.hashCode),
                                             isMenuVisible.hashCode),
                                         showKanban.hashCode),
                                     isHistoryVisible.hashCode),
@@ -611,6 +628,7 @@ class _$PrefState extends PrefState {
           ..add('historySidebarMode', historySidebarMode)
           ..add('useSidebarEditor', useSidebarEditor)
           ..add('isPreviewVisible', isPreviewVisible)
+          ..add('isPreviewEnabled', isPreviewEnabled)
           ..add('isMenuVisible', isMenuVisible)
           ..add('showKanban', showKanban)
           ..add('isHistoryVisible', isHistoryVisible)
@@ -657,6 +675,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   bool get isPreviewVisible => _$this._isPreviewVisible;
   set isPreviewVisible(bool isPreviewVisible) =>
       _$this._isPreviewVisible = isPreviewVisible;
+
+  bool _isPreviewEnabled;
+  bool get isPreviewEnabled => _$this._isPreviewEnabled;
+  set isPreviewEnabled(bool isPreviewEnabled) =>
+      _$this._isPreviewEnabled = isPreviewEnabled;
 
   bool _isMenuVisible;
   bool get isMenuVisible => _$this._isMenuVisible;
@@ -718,6 +741,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _historySidebarMode = _$v.historySidebarMode;
       _useSidebarEditor = _$v.useSidebarEditor?.toBuilder();
       _isPreviewVisible = _$v.isPreviewVisible;
+      _isPreviewEnabled = _$v.isPreviewEnabled;
       _isMenuVisible = _$v.isMenuVisible;
       _showKanban = _$v.showKanban;
       _isHistoryVisible = _$v.isHistoryVisible;
@@ -758,6 +782,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               historySidebarMode: historySidebarMode,
               useSidebarEditor: useSidebarEditor.build(),
               isPreviewVisible: isPreviewVisible,
+              isPreviewEnabled: isPreviewEnabled,
               isMenuVisible: isMenuVisible,
               showKanban: showKanban,
               isHistoryVisible: isHistoryVisible,

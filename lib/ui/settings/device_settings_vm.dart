@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
-import 'package:invoiceninja_flutter/ui/settings/device_settings_list.dart';
+import 'package:invoiceninja_flutter/ui/settings/device_settings.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
@@ -46,6 +46,7 @@ class DeviceSettingsVM {
     @required this.onHistoryModeChanged,
     @required this.onColorThemeChanged,
     @required this.onRowsPerPageChanged,
+    @required this.onPreviewSidebarChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -105,6 +106,9 @@ class DeviceSettingsVM {
           store.dispatch(UpdateUserPreferences(colorTheme: value));
         }
       },
+      onPreviewSidebarChanged: (context, value) {
+        store.dispatch(UpdateUserPreferences(isPreviewEnabled: value));
+      },
       onRowsPerPageChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(rowsPerPage: value));
       },
@@ -160,6 +164,7 @@ class DeviceSettingsVM {
   final Function(BuildContext) onRefreshTap;
   final Function(BuildContext) onLogoutTap;
   final Function(BuildContext, bool) onDarkModeChanged;
+  final Function(BuildContext, bool) onPreviewSidebarChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
   final Function(BuildContext, AppSidebarMode) onHistoryModeChanged;

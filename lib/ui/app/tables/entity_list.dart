@@ -104,12 +104,11 @@ class _EntityListState extends State<EntityList> {
     final uiState = state.uiState;
     final entityType = widget.entityType;
     final listUIState = state.getUIState(entityType).listUIState;
-    final isList = state.prefState.moduleLayout == ModuleLayout.list ||
-        entityType.isSetting;
     final isInMultiselect = listUIState.isInMultiselect();
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
     final countSelected = (listUIState.selectedIds ?? <String>[]).length;
+    final isList = entityType.isSetting || state.prefState.isModuleList;
 
     if (!state.isLoaded && entityList.isEmpty) {
       return LoadingIndicator();
@@ -464,9 +463,9 @@ class _EntityListState extends State<EntityList> {
                 alignment: Alignment.topCenter,
                 children: <Widget>[
                   listOrTable(),
-                  if (state.isLoading ||
-                      ((entityType.isSetting || isMobile(context)) &&
-                          state.isSaving))
+                  if ((state.isLoading &&
+                          (isMobile(context) || !entityType.isSetting)) ||
+                      (state.isSaving && entityType.isSetting))
                     LinearProgressIndicator(),
                 ],
               ),

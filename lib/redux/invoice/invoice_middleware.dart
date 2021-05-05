@@ -427,9 +427,10 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
 Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadInvoices;
+    final state = store.state;
 
     store.dispatch(LoadInvoicesRequest());
-    repository.loadList(store.state.credentials).then((data) {
+    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

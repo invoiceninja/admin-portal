@@ -316,9 +316,10 @@ Middleware<AppState> _loadCredit(CreditRepository repository) {
 Middleware<AppState> _loadCredits(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadCredits;
+    final state = store.state;
 
     store.dispatch(LoadCreditsRequest());
-    repository.loadList(store.state.credentials).then((data) {
+    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
       store.dispatch(LoadCreditsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

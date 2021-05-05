@@ -140,6 +140,21 @@ class _DashboardScreenState extends State<DashboardScreen>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
+    Widget leading = SizedBox();
+
+    if (isMobile(context) || state.prefState.isMenuFloated) {
+      leading = Builder(
+        builder: (context) => InkWell(
+          child: IconButton(
+            tooltip: localization.menuSidebar,
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+        ),
+      );
+    }
 
     final mainScaffold = Scaffold(
       drawer: isMobile(context) || state.prefState.isMenuFloated
@@ -150,9 +165,8 @@ class _DashboardScreenState extends State<DashboardScreen>
           : null,
       appBar: AppBar(
         centerTitle: false,
-        leading: isMobile(context) || state.prefState.isMenuFloated
-            ? null
-            : SizedBox(),
+        automaticallyImplyLeading: false,
+        leading: leading,
         title: ListFilter(
           key: ValueKey('__cleared_at_${state.uiState.filterClearedAt}__'),
           entityType: EntityType.dashboard,

@@ -164,6 +164,7 @@ class MenuDrawer extends StatelessWidget {
     final _expandedCompanySelector = state.companies.isEmpty
         ? SizedBox()
         : AppDropdownButton<String>(
+            key: ValueKey(kSelectCompanyDropdownKey),
             value: viewModel.selectedCompanyIndex,
             items: [
               ...state.companies
@@ -265,7 +266,8 @@ class MenuDrawer extends StatelessWidget {
                                 ),
                                 onTap: () => launch(kDebugModeUrl),
                               ),
-                          if (state.company.isDisabled)
+                          if (state.company.isDisabled &&
+                              state.userCompany.isAdmin)
                             if (state.isMenuCollapsed)
                               Tooltip(
                                 message: localization.companyDisabledWarning,
@@ -558,6 +560,7 @@ class _DrawerTileState extends State<DrawerTile> {
         ),
         title: Text(
           widget.title,
+          key: ValueKey('menu_${widget.title}'),
           style: Theme.of(context).textTheme.bodyText1.copyWith(
                 fontSize: 16,
                 color: textColor,

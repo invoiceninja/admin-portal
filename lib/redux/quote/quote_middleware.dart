@@ -360,9 +360,10 @@ Middleware<AppState> _bulkEmailQuotes(QuoteRepository repository) {
 Middleware<AppState> _loadQuotes(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadQuotes;
+    final state = store.state;
 
     store.dispatch(LoadQuotesRequest());
-    repository.loadList(store.state.credentials).then((data) {
+    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
       store.dispatch(LoadQuotesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

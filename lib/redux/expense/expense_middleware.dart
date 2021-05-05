@@ -220,9 +220,10 @@ Middleware<AppState> _loadExpense(ExpenseRepository repository) {
 Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadExpenses;
+    final state = store.state;
 
     store.dispatch(LoadExpensesRequest());
-    repository.loadList(store.state.credentials).then((data) {
+    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
       store.dispatch(LoadExpensesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

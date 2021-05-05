@@ -8,7 +8,7 @@ class GrowableFormField extends StatefulWidget {
     this.initialValue,
     this.onChanged,
     this.keyboardType,
-  });
+  }) : super(key: key);
 
   final String initialValue;
   final ValueChanged<String> onChanged;
@@ -45,7 +45,6 @@ class _GrowableFormFieldState extends State<GrowableFormField> {
   @override
   Widget build(BuildContext context) {
     return DecoratedFormField(
-      key: widget.key,
       focusNode: _focusNode,
       initialValue: widget.initialValue,
       onChanged: widget.onChanged,

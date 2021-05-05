@@ -1,4 +1,3 @@
-/*
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -110,9 +109,10 @@ void runTestSuite({bool batchMode = false}) {
     });
 
     // Archive the edited product
-    test('Archieve/delete product test', () async {
+    test('Archive/delete product test', () async {
       await testArchiveAndDelete(
           driver: driver,
+          rowText: updatedProductKey,
           archivedMessage: localization.archivedProduct,
           deletedMessage: localization.deletedProduct,
           restoredMessage: localization.restoredProduct);
@@ -123,4 +123,3 @@ void runTestSuite({bool batchMode = false}) {
     });
   });
 }
-*/

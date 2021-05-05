@@ -35,6 +35,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
     final localization = AppLocalization.of(context);
 
     return DecoratedFormField(
+      key: ValueKey(widget.labelText ?? localization.password),
       controller: widget.controller,
       onSavePressed: widget.onSavePressed,
       autocorrect: false,

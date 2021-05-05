@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
@@ -174,7 +175,7 @@ class DashboardPanels extends StatelessWidget {
               SizedBox(width: 8),
               if (!isWide && (company.hasTaxes || hasMultipleCurrencies))
                 IconButton(
-                  icon: Icon(Icons.settings),
+                  icon: Icon(MdiIcons.tuneVariant),
                   visualDensity: VisualDensity.compact,
                   onPressed: () {
                     showDialog<AlertDialog>(

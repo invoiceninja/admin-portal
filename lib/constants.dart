@@ -632,6 +632,7 @@ const kPageSizes = [
 ];
 
 const String kDrawerKey = 'drawer_key';
+const String kSelectCompanyDropdownKey = 'select_company_dropdown_key';
 
 const String kActivityCreateClient = '1';
 const String kActivityArchiveClient = '2';

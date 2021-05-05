@@ -1,4 +1,3 @@
-/*
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -17,16 +16,16 @@ void runTestSuite({bool batchMode = false}) {
 
     final clientName = makeUnique(faker.company.name());
     final poNumber =
-    faker.randomGenerator.integer(999999, min: 100000).toString();
+        faker.randomGenerator.integer(999999, min: 100000).toString();
     final productKey = makeUnique(faker.food.cuisine());
-    final clientKey = faker.randomGenerator.integer(999999, min: 100000)
-        .toString();
+    final clientKey =
+        faker.randomGenerator.integer(999999, min: 100000).toString();
     final description = faker.lorem.sentences(5).toString();
     final cost =
-    faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
+        faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
 
     final updatedPoNumber =
-    faker.randomGenerator.integer(999999, min: 100000).toString();
+        faker.randomGenerator.integer(999999, min: 100000).toString();
 
     setUpAll(() async {
       localization = TestLocalization('en');
@@ -70,12 +69,11 @@ void runTestSuite({bool batchMode = false}) {
 
     // Create a new invoice
     test('Add a new invoice', () async {
-
       print('Tap new invoice');
       await driver.tap(find.byTooltip(localization.newInvoice));
 
       print('Create new client: $clientName');
-      if(await isMobile(driver)) {
+      if (await isMobile(driver)) {
         await driver.tap(find.byValueKey(Keys.clientPickerEmptyKey));
       }
       await driver.tap(find.byTooltip(localization.createNew));
@@ -93,7 +91,7 @@ void runTestSuite({bool batchMode = false}) {
       await driver.waitFor(find.text(localization.newInvoice));
 
       print('Fill the invoice form');
-      if(await isMobile(driver)) {
+      if (await isMobile(driver)) {
         await driver.tap(find.byTooltip(localization.addItem));
         await driver.tap(find.byTooltip(localization.createNew));
 
@@ -106,9 +104,8 @@ void runTestSuite({bool batchMode = false}) {
 
         // Await for Debouncer
         await Future<dynamic>.delayed(Duration(milliseconds: 500));
-        await driver.tap(find.text(localization.done));
+        await driver.tap(find.text(localization.done.toUpperCase()));
         await driver.tap(find.text(localization.details));
-
       } else {
         await fillTextFields(driver, <String, String>{
           getLineItemKey('name', 0): productKey,
@@ -151,6 +148,7 @@ void runTestSuite({bool batchMode = false}) {
     test('Archive/delete invoice test', () async {
       await testArchiveAndDelete(
           driver: driver,
+          rowText: clientName,
           archivedMessage: localization.archivedInvoice,
           deletedMessage: localization.deletedInvoice,
           restoredMessage: localization.restoredInvoice);
@@ -161,8 +159,8 @@ void runTestSuite({bool batchMode = false}) {
       await selectAction(driver, localization.enterPayment);
       await driver.tap(find.text(localization.save));
       // "Completed" status
-      await driver.waitFor(
-          find.text(localization.paymentStatus4.toUpperCase()));
+      await driver
+          .waitFor(find.text(localization.paymentStatus4.toUpperCase()));
 
       if (await isMobile(driver)) {
         await driver.tap(find.pageBack());
@@ -171,4 +169,3 @@ void runTestSuite({bool batchMode = false}) {
     });
   });
 }
-*/

@@ -71,6 +71,7 @@ class EmailCreditVM extends EmailEntityVM {
     final state = store.state;
 
     return EmailCreditVM(
+      state: state,
       isLoading: state.isLoading,
       isSaving: state.isSaving,
       company: state.company,

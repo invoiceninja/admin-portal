@@ -220,9 +220,10 @@ Middleware<AppState> _loadTask(TaskRepository repository) {
 Middleware<AppState> _loadTasks(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadTasks;
+    final state = store.state;
 
     store.dispatch(LoadTasksRequest());
-    repository.loadList(store.state.credentials).then((data) {
+    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
       store.dispatch(LoadTasksSuccess(data));
 
       if (action.completer != null) {

@@ -1,4 +1,3 @@
-/*
 // Import Flutter Driver API
 import 'dart:async';
 
@@ -26,7 +25,6 @@ void main() {
       //      'Resuming isolate: ${isolateRef.numberAsString}:${isolateRef.name}');
       //  isolateRef.resume();
       //});
-      
     });
 
     tearDownAll(() async {
@@ -53,9 +51,8 @@ void main() {
       });
 
       test('Logout from a logged in user', () async {
-        await logout(driver, localization, fromDashboard: true);
+        await logout(driver, localization);
       });
     });
   });
 }
-*/

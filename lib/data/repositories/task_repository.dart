@@ -28,8 +28,9 @@ class TaskRepository {
     return taskResponse.data;
   }
 
-  Future<BuiltList<TaskEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/tasks?';
+  Future<BuiltList<TaskEntity>> loadList(
+      Credentials credentials, int createdAt) async {
+    final url = credentials.url + '/tasks?created_at=$createdAt';
 
     final dynamic response = await webClient.get(url, credentials.token);
 

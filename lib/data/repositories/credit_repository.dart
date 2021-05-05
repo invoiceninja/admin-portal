@@ -30,8 +30,9 @@ class CreditRepository {
     return creditResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/credits?';
+  Future<BuiltList<InvoiceEntity>> loadList(
+      Credentials credentials, int createdAt) async {
+    final url = credentials.url + '/credits?created_at=$createdAt';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse creditResponse = await compute<dynamic, dynamic>(

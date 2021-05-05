@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -423,7 +424,9 @@ Middleware<AppState> _createAccountLoaded() {
     }
 
     try {
-      for (int i = 0; i < response.userCompanies.length; i++) {
+      for (int i = 0;
+          i < min(response.userCompanies.length, kMaxNumberOfCompanies);
+          i++) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
 
         if (i == 0) {
@@ -486,6 +489,10 @@ Middleware<AppState> _createDataRefreshed() {
     }
 
     next(action);
+
+    if (store.state.company.isLarge && !store.state.isLoaded) {
+      store.dispatch(LoadClients());
+    }
   };
 }
 

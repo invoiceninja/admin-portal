@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -221,7 +222,6 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as RefreshData;
     final state = store.state;
-    final company = state.company;
 
     if (action.clearData) {
       //
@@ -251,7 +251,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
           'TOKEN';
     }
 
-    final updatedAt = action.clearData && !company.isLarge
+    final updatedAt = action.clearData
         ? 0
         : ((state.userCompanyState.lastUpdated - kMillisecondsToRefreshData) /
                 1000)
@@ -286,7 +286,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         store.dispatch(
             RefreshData(completer: action.completer, clearData: true));
       } else {
-        if (action.clearData && !company.isLarge) {
+        if (action.clearData) {
           store.dispatch(ClearData());
         }
 

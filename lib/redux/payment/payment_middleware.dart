@@ -294,9 +294,10 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
 Middleware<AppState> _loadPayments(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadPayments;
+    final state = store.state;
 
     store.dispatch(LoadPaymentsRequest());
-    repository.loadList(store.state.credentials).then((data) {
+    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
       store.dispatch(LoadPaymentsSuccess(data));
 
       if (action.completer != null) {

@@ -86,8 +86,8 @@ bool isValidDate(String input) {
 }
 
 void printWrapped(String text) {
-  if (text.length > 2000) {
-    text = text.substring(0, 2000);
+  if (text.length > 5000) {
+    text = text.substring(0, 5000);
   }
 
   final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
