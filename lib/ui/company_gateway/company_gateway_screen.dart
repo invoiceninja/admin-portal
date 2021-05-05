@@ -74,18 +74,17 @@ class CompanyGatewayScreen extends StatelessWidget {
             onCancelPressed: (context) =>
                 store.dispatch(ClearCompanyGatewayMultiselect()),
           )
-        else if (settingsUIState.isFiltered && !state.isSaving) ...[
-          TextButton(
-            child: Text(localization.reset,
-                style: TextStyle(color: store.state.headerTextColor)),
-            onPressed: () {
-              final settings = settingsUIState.settings
-                  .rebuild((b) => b..companyGatewayIds = '');
-              store.dispatch(UpdateSettings(settings: settings));
-            },
-          ),
-          SizedBox(width: 10),
-        ] else
+        else ...[
+          if (settingsUIState.isFiltered && !state.isSaving)
+            TextButton(
+              child: Text(localization.reset,
+                  style: TextStyle(color: store.state.headerTextColor)),
+              onPressed: () {
+                final settings = settingsUIState.settings
+                    .rebuild((b) => b..companyGatewayIds = '');
+                store.dispatch(UpdateSettings(settings: settings));
+              },
+            ),
           SaveCancelButtons(
             isEnabled: settingsUIState.isChanged,
             isCancelEnabled: true,
@@ -103,6 +102,7 @@ class CompanyGatewayScreen extends StatelessWidget {
                     }
                   },
           )
+        ],
       ],
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(
