@@ -50,7 +50,7 @@ jobs:
           cp lib/.env.dart.example lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run iOS Flutter Driver tests
-        run: flutter drive --target=test_driver/login_it.dart
+        run: flutter drive --target=test_driver/all_it.dart
 
   drive_android:
     runs-on: macos-latest
@@ -59,7 +59,7 @@ jobs:
       #set of different configurations of the virtual environment.
       matrix:
         #api-level: [21, 29]
-        api-level: [26, 27, 28, 29]
+        api-level: [21, 28]
         target: [default]
     needs: test
     steps:
@@ -79,4 +79,4 @@ jobs:
           target: ${{ matrix.target }}
           arch: x86_64
           profile: Nexus 6
-          script: flutter drive --target=test_driver/login_it.dart
+          script: flutter drive --target=test_driver/all_it.dart
