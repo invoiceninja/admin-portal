@@ -268,7 +268,6 @@ class _EntityListState extends State<EntityList> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            numeric: EntityPresenter.isFieldNumeric(field),
                             onSort: (int columnIndex, bool ascending) {
                               widget.onSortColumn(field);
                             });
