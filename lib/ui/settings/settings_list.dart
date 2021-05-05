@@ -50,16 +50,21 @@ class _SettingsListState extends State<SettingsList> {
     }
 
     if (!state.userCompany.isAdmin)
-      return ScrollableListView(
-        children: <Widget>[
-          SettingsListTile(
-            section: kSettingsUserDetails,
-            viewModel: widget.viewModel,
+      return Stack(
+        children: [
+          ScrollableListView(
+            children: <Widget>[
+              SettingsListTile(
+                section: kSettingsUserDetails,
+                viewModel: widget.viewModel,
+              ),
+              SettingsListTile(
+                section: kSettingsDeviceSettings,
+                viewModel: widget.viewModel,
+              ),
+            ],
           ),
-          SettingsListTile(
-            section: kSettingsDeviceSettings,
-            viewModel: widget.viewModel,
-          ),
+          if (state.isLoading) LinearProgressIndicator(),
         ],
       );
     else if (settingsUIState.filter != null)
