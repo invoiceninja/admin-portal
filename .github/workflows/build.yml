@@ -77,7 +77,7 @@ jobs:
         run: |
           export SENTRY_RELEASE=$(sentry-cli releases propose-version)
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
 
           cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
           cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
