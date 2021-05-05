@@ -246,6 +246,7 @@ class _ClientPortalState extends State<ClientPortal>
                         validator: (val) => val.isEmpty || val.trim().isEmpty
                             ? localization.pleaseEnterAValue
                             : null,
+                        onSavePressed: viewModel.onSavePressed,
                       ),
                     DecoratedFormField(
                       label: localization.subdomain,
@@ -253,8 +254,10 @@ class _ClientPortalState extends State<ClientPortal>
                       hint: localization.subdomainHelp,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
-                            RegExp(r'[a-z0-9\-]')),
+                          RegExp(r'[a-z0-9\-]'),
+                        ),
                       ],
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                   ],
                 ),
