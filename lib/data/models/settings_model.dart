@@ -818,6 +818,34 @@ abstract class SettingsEntity
     }
   }
 
+  String getDefaultTerms(EntityType entityType) {
+    switch (entityType) {
+      case EntityType.invoice:
+        return defaultInvoiceTerms;
+      case EntityType.quote:
+        return defaultQuoteTerms;
+      case EntityType.credit:
+        return defaultCreditTerms;
+      default:
+        print('## Error: getDefaultTerms not defined for $entityType');
+        return '';
+    }
+  }
+
+  String getDefaultFooter(EntityType entityType) {
+    switch (entityType) {
+      case EntityType.invoice:
+        return defaultInvoiceFooter;
+      case EntityType.quote:
+        return defaultQuoteFooter;
+      case EntityType.credit:
+        return defaultCreditFooter;
+      default:
+        print('## Error: getDefaultFooter not defined for $entityType');
+        return '';
+    }
+  }
+
   String getEmailSubject(EmailTemplate emailTemplate) {
     switch (emailTemplate) {
       case EmailTemplate.invoice:

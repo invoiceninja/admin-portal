@@ -203,7 +203,9 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
               subtitle: Text((widget.subtitle ?? '').isEmpty
                   ? AppLocalization.of(context).none
                   : widget.subtitle),
-              leading: _isHovered && !widget.hideNew
+              leading: _isHovered &&
+                      !widget.hideNew &&
+                      state.userCompany.canCreate(widget.entityType)
                   ? IconButton(
                       icon: Icon(Icons.add_circle_outline),
                       onPressed: _onLongPress,

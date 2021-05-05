@@ -574,22 +574,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           controller: _termsController,
                           keyboardType: TextInputType.multiline,
                           label: '',
-                          hint: invoice.isCredit
-                              ? settings.defaultCreditTerms
-                              : invoice.isQuote
-                                  ? settings.defaultQuoteTerms
-                                  : settings.defaultInvoiceTerms,
+                          hint: invoice.isOld
+                              ? ''
+                              : settings.getDefaultTerms(invoice.entityType),
                         ),
                         DecoratedFormField(
                           maxLines: 6,
                           controller: _footerController,
                           keyboardType: TextInputType.multiline,
                           label: '',
-                          hint: invoice.isCredit
-                              ? settings.defaultCreditFooter
-                              : invoice.isQuote
-                                  ? settings.defaultQuoteFooter
-                                  : settings.defaultInvoiceFooter,
+                          hint: invoice.isOld
+                              ? ''
+                              : settings.getDefaultFooter(invoice.entityType),
                         ),
                         DecoratedFormField(
                           maxLines: 6,

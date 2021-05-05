@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -200,6 +201,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final state = viewModel.state;
     final company = viewModel.company;
     final settings = viewModel.settings;
+
+    if (!state.userCompany.isAdmin) {
+      return BlankScreen();
+    }
 
     return EditScaffold(
       title: localization.companyDetails,

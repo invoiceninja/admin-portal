@@ -117,6 +117,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   disabledLabel: localization.startMultiselect,
                 ),
                 AppDropdownButton<int>(
+                  blankValue: null,
                   labelText: localization.rowsPerPage,
                   value: prefState.rowsPerPage,
                   onChanged: (dynamic value) =>

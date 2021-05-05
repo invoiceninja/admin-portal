@@ -119,8 +119,6 @@ class AuthRepository {
       includeStatic = true;
     }
 
-    print('## Refresh data - include static: $includeStatic');
-
     return sendRequest(url: url, token: token, includeStatic: includeStatic);
   }
 

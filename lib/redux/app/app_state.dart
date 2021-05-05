@@ -765,7 +765,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final offset =
         userCompany.settings.numberYearsActive * (60 * 60 * 24 * 365);
 
-    return (DateTime.now().millisecondsSinceEpoch * 1000) - offset;
+    return (DateTime.now().millisecondsSinceEpoch / 1000).round() - offset;
   }
 
   bool get canAddCompany => userCompany.isOwner && companies.length < 10;

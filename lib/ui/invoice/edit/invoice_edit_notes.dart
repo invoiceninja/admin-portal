@@ -103,11 +103,9 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
                   : invoice.entityType == EntityType.quote
                       ? localization.quoteTerms
                       : localization.invoiceTerms,
-              hint: invoice.isCredit
-                  ? settings.defaultCreditTerms
-                  : invoice.isQuote
-                      ? settings.defaultQuoteTerms
-                      : settings.defaultInvoiceTerms,
+              hint: invoice.isOld
+                  ? ''
+                  : settings.getDefaultTerms(invoice.entityType),
             ),
             DecoratedFormField(
               maxLines: 4,
@@ -118,11 +116,9 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
                   : invoice.entityType == EntityType.quote
                       ? localization.quoteFooter
                       : localization.invoiceFooter,
-              hint: invoice.isCredit
-                  ? settings.defaultCreditFooter
-                  : invoice.isQuote
-                      ? settings.defaultQuoteFooter
-                      : settings.defaultInvoiceFooter,
+              hint: invoice.isOld
+                  ? ''
+                  : settings.getDefaultFooter(invoice.entityType),
             ),
             DecoratedFormField(
               maxLines: 4,
