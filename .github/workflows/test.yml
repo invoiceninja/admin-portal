@@ -20,9 +20,9 @@ jobs:
   drive_ios:
     strategy:
       matrix:
-        device:
-          #- "iPhone 11 Pro (14.4)"
-          #- "iPad Pro (9.7-inch) (14.4)"
+        #device:
+        #  - "iPhone 11 Pro (14.4)"
+        #  - "iPad Pro (9.7-inch) (14.4)"
       fail-fast: false
     runs-on: macos-latest
     needs: test
