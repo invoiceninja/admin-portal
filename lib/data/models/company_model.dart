@@ -419,6 +419,11 @@ abstract class CompanyEntity extends Object
       hasCustomField(CustomFieldType.surcharge4);
 
   String getCustomFieldLabel(String field) {
+    // Convert '$client.custom1' to 'client1'
+    if (field.contains('.custom')) {
+      field = field.replaceFirst('.custom', '').replaceFirst('\$', '');
+    }
+
     if (customFields.containsKey(field)) {
       return customFields[field].split('|').first;
     } else {
