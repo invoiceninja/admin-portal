@@ -222,8 +222,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as RefreshData;
     final state = store.state;
-    final company = state.company;
-    print('## CLEAR DATA: ${action.clearData}');
+
     if (action.clearData) {
       //
     } else {
