@@ -43,9 +43,9 @@ jobs:
           echo ";" >> lib/flutter_version.dart
       - name: Build Hosted App
         run: |
-          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
+          #export SENTRY_RELEASE=$(sentry-cli releases propose-version)
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
 
           flutter build web --web-renderer html --release --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
 
@@ -65,19 +65,18 @@ jobs:
           git push      
           cd ..
 
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart
+          #cd ./build/web
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext map --ext js
+          #cd ../..
 
-          cd ./build/web
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext map --ext js
-          cd ../..
-
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production
       - name: Build Selfhosted App
         run: |
           export SENTRY_RELEASE=$(sentry-cli releases propose-version)
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
+          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
 
           cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
           cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
@@ -90,6 +89,7 @@ jobs:
           cd invoiceninja_foss
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.foss.dart.js
+          cp ../build/web/main.dart.js.map ./public/main.foss.dart.js.map
           git add .
           git commit -m 'New admin portal [selfhosted]'
           git push
