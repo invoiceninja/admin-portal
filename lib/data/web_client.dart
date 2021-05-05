@@ -217,7 +217,7 @@ void _checkResponse(http.Response response) {
    */
 
   if (!kReleaseMode) {
-    print('## Response: ${formatSize(response.body.length)}');
+    print('Response: ${formatSize(response.body.length)}');
     if (Config.DEBUG_REQUESTS) {
       printWrapped('${response.statusCode} ${response.body}');
       print('Headers: ${response.headers}');
