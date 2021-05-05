@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:version/version.dart';
 
@@ -215,9 +216,12 @@ void _checkResponse(http.Response response) {
   debugPrint('response: ${response.statusCode} ${response.body}');
    */
 
-  if (!kReleaseMode && Config.DEBUG_REQUESTS) {
-    printWrapped('${response.statusCode} ${response.body}');
-    print('headers: ${response.headers}');
+  if (!kReleaseMode) {
+    print('## Response: ${formatSize(response.body.length)}');
+    if (Config.DEBUG_REQUESTS) {
+      printWrapped('${response.statusCode} ${response.body}');
+      print('Headers: ${response.headers}');
+    }
   }
 
   final serverVersion = response.headers['x-app-version'];
