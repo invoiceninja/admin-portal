@@ -266,7 +266,8 @@ class MenuDrawer extends StatelessWidget {
                                 ),
                                 onTap: () => launch(kDebugModeUrl),
                               ),
-                          if (state.company.isDisabled)
+                          if (state.company.isDisabled &&
+                              state.userCompany.isAdmin)
                             if (state.isMenuCollapsed)
                               Tooltip(
                                 message: localization.companyDisabledWarning,
