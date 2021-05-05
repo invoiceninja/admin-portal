@@ -489,6 +489,10 @@ Middleware<AppState> _createDataRefreshed() {
     }
 
     next(action);
+
+    if (store.state.company.isLarge && !store.state.isLoaded) {
+      store.dispatch(LoadClients());
+    }
   };
 }
 
