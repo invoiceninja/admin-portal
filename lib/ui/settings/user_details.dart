@@ -297,6 +297,7 @@ class _UserDetailsState extends State<UserDetails>
                   ),
                   if (state.company.isLarge || !kReleaseMode)
                     AppDropdownButton<int>(
+                      blankValue: null,
                       labelText: localization.numberYearsActive,
                       value: user.userCompany.settings.numberYearsActive,
                       onChanged: (dynamic value) {
