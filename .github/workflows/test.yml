@@ -50,7 +50,7 @@ jobs:
           cp lib/.env.dart.example lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run iOS Flutter Driver tests
-        run: flutter drive --target=test_driver/all_it.dart
+        run: flutter drive --target=test_driver/login_it.dart
 
   drive_android:
     runs-on: macos-latest
@@ -79,4 +79,4 @@ jobs:
           target: ${{ matrix.target }}
           arch: x86_64
           profile: Nexus 6
-          script: flutter drive --target=test_driver/all_it.dart
+          script: flutter drive --target=test_driver/login_it.dart

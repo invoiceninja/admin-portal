@@ -222,7 +222,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final action = dynamicAction as RefreshData;
     final state = store.state;
     final company = state.company;
-
+    print('## CLEAR DATA: ${action.clearData}');
     if (action.clearData) {
       //
     } else {
@@ -251,7 +251,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
           'TOKEN';
     }
 
-    final updatedAt = action.clearData && !company.isLarge
+    final updatedAt = action.clearData
         ? 0
         : ((state.userCompanyState.lastUpdated - kMillisecondsToRefreshData) /
                 1000)
