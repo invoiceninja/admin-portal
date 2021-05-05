@@ -1,5 +1,3 @@
-@Timeout(Duration(seconds: 120))
-
 // Import Flutter Driver API
 import 'dart:async';
 
