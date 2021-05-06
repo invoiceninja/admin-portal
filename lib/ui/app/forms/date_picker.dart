@@ -187,14 +187,14 @@ class _DatePickerState extends State<DatePicker> {
             final day = secondPart;
 
             final state = StoreProvider.of<AppState>(context).state;
-            final dateFormatId =
-                state.company.settings.dateFormatId ?? kDefaultDateFormat;
-            final dateFormat =
-                state.staticState.dateFormatMap[dateFormatId].format;
+            final countryId = state.company.settings.countryId;
 
-            value = dateFormat.substring(0, 1).toLowerCase() == 'd'
-                ? '$day$month'
-                : '$month$day';
+            value = [
+              kCountryUnitedStates,
+              kCountryCanada,
+            ].contains(countryId)
+                ? '$month$day'
+                : '$day$month';
 
             if (value.length == 4) {
               value = '$year$value';

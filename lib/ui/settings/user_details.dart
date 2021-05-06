@@ -174,6 +174,7 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterAFirstName
                       : null,
                   autovalidate: autoValidate,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 DecoratedFormField(
                   label: localization.lastName,
@@ -182,6 +183,7 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterALastName
                       : null,
                   autovalidate: autoValidate,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 DecoratedFormField(
                   label: localization.email,
@@ -190,14 +192,17 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterYourEmail
                       : null,
                   autovalidate: autoValidate,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 DecoratedFormField(
                   label: localization.phone,
                   controller: _phoneController,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 PasswordFormField(
                   controller: _passwordController,
                   autoValidate: autoValidate,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
               ]),
               Padding(

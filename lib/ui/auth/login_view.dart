@@ -166,6 +166,7 @@ class _LoginState extends State<LoginView> {
     });
 
     if (_emailLogin) {
+      TextInput.finishAutofillContext(shouldSave: true);
       viewModel.onSignUpPressed(
         context,
         completer,
@@ -230,6 +231,7 @@ class _LoginState extends State<LoginView> {
           secret: _isSelfHosted ? _secretController.text : '',
         );
       } else {
+        TextInput.finishAutofillContext(shouldSave: true);
         viewModel.onLoginPressed(
           context,
           completer,
