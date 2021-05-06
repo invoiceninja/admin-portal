@@ -85,8 +85,12 @@ class LoginVM {
   static LoginVM fromStore(Store<AppState> store) {
     void _handleLogin({BuildContext context, bool isSignUp = false}) {
       final layout = calculateLayout(context);
-
-      store.dispatch(UpdateUserPreferences(appLayout: layout));
+      final moduleLayout =
+          layout == AppLayout.desktop ? ModuleLayout.table : ModuleLayout.list;
+      store.dispatch(UpdateUserPreferences(
+        appLayout: layout,
+        moduleLayout: isSignUp ? moduleLayout : null,
+      ));
       AppBuilder.of(context).rebuild();
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
