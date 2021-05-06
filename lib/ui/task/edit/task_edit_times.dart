@@ -115,6 +115,8 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final company = viewModel.company;
+    final showEndDate = company.showTaskEndDate;
 
     return AlertDialog(
       content: SingleChildScrollView(
@@ -129,7 +131,8 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   : convertDateTimeToSqlDate(_taskTime.startDate.toLocal()),
               onSelected: (date) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithStartDate(date);
+                  _taskTime = _taskTime.copyWithStartDate(date,
+                      syncDates: !showEndDate);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _dateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
