@@ -149,7 +149,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     return dates;
   }
 
-  TaskTime copyWithStartDate(String date) {
+  TaskTime copyWithStartDate(String date, {bool syncDates = false}) {
     if ((date ?? '').isEmpty) {
       return this;
     }
@@ -166,7 +166,16 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         startDate?.toLocal()?.minute ?? now.minute,
         startDate?.toLocal()?.second ?? now.second,
       ).toUtc(),
-      endDate: endDate,
+      endDate: syncDates && endDate != null
+          ? DateTime(
+              dateTime.toLocal()?.year,
+              dateTime.toLocal()?.month,
+              dateTime.toLocal()?.day,
+              endDate.toLocal().hour,
+              endDate.toLocal().minute,
+              endDate.toLocal().second,
+            )
+          : endDate,
     );
   }
 
