@@ -295,13 +295,13 @@ Middleware<AppState> _createLoadState(
         completer.future.then((_) {
           if (calculateLayout(action.context) == AppLayout.mobile) {
             store.dispatch(UpdateUserPreferences(appLayout: AppLayout.mobile));
-            AppBuilder.of(action.context).rebuild();
             WidgetsBinding.instance.addPostFrameCallback((duration) {
               store.dispatch(ViewDashboard());
             });
           } else {
             store.dispatch(ViewMainScreen());
           }
+          AppBuilder.of(action.context).rebuild();
         }).catchError((Object error) {
           print('Error (app_middleware - refresh): $error');
           store.dispatch(UserLogout());
