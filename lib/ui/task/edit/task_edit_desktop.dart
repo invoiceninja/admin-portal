@@ -48,6 +48,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
   int _updatedAt = 0;
   int _startDateUpdatedAt = 0;
   int _startTimeUpdatedAt = 0;
+  int _endDateUpdatedAt = 0;
   int _endTimeUpdatedAt = 0;
   int _durationUpdateAt = 0;
 
@@ -346,13 +347,18 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           final taskTime =
                               taskTimes[index].copyWithEndDate(date);
                           viewModel.onUpdatedTaskTime(taskTime, index);
+                          setState(() {
+                            _endDateUpdatedAt =
+                                DateTime.now().millisecondsSinceEpoch;
+                          });
                         },
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TimePicker(
-                        key: ValueKey('__${_durationUpdateAt}_${index}__'),
+                        key: ValueKey(
+                            '__${_endDateUpdatedAt}_${_durationUpdateAt}_${index}__'),
                         selectedDateTime: taskTimes[index].endDate,
                         isEndTime: true,
                         onSelected: (timeOfDay) {
@@ -370,7 +376,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: DurationPicker(
                         key: ValueKey(
-                            '__${_startTimeUpdatedAt}_${_endTimeUpdatedAt}_${_startDateUpdatedAt}_${index}__'),
+                            '__${_startTimeUpdatedAt}_${_endTimeUpdatedAt}_${_startDateUpdatedAt}_${_endDateUpdatedAt}_${index}__'),
                         onSelected: (Duration duration) {
                           final taskTime =
                               taskTimes[index].copyWithDuration(duration);

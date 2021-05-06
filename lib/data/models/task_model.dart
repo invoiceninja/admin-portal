@@ -155,7 +155,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     }
 
     final dateTime = DateTime.parse(date);
-    final now = DateTime.now();
+    final now = DateTime.now().toUtc();
 
     return TaskTime(
       startDate: DateTime.utc(
@@ -176,7 +176,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     }
 
     final dateTime = DateTime.parse(date);
-    final now = DateTime.now();
+    final now = DateTime.now().toUtc();
 
     return TaskTime(
         startDate: startDate,
