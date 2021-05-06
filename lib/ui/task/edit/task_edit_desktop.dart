@@ -325,7 +325,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         selectedDateTime: taskTimes[index].startDate,
                         onSelected: (timeOfDay) {
                           final taskTime =
-                              taskTimes[index].copyWithStartDateTime(timeOfDay);
+                              taskTimes[index].copyWithStartTime(timeOfDay);
                           viewModel.onUpdatedTaskTime(taskTime, index);
                           setState(() {
                             _startTimeUpdatedAt =
@@ -365,7 +365,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         isEndTime: true,
                         onSelected: (timeOfDay) {
                           final taskTime =
-                              taskTimes[index].copyWithEndDateTime(timeOfDay);
+                              taskTimes[index].copyWithEndTime(timeOfDay);
                           viewModel.onUpdatedTaskTime(taskTime, index);
                           setState(() {
                             _endTimeUpdatedAt =

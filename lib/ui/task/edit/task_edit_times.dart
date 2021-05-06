@@ -141,7 +141,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               selectedDateTime: _taskTime.startDate,
               onSelected: (timeOfDay) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithStartDateTime(timeOfDay);
+                  _taskTime = _taskTime.copyWithStartTime(timeOfDay);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _startUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
@@ -154,7 +154,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               isEndTime: true,
               onSelected: (timeOfDay) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithEndDateTime(timeOfDay);
+                  _taskTime = _taskTime.copyWithEndTime(timeOfDay);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _endUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });

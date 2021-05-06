@@ -190,7 +190,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         ).toUtc());
   }
 
-  TaskTime copyWithStartDateTime(DateTime dateTime) {
+  TaskTime copyWithStartTime(DateTime dateTime) {
     final now = DateTime.now();
 
     return TaskTime(
@@ -206,14 +206,14 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     );
   }
 
-  TaskTime copyWithEndDateTime(DateTime dateTime) {
+  TaskTime copyWithEndTime(DateTime dateTime) {
     final now = DateTime.now();
     return TaskTime(
       startDate: startDate,
       endDate: DateTime(
-        endDate?.toLocal()?.year ?? now.year,
-        endDate?.toLocal()?.month ?? now.month,
-        endDate?.toLocal()?.day ?? now.day,
+        endDate?.toLocal()?.year ?? startDate?.toLocal()?.year ?? now.year,
+        endDate?.toLocal()?.month ?? startDate?.toLocal()?.month ?? now.month,
+        endDate?.toLocal()?.day ?? startDate?.toLocal()?.day ?? now.day,
         dateTime.toLocal().hour,
         dateTime.toLocal().minute,
         dateTime.toLocal().second,
