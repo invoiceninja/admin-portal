@@ -116,6 +116,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
 
     final company = state.company;
     final client = state.clientState.get(task.clientId);
+    final showEndDate = company.showTaskEndDate;
     final taskTimes = task.getTaskTimes(sort: false);
     if (!taskTimes.any((taskTime) => taskTime.isEmpty)) {
       taskTimes.add(TaskTime().rebuild((b) => b..startDate = null));
@@ -283,14 +284,14 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
             child: Table(
               key: ValueKey('__table_${_updatedAt}__'),
               columnWidths: {
-                4: FixedColumnWidth(kMinInteractiveDimension),
+                showEndDate ? 5 : 4: FixedColumnWidth(kMinInteractiveDimension),
               },
               children: [
                 TableRow(
                   children: [
                     TableHeader(localization.startDate),
                     TableHeader(localization.startTime),
-                    //TableHeader(localization.endDate),
+                    if (showEndDate) TableHeader(localization.endDate),
                     TableHeader(localization.endTime),
                     TableHeader(localization.duration),
                     TableHeader(''),
@@ -334,28 +335,27 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         },
                       ),
                     ),
-                    /*
-                    Padding(
-                      padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: DatePicker(
-                        key: ValueKey(
-                            '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}_${index}__'),
-                        selectedDate: taskTimes[index].endDate == null
-                            ? null
-                            : convertDateTimeToSqlDate(
-                                taskTimes[index].endDate.toLocal()),
-                        onSelected: (date) {
-                          final taskTime =
-                              taskTimes[index].copyWithEndDate(date);
-                          viewModel.onUpdatedTaskTime(taskTime, index);
-                          setState(() {
-                            _endDateUpdatedAt =
-                                DateTime.now().millisecondsSinceEpoch;
-                          });
-                        },
+                    if (showEndDate)
+                      Padding(
+                        padding: const EdgeInsets.only(right: kTableColumnGap),
+                        child: DatePicker(
+                          key: ValueKey(
+                              '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}_${index}__'),
+                          selectedDate: taskTimes[index].endDate == null
+                              ? null
+                              : convertDateTimeToSqlDate(
+                                  taskTimes[index].endDate.toLocal()),
+                          onSelected: (date) {
+                            final taskTime =
+                                taskTimes[index].copyWithEndDate(date);
+                            viewModel.onUpdatedTaskTime(taskTime, index);
+                            setState(() {
+                              _endDateUpdatedAt =
+                                  DateTime.now().millisecondsSinceEpoch;
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                    */
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TimePicker(
