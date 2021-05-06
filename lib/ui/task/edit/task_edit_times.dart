@@ -99,9 +99,10 @@ class TimeEditDetails extends StatefulWidget {
 
 class TimeEditDetailsState extends State<TimeEditDetails> {
   TaskTime _taskTime = TaskTime();
-  int _dateUpdatedAt = 0;
-  int _startUpdatedAt = 0;
-  int _endUpdatedAt = 0;
+  int _startDateUpdatedAt = 0;
+  int _startTimeUpdatedAt = 0;
+  int _endDateUpdatedAt = 0;
+  int _endTimeUpdatedAt = 0;
   int _durationUpdateAt = 0;
 
   @override
@@ -115,6 +116,8 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final company = viewModel.company;
+    final showEndDate = company.showTaskEndDate;
 
     return AlertDialog(
       content: SingleChildScrollView(
@@ -122,49 +125,64 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             DatePicker(
-              key: ValueKey('__date_${_startUpdatedAt}__'),
+              key: ValueKey('__date_${_startTimeUpdatedAt}__'),
               labelText: localization.date,
               selectedDate: _taskTime.startDate == null
                   ? null
                   : convertDateTimeToSqlDate(_taskTime.startDate.toLocal()),
               onSelected: (date) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithDate(date);
+                  _taskTime = _taskTime.copyWithStartDate(date,
+                      syncDates: !showEndDate);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
-                  _dateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                  _startDateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
               },
             ),
             TimePicker(
               key: ValueKey('__start_time_${_durationUpdateAt}__'),
               labelText: localization.startTime,
-              selectedDate: _taskTime.startDate,
               selectedDateTime: _taskTime.startDate,
               onSelected: (timeOfDay) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithStartDateTime(timeOfDay);
+                  _taskTime = _taskTime.copyWithStartTime(timeOfDay);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
-                  _startUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                  _startTimeUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
               },
             ),
             TimePicker(
-              key: ValueKey('__end_time_${_durationUpdateAt}__'),
+              key: ValueKey(
+                  '__end_time_${_endDateUpdatedAt}_${_durationUpdateAt}__'),
               labelText: localization.endTime,
-              selectedDate: _taskTime.startDate,
               selectedDateTime: _taskTime.endDate,
               isEndTime: true,
               onSelected: (timeOfDay) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithEndDateTime(timeOfDay);
+                  _taskTime = _taskTime.copyWithEndTime(timeOfDay);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
-                  _endUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                  _endTimeUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
               },
             ),
+            if (showEndDate)
+              DatePicker(
+                key: ValueKey(
+                    '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}__'),
+                selectedDate: _taskTime.startDate == null
+                    ? null
+                    : convertDateTimeToSqlDate(_taskTime.endDate.toLocal()),
+                onSelected: (date) {
+                  setState(() {
+                    _taskTime = _taskTime.copyWithEndDate(date);
+                    viewModel.onUpdatedTaskTime(_taskTime, widget.index);
+                    _endDateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
+                  });
+                },
+              ),
             DurationPicker(
               key: ValueKey(
-                  '__duration_${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}__'),
+                  '__duration_${_startTimeUpdatedAt}_${_endTimeUpdatedAt}_${_startDateUpdatedAt}_${_endDateUpdatedAt}_'),
               labelText: localization.duration,
               onSelected: (Duration duration) {
                 setState(() {

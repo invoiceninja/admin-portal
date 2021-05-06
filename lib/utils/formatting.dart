@@ -199,7 +199,7 @@ String formatNumber(
   final prefix = value < 0 ? '-' : '';
 
   if (formatNumberType == FormatNumberType.percent) {
-    return '$formatted%';
+    return '$prefix$formatted%';
   } else if ((showCurrencyCode ?? company.settings.showCurrencyCode ?? false) ||
       currency.symbol.isEmpty) {
     return '$prefix$formatted ${currency.code}';
@@ -283,7 +283,7 @@ String formatDuration(Duration duration, {bool showSeconds = true}) {
   }
 }
 
-DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay, DateTime dateTime) {
+DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay, [DateTime dateTime]) {
   dateTime ??= DateTime.now();
   return DateTime(dateTime.year, dateTime.month, dateTime.day,
           timeOfDay?.hour ?? 0, timeOfDay?.minute ?? 0)

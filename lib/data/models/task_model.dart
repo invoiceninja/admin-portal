@@ -149,7 +149,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     return dates;
   }
 
-  TaskTime copyWithDate(String date) {
+  TaskTime copyWithStartDate(String date, {bool syncDates = false}) {
     if ((date ?? '').isEmpty) {
       return this;
     }
@@ -158,37 +158,75 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     final now = DateTime.now();
 
     return TaskTime(
-        startDate: DateTime(
-          dateTime.year,
-          dateTime.month,
-          dateTime.day,
-          startDate?.toLocal()?.hour ?? now.hour,
-          startDate?.toLocal()?.minute ?? now.minute,
-          startDate?.toLocal()?.second ?? now.second,
-        ).toUtc(),
-        endDate: endDate == null
-            ? null
-            : DateTime.utc(
-                dateTime.toUtc().year,
-                dateTime.toUtc().month,
-                dateTime.toUtc().day,
-                endDate.hour,
-                endDate.minute,
-                endDate.second,
-              ));
+      startDate: DateTime(
+        dateTime.toLocal()?.year,
+        dateTime.toLocal()?.month,
+        dateTime.toLocal()?.day,
+        startDate?.toLocal()?.hour ?? now.hour,
+        startDate?.toLocal()?.minute ?? now.minute,
+        startDate?.toLocal()?.second ?? now.second,
+      ).toUtc(),
+      endDate: syncDates && endDate != null
+          ? DateTime(
+              dateTime.toLocal()?.year,
+              dateTime.toLocal()?.month,
+              dateTime.toLocal()?.day,
+              endDate.toLocal().hour,
+              endDate.toLocal().minute,
+              endDate.toLocal().second,
+            )
+          : endDate,
+    );
   }
 
-  TaskTime copyWithStartDateTime(DateTime dateTime) {
+  TaskTime copyWithEndDate(String date) {
+    if ((date ?? '').isEmpty) {
+      return this;
+    }
+
+    final dateTime = DateTime.parse(date);
+    final now = DateTime.now();
+
     return TaskTime(
-      startDate: dateTime,
+        startDate: startDate,
+        endDate: DateTime(
+          dateTime.toLocal()?.year,
+          dateTime.toLocal()?.month,
+          dateTime.toLocal()?.day,
+          endDate?.toLocal()?.hour ?? now.hour,
+          endDate?.toLocal()?.minute ?? now.minute,
+          endDate?.toLocal()?.second ?? now.second,
+        ).toUtc());
+  }
+
+  TaskTime copyWithStartTime(DateTime dateTime) {
+    final now = DateTime.now();
+
+    return TaskTime(
+      startDate: DateTime(
+        startDate?.toLocal()?.year ?? now.year,
+        startDate?.toLocal()?.month ?? now.month,
+        startDate?.toLocal()?.day ?? now.day,
+        dateTime.toLocal().hour,
+        dateTime.toLocal().minute,
+        dateTime.toLocal().second,
+      ).toUtc(),
       endDate: endDate,
     );
   }
 
-  TaskTime copyWithEndDateTime(DateTime dateTime) {
+  TaskTime copyWithEndTime(DateTime dateTime) {
+    final now = DateTime.now();
     return TaskTime(
       startDate: startDate,
-      endDate: dateTime,
+      endDate: DateTime(
+        endDate?.toLocal()?.year ?? startDate?.toLocal()?.year ?? now.year,
+        endDate?.toLocal()?.month ?? startDate?.toLocal()?.month ?? now.month,
+        endDate?.toLocal()?.day ?? startDate?.toLocal()?.day ?? now.day,
+        dateTime.toLocal().hour,
+        dateTime.toLocal().minute,
+        dateTime.toLocal().second,
+      ).toUtc(),
     );
   }
 

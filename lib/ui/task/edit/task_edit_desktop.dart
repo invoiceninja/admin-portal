@@ -46,9 +46,10 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
   List<TextEditingController> _controllers = [];
 
   int _updatedAt = 0;
-  int _dateUpdatedAt = 0;
-  int _startUpdatedAt = 0;
-  int _endUpdatedAt = 0;
+  int _startDateUpdatedAt = 0;
+  int _startTimeUpdatedAt = 0;
+  int _endDateUpdatedAt = 0;
+  int _endTimeUpdatedAt = 0;
   int _durationUpdateAt = 0;
 
   @override
@@ -115,6 +116,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
 
     final company = state.company;
     final client = state.clientState.get(task.clientId);
+    final showEndDate = company.showTaskEndDate;
     final taskTimes = task.getTaskTimes(sort: false);
     if (!taskTimes.any((taskTime) => taskTime.isEmpty)) {
       taskTimes.add(TaskTime().rebuild((b) => b..startDate = null));
@@ -282,13 +284,14 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
             child: Table(
               key: ValueKey('__table_${_updatedAt}__'),
               columnWidths: {
-                4: FixedColumnWidth(kMinInteractiveDimension),
+                showEndDate ? 5 : 4: FixedColumnWidth(kMinInteractiveDimension),
               },
               children: [
                 TableRow(
                   children: [
-                    TableHeader(localization.date),
+                    TableHeader(localization.startDate),
                     TableHeader(localization.startTime),
+                    if (showEndDate) TableHeader(localization.endDate),
                     TableHeader(localization.endTime),
                     TableHeader(localization.duration),
                     TableHeader(''),
@@ -300,16 +303,17 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: DatePicker(
                         key: ValueKey(
-                            '__${_startUpdatedAt}_${_durationUpdateAt}_${index}__'),
+                            '__${_startTimeUpdatedAt}_${_durationUpdateAt}_${index}__'),
                         selectedDate: taskTimes[index].startDate == null
                             ? null
                             : convertDateTimeToSqlDate(
                                 taskTimes[index].startDate.toLocal()),
                         onSelected: (date) {
-                          final taskTime = taskTimes[index].copyWithDate(date);
+                          final taskTime = taskTimes[index]
+                              .copyWithStartDate(date, syncDates: !showEndDate);
                           viewModel.onUpdatedTaskTime(taskTime, index);
                           setState(() {
-                            _dateUpdatedAt =
+                            _startDateUpdatedAt =
                                 DateTime.now().millisecondsSinceEpoch;
                           });
                         },
@@ -319,32 +323,52 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TimePicker(
                         key: ValueKey('__${_durationUpdateAt}_${index}__'),
-                        selectedDate: taskTimes[index].startDate,
                         selectedDateTime: taskTimes[index].startDate,
                         onSelected: (timeOfDay) {
                           final taskTime =
-                              taskTimes[index].copyWithStartDateTime(timeOfDay);
+                              taskTimes[index].copyWithStartTime(timeOfDay);
                           viewModel.onUpdatedTaskTime(taskTime, index);
                           setState(() {
-                            _startUpdatedAt =
+                            _startTimeUpdatedAt =
                                 DateTime.now().millisecondsSinceEpoch;
                           });
                         },
                       ),
                     ),
+                    if (showEndDate)
+                      Padding(
+                        padding: const EdgeInsets.only(right: kTableColumnGap),
+                        child: DatePicker(
+                          key: ValueKey(
+                              '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}_${index}__'),
+                          selectedDate: taskTimes[index].endDate == null
+                              ? null
+                              : convertDateTimeToSqlDate(
+                                  taskTimes[index].endDate.toLocal()),
+                          onSelected: (date) {
+                            final taskTime =
+                                taskTimes[index].copyWithEndDate(date);
+                            viewModel.onUpdatedTaskTime(taskTime, index);
+                            setState(() {
+                              _endDateUpdatedAt =
+                                  DateTime.now().millisecondsSinceEpoch;
+                            });
+                          },
+                        ),
+                      ),
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TimePicker(
-                        key: ValueKey('__${_durationUpdateAt}_${index}__'),
-                        selectedDate: taskTimes[index].startDate,
+                        key: ValueKey(
+                            '__${_endDateUpdatedAt}_${_durationUpdateAt}_${index}__'),
                         selectedDateTime: taskTimes[index].endDate,
                         isEndTime: true,
                         onSelected: (timeOfDay) {
                           final taskTime =
-                              taskTimes[index].copyWithEndDateTime(timeOfDay);
+                              taskTimes[index].copyWithEndTime(timeOfDay);
                           viewModel.onUpdatedTaskTime(taskTime, index);
                           setState(() {
-                            _endUpdatedAt =
+                            _endTimeUpdatedAt =
                                 DateTime.now().millisecondsSinceEpoch;
                           });
                         },
@@ -354,7 +378,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: DurationPicker(
                         key: ValueKey(
-                            '__${_startUpdatedAt}_${_endUpdatedAt}_${_dateUpdatedAt}_${index}__'),
+                            '__${_startTimeUpdatedAt}_${_endTimeUpdatedAt}_${_startDateUpdatedAt}_${_endDateUpdatedAt}_${index}__'),
                         onSelected: (Duration duration) {
                           final taskTime =
                               taskTimes[index].copyWithDuration(duration);

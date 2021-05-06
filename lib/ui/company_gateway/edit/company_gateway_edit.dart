@@ -130,14 +130,18 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         );
                       },
                     ),
-                  if (companyGateway.gatewayId == kGatewayStripeConnect)
+                  if ([
+                    kGatewayStripeConnect,
+                    kGatewayWePay,
+                  ].contains(companyGateway.gatewayId))
                     AppButton(
-                      label: localization.stripeConnect.toUpperCase(),
+                      label: localization.gatewaySetup.toUpperCase(),
                       onPressed: viewModel.state.isSaving
                           ? null
                           : () {
                               viewModel.onCancelPressed(context);
-                              viewModel.onStripeConnectPressed();
+                              viewModel.onGatewaySignUpPressed(
+                                  companyGateway.gatewayId);
                             },
                     )
                   else

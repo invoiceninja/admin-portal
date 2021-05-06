@@ -89,6 +89,7 @@ abstract class CompanyEntity extends Object
       markExpensesInvoiceable: false,
       markExpensesPaid: false,
       showTasksTable: false,
+      showTaskEndDate: false,
       invoiceTaskDocuments: false,
       isDisabled: false,
       calculateExpenseTaxByAmount: false,
@@ -322,6 +323,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'show_tasks_table')
   bool get showTasksTable;
 
+  @BuiltValueField(wireName: 'show_task_end_date')
+  bool get showTaskEndDate;
+
   SettingsEntity get settings;
 
   @BuiltValueField(wireName: 'enabled_modules')
@@ -529,6 +533,7 @@ abstract class CompanyEntity extends Object
     ..passwordTimeout = 30 * 60 * 1000
     ..oauthPasswordRequired = false
     ..invoiceTaskDatelog = true
+    ..showTaskEndDate = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>());
 

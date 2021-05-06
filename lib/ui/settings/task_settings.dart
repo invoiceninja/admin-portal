@@ -87,24 +87,36 @@ class _TaskSettingsState extends State<TaskSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          FormCard(
-            children: <Widget>[
-              DecoratedFormField(
-                controller: _taskRateController,
-                label: localization.defaultTaskRate,
-                onSavePressed: viewModel.onSavePressed,
-                isMoney: true,
+          FormCard(children: <Widget>[
+            DecoratedFormField(
+              controller: _taskRateController,
+              label: localization.defaultTaskRate,
+              onSavePressed: viewModel.onSavePressed,
+              isMoney: true,
+            ),
+            if (!viewModel.state.settingsUIState.isFiltered) ...[
+              SizedBox(height: 32),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.autoStartTasks),
+                value: company.autoStartTasks,
+                subtitle: Text(localization.autoStartTasksHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..autoStartTasks = value)),
               ),
-              if (!viewModel.state.settingsUIState.isFiltered) ...[
-                SizedBox(height: 32),
-                SwitchListTile(
-                  activeColor: Theme.of(context).accentColor,
-                  title: Text(localization.autoStartTasks),
-                  value: company.autoStartTasks,
-                  subtitle: Text(localization.autoStartTasksHelp),
-                  onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..autoStartTasks = value)),
-                ),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.showTaskEndDate),
+                value: company.showTaskEndDate,
+                subtitle: Text(localization.showTaskEndDateHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..showTaskEndDate = value)),
+              ),
+            ]
+          ]),
+          if (!viewModel.state.settingsUIState.isFiltered)
+            FormCard(
+              children: <Widget>[
                 SwitchListTile(
                   activeColor: Theme.of(context).accentColor,
                   title: Text(localization.showTasksTable),
@@ -138,8 +150,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       company.rebuild((b) => b..invoiceTaskDocuments = value)),
                 ),
               ],
-            ],
-          ),
+            ),
           if (!viewModel.state.settingsUIState.isFiltered)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

@@ -54,7 +54,7 @@ class CompanyGatewayEditVM {
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.isLoading,
-    @required this.onStripeConnectPressed,
+    @required this.onGatewaySignUpPressed,
   });
 
   factory CompanyGatewayEditVM.fromStore(Store<AppState> store) {
@@ -115,7 +115,7 @@ class CompanyGatewayEditVM {
             });
           });
         },
-        onStripeConnectPressed: () async {
+        onGatewaySignUpPressed: (gatewayId) async {
           final webClient = WebClient();
           final credentials = state.credentials;
           final url = '${credentials.url}/one_time_token';
@@ -129,8 +129,16 @@ class CompanyGatewayEditVM {
                   }))
               .then((dynamic response) {
             store.dispatch(StopSaving());
-            launch(
-                '${cleanApiUrl(credentials.url)}/stripe_connect/${response['hash']}');
+            switch (gatewayId) {
+              case kGatewayStripeConnect:
+                launch(
+                    '${cleanApiUrl(credentials.url)}/stripe_connect/${response['hash']}');
+                break;
+              case kGatewayWePay:
+                launch(
+                    '${cleanApiUrl(credentials.url)}/wepay/signup/${response['hash']}');
+                break;
+            }
           }).catchError((dynamic error) {
             store.dispatch(StopSaving());
             showErrorDialog(
@@ -148,5 +156,5 @@ class CompanyGatewayEditVM {
   final bool isSaving;
   final CompanyGatewayEntity origCompanyGateway;
   final AppState state;
-  final Function onStripeConnectPressed;
+  final Function(String) onGatewaySignUpPressed;
 }

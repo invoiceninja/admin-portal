@@ -21,6 +21,10 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..cost = company.settings.enableInclusiveTaxes
         ? expense.convertedAmount
         : expense.convertedNetAmount
+    ..customValue1 = expense.customValue1
+    ..customValue2 = expense.customValue2
+    ..customValue3 = expense.customValue3
+    ..customValue4 = expense.customValue4
     ..taxName1 = company.numberOfItemTaxRates >= 1 ? expense.taxName1 : ''
     ..taxRate1 =
         company.numberOfItemTaxRates >= 1 ? expense.calculatetaxRate1 : 0
