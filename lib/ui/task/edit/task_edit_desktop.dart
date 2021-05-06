@@ -283,14 +283,14 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
             child: Table(
               key: ValueKey('__table_${_updatedAt}__'),
               columnWidths: {
-                5: FixedColumnWidth(kMinInteractiveDimension),
+                4: FixedColumnWidth(kMinInteractiveDimension),
               },
               children: [
                 TableRow(
                   children: [
                     TableHeader(localization.startDate),
                     TableHeader(localization.startTime),
-                    TableHeader(localization.endDate),
+                    //TableHeader(localization.endDate),
                     TableHeader(localization.endTime),
                     TableHeader(localization.duration),
                     TableHeader(''),
@@ -334,6 +334,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         },
                       ),
                     ),
+                    /*
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: DatePicker(
@@ -354,6 +355,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         },
                       ),
                     ),
+                    */
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TimePicker(
