@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'show_task_end_date': 'Show Task End Date',
+      'show_task_end_date_help': 'Enable specifying the task end date',
       'gateway_setup': 'Gateway Setup',
       'preview_sidebar': 'Preview Sidebar',
       'number_years_active': 'Number Years Active',
@@ -60327,6 +60329,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['gateway_setup'] ??
       _localizedValues['en']['gateway_setup'];
 
+  String get showTaskEndDate =>
+      _localizedValues[localeCode]['show_task_end_date'] ??
+      _localizedValues['en']['show_task_end_date'];
+
+  String get showTaskEndDateHelp =>
+      _localizedValues[localeCode]['show_task_end_date_help'] ??
+      _localizedValues['en']['show_task_end_date_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
