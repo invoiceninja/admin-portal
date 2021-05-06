@@ -283,7 +283,7 @@ String formatDuration(Duration duration, {bool showSeconds = true}) {
   }
 }
 
-DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay, DateTime dateTime) {
+DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay, [DateTime dateTime]) {
   dateTime ??= DateTime.now();
   return DateTime(dateTime.year, dateTime.month, dateTime.day,
           timeOfDay?.hour ?? 0, timeOfDay?.minute ?? 0)

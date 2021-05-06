@@ -129,7 +129,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   : convertDateTimeToSqlDate(_taskTime.startDate.toLocal()),
               onSelected: (date) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithDate(date);
+                  _taskTime = _taskTime.copyWithStartDate(date);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _dateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
@@ -138,7 +138,6 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             TimePicker(
               key: ValueKey('__start_time_${_durationUpdateAt}__'),
               labelText: localization.startTime,
-              selectedDate: _taskTime.startDate,
               selectedDateTime: _taskTime.startDate,
               onSelected: (timeOfDay) {
                 setState(() {
@@ -151,7 +150,6 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             TimePicker(
               key: ValueKey('__end_time_${_durationUpdateAt}__'),
               labelText: localization.endTime,
-              selectedDate: _taskTime.startDate,
               selectedDateTime: _taskTime.endDate,
               isEndTime: true,
               onSelected: (timeOfDay) {

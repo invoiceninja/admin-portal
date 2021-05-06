@@ -149,7 +149,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     return dates;
   }
 
-  TaskTime copyWithDate(String date) {
+  TaskTime copyWithStartDate(String date) {
     if ((date ?? '').isEmpty) {
       return this;
     }
@@ -158,24 +158,36 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     final now = DateTime.now();
 
     return TaskTime(
-        startDate: DateTime(
+      startDate: DateTime.utc(
+        dateTime.year,
+        dateTime.month,
+        dateTime.day,
+        startDate?.hour ?? now.hour,
+        startDate?.minute ?? now.minute,
+        startDate?.second ?? now.second,
+      ),
+      endDate: endDate,
+    );
+  }
+
+  TaskTime copyWithEndDate(String date) {
+    if ((date ?? '').isEmpty) {
+      return this;
+    }
+
+    final dateTime = DateTime.parse(date);
+    final now = DateTime.now();
+
+    return TaskTime(
+        startDate: startDate,
+        endDate: DateTime.utc(
           dateTime.year,
           dateTime.month,
           dateTime.day,
-          startDate?.toLocal()?.hour ?? now.hour,
-          startDate?.toLocal()?.minute ?? now.minute,
-          startDate?.toLocal()?.second ?? now.second,
-        ).toUtc(),
-        endDate: endDate == null
-            ? null
-            : DateTime.utc(
-                dateTime.toUtc().year,
-                dateTime.toUtc().month,
-                dateTime.toUtc().day,
-                endDate.hour,
-                endDate.minute,
-                endDate.second,
-              ));
+          endDate?.hour ?? now.hour,
+          endDate?.minute ?? now.minute,
+          endDate?.second ?? now.second,
+        ));
   }
 
   TaskTime copyWithStartDateTime(DateTime dateTime) {
