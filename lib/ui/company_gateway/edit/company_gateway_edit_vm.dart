@@ -132,7 +132,7 @@ class CompanyGatewayEditVM {
             switch (gatewayId) {
               case kGatewayStripeConnect:
                 launch(
-                    '${cleanApiUrl(credentials.url)}/stripe_connect/${response['hash']}');
+                    '${cleanApiUrl(credentials.url)}/stripe/signup/${response['hash']}');
                 break;
               case kGatewayWePay:
                 launch(
