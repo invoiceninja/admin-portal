@@ -710,7 +710,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   AppEnvironment get environment {
-    if (isDemo) {
+    if (isTesting) {
+      return AppEnvironment.testing;
+    } else if (isDemo) {
       return AppEnvironment.demo;
     } else if (isStaging) {
       return AppEnvironment.staging;
