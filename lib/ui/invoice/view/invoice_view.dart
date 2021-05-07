@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_contacts.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_history.dart';
@@ -57,7 +58,7 @@ class _InvoiceViewState extends State<InvoiceView>
 
     _controller = TabController(
         vsync: this,
-        length: invoice.isRecurring ? 5 : 4,
+        length: invoice.isRecurring ? 6 : 5,
         initialIndex: widget.isFilter ? 0 : tabIndex);
     _controller.addListener(_onTabChanged);
   }
@@ -127,24 +128,15 @@ class _InvoiceViewState extends State<InvoiceView>
         controller: _controller,
         isScrollable: true,
         tabs: [
+          Tab(text: localization.overview),
+          if (invoice.isRecurring) Tab(text: localization.schedule),
+          Tab(text: localization.contacts),
           Tab(
-            text: localization.overview,
-          ),
-          if (invoice.isRecurring)
-            Tab(
-              text: localization.schedule,
-            ),
-          Tab(
-            text: localization.contacts,
-          ),
-          Tab(
-            text: documents.isEmpty
-                ? localization.documents
-                : '${localization.documents} (${documents.length})',
-          ),
-          Tab(
-            text: localization.history,
-          ),
+              text: documents.isEmpty
+                  ? localization.documents
+                  : '${localization.documents} (${documents.length})'),
+          Tab(text: localization.history),
+          Tab(text: localization.activity),
         ],
       ),
       body: Builder(
@@ -190,6 +182,12 @@ class _InvoiceViewState extends State<InvoiceView>
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: InvoiceViewHistory(
+                            viewModel: viewModel,
+                            key: ValueKey(viewModel.invoice.id)),
+                      ),
+                      RefreshIndicator(
+                        onRefresh: () => viewModel.onRefreshed(context),
+                        child: InvoiceViewActivity(
                             viewModel: viewModel,
                             key: ValueKey(viewModel.invoice.id)),
                       ),

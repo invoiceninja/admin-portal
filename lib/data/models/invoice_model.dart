@@ -184,6 +184,7 @@ abstract class InvoiceEntity extends Object
       history: BuiltList<InvoiceHistoryEntity>(),
       usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
       documents: BuiltList<DocumentEntity>(),
+      activities: BuiltList<ActivityEntity>(),
       invitations: client == null
           ? BuiltList<InvitationEntity>()
           : BuiltList(client.contacts
@@ -462,6 +463,8 @@ abstract class InvoiceEntity extends Object
   BuiltList<InvitationEntity> get invitations;
 
   BuiltList<DocumentEntity> get documents;
+
+  BuiltList<ActivityEntity> get activities;
 
   @nullable
   BuiltList<InvoiceHistoryEntity> get history;
@@ -1076,6 +1079,7 @@ abstract class InvoiceEntity extends Object
 
   // ignore: unused_element
   static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
+    ..activities.replace(BuiltList<ActivityEntity>())
     ..paidToDate = 0
     ..subscriptionId = '';
 
