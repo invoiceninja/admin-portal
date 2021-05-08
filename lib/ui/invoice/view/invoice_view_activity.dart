@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 class InvoiceViewActivity extends StatefulWidget {
   const InvoiceViewActivity({Key key, this.viewModel}) : super(key: key);
 
-  final InvoiceViewVM viewModel;
+  final EntityViewVM viewModel;
 
   @override
   _InvoiceViewActivityState createState() => _InvoiceViewActivityState();

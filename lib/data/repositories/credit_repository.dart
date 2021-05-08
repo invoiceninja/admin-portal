@@ -20,7 +20,7 @@ class CreditRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/credits/$entityId?include=history',
+        '${credentials.url}/credits/$entityId?include=history,activities',
         credentials.token);
 
     final InvoiceItemResponse creditResponse = await compute<dynamic, dynamic>(
@@ -62,10 +62,12 @@ class CreditRepository {
 
     if (credit.isNew) {
       response = await webClient.post(
-          credentials.url + '/credits?include=history', credentials.token,
+          credentials.url + '/credits?include=history,activities',
+          credentials.token,
           data: json.encode(data));
     } else {
-      final url = '${credentials.url}/credits/${credit.id}?include=history';
+      final url =
+          '${credentials.url}/credits/${credit.id}?include=history,activities';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
