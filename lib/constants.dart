@@ -59,6 +59,7 @@ const String kGitHubLangUrl =
 enum AppEnvironment {
   hosted,
   selfhosted,
+  testing,
   demo,
   staging,
   develop,

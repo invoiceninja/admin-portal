@@ -18,7 +18,8 @@ class RecurringInvoiceRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/recurring_invoices/$entityId', credentials.token);
+        '${credentials.url}/recurring_invoices/$entityId?include=activities',
+        credentials.token);
 
     final InvoiceItemResponse recurringInvoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
@@ -57,11 +58,12 @@ class RecurringInvoiceRepository {
 
     if (recurringInvoice.isNew) {
       response = await webClient.post(
-          credentials.url + '/recurring_invoices', credentials.token,
+          credentials.url + '/recurring_invoices?include=activities',
+          credentials.token,
           data: json.encode(data));
     } else {
       final url =
-          '${credentials.url}/recurring_invoices/${recurringInvoice.id}';
+          '${credentials.url}/recurring_invoices/${recurringInvoice.id}?include=activities';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

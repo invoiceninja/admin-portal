@@ -160,15 +160,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             if (hasTax2) TableHeader(localization.tax),
             if (hasTax3) TableHeader(localization.tax),
             TableHeader(
-                widget.isTasks ? localization.rate : localization.unitCost,
-                isNumeric: true),
+                widget.isTasks ? localization.rate : localization.unitCost),
             if (company.enableProductQuantity || widget.isTasks)
               TableHeader(
-                  widget.isTasks ? localization.hours : localization.quantity,
-                  isNumeric: true),
+                  widget.isTasks ? localization.hours : localization.quantity),
             if (company.enableProductDiscount)
-              TableHeader(localization.discount, isNumeric: true),
-            TableHeader(localization.lineTotal, isNumeric: true),
+              TableHeader(localization.discount),
+            TableHeader(localization.lineTotal),
             TableHeader(''),
           ]),
           for (var index = 0; index < lineItems.length; index++)

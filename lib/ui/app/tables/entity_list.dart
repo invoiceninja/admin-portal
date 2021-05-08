@@ -347,7 +347,7 @@ class _EntityListState extends State<EntityList> {
                         ),
                       if (isDesktop(context)) ...[
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: Text(isList
                               ? '($countSelected)'
                               : localization.countSelected

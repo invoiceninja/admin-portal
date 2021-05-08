@@ -88,8 +88,12 @@ class DashboardVM {
       currencyMap: state.staticState.currencyMap,
       isLoading: state.isLoading,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityTypeChanged: (entityType) =>
-          store.dispatch(UpdateDashboardEntityType(entityType: entityType)),
+      onEntityTypeChanged: (entityType) {
+        if (entityType == null) {
+          return;
+        }
+        store.dispatch(UpdateDashboardEntityType(entityType: entityType));
+      },
       onSettingsChanged: (DashboardSettings settings) =>
           store.dispatch(UpdateDashboardSettings(settings: settings)),
       onTaxesChanged: (value) =>

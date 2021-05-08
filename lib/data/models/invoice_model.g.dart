@@ -263,6 +263,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       serializers.serialize(object.documents,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DocumentEntity)])),
+      'activities',
+      serializers.serialize(object.activities,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ActivityEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -650,6 +654,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DocumentEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'activities':
+          result.activities.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ActivityEntity)]))
               as BuiltList<Object>);
           break;
         case 'history':
@@ -1486,6 +1496,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
+  final BuiltList<ActivityEntity> activities;
+  @override
   final BuiltList<InvoiceHistoryEntity> history;
   @override
   final int loadedAt;
@@ -1570,6 +1582,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.lineItems,
       this.invitations,
       this.documents,
+      this.activities,
       this.history,
       this.loadedAt,
       this.isChanged,
@@ -1717,6 +1730,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (documents == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'documents');
     }
+    if (activities == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'activities');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'createdAt');
     }
@@ -1800,6 +1816,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         lineItems == other.lineItems &&
         invitations == other.invitations &&
         documents == other.documents &&
+        activities == other.activities &&
         history == other.history &&
         loadedAt == other.loadedAt &&
         isChanged == other.isChanged &&
@@ -1834,15 +1851,15 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), autoBillEnabled.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode),
-                                                                                dueDateDays.hashCode),
-                                                                            invoiceId.hashCode),
-                                                                        recurringId.hashCode),
-                                                                    filename.hashCode),
-                                                                recurringDates.hashCode),
-                                                            lineItems.hashCode),
-                                                        invitations.hashCode),
-                                                    documents.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), autoBillEnabled.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode),
+                                                                                invoiceId.hashCode),
+                                                                            recurringId.hashCode),
+                                                                        filename.hashCode),
+                                                                    recurringDates.hashCode),
+                                                                lineItems.hashCode),
+                                                            invitations.hashCode),
+                                                        documents.hashCode),
+                                                    activities.hashCode),
                                                 history.hashCode),
                                             loadedAt.hashCode),
                                         isChanged.hashCode),
@@ -1917,6 +1934,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('lineItems', lineItems)
           ..add('invitations', invitations)
           ..add('documents', documents)
+          ..add('activities', activities)
           ..add('history', history)
           ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
@@ -2190,6 +2208,12 @@ class InvoiceEntityBuilder
   set documents(ListBuilder<DocumentEntity> documents) =>
       _$this._documents = documents;
 
+  ListBuilder<ActivityEntity> _activities;
+  ListBuilder<ActivityEntity> get activities =>
+      _$this._activities ??= new ListBuilder<ActivityEntity>();
+  set activities(ListBuilder<ActivityEntity> activities) =>
+      _$this._activities = activities;
+
   ListBuilder<InvoiceHistoryEntity> _history;
   ListBuilder<InvoiceHistoryEntity> get history =>
       _$this._history ??= new ListBuilder<InvoiceHistoryEntity>();
@@ -2302,6 +2326,7 @@ class InvoiceEntityBuilder
       _lineItems = _$v.lineItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
       _documents = _$v.documents?.toBuilder();
+      _activities = _$v.activities?.toBuilder();
       _history = _$v.history?.toBuilder();
       _loadedAt = _$v.loadedAt;
       _isChanged = _$v.isChanged;
@@ -2395,6 +2420,7 @@ class InvoiceEntityBuilder
               lineItems: lineItems.build(),
               invitations: invitations.build(),
               documents: documents.build(),
+              activities: activities.build(),
               history: _history?.build(),
               loadedAt: loadedAt,
               isChanged: isChanged,
@@ -2417,6 +2443,8 @@ class InvoiceEntityBuilder
         invitations.build();
         _$failedField = 'documents';
         documents.build();
+        _$failedField = 'activities';
+        activities.build();
         _$failedField = 'history';
         _history?.build();
       } catch (e) {

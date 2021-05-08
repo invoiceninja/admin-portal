@@ -145,7 +145,7 @@ class EntityTopFilter extends StatelessWidget {
                             return PopupMenuButton<EntityType>(
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
+                                    const EdgeInsets.symmetric(horizontal: 4),
                                 child: Row(
                                   children: [
                                     Text(
