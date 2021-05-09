@@ -150,7 +150,7 @@ class KanbanViewState extends State<KanbanView> {
           status.statusOrder == filteredStatusIds.indexOf(status.id);
 
       return BoardList(
-        draggable: status.isOld && hasCorectOrder,
+        draggable: status.isOld,
         backgroundColor: color,
         headerBackgroundColor: color,
         onDropList: (endIndex, startIndex) {

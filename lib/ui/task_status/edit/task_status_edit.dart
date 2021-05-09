@@ -106,6 +106,7 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
                       validator: (val) => val.isEmpty || val.trim().isEmpty
                           ? localization.pleaseEnterAName
                           : null,
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                     FormColorPicker(
                       initialValue: taskStatus.color,
