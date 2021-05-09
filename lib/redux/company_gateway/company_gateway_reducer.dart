@@ -35,6 +35,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveCompanyGatewaySuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteCompanyGatewaySuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.companyGateway
           ? action.entityId

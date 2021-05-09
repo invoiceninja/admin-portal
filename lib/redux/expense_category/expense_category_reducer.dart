@@ -35,6 +35,10 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveExpenseCategoriesSuccess>(
+      (completer, action) => ''),
+  TypedReducer<String, DeleteExpenseCategoriesSuccess>(
+      (completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.expenseCategory
           ? action.entityId

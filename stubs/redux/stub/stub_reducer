@@ -41,6 +41,8 @@ final tabIndexReducer = combineReducers<int>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveStubsSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteStubsSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.stub
           ? action.entityId

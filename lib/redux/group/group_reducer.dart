@@ -27,6 +27,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveGroupSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteGroupSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.group ? action.entityId : selectedId),
   TypedReducer<String, ViewGroup>(

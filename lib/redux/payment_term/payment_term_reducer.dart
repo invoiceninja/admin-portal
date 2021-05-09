@@ -29,6 +29,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchivePaymentTermsSuccess>((completer, action) => ''),
+  TypedReducer<String, DeletePaymentTermsSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.paymentTerm
           ? action.entityId

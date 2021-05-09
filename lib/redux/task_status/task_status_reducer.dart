@@ -30,6 +30,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveTaskStatusesSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteTaskStatusesSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.taskStatus
           ? action.entityId
