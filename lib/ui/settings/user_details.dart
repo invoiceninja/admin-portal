@@ -219,16 +219,20 @@ class _UserDetailsState extends State<UserDetails>
                               .toUpperCase()),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
-                          onPressed: state.settingsUIState.isChanged
-                              ? null
-                              : () {
-                                  if (state.user.isConnectedToGoogle) {
-                                    viewModel
-                                        .onDisconnectGooglePressed(context);
-                                  } else {
-                                    viewModel.onConnectGooglePressed(context);
-                                  }
-                                },
+                          onPressed: () {
+                            if (state.settingsUIState.isChanged) {
+                              showMessageDialog(
+                                  context: context,
+                                  message: localization.errorUnsavedChanges);
+                              return;
+                            }
+
+                            if (state.user.isConnectedToGoogle) {
+                              viewModel.onDisconnectGooglePressed(context);
+                            } else {
+                              viewModel.onConnectGooglePressed(context);
+                            }
+                          },
                         ),
                       ),
                       SizedBox(width: kTableColumnGap),
@@ -240,10 +244,17 @@ class _UserDetailsState extends State<UserDetails>
                               .toUpperCase()),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
-                          onPressed: state.settingsUIState.isChanged ||
-                                  !state.user.isConnectedToGoogle
+                          onPressed: !state.user.isConnectedToGoogle
                               ? null
                               : () async {
+                                  if (state.settingsUIState.isChanged) {
+                                    showMessageDialog(
+                                        context: context,
+                                        message:
+                                            localization.errorUnsavedChanges);
+                                    return;
+                                  }
+
                                   if (state.user.isConnectedToGmail) {
                                     viewModel.onDisconnectGmailPressed(context);
                                   } else {
@@ -262,29 +273,33 @@ class _UserDetailsState extends State<UserDetails>
                             .toUpperCase()),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed: state.settingsUIState.isChanged
-                            ? null
-                            : () {
-                                if (state.user.isTwoFactorEnabled) {
-                                  viewModel.onDisableTwoFactorPressed(context);
-                                } else {
-                                  if (state.user.phone.isEmpty ||
-                                      user.phone.isEmpty) {
-                                    showMessageDialog(
-                                        context: context,
-                                        message: localization
-                                            .enterPhoneToEnableTwoFactor);
-                                    return;
-                                  }
+                        onPressed: () {
+                          if (state.settingsUIState.isChanged) {
+                            showMessageDialog(
+                                context: context,
+                                message: localization.errorUnsavedChanges);
+                            return;
+                          }
 
-                                  showDialog<void>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        _EnableTwoFactor(
-                                            state: viewModel.state),
-                                  );
-                                }
-                              },
+                          if (state.user.isTwoFactorEnabled) {
+                            viewModel.onDisableTwoFactorPressed(context);
+                          } else {
+                            if (state.user.phone.isEmpty ||
+                                user.phone.isEmpty) {
+                              showMessageDialog(
+                                  context: context,
+                                  message:
+                                      localization.enterPhoneToEnableTwoFactor);
+                              return;
+                            }
+
+                            showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  _EnableTwoFactor(state: viewModel.state),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],
