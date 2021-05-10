@@ -52,10 +52,10 @@ class _$HealthCheckResponseSerializer
           specifiedType: const FullType(bool)),
       'mail_mailer',
       serializers.serialize(object.emailDriver,
-          specifiedType: const FullType(bool)),
+          specifiedType: const FullType(String)),
       'jobs_pending',
       serializers.serialize(object.pendingJobs,
-          specifiedType: const FullType(bool)),
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -108,11 +108,11 @@ class _$HealthCheckResponseSerializer
           break;
         case 'mail_mailer':
           result.emailDriver = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'jobs_pending':
           result.pendingJobs = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -205,9 +205,9 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   @override
   final bool execEnabled;
   @override
-  final bool emailDriver;
+  final String emailDriver;
   @override
-  final bool pendingJobs;
+  final int pendingJobs;
 
   factory _$HealthCheckResponse(
           [void Function(HealthCheckResponseBuilder) updates]) =>
@@ -362,13 +362,13 @@ class HealthCheckResponseBuilder
   bool get execEnabled => _$this._execEnabled;
   set execEnabled(bool execEnabled) => _$this._execEnabled = execEnabled;
 
-  bool _emailDriver;
-  bool get emailDriver => _$this._emailDriver;
-  set emailDriver(bool emailDriver) => _$this._emailDriver = emailDriver;
+  String _emailDriver;
+  String get emailDriver => _$this._emailDriver;
+  set emailDriver(String emailDriver) => _$this._emailDriver = emailDriver;
 
-  bool _pendingJobs;
-  bool get pendingJobs => _$this._pendingJobs;
-  set pendingJobs(bool pendingJobs) => _$this._pendingJobs = pendingJobs;
+  int _pendingJobs;
+  int get pendingJobs => _$this._pendingJobs;
+  set pendingJobs(int pendingJobs) => _$this._pendingJobs = pendingJobs;
 
   HealthCheckResponseBuilder();
 
