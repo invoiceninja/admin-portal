@@ -40,10 +40,10 @@ abstract class HealthCheckResponse
   bool get execEnabled;
 
   @BuiltValueField(wireName: 'mail_mailer')
-  bool get emailDriver;
+  String get emailDriver;
 
   @BuiltValueField(wireName: 'jobs_pending')
-  bool get pendingJobs;
+  int get pendingJobs;
 
   static Serializer<HealthCheckResponse> get serializer =>
       _$healthCheckResponseSerializer;

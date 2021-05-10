@@ -118,22 +118,30 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isValid: false,
                     subtitle: 'Not enabled',
                   ),
-                if (!_response.openBasedir)
-                  _HealthListTile(
-                    title: 'Open Basedir',
-                    isValid: false,
-                    subtitle: 'Not enabled',
-                  ),
                 if (!_response.envWritable)
                   _HealthListTile(
                     title: '.env Writable',
                     isValid: false,
                   ),
-                if (!_response.cacheEnabled && !state.account.isDocker)
+                if (_response.pendingJobs > 0)
                   _HealthListTile(
-                    title: 'Config not cached',
-                    subtitle: 'Run php artisan optimize to improve performance',
+                    title: '.env Writable',
+                    isValid: false,
                   ),
+                if (!state.account.isDocker) ...[
+                  if (!_response.openBasedir)
+                    _HealthListTile(
+                      title: 'Open Basedir',
+                      isValid: false,
+                      subtitle: 'Not enabled',
+                    ),
+                  if (!_response.cacheEnabled)
+                    _HealthListTile(
+                      title: 'Config not cached',
+                      subtitle:
+                          'Run php artisan optimize to improve performance',
+                    ),
+                ],
                 if (_response.phantomEnabled)
                   _HealthListTile(
                     title: 'Using PhantomJS',
