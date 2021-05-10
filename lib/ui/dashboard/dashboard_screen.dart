@@ -76,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         ScrollController(initialScrollOffset: index * kDashboardPanelHeight)
           ..addListener(onScrollListener);
 
-    if (kReleaseMode && (state.company.settings.name ?? '').isEmpty) {
+    if ((state.company.settings.name ?? '').isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         showDialog<void>(
             context: context,

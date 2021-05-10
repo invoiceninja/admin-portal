@@ -50,6 +50,12 @@ class _$HealthCheckResponseSerializer
       'exec',
       serializers.serialize(object.execEnabled,
           specifiedType: const FullType(bool)),
+      'mail_mailer',
+      serializers.serialize(object.emailDriver,
+          specifiedType: const FullType(String)),
+      'jobs_pending',
+      serializers.serialize(object.pendingJobs,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -99,6 +105,14 @@ class _$HealthCheckResponseSerializer
         case 'exec':
           result.execEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'mail_mailer':
+          result.emailDriver = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'jobs_pending':
+          result.pendingJobs = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -190,6 +204,10 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   final bool openBasedir;
   @override
   final bool execEnabled;
+  @override
+  final String emailDriver;
+  @override
+  final int pendingJobs;
 
   factory _$HealthCheckResponse(
           [void Function(HealthCheckResponseBuilder) updates]) =>
@@ -203,7 +221,9 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.cacheEnabled,
       this.phantomEnabled,
       this.openBasedir,
-      this.execEnabled})
+      this.execEnabled,
+      this.emailDriver,
+      this.pendingJobs})
       : super._() {
     if (systemHealth == null) {
       throw new BuiltValueNullFieldError('HealthCheckResponse', 'systemHealth');
@@ -230,6 +250,12 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     if (execEnabled == null) {
       throw new BuiltValueNullFieldError('HealthCheckResponse', 'execEnabled');
     }
+    if (emailDriver == null) {
+      throw new BuiltValueNullFieldError('HealthCheckResponse', 'emailDriver');
+    }
+    if (pendingJobs == null) {
+      throw new BuiltValueNullFieldError('HealthCheckResponse', 'pendingJobs');
+    }
   }
 
   @override
@@ -252,7 +278,9 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         cacheEnabled == other.cacheEnabled &&
         phantomEnabled == other.phantomEnabled &&
         openBasedir == other.openBasedir &&
-        execEnabled == other.execEnabled;
+        execEnabled == other.execEnabled &&
+        emailDriver == other.emailDriver &&
+        pendingJobs == other.pendingJobs;
   }
 
   int __hashCode;
@@ -264,14 +292,18 @@ class _$HealthCheckResponse extends HealthCheckResponse {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc(0, systemHealth.hashCode),
-                                phpVersion.hashCode),
-                            envWritable.hashCode),
-                        dbCheck.hashCode),
-                    cacheEnabled.hashCode),
-                phantomEnabled.hashCode),
-            openBasedir.hashCode),
-        execEnabled.hashCode));
+                            $jc(
+                                $jc(
+                                    $jc($jc(0, systemHealth.hashCode),
+                                        phpVersion.hashCode),
+                                    envWritable.hashCode),
+                                dbCheck.hashCode),
+                            cacheEnabled.hashCode),
+                        phantomEnabled.hashCode),
+                    openBasedir.hashCode),
+                execEnabled.hashCode),
+            emailDriver.hashCode),
+        pendingJobs.hashCode));
   }
 
   @override
@@ -284,7 +316,9 @@ class _$HealthCheckResponse extends HealthCheckResponse {
           ..add('cacheEnabled', cacheEnabled)
           ..add('phantomEnabled', phantomEnabled)
           ..add('openBasedir', openBasedir)
-          ..add('execEnabled', execEnabled))
+          ..add('execEnabled', execEnabled)
+          ..add('emailDriver', emailDriver)
+          ..add('pendingJobs', pendingJobs))
         .toString();
   }
 }
@@ -328,6 +362,14 @@ class HealthCheckResponseBuilder
   bool get execEnabled => _$this._execEnabled;
   set execEnabled(bool execEnabled) => _$this._execEnabled = execEnabled;
 
+  String _emailDriver;
+  String get emailDriver => _$this._emailDriver;
+  set emailDriver(String emailDriver) => _$this._emailDriver = emailDriver;
+
+  int _pendingJobs;
+  int get pendingJobs => _$this._pendingJobs;
+  set pendingJobs(int pendingJobs) => _$this._pendingJobs = pendingJobs;
+
   HealthCheckResponseBuilder();
 
   HealthCheckResponseBuilder get _$this {
@@ -340,6 +382,8 @@ class HealthCheckResponseBuilder
       _phantomEnabled = _$v.phantomEnabled;
       _openBasedir = _$v.openBasedir;
       _execEnabled = _$v.execEnabled;
+      _emailDriver = _$v.emailDriver;
+      _pendingJobs = _$v.pendingJobs;
       _$v = null;
     }
     return this;
@@ -371,7 +415,9 @@ class HealthCheckResponseBuilder
               cacheEnabled: cacheEnabled,
               phantomEnabled: phantomEnabled,
               openBasedir: openBasedir,
-              execEnabled: execEnabled);
+              execEnabled: execEnabled,
+              emailDriver: emailDriver,
+              pendingJobs: pendingJobs);
     } catch (_) {
       String _$failedField;
       try {

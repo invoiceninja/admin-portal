@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -8,6 +9,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -115,6 +117,32 @@ class _SettingsWizardState extends State<SettingsWizard> {
     });
   }
 
+  void _onRefreshPressed() async {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final completer =
+        snackBarCompleter<Null>(context, localization.refreshComplete)
+          ..future.then((value) {
+            setState(() => _isSaving = false);
+            if (store.state.companies.length == 2) {
+              navigatorKey.currentState.pop();
+            } else {
+              showMessageDialog(
+                  context: context,
+                  message: localization.migrationNotYetCompleted);
+            }
+          }).catchError((Object error) {
+            setState(() => _isSaving = false);
+          });
+
+    store.dispatch(RefreshData(
+      completer: completer,
+      clearData: true,
+      includeStatic: true,
+      allCompanies: true,
+    ));
+  }
+
   void _onSavePressed() {
     final bool isValid = _formKey.currentState.validate();
 
@@ -178,6 +206,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final countCompanies = state.companies.length;
 
     final companyName = DecoratedFormField(
       autofocus: true,
@@ -298,6 +327,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
                     mainAxisSize: MainAxisSize.min,
                     children: isMobile(context)
                         ? [
+                            if (countCompanies == 1)
+                              Text(localization.wizardWarning),
                             companyName,
                             if (state.isHosted) subdomain,
                             firstName,
@@ -321,6 +352,11 @@ class _SettingsWizardState extends State<SettingsWizard> {
                               ],
                             ),
                             SizedBox(height: 16),
+                            if (countCompanies == 1)
+                              Padding(
+                                child: Text(localization.wizardWarning),
+                                padding: const EdgeInsets.only(bottom: 8),
+                              ),
                             Row(
                               children: [
                                 Expanded(child: companyName),
@@ -350,10 +386,21 @@ class _SettingsWizardState extends State<SettingsWizard> {
         ),
       ),
       actions: [
-        if (!_isSaving)
+        if (!_isSaving) ...[
           TextButton(
-              onPressed: _onSavePressed,
-              child: Text(localization.save.toUpperCase()))
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(localization.close.toUpperCase()),
+          ),
+          if (countCompanies == 1)
+            TextButton(
+              onPressed: _onRefreshPressed,
+              child: Text(localization.refresh.toUpperCase()),
+            ),
+          TextButton(
+            onPressed: _onSavePressed,
+            child: Text(localization.save.toUpperCase()),
+          ),
+        ]
       ],
     );
   }

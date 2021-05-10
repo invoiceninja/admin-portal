@@ -163,7 +163,7 @@ class _ClientViewState extends State<ClientView>
             BottomButtons(
               entity: client,
               action1: EntityAction.settings,
-              action2: EntityAction.newInvoice,
+              action2: EntityAction.clientPortal,
             ),
           ],
         );

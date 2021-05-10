@@ -593,6 +593,8 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.settings);
       }
 
+      actions.add(EntityAction.clientPortal);
+
       if (actions.isNotEmpty) {
         actions.add(null);
       }

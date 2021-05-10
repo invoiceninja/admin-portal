@@ -18,8 +18,6 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'system_health')
   bool get systemHealth;
 
-  //BuiltList<dynamic> get extensions;
-
   @BuiltValueField(wireName: 'php_version')
   HealthCheckPHPResponse get phpVersion;
 
@@ -40,6 +38,12 @@ abstract class HealthCheckResponse
 
   @BuiltValueField(wireName: 'exec')
   bool get execEnabled;
+
+  @BuiltValueField(wireName: 'mail_mailer')
+  String get emailDriver;
+
+  @BuiltValueField(wireName: 'jobs_pending')
+  int get pendingJobs;
 
   static Serializer<HealthCheckResponse> get serializer =>
       _$healthCheckResponseSerializer;
