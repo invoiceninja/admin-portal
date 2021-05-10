@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class HealthCheckDialog extends StatefulWidget {
   @override
@@ -99,6 +100,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
               children: [
                 _HealthListTile(
                   title: 'System Health',
+                  subtitle: 'Email: ${toTitleCase(_response.emailDriver)}',
                   isValid: _response.systemHealth,
                 ),
                 _HealthListTile(
@@ -125,14 +127,15 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   ),
                 if (_response.pendingJobs > 0)
                   _HealthListTile(
-                    title: '.env Writable',
-                    isValid: false,
+                    title: 'Pending Jobs',
+                    subtitle: 'Count: ${_response.pendingJobs}',
+                    isWarning: true,
                   ),
                 if (!state.account.isDocker) ...[
                   if (!_response.openBasedir)
                     _HealthListTile(
                       title: 'Open Basedir',
-                      isValid: false,
+                      isWarning: true,
                       subtitle: 'Not enabled',
                     ),
                   if (!_response.cacheEnabled)
@@ -140,6 +143,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       title: 'Config not cached',
                       subtitle:
                           'Run php artisan optimize to improve performance',
+                      isWarning: true,
                     ),
                 ],
                 if (_response.phantomEnabled)
@@ -172,28 +176,31 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
 class _HealthListTile extends StatelessWidget {
   const _HealthListTile({
     @required this.title,
-    this.isValid,
+    this.isValid = true,
+    this.isWarning = false,
     this.subtitle,
   });
 
   final String title;
   final bool isValid;
+  final bool isWarning;
   final String subtitle;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      subtitle: Text(subtitle != null
-          ? subtitle
-          : (isValid == null ? 'Warning' : (isValid ? 'Passed' : 'Failed'))),
+      subtitle: Text(
+        subtitle != null
+            ? subtitle
+            : (isWarning ? 'Warning' : (isValid ? 'Passed' : 'Failed')),
+      ),
       trailing: Icon(
-        isValid == null
+        isWarning
             ? Icons.warning
             : (isValid ? Icons.check_circle_outline : Icons.error_outline),
-        color: isValid == null
-            ? Colors.orange
-            : (isValid ? Colors.green : Colors.red),
+        color:
+            isWarning ? Colors.orange : (isValid ? Colors.green : Colors.red),
       ),
     );
   }
