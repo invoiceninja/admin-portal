@@ -29,6 +29,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveTokensSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteTokensSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.token ? action.entityId : selectedId),
   TypedReducer<String, ViewToken>(

@@ -29,6 +29,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveWebhooksSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteWebhooksSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.webhook ? action.entityId : selectedId),
   TypedReducer<String, ViewWebhook>(

@@ -108,7 +108,11 @@ class AuthRepository {
     @required bool currentCompany,
     @required bool includeStatic,
   }) async {
-    url = formatApiUrl(url) + '/refresh?current_company=$currentCompany';
+    url = formatApiUrl(url) + '/refresh?';
+
+    if (currentCompany) {
+      url += 'current_company=$currentCompany';
+    }
 
     if (updatedAt > 0) {
       url += '&updated_at=$updatedAt';

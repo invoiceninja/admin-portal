@@ -54,6 +54,8 @@ final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveProjectSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteProjectSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.project ? action.entityId : selectedId),
   TypedReducer<String, ViewProject>((selectedId, action) => action.projectId),

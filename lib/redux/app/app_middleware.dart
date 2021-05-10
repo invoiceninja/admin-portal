@@ -424,6 +424,7 @@ Middleware<AppState> _createAccountLoaded() {
     }
 
     try {
+      print('## Account Loadded: ${response.userCompanies.length}');
       for (int i = 0;
           i < min(response.userCompanies.length, kMaxNumberOfCompanies);
           i++) {
@@ -477,8 +478,29 @@ Middleware<AppState> _createDataRefreshed() {
     }
 
     try {
-      final userCompany = response.userCompanies.first;
-      store.dispatch(LoadCompanySuccess(userCompany));
+      if (response.userCompanies.length == 1) {
+        final userCompany = response.userCompanies.first;
+        store.dispatch(LoadCompanySuccess(userCompany));
+      } else {
+        for (int i = 0;
+            i < min(response.userCompanies.length, kMaxNumberOfCompanies);
+            i++) {
+          final UserCompanyEntity userCompany = response.userCompanies[i];
+
+          if (i == 0) {
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+            prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
+          }
+
+          store.dispatch(
+              SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
+          store.dispatch(LoadCompanySuccess(userCompany));
+          if (!userCompany.company.isLarge) {
+            store.dispatch(PersistData());
+          }
+        }
+      }
     } catch (error) {
       action.completer?.completeError(error);
       rethrow;

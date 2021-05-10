@@ -38,6 +38,8 @@ final tabIndexReducer = combineReducers<int>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchivePaymentsSuccess>((completer, action) => ''),
+  TypedReducer<String, DeletePaymentsSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.payment ? action.entityId : selectedId),
   TypedReducer<String, ViewPayment>((selectedId, action) => action.paymentId),

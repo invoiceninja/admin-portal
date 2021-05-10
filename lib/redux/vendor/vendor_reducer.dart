@@ -66,6 +66,8 @@ VendorContactEntity editVendorContact(
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveVendorSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteVendorSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.vendor ? action.entityId : selectedId),
   TypedReducer<String, ViewVendor>((selectedId, action) => action.vendorId),

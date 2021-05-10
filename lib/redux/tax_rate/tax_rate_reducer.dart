@@ -26,6 +26,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveTaxRatesSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteTaxRatesSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.taxRate ? action.entityId : selectedId),
   TypedReducer<String, ViewTaxRate>(

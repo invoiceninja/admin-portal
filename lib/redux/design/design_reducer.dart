@@ -28,6 +28,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveDesignsSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteDesignsSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.design ? action.entityId : selectedId),
   TypedReducer<String, ViewDesign>(

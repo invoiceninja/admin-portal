@@ -28,6 +28,8 @@ final forceSelectedReducer = combineReducers<bool>([
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveDocumentSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteDocumentSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.document ? action.entityId : selectedId),
   TypedReducer<String, ViewDocument>((selectedId, action) => action.documentId),

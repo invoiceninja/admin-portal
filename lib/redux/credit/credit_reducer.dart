@@ -60,6 +60,8 @@ String filtercreditDropdownReducer(
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveCreditsSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteCreditsSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.credit ? action.entityId : selectedId),
   TypedReducer<String, ViewCredit>((selectedId, action) => action.creditId),

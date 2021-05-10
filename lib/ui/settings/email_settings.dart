@@ -201,6 +201,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 label: localization.bccEmail,
                 controller: _bccEmailController,
                 keyboardType: TextInputType.emailAddress,
+                hint: localization.commaSeparatedList,
               ),
               /*
               SizedBox(height: 10),

@@ -75,6 +75,8 @@ ProductEntity _updateEditing(ProductEntity product, dynamic action) {
 }
 
 Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ArchiveProductsSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteProductsSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.product ? action.entityId : selectedId),
   TypedReducer<String, ViewProduct>((selectedId, action) => action.productId),
