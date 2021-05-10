@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewClientList implements PersistUI, StopLoading {
   ViewClientList({
@@ -270,7 +271,7 @@ class FilterClientsByCustom4 implements PersistUI {
 }
 
 void handleClientAction(
-    BuildContext context, List<BaseEntity> clients, EntityAction action) {
+    BuildContext context, List<BaseEntity> clients, EntityAction action) async {
   if (clients.isEmpty) {
     return;
   }
@@ -279,11 +280,17 @@ void handleClientAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final clientIds = clients.map((client) => client.id).toList();
-  final client = clients[0];
+  final client = clients[0] as ClientEntity;
 
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: client);
+      break;
+    case EntityAction.clientPortal:
+      final url = client.primaryContact?.silentLink ?? '';
+      if (url.isNotEmpty && await canLaunch(url)) {
+        await launch(url);
+      }
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(
