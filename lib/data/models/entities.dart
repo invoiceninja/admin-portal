@@ -702,6 +702,22 @@ abstract class ActivityEntity
       kActivityRestoreUser,
     ].contains(activityTypeId)) {
       return EntityType.user;
+    } else if ([
+      kActivityCreateSubscription,
+      kActivityUpdateSubscription,
+      kActivityArchiveSubscription,
+      kActivityDeleteSubscription,
+      kActivityRestoreSubscription,
+    ].contains(activityTypeId)) {
+      return EntityType.subscription;
+    } else if ([
+      kActivityCreateRecurringInvoice,
+      kActivityUpdateRecurringInvoice,
+      kActivityArchiveRecurringInvoice,
+      kActivityDeleteRecurringInvoice,
+      kActivityRestoreRecurringInvoice,
+    ].contains(activityTypeId)) {
+      return EntityType.recurringInvoice;
     } else {
       print(
           '## ERROR: failed to resolve entity type - activity_type_id: $activityTypeId');

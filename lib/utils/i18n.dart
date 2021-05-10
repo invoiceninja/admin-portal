@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'activity_100': ':user created recurring invoice',
+      'activity_101': ':user updated recurring invoice',
+      'activity_102': ':user archived recurring invoice',
+      'activity_103': ':user deleted recurring invoice',
+      'activity_104': ':user restored recurring invoice',
       'show_task_end_date': 'Show Task End Date',
       'show_task_end_date_help': 'Enable specifying the task end date',
       'gateway_setup': 'Gateway Setup',
