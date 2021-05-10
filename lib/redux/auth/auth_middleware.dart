@@ -265,7 +265,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       token: token,
       updatedAt: updatedAt - kUpdatedAtBufferSeconds,
       includeStatic: action.includeStatic || state.staticState.isStale,
-      currentCompany: hasToken,
+      currentCompany: hasToken && !action.allCompanies,
     )
         .then((data) {
       bool permissionsWereChanged = false;
@@ -345,6 +345,7 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
     repository.addCompany(credentials: state.credentials).then((dynamic value) {
       store.dispatch(AddCompanySuccess());
       store.dispatch(RefreshData(
+        allCompanies: true,
         completer: Completer<Null>()
           ..future.then<Null>((_) {
             store.dispatch(SelectCompany(companyIndex: state.companies.length));
