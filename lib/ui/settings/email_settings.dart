@@ -191,17 +191,20 @@ class _EmailSettingsState extends State<EmailSettings> {
               DecoratedFormField(
                 label: localization.replyToName,
                 controller: _replyToNameController,
+                onSavePressed: viewModel.onSavePressed,
               ),
               DecoratedFormField(
                 label: localization.replyToEmail,
                 controller: _replyToEmailController,
                 keyboardType: TextInputType.emailAddress,
+                onSavePressed: viewModel.onSavePressed,
               ),
               DecoratedFormField(
                 label: localization.bccEmail,
                 controller: _bccEmailController,
                 keyboardType: TextInputType.emailAddress,
                 hint: localization.commaSeparatedList,
+                onSavePressed: viewModel.onSavePressed,
               ),
               /*
               SizedBox(height: 10),
