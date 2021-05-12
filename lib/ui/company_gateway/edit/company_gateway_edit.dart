@@ -134,16 +134,24 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     kGatewayStripeConnect,
                     kGatewayWePay,
                   ].contains(companyGateway.gatewayId))
-                    AppButton(
-                      label: localization.gatewaySetup.toUpperCase(),
-                      onPressed: viewModel.state.isSaving
-                          ? null
-                          : () {
-                              viewModel.onCancelPressed(context);
-                              viewModel.onGatewaySignUpPressed(
-                                  companyGateway.gatewayId);
-                            },
-                    )
+                    if (companyGateway.isNew)
+                      AppButton(
+                        label: localization.gatewaySetup.toUpperCase(),
+                        onPressed: viewModel.state.isSaving
+                            ? null
+                            : () {
+                                viewModel.onCancelPressed(context);
+                                viewModel.onGatewaySignUpPressed(
+                                    companyGateway.gatewayId);
+                              },
+                      )
+                    else
+                      DecoratedFormField(
+                        enabled: false,
+                        label: localization.accountId,
+                        initialValue:
+                            companyGateway.parsedConfig['account_id'] ?? '',
+                      )
                   else
                     GatewayConfigSettings(
                       key: ValueKey('__${companyGateway.gatewayId}__'),
