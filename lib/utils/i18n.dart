@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
           'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \'Refesh\'.',
@@ -60352,6 +60353,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get migrationNotYetCompleted =>
       _localizedValues[localeCode]['migration_not_yet_completed'] ??
       _localizedValues['en']['migration_not_yet_completed'];
+
+  String get accountId =>
+      _localizedValues[localeCode]['account_id'] ??
+      _localizedValues['en']['account_id'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
