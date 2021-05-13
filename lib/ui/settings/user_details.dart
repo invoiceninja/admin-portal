@@ -154,6 +154,7 @@ class _UserDetailsState extends State<UserDetails>
         print('## $idToken, $accessToken');
         if (idToken.isEmpty || accessToken.isEmpty) {
           GoogleOAuth.signOut();
+        } else {
           setState(() {
             _connectGmailStep = GMAIL_2_REQUEST_SCOPE;
           });
