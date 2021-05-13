@@ -271,10 +271,8 @@ class _UserDetailsState extends State<UserDetails>
                                       final completer = Completer<Null>();
                                       completer.future
                                           .catchError((Object error) {
-                                        setState(() {
-                                          _isConnectingGmail = false;
-                                          _isSignedInToGmail = false;
-                                        });
+                                        showErrorDialog(
+                                            context: context, message: error);
                                       });
                                       viewModel.onConnectGmailPressed(
                                           context, completer);
