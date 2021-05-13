@@ -58,6 +58,7 @@ class UserDetailsVM {
 
         passwordCallback(
             context: context,
+            skipOAuth: true,
             callback: (password, idToken) async {
               try {
                 final signedIn = await GoogleOAuth.grantOfflineAccess(
@@ -65,11 +66,8 @@ class UserDetailsVM {
                   if (idToken.isEmpty ||
                       accessToken.isEmpty ||
                       serverAuthCode.isEmpty) {
-                    completer.completeError(null);
-                    showErrorDialog(
-                        context: context,
-                        message: AppLocalization.of(context)
-                            .anErrorOccurredTryAgain);
+                    completer.completeError(
+                        AppLocalization.of(context).anErrorOccurredTryAgain);
                   } else {
                     store.dispatch(ConnecGmailUserRequest(
                       serverAuthCode: serverAuthCode,
@@ -80,15 +78,11 @@ class UserDetailsVM {
                   }
                 });
                 if (!signedIn) {
-                  completer.completeError(null);
-                  showErrorDialog(
-                      context: context,
-                      message:
-                          AppLocalization.of(context).anErrorOccurredTryAgain);
+                  completer.completeError(
+                      AppLocalization.of(context).anErrorOccurredTryAgain);
                 }
               } catch (error) {
-                completer.completeError(null);
-                showErrorDialog(context: context, message: error);
+                completer.completeError(error);
               }
             });
       },

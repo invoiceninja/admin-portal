@@ -115,6 +115,7 @@ void passwordCallback({
   BuildContext context,
   Function(String, String) callback,
   bool alwaysRequire = false,
+  bool skipOAuth = false,
 }) {
   final state = StoreProvider.of<AppState>(context).state;
   if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
@@ -123,7 +124,7 @@ void passwordCallback({
     return;
   }
 
-  if (state.user.oauthProvider.isEmpty) {
+  if (state.user.oauthProvider.isEmpty || skipOAuth) {
     showDialog<Null>(
       context: context,
       barrierDismissible: false,
