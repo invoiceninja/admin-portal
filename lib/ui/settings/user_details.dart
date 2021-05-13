@@ -53,6 +53,7 @@ class _UserDetailsState extends State<UserDetails>
 
   bool _isConnectingGmail = false;
   bool _isSignedInToGmail = false;
+  String _password;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -278,7 +279,7 @@ class _UserDetailsState extends State<UserDetails>
                                       });
                                       print('## onPressed: 3');
                                       viewModel.onConnectGmailPressed(
-                                          context, completer);
+                                          context, completer, _password);
                                       print('## onPressed: 4');
                                     } else {
                                       GoogleOAuth.signIn(
@@ -299,10 +300,16 @@ class _UserDetailsState extends State<UserDetails>
                                     }
                                   } else {
                                     GoogleOAuth.signOut();
-                                    setState(() {
-                                      _isConnectingGmail = true;
-                                      _isSignedInToGmail = false;
-                                    });
+                                    passwordCallback(
+                                        context: context,
+                                        skipOAuth: true,
+                                        callback: (password, idToken) async {
+                                          setState(() {
+                                            _isConnectingGmail = true;
+                                            _isSignedInToGmail = false;
+                                            _password = password;
+                                          });
+                                        });
                                   }
                                 },
                         ),
