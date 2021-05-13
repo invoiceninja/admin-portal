@@ -395,6 +395,7 @@ class _UserDetailsState extends State<UserDetails>
                             .toList()
                       ],
                     ),
+                    SizedBox(height: 8),
                     BoolDropdownButton(
                       label: localization.includeDeletedClients,
                       helpLabel: localization.includeDeletedClientsHelp,
