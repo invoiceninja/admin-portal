@@ -149,16 +149,20 @@ class _UserDetailsState extends State<UserDetails>
           });
     } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
       print('## STEP 1');
-      GoogleOAuth.grantOfflineAccess((idToken, accessToken, serverAuthCode) {
-        print('## id: $idToken, acces: $accessToken, auth: $serverAuthCode');
-        if (idToken.isEmpty || accessToken.isEmpty) {
-          GoogleOAuth.signOut();
-        } else {
-          setState(() {
-            _connectGmailStep = GMAIL_2_AUTHORIZE;
-          });
-        }
-      });
+      try {
+        GoogleOAuth.grantOfflineAccess((idToken, accessToken, serverAuthCode) {
+          print('## id: $idToken, acces: $accessToken, auth: $serverAuthCode');
+          if (idToken.isEmpty || accessToken.isEmpty) {
+            GoogleOAuth.signOut();
+          } else {
+            setState(() {
+              _connectGmailStep = GMAIL_2_AUTHORIZE;
+            });
+          }
+        });
+      } catch (error) {
+        showErrorDialog(context: context, message: error);
+      }
     } else if (_connectGmailStep == GMAIL_2_AUTHORIZE) {
       print('## STEP 3');
       final completer = Completer<Null>();
