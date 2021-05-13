@@ -816,6 +816,7 @@ abstract class UserSettingsEntity
       numberYearsActive: 3,
       tableColumns: BuiltMap<String, BuiltList<String>>(),
       reportSettings: BuiltMap<String, ReportSettingsEntity>(),
+      includeDeletedClients: false,
     );
   }
 
@@ -838,6 +839,9 @@ abstract class UserSettingsEntity
   @BuiltValueField(wireName: 'number_years_active')
   int get numberYearsActive;
 
+  @BuiltValueField(wireName: 'include_deleted_clients')
+  bool get includeDeletedClients;
+
   List<String> getTableColumns(EntityType entityType) {
     if (tableColumns != null && tableColumns.containsKey('$entityType')) {
       return tableColumns['$entityType'].toList();
@@ -847,8 +851,9 @@ abstract class UserSettingsEntity
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(UserSettingsEntityBuilder builder) =>
-      builder..numberYearsActive = 3;
+  static void _initializeBuilder(UserSettingsEntityBuilder builder) => builder
+    ..numberYearsActive = 3
+    ..includeDeletedClients = false;
 
   static Serializer<UserSettingsEntity> get serializer =>
       _$userSettingsEntitySerializer;

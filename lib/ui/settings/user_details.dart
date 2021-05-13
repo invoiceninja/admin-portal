@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
@@ -378,7 +379,7 @@ class _UserDetailsState extends State<UserDetails>
                           (b) => b..userCompany.settings.accentColor = value));
                     },
                   ),
-                  if (state.company.isLarge || !kReleaseMode)
+                  if (state.company.isLarge || !kReleaseMode) ...[
                     AppDropdownButton<int>(
                       blankValue: null,
                       labelText: localization.numberYearsActive,
@@ -400,6 +401,12 @@ class _UserDetailsState extends State<UserDetails>
                             .toList()
                       ],
                     ),
+                    BoolDropdownButton(
+                      label: localization.includeDeletedClients,
+                      value: value,
+                      onChanged: onChanged,
+                    )
+                  ],
                 ],
               ),
             ],
