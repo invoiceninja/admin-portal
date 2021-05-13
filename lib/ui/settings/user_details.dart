@@ -122,17 +122,17 @@ class _UserDetailsState extends State<UserDetails>
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final user = widget.viewModel.user.rebuild((b) => b
-        ..firstName = _firstNameController.text.trim()
-        ..lastName = _lastNameController.text.trim()
-        ..email = _emailController.text.trim()
-        ..phone = _phoneController.text.trim()
-        ..password = _passwordController.text.trim());
-      if (user != widget.viewModel.user) {
+    final user = widget.viewModel.user.rebuild((b) => b
+      ..firstName = _firstNameController.text.trim()
+      ..lastName = _lastNameController.text.trim()
+      ..email = _emailController.text.trim()
+      ..phone = _phoneController.text.trim()
+      ..password = _passwordController.text.trim());
+    if (user != widget.viewModel.user) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(user);
-      }
-    });
+      });
+    }
   }
 
   void _connectToGmail() {
