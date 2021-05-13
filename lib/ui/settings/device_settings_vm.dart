@@ -51,12 +51,10 @@ class DeviceSettingsVM {
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
     void _refreshData(BuildContext context) async {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete,
-          shouldPop: true);
-
       store.dispatch(RefreshData(
-        completer: completer,
+        completer: snackBarCompleter<Null>(
+            context, AppLocalization.of(context).refreshComplete,
+            shouldPop: true),
         clearData: true,
         includeStatic: true,
       ));

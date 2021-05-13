@@ -9,15 +9,16 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 Completer<T> snackBarCompleter<T>(BuildContext context, String message,
     {bool shouldPop = false}) {
   final Completer<T> completer = Completer<T>();
+  final navigator = Navigator.of(context);
 
   completer.future.then((_) {
-    if (shouldPop && Navigator.of(context).canPop()) {
-      Navigator.of(context).pop();
+    if (shouldPop && navigator.canPop()) {
+      navigator.pop();
     }
     showToast(message);
   }).catchError((Object error) {
-    if (shouldPop && Navigator.of(context).canPop()) {
-      Navigator.of(context).pop();
+    if (shouldPop && navigator.canPop()) {
+      navigator.pop();
     }
     showDialog<ErrorDialog>(
         context: navigatorKey.currentContext,

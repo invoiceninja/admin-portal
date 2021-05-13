@@ -5,8 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -199,8 +202,30 @@ class UserDetailsVM {
           final completer =
               snackBarCompleter<Null>(context, localization.savedSettings);
           final appBuilder = AppBuilder.of(context);
+          final origUserSettings = state.userCompany.settings;
 
-          completer.future.then((_) {
+          completer.future.then((_) async {
+            final newUserSettings = store.state.userCompany.settings;
+            if (origUserSettings.includeDeletedClients !=
+                    newUserSettings.includeDeletedClients ||
+                origUserSettings.numberYearsActive !=
+                    newUserSettings.numberYearsActive) {
+              store.dispatch(RefreshData(
+                completer: snackBarCompleter<Null>(
+                    navigatorKey.currentContext, localization.refreshComplete,
+                    shouldPop: true),
+                clearData: true,
+                includeStatic: true,
+              ));
+
+              await showDialog<AlertDialog>(
+                  context: navigatorKey.currentContext,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) => SimpleDialog(
+                        children: <Widget>[LoadingDialog()],
+                      ));
+            }
+
             appBuilder.rebuild();
           });
 
