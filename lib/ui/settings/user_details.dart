@@ -184,7 +184,6 @@ class _UserDetailsState extends State<UserDetails>
     final viewModel = widget.viewModel;
     final user = viewModel.user;
     final state = viewModel.state;
-    final settings = viewModel.state.userCompany.settings;
 
     String gmailButtonLabel = localization.connectGmail;
     if (state.user.isConnectedToGmail) {
