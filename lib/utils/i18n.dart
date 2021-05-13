@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'include_deleted_clients': 'Include Deleted Clients',
+      'include_deleted_clients_help':
+          'Automatically load records belonging to deleted clients',
       'step_1_sign_in': 'Step 1: Sign In',
       'step_2_authorize': 'Step 2: Authorize',
       'account_id': 'Account ID',
@@ -60372,6 +60374,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get includeDeletedClients =>
       _localizedValues[localeCode]['include_deleted_clients'] ??
       _localizedValues['en']['include_deleted_clients'];
+
+  String get includeDeletedClientsHelp =>
+      _localizedValues[localeCode]['include_deleted_clients_help'] ??
+      _localizedValues['en']['include_deleted_clients_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

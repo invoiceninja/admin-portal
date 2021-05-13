@@ -403,8 +403,13 @@ class _UserDetailsState extends State<UserDetails>
                     ),
                     BoolDropdownButton(
                       label: localization.includeDeletedClients,
-                      value: value,
-                      onChanged: onChanged,
+                      helpLabel: localization.includeDeletedClientsHelp,
+                      value: user.userCompany.settings.includeDeletedClients,
+                      onChanged: (value) {
+                        widget.viewModel.onChanged(user.rebuild((b) => b
+                          ..userCompany.settings.includeDeletedClients =
+                              value));
+                      },
                     )
                   ],
                 ],
