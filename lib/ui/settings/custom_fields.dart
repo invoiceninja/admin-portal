@@ -368,7 +368,9 @@ class _CustomFormFieldState extends State<CustomFormField> {
       var value = _customFieldController.text.trim();
 
       if (value.isEmpty) {
-        widget.onChanged('');
+        if ((widget.value ?? '').isNotEmpty) {
+          widget.onChanged('');
+        }
         return;
       }
 
