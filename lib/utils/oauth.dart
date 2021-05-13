@@ -52,16 +52,18 @@ class GoogleOAuth {
   }
 
   static Future<bool> grantOfflineAccess(
-      Function(String, String, String) callback) async {
+      Function(String, String, String) successCallback,
+      Function errorCallback) async {
     final account = await _googleSignIn.grantOfflineAccess();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
-        callback(value.idToken, value.accessToken, value.serverAuthCode);
+        successCallback(value.idToken, value.accessToken, value.serverAuthCode);
       });
 
       return true;
     } else {
       print('## Error: grant offline failed');
+      errorCallback();
       return false;
     }
   }

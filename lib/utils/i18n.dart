@@ -16,7 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'step_1_sign_in': 'Step 1: Sign In',
-      'step_2_authorize': 'Step 3: Authorize',
+      'step_2_authorize': 'Step 2: Authorize',
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
