@@ -164,7 +164,6 @@ abstract class UserEntity extends Object
 
   String get phone;
 
-  @nullable
   String get password;
 
   @nullable
@@ -320,6 +319,7 @@ abstract class UserEntity extends Object
   static void _initializeBuilder(UserEntityBuilder builder) => builder
     ..isTwoFactorEnabled = false
     ..hasPassword = false
+    ..password = ''
     ..lastEmailAddress = ''
     ..oauthUserToken = '';
 
