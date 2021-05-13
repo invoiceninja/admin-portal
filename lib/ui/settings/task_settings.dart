@@ -65,9 +65,10 @@ class _TaskSettingsState extends State<TaskSettings> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final settings = viewModel.settings.rebuild((b) => b
-      ..defaultTaskRate =
-          parseDouble(_taskRateController.text, zeroIsNull: true));
+      ..defaultTaskRate = parseDouble(_taskRateController.text,
+          zeroIsNull: state.settingsUIState.isFiltered));
 
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
