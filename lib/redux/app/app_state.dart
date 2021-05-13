@@ -770,6 +770,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return (DateTime.now().millisecondsSinceEpoch / 1000).round() - offset;
   }
 
+  bool get filterDeletedClients {
+    if (!company.isLarge) {
+      return false;
+    }
+
+    return !userCompany.settings.includeDeletedClients;
+  }
+
   bool get canAddCompany => userCompany.isOwner && companies.length < 10;
 
   bool get isMenuCollapsed =>

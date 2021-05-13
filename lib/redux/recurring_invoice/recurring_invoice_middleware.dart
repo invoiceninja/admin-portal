@@ -307,7 +307,13 @@ Middleware<AppState> _loadRecurringInvoices(
     final AppState state = store.state;
 
     store.dispatch(LoadRecurringInvoicesRequest());
-    repository.loadList(state.credentials).then((data) {
+    repository
+        .loadList(
+      state.credentials,
+      state.createdAtLimit,
+      state.filterDeletedClients,
+    )
+        .then((data) {
       store.dispatch(LoadRecurringInvoicesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

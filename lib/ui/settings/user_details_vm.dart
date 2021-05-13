@@ -53,24 +53,17 @@ class UserDetailsVM {
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
       onConnectGmailPressed: (context, completer, password) async {
-        print('## onConnectGmailPressed: 1');
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).connectedGmail);
         try {
-          print('## onConnectGmailPressed: 2');
           final signedIn = await GoogleOAuth.grantOfflineAccess(
               (idToken, accessToken, serverAuthCode) {
-            print(
-                '## id: $idToken, acces: $accessToken, auth: $serverAuthCode');
-
             if (idToken.isEmpty ||
                 accessToken.isEmpty ||
                 serverAuthCode.isEmpty) {
-              print('## onConnectGmailPressed: 4');
               completer.completeError(
                   AppLocalization.of(context).anErrorOccurredTryAgain);
             } else {
-              print('## onConnectGmailPressed: 4');
               store.dispatch(ConnecGmailUserRequest(
                 serverAuthCode: serverAuthCode,
                 idToken: idToken,
@@ -79,20 +72,16 @@ class UserDetailsVM {
               ));
             }
           }, () {
-            print('## onConnectGmailPressed: error');
             completer.completeError(
                 AppLocalization.of(context).anErrorOccurredTryAgain);
           });
           if (!signedIn) {
-            print('## onConnectGmailPressed: 5');
             completer.completeError(
                 AppLocalization.of(context).anErrorOccurredTryAgain);
           }
         } catch (error) {
-          print('## onConnectGmailPressed: 6');
           completer.completeError(error);
         }
-        print('## onConnectGmailPressed: 7');
       },
       onDisconnectGmailPressed: (context) {
         confirmCallback(

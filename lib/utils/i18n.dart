@@ -33,7 +33,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'show_task_end_date_help': 'Enable specifying the task end date',
       'gateway_setup': 'Gateway Setup',
       'preview_sidebar': 'Preview Sidebar',
-      'number_years_active': 'Number Years Active',
+      'years_data_shown': 'Years Data Shown',
       'ended_all_sessions': 'Successfully ended all sessions',
       'end_all_sessions': 'End All Sessions',
       'count_session': '1 Session',
@@ -60331,9 +60331,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['ended_all_sessions'] ??
       _localizedValues['en']['ended_all_sessions'];
 
-  String get numberYearsActive =>
-      _localizedValues[localeCode]['number_years_active'] ??
-      _localizedValues['en']['number_years_active'];
+  String get yearsDataShown =>
+      _localizedValues[localeCode]['years_data_shown'] ??
+      _localizedValues['en']['years_data_shown'];
 
   String get previewSidebar =>
       _localizedValues[localeCode]['preview_sidebar'] ??

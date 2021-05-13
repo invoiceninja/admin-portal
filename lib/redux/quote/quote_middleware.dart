@@ -363,7 +363,13 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadQuotesRequest());
-    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
+    repository
+        .loadList(
+      state.credentials,
+      state.createdAtLimit,
+      state.filterDeletedClients,
+    )
+        .then((data) {
       store.dispatch(LoadQuotesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

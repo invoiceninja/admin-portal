@@ -27,8 +27,13 @@ class RecurringInvoiceRepository {
     return recurringInvoiceResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/recurring_invoices?';
+  Future<BuiltList<InvoiceEntity>> loadList(
+      Credentials credentials, int createdAt, bool includeDeleted) async {
+    String url = credentials.url + '/recurring_invoices?created_at=$createdAt';
+
+    if (!includeDeleted) {
+      url += '&filter_deleted_clients=true';
+    }
 
     final dynamic response = await webClient.get(url, credentials.token);
 

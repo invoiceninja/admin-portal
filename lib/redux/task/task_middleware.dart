@@ -223,7 +223,13 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadTasksRequest());
-    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
+    repository
+        .loadList(
+      state.credentials,
+      state.createdAtLimit,
+      state.filterDeletedClients,
+    )
+        .then((data) {
       store.dispatch(LoadTasksSuccess(data));
 
       if (action.completer != null) {

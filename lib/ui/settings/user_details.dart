@@ -137,7 +137,6 @@ class _UserDetailsState extends State<UserDetails>
 
   void _connectToGmail() {
     if (_connectGmailStep == GMAIL_DEFAULT) {
-      print('## STEP 000');
       GoogleOAuth.signOut();
       passwordCallback(
           context: context,
@@ -149,10 +148,8 @@ class _UserDetailsState extends State<UserDetails>
             });
           });
     } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
-      print('## STEP 1');
       try {
         GoogleOAuth.grantOfflineAccess((idToken, accessToken, serverAuthCode) {
-          print('## id: $idToken, acces: $accessToken, auth: $serverAuthCode');
           if (idToken.isEmpty || accessToken.isEmpty) {
             GoogleOAuth.signOut();
             setState(() {
@@ -164,8 +161,7 @@ class _UserDetailsState extends State<UserDetails>
             });
           }
         }, () {
-          // Gmail always fails the first time
-          print('## STEP 1 FAILED');
+          // TODO Gmail always fails the first time
           setState(() {
             _connectGmailStep = GMAIL_2_AUTHORIZE;
           });
@@ -174,7 +170,6 @@ class _UserDetailsState extends State<UserDetails>
         showErrorDialog(context: context, message: error);
       }
     } else if (_connectGmailStep == GMAIL_2_AUTHORIZE) {
-      print('## STEP 2');
       final completer = Completer<Null>();
       completer.future.catchError((Object error) {
         showErrorDialog(context: context, message: error);
@@ -382,7 +377,7 @@ class _UserDetailsState extends State<UserDetails>
                   if (state.company.isLarge || !kReleaseMode) ...[
                     AppDropdownButton<int>(
                       blankValue: null,
-                      labelText: localization.numberYearsActive,
+                      labelText: localization.yearsDataShown,
                       value: user.userCompany.settings.numberYearsActive,
                       onChanged: (dynamic value) {
                         widget.viewModel.onChanged(user.rebuild((b) =>
@@ -505,7 +500,6 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             }))
         .then((dynamic data) {
       setState(() => _isLoading = false);
-      print('## DONE: $data');
       showToast(AppLocalization.of(context).enabledTwoFactor);
       final store = StoreProvider.of<AppState>(context);
       store.dispatch(RefreshData());

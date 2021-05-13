@@ -430,7 +430,10 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadInvoicesRequest());
-    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
+    repository
+        .loadList(
+            state.credentials, state.createdAtLimit, state.filterDeletedClients)
+        .then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
