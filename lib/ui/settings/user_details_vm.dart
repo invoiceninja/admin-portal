@@ -60,11 +60,13 @@ class UserDetailsVM {
           print('## onConnectGmailPressed: 2');
           final signedIn = await GoogleOAuth.grantOfflineAccess(
               (idToken, accessToken, serverAuthCode) {
+            print(
+                '## onConnectGmailPressed: 3 $idToken, $accessToken, $serverAuthCode');
+
             if (idToken.isEmpty ||
                 accessToken.isEmpty ||
                 serverAuthCode.isEmpty) {
-              print(
-                  '## onConnectGmailPressed: $idToken, $accessToken, $serverAuthCode');
+              print('## onConnectGmailPressed: 4');
               completer.completeError(
                   AppLocalization.of(context).anErrorOccurredTryAgain);
             } else {
