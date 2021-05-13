@@ -138,6 +138,7 @@ abstract class UserEntity extends Object
       hasPassword: false,
       lastEmailAddress: '',
       oauthUserToken: '',
+      password: '',
     );
   }
 
