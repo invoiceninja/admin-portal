@@ -53,6 +53,7 @@ class UserDetailsVM {
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
       onConnectGmailPressed: (context, completer) {
+        print('## onConnectGmailPressed: 1');
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).connectedGmail);
 
@@ -61,14 +62,17 @@ class UserDetailsVM {
             skipOAuth: true,
             callback: (password, idToken) async {
               try {
+                print('## onConnectGmailPressed: 2');
                 final signedIn = await GoogleOAuth.grantOfflineAccess(
                     (idToken, accessToken, serverAuthCode) {
                   if (idToken.isEmpty ||
                       accessToken.isEmpty ||
                       serverAuthCode.isEmpty) {
+                    print('## onConnectGmailPressed: 3');
                     completer.completeError(
                         AppLocalization.of(context).anErrorOccurredTryAgain);
                   } else {
+                    print('## onConnectGmailPressed: 4');
                     store.dispatch(ConnecGmailUserRequest(
                       serverAuthCode: serverAuthCode,
                       idToken: idToken,
@@ -78,12 +82,15 @@ class UserDetailsVM {
                   }
                 });
                 if (!signedIn) {
+                  print('## onConnectGmailPressed: 5');
                   completer.completeError(
                       AppLocalization.of(context).anErrorOccurredTryAgain);
                 }
               } catch (error) {
+                print('## onConnectGmailPressed: 6');
                 completer.completeError(error);
               }
+              print('## onConnectGmailPressed: 7');
             });
       },
       onDisconnectGmailPressed: (context) {
