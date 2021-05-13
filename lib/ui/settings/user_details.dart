@@ -136,7 +136,7 @@ class _UserDetailsState extends State<UserDetails>
 
   void _connectToGmail() {
     if (_connectGmailStep == GMAIL_DEFAULT) {
-      print('## STEP 0');
+      print('## STEP 000');
       GoogleOAuth.signOut();
       passwordCallback(
           context: context,
