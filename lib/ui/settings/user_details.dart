@@ -268,14 +268,18 @@ class _UserDetailsState extends State<UserDetails>
                                     viewModel.onDisconnectGmailPressed(context);
                                   } else if (_isConnectingGmail) {
                                     if (_isSignedInToGmail) {
+                                      print('## onPressed: 1');
                                       final completer = Completer<Null>();
                                       completer.future
                                           .catchError((Object error) {
+                                        print('## onPressed: 2');
                                         showErrorDialog(
                                             context: context, message: error);
                                       });
+                                      print('## onPressed: 3');
                                       viewModel.onConnectGmailPressed(
                                           context, completer);
+                                      print('## onPressed: 4');
                                     } else {
                                       GoogleOAuth.signIn(
                                           (idToken, accessToken) {
