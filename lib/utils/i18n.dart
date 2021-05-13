@@ -16,8 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'step_1_sign_in': 'Step 1: Sign In',
-      'step_2_request_scope': 'Step 2: Request Scope',
-      'step_3_authorize_offline': 'Step 3: Authorize',
+      'step_2_authorize': 'Step 3: Authorize',
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
@@ -60365,13 +60364,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['step_1_sign_in'] ??
       _localizedValues['en']['step_1_sign_in'];
 
-  String get step2RequestScope =>
-      _localizedValues[localeCode]['step_2_request_scope'] ??
-      _localizedValues['en']['step_2_request_scope'];
-
-  String get step3AuthorizeOffline =>
-      _localizedValues[localeCode]['step_3_authorize_offline'] ??
-      _localizedValues['en']['step_3_authorize_offline'];
+  String get step2Authorize =>
+      _localizedValues[localeCode]['step_2_authorize'] ??
+      _localizedValues['en']['step_2_authorize'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

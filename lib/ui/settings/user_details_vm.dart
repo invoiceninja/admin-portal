@@ -61,7 +61,7 @@ class UserDetailsVM {
           final signedIn = await GoogleOAuth.grantOfflineAccess(
               (idToken, accessToken, serverAuthCode) {
             print(
-                '## onConnectGmailPressed: 3 $idToken, $accessToken, $serverAuthCode');
+                '## id: $idToken, acces: $accessToken, auth: $serverAuthCode');
 
             if (idToken.isEmpty ||
                 accessToken.isEmpty ||

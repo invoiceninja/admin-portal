@@ -53,8 +53,7 @@ class _UserDetailsState extends State<UserDetails>
 
   static const GMAIL_DEFAULT = 0;
   static const GMAIL_1_SIGN_IN = 1;
-  static const GMAIL_2_REQUEST_SCOPE = 2;
-  static const GMAIL_3_AUTHORIZE_OFFLINE = 4;
+  static const GMAIL_2_AUTHORIZE = 2;
 
   int _connectGmailStep = GMAIL_DEFAULT;
   String _password;
@@ -150,23 +149,17 @@ class _UserDetailsState extends State<UserDetails>
           });
     } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
       print('## STEP 1');
-      GoogleOAuth.signIn((idToken, accessToken) {
-        print('## $idToken, $accessToken');
+      GoogleOAuth.grantOfflineAccess((idToken, accessToken, serverAuthCode) {
+        print('## id: $idToken, acces: $accessToken, auth: $serverAuthCode');
         if (idToken.isEmpty || accessToken.isEmpty) {
           GoogleOAuth.signOut();
         } else {
           setState(() {
-            _connectGmailStep = GMAIL_2_REQUEST_SCOPE;
+            _connectGmailStep = GMAIL_2_AUTHORIZE;
           });
         }
       });
-    } else if (_connectGmailStep == GMAIL_2_REQUEST_SCOPE) {
-      print('## STEP 2');
-      GoogleOAuth.requestGmailScope();
-      setState(() {
-        _connectGmailStep = GMAIL_3_AUTHORIZE_OFFLINE;
-      });
-    } else if (_connectGmailStep == GMAIL_3_AUTHORIZE_OFFLINE) {
+    } else if (_connectGmailStep == GMAIL_2_AUTHORIZE) {
       print('## STEP 3');
       final completer = Completer<Null>();
       completer.future.catchError((Object error) {
@@ -189,10 +182,8 @@ class _UserDetailsState extends State<UserDetails>
       gmailButtonLabel = localization.disconnectGmail;
     } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
       gmailButtonLabel = localization.step1SignIn;
-    } else if (_connectGmailStep == GMAIL_2_REQUEST_SCOPE) {
-      gmailButtonLabel = localization.step2RequestScope;
-    } else if (_connectGmailStep == GMAIL_3_AUTHORIZE_OFFLINE) {
-      gmailButtonLabel = localization.step3AuthorizeOffline;
+    } else if (_connectGmailStep == GMAIL_2_AUTHORIZE) {
+      gmailButtonLabel = localization.step2Authorize;
     }
 
     return EditScaffold(
