@@ -51,8 +51,12 @@ class _UserDetailsState extends State<UserDetails>
   TabController _controller;
   bool autoValidate = false;
 
-  bool _isConnectingGmail = false;
-  bool _isSignedInToGmail = false;
+  static const GMAIL_DEFAULT = 0;
+  static const GMAIL_1_SIGN_IN = 1;
+  static const GMAIL_2_REQUEST_SCOPE = 2;
+  static const GMAIL_3_AUTHORIZE_OFFLINE = 4;
+
+  int _connectGmailStep = GMAIL_DEFAULT;
   String _password;
 
   final _firstNameController = TextEditingController();
@@ -131,6 +135,46 @@ class _UserDetailsState extends State<UserDetails>
     });
   }
 
+  void _connectToGmail() {
+    if (_connectGmailStep == GMAIL_DEFAULT) {
+      print('## STEP 0');
+      GoogleOAuth.signOut();
+      passwordCallback(
+          context: context,
+          skipOAuth: true,
+          callback: (password, idToken) async {
+            setState(() {
+              _connectGmailStep = GMAIL_1_SIGN_IN;
+              _password = password;
+            });
+          });
+    } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
+      print('## STEP 1');
+      GoogleOAuth.signIn((idToken, accessToken) {
+        print('## $idToken, $accessToken');
+        if (idToken.isEmpty || accessToken.isEmpty) {
+          GoogleOAuth.signOut();
+          setState(() {
+            _connectGmailStep = GMAIL_2_REQUEST_SCOPE;
+          });
+        }
+      });
+    } else if (_connectGmailStep == GMAIL_2_REQUEST_SCOPE) {
+      print('## STEP 2');
+      GoogleOAuth.requestGmailScope();
+      setState(() {
+        _connectGmailStep = GMAIL_3_AUTHORIZE_OFFLINE;
+      });
+    } else if (_connectGmailStep == GMAIL_3_AUTHORIZE_OFFLINE) {
+      print('## STEP 3');
+      final completer = Completer<Null>();
+      completer.future.catchError((Object error) {
+        showErrorDialog(context: context, message: error);
+      });
+      widget.viewModel.onConnectGmailPressed(context, completer, _password);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -138,6 +182,17 @@ class _UserDetailsState extends State<UserDetails>
     final user = viewModel.user;
     final state = viewModel.state;
     final settings = viewModel.state.userCompany.settings;
+
+    String gmailButtonLabel = localization.connectGmail;
+    if (state.user.isConnectedToGmail) {
+      gmailButtonLabel = localization.disconnectGmail;
+    } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
+      gmailButtonLabel = localization.step1SignIn;
+    } else if (_connectGmailStep == GMAIL_2_REQUEST_SCOPE) {
+      gmailButtonLabel = localization.step2RequestScope;
+    } else if (_connectGmailStep == GMAIL_3_AUTHORIZE_OFFLINE) {
+      gmailButtonLabel = localization.step3AuthorizeOffline;
+    }
 
     return EditScaffold(
       title: localization.userDetails,
@@ -244,14 +299,7 @@ class _UserDetailsState extends State<UserDetails>
                       SizedBox(width: kTableColumnGap),
                       Expanded(
                         child: OutlineButton(
-                          child: Text((_isConnectingGmail
-                                  ? (_isSignedInToGmail
-                                      ? localization.step2Authorize
-                                      : localization.step1SignIn)
-                                  : state.user.isConnectedToGmail
-                                      ? localization.disconnectGmail
-                                      : localization.connectGmail)
-                              .toUpperCase()),
+                          child: Text(gmailButtonLabel.toUpperCase()),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                           onPressed: !state.user.isConnectedToGoogle
@@ -267,49 +315,8 @@ class _UserDetailsState extends State<UserDetails>
 
                                   if (state.user.isConnectedToGmail) {
                                     viewModel.onDisconnectGmailPressed(context);
-                                  } else if (_isConnectingGmail) {
-                                    if (_isSignedInToGmail) {
-                                      print('## onPressed: 1');
-                                      final completer = Completer<Null>();
-                                      completer.future
-                                          .catchError((Object error) {
-                                        print('## onPressed: 2');
-                                        showErrorDialog(
-                                            context: context, message: error);
-                                      });
-                                      print('## onPressed: 3');
-                                      viewModel.onConnectGmailPressed(
-                                          context, completer, _password);
-                                      print('## onPressed: 4');
-                                    } else {
-                                      GoogleOAuth.signIn(
-                                          (idToken, accessToken) {
-                                        if (idToken.isEmpty ||
-                                            accessToken.isEmpty) {
-                                          GoogleOAuth.signOut();
-                                          setState(() {
-                                            _isConnectingGmail = false;
-                                            _isSignedInToGmail = false;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            _isSignedInToGmail = true;
-                                          });
-                                        }
-                                      });
-                                    }
                                   } else {
-                                    GoogleOAuth.signOut();
-                                    passwordCallback(
-                                        context: context,
-                                        skipOAuth: true,
-                                        callback: (password, idToken) async {
-                                          setState(() {
-                                            _isConnectingGmail = true;
-                                            _isSignedInToGmail = false;
-                                            _password = password;
-                                          });
-                                        });
+                                    _connectToGmail();
                                   }
                                 },
                         ),
