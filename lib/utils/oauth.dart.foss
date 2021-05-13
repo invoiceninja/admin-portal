@@ -11,7 +11,7 @@ class GoogleOAuth {
     //
   }
 
-  static Future<bool> grantOfflineAccess(Function(String, String, String) callback) async {
+  static Future<bool> grantOfflineAccess(Function(String, String, String) successCallback, Function errorCallback) async {
     //
   }
 

@@ -154,17 +154,26 @@ class _UserDetailsState extends State<UserDetails>
           print('## id: $idToken, acces: $accessToken, auth: $serverAuthCode');
           if (idToken.isEmpty || accessToken.isEmpty) {
             GoogleOAuth.signOut();
+            setState(() {
+              _connectGmailStep = GMAIL_1_SIGN_IN;
+            });
           } else {
             setState(() {
               _connectGmailStep = GMAIL_2_AUTHORIZE;
             });
           }
+        }, () {
+          // Gmail always fails the first time
+          print('## STEP 1 FAILED');
+          setState(() {
+            _connectGmailStep = GMAIL_2_AUTHORIZE;
+          });
         });
       } catch (error) {
         showErrorDialog(context: context, message: error);
       }
     } else if (_connectGmailStep == GMAIL_2_AUTHORIZE) {
-      print('## STEP 3');
+      print('## STEP 2');
       final completer = Completer<Null>();
       completer.future.catchError((Object error) {
         showErrorDialog(context: context, message: error);

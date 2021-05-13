@@ -78,6 +78,10 @@ class UserDetailsVM {
                 password: password,
               ));
             }
+          }, () {
+            print('## onConnectGmailPressed: error');
+            completer.completeError(
+                AppLocalization.of(context).anErrorOccurredTryAgain);
           });
           if (!signedIn) {
             print('## onConnectGmailPressed: 5');
