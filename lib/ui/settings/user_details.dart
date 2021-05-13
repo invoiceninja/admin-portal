@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,6 +50,9 @@ class _UserDetailsState extends State<UserDetails>
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
   bool autoValidate = false;
+
+  bool _isConnectingGmail = false;
+  bool _isSignedInToGmail = false;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -238,9 +243,13 @@ class _UserDetailsState extends State<UserDetails>
                       SizedBox(width: kTableColumnGap),
                       Expanded(
                         child: OutlineButton(
-                          child: Text((state.user.isConnectedToGmail
-                                  ? localization.disconnectGmail
-                                  : localization.connectGmail)
+                          child: Text((_isConnectingGmail
+                                  ? (_isSignedInToGmail
+                                      ? localization.step2Authorize
+                                      : localization.step1SignIn)
+                                  : state.user.isConnectedToGmail
+                                      ? localization.disconnectGmail
+                                      : localization.connectGmail)
                               .toUpperCase()),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
@@ -257,8 +266,41 @@ class _UserDetailsState extends State<UserDetails>
 
                                   if (state.user.isConnectedToGmail) {
                                     viewModel.onDisconnectGmailPressed(context);
+                                  } else if (_isConnectingGmail) {
+                                    if (_isSignedInToGmail) {
+                                      final completer = Completer<Null>();
+                                      completer.future
+                                          .catchError((Object error) {
+                                        setState(() {
+                                          _isConnectingGmail = false;
+                                          _isSignedInToGmail = false;
+                                        });
+                                      });
+                                      viewModel.onConnectGmailPressed(
+                                          context, completer);
+                                    } else {
+                                      GoogleOAuth.signIn(
+                                          (idToken, accessToken) {
+                                        if (idToken.isEmpty ||
+                                            accessToken.isEmpty) {
+                                          GoogleOAuth.signOut();
+                                          setState(() {
+                                            _isConnectingGmail = false;
+                                            _isSignedInToGmail = false;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            _isSignedInToGmail = true;
+                                          });
+                                        }
+                                      });
+                                    }
                                   } else {
-                                    viewModel.onConnectGmailPressed(context);
+                                    GoogleOAuth.signOut();
+                                    setState(() {
+                                      _isConnectingGmail = true;
+                                      _isSignedInToGmail = false;
+                                    });
                                   }
                                 },
                         ),

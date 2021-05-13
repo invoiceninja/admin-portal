@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -50,7 +52,7 @@ class UserDetailsVM {
       state: state,
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
-      onConnectGmailPressed: (context) {
+      onConnectGmailPressed: (context, completer) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).connectedGmail);
 
@@ -63,7 +65,7 @@ class UserDetailsVM {
                   if (idToken.isEmpty ||
                       accessToken.isEmpty ||
                       serverAuthCode.isEmpty) {
-                    GoogleOAuth.signOut();
+                    completer.completeError(null);
                     showErrorDialog(
                         context: context,
                         message: AppLocalization.of(context)
@@ -78,12 +80,14 @@ class UserDetailsVM {
                   }
                 });
                 if (!signedIn) {
+                  completer.completeError(null);
                   showErrorDialog(
                       context: context,
                       message:
                           AppLocalization.of(context).anErrorOccurredTryAgain);
                 }
               } catch (error) {
+                completer.completeError(null);
                 showErrorDialog(context: context, message: error);
               }
             });
@@ -240,7 +244,7 @@ class UserDetailsVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onConnectGooglePressed;
   final Function(BuildContext) onDisconnectGooglePressed;
-  final Function(BuildContext) onConnectGmailPressed;
+  final Function(BuildContext, Completer) onConnectGmailPressed;
   final Function(BuildContext) onDisconnectGmailPressed;
   final Function(BuildContext) onDisableTwoFactorPressed;
 }
