@@ -1032,6 +1032,9 @@ class _$UserSettingsEntitySerializer
       'number_years_active',
       serializers.serialize(object.numberYearsActive,
           specifiedType: const FullType(int)),
+      'include_deleted_clients',
+      serializers.serialize(object.includeDeletedClients,
+          specifiedType: const FullType(bool)),
     ];
     if (object.accentColor != null) {
       result
@@ -1075,6 +1078,10 @@ class _$UserSettingsEntitySerializer
         case 'number_years_active':
           result.numberYearsActive = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'include_deleted_clients':
+          result.includeDeletedClients = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -3194,6 +3201,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   final BuiltMap<String, ReportSettingsEntity> reportSettings;
   @override
   final int numberYearsActive;
+  @override
+  final bool includeDeletedClients;
 
   factory _$UserSettingsEntity(
           [void Function(UserSettingsEntityBuilder) updates]) =>
@@ -3203,7 +3212,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
       {this.accentColor,
       this.tableColumns,
       this.reportSettings,
-      this.numberYearsActive})
+      this.numberYearsActive,
+      this.includeDeletedClients})
       : super._() {
     if (tableColumns == null) {
       throw new BuiltValueNullFieldError('UserSettingsEntity', 'tableColumns');
@@ -3215,6 +3225,10 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     if (numberYearsActive == null) {
       throw new BuiltValueNullFieldError(
           'UserSettingsEntity', 'numberYearsActive');
+    }
+    if (includeDeletedClients == null) {
+      throw new BuiltValueNullFieldError(
+          'UserSettingsEntity', 'includeDeletedClients');
     }
   }
 
@@ -3234,16 +3248,19 @@ class _$UserSettingsEntity extends UserSettingsEntity {
         accentColor == other.accentColor &&
         tableColumns == other.tableColumns &&
         reportSettings == other.reportSettings &&
-        numberYearsActive == other.numberYearsActive;
+        numberYearsActive == other.numberYearsActive &&
+        includeDeletedClients == other.includeDeletedClients;
   }
 
   int __hashCode;
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
-            reportSettings.hashCode),
-        numberYearsActive.hashCode));
+        $jc(
+            $jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
+                reportSettings.hashCode),
+            numberYearsActive.hashCode),
+        includeDeletedClients.hashCode));
   }
 
   @override
@@ -3252,7 +3269,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
           ..add('accentColor', accentColor)
           ..add('tableColumns', tableColumns)
           ..add('reportSettings', reportSettings)
-          ..add('numberYearsActive', numberYearsActive))
+          ..add('numberYearsActive', numberYearsActive)
+          ..add('includeDeletedClients', includeDeletedClients))
         .toString();
   }
 }
@@ -3282,6 +3300,11 @@ class UserSettingsEntityBuilder
   set numberYearsActive(int numberYearsActive) =>
       _$this._numberYearsActive = numberYearsActive;
 
+  bool _includeDeletedClients;
+  bool get includeDeletedClients => _$this._includeDeletedClients;
+  set includeDeletedClients(bool includeDeletedClients) =>
+      _$this._includeDeletedClients = includeDeletedClients;
+
   UserSettingsEntityBuilder() {
     UserSettingsEntity._initializeBuilder(this);
   }
@@ -3292,6 +3315,7 @@ class UserSettingsEntityBuilder
       _tableColumns = _$v.tableColumns?.toBuilder();
       _reportSettings = _$v.reportSettings?.toBuilder();
       _numberYearsActive = _$v.numberYearsActive;
+      _includeDeletedClients = _$v.includeDeletedClients;
       _$v = null;
     }
     return this;
@@ -3319,7 +3343,8 @@ class UserSettingsEntityBuilder
               accentColor: accentColor,
               tableColumns: tableColumns.build(),
               reportSettings: reportSettings.build(),
-              numberYearsActive: numberYearsActive);
+              numberYearsActive: numberYearsActive,
+              includeDeletedClients: includeDeletedClients);
     } catch (_) {
       String _$failedField;
       try {

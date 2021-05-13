@@ -297,7 +297,13 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadPaymentsRequest());
-    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
+    repository
+        .loadList(
+      state.credentials,
+      state.createdAtLimit,
+      state.filterDeletedClients,
+    )
+        .then((data) {
       store.dispatch(LoadPaymentsSuccess(data));
 
       if (action.completer != null) {

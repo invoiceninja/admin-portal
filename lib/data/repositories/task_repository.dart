@@ -29,8 +29,12 @@ class TaskRepository {
   }
 
   Future<BuiltList<TaskEntity>> loadList(
-      Credentials credentials, int createdAt) async {
-    final url = credentials.url + '/tasks?created_at=$createdAt';
+      Credentials credentials, int createdAt, bool includeDeleted) async {
+    String url = credentials.url + '/tasks?created_at=$createdAt';
+
+    if (!includeDeleted) {
+      url += '&filter_deleted_clients=true';
+    }
 
     final dynamic response = await webClient.get(url, credentials.token);
 

@@ -319,7 +319,10 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadCreditsRequest());
-    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
+    repository
+        .loadList(
+            state.credentials, state.createdAtLimit, state.filterDeletedClients)
+        .then((data) {
       store.dispatch(LoadCreditsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

@@ -119,7 +119,9 @@ void passwordCallback({
 }) {
   final state = StoreProvider.of<AppState>(context).state;
   if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
-    print('## hasRecentlyEnteredPassword...');
+    callback(null, null);
+    return;
+  } else if (!state.user.hasPassword && skipOAuth) {
     callback(null, null);
     return;
   }

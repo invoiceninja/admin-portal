@@ -39,18 +39,6 @@ class MessageDialog extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      if (onDiscard != null)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: TextButton(
-                              autofocus: true,
-                              child: Text(
-                                  localization.discardChanges.toUpperCase()),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                onDiscard();
-                              }),
-                        ),
                       if (secondaryActions != null)
                         Row(
                           children: secondaryActions
@@ -60,16 +48,28 @@ class MessageDialog extends StatelessWidget {
                                   ))
                               .toList(),
                         ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          if (onDismiss != null) {
-                            onDismiss();
-                          }
-                        },
-                        child: Text((dismissLabel ?? localization.dismiss)
-                            .toUpperCase()),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            if (onDismiss != null) {
+                              onDismiss();
+                            }
+                          },
+                          child: Text((dismissLabel ?? localization.dismiss)
+                              .toUpperCase()),
+                        ),
                       ),
+                      if (onDiscard != null)
+                        TextButton(
+                            autofocus: true,
+                            child:
+                                Text(localization.discardChanges.toUpperCase()),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              onDiscard();
+                            }),
                     ],
                   ),
                 ],

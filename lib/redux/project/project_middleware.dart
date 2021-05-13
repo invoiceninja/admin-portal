@@ -231,7 +231,13 @@ Middleware<AppState> _loadProjects(ProjectRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadProjectsRequest());
-    repository.loadList(state.credentials, state.createdAtLimit).then((data) {
+    repository
+        .loadList(
+      state.credentials,
+      state.createdAtLimit,
+      state.filterDeletedClients,
+    )
+        .then((data) {
       store.dispatch(LoadProjectsSuccess(data));
 
       if (action.completer != null) {

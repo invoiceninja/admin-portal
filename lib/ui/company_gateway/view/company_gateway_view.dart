@@ -183,7 +183,6 @@ class _CompanyGatewayOverview extends StatelessWidget {
               .present(localization.active, localization.archived),
         ),
       ],
-      ListDivider(),
       EntitiesListTile(
         hideNew: true,
         entity: companyGateway,
@@ -194,7 +193,6 @@ class _CompanyGatewayOverview extends StatelessWidget {
                 companyGateway.id, state.paymentState.map)
             .present(localization.active, localization.archived),
       ),
-      ListDivider(),
       for (var entry in allFields.entries) ...[
         Padding(
           padding: const EdgeInsets.only(top: 20, left: 20),

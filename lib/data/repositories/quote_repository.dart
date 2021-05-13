@@ -31,8 +31,12 @@ class QuoteRepository {
   }
 
   Future<BuiltList<InvoiceEntity>> loadList(
-      Credentials credentials, int createdAt) async {
-    final url = credentials.url + '/quotes?created_at=$createdAt';
+      Credentials credentials, int createdAt, bool includeDeleted) async {
+    String url = credentials.url + '/quotes?created_at=$createdAt';
+
+    if (!includeDeleted) {
+      url += '&filter_deleted_clients=true';
+    }
 
     final dynamic response = await webClient.get(url, credentials.token);
 

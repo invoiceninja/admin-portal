@@ -270,6 +270,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
+      'password',
+      serializers.serialize(object.password,
+          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -309,12 +312,6 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.password != null) {
-      result
-        ..add('password')
-        ..add(serializers.serialize(object.password,
-            specifiedType: const FullType(String)));
-    }
     if (object.emailVerifiedAt != null) {
       result
         ..add('email_verified_at')
@@ -1034,6 +1031,9 @@ class _$UserEntity extends UserEntity {
     }
     if (phone == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'phone');
+    }
+    if (password == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'password');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'customValue1');

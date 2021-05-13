@@ -135,7 +135,8 @@ class _TimePickerState extends State<TimePicker> {
           value = value.replaceAll(RegExp('[^\\d\:]'), '');
           value = value.toLowerCase().replaceAll('.', ':');
 
-          final parts = value.split(':');
+          final parts =
+              value.split(':').where((element) => element.isNotEmpty).toList();
           String dateTimeStr = '';
 
           if (parts.length == 1) {
@@ -168,8 +169,15 @@ class _TimePickerState extends State<TimePicker> {
           } else {
             final store = StoreProvider.of<AppState>(context);
             if (!store.state.company.settings.enableMilitaryTime) {
-              //final hour = parseDouble(parts[0]);
-              //dateTimeStr += hour > 6 ? ' AM' : ' PM';
+              final hour = parseDouble(parts[0]);
+              if (hour > 12) {
+                final parts = dateTimeStr
+                    .split(':')
+                    .where((element) => element.isNotEmpty)
+                    .toList();
+                parts[0] = '${(hour - 12).toInt()}';
+                dateTimeStr = parts.join(':');
+              }
               dateTimeStr += ' PM';
             }
           }

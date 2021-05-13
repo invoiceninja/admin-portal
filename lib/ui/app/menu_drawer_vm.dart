@@ -102,14 +102,9 @@ class MenuDrawerVM {
 
               final uiState = state.uiState;
               if (uiState.isInSettings) {
-                /*
-                String section = state.uiState.subRoute;
-                if ([kSettingsUserDetails].contains(section)) {
-                  section = kSettingsCompanyDetails;
-                }
-                */
                 store.dispatch(ViewSettings(
                   company: company,
+                  user: store.state.user,
                   section: uiState.subRoute,
                   force: true,
                 ));

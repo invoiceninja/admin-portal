@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
@@ -121,22 +122,21 @@ class _UserDetailsState extends State<UserDetails>
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final user = widget.viewModel.user.rebuild((b) => b
-        ..firstName = _firstNameController.text.trim()
-        ..lastName = _lastNameController.text.trim()
-        ..email = _emailController.text.trim()
-        ..phone = _phoneController.text.trim()
-        ..password = _passwordController.text.trim());
-      if (user != widget.viewModel.user) {
+    final user = widget.viewModel.user.rebuild((b) => b
+      ..firstName = _firstNameController.text.trim()
+      ..lastName = _lastNameController.text.trim()
+      ..email = _emailController.text.trim()
+      ..phone = _phoneController.text.trim()
+      ..password = _passwordController.text.trim());
+    if (user != widget.viewModel.user) {
+      _debouncer.run(() {
         widget.viewModel.onChanged(user);
-      }
-    });
+      });
+    }
   }
 
   void _connectToGmail() {
     if (_connectGmailStep == GMAIL_DEFAULT) {
-      print('## STEP 000');
       GoogleOAuth.signOut();
       passwordCallback(
           context: context,
@@ -148,10 +148,8 @@ class _UserDetailsState extends State<UserDetails>
             });
           });
     } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
-      print('## STEP 1');
       try {
         GoogleOAuth.grantOfflineAccess((idToken, accessToken, serverAuthCode) {
-          print('## id: $idToken, acces: $accessToken, auth: $serverAuthCode');
           if (idToken.isEmpty || accessToken.isEmpty) {
             GoogleOAuth.signOut();
             setState(() {
@@ -163,8 +161,7 @@ class _UserDetailsState extends State<UserDetails>
             });
           }
         }, () {
-          // Gmail always fails the first time
-          print('## STEP 1 FAILED');
+          // TODO Gmail always fails the first time
           setState(() {
             _connectGmailStep = GMAIL_2_AUTHORIZE;
           });
@@ -173,7 +170,6 @@ class _UserDetailsState extends State<UserDetails>
         showErrorDialog(context: context, message: error);
       }
     } else if (_connectGmailStep == GMAIL_2_AUTHORIZE) {
-      print('## STEP 2');
       final completer = Completer<Null>();
       completer.future.catchError((Object error) {
         showErrorDialog(context: context, message: error);
@@ -188,7 +184,6 @@ class _UserDetailsState extends State<UserDetails>
     final viewModel = widget.viewModel;
     final user = viewModel.user;
     final state = viewModel.state;
-    final settings = viewModel.state.userCompany.settings;
 
     String gmailButtonLabel = localization.connectGmail;
     if (state.user.isConnectedToGmail) {
@@ -378,10 +373,10 @@ class _UserDetailsState extends State<UserDetails>
                           (b) => b..userCompany.settings.accentColor = value));
                     },
                   ),
-                  if (state.company.isLarge || !kReleaseMode)
+                  if (state.company.isLarge || !kReleaseMode) ...[
                     AppDropdownButton<int>(
                       blankValue: null,
-                      labelText: localization.numberYearsActive,
+                      labelText: localization.yearsDataShown,
                       value: user.userCompany.settings.numberYearsActive,
                       onChanged: (dynamic value) {
                         widget.viewModel.onChanged(user.rebuild((b) =>
@@ -400,6 +395,18 @@ class _UserDetailsState extends State<UserDetails>
                             .toList()
                       ],
                     ),
+                    SizedBox(height: 8),
+                    BoolDropdownButton(
+                      label: localization.includeDeletedClients,
+                      helpLabel: localization.includeDeletedClientsHelp,
+                      value: user.userCompany.settings.includeDeletedClients,
+                      onChanged: (value) {
+                        widget.viewModel.onChanged(user.rebuild((b) => b
+                          ..userCompany.settings.includeDeletedClients =
+                              value));
+                      },
+                    )
+                  ],
                 ],
               ),
             ],
@@ -493,7 +500,6 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             }))
         .then((dynamic data) {
       setState(() => _isLoading = false);
-      print('## DONE: $data');
       showToast(AppLocalization.of(context).enabledTwoFactor);
       final store = StoreProvider.of<AppState>(context);
       store.dispatch(RefreshData());

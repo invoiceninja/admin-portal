@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'include_deleted_clients': 'Include Deleted Clients',
+      'include_deleted_clients_help':
+          'Automatically load records belonging to deleted clients',
       'step_1_sign_in': 'Step 1: Sign In',
       'step_2_authorize': 'Step 2: Authorize',
       'account_id': 'Account ID',
@@ -30,7 +33,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'show_task_end_date_help': 'Enable specifying the task end date',
       'gateway_setup': 'Gateway Setup',
       'preview_sidebar': 'Preview Sidebar',
-      'number_years_active': 'Number Years Active',
+      'years_data_shown': 'Years Data Shown',
       'ended_all_sessions': 'Successfully ended all sessions',
       'end_all_sessions': 'End All Sessions',
       'count_session': '1 Session',
@@ -60328,9 +60331,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['ended_all_sessions'] ??
       _localizedValues['en']['ended_all_sessions'];
 
-  String get numberYearsActive =>
-      _localizedValues[localeCode]['number_years_active'] ??
-      _localizedValues['en']['number_years_active'];
+  String get yearsDataShown =>
+      _localizedValues[localeCode]['years_data_shown'] ??
+      _localizedValues['en']['years_data_shown'];
 
   String get previewSidebar =>
       _localizedValues[localeCode]['preview_sidebar'] ??
@@ -60367,6 +60370,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get step2Authorize =>
       _localizedValues[localeCode]['step_2_authorize'] ??
       _localizedValues['en']['step_2_authorize'];
+
+  String get includeDeletedClients =>
+      _localizedValues[localeCode]['include_deleted_clients'] ??
+      _localizedValues['en']['include_deleted_clients'];
+
+  String get includeDeletedClientsHelp =>
+      _localizedValues[localeCode]['include_deleted_clients_help'] ??
+      _localizedValues['en']['include_deleted_clients_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

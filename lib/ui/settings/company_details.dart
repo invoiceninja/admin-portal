@@ -165,33 +165,33 @@ class _CompanyDetailsState extends State<CompanyDetails>
   }
 
   void _onSettingsChanged() {
-    _debouncer.run(() {
-      final settings = widget.viewModel.settings.rebuild((b) => b
-        ..name = _nameController.text.trim()
-        ..idNumber = _idNumberController.text.trim()
-        ..vatNumber = _vatNumberController.text.trim()
-        ..phone = _phoneController.text.trim()
-        ..email = _emailController.text.trim()
-        ..website = _websiteController.text.trim()
-        ..address1 = _address1Controller.text.trim()
-        ..address2 = _address2Controller.text.trim()
-        ..city = _cityController.text.trim()
-        ..state = _stateController.text.trim()
-        ..postalCode = _postalCodeController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim()
-        ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim()
-        ..defaultInvoiceFooter = _invoiceFooterController.text.trim()
-        ..defaultInvoiceTerms = _invoiceTermsController.text.trim()
-        ..defaultQuoteFooter = _quoteFooterController.text.trim()
-        ..defaultQuoteTerms = _quoteTermsController.text.trim()
-        ..defaultCreditFooter = _creditFooterController.text.trim()
-        ..defaultCreditTerms = _creditTermsController.text.trim());
-      if (settings != widget.viewModel.settings) {
+    final settings = widget.viewModel.settings.rebuild((b) => b
+      ..name = _nameController.text.trim()
+      ..idNumber = _idNumberController.text.trim()
+      ..vatNumber = _vatNumberController.text.trim()
+      ..phone = _phoneController.text.trim()
+      ..email = _emailController.text.trim()
+      ..website = _websiteController.text.trim()
+      ..address1 = _address1Controller.text.trim()
+      ..address2 = _address2Controller.text.trim()
+      ..city = _cityController.text.trim()
+      ..state = _stateController.text.trim()
+      ..postalCode = _postalCodeController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim()
+      ..defaultInvoiceFooter = _invoiceFooterController.text.trim()
+      ..defaultInvoiceTerms = _invoiceTermsController.text.trim()
+      ..defaultQuoteFooter = _quoteFooterController.text.trim()
+      ..defaultQuoteTerms = _quoteTermsController.text.trim()
+      ..defaultCreditFooter = _creditFooterController.text.trim()
+      ..defaultCreditTerms = _creditTermsController.text.trim());
+    if (settings != widget.viewModel.settings) {
+      _debouncer.run(() {
         widget.viewModel.onSettingsChanged(settings);
-      }
-    });
+      });
+    }
   }
 
   @override
