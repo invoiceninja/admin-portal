@@ -28,10 +28,10 @@ class RecurringInvoiceRepository {
   }
 
   Future<BuiltList<InvoiceEntity>> loadList(
-      Credentials credentials, int createdAt, bool includeDeleted) async {
+      Credentials credentials, int createdAt, bool filterDeleted) async {
     String url = credentials.url + '/recurring_invoices?created_at=$createdAt';
 
-    if (!includeDeleted) {
+    if (filterDeleted) {
       url += '&filter_deleted_clients=true';
     }
 
