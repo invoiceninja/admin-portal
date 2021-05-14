@@ -19,7 +19,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
-          'Automatically load records belonging to deleted clients',
+          'Load records belonging to deleted clients',
       'step_1_sign_in': 'Step 1: Sign In',
       'step_2_authorize': 'Step 2: Authorize',
       'account_id': 'Account ID',
