@@ -397,7 +397,7 @@ class _DesignSettingsState extends State<DesignSettings> {
               controller: widget.nameController,
             ),
             DesignPicker(
-                label: localization.loadDesign,
+                label: localization.design,
                 onSelected: (value) {
                   widget.onLoadDesign(value);
                   _selectedDesign = value;

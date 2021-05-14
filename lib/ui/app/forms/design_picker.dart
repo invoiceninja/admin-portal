@@ -23,7 +23,7 @@ class DesignPicker extends StatelessWidget {
     final designState = store.state.designState;
 
     return AppDropdownButton<String>(
-      value: initialValue,
+      value: initialValue ?? designState.cleanDesign.id,
       onChanged: (dynamic value) => onSelected(designState.map[value]),
       items: designState.list
           .where((designId) =>
