@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'exported_data':
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Automatically load records belonging to deleted clients',
@@ -429,9 +431,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reminder3_sent': 'Reminder 3 Sent',
       'reminder_last_sent': 'Reminder Last Sent',
       'pdf_page_info': 'Page :current of :total',
-      'emailed_invoices': 'Successfully emailed invoices',
-      'emailed_quotes': 'Successfully emailed quotes',
-      'emailed_credits': 'Successfully emailed credits',
+      'emailed_invoices': 'Successfully queued invoices to be sent',
+      'emailed_quotes': 'Successfully queued quotes to be sent',
+      'emailed_credits': 'Successfully queued credits to be sent',
       'gateway': 'Gateway',
       'view_in_stripe': 'View in Stripe',
       'rows_per_page': 'Rows Per Page',
@@ -1475,8 +1477,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_invoices': 'Successfully archived :value invoices',
       'deleted_invoices': 'Successfully deleted :value invoices',
       'restored_invoices': 'Successfully restored :value invoices',
-      'emailed_invoice': 'Successfully emailed invoice',
-      'emailed_payment': 'Successfully emailed payment',
+      'emailed_invoice': 'Successfully queued invoice to be sent',
+      'emailed_payment': 'Successfully queued payment to be sent',
       'amount': 'Amount',
       'invoice_number': 'Invoice Number',
       'invoice_date': 'Invoice Date',
@@ -1695,8 +1697,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_83': ':user deleted subscription',
       'activity_84': ':user restored subscription',
       'one_time_password': 'One Time Password',
-      'emailed_quote': 'Successfully emailed quote',
-      'emailed_credit': 'Successfully emailed credit',
+      'emailed_quote': 'Successfully queued quote to be sent',
+      'emailed_credit': 'Successfully queued credit to be sent',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
       'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
@@ -60378,6 +60380,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get includeDeletedClientsHelp =>
       _localizedValues[localeCode]['include_deleted_clients_help'] ??
       _localizedValues['en']['include_deleted_clients_help'];
+
+  String get exportedData =>
+      _localizedValues[localeCode]['exported_data'] ??
+      _localizedValues['en']['exported_data'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
