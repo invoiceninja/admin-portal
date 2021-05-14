@@ -787,7 +787,7 @@ abstract class InvoiceEntity extends Object
       }
     }
 
-    if (actions.isNotEmpty) {
+    if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
 
@@ -835,7 +835,9 @@ abstract class InvoiceEntity extends Object
         actions.add(EntityAction.cloneToOther);
       }
 
-      actions.add(null);
+      if (actions.isNotEmpty && actions.last != null) {
+        actions.add(null);
+      }
     }
 
     if (userCompany.canEditEntity(this) && !isDeleted) {

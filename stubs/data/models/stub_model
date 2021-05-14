@@ -91,7 +91,7 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
       }
     }
 
-    if (actions.isNotEmpty) {
+    if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
 

@@ -217,7 +217,7 @@ abstract class DocumentEntity extends Object
       actions.add(EntityAction.clone);
     }
 
-    if (actions.isNotEmpty) {
+    if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
 

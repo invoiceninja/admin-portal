@@ -202,7 +202,7 @@ abstract class VendorEntity extends Object
       }
     }
 
-    if (actions.isNotEmpty) {
+    if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
 
