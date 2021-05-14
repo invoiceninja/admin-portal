@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -21,8 +22,10 @@ import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ImportExport extends StatefulWidget {
   const ImportExport({
@@ -96,6 +99,18 @@ class _ImportExportState extends State<ImportExport> {
                 response: _response,
                 onCancelPressed: () => setState(() => _response = null),
               ),
+            FormCard(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppButton(
+                  iconData: MdiIcons.export,
+                  label: localization.export.toUpperCase(),
+                  onPressed: () {
+                    //
+                  },
+                )
+              ],
+            )
           ],
         ),
       ),
@@ -241,11 +256,10 @@ class _FileImportState extends State<_FileImport> {
     if (_isLoading)
       children.add(LinearProgressIndicator());
     else
-      children.add(OutlineButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        child: Text(localization.uploadFile),
+      children.add(AppButton(
+        label: localization.import.toUpperCase(),
+        iconData: MdiIcons.import,
         onPressed: _multipartFiles == null ? null : () => uploadFile(),
-        //onPressed: () => uploadFile(),
       ));
 
     return FormCard(
