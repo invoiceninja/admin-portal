@@ -129,6 +129,7 @@ const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;
 const int kMaxPostSeconds = 30;
+const int kMaxRawPostSeconds = 180;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kUpdatedAtBufferSeconds = 600;
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day

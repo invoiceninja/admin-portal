@@ -79,16 +79,22 @@ class WebClient {
       response = await _uploadFiles(url, token, multipartFiles, data: data);
     } else {
       response = await http.Client()
-          .post(url,
-              body: data,
-              headers: _getHeaders(
-                url,
-                token,
-                secret: secret,
-                password: password,
-                idToken: idToken,
-              ))
-          .timeout(const Duration(seconds: kMaxPostSeconds));
+          .post(
+            url,
+            body: data,
+            headers: _getHeaders(
+              url,
+              token,
+              secret: secret,
+              password: password,
+              idToken: idToken,
+            ),
+          )
+          .timeout(
+            Duration(
+              seconds: rawResponse ? kMaxRawPostSeconds : kMaxPostSeconds,
+            ),
+          );
     }
 
     if (rawResponse) {
