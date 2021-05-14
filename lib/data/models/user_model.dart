@@ -295,7 +295,7 @@ abstract class UserEntity extends Object
       actions.add(EntityAction.remove);
     }
 
-    if (actions.isNotEmpty) {
+    if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
 

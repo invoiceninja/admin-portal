@@ -595,7 +595,7 @@ abstract class ClientEntity extends Object
 
       actions.add(EntityAction.clientPortal);
 
-      if (actions.isNotEmpty) {
+      if (actions.isNotEmpty && actions.last != null) {
         actions.add(null);
       }
 
@@ -624,7 +624,7 @@ abstract class ClientEntity extends Object
       }
     }
 
-    if (actions.isNotEmpty) {
+    if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
 

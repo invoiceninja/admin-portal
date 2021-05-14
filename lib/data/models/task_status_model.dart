@@ -106,7 +106,7 @@ abstract class TaskStatusEntity extends Object
       actions.add(EntityAction.edit);
     }
 
-    if (actions.isNotEmpty) {
+    if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
 

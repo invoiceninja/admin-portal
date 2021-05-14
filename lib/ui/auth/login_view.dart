@@ -303,50 +303,52 @@ class _LoginState extends State<LoginView> {
                       Column(
                         children: <Widget>[
                           SizedBox(height: 10),
-                          if (!kIsWeb && !kReleaseMode)
-                            AppToggleButtons(
-                              tabLabels: [
-                                localization.hosted,
-                                localization.selfhosted,
-                              ],
-                              selectedIndex: _isSelfHosted ? 1 : 0,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _isSelfHosted = index == 1;
-                                  _loginError = '';
-                                  _emailLogin = _isSelfHosted;
-                                  _createAccount = !_isSelfHosted;
-                                });
-                              },
-                            ),
-                          if (!_isSelfHosted)
-                            AppToggleButtons(
-                              tabLabels: [
-                                localization.signUp,
-                                localization.login,
-                              ],
-                              selectedIndex: _createAccount ? 0 : 1,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _createAccount = index == 0;
-                                  _loginError = '';
-                                });
-                              },
-                            ),
-                          if (!_isSelfHosted)
-                            AppToggleButtons(
-                              tabLabels: [
-                                'Google',
-                                localization.email,
-                              ],
-                              selectedIndex: _emailLogin ? 1 : 0,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _emailLogin = index == 1;
-                                  _loginError = '';
-                                });
-                              },
-                            ),
+                          if (!_recoverPassword) ...[
+                            if (!kIsWeb && !kReleaseMode)
+                              AppToggleButtons(
+                                tabLabels: [
+                                  localization.hosted,
+                                  localization.selfhosted,
+                                ],
+                                selectedIndex: _isSelfHosted ? 1 : 0,
+                                onTabChanged: (index) {
+                                  setState(() {
+                                    _isSelfHosted = index == 1;
+                                    _loginError = '';
+                                    _emailLogin = _isSelfHosted;
+                                    _createAccount = !_isSelfHosted;
+                                  });
+                                },
+                              ),
+                            if (!_isSelfHosted)
+                              AppToggleButtons(
+                                tabLabels: [
+                                  localization.signUp,
+                                  localization.login,
+                                ],
+                                selectedIndex: _createAccount ? 0 : 1,
+                                onTabChanged: (index) {
+                                  setState(() {
+                                    _createAccount = index == 0;
+                                    _loginError = '';
+                                  });
+                                },
+                              ),
+                            if (!_isSelfHosted)
+                              AppToggleButtons(
+                                tabLabels: [
+                                  'Google',
+                                  localization.email,
+                                ],
+                                selectedIndex: _emailLogin ? 1 : 0,
+                                onTabChanged: (index) {
+                                  setState(() {
+                                    _emailLogin = index == 1;
+                                    _loginError = '';
+                                  });
+                                },
+                              ),
+                          ],
                           if (_emailLogin)
                             DecoratedFormField(
                               controller: _emailController,
@@ -379,14 +381,14 @@ class _LoginState extends State<LoginView> {
                               keyboardType: TextInputType.url,
                               onSavePressed: (_) => _submitLoginForm(),
                             ),
-                          if (!_createAccount)
+                          if (!_createAccount && !_recoverPassword)
                             DecoratedFormField(
                               controller: _oneTimePasswordController,
                               label:
                                   '${localization.oneTimePassword} (${localization.optional})',
                               onSavePressed: (_) => _submitLoginForm(),
                             ),
-                          if (_isSelfHosted)
+                          if (_isSelfHosted && !_recoverPassword)
                             PasswordFormField(
                               labelText:
                                   '${localization.secret} (${localization.optional})',
