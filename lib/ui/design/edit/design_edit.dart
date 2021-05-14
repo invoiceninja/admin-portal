@@ -139,6 +139,8 @@ class _DesignEditState extends State<DesignEdit>
   }
 
   void _loadDesign(DesignEntity design) {
+    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+
     final htmlDesign = design.design;
     _headerController.text = htmlDesign[kDesignHeader];
     _bodyController.text = htmlDesign[kDesignBody];
@@ -147,7 +149,9 @@ class _DesignEditState extends State<DesignEdit>
     _tasksController.text = htmlDesign[kDesignTasks];
     _includesController.text = htmlDesign[kDesignIncludes];
 
-    _loadPreview(context, design);
+    _controllers.forEach((controller) => controller.addListener(_onChanged));
+
+    _onChanged();
   }
 
   void _loadPreview(BuildContext context, DesignEntity design) async {
