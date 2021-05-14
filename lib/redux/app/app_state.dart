@@ -760,12 +760,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   int get createdAtLimit {
-    if (!company.isLarge) {
+    final numberYearsActive = userCompany.settings.numberYearsActive;
+
+    if (!company.isLarge || numberYearsActive == 0) {
       return 0;
     }
 
-    final offset =
-        userCompany.settings.numberYearsActive * (60 * 60 * 24 * 365);
+    final offset = numberYearsActive * (60 * 60 * 24 * 365);
 
     return (DateTime.now().millisecondsSinceEpoch / 1000).round() - offset;
   }
