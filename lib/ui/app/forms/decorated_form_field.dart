@@ -111,10 +111,13 @@ class DecoratedFormField extends StatelessWidget {
       }
 
       inputDecoration = InputDecoration(
-        labelText: label,
-        hintText: hint,
-        suffixIcon: icon,
-      );
+          labelText: label,
+          hintText: hint,
+          suffixIcon: icon,
+          floatingLabelBehavior:
+              (hint ?? '').isNotEmpty && (label ?? '').isEmpty
+                  ? FloatingLabelBehavior.always
+                  : FloatingLabelBehavior.auto);
     }
 
     return TextFormField(
