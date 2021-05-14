@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'exported_data':
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Automatically load records belonging to deleted clients',
@@ -60378,6 +60380,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get includeDeletedClientsHelp =>
       _localizedValues[localeCode]['include_deleted_clients_help'] ??
       _localizedValues['en']['include_deleted_clients_help'];
+
+  String get exportedData =>
+      _localizedValues[localeCode]['exported_data'] ??
+      _localizedValues['en']['exported_data'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

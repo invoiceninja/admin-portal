@@ -46,6 +46,7 @@ class _ImportExportState extends State<ImportExport> {
   bool autoValidate = false;
   PreImportResponse _response;
   var _importType = ImportType.csv;
+  bool _isExporting = false;
 
   @override
   void initState() {
@@ -102,13 +103,33 @@ class _ImportExportState extends State<ImportExport> {
             FormCard(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AppButton(
-                  iconData: MdiIcons.export,
-                  label: localization.export.toUpperCase(),
-                  onPressed: () {
-                    //
-                  },
-                )
+                if (_isExporting)
+                  LinearProgressIndicator()
+                else
+                  AppButton(
+                    iconData: MdiIcons.export,
+                    label: localization.export.toUpperCase(),
+                    onPressed: () {
+                      final webClient = WebClient();
+                      final state = StoreProvider.of<AppState>(context).state;
+                      final credentials = state.credentials;
+                      final url = '${credentials.url}/export';
+
+                      setState(() => _isExporting = true);
+
+                      webClient
+                          .post(url, credentials.token)
+                          .then((dynamic result) {
+                        setState(() => _isExporting = false);
+                        showMessageDialog(
+                            context: context,
+                            message: localization.exportedData);
+                      }).catchError((dynamic error) {
+                        setState(() => _isExporting = false);
+                        showErrorDialog(context: context, message: '$error');
+                      });
+                    },
+                  )
               ],
             )
           ],
