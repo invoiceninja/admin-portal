@@ -236,7 +236,19 @@ class _ClientPortalState extends State<ClientPortal>
                         ),
                       ],
                     ),
-                    if (company.portalMode != kClientPortalModeSubdomain)
+                    if (company.portalMode == kClientPortalModeSubdomain)
+                      DecoratedFormField(
+                        label: localization.subdomain,
+                        controller: _subdomainController,
+                        hint: localization.subdomainHelp,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-z0-9\-]'),
+                          ),
+                        ],
+                        onSavePressed: viewModel.onSavePressed,
+                      )
+                    else
                       DecoratedFormField(
                         label: company.portalMode == kClientPortalModeDomain
                             ? localization.domainUrl
@@ -248,17 +260,6 @@ class _ClientPortalState extends State<ClientPortal>
                             : null,
                         onSavePressed: viewModel.onSavePressed,
                       ),
-                    DecoratedFormField(
-                      label: localization.subdomain,
-                      controller: _subdomainController,
-                      hint: localization.subdomainHelp,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'[a-z0-9\-]'),
-                        ),
-                      ],
-                      onSavePressed: viewModel.onSavePressed,
-                    ),
                   ],
                 ),
               FormCard(
