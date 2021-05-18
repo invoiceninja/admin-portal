@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -52,6 +55,7 @@ class CompanyGatewayViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
+    @required this.onStripeImportPressed,
   });
 
   factory CompanyGatewayViewVM.fromStore(Store<AppState> store) {
@@ -83,6 +87,29 @@ class CompanyGatewayViewVM {
           handleEntitiesActions(
               context.getAppContext(), [companyGateway], action,
               autoPop: true),
+      onStripeImportPressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
+        final webClient = WebClient();
+        final credentials = state.credentials;
+        final url = '${credentials.url}/stripe/import_customers';
+
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              store.dispatch(StartSaving());
+              webClient
+                  .post(url, credentials.token,
+                      password: password, idToken: idToken)
+                  .then((dynamic response) {
+                store.dispatch(StopSaving());
+                showMessageDialog(
+                    context: context, message: localization.importedCustomers);
+              }).catchError((dynamic error) {
+                store.dispatch(StopSaving());
+                showErrorDialog(context: context, message: error);
+              });
+            });
+      },
     );
   }
 
@@ -95,4 +122,5 @@ class CompanyGatewayViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
+  final Function(BuildContext) onStripeImportPressed;
 }
