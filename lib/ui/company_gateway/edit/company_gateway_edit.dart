@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CompanyGatewayEdit extends StatefulWidget {
   const CompanyGatewayEdit({
@@ -76,11 +77,19 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final origCompanyGateway = state.companyGatewayState.get(companyGateway.id);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
 
+    final connectGateways = [
+      kGatewayStripeConnect,
+      kGatewayWePay,
+    ];
+
+    final disableSave = connectGateways.contains(companyGateway.gatewayId) &&
+        companyGateway.isNew;
+
     return EditScaffold(
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
           : origCompanyGateway.listDisplayName,
-      onSavePressed: viewModel.onSavePressed,
+      onSavePressed: disableSave ? null : viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
@@ -130,10 +139,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         );
                       },
                     ),
-                  if ([
-                    kGatewayStripeConnect,
-                    kGatewayWePay,
-                  ].contains(companyGateway.gatewayId))
+                  if (connectGateways.contains(companyGateway.gatewayId))
                     if (companyGateway.isNew)
                       AppButton(
                         label: localization.gatewaySetup.toUpperCase(),
