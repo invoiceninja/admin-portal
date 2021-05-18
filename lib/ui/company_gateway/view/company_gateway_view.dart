@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -17,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CompanyGatewayView extends StatefulWidget {
   const CompanyGatewayView({
@@ -145,7 +147,18 @@ class _CompanyGatewayOverview extends StatelessWidget {
           label: localization.processed,
           value: formatNumber(processed, context)),
       ListDivider(),
-      if (gateway.supportedEvents().isNotEmpty)
+      if ([kGatewayStripe, kGatewayStripeConnect].contains(gateway.id)) ...[
+        Padding(
+          padding: const EdgeInsets.only(left: 16, bottom: 20, right: 16),
+          child: AppButton(
+            iconData: MdiIcons.import,
+            label: localization.importCustomers.toUpperCase(),
+            onPressed: () => viewModel.onStripeImportPressed(context),
+          ),
+        ),
+        ListDivider(),
+      ],
+      if (gateway.supportedEvents().isNotEmpty) ...[
         ListTile(
           contentPadding: const EdgeInsets.all(22),
           title: Text(localization.webhookUrl),
@@ -170,7 +183,8 @@ class _CompanyGatewayOverview extends StatelessWidget {
                 .replaceFirst(':value ', webhookUrl));
           },
         ),
-      ListDivider(),
+        ListDivider(),
+      ],
       if (gateway?.supportsTokenBilling == true) ...[
         EntitiesListTile(
           hideNew: true,

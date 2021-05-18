@@ -40,6 +40,13 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               .where((systemLog) => systemLog.isVisible)
               .map((systemLog) {
             final client = state.clientState.get(systemLog.clientId);
+            Map<String, dynamic> logs;
+            if (systemLog.log.isNotEmpty) {
+              try {
+                logs = json.decode(systemLog.log);
+              } catch (e) {}
+            }
+
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
@@ -69,9 +76,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: systemLog.log.isEmpty
-                      ? SizedBox()
-                      : JsonViewerWidget(jsonDecode(systemLog.log)),
+                  child: logs == null ? SizedBox() : JsonViewerWidget(logs),
                 ),
               ),
             );

@@ -52,14 +52,9 @@ class _LoginState extends State<LoginView> {
 
   String _loginError = '';
 
-  bool _emailLogin = true;
-  bool _isSelfHosted = true;
-  bool _createAccount = false;
-
-  // TODO change for stable release
-  //bool _emailLogin = false;
-  //bool _isSelfHosted = false;
-  //bool _createAccount = true;
+  bool _emailLogin = false;
+  bool _isSelfHosted = false;
+  bool _createAccount = true;
 
   bool _recoverPassword = false;
   bool _autoValidate = false;
@@ -92,6 +87,7 @@ class _LoginState extends State<LoginView> {
       _privacyChecked = true;
       _termsChecked = true;
       _emailLogin = true;
+      _createAccount = false;
     }
 
     if (_urlController.text.isEmpty) {
@@ -486,7 +482,6 @@ class _LoginState extends State<LoginView> {
                         padding: EdgeInsets.only(top: 30, bottom: 10),
                         child: RoundedLoadingButton(
                           height: 44,
-                          //width: 210,
                           width: 220,
                           controller: _buttonController,
                           color: convertHexStringToColor('#4285F4'),

@@ -15,11 +15,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'import_customers': 'Import Customers',
+      'imported_customers': 'Successfully started importing customers',
+      'login_success': 'Successful Login',
+      'login_failure': 'Failed Login',
       'exported_data':
           'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
-          'Automatically load records belonging to deleted clients',
+          'Load records belonging to deleted clients',
       'step_1_sign_in': 'Step 1: Sign In',
       'step_2_authorize': 'Step 2: Authorize',
       'account_id': 'Account ID',
@@ -60384,6 +60388,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get exportedData =>
       _localizedValues[localeCode]['exported_data'] ??
       _localizedValues['en']['exported_data'];
+
+  String get loginSuccess =>
+      _localizedValues[localeCode]['login_success'] ??
+      _localizedValues['en']['login_success'];
+
+  String get loginFailure =>
+      _localizedValues[localeCode]['login_failure'] ??
+      _localizedValues['en']['login_failure'];
+
+  String get importCustomers =>
+      _localizedValues[localeCode]['import_customers'] ??
+      _localizedValues['en']['import_customers'];
+
+  String get importedCustomers =>
+      _localizedValues[localeCode]['imported_customers'] ??
+      _localizedValues['en']['imported_customers'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

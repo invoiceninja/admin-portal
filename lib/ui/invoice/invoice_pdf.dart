@@ -227,7 +227,10 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     ),
                     if (isDesktop(context)) ...activitySelector,
                     if (isDesktop(context)) ...pageSelector,
-                    if (isDesktop(context) && _activityId == null) deliveryNote,
+                    if (isDesktop(context) &&
+                        invoice.isInvoice &&
+                        _activityId == null)
+                      deliveryNote,
                   ],
                 ),
                 actions: <Widget>[

@@ -120,11 +120,6 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isValid: false,
                     subtitle: 'Not enabled',
                   ),
-                if (!_response.envWritable && !state.account.isDocker)
-                  _HealthListTile(
-                    title: '.env Writable',
-                    isValid: false,
-                  ),
                 if (_response.pendingJobs > 0)
                   _HealthListTile(
                     title: 'Pending Jobs',

@@ -141,6 +141,10 @@ abstract class SystemLogEntity
         return 'modified';
       case 702:
         return 'deleted';
+      case 800:
+        return 'login_success';
+      case 801:
+        return 'login_failure';
     }
 
     return '';
