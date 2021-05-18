@@ -126,10 +126,15 @@ class _EmailSettingsState extends State<EmailSettings> {
     final settings = viewModel.settings;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
 
+    final gmailSendingUserId = settings.gmailSendingUserId ?? '';
+    final disableSave = settings.emailSendingMethod ==
+            SettingsEntity.EMAIL_SENDING_METHOD_GMAIL &&
+        (gmailSendingUserId.isEmpty || gmailSendingUserId == '0');
+
     return EditScaffold(
       title: localization.emailSettings,
       isAdvancedSettings: true,
-      onSavePressed: _onSavePressed,
+      onSavePressed: disableSave ? null : _onSavePressed,
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
@@ -162,6 +167,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                             final store = StoreProvider.of<AppState>(context);
                             store.dispatch(ViewSettings(
                               section: kSettingsUserDetails,
+                              force: true,
                             ));
                           },
                         ),
