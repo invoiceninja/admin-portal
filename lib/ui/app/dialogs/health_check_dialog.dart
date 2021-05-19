@@ -100,7 +100,8 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
               children: [
                 _HealthListTile(
                   title: 'System Health',
-                  subtitle: 'Email: ${toTitleCase(_response.emailDriver)}',
+                  subtitle:
+                      '${toTitleCase(_response.emailDriver)} • ${_response.pdfEngine.replaceFirst(' PDF Generator', '')}',
                   isValid: _response.systemHealth,
                 ),
                 _HealthListTile(
