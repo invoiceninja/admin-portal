@@ -109,6 +109,14 @@ class _LoginState extends State<LoginView> {
     super.dispose();
   }
 
+  void _submitForm() {
+    if (_createAccount) {
+      _submitSignUpForm();
+    } else {
+      _submitLoginForm();
+    }
+  }
+
   void _submitSignUpForm() {
     final isValid = _formKey.currentState.validate();
     final localization = AppLocalization.of(context);
@@ -116,7 +124,6 @@ class _LoginState extends State<LoginView> {
 
     setState(() {
       _autoValidate = !isValid ?? false;
-      print('_autoValidate: $_autoValidate');
       _loginError = '';
     });
 
@@ -162,7 +169,6 @@ class _LoginState extends State<LoginView> {
     });
 
     if (_emailLogin) {
-      TextInput.finishAutofillContext(shouldSave: true);
       viewModel.onSignUpPressed(
         context,
         completer,
@@ -227,7 +233,6 @@ class _LoginState extends State<LoginView> {
           secret: _isSelfHosted ? _secretController.text : '',
         );
       } else {
-        TextInput.finishAutofillContext(shouldSave: true);
         viewModel.onLoginPressed(
           context,
           completer,
@@ -357,14 +362,14 @@ class _LoginState extends State<LoginView> {
                                       : null,
                               autofillHints: [AutofillHints.email],
                               autofocus: true,
-                              onSavePressed: (_) => _submitLoginForm(),
+                              onSavePressed: (_) => _submitForm(),
                             ),
                           if (_emailLogin && !_recoverPassword)
                             PasswordFormField(
                               controller: _passwordController,
                               autoValidate: false,
                               newPassword: _createAccount,
-                              onSavePressed: (_) => _submitLoginForm(),
+                              onSavePressed: (_) => _submitForm(),
                             ),
                           if (_isSelfHosted && !kIsWeb)
                             DecoratedFormField(
@@ -375,14 +380,14 @@ class _LoginState extends State<LoginView> {
                                       ? localization.pleaseEnterYourUrl
                                       : null,
                               keyboardType: TextInputType.url,
-                              onSavePressed: (_) => _submitLoginForm(),
+                              onSavePressed: (_) => _submitForm(),
                             ),
                           if (!_createAccount && !_recoverPassword)
                             DecoratedFormField(
                               controller: _oneTimePasswordController,
                               label:
                                   '${localization.oneTimePassword} (${localization.optional})',
-                              onSavePressed: (_) => _submitLoginForm(),
+                              onSavePressed: (_) => _submitForm(),
                             ),
                           if (_isSelfHosted && !_recoverPassword)
                             PasswordFormField(
@@ -390,7 +395,7 @@ class _LoginState extends State<LoginView> {
                                   '${localization.secret} (${localization.optional})',
                               controller: _secretController,
                               autoValidate: _autoValidate,
-                              onSavePressed: (_) => _submitLoginForm(),
+                              onSavePressed: (_) => _submitForm(),
                             ),
                           if (_createAccount)
                             Padding(
@@ -485,9 +490,7 @@ class _LoginState extends State<LoginView> {
                           width: 220,
                           controller: _buttonController,
                           color: convertHexStringToColor('#4285F4'),
-                          onPressed: () => _createAccount
-                              ? _submitSignUpForm()
-                              : _submitLoginForm(),
+                          onPressed: () => _submitForm(),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [

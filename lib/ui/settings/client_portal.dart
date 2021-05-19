@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,10 +7,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -43,21 +45,22 @@ class _ClientPortalState extends State<ClientPortal>
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
 
-  bool autoValidate = false;
+  final _webClient = WebClient();
+  bool _autoValidate = false;
+  bool _isSubdomainUnique = true;
+  bool _isCheckingSubdomain = false;
 
-  final _debouncer = Debouncer();
+  final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
   final _subdomainController = TextEditingController();
   final _portalDomainController = TextEditingController();
   final _customCssController = TextEditingController();
   final _customJavaScriptController = TextEditingController();
   final _customHeaderController = TextEditingController();
   final _customFooterController = TextEditingController();
-
   final _customMessageDashboard = TextEditingController();
   final _customMessageUnpaidInvoice = TextEditingController();
   final _customMessagePaidInvoice = TextEditingController();
   final _customMessageUnapprovedQuote = TextEditingController();
-
   final _termsController = TextEditingController();
   final _privacyController = TextEditingController();
 
@@ -76,6 +79,45 @@ class _ClientPortalState extends State<ClientPortal>
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+  }
+
+  void _validateSubdomain() {
+    _debouncer.run(() {
+      final subdomain = _subdomainController.text.trim();
+      final store = StoreProvider.of<AppState>(context);
+      final state = store.state;
+      final credentials = state.credentials;
+      final url = '${credentials.url}/check_subdomain';
+
+      if (subdomain.isEmpty) {
+        setState(() => _isSubdomainUnique = false);
+        return;
+      }
+
+      if (subdomain == state.company.subdomain) {
+        setState(() => _isSubdomainUnique = true);
+        return;
+      }
+
+      setState(() => _isCheckingSubdomain = true);
+
+      _webClient
+          .post(url, credentials.token,
+              data: jsonEncode(
+                {'subdomain': subdomain},
+              ))
+          .then((dynamic data) {
+        setState(() {
+          _isSubdomainUnique = true;
+          _isCheckingSubdomain = false;
+        });
+      }).catchError((Object error) {
+        setState(() {
+          _isSubdomainUnique = false;
+          _isCheckingSubdomain = false;
+        });
+      });
+    });
   }
 
   @override
@@ -162,10 +204,10 @@ class _ClientPortalState extends State<ClientPortal>
     final bool isValid = _formKey.currentState.validate();
 
     setState(() {
-      autoValidate = !isValid;
+      _autoValidate = !isValid;
     });
 
-    if (!isValid) {
+    if (!isValid || _isCheckingSubdomain) {
       return;
     }
 
@@ -236,7 +278,36 @@ class _ClientPortalState extends State<ClientPortal>
                         ),
                       ],
                     ),
-                    if (company.portalMode != kClientPortalModeSubdomain)
+                    if (company.portalMode == kClientPortalModeSubdomain)
+                      DecoratedFormField(
+                        label: localization.subdomain,
+                        autovalidate: _autoValidate,
+                        controller: _subdomainController,
+                        hint: localization.subdomainHelp,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return localization.pleaseEnterAValue;
+                          } else if (!_isCheckingSubdomain &&
+                              !_isSubdomainUnique) {
+                            return localization.subdomainIsNotAvailable;
+                          }
+
+                          return null;
+                        },
+                        suffixIcon: Icon(_isCheckingSubdomain
+                            ? Icons.pending_outlined
+                            : _isSubdomainUnique
+                                ? Icons.check_circle_outline
+                                : Icons.error_outline),
+                        onChanged: (value) => _validateSubdomain(),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-z0-9\-]'),
+                          ),
+                        ],
+                        onSavePressed: viewModel.onSavePressed,
+                      )
+                    else
                       DecoratedFormField(
                         label: company.portalMode == kClientPortalModeDomain
                             ? localization.domainUrl
@@ -248,17 +319,6 @@ class _ClientPortalState extends State<ClientPortal>
                             : null,
                         onSavePressed: viewModel.onSavePressed,
                       ),
-                    DecoratedFormField(
-                      label: localization.subdomain,
-                      controller: _subdomainController,
-                      hint: localization.subdomainHelp,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'[a-z0-9\-]'),
-                        ),
-                      ],
-                      onSavePressed: viewModel.onSavePressed,
-                    ),
                   ],
                 ),
               FormCard(

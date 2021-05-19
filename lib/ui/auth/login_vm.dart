@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -106,6 +107,18 @@ class LoginVM {
       });
     }
 
+    String _formatApiUrl(String url) {
+      url = url.trim();
+
+      if (url.isEmpty) {
+        url = kAppProductionUrl;
+      } else if (!url.startsWith('http')) {
+        url = 'https://' + url;
+      }
+
+      return formatApiUrl(url);
+    }
+
     return LoginVM(
         state: store.state,
         isLoading: store.state.isLoading,
@@ -129,7 +142,7 @@ class LoginVM {
                   completer: completer,
                   idToken: idToken,
                   accessToken: accessToken,
-                  url: formatApiUrl(url.trim()),
+                  url: _formatApiUrl(url),
                   secret: secret.trim(),
                   platform: getPlatform(context),
                   oneTimePassword: oneTimePassword,
@@ -203,14 +216,10 @@ class LoginVM {
             return;
           }
 
-          if (url.isNotEmpty && !url.startsWith('http')) {
-            url = 'https://' + url;
-          }
-
           store.dispatch(RecoverPasswordRequest(
             completer: completer,
             email: email.trim(),
-            url: formatApiUrl(url.trim()),
+            url: _formatApiUrl(url),
             secret: secret.trim(),
           ));
         },
@@ -227,15 +236,11 @@ class LoginVM {
             return;
           }
 
-          if (url.isNotEmpty && !url.startsWith('http')) {
-            url = 'https://' + url;
-          }
-
           store.dispatch(UserLoginRequest(
             completer: completer,
             email: email.trim(),
             password: password.trim(),
-            url: formatApiUrl(url.trim()),
+            url: _formatApiUrl(url),
             secret: secret.trim(),
             platform: getPlatform(context),
             oneTimePassword: oneTimePassword.trim(),

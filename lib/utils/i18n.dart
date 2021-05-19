@@ -1063,7 +1063,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+          'If enabled the contact will be able to set a password when viewing their first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',

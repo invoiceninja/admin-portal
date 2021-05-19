@@ -6,15 +6,20 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VariablesHelp extends StatefulWidget {
-  const VariablesHelp({this.showEmailVariables = false});
+  const VariablesHelp({
+    this.showEmailVariables = false,
+    this.showInvoiceAsQuote = false,
+  });
 
   final bool showEmailVariables;
+  final bool showInvoiceAsQuote;
 
   @override
   _VariablesHelpState createState() => _VariablesHelpState();
@@ -50,7 +55,10 @@ class _VariablesHelpState extends State<VariablesHelp>
           controller: _controller,
           isScrollable: true,
           tabs: [
-            Tab(child: Text(localization.invoice)),
+            Tab(
+                child: Text(widget.showInvoiceAsQuote
+                    ? localization.quote
+                    : localization.invoice)),
             Tab(child: Text(localization.client)),
             Tab(child: Text(localization.contact)),
             Tab(child: Text(localization.company)),
@@ -67,17 +75,30 @@ class _VariablesHelpState extends State<VariablesHelp>
                 fields: [
                   'view_link', // TODO change to email variables
                   'view_url',
-                  InvoiceFields.amount,
-                  InvoiceFields.discount,
-                  InvoiceFields.balance,
-                  InvoiceFields.date,
-                  InvoiceFields.dueDate,
-                  InvoiceFields.poNumber,
-                  InvoiceFields.publicNotes,
-                  InvoiceFields.exchangeRate,
-                  InvoiceFields.number,
-                  InvoiceFields.terms,
-                  InvoiceFields.footer,
+                  if (widget.showInvoiceAsQuote) ...[
+                    QuoteFields.amount,
+                    QuoteFields.discount,
+                    QuoteFields.date,
+                    QuoteFields.validUntil,
+                    QuoteFields.poNumber,
+                    QuoteFields.publicNotes,
+                    QuoteFields.exchangeRate,
+                    QuoteFields.number,
+                    QuoteFields.terms,
+                    QuoteFields.footer,
+                  ] else ...[
+                    InvoiceFields.amount,
+                    InvoiceFields.discount,
+                    InvoiceFields.balance,
+                    InvoiceFields.date,
+                    InvoiceFields.dueDate,
+                    InvoiceFields.poNumber,
+                    InvoiceFields.publicNotes,
+                    InvoiceFields.exchangeRate,
+                    InvoiceFields.number,
+                    InvoiceFields.terms,
+                    InvoiceFields.footer,
+                  ],
                   if (company.hasCustomField(CustomFieldType.invoice1))
                     CustomFieldType.invoice1,
                   if (company.hasCustomField(CustomFieldType.invoice2))
