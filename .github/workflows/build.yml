@@ -23,7 +23,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable' # TODO change to beta/stable
-          #flutter-version: '1.26.0-17.2.pre'
+          flutter-version: '2.0.6'
       - name: Install Sentry
         run: |
           curl -sL https://sentry.io/get-cli/ | bash
