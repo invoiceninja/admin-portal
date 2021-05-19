@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -96,19 +95,18 @@ class InvoiceEditVM extends EntityEditVM {
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       origInvoice: store.state.invoiceState.map[invoice.id],
       onSavePressed: (BuildContext context, [EntityAction action]) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final invoice = store.state.invoiceUIState.editing;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           if (invoice.clientId.isEmpty) {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
-                  return ErrorDialog(
-                      appContext.localization.pleaseSelectAClient);
+                  return ErrorDialog(localization.pleaseSelectAClient);
                 });
             return null;
           }
-          final localization = appContext.localization;
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
           final refreshData =
               ![EntityAction.markSent, EntityAction.markPaid].contains(action);
@@ -124,17 +122,15 @@ class InvoiceEditVM extends EntityEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
               if (invoice.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(InvoiceViewScreen.route);
+                navigator.pushReplacementNamed(InvoiceViewScreen.route);
               } else {
-                appContext.navigator.pop(savedInvoice);
+                navigator.pop(savedInvoice);
               }
             } else {
-              viewEntity(
-                  appContext: appContext, entity: savedInvoice, force: true);
+              viewEntity(entity: savedInvoice, force: true);
 
               if (action != null) {
-                handleEntityAction(appContext, savedInvoice, action);
+                handleEntityAction(savedInvoice, action);
               }
             }
           }).catchError((Object error) {

@@ -297,7 +297,6 @@ void handleCompanyGatewayAction(BuildContext context,
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [companyGateway],
-        context: context,
       );
       break;
   }

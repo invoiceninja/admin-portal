@@ -323,7 +323,6 @@ void handleStubAction(
       case EntityAction.more:
         showEntityActionsDialog(
           entities: [stub],
-          context: context,
         );
         break;
       default:

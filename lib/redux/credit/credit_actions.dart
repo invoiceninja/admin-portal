@@ -559,7 +559,6 @@ Future handleCreditAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [credit],
-        context: context,
       );
       break;
   }

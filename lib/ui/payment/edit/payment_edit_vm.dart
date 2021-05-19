@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
@@ -73,9 +72,10 @@ class PaymentEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final payment = store.state.paymentUIState.editing;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           double amount = 0;
           payment.invoices.forEach((invoice) => amount += invoice.amount);
           payment.credits.forEach((credit) => amount -= credit.amount);
@@ -83,12 +83,10 @@ class PaymentEditVM {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
-                  return ErrorDialog(
-                      appContext.localization.negativePaymentError);
+                  return ErrorDialog(localization.negativePaymentError);
                 });
             return null;
           }
-          final localization = appContext.localization;
           final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
           store.dispatch(
               SavePaymentRequest(completer: completer, payment: payment));
@@ -99,17 +97,15 @@ class PaymentEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
               if (payment.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(PaymentViewScreen.route);
+                navigator.pushReplacementNamed(PaymentViewScreen.route);
               } else {
-                appContext.navigator.pop(savedPayment);
+                navigator.pop(savedPayment);
               }
             } else {
               if (payment.isApplying == true) {
-                appContext.navigator.pop();
+                navigator.pop();
               } else {
-                viewEntity(
-                    appContext: appContext, entity: savedPayment, force: true);
+                viewEntity(entity: savedPayment, force: true);
               }
             }
           }).catchError((Object error) {

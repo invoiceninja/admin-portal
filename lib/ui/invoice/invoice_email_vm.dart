@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -105,13 +104,12 @@ class EmailInvoiceVM extends EmailEntityVM {
         store.dispatch(LoadClient(clientId: invoice.clientId));
       },
       onSendPressed: (context, template, subject, body) {
-        final appContext = context.getAppContext();
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedInvoice,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then((value) {
-            viewEntity(entity: invoice, appContext: appContext);
+            viewEntity(entity: invoice);
           });
         }
         store.dispatch(EmailInvoiceRequest(

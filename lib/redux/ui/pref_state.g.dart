@@ -575,6 +575,7 @@ class _$PrefState extends PrefState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -647,85 +648,119 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   _$PrefState _$v;
 
   AppLayout _appLayout;
+
   AppLayout get appLayout => _$this._appLayout;
+
   set appLayout(AppLayout appLayout) => _$this._appLayout = appLayout;
 
   ModuleLayout _moduleLayout;
+
   ModuleLayout get moduleLayout => _$this._moduleLayout;
+
   set moduleLayout(ModuleLayout moduleLayout) =>
       _$this._moduleLayout = moduleLayout;
 
   AppSidebarMode _menuSidebarMode;
+
   AppSidebarMode get menuSidebarMode => _$this._menuSidebarMode;
+
   set menuSidebarMode(AppSidebarMode menuSidebarMode) =>
       _$this._menuSidebarMode = menuSidebarMode;
 
   AppSidebarMode _historySidebarMode;
+
   AppSidebarMode get historySidebarMode => _$this._historySidebarMode;
+
   set historySidebarMode(AppSidebarMode historySidebarMode) =>
       _$this._historySidebarMode = historySidebarMode;
 
   MapBuilder<EntityType, bool> _useSidebarEditor;
+
   MapBuilder<EntityType, bool> get useSidebarEditor =>
       _$this._useSidebarEditor ??= new MapBuilder<EntityType, bool>();
+
   set useSidebarEditor(MapBuilder<EntityType, bool> useSidebarEditor) =>
       _$this._useSidebarEditor = useSidebarEditor;
 
   bool _isPreviewVisible;
+
   bool get isPreviewVisible => _$this._isPreviewVisible;
+
   set isPreviewVisible(bool isPreviewVisible) =>
       _$this._isPreviewVisible = isPreviewVisible;
 
   bool _isPreviewEnabled;
+
   bool get isPreviewEnabled => _$this._isPreviewEnabled;
+
   set isPreviewEnabled(bool isPreviewEnabled) =>
       _$this._isPreviewEnabled = isPreviewEnabled;
 
   bool _isMenuVisible;
+
   bool get isMenuVisible => _$this._isMenuVisible;
+
   set isMenuVisible(bool isMenuVisible) =>
       _$this._isMenuVisible = isMenuVisible;
 
   bool _showKanban;
+
   bool get showKanban => _$this._showKanban;
+
   set showKanban(bool showKanban) => _$this._showKanban = showKanban;
 
   bool _isHistoryVisible;
+
   bool get isHistoryVisible => _$this._isHistoryVisible;
+
   set isHistoryVisible(bool isHistoryVisible) =>
       _$this._isHistoryVisible = isHistoryVisible;
 
   bool _enableDarkMode;
+
   bool get enableDarkMode => _$this._enableDarkMode;
+
   set enableDarkMode(bool enableDarkMode) =>
       _$this._enableDarkMode = enableDarkMode;
 
   bool _showFilterSidebar;
+
   bool get showFilterSidebar => _$this._showFilterSidebar;
+
   set showFilterSidebar(bool showFilterSidebar) =>
       _$this._showFilterSidebar = showFilterSidebar;
 
   bool _longPressSelectionIsDefault;
+
   bool get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
+
   set longPressSelectionIsDefault(bool longPressSelectionIsDefault) =>
       _$this._longPressSelectionIsDefault = longPressSelectionIsDefault;
 
   bool _requireAuthentication;
+
   bool get requireAuthentication => _$this._requireAuthentication;
+
   set requireAuthentication(bool requireAuthentication) =>
       _$this._requireAuthentication = requireAuthentication;
 
   int _rowsPerPage;
+
   int get rowsPerPage => _$this._rowsPerPage;
+
   set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
 
   String _colorTheme;
+
   String get colorTheme => _$this._colorTheme;
+
   set colorTheme(String colorTheme) => _$this._colorTheme = colorTheme;
 
   MapBuilder<String, CompanyPrefState> _companyPrefs;
+
   MapBuilder<String, CompanyPrefState> get companyPrefs =>
       _$this._companyPrefs ??= new MapBuilder<String, CompanyPrefState>();
+
   set companyPrefs(MapBuilder<String, CompanyPrefState> companyPrefs) =>
       _$this._companyPrefs = companyPrefs;
 
@@ -841,6 +876,7 @@ class _$CompanyPrefState extends CompanyPrefState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(0, historyList.hashCode));
@@ -859,8 +895,10 @@ class CompanyPrefStateBuilder
   _$CompanyPrefState _$v;
 
   ListBuilder<HistoryRecord> _historyList;
+
   ListBuilder<HistoryRecord> get historyList =>
       _$this._historyList ??= new ListBuilder<HistoryRecord>();
+
   set historyList(ListBuilder<HistoryRecord> historyList) =>
       _$this._historyList = historyList;
 
@@ -946,6 +984,7 @@ class _$HistoryRecord extends HistoryRecord {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf(
@@ -967,15 +1006,21 @@ class HistoryRecordBuilder
   _$HistoryRecord _$v;
 
   String _id;
+
   String get id => _$this._id;
+
   set id(String id) => _$this._id = id;
 
   EntityType _entityType;
+
   EntityType get entityType => _$this._entityType;
+
   set entityType(EntityType entityType) => _$this._entityType = entityType;
 
   int _timestamp;
+
   int get timestamp => _$this._timestamp;
+
   set timestamp(int timestamp) => _$this._timestamp = timestamp;
 
   HistoryRecordBuilder();

@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem({
@@ -79,7 +78,7 @@ class TaskListItem extends StatelessWidget {
                   ),
             onPressed: task.isInvoiced
                 ? null
-                : () => handleEntityAction(context.getAppContext(), task,
+                : () => handleEntityAction(task,
                     task.isRunning ? EntityAction.stop : EntityAction.start),
             visualDensity: VisualDensity.compact,
           );
@@ -141,8 +140,7 @@ class TaskListItem extends StatelessWidget {
                                 isSaving: false,
                                 entity: task,
                                 onSelected: (context, action) =>
-                                    handleEntityAction(
-                                        context.getAppContext(), task, action),
+                                    handleEntityAction(task, action),
                               ),
                       ),
                       SizedBox(

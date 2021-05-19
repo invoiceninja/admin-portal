@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class SettingsListBuilder extends StatelessWidget {
   const SettingsListBuilder({Key key}) : super(key: key);
@@ -48,14 +47,10 @@ class SettingsListVM {
         onClearSettingsFilterPressed: () =>
             store.dispatch(ClearSettingsFilter()),
         onViewClientPressed: (context) {
-          viewEntity(
-              appContext: context.getAppContext(),
-              entity: settingsUIState.client);
+          viewEntity(entity: settingsUIState.client);
         },
         onViewGroupPressed: (context) {
-          viewEntity(
-              appContext: context.getAppContext(),
-              entity: settingsUIState.group);
+          viewEntity(entity: settingsUIState.group);
         });
   }
 

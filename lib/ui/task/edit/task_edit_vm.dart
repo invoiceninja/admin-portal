@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -78,19 +77,18 @@ class TaskEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final task = store.state.taskUIState.editing;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           if (!task.areTimesValid) {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
-                  return ErrorDialog(appContext.localization.taskErrors);
+                  return ErrorDialog(localization.taskErrors);
                 });
             return null;
           }
-
-          final localization = appContext.localization;
           final Completer<TaskEntity> completer = new Completer<TaskEntity>();
           store.dispatch(SaveTaskRequest(completer: completer, task: task));
           return completer.future.then((savedTask) {
@@ -101,13 +99,12 @@ class TaskEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
               if (task.isNew) {
-                appContext.navigator.pushReplacementNamed(TaskViewScreen.route);
+                navigator.pushReplacementNamed(TaskViewScreen.route);
               } else {
-                appContext.navigator.pop(savedTask);
+                navigator.pop(savedTask);
               }
             } else {
-              viewEntity(
-                  appContext: appContext, entity: savedTask, force: true);
+              viewEntity(entity: savedTask, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

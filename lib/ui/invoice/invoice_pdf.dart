@@ -21,7 +21,6 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -239,7 +238,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {
-                        handleEntityAction(context.getAppContext(), invoice,
+                        handleEntityAction(invoice,
                             EntityAction.emailEntityType(invoice.entityType));
                       },
                     ),
@@ -276,9 +275,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                       child: Text(localization.close,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {
-                        viewEntity(
-                            appContext: context.getAppContext(),
-                            entity: invoice);
+                        viewEntity(entity: invoice);
                       },
                     ),
                 ],

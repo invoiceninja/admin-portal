@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class BottomButtons extends StatelessWidget {
   const BottomButtons({
@@ -44,8 +43,7 @@ class BottomButtons extends StatelessWidget {
                 onTap: action1Enabled &&
                         (!entity.isDeleted || action1 == EntityAction.viewPdf)
                     ? () {
-                        handleEntityAction(
-                            context.getAppContext(), entity, action1);
+                        handleEntityAction(entity, action1);
                       }
                     : null,
                 child: Center(
@@ -65,8 +63,7 @@ class BottomButtons extends StatelessWidget {
                 child: InkWell(
                   onTap: action2Enabled && !entity.isDeleted
                       ? () {
-                          handleEntityAction(
-                              context.getAppContext(), entity, action2);
+                          handleEntityAction(entity, action2);
                         }
                       : null,
                   child: Center(

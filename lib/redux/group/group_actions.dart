@@ -294,7 +294,6 @@ void handleGroupAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [group],
-        context: context,
       );
       break;
   }

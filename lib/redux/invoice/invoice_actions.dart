@@ -676,7 +676,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [invoice],
-        context: context,
       );
       break;
   }

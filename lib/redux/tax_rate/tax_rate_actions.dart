@@ -289,7 +289,6 @@ void handleTaxRateAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [taxRate],
-        context: context,
       );
       break;
   }

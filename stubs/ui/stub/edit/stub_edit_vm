@@ -87,7 +87,7 @@ class StubEditVM {
                 Navigator.of(context).pop(savedStub);
               }
           } else {
-              viewEntity(context: context, entity: savedStub, force: true);
+              viewEntity( entity: savedStub, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

@@ -574,6 +574,7 @@ class _$UserCompanyState extends UserCompanyState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -653,149 +654,199 @@ class UserCompanyStateBuilder
   _$UserCompanyState _$v;
 
   int _lastUpdated;
+
   int get lastUpdated => _$this._lastUpdated;
+
   set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   UserCompanyEntityBuilder _userCompany;
+
   UserCompanyEntityBuilder get userCompany =>
       _$this._userCompany ??= new UserCompanyEntityBuilder();
+
   set userCompany(UserCompanyEntityBuilder userCompany) =>
       _$this._userCompany = userCompany;
 
   DocumentStateBuilder _documentState;
+
   DocumentStateBuilder get documentState =>
       _$this._documentState ??= new DocumentStateBuilder();
+
   set documentState(DocumentStateBuilder documentState) =>
       _$this._documentState = documentState;
 
   ProductStateBuilder _productState;
+
   ProductStateBuilder get productState =>
       _$this._productState ??= new ProductStateBuilder();
+
   set productState(ProductStateBuilder productState) =>
       _$this._productState = productState;
 
   ClientStateBuilder _clientState;
+
   ClientStateBuilder get clientState =>
       _$this._clientState ??= new ClientStateBuilder();
+
   set clientState(ClientStateBuilder clientState) =>
       _$this._clientState = clientState;
 
   InvoiceStateBuilder _invoiceState;
+
   InvoiceStateBuilder get invoiceState =>
       _$this._invoiceState ??= new InvoiceStateBuilder();
+
   set invoiceState(InvoiceStateBuilder invoiceState) =>
       _$this._invoiceState = invoiceState;
 
   ExpenseStateBuilder _expenseState;
+
   ExpenseStateBuilder get expenseState =>
       _$this._expenseState ??= new ExpenseStateBuilder();
+
   set expenseState(ExpenseStateBuilder expenseState) =>
       _$this._expenseState = expenseState;
 
   VendorStateBuilder _vendorState;
+
   VendorStateBuilder get vendorState =>
       _$this._vendorState ??= new VendorStateBuilder();
+
   set vendorState(VendorStateBuilder vendorState) =>
       _$this._vendorState = vendorState;
 
   TaskStateBuilder _taskState;
+
   TaskStateBuilder get taskState =>
       _$this._taskState ??= new TaskStateBuilder();
+
   set taskState(TaskStateBuilder taskState) => _$this._taskState = taskState;
 
   ProjectStateBuilder _projectState;
+
   ProjectStateBuilder get projectState =>
       _$this._projectState ??= new ProjectStateBuilder();
+
   set projectState(ProjectStateBuilder projectState) =>
       _$this._projectState = projectState;
 
   PaymentStateBuilder _paymentState;
+
   PaymentStateBuilder get paymentState =>
       _$this._paymentState ??= new PaymentStateBuilder();
+
   set paymentState(PaymentStateBuilder paymentState) =>
       _$this._paymentState = paymentState;
 
   QuoteStateBuilder _quoteState;
+
   QuoteStateBuilder get quoteState =>
       _$this._quoteState ??= new QuoteStateBuilder();
+
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
   SubscriptionStateBuilder _subscriptionState;
+
   SubscriptionStateBuilder get subscriptionState =>
       _$this._subscriptionState ??= new SubscriptionStateBuilder();
+
   set subscriptionState(SubscriptionStateBuilder subscriptionState) =>
       _$this._subscriptionState = subscriptionState;
 
   TaskStatusStateBuilder _taskStatusState;
+
   TaskStatusStateBuilder get taskStatusState =>
       _$this._taskStatusState ??= new TaskStatusStateBuilder();
+
   set taskStatusState(TaskStatusStateBuilder taskStatusState) =>
       _$this._taskStatusState = taskStatusState;
 
   ExpenseCategoryStateBuilder _expenseCategoryState;
+
   ExpenseCategoryStateBuilder get expenseCategoryState =>
       _$this._expenseCategoryState ??= new ExpenseCategoryStateBuilder();
+
   set expenseCategoryState(ExpenseCategoryStateBuilder expenseCategoryState) =>
       _$this._expenseCategoryState = expenseCategoryState;
 
   RecurringInvoiceStateBuilder _recurringInvoiceState;
+
   RecurringInvoiceStateBuilder get recurringInvoiceState =>
       _$this._recurringInvoiceState ??= new RecurringInvoiceStateBuilder();
+
   set recurringInvoiceState(
           RecurringInvoiceStateBuilder recurringInvoiceState) =>
       _$this._recurringInvoiceState = recurringInvoiceState;
 
   WebhookStateBuilder _webhookState;
+
   WebhookStateBuilder get webhookState =>
       _$this._webhookState ??= new WebhookStateBuilder();
+
   set webhookState(WebhookStateBuilder webhookState) =>
       _$this._webhookState = webhookState;
 
   TokenStateBuilder _tokenState;
+
   TokenStateBuilder get tokenState =>
       _$this._tokenState ??= new TokenStateBuilder();
+
   set tokenState(TokenStateBuilder tokenState) =>
       _$this._tokenState = tokenState;
 
   PaymentTermStateBuilder _paymentTermState;
+
   PaymentTermStateBuilder get paymentTermState =>
       _$this._paymentTermState ??= new PaymentTermStateBuilder();
+
   set paymentTermState(PaymentTermStateBuilder paymentTermState) =>
       _$this._paymentTermState = paymentTermState;
 
   DesignStateBuilder _designState;
+
   DesignStateBuilder get designState =>
       _$this._designState ??= new DesignStateBuilder();
+
   set designState(DesignStateBuilder designState) =>
       _$this._designState = designState;
 
   CreditStateBuilder _creditState;
+
   CreditStateBuilder get creditState =>
       _$this._creditState ??= new CreditStateBuilder();
+
   set creditState(CreditStateBuilder creditState) =>
       _$this._creditState = creditState;
 
   UserStateBuilder _userState;
+
   UserStateBuilder get userState =>
       _$this._userState ??= new UserStateBuilder();
+
   set userState(UserStateBuilder userState) => _$this._userState = userState;
 
   TaxRateStateBuilder _taxRateState;
+
   TaxRateStateBuilder get taxRateState =>
       _$this._taxRateState ??= new TaxRateStateBuilder();
+
   set taxRateState(TaxRateStateBuilder taxRateState) =>
       _$this._taxRateState = taxRateState;
 
   CompanyGatewayStateBuilder _companyGatewayState;
+
   CompanyGatewayStateBuilder get companyGatewayState =>
       _$this._companyGatewayState ??= new CompanyGatewayStateBuilder();
+
   set companyGatewayState(CompanyGatewayStateBuilder companyGatewayState) =>
       _$this._companyGatewayState = companyGatewayState;
 
   GroupStateBuilder _groupState;
+
   GroupStateBuilder get groupState =>
       _$this._groupState ??= new GroupStateBuilder();
+
   set groupState(GroupStateBuilder groupState) =>
       _$this._groupState = groupState;
 
@@ -1065,6 +1116,7 @@ class _$SettingsUIState extends SettingsUIState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -1129,71 +1181,101 @@ class SettingsUIStateBuilder
   _$SettingsUIState _$v;
 
   CompanyEntityBuilder _company;
+
   CompanyEntityBuilder get company =>
       _$this._company ??= new CompanyEntityBuilder();
+
   set company(CompanyEntityBuilder company) => _$this._company = company;
 
   CompanyEntityBuilder _origCompany;
+
   CompanyEntityBuilder get origCompany =>
       _$this._origCompany ??= new CompanyEntityBuilder();
+
   set origCompany(CompanyEntityBuilder origCompany) =>
       _$this._origCompany = origCompany;
 
   ClientEntityBuilder _client;
+
   ClientEntityBuilder get client =>
       _$this._client ??= new ClientEntityBuilder();
+
   set client(ClientEntityBuilder client) => _$this._client = client;
 
   ClientEntityBuilder _origClient;
+
   ClientEntityBuilder get origClient =>
       _$this._origClient ??= new ClientEntityBuilder();
+
   set origClient(ClientEntityBuilder origClient) =>
       _$this._origClient = origClient;
 
   GroupEntityBuilder _group;
+
   GroupEntityBuilder get group => _$this._group ??= new GroupEntityBuilder();
+
   set group(GroupEntityBuilder group) => _$this._group = group;
 
   GroupEntityBuilder _origGroup;
+
   GroupEntityBuilder get origGroup =>
       _$this._origGroup ??= new GroupEntityBuilder();
+
   set origGroup(GroupEntityBuilder origGroup) => _$this._origGroup = origGroup;
 
   UserEntityBuilder _user;
+
   UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
+
   set user(UserEntityBuilder user) => _$this._user = user;
 
   UserEntityBuilder _origUser;
+
   UserEntityBuilder get origUser =>
       _$this._origUser ??= new UserEntityBuilder();
+
   set origUser(UserEntityBuilder origUser) => _$this._origUser = origUser;
 
   EntityType _entityType;
+
   EntityType get entityType => _$this._entityType;
+
   set entityType(EntityType entityType) => _$this._entityType = entityType;
 
   bool _isChanged;
+
   bool get isChanged => _$this._isChanged;
+
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _updatedAt;
+
   int get updatedAt => _$this._updatedAt;
+
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
   String _section;
+
   String get section => _$this._section;
+
   set section(String section) => _$this._section = section;
 
   int _tabIndex;
+
   int get tabIndex => _$this._tabIndex;
+
   set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
 
   String _filter;
+
   String get filter => _$this._filter;
+
   set filter(String filter) => _$this._filter = filter;
 
   int _filterClearedAt;
+
   int get filterClearedAt => _$this._filterClearedAt;
+
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 

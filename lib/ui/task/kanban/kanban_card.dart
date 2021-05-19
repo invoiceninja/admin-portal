@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -26,6 +25,7 @@ class KanbanTaskCard extends StatefulWidget {
     this.isCorrectOrder = true,
     this.isSelected = false,
   });
+
   final TaskEntity task;
   final Function(Completer<TaskEntity>, String) onSavePressed;
   final Function() onCancelPressed;
@@ -189,14 +189,11 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                               : () {
                                   if (state.taskUIState.selectedId == task.id) {
                                     viewEntityById(
-                                        appContext: context.getAppContext(),
                                         entityId: '',
                                         entityType: EntityType.task,
                                         showError: false);
                                   } else {
-                                    viewEntity(
-                                        appContext: context.getAppContext(),
-                                        entity: task);
+                                    viewEntity(entity: task);
                                   }
                                 },
                         ),
@@ -223,7 +220,6 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                         child: InkWell(
                           onTap: () {
                             handleEntityAction(
-                                context.getAppContext(),
                                 task,
                                 task.isRunning
                                     ? EntityAction.stop

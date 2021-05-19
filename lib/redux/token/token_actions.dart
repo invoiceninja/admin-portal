@@ -314,7 +314,6 @@ void handleTokenAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [token],
-        context: context,
       );
       break;
   }

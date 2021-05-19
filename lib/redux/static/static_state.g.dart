@@ -259,6 +259,7 @@ class _$StaticState extends StaticState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -305,66 +306,88 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   _$StaticState _$v;
 
   int _updatedAt;
+
   int get updatedAt => _$this._updatedAt;
+
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
   MapBuilder<String, CurrencyEntity> _currencyMap;
+
   MapBuilder<String, CurrencyEntity> get currencyMap =>
       _$this._currencyMap ??= new MapBuilder<String, CurrencyEntity>();
+
   set currencyMap(MapBuilder<String, CurrencyEntity> currencyMap) =>
       _$this._currencyMap = currencyMap;
 
   MapBuilder<String, SizeEntity> _sizeMap;
+
   MapBuilder<String, SizeEntity> get sizeMap =>
       _$this._sizeMap ??= new MapBuilder<String, SizeEntity>();
+
   set sizeMap(MapBuilder<String, SizeEntity> sizeMap) =>
       _$this._sizeMap = sizeMap;
 
   MapBuilder<String, GatewayEntity> _gatewayMap;
+
   MapBuilder<String, GatewayEntity> get gatewayMap =>
       _$this._gatewayMap ??= new MapBuilder<String, GatewayEntity>();
+
   set gatewayMap(MapBuilder<String, GatewayEntity> gatewayMap) =>
       _$this._gatewayMap = gatewayMap;
 
   MapBuilder<String, IndustryEntity> _industryMap;
+
   MapBuilder<String, IndustryEntity> get industryMap =>
       _$this._industryMap ??= new MapBuilder<String, IndustryEntity>();
+
   set industryMap(MapBuilder<String, IndustryEntity> industryMap) =>
       _$this._industryMap = industryMap;
 
   MapBuilder<String, TimezoneEntity> _timezoneMap;
+
   MapBuilder<String, TimezoneEntity> get timezoneMap =>
       _$this._timezoneMap ??= new MapBuilder<String, TimezoneEntity>();
+
   set timezoneMap(MapBuilder<String, TimezoneEntity> timezoneMap) =>
       _$this._timezoneMap = timezoneMap;
 
   MapBuilder<String, DateFormatEntity> _dateFormatMap;
+
   MapBuilder<String, DateFormatEntity> get dateFormatMap =>
       _$this._dateFormatMap ??= new MapBuilder<String, DateFormatEntity>();
+
   set dateFormatMap(MapBuilder<String, DateFormatEntity> dateFormatMap) =>
       _$this._dateFormatMap = dateFormatMap;
 
   MapBuilder<String, LanguageEntity> _languageMap;
+
   MapBuilder<String, LanguageEntity> get languageMap =>
       _$this._languageMap ??= new MapBuilder<String, LanguageEntity>();
+
   set languageMap(MapBuilder<String, LanguageEntity> languageMap) =>
       _$this._languageMap = languageMap;
 
   MapBuilder<String, PaymentTypeEntity> _paymentTypeMap;
+
   MapBuilder<String, PaymentTypeEntity> get paymentTypeMap =>
       _$this._paymentTypeMap ??= new MapBuilder<String, PaymentTypeEntity>();
+
   set paymentTypeMap(MapBuilder<String, PaymentTypeEntity> paymentTypeMap) =>
       _$this._paymentTypeMap = paymentTypeMap;
 
   MapBuilder<String, CountryEntity> _countryMap;
+
   MapBuilder<String, CountryEntity> get countryMap =>
       _$this._countryMap ??= new MapBuilder<String, CountryEntity>();
+
   set countryMap(MapBuilder<String, CountryEntity> countryMap) =>
       _$this._countryMap = countryMap;
 
   MapBuilder<String, TemplateEntity> _templateMap;
+
   MapBuilder<String, TemplateEntity> get templateMap =>
       _$this._templateMap ??= new MapBuilder<String, TemplateEntity>();
+
   set templateMap(MapBuilder<String, TemplateEntity> templateMap) =>
       _$this._templateMap = templateMap;
 

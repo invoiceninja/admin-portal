@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DesktopSessionTimeout extends StatefulWidget {
   const DesktopSessionTimeout({this.child});
+
   final Widget child;
 
   @override

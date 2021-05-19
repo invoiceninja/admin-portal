@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class CreditEmailScreen extends StatelessWidget {
   const CreditEmailScreen({Key key}) : super(key: key);
@@ -81,13 +80,12 @@ class EmailCreditVM extends EmailEntityVM {
         store.dispatch(LoadClient(clientId: credit.clientId));
       },
       onSendPressed: (context, template, subject, body) {
-        final appContext = context.getAppContext();
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedCredit,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then((value) {
-            viewEntity(entity: credit, appContext: appContext);
+            viewEntity(entity: credit);
           });
         }
         store.dispatch(EmailCreditRequest(

@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
@@ -78,8 +77,7 @@ class WebhookViewVM {
         store.dispatch(UpdateCurrentRoute(WebhookScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context.getAppContext(), [webhook], action,
-              autoPop: true),
+          handleEntitiesActions([webhook], action, autoPop: true),
     );
   }
 

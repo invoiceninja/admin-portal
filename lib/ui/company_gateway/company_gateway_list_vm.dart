@@ -11,7 +11,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list.dart';
@@ -85,7 +84,7 @@ class CompanyGatewayListVM {
           handleCompanyGatewayAction(
               context, [companyGateway], EntityAction.toggleMultiselect);
         } else {
-          viewEntity(appContext: context.getAppContext(), entity: companyGateway);
+          viewEntity(entity: companyGateway);
         }
       },
       onRefreshed: (context) => _handleRefresh(context),

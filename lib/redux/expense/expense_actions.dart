@@ -321,7 +321,6 @@ void handleExpenseAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [expense],
-        context: context,
       );
       break;
   }

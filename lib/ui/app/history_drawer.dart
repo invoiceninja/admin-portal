@@ -20,7 +20,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class HistoryDrawer extends StatelessWidget {
   const HistoryDrawer({
@@ -213,7 +212,6 @@ class _HistoryListTileState extends State<HistoryListTile> {
               break;
             default:
               viewEntityById(
-                appContext: context.getAppContext(),
                 entityId: history.id,
                 entityType: history.entityType,
               );
@@ -223,7 +221,6 @@ class _HistoryListTileState extends State<HistoryListTile> {
             ? null
             : () {
                 showEntityActionsDialog(
-                  context: context,
                   entities: [entity],
                   completer: state.prefState.isHistoryFloated
                       ? (Completer<Null>()

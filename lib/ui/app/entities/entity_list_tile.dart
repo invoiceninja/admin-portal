@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class EntityListTile extends StatefulWidget {
   const EntityListTile({
@@ -72,7 +71,7 @@ class _EntityListTileState extends State<EntityListTile> {
       entity: widget.entity,
       onSelected: (context, action) => widget.onEntityActionSelected != null
           ? widget.onEntityActionSelected(context, widget.entity, action)
-          : handleEntityAction(context.getAppContext(), widget.entity, action),
+          : handleEntityAction(widget.entity, action),
     );
 
     final trailing = widget.isFilter
@@ -87,7 +86,6 @@ class _EntityListTileState extends State<EntityListTile> {
                   : Icons.filter_list),
               onPressed: () => viewEntity(
                 entity: widget.entity,
-                appContext: context.getAppContext(),
                 addToStack: isDesktop(context) && !widget.isFilter,
               ),
             ),
@@ -104,10 +102,9 @@ class _EntityListTileState extends State<EntityListTile> {
             isMenu: true,
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              onTap: () =>
-                  inspectEntity(context: context, entity: widget.entity),
-              onLongPress: () => inspectEntity(
-                  context: context, entity: widget.entity, longPress: true),
+              onTap: () => inspectEntity(entity: widget.entity),
+              onLongPress: () =>
+                  inspectEntity(entity: widget.entity, longPress: true),
               title: Text(
                 EntityPresenter().initialize(widget.entity, context).title,
                 maxLines: 1,
@@ -163,9 +160,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
   bool _isHovered = false;
 
   void _onTap(BuildContext context) => viewEntitiesByType(
-      appContext: context.getAppContext(),
-      entityType: widget.entityType,
-      filterEntity: widget.entity);
+      entityType: widget.entityType, filterEntity: widget.entity);
 
   void _onLongPress() {
     final store = StoreProvider.of<AppState>(context);
@@ -176,8 +171,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
       store.dispatch(
           FilterByEntity(entityId: entity.id, entityType: entity.entityType));
     }
-    handleEntityAction(context.getAppContext(), entity,
-        EntityAction.newEntityType(widget.entityType));
+    handleEntityAction(entity, EntityAction.newEntityType(widget.entityType));
   }
 
   @override

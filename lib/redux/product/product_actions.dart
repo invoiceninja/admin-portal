@@ -312,7 +312,6 @@ void handleProductAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [product],
-        context: context,
       );
       break;
   }

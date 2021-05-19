@@ -56,10 +56,10 @@ class DocumentEditVM {
       },
       onSavePressed: (BuildContext context) {
         /*
-        final appContext = context.getAppContext();
-        Debouncer.runOnComplete(() {
+Debouncer.runOnComplete(() {
           final document = store.state.documentUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<DocumentEntity> completer =
               new Completer<DocumentEntity>();
           store.dispatch(
@@ -71,14 +71,13 @@ class DocumentEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
               if (document.isNew) {
-                appContext.navigator
+                navigator
                     .pushReplacementNamed(DocumentViewScreen.route);
               } else {
-                appContext.navigator.pop(savedDocument);
+                navigator.pop(savedDocument);
               }
             } else {
               viewEntityById(
-                  appContext: appContext,
                   entityId: savedDocument.id,
                   entityType: EntityType.document,
                   force: true);

@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -75,10 +74,10 @@ class WebhookEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final webhook = store.state.webhookUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<WebhookEntity> completer =
               new Completer<WebhookEntity>();
           store.dispatch(
@@ -91,14 +90,12 @@ class WebhookEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
               if (webhook.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(WebhookViewScreen.route);
+                navigator.pushReplacementNamed(WebhookViewScreen.route);
               } else {
-                appContext.navigator.pop(savedWebhook);
+                navigator.pop(savedWebhook);
               }
             } else {
               viewEntity(
-                appContext: appContext,
                 entity: savedWebhook,
                 force: true,
               );
