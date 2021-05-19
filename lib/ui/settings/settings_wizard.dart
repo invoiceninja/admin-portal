@@ -40,6 +40,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       GlobalKey<FormState>(debugLabel: '_settingsWizard');
   final FocusScopeNode _focusNode = FocusScopeNode();
   final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
+
   bool _autoValidate = false;
   bool _isSaving = false;
   bool _isSubdomainUnique = false;
@@ -103,7 +104,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
                 {'subdomain': subdomain},
               ))
           .then((dynamic data) {
-        print('## DATA: $data');
         setState(() {
           _isSubdomainUnique = true;
           _isCheckingSubdomain = false;
