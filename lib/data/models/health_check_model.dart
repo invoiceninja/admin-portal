@@ -45,6 +45,9 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'jobs_pending')
   int get pendingJobs;
 
+  @BuiltValueField(wireName: 'pdf_engine')
+  String get pdfEngine;
+
   static Serializer<HealthCheckResponse> get serializer =>
       _$healthCheckResponseSerializer;
 }
