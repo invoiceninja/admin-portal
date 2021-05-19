@@ -89,8 +89,8 @@ dependency_overrides:
       path: packages/google_sign_in/google_sign_in_platform_interface
 
 dev_dependencies:
-  flutter_driver:
-    sdk: flutter
+  #flutter_driver:
+  #  sdk: flutter
   test: ^1.6.3
   #flutter_test:
   #  sdk: flutter
