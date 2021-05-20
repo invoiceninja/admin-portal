@@ -31,7 +31,7 @@ jobs:
         run: |
           flutter doctor -v
           flutter pub get
-          flutter upgrade
+          #flutter upgrade
           flutter config --enable-web
       - name: Prepare App
         run: |
