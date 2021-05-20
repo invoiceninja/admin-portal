@@ -65,6 +65,8 @@ final editingContactReducer = combineReducers<ContactEntity>([
 ]);
 
 final selectedIdReducer = combineReducers<String>([
+  TypedReducer<String, ArchiveClientsSuccess>((completer, action) => ''),
+  TypedReducer<String, DeleteClientsSuccess>((completer, action) => ''),
   TypedReducer<String, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.client ? action.entityId : selectedId),
   TypedReducer<String, ViewClient>((selectedId, action) {
