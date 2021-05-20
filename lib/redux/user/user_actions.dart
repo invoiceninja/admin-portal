@@ -532,7 +532,6 @@ void handleUserAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [user],
-        context: context,
       );
       break;
   }

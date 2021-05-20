@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -72,7 +71,6 @@ class PaymentTermEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final paymentTerm = store.state.paymentTermUIState.editing;
           final localization = AppLocalization.of(context);
@@ -93,10 +91,7 @@ class PaymentTermEditVM {
                 Navigator.of(context).pop(savedPaymentTerm);
               }
             } else {
-              viewEntity(
-                  appContext: appContext,
-                  entity: savedPaymentTerm,
-                  force: true);
+              viewEntity(entity: savedPaymentTerm, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

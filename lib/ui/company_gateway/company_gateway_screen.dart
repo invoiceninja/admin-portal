@@ -64,7 +64,6 @@ class CompanyGatewayScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                       entities: companyGateways,
-                      context: context,
                       multiselect: true,
                       completer: Completer<Null>()
                         ..future.then<dynamic>((_) =>

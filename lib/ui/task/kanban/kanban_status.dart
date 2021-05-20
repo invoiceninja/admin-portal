@@ -13,6 +13,7 @@ class KanbanStatusCard extends StatefulWidget {
     @required this.isCorrectOrder,
     @required this.isSaving,
   });
+
   final TaskStatusEntity status;
   final Function(Completer<TaskStatusEntity>, String) onSavePressed;
   final bool isCorrectOrder;

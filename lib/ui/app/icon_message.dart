@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class IconMessage extends StatelessWidget {
   const IconMessage(this.text, {this.iconData, this.color});
+
   final String text;
   final IconData iconData;
   final Color color;

@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class QuoteListItem extends StatelessWidget {
   const QuoteListItem({
@@ -101,10 +100,7 @@ class QuoteListItem extends StatelessWidget {
                                     isSaving: false,
                                     entity: quote,
                                     onSelected: (context, action) =>
-                                        handleEntityAction(
-                                            context.getAppContext(),
-                                            quote,
-                                            action),
+                                        handleEntityAction(quote, action),
                                   )),
                         SizedBox(
                           width: kListNumberWidth,

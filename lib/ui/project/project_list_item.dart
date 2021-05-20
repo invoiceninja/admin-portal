@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class ProjectListItem extends StatelessWidget {
   const ProjectListItem({
@@ -102,8 +101,7 @@ class ProjectListItem extends StatelessWidget {
                                 isSaving: false,
                                 entity: project,
                                 onSelected: (context, action) =>
-                                    handleEntityAction(context.getAppContext(),
-                                        project, action),
+                                    handleEntityAction(project, action),
                               ),
                       ),
                       SizedBox(

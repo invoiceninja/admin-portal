@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class HelpText extends StatelessWidget {
   const HelpText(this.message);
+
   final String message;
 
   @override

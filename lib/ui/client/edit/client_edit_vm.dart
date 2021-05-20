@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ClientEditScreen extends StatelessWidget {
@@ -90,20 +90,21 @@ class ClientEditVM {
           }
         },
         onSavePressed: (BuildContext context) {
-          final appContext = context.getAppContext();
           Debouncer.runOnComplete(() {
             final client = store.state.clientUIState.editing;
             if (!client.hasNameSet) {
               showDialog<ErrorDialog>(
                   context: context,
                   builder: (BuildContext context) {
-                    return ErrorDialog(appContext
-                        .localization.pleaseEnterAClientOrContactName);
+                    return ErrorDialog(
+                        AppLocalization.of(navigatorKey.currentContext)
+                            .pleaseEnterAClientOrContactName);
                   });
               return null;
             }
             final Completer<ClientEntity> completer = Completer<ClientEntity>();
-            final localization = appContext.localization;
+            final localization = navigatorKey.localization;
+            final navigator = navigatorKey.currentState;
             store.dispatch(
                 SaveClientRequest(completer: completer, client: client));
             return completer.future.then((savedClient) {
@@ -113,14 +114,12 @@ class ClientEditVM {
               if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
                 if (client.isNew && state.clientUIState.saveCompleter == null) {
-                  appContext.navigator
-                      .pushReplacementNamed(ClientViewScreen.route);
+                  navigator.pushReplacementNamed(ClientViewScreen.route);
                 } else {
-                  appContext.navigator.pop(savedClient);
+                  navigator.pop(savedClient);
                 }
               } else {
                 viewEntity(
-                  appContext: appContext,
                   entity: savedClient,
                   force: true,
                 );

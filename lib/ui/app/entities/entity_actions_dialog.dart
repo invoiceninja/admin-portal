@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
@@ -30,15 +31,14 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 Future<void> showEntityActionsDialog(
-    {@required BuildContext context,
-    @required List<BaseEntity> entities,
+    {@required List<BaseEntity> entities,
     Completer completer,
     bool multiselect = false}) async {
   if (entities == null) {
     return;
   }
-  final mainContext = context;
-  final state = StoreProvider.of<AppState>(context).state;
+  final mainContext = navigatorKey.currentContext;
+  final state = StoreProvider.of<AppState>(navigatorKey.currentContext).state;
   final actions = <Widget>[];
   final first = entities[0];
   final ClientEntity client = first is BelongsToClient
@@ -70,7 +70,7 @@ Future<void> showEntityActionsDialog(
   }
 
   showDialog<String>(
-      context: context,
+      context: navigatorKey.currentContext,
       builder: (BuildContext dialogContext) {
         return SimpleDialog(children: actions);
       });

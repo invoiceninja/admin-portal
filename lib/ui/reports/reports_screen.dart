@@ -29,7 +29,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 
 class ReportsScreen extends StatelessWidget {
@@ -1034,9 +1033,7 @@ class ReportResult {
         cells.add(
           DataCell(cell.renderWidget(context, column), onTap: () {
             viewEntityById(
-                appContext: context.getAppContext(),
-                entityId: cell.entityId,
-                entityType: cell.entityType);
+                entityId: cell.entityId, entityType: cell.entityType);
           }),
         );
       }

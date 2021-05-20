@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class ProductEditScreen extends StatelessWidget {
@@ -71,10 +70,10 @@ class ProductEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final product = store.state.productUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<ProductEntity> completer =
               new Completer<ProductEntity>();
           store.dispatch(
@@ -87,14 +86,12 @@ class ProductEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
               if (product.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(ProductViewScreen.route);
+                navigator.pushReplacementNamed(ProductViewScreen.route);
               } else {
-                appContext.navigator.pop(savedProduct);
+                navigator.pop(savedProduct);
               }
             } else {
-              viewEntity(
-                  appContext: appContext, entity: savedProduct, force: true);
+              viewEntity(entity: savedProduct, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

@@ -92,6 +92,15 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
+extension NavigatorKeyUtils on GlobalKey<NavigatorState> {
+  AppLocalization get localization {
+    return AppLocalization.of(currentContext);
+  }
+  Store<AppState> get store {
+    return StoreProvider.of<AppState>(currentContext);
+  }
+}
+
 class InvoiceNinjaApp extends StatefulWidget {
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
   final Store<AppState> store;

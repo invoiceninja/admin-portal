@@ -6,6 +6,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class AppWebView extends StatelessWidget {
   const AppWebView({this.html});
+
   final String html;
 
   @override
@@ -16,6 +17,7 @@ class AppWebView extends StatelessWidget {
 
 class _WebWebView extends StatelessWidget {
   const _WebWebView({this.html});
+
   final String html;
 
   @override

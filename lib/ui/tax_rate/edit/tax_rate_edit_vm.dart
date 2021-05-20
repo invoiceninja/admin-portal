@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -70,10 +69,10 @@ class TaxRateEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final taxRate = store.state.taxRateUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<TaxRateEntity> completer =
               new Completer<TaxRateEntity>();
           store.dispatch(
@@ -86,14 +85,12 @@ class TaxRateEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
               if (taxRate.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(TaxRateViewScreen.route);
+                navigator.pushReplacementNamed(TaxRateViewScreen.route);
               } else {
-                appContext.navigator.pop(savedTaxRate);
+                navigator.pop(savedTaxRate);
               }
             } else {
-              viewEntity(
-                  appContext: appContext, entity: savedTaxRate, force: true);
+              viewEntity(entity: savedTaxRate, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

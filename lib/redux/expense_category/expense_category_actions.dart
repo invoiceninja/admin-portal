@@ -330,7 +330,6 @@ void handleExpenseCategoryAction(BuildContext context,
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [expenseCategory],
-        context: context,
       );
       break;
     default:

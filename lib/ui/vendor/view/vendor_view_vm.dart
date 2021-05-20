@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class VendorViewScreen extends StatelessWidget {
@@ -89,9 +88,7 @@ class VendorViewVM {
                   entity: ExpenseEntity(state: state, vendor: vendor));
             } else {
               viewEntitiesByType(
-                  appContext: context.getAppContext(),
-                  entityType: EntityType.expense,
-                  filterEntity: vendor);
+                  entityType: EntityType.expense, filterEntity: vendor);
             }
             break;
         }
@@ -102,8 +99,7 @@ class VendorViewVM {
             entity: ExpenseEntity(state: state, vendor: vendor));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context.getAppContext(), [vendor], action,
-              autoPop: true),
+          handleEntitiesActions([vendor], action, autoPop: true),
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveVendorDocumentRequest(

@@ -400,7 +400,6 @@ void handleTaskAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [task],
-        context: context,
       );
       break;
   }

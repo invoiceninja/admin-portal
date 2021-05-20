@@ -8,6 +8,7 @@ class AppScrollbar extends StatefulWidget {
     @required this.controller,
     this.hideMobileThumb = false,
   });
+
   final Widget child;
   final ScrollController controller;
   final bool hideMobileThumb;

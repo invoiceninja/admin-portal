@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'buttons/edit_icon_button.dart';
 
 class ViewScaffold extends StatelessWidget {
@@ -73,7 +72,6 @@ class ViewScaffold extends StatelessWidget {
           icon: Icon(Icons.clear),
           onPressed: () {
             viewEntityById(
-              appContext: context.getAppContext(),
               entityType: entity.entityType,
               entityId: '',
               showError: false,
@@ -122,9 +120,8 @@ class ViewScaffold extends StatelessWidget {
                   ViewActionMenuButton(
                     isSaving: state.isSaving && !isFilter,
                     entity: entity,
-                    onSelected: (context, action) => handleEntityAction(
-                        context.getAppContext(), entity, action,
-                        autoPop: true),
+                    onSelected: (context, action) =>
+                        handleEntityAction(entity, action, autoPop: true),
                     entityActions: entity.getActions(
                       userCompany: userCompany,
                       client: entity is BelongsToClient

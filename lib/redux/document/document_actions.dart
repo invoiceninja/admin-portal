@@ -315,7 +315,6 @@ void handleDocumentAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [document],
-        context: context,
       );
       break;
   }

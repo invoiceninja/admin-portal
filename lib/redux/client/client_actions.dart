@@ -409,7 +409,6 @@ void handleClientAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [client],
-        context: context,
       );
       break;
   }

@@ -342,7 +342,6 @@ void handleVendorAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [vendor],
-        context: context,
       );
       break;
   }

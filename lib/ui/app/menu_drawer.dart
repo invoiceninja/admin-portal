@@ -39,7 +39,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -311,7 +310,6 @@ class MenuDrawer extends StatelessWidget {
                             icon: getEntityIcon(EntityType.dashboard),
                             title: localization.dashboard,
                             onTap: () => viewEntitiesByType(
-                                appContext: context.getAppContext(),
                                 entityType: EntityType.dashboard),
                             onLongPress: () =>
                                 store.dispatch(ViewDashboard(filter: '')),
@@ -399,7 +397,6 @@ class MenuDrawer extends StatelessWidget {
                             icon: getEntityIcon(EntityType.reports),
                             title: localization.reports,
                             onTap: () => viewEntitiesByType(
-                                appContext: context.getAppContext(),
                                 entityType: EntityType.reports),
                           ),
                           DrawerTile(
@@ -407,7 +404,6 @@ class MenuDrawer extends StatelessWidget {
                             icon: getEntityIcon(EntityType.settings),
                             title: localization.settings,
                             onTap: () => viewEntitiesByType(
-                                appContext: context.getAppContext(),
                                 entityType: EntityType.settings),
                           ),
                         ],
@@ -571,7 +567,6 @@ class _DrawerTileState extends State<DrawerTile> {
         onTap: () {
           if (widget.entityType != null) {
             viewEntitiesByType(
-              appContext: context.getAppContext(),
               entityType: widget.entityType,
             );
           } else {

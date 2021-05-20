@@ -96,6 +96,7 @@ class UserLogout implements PersistData, PersistUI {}
 
 class UserLogoutAll implements StartLoading {
   const UserLogoutAll({this.completer});
+
   final Completer completer;
 }
 
@@ -103,6 +104,7 @@ class UserLogoutAllSuccess implements StopLoading {}
 
 class UserLogoutAllFailure implements StopLoading {
   const UserLogoutAllFailure(this.error);
+
   final Object error;
 }
 

@@ -121,7 +121,8 @@ class DecoratedFormField extends StatelessWidget {
     }
 
     return TextFormField(
-      key: ValueKey(label), // Enables tests to find fields
+      key: ValueKey(label),
+      // Enables tests to find fields
       focusNode: focusNode,
       controller: controller,
       autofocus: autofocus,

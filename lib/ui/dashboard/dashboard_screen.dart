@@ -20,7 +20,6 @@ import 'package:invoiceninja_flutter/ui/settings/settings_wizard.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
@@ -296,8 +295,7 @@ class _CustomTabBarView extends StatelessWidget {
               subtitle: Text(subtitle != null
                   ? subtitle
                   : localization.lookup('${entity.entityType}')),
-              onTap: () => viewEntity(
-                  appContext: context.getAppContext(), entity: entity),
+              onTap: () => viewEntity(entity: entity),
             );
           });
     }

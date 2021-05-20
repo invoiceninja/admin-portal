@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:overflow_view/overflow_view.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class EntityTopFilter extends StatelessWidget {
   const EntityTopFilter({@required this.show});
@@ -85,7 +84,6 @@ class EntityTopFilter extends StatelessWidget {
                         ),
                         onPressed: () => viewEntity(
                           entity: filterEntity,
-                          appContext: context.getAppContext(),
                         ),
                       ),
                     ),
@@ -112,14 +110,12 @@ class EntityTopFilter extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     viewEntitiesByType(
-                                      appContext: context.getAppContext(),
                                       entityType: relatedTypes[i],
                                       filterEntity: filterEntity,
                                     );
                                   },
                                   onLongPress: () {
                                     handleEntityAction(
-                                        context.getAppContext(),
                                         filterEntity,
                                         EntityAction.newEntityType(
                                             relatedTypes[i]));
@@ -164,11 +160,9 @@ class EntityTopFilter extends StatelessWidget {
                                 if (value == filterEntityType) {
                                   viewEntity(
                                     entity: filterEntity,
-                                    appContext: context.getAppContext(),
                                   );
                                 } else {
                                   viewEntitiesByType(
-                                    appContext: context.getAppContext(),
                                     entityType: value,
                                     filterEntity: filterEntity,
                                   );
