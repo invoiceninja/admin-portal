@@ -316,7 +316,6 @@ void handleSubscriptionAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [subscription],
-        context: context,
       );
       break;
     default:

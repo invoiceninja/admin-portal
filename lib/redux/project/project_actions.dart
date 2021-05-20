@@ -335,7 +335,6 @@ void handleProjectAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [project],
-        context: context,
       );
       break;
   }

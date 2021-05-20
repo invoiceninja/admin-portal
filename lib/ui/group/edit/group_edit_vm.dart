@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -70,10 +69,10 @@ class GroupEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final group = store.state.groupUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<GroupEntity> completer = Completer<GroupEntity>();
           store.dispatch(SaveGroupRequest(completer: completer, group: group));
           return completer.future.then((savedGroup) {
@@ -84,14 +83,12 @@ class GroupEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
               if (group.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(GroupViewScreen.route);
+                navigator.pushReplacementNamed(GroupViewScreen.route);
               } else {
-                appContext.navigator.pop(savedGroup);
+                navigator.pop(savedGroup);
               }
             } else {
-              viewEntity(
-                  appContext: appContext, entity: savedGroup, force: true);
+              viewEntity(entity: savedGroup, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

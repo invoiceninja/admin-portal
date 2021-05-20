@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
@@ -142,13 +141,10 @@ class InvoiceViewVM extends EntityViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onPaymentsPressed: (BuildContext context) {
         viewEntitiesByType(
-            appContext: context.getAppContext(),
-            entityType: EntityType.payment,
-            filterEntity: invoice);
+            entityType: EntityType.payment, filterEntity: invoice);
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context.getAppContext(), [invoice], action,
-              autoPop: true),
+          handleEntitiesActions([invoice], action, autoPop: true),
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
@@ -181,7 +177,6 @@ class InvoiceViewVM extends EntityViewVM {
       onViewExpense: (BuildContext context, DocumentEntity document) {
         /*
         viewEntityById(
-            context: context,
             entityId: document.expenseId,
             entityType: EntityType.expense);
          */

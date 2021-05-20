@@ -325,7 +325,6 @@ void handleTaskStatusAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [taskStatus],
-        context: context,
       );
       break;
     default:

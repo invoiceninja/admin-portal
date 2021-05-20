@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
@@ -77,8 +76,7 @@ class UserViewVM {
         store.dispatch(UpdateCurrentRoute(UserScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context.getAppContext(), [user], action,
-              autoPop: true),
+          handleEntitiesActions([user], action, autoPop: true),
     );
   }
 

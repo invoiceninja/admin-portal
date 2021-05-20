@@ -304,7 +304,6 @@ void handleWebhookAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [webhook],
-        context: context,
       );
       break;
   }

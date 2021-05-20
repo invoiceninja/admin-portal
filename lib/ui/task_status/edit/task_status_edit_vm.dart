@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -70,10 +69,10 @@ class TaskStatusEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final taskStatus = store.state.taskStatusUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<TaskStatusEntity> completer =
               new Completer<TaskStatusEntity>();
           store.dispatch(SaveTaskStatusRequest(
@@ -86,14 +85,12 @@ class TaskStatusEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TaskStatusViewScreen.route));
               if (taskStatus.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(TaskStatusViewScreen.route);
+                navigator.pushReplacementNamed(TaskStatusViewScreen.route);
               } else {
-                appContext.navigator.pop(savedTaskStatus);
+                navigator.pop(savedTaskStatus);
               }
             } else {
-              viewEntity(
-                  appContext: appContext, entity: savedTaskStatus, force: true);
+              viewEntity(entity: savedTaskStatus, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

@@ -430,6 +430,7 @@ class _UserDetailsState extends State<UserDetails>
 
 class _EnableTwoFactor extends StatefulWidget {
   const _EnableTwoFactor({@required this.state});
+
   final AppState state;
 
   @override

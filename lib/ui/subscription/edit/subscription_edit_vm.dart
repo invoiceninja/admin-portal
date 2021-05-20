@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/data/models/subscription_model.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class SubscriptionEditScreen extends StatelessWidget {
   const SubscriptionEditScreen({Key key}) : super(key: key);
@@ -75,19 +74,18 @@ class SubscriptionEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final subscription = store.state.subscriptionUIState.editing;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           if (subscription.name.isEmpty) {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
-                  return ErrorDialog(appContext.localization.pleaseEnterAName);
+                  return ErrorDialog(localization.pleaseEnterAName);
                 });
             return null;
           }
-
-          final localization = appContext.localization;
           final Completer<SubscriptionEntity> completer =
               new Completer<SubscriptionEntity>();
           store.dispatch(SaveSubscriptionRequest(
@@ -99,16 +97,12 @@ class SubscriptionEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
               if (subscription.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(SubscriptionViewScreen.route);
+                navigator.pushReplacementNamed(SubscriptionViewScreen.route);
               } else {
-                appContext.navigator.pop(savedSubscription);
+                navigator.pop(savedSubscription);
               }
             } else {
-              viewEntity(
-                  appContext: appContext,
-                  entity: savedSubscription,
-                  force: true);
+              viewEntity(entity: savedSubscription, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

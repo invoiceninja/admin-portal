@@ -5,12 +5,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+
 // ignore: unused_import
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class MobileSessionTimeout extends StatefulWidget {
   const MobileSessionTimeout({this.child});
+
   final Widget child;
 
   @override

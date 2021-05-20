@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SystemLogViewer extends StatefulWidget {
   const SystemLogViewer({this.systemLogs});
+
   final BuiltList<SystemLogEntity> systemLogs;
 
   @override

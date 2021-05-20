@@ -379,9 +379,8 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         );
       }).toList();
       footerWidgets.addAll(<Widget>[
-        Container(
-            width:
-                14.0), // to match trailing padding in case we overflow and end up scrolling
+        Container(width: 14.0),
+        // to match trailing padding in case we overflow and end up scrolling
         Text(localizations.rowsPerPageTitle),
         ConstrainedBox(
           constraints: const BoxConstraints(

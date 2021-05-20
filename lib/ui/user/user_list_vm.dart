@@ -41,7 +41,6 @@ class UserListBuilder extends StatelessWidget {
 
               void showDialog() => showEntityActionsDialog(
                     entities: [user],
-                    context: context,
                   );
 
               return UserListItem(

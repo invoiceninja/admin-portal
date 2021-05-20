@@ -169,6 +169,7 @@ class _$TaskState extends TaskState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
@@ -187,12 +188,16 @@ class TaskStateBuilder implements Builder<TaskState, TaskStateBuilder> {
   _$TaskState _$v;
 
   MapBuilder<String, TaskEntity> _map;
+
   MapBuilder<String, TaskEntity> get map =>
       _$this._map ??= new MapBuilder<String, TaskEntity>();
+
   set map(MapBuilder<String, TaskEntity> map) => _$this._map = map;
 
   ListBuilder<String> _list;
+
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+
   set list(ListBuilder<String> list) => _$this._list = list;
 
   TaskStateBuilder();
@@ -303,6 +308,7 @@ class _$TaskUIState extends TaskUIState {
   }
 
   int __hashCode;
+
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -340,40 +346,56 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   _$TaskUIState _$v;
 
   TaskEntityBuilder _editing;
+
   TaskEntityBuilder get editing => _$this._editing ??= new TaskEntityBuilder();
+
   set editing(TaskEntityBuilder editing) => _$this._editing = editing;
 
   int _editingTimeIndex;
+
   int get editingTimeIndex => _$this._editingTimeIndex;
+
   set editingTimeIndex(int editingTimeIndex) =>
       _$this._editingTimeIndex = editingTimeIndex;
 
   ListUIStateBuilder _listUIState;
+
   ListUIStateBuilder get listUIState =>
       _$this._listUIState ??= new ListUIStateBuilder();
+
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
 
   String _selectedId;
+
   String get selectedId => _$this._selectedId;
+
   set selectedId(String selectedId) => _$this._selectedId = selectedId;
 
   bool _forceSelected;
+
   bool get forceSelected => _$this._forceSelected;
+
   set forceSelected(bool forceSelected) =>
       _$this._forceSelected = forceSelected;
 
   int _tabIndex;
+
   int get tabIndex => _$this._tabIndex;
+
   set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
 
   Completer<SelectableEntity> _saveCompleter;
+
   Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
+
   set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
       _$this._saveCompleter = saveCompleter;
 
   Completer<Null> _cancelCompleter;
+
   Completer<Null> get cancelCompleter => _$this._cancelCompleter;
+
   set cancelCompleter(Completer<Null> cancelCompleter) =>
       _$this._cancelCompleter = cancelCompleter;
 

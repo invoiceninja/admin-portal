@@ -6,7 +6,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -99,10 +98,10 @@ class ExpenseEditVM {
         });
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final expense = store.state.expenseUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<ExpenseEntity> completer =
               new Completer<ExpenseEntity>();
           store.dispatch(
@@ -115,14 +114,12 @@ class ExpenseEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
               if (expense.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(ExpenseViewScreen.route);
+                navigator.pushReplacementNamed(ExpenseViewScreen.route);
               } else {
-                appContext.navigator.pop(savedExpense);
+                navigator.pop(savedExpense);
               }
             } else {
               viewEntityById(
-                  appContext: appContext,
                   entityType: EntityType.expense,
                   entityId: savedExpense.id,
                   force: true);

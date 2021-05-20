@@ -29,6 +29,7 @@ class SettingsWizard extends StatefulWidget {
   const SettingsWizard({
     @required this.user,
   });
+
   final UserEntity user;
 
   @override

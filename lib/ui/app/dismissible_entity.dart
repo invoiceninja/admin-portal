@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -65,16 +64,15 @@ class DismissibleEntity extends StatelessWidget {
             color: Colors.teal,
             foregroundColor: Colors.white,
             icon: Icons.check_box,
-            onTap: () => handleEntityAction(context.getAppContext(), entity,
-                EntityAction.toggleMultiselect),
+            onTap: () =>
+                handleEntityAction(entity, EntityAction.toggleMultiselect),
           ),
         IconSlideAction(
           caption: localization.more,
           color: Colors.black45,
           foregroundColor: Colors.white,
           icon: Icons.more_vert,
-          onTap: () => handleEntityAction(
-              context.getAppContext(), entity, EntityAction.more),
+          onTap: () => handleEntityAction(entity, EntityAction.more),
         ),
       ],
       secondaryActions: <Widget>[
@@ -84,16 +82,14 @@ class DismissibleEntity extends StatelessWidget {
                 color: Colors.orange,
                 foregroundColor: Colors.white,
                 icon: Icons.archive,
-                onTap: () => handleEntityAction(
-                    context.getAppContext(), entity, EntityAction.archive),
+                onTap: () => handleEntityAction(entity, EntityAction.archive),
               )
             : IconSlideAction(
                 caption: localization.restore,
                 color: Colors.blue,
                 foregroundColor: Colors.white,
                 icon: Icons.restore,
-                onTap: () => handleEntityAction(
-                    context.getAppContext(), entity, EntityAction.restore),
+                onTap: () => handleEntityAction(entity, EntityAction.restore),
               ),
         entity.isDeleted
             ? IconSlideAction(
@@ -101,16 +97,14 @@ class DismissibleEntity extends StatelessWidget {
                 color: Colors.blue,
                 foregroundColor: Colors.white,
                 icon: Icons.restore,
-                onTap: () => handleEntityAction(
-                    context.getAppContext(), entity, EntityAction.restore),
+                onTap: () => handleEntityAction(entity, EntityAction.restore),
               )
             : IconSlideAction(
                 caption: localization.delete,
                 color: Colors.red,
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
-                onTap: () => handleEntityAction(
-                    context.getAppContext(), entity, EntityAction.delete),
+                onTap: () => handleEntityAction(entity, EntityAction.delete),
               ),
       ],
       child: widget,

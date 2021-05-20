@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -71,10 +70,10 @@ class ExpenseCategoryEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final expenseCategory = store.state.expenseCategoryUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<ExpenseCategoryEntity> completer =
               new Completer<ExpenseCategoryEntity>();
           store.dispatch(SaveExpenseCategoryRequest(
@@ -88,16 +87,12 @@ class ExpenseCategoryEditVM {
               store.dispatch(
                   UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
               if (expenseCategory.isNew) {
-                appContext.navigator
-                    .pushReplacementNamed(ExpenseCategoryViewScreen.route);
+                navigator.pushReplacementNamed(ExpenseCategoryViewScreen.route);
               } else {
-                appContext.navigator.pop(savedExpenseCategory);
+                navigator.pop(savedExpenseCategory);
               }
             } else {
-              viewEntity(
-                  appContext: appContext,
-                  entity: savedExpenseCategory,
-                  force: true);
+              viewEntity(entity: savedExpenseCategory, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

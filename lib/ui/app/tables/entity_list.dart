@@ -24,7 +24,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:overflow_view/overflow_view.dart';
 
 class EntityList extends StatefulWidget {
@@ -125,7 +124,6 @@ class _EntityListState extends State<EntityList> {
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         viewEntityById(
-          appContext: context.getAppContext(),
           entityType: entityType,
           entityId: entityId,
         );
@@ -142,7 +140,6 @@ class _EntityListState extends State<EntityList> {
                 filterEntityId: uiState.filterEntityId,
                 filterEntityType: uiState.filterEntityType,
                 onPressed: (_) => viewEntityById(
-                    appContext: context.getAppContext(),
                     entityId: state.uiState.filterEntityId,
                     entityType: state.uiState.filterEntityType),
                 onClearPressed: () => store.dispatch(ClearEntityFilter()),
@@ -222,7 +219,6 @@ class _EntityListState extends State<EntityList> {
                 filterEntityType: uiState.filterEntityType,
                 onPressed: (_) {
                   viewEntityById(
-                      appContext: context.getAppContext(),
                       entityId: state.uiState.filterEntityId,
                       entityType: state.uiState.filterEntityType);
                 },
@@ -244,8 +240,8 @@ class _EntityListState extends State<EntityList> {
                               value != listUIState.isSelected(invoice.id))
                           .map((entity) => entity as BaseEntity)
                           .toList();
-                      handleEntitiesActions(context.getAppContext(), entities,
-                          EntityAction.toggleMultiselect);
+                      handleEntitiesActions(
+                          entities, EntityAction.toggleMultiselect);
                     },
                     columns: [
                       if (!isInMultiselect) DataColumn(label: SizedBox()),
@@ -338,7 +334,7 @@ class _EntityListState extends State<EntityList> {
                                 .map<BaseEntity>(
                                     (entityId) => entityMap[entityId])
                                 .toList();
-                            handleEntitiesActions(context.getAppContext(),
+                            handleEntitiesActions(
                                 entities, EntityAction.toggleMultiselect);
                           },
                           activeColor: Theme.of(context).accentColor,
@@ -367,9 +363,7 @@ class _EntityListState extends State<EntityList> {
                                         ),
                                         onPressed: () {
                                           handleEntitiesActions(
-                                              context.getAppContext(),
-                                              entities,
-                                              action);
+                                              entities, action);
                                           widget.onClearMultiselect();
                                         },
                                       ),
@@ -394,10 +388,7 @@ class _EntityListState extends State<EntityList> {
                                       ),
                                     ),
                                     onSelected: (EntityAction action) {
-                                      handleEntitiesActions(
-                                          context.getAppContext(),
-                                          entities,
-                                          action);
+                                      handleEntitiesActions(entities, action);
                                       widget.onClearMultiselect();
                                     },
                                     itemBuilder: (BuildContext context) {
@@ -442,7 +433,6 @@ class _EntityListState extends State<EntityList> {
                           onSavePressed: (context) async {
                             await showEntityActionsDialog(
                               entities: entities,
-                              context: context,
                               multiselect: true,
                               completer: Completer<Null>()
                                 ..future.then<dynamic>(

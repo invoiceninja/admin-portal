@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 
 class ProjectViewScreen extends StatelessWidget {
@@ -90,7 +89,6 @@ class ProjectViewVM {
               context, [project], EntityAction.newEntityType(entityType));
         } else {
           viewEntitiesByType(
-            appContext: context.getAppContext(),
             entityType: entityType,
             filterEntity: project,
           );
@@ -105,8 +103,7 @@ class ProjectViewVM {
             force: true);
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context.getAppContext(), [project], action,
-              autoPop: true),
+          handleEntitiesActions([project], action, autoPop: true),
       onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveProjectDocumentRequest(

@@ -546,7 +546,6 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [recurringInvoice],
-        context: context,
       );
       break;
   }

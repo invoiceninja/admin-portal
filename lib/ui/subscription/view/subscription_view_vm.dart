@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
@@ -79,8 +78,7 @@ class SubscriptionViewVM {
         store.dispatch(UpdateCurrentRoute(SubscriptionScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context.getAppContext(), [subscription], action,
-              autoPop: true),
+          handleEntitiesActions([subscription], action, autoPop: true),
     );
   }
 

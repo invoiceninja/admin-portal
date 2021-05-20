@@ -572,7 +572,6 @@ Future handleQuoteAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [quote],
-        context: context,
       );
       break;
   }

@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
@@ -94,10 +93,7 @@ class PaymentRefundVM {
               Navigator.of(context).pop(savedPayment);
             }
           } else {
-            viewEntity(
-                appContext: context.getAppContext(),
-                entity: savedPayment,
-                force: true);
+            viewEntity(entity: savedPayment, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

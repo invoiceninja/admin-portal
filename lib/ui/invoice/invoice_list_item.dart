@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
@@ -110,10 +109,7 @@ class InvoiceListItem extends StatelessWidget {
                                     isSaving: false,
                                     entity: invoice,
                                     onSelected: (context, action) =>
-                                        handleEntityAction(
-                                            context.getAppContext(),
-                                            invoice,
-                                            action),
+                                        handleEntityAction(invoice, action),
                                   )),
                         SizedBox(
                           width: kListNumberWidth,

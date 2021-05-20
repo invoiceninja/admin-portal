@@ -301,7 +301,6 @@ void handlePaymentTermAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [paymentTerm],
-        context: context,
       );
       break;
   }

@@ -334,7 +334,6 @@ void handleDesignAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [design],
-        context: context,
       );
       break;
   }

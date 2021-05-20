@@ -56,6 +56,9 @@ class _$HealthCheckResponseSerializer
       'jobs_pending',
       serializers.serialize(object.pendingJobs,
           specifiedType: const FullType(int)),
+      'pdf_engine',
+      serializers.serialize(object.pdfEngine,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -113,6 +116,10 @@ class _$HealthCheckResponseSerializer
         case 'jobs_pending':
           result.pendingJobs = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'pdf_engine':
+          result.pdfEngine = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -208,6 +215,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   final String emailDriver;
   @override
   final int pendingJobs;
+  @override
+  final String pdfEngine;
 
   factory _$HealthCheckResponse(
           [void Function(HealthCheckResponseBuilder) updates]) =>
@@ -223,7 +232,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.openBasedir,
       this.execEnabled,
       this.emailDriver,
-      this.pendingJobs})
+      this.pendingJobs,
+      this.pdfEngine})
       : super._() {
     if (systemHealth == null) {
       throw new BuiltValueNullFieldError('HealthCheckResponse', 'systemHealth');
@@ -256,6 +266,9 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     if (pendingJobs == null) {
       throw new BuiltValueNullFieldError('HealthCheckResponse', 'pendingJobs');
     }
+    if (pdfEngine == null) {
+      throw new BuiltValueNullFieldError('HealthCheckResponse', 'pdfEngine');
+    }
   }
 
   @override
@@ -280,7 +293,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         openBasedir == other.openBasedir &&
         execEnabled == other.execEnabled &&
         emailDriver == other.emailDriver &&
-        pendingJobs == other.pendingJobs;
+        pendingJobs == other.pendingJobs &&
+        pdfEngine == other.pdfEngine;
   }
 
   int __hashCode;
@@ -294,16 +308,18 @@ class _$HealthCheckResponse extends HealthCheckResponse {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, systemHealth.hashCode),
-                                        phpVersion.hashCode),
-                                    envWritable.hashCode),
-                                dbCheck.hashCode),
-                            cacheEnabled.hashCode),
-                        phantomEnabled.hashCode),
-                    openBasedir.hashCode),
-                execEnabled.hashCode),
-            emailDriver.hashCode),
-        pendingJobs.hashCode));
+                                    $jc(
+                                        $jc($jc(0, systemHealth.hashCode),
+                                            phpVersion.hashCode),
+                                        envWritable.hashCode),
+                                    dbCheck.hashCode),
+                                cacheEnabled.hashCode),
+                            phantomEnabled.hashCode),
+                        openBasedir.hashCode),
+                    execEnabled.hashCode),
+                emailDriver.hashCode),
+            pendingJobs.hashCode),
+        pdfEngine.hashCode));
   }
 
   @override
@@ -318,7 +334,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
           ..add('openBasedir', openBasedir)
           ..add('execEnabled', execEnabled)
           ..add('emailDriver', emailDriver)
-          ..add('pendingJobs', pendingJobs))
+          ..add('pendingJobs', pendingJobs)
+          ..add('pdfEngine', pdfEngine))
         .toString();
   }
 }
@@ -370,6 +387,10 @@ class HealthCheckResponseBuilder
   int get pendingJobs => _$this._pendingJobs;
   set pendingJobs(int pendingJobs) => _$this._pendingJobs = pendingJobs;
 
+  String _pdfEngine;
+  String get pdfEngine => _$this._pdfEngine;
+  set pdfEngine(String pdfEngine) => _$this._pdfEngine = pdfEngine;
+
   HealthCheckResponseBuilder();
 
   HealthCheckResponseBuilder get _$this {
@@ -384,6 +405,7 @@ class HealthCheckResponseBuilder
       _execEnabled = _$v.execEnabled;
       _emailDriver = _$v.emailDriver;
       _pendingJobs = _$v.pendingJobs;
+      _pdfEngine = _$v.pdfEngine;
       _$v = null;
     }
     return this;
@@ -417,7 +439,8 @@ class HealthCheckResponseBuilder
               openBasedir: openBasedir,
               execEnabled: execEnabled,
               emailDriver: emailDriver,
-              pendingJobs: pendingJobs);
+              pendingJobs: pendingJobs,
+              pdfEngine: pdfEngine);
     } catch (_) {
       String _$failedField;
       try {

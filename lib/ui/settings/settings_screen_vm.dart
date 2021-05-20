@@ -28,6 +28,7 @@ class SettingsScreenVM {
   SettingsScreenVM({@required this.state});
 
   final AppState state;
+
   static SettingsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
 

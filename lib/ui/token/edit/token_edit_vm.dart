@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -75,13 +74,13 @@ class TokenEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final token = store.state.tokenUIState.editing;
           passwordCallback(
               context: context,
               callback: (password, idToken) {
-                final localization = appContext.localization;
+                final localization = navigatorKey.localization;
+                final navigator = navigatorKey.currentState;
                 final Completer<TokenEntity> completer =
                     new Completer<TokenEntity>();
                 store.dispatch(SaveTokenRequest(
@@ -98,16 +97,12 @@ class TokenEditVM {
                   if (state.prefState.isMobile) {
                     store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
                     if (token.isNew) {
-                      appContext.navigator
-                          .pushReplacementNamed(TokenViewScreen.route);
+                      navigator.pushReplacementNamed(TokenViewScreen.route);
                     } else {
-                      appContext.navigator.pop(savedToken);
+                      navigator.pop(savedToken);
                     }
                   } else {
-                    viewEntity(
-                        appContext: appContext,
-                        entity: savedToken,
-                        force: true);
+                    viewEntity(entity: savedToken, force: true);
                   }
                 }).catchError((Object error) {
                   showDialog<ErrorDialog>(

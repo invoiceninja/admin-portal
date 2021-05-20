@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 
 void showErrorDialog({
   @required BuildContext context,
@@ -336,7 +335,7 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.invoice)),
                   title: Text(localization.invoice),
                   onTap: () {
-                    handleEntityAction(context.getAppContext(), invoice,
+                    handleEntityAction( invoice,
                         EntityAction.cloneToInvoice);
                     Navigator.of(context).pop();
                   },
@@ -346,7 +345,7 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.quote)),
                   title: Text(localization.quote),
                   onTap: () {
-                    handleEntityAction(context.getAppContext(), invoice,
+                    handleEntityAction( invoice,
                         EntityAction.cloneToQuote);
                     Navigator.of(context).pop();
                   },
@@ -356,7 +355,7 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.credit)),
                   title: Text(localization.credit),
                   onTap: () {
-                    handleEntityAction(context.getAppContext(), invoice,
+                    handleEntityAction( invoice,
                         EntityAction.cloneToCredit);
                     Navigator.of(context).pop();
                   },
@@ -366,7 +365,7 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.recurringInvoice)),
                   title: Text(localization.recurringInvoice),
                   onTap: () {
-                    handleEntityAction(context.getAppContext(), invoice,
+                    handleEntityAction( invoice,
                         EntityAction.cloneToRecurring);
                     Navigator.of(context).pop();
                   },

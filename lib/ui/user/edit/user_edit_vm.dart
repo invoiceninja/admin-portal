@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/utils/app_context.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -73,10 +72,10 @@ class UserEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final appContext = context.getAppContext();
         Debouncer.runOnComplete(() {
           final user = store.state.userUIState.editing;
-          final localization = appContext.localization;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
           final Completer<UserEntity> completer = new Completer<UserEntity>();
           passwordCallback(
               context: context,
@@ -96,13 +95,12 @@ class UserEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
               if (user.isNew) {
-                appContext.navigator.pushReplacementNamed(UserViewScreen.route);
+                navigator.pushReplacementNamed(UserViewScreen.route);
               } else {
-                appContext.navigator.pop(savedUser);
+                navigator.pop(savedUser);
               }
             } else {
-              viewEntity(
-                  appContext: appContext, entity: savedUser, force: true);
+              viewEntity(entity: savedUser, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
