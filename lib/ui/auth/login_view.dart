@@ -305,7 +305,7 @@ class _LoginState extends State<LoginView> {
                         children: <Widget>[
                           SizedBox(height: 10),
                           if (!_recoverPassword) ...[
-                            if (!kIsWeb && !kReleaseMode)
+                            if (!kIsWeb)
                               AppToggleButtons(
                                 tabLabels: [
                                   localization.hosted,
