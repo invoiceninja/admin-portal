@@ -238,7 +238,6 @@ class _$ListUIState extends ListUIState {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -285,84 +284,62 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   _$ListUIState _$v;
 
   String _filter;
-
   String get filter => _$this._filter;
-
   set filter(String filter) => _$this._filter = filter;
 
   int _filterClearedAt;
-
   int get filterClearedAt => _$this._filterClearedAt;
-
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
   String _sortField;
-
   String get sortField => _$this._sortField;
-
   set sortField(String sortField) => _$this._sortField = sortField;
 
   bool _sortAscending;
-
   bool get sortAscending => _$this._sortAscending;
-
   set sortAscending(bool sortAscending) =>
       _$this._sortAscending = sortAscending;
 
   ListBuilder<EntityState> _stateFilters;
-
   ListBuilder<EntityState> get stateFilters =>
       _$this._stateFilters ??= new ListBuilder<EntityState>();
-
   set stateFilters(ListBuilder<EntityState> stateFilters) =>
       _$this._stateFilters = stateFilters;
 
   ListBuilder<EntityStatus> _statusFilters;
-
   ListBuilder<EntityStatus> get statusFilters =>
       _$this._statusFilters ??= new ListBuilder<EntityStatus>();
-
   set statusFilters(ListBuilder<EntityStatus> statusFilters) =>
       _$this._statusFilters = statusFilters;
 
   ListBuilder<String> _custom1Filters;
-
   ListBuilder<String> get custom1Filters =>
       _$this._custom1Filters ??= new ListBuilder<String>();
-
   set custom1Filters(ListBuilder<String> custom1Filters) =>
       _$this._custom1Filters = custom1Filters;
 
   ListBuilder<String> _custom2Filters;
-
   ListBuilder<String> get custom2Filters =>
       _$this._custom2Filters ??= new ListBuilder<String>();
-
   set custom2Filters(ListBuilder<String> custom2Filters) =>
       _$this._custom2Filters = custom2Filters;
 
   ListBuilder<String> _custom3Filters;
-
   ListBuilder<String> get custom3Filters =>
       _$this._custom3Filters ??= new ListBuilder<String>();
-
   set custom3Filters(ListBuilder<String> custom3Filters) =>
       _$this._custom3Filters = custom3Filters;
 
   ListBuilder<String> _custom4Filters;
-
   ListBuilder<String> get custom4Filters =>
       _$this._custom4Filters ??= new ListBuilder<String>();
-
   set custom4Filters(ListBuilder<String> custom4Filters) =>
       _$this._custom4Filters = custom4Filters;
 
   ListBuilder<String> _selectedIds;
-
   ListBuilder<String> get selectedIds =>
       _$this._selectedIds ??= new ListBuilder<String>();
-
   set selectedIds(ListBuilder<String> selectedIds) =>
       _$this._selectedIds = selectedIds;
 

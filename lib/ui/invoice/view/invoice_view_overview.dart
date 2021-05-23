@@ -132,6 +132,8 @@ class InvoiceOverview extends StatelessWidget {
       else if (invoice.isInvoice)
         InvoiceFields.date: formatDate(invoice.date, context),
       dueDateField: formatDate(invoice.dueDate, context),
+      if (invoice.isInvoice)
+        InvoiceFields.nextSendDate: formatDate(invoice.nextSendDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
           clientId: invoice.clientId, zeroIsNull: true),
       InvoiceFields.partialDueDate: formatDate(invoice.partialDueDate, context),

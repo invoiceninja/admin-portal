@@ -245,7 +245,6 @@ class _$DashboardUIState extends DashboardUIState {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -270,34 +269,26 @@ class DashboardUIStateBuilder
   _$DashboardUIState _$v;
 
   DashboardUISettingsBuilder _settings;
-
   DashboardUISettingsBuilder get settings =>
       _$this._settings ??= new DashboardUISettingsBuilder();
-
   set settings(DashboardUISettingsBuilder settings) =>
       _$this._settings = settings;
 
   EntityType _selectedEntityType;
-
   EntityType get selectedEntityType => _$this._selectedEntityType;
-
   set selectedEntityType(EntityType selectedEntityType) =>
       _$this._selectedEntityType = selectedEntityType;
 
   MapBuilder<EntityType, BuiltList<String>> _selectedEntities;
-
   MapBuilder<EntityType, BuiltList<String>> get selectedEntities =>
       _$this._selectedEntities ??=
           new MapBuilder<EntityType, BuiltList<String>>();
-
   set selectedEntities(
           MapBuilder<EntityType, BuiltList<String>> selectedEntities) =>
       _$this._selectedEntities = selectedEntities;
 
   bool _showSidebar;
-
   bool get showSidebar => _$this._showSidebar;
-
   set showSidebar(bool showSidebar) => _$this._showSidebar = showSidebar;
 
   DashboardUIStateBuilder();
@@ -457,7 +448,6 @@ class _$DashboardUISettings extends DashboardUISettings {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -502,69 +492,49 @@ class DashboardUISettingsBuilder
   _$DashboardUISettings _$v;
 
   DateRange _dateRange;
-
   DateRange get dateRange => _$this._dateRange;
-
   set dateRange(DateRange dateRange) => _$this._dateRange = dateRange;
 
   String _customStartDate;
-
   String get customStartDate => _$this._customStartDate;
-
   set customStartDate(String customStartDate) =>
       _$this._customStartDate = customStartDate;
 
   String _customEndDate;
-
   String get customEndDate => _$this._customEndDate;
-
   set customEndDate(String customEndDate) =>
       _$this._customEndDate = customEndDate;
 
   bool _enableComparison;
-
   bool get enableComparison => _$this._enableComparison;
-
   set enableComparison(bool enableComparison) =>
       _$this._enableComparison = enableComparison;
 
   DateRangeComparison _compareDateRange;
-
   DateRangeComparison get compareDateRange => _$this._compareDateRange;
-
   set compareDateRange(DateRangeComparison compareDateRange) =>
       _$this._compareDateRange = compareDateRange;
 
   String _compareCustomStartDate;
-
   String get compareCustomStartDate => _$this._compareCustomStartDate;
-
   set compareCustomStartDate(String compareCustomStartDate) =>
       _$this._compareCustomStartDate = compareCustomStartDate;
 
   String _compareCustomEndDate;
-
   String get compareCustomEndDate => _$this._compareCustomEndDate;
-
   set compareCustomEndDate(String compareCustomEndDate) =>
       _$this._compareCustomEndDate = compareCustomEndDate;
 
   int _offset;
-
   int get offset => _$this._offset;
-
   set offset(int offset) => _$this._offset = offset;
 
   String _currencyId;
-
   String get currencyId => _$this._currencyId;
-
   set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   bool _includeTaxes;
-
   bool get includeTaxes => _$this._includeTaxes;
-
   set includeTaxes(bool includeTaxes) => _$this._includeTaxes = includeTaxes;
 
   DashboardUISettingsBuilder();

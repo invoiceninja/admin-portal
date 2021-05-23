@@ -397,6 +397,20 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   invoice.rebuild((b) => b..exchangeRate = parseDouble(value))),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
+            if (invoice.isInvoice)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.autoBillEnabled),
+                  dense: true,
+                  value: invoice.autoBillEnabled,
+                  onChanged: (value) {
+                    viewModel.onChanged(
+                        invoice.rebuild((b) => b..autoBillEnabled = value));
+                  },
+                ),
+              )
           ],
         ),
       ],

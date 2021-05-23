@@ -62,6 +62,7 @@ class InvoiceFields {
   static const String poNumber = 'po_number';
   static const String date = 'date';
   static const String dueDate = 'due_date';
+  static const String nextSendDate = 'next_send_date';
   static const String terms = 'terms';
   static const String footer = 'footer';
   static const String partial = 'partial_due';
@@ -356,10 +357,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'auto_bill')
   String get autoBill;
 
-  @nullable
-  @BuiltValueField(wireName: 'auto_bill_enabled')
-  bool get autoBillEnabled;
-
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
@@ -448,6 +445,9 @@ abstract class InvoiceEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'recurring_id')
   String get recurringId;
+
+  @BuiltValueField(wireName: 'auto_bill_enabled')
+  bool get autoBillEnabled;
 
   @nullable
   String get filename;
@@ -1083,6 +1083,7 @@ abstract class InvoiceEntity extends Object
   static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())
     ..paidToDate = 0
+    ..autoBillEnabled = false
     ..subscriptionId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;

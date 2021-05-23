@@ -182,7 +182,6 @@ class _$ReportsUIState extends ReportsUIState {
   }
 
   int __hashCode;
-
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
@@ -219,55 +218,39 @@ class ReportsUIStateBuilder
   _$ReportsUIState _$v;
 
   String _report;
-
   String get report => _$this._report;
-
   set report(String report) => _$this._report = report;
 
   String _group;
-
   String get group => _$this._group;
-
   set group(String group) => _$this._group = group;
 
   String _selectedGroup;
-
   String get selectedGroup => _$this._selectedGroup;
-
   set selectedGroup(String selectedGroup) =>
       _$this._selectedGroup = selectedGroup;
 
   String _chart;
-
   String get chart => _$this._chart;
-
   set chart(String chart) => _$this._chart = chart;
 
   String _subgroup;
-
   String get subgroup => _$this._subgroup;
-
   set subgroup(String subgroup) => _$this._subgroup = subgroup;
 
   String _customStartDate;
-
   String get customStartDate => _$this._customStartDate;
-
   set customStartDate(String customStartDate) =>
       _$this._customStartDate = customStartDate;
 
   String _customEndDate;
-
   String get customEndDate => _$this._customEndDate;
-
   set customEndDate(String customEndDate) =>
       _$this._customEndDate = customEndDate;
 
   MapBuilder<String, String> _filters;
-
   MapBuilder<String, String> get filters =>
       _$this._filters ??= new MapBuilder<String, String>();
-
   set filters(MapBuilder<String, String> filters) => _$this._filters = filters;
 
   ReportsUIStateBuilder();
