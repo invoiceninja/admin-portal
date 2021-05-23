@@ -208,6 +208,7 @@ abstract class InvoiceEntity extends Object
       frequencyId: kFrequencyMonthly,
       remainingCycles: -1,
       dueDateDays: 'terms',
+      autoBillEnabled: false,
     );
   }
 
@@ -448,6 +449,9 @@ abstract class InvoiceEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'recurring_id')
   String get recurringId;
+
+  @BuiltValueField(wireName: 'auto_bill_enabled')
+  bool get autoBillEnabled;
 
   @nullable
   String get filename;
@@ -1083,6 +1087,7 @@ abstract class InvoiceEntity extends Object
   static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())
     ..paidToDate = 0
+    ..autoBillEnabled = false
     ..subscriptionId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
