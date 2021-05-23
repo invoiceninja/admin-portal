@@ -656,6 +656,12 @@ class ReportResult {
             filter == 'true' ||
             filter == 'false') {
           // Support custom fields
+          String boolFilter = filter;
+          if (filter.toLowerCase() == 'yes') {
+            boolFilter = 'true';
+          } else if (filter.toLowerCase() == 'no') {
+            boolFilter = 'false';
+          }
           if (value.runtimeType == String) {
             if (value.toLowerCase() == 'yes') {
               value = 'true';
@@ -663,7 +669,7 @@ class ReportResult {
               value = 'false';
             }
           }
-          if (filter != '$value') {
+          if (boolFilter != '$value') {
             return false;
           }
         } else if (value.runtimeType == EntityType) {
@@ -1127,8 +1133,8 @@ class ReportResult {
     final sortedColumns = columns.toList()
       ..sort((String str1, String str2) => str1.compareTo(str2));
 
-    for (String column in sortedColumns)
-      print('## $column => ${getReportColumnType(column, context)}');
+    //for (String column in sortedColumns)
+    //  print('## $column => ${getReportColumnType(column, context)}');
 
     final totalColumns = [
       DataColumn(

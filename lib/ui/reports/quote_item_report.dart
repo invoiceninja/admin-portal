@@ -130,7 +130,7 @@ ReportResult lineItemReport(
             value = lineItem.notes;
             break;
           case QuoteItemReportFields.total:
-            value = lineItem.total;
+            value = lineItem.total(invoice);
             break;
           case QuoteItemReportFields.productKey:
             value = lineItem.productKey;
