@@ -62,7 +62,7 @@ dependencies:
   extended_image: 1.3.1-dev #TODO remove
   file_picker: ^2.1.1
   draggable_scrollbar: ^0.0.4
-  boardview: ^0.2.0
+  boardview: 0.2.0 #TODO add back ^
   pointer_interceptor: ^0.9.0
 
 dependency_overrides:
