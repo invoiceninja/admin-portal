@@ -247,8 +247,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accounting': 'Accounting',
       'required_files_missing': 'Please provide all CSVs.',
       'import_type': 'Import Type',
-      'draft_mode': 'Draft Mode',
-      'draft_mode_help': 'Preview updates faster but is less accurate',
+      'html_mode': 'HTML Mode',
+      'html_mode_help': 'Preview updates faster but is less accurate',
       'view_licenses': 'View Licenses',
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
@@ -59830,12 +59830,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get viewLicenses =>
       _localizedValues[localeCode]['view_licenses'] ?? '';
 
-  String get draftMode => _localizedValues[localeCode]['draft_mode'] ?? '';
-
   String get csvFile => _localizedValues[localeCode]['csv_file'] ?? '';
-
-  String get draftModeHelp =>
-      _localizedValues[localeCode]['draft_mode_help'] ?? '';
 
   String get noFileSelected =>
       _localizedValues[localeCode]['no_file_selected'] ?? '';
@@ -60414,6 +60409,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get netTotal =>
       _localizedValues[localeCode]['net_total'] ??
       _localizedValues['en']['net_total'];
+
+  String get draftMode =>
+      _localizedValues[localeCode]['html_mode'] ??
+      _localizedValues['en']['html_mode'];
+
+  String get draftModeHelp =>
+      _localizedValues[localeCode]['html_mode_help'] ??
+      _localizedValues['en']['html_mode_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
