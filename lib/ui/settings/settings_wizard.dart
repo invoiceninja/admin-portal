@@ -312,22 +312,28 @@ class _SettingsWizardState extends State<SettingsWizard> {
     );
 
     return AlertDialog(
-      title:
-          isMobile(context) ? Text(localization.welcomeToInvoiceNinja) : null,
       content: AppForm(
         focusNode: _focusNode,
         formKey: _formKey,
         child: SingleChildScrollView(
           child: Container(
-            width: isMobile(context) ? double.infinity : 500,
+            width: 500,
             child: _isSaving
                 ? LoadingIndicator(
                     height: 200,
                   )
                 : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: isMobile(context)
                         ? [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: Text(
+                                localization.welcomeToInvoiceNinja,
+                                style: Theme.of(context).textTheme.headline6,
+                              ),
+                            ),
                             if (countCompanies == 1)
                               Text(localization.wizardWarning),
                             companyName,
@@ -336,6 +342,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                             lastName,
                             language,
                             currency,
+                            SizedBox(height: 16),
                             darkMode,
                           ]
                         : [
