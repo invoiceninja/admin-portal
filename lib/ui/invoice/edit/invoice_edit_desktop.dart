@@ -650,7 +650,20 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   width: 38,
                                 ),
                                 Expanded(
-                                  child: SizedBox(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: SwitchListTile(
+                                      activeColor:
+                                          Theme.of(context).accentColor,
+                                      title: Text(localization.autoBillEnabled),
+                                      dense: true,
+                                      value: invoice.autoBillEnabled,
+                                      onChanged: (value) {
+                                        viewModel.onChanged(invoice.rebuild(
+                                            (b) => b..autoBillEnabled = value));
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             )
