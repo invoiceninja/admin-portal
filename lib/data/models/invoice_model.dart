@@ -1210,30 +1210,42 @@ abstract class InvoiceItemEntity
   @nullable
   int get createdAt;
 
-  /*
-  double taxAmount(bool useInclusiveTaxes, int precision) {
+  double taxAmount(InvoiceEntity invoice, int precision) {
     double calculateTaxAmount(double rate) {
       double taxAmount;
       if (rate == 0) {
         return 0;
       }
-      if (useInclusiveTaxes) {
-        taxAmount = total - (total / (1 + (rate / 100)));
+      final lineTotal = total(invoice);
+      if (invoice.usesInclusiveTaxes) {
+        taxAmount = lineTotal - (lineTotal / (1 + (rate / 100)));
       } else {
-        taxAmount = total * rate / 100;
+        taxAmount = lineTotal * rate / 100;
       }
       return round(taxAmount, precision);
     }
 
-    return calculateTaxAmount(taxRate1) + calculateTaxAmount(taxRate2) +
+    return calculateTaxAmount(taxRate1) +
+        calculateTaxAmount(taxRate2) +
         calculateTaxAmount(taxRate3);
   }
 
-  double netTotal(bool useInclusiveTaxes, int precision) =>
-      total - taxAmount(useInclusiveTaxes, precision);
-  */
+  double netTotal(InvoiceEntity invoice, int precision) =>
+      total(invoice) - taxAmount(invoice, precision);
 
-  double get total => round(quantity * cost, 2);
+  double total(InvoiceEntity invoice) {
+    var total = quantity * cost;
+
+    if (discount != 0) {
+      if (invoice.isAmountDiscount) {
+        total = total - discount;
+      } else {
+        total = total - (discount / 100 * total);
+      }
+    }
+
+    return round(total, 2);
+  }
 
   bool get isTask => typeId == TYPE_TASK;
 
@@ -1245,9 +1257,31 @@ abstract class InvoiceItemEntity
       cost == 0 &&
       quantity == 0 &&
       customValue1.isEmpty &&
-      customValue2.isEmpty;
+      customValue2.isEmpty &&
+      customValue3.isEmpty &&
+      customValue4.isEmpty;
 
-  // TODO add custom 3 and 4
+  bool get hasTaxes =>
+      taxRate1 != 0 ||
+      taxRate2 != 0 ||
+      taxRate3 != 0 ||
+      taxName1.isNotEmpty ||
+      taxName2.isNotEmpty ||
+      taxName3.isNotEmpty;
+
+  String get taxRates {
+    final parts = <String>[];
+    if (taxName1.isNotEmpty) {
+      parts.add(taxName1);
+    }
+    if (taxName2.isNotEmpty) {
+      parts.add(taxName2);
+    }
+    if (taxName3.isNotEmpty) {
+      parts.add(taxName3);
+    }
+    return parts.join(', ');
+  }
 
   InvoiceItemEntity applyTax(TaxRateEntity taxRate,
       {bool isSecond = false, bool isThird = false}) {

@@ -20,31 +20,28 @@ enum PaymentReportFields {
   client_shipping_address2,
   transaction_reference,
   date,
-  vendor,
   custom_value1,
   custom_value2,
   custom_value3,
   custom_value4,
 }
 
-var memoizedPaymentReport = memo7((
+var memoizedPaymentReport = memo6((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    paymentReport(userCompany, reportsUIState, paymentMap, clientMap, vendorMap,
-        userMap, staticState));
+    paymentReport(userCompany, reportsUIState, paymentMap, clientMap, userMap,
+        staticState));
 
 ReportResult paymentReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
@@ -118,9 +115,6 @@ ReportResult paymentReport(
           break;
         case PaymentReportFields.date:
           value = payment.date;
-          break;
-        case PaymentReportFields.vendor:
-          value = vendorMap[payment.vendorId].listDisplayName;
           break;
         case PaymentReportFields.custom_value1:
           value = payment.customValue1;

@@ -93,7 +93,7 @@ class InvoiceItemListTile extends StatelessWidget {
               title: Row(
                 children: <Widget>[
                   Expanded(child: Text(invoiceItem.productKey)),
-                  Text(formatNumber(invoiceItem.total, context,
+                  Text(formatNumber(invoiceItem.total(invoice), context,
                       clientId: invoice.clientId)),
                 ],
               ),
