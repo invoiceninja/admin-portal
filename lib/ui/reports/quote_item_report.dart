@@ -17,7 +17,7 @@ enum QuoteItemReportFields {
   cost,
   quantity,
   profit,
-  lineTotal,
+  total,
   discount,
   custom1,
   custom2,
@@ -26,6 +26,11 @@ enum QuoteItemReportFields {
   quoteNumber,
   quoteDate,
   client,
+  validUntil,
+  hasTaxes,
+  taxRates,
+  taxAmount,
+  netTotal,
 }
 
 var memoizedQuoteItemReport = memo6((
@@ -81,6 +86,7 @@ ReportResult lineItemReport(
   for (var entry in invoiceMap.entries) {
     final invoice = entry.value;
     final client = clientMap[invoice.clientId];
+    final precision = staticState.currencyMap[client.currencyId].precision;
 
     if (invoice.isDeleted || client.isDeleted) {
       continue;
@@ -105,9 +111,8 @@ ReportResult lineItemReport(
             value = productId == null ? 0.0 : productMap[productId].cost;
             break;
           case QuoteItemReportFields.profit:
-            value = productId == null
-                ? 0.0
-                : lineItem.total - productMap[productId].cost;
+            value = lineItem.netTotal(invoice, precision) -
+                (productId == null ? 0.0 : productMap[productId].cost);
             break;
           case QuoteItemReportFields.custom1:
             value = lineItem.customValue1;
@@ -124,7 +129,7 @@ ReportResult lineItemReport(
           case QuoteItemReportFields.notes:
             value = lineItem.notes;
             break;
-          case QuoteItemReportFields.lineTotal:
+          case QuoteItemReportFields.total:
             value = lineItem.total;
             break;
           case QuoteItemReportFields.productKey:
@@ -141,6 +146,21 @@ ReportResult lineItemReport(
             break;
           case QuoteItemReportFields.client:
             value = client.displayName;
+            break;
+          case QuoteItemReportFields.validUntil:
+            value = invoice.dueDate;
+            break;
+          case QuoteItemReportFields.hasTaxes:
+            value = lineItem.hasTaxes;
+            break;
+          case QuoteItemReportFields.taxRates:
+            value = lineItem.taxRates;
+            break;
+          case QuoteItemReportFields.taxAmount:
+            value = lineItem.taxAmount(invoice, precision);
+            break;
+          case QuoteItemReportFields.netTotal:
+            value = lineItem.netTotal(invoice, precision);
             break;
         }
 

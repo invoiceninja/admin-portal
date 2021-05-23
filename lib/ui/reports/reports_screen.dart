@@ -534,6 +534,8 @@ enum ReportColumnType {
 }
 
 ReportColumnType getReportColumnType(String column, BuildContext context) {
+  column = toSnakeCase(column);
+
   ReportColumnType convertCustomFieldType(String type) {
     if (type == kFieldTypeDate) {
       return ReportColumnType.date;
@@ -1124,6 +1126,9 @@ class ReportResult {
     final localization = AppLocalization.of(context);
     final sortedColumns = columns.toList()
       ..sort((String str1, String str2) => str1.compareTo(str2));
+
+    for (String column in sortedColumns)
+      print('## $column => ${getReportColumnType(column, context)}');
 
     final totalColumns = [
       DataColumn(

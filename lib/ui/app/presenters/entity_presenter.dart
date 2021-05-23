@@ -133,6 +133,7 @@ class EntityPresenter {
       'calculated_rate',
       'duration',
       'net_amount',
+      'net_total',
     ].contains(field);
 
     return value;

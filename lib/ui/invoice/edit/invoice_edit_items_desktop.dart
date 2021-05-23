@@ -576,7 +576,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         readOnly: true,
                         enabled: false,
                         initialValue: formatNumber(
-                            lineItems[index].total, context,
+                            lineItems[index].total(invoice), context,
                             clientId: invoice.clientId),
                         textAlign: TextAlign.right,
                       ),
