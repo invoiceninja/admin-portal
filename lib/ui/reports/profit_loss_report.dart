@@ -92,7 +92,7 @@ ReportResult profitAndLossReport(
     final client = clientMap[payment.clientId];
     final vendor = vendorMap[payment.vendorId];
 
-    bool skip = false;
+    bool skip = payment.isDeleted || client.isDeleted;
     final List<ReportElement> row = [];
 
     for (var column in columns) {
@@ -180,7 +180,7 @@ ReportResult profitAndLossReport(
     final client = clientMap[expense.clientId];
     final vendor = vendorMap[expense.vendorId];
 
-    bool skip = false;
+    bool skip = expense.isDeleted || client.isDeleted;
     final List<ReportElement> row = [];
 
     for (var column in columns) {
