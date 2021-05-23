@@ -208,7 +208,6 @@ abstract class InvoiceEntity extends Object
       frequencyId: kFrequencyMonthly,
       remainingCycles: -1,
       dueDateDays: 'terms',
-      autoBillEnabled: false,
     );
   }
 
@@ -356,10 +355,6 @@ abstract class InvoiceEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'auto_bill')
   String get autoBill;
-
-  @nullable
-  @BuiltValueField(wireName: 'auto_bill_enabled')
-  bool get autoBillEnabled;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
