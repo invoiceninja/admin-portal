@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,6 +56,7 @@ class _LoginState extends State<LoginView> {
   bool _emailLogin = false;
   bool _isSelfHosted = false;
   bool _createAccount = true;
+  bool _hideGoogle = false;
 
   bool _recoverPassword = false;
   bool _autoValidate = false;
@@ -72,6 +74,9 @@ class _LoginState extends State<LoginView> {
         _emailLogin = true;
         _createAccount = false;
       }
+    } else if (isApple()) {
+      _emailLogin = true;
+      _hideGoogle = true;
     }
   }
 
@@ -335,7 +340,7 @@ class _LoginState extends State<LoginView> {
                                   });
                                 },
                               ),
-                            if (!_isSelfHosted)
+                            if (!_isSelfHosted && !_hideGoogle)
                               AppToggleButtons(
                                 tabLabels: [
                                   'Google',

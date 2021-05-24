@@ -97,6 +97,8 @@ class _DesignEditState extends State<DesignEdit>
 
     _loadDesign(design);
 
+    _loadPreview(context, design);
+
     super.didChangeDependencies();
   }
 
@@ -244,6 +246,7 @@ class _DesignEditState extends State<DesignEdit>
                 focusNode: _focusNode,
                 children: <Widget>[
                     DesignSettings(
+                      viewModel: viewModel,
                       isLoading: _isLoading,
                       nameController: _nameController,
                       onLoadDesign: _loadDesign,
@@ -292,6 +295,7 @@ class _DesignEditState extends State<DesignEdit>
                               controller: _tabController,
                               children: <Widget>[
                                 DesignSettings(
+                                  viewModel: viewModel,
                                   isLoading: _isLoading,
                                   nameController: _nameController,
                                   onLoadDesign: _loadDesign,
@@ -364,6 +368,7 @@ class DesignSection extends StatelessWidget {
 
 class DesignSettings extends StatefulWidget {
   const DesignSettings({
+    @required this.viewModel,
     @required this.nameController,
     @required this.onLoadDesign,
     @required this.draftMode,
@@ -371,6 +376,7 @@ class DesignSettings extends StatefulWidget {
     @required this.isLoading,
   });
 
+  final DesignEditVM viewModel;
   final Function(DesignEntity) onLoadDesign;
   final TextEditingController nameController;
   final bool draftMode;
@@ -383,6 +389,17 @@ class DesignSettings extends StatefulWidget {
 
 class _DesignSettingsState extends State<DesignSettings> {
   DesignEntity _selectedDesign;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final design = widget.viewModel.design;
+
+    if (design.isOld) {
+      _selectedDesign = design;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
