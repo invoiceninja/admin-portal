@@ -442,7 +442,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
   String _secret;
   String _qrCode;
   String _oneTimePassword;
-  String _smsCode;
+  //String _smsCode;
   bool autoValidate = false;
   bool _isLoading = true;
   final _webClient = WebClient();
