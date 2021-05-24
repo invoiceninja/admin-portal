@@ -97,6 +97,8 @@ class _DesignEditState extends State<DesignEdit>
 
     _loadDesign(design);
 
+    _loadPreview(context, design);
+
     super.didChangeDependencies();
   }
 
