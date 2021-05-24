@@ -21,7 +21,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CompanyGatewayEdit extends StatefulWidget {
   const CompanyGatewayEdit({
