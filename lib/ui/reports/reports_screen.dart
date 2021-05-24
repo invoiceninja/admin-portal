@@ -1529,7 +1529,7 @@ int sortReportTableRows(dynamic rowA, dynamic rowB,
 
   final index = columns.indexOf(reportSettings.sortColumn);
 
-  if (rowA.length <= index || rowB.length <= index) {
+  if (index == -1 || rowA.length <= index || rowB.length <= index) {
     return 0;
   }
 
