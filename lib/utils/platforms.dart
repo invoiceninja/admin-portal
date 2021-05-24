@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -5,6 +7,14 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
+bool isApple() {
+  if (kIsWeb) {
+    return false;
+  }
+
+  return Platform.isIOS || Platform.isMacOS;
+}
 
 bool isAndroid(BuildContext context) =>
     Theme.of(context).platform == TargetPlatform.android;
