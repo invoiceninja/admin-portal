@@ -273,23 +273,21 @@ class MainScreen extends StatelessWidget {
           return false;
         },
         child: DesktopSessionTimeout(
-          child: AppShortcuts(
-            child: SafeArea(
-              child: FocusTraversalGroup(
-                policy: WidgetOrderTraversalPolicy(),
-                child: ChangeLayoutBanner(
-                  appLayout: prefState.appLayout,
-                  suggestedLayout: AppLayout.desktop,
-                  child: Row(children: <Widget>[
-                    if (prefState.showMenu) MenuDrawerBuilder(),
-                    Expanded(
-                        child: AppBorder(
-                      child: screen,
-                      isLeft: prefState.showMenu &&
-                          (!state.isFullScreen || showFilterSidebar),
-                    )),
-                  ]),
-                ),
+          child: SafeArea(
+            child: FocusTraversalGroup(
+              policy: WidgetOrderTraversalPolicy(),
+              child: ChangeLayoutBanner(
+                appLayout: prefState.appLayout,
+                suggestedLayout: AppLayout.desktop,
+                child: Row(children: <Widget>[
+                  if (prefState.showMenu) MenuDrawerBuilder(),
+                  Expanded(
+                      child: AppBorder(
+                    child: screen,
+                    isLeft: prefState.showMenu &&
+                        (!state.isFullScreen || showFilterSidebar),
+                  )),
+                ]),
               ),
             ),
           ),
