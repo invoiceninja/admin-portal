@@ -18,10 +18,15 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final button = RaisedButton(
-      padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-      color: color ?? Theme.of(context).buttonColor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+    final button = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          primary: color ?? Theme.of(context).buttonColor,
+          padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          elevation: 4,
+          textStyle: TextStyle(
+            color: Colors.white,
+          )),
       child: iconData != null
           ? IconText(
               icon: iconData,
@@ -29,8 +34,6 @@ class AppButton extends StatelessWidget {
               alignment: MainAxisAlignment.center,
             )
           : Text(label, overflow: TextOverflow.ellipsis),
-      textColor: Colors.white,
-      elevation: 4.0,
       onPressed: () => onPressed(),
     );
 
