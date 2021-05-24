@@ -15,10 +15,14 @@ class ListDivider extends StatelessWidget {
     final color = convertHexStringToColor(
         enableDarkMode ? kDefaultDarkBorderColor : kDefaultLightBorderColor);
 
-    return Divider(
+    // https://github.com/flutter/flutter/issues/46339#issuecomment-562859241
+    return Container(
       color: color,
-      thickness: kIsWeb ? 2.5 : 1.5,
-      height: kIsWeb ? 2.5 : 1.5,
+      child: Divider(
+        color: color,
+        thickness: 1.5,
+        height: 1.5,
+      ),
     );
   }
 }
