@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'wait_for_data': 'Please wait for the data to finish loading',
       'net_total': 'Net Total',
       'has_taxes': 'Has Taxes',
       'import_customers': 'Import Customers',
@@ -60417,6 +60418,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get draftModeHelp =>
       _localizedValues[localeCode]['html_mode_help'] ??
       _localizedValues['en']['html_mode_help'];
+
+  String get waitForData =>
+      _localizedValues[localeCode]['wait_for_data'] ??
+      _localizedValues['en']['wait_for_data'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
