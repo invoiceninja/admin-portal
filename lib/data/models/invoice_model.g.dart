@@ -251,6 +251,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'next_send_date',
       serializers.serialize(object.nextSendDate,
           specifiedType: const FullType(String)),
+      'auto_bill_enabled',
+      serializers.serialize(object.autoBillEnabled,
+          specifiedType: const FullType(bool)),
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
@@ -284,12 +287,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add('auto_bill')
         ..add(serializers.serialize(object.autoBill,
             specifiedType: const FullType(String)));
-    }
-    if (object.autoBillEnabled != null) {
-      result
-        ..add('auto_bill_enabled')
-        ..add(serializers.serialize(object.autoBillEnabled,
-            specifiedType: const FullType(bool)));
     }
     if (object.reminder1Sent != null) {
       result
@@ -528,10 +525,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.autoBill = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'auto_bill_enabled':
-          result.autoBillEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -627,6 +620,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'recurring_id':
           result.recurringId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'auto_bill_enabled':
+          result.autoBillEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'filename':
           result.filename = serializers.deserialize(value,
@@ -1436,8 +1433,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String autoBill;
   @override
-  final bool autoBillEnabled;
-  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -1485,6 +1480,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   final String invoiceId;
   @override
   final String recurringId;
+  @override
+  final bool autoBillEnabled;
   @override
   final String filename;
   @override
@@ -1552,7 +1549,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.taxAmount,
       this.partialDueDate,
       this.autoBill,
-      this.autoBillEnabled,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -1577,6 +1573,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.dueDateDays,
       this.invoiceId,
       this.recurringId,
+      this.autoBillEnabled,
       this.filename,
       this.recurringDates,
       this.lineItems,
@@ -1721,6 +1718,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (nextSendDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'nextSendDate');
     }
+    if (autoBillEnabled == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'autoBillEnabled');
+    }
     if (lineItems == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'lineItems');
     }
@@ -1786,7 +1786,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         taxAmount == other.taxAmount &&
         partialDueDate == other.partialDueDate &&
         autoBill == other.autoBill &&
-        autoBillEnabled == other.autoBillEnabled &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -1811,6 +1810,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         dueDateDays == other.dueDateDays &&
         invoiceId == other.invoiceId &&
         recurringId == other.recurringId &&
+        autoBillEnabled == other.autoBillEnabled &&
         filename == other.filename &&
         recurringDates == other.recurringDates &&
         lineItems == other.lineItems &&
@@ -1851,9 +1851,9 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), autoBillEnabled.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode),
-                                                                                invoiceId.hashCode),
-                                                                            recurringId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode), invoiceId.hashCode),
+                                                                                recurringId.hashCode),
+                                                                            autoBillEnabled.hashCode),
                                                                         filename.hashCode),
                                                                     recurringDates.hashCode),
                                                                 lineItems.hashCode),
@@ -1904,7 +1904,6 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('taxAmount', taxAmount)
           ..add('partialDueDate', partialDueDate)
           ..add('autoBill', autoBill)
-          ..add('autoBillEnabled', autoBillEnabled)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -1929,6 +1928,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('dueDateDays', dueDateDays)
           ..add('invoiceId', invoiceId)
           ..add('recurringId', recurringId)
+          ..add('autoBillEnabled', autoBillEnabled)
           ..add('filename', filename)
           ..add('recurringDates', recurringDates)
           ..add('lineItems', lineItems)
@@ -2070,11 +2070,6 @@ class InvoiceEntityBuilder
   String get autoBill => _$this._autoBill;
   set autoBill(String autoBill) => _$this._autoBill = autoBill;
 
-  bool _autoBillEnabled;
-  bool get autoBillEnabled => _$this._autoBillEnabled;
-  set autoBillEnabled(bool autoBillEnabled) =>
-      _$this._autoBillEnabled = autoBillEnabled;
-
   String _customValue1;
   String get customValue1 => _$this._customValue1;
   set customValue1(String customValue1) => _$this._customValue1 = customValue1;
@@ -2179,6 +2174,11 @@ class InvoiceEntityBuilder
   String _recurringId;
   String get recurringId => _$this._recurringId;
   set recurringId(String recurringId) => _$this._recurringId = recurringId;
+
+  bool _autoBillEnabled;
+  bool get autoBillEnabled => _$this._autoBillEnabled;
+  set autoBillEnabled(bool autoBillEnabled) =>
+      _$this._autoBillEnabled = autoBillEnabled;
 
   String _filename;
   String get filename => _$this._filename;
@@ -2296,7 +2296,6 @@ class InvoiceEntityBuilder
       _taxAmount = _$v.taxAmount;
       _partialDueDate = _$v.partialDueDate;
       _autoBill = _$v.autoBill;
-      _autoBillEnabled = _$v.autoBillEnabled;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -2321,6 +2320,7 @@ class InvoiceEntityBuilder
       _dueDateDays = _$v.dueDateDays;
       _invoiceId = _$v.invoiceId;
       _recurringId = _$v.recurringId;
+      _autoBillEnabled = _$v.autoBillEnabled;
       _filename = _$v.filename;
       _recurringDates = _$v.recurringDates?.toBuilder();
       _lineItems = _$v.lineItems?.toBuilder();
@@ -2390,7 +2390,6 @@ class InvoiceEntityBuilder
               taxAmount: taxAmount,
               partialDueDate: partialDueDate,
               autoBill: autoBill,
-              autoBillEnabled: autoBillEnabled,
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,
@@ -2415,6 +2414,7 @@ class InvoiceEntityBuilder
               dueDateDays: dueDateDays,
               invoiceId: invoiceId,
               recurringId: recurringId,
+              autoBillEnabled: autoBillEnabled,
               filename: filename,
               recurringDates: _recurringDates?.build(),
               lineItems: lineItems.build(),
