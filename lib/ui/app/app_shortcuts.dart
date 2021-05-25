@@ -70,7 +70,7 @@ class AppShortcutsState extends State<AppShortcuts> {
       ),
     };
 
-    return widget.child;
+    //return widget.child;
 
     return Shortcuts(
       shortcuts: _shortcuts,
@@ -83,12 +83,14 @@ class AppShortcutsState extends State<AppShortcuts> {
       ),
     );
 
+    /*
     return FocusableActionDetector(
       child: widget.child,
       actions: _actions,
       shortcuts: _shortcuts,
       autofocus: false,
     );
+    */
   }
 }
 

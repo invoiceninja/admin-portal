@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

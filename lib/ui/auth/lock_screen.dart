@@ -38,7 +38,7 @@ class LockScreen extends StatelessWidget {
               ),
             ],
           ),
-          RaisedButton(
+          ElevatedButton(
             onPressed: onAuthenticatePressed,
             child: Text(localization.authenticate),
           )

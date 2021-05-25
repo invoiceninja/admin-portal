@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
-import 'package:invoiceninja_flutter/ui/app/app_shortcuts.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
@@ -273,23 +272,21 @@ class MainScreen extends StatelessWidget {
           return false;
         },
         child: DesktopSessionTimeout(
-          child: AppShortcuts(
-            child: SafeArea(
-              child: FocusTraversalGroup(
-                policy: WidgetOrderTraversalPolicy(),
-                child: ChangeLayoutBanner(
-                  appLayout: prefState.appLayout,
-                  suggestedLayout: AppLayout.desktop,
-                  child: Row(children: <Widget>[
-                    if (prefState.showMenu) MenuDrawerBuilder(),
-                    Expanded(
-                        child: AppBorder(
-                      child: screen,
-                      isLeft: prefState.showMenu &&
-                          (!state.isFullScreen || showFilterSidebar),
-                    )),
-                  ]),
-                ),
+          child: SafeArea(
+            child: FocusTraversalGroup(
+              policy: WidgetOrderTraversalPolicy(),
+              child: ChangeLayoutBanner(
+                appLayout: prefState.appLayout,
+                suggestedLayout: AppLayout.desktop,
+                child: Row(children: <Widget>[
+                  if (prefState.showMenu) MenuDrawerBuilder(),
+                  Expanded(
+                      child: AppBorder(
+                    child: screen,
+                    isLeft: prefState.showMenu &&
+                        (!state.isFullScreen || showFilterSidebar),
+                  )),
+                ]),
               ),
             ),
           ),

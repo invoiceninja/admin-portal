@@ -58,7 +58,7 @@ class DynamicSelector extends StatelessWidget {
         key: ValueKey('__entity_id_${entityId}__'),
         labelText: labelText ?? localization.lookup('$entityType'),
         entityType: entityType,
-        onSelected: (entity) => onChanged(entity.id),
+        onSelected: (entity) => onChanged(entity?.id),
         onAddPressed: onAddPressed,
         entityId: entityId,
         entityList: entityIds,

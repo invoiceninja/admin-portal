@@ -257,9 +257,7 @@ class ContactsPage extends StatelessWidget {
           ..addAll(contacts)
           ..add(Padding(
             padding: const EdgeInsets.all(16),
-            child: RaisedButton(
-              elevation: 4.0,
-              textColor: Theme.of(context).secondaryHeaderColor,
+            child: ElevatedButton(
               child: Text('ADD CONTACT'),
               onPressed: () {
                 store.dispatch(AddContact());

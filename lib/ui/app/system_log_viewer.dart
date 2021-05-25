@@ -45,7 +45,9 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
             if (systemLog.log.isNotEmpty) {
               try {
                 logs = json.decode(systemLog.log);
-              } catch (e) {}
+              } catch (e) {
+                // do nothing
+              }
             }
 
             return ExpansionPanel(

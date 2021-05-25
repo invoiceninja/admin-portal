@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -443,7 +442,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
   String _secret;
   String _qrCode;
   String _oneTimePassword;
-  String _smsCode;
+  //String _smsCode;
   bool autoValidate = false;
   bool _isLoading = true;
   final _webClient = WebClient();
@@ -572,29 +571,30 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                         ),
                       ],
                     ),
-                    if (false)
-                      Row(
-                        children: [
-                          Expanded(
-                            child: DecoratedFormField(
-                              label: localzation.smsCode,
-                              onChanged: (value) {
-                                _smsCode = value;
-                              },
-                            ),
+                    /*
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DecoratedFormField(
+                            label: localzation.smsCode,
+                            onChanged: (value) {
+                              _smsCode = value;
+                            },
                           ),
-                          SizedBox(width: kTableColumnGap),
-                          SizedBox(
-                            width: 100,
-                            child: TextButton(
-                              onPressed: () {
-                                //
-                              },
-                              child: Text(localzation.sendSms),
-                            ),
+                        ),
+                        SizedBox(width: kTableColumnGap),
+                        SizedBox(
+                          width: 100,
+                          child: TextButton(
+                            onPressed: () {
+                              //
+                            },
+                            child: Text(localzation.sendSms),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
+                    */
                   ],
                 ),
               ),
