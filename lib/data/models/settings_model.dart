@@ -821,6 +821,7 @@ abstract class SettingsEntity
   String getDefaultTerms(EntityType entityType) {
     switch (entityType) {
       case EntityType.invoice:
+      case EntityType.recurringInvoice:
         return defaultInvoiceTerms;
       case EntityType.quote:
         return defaultQuoteTerms;
@@ -835,6 +836,7 @@ abstract class SettingsEntity
   String getDefaultFooter(EntityType entityType) {
     switch (entityType) {
       case EntityType.invoice:
+      case EntityType.recurringInvoice:
         return defaultInvoiceFooter;
       case EntityType.quote:
         return defaultQuoteFooter;
