@@ -147,10 +147,14 @@ class MenuDrawer extends StatelessWidget {
         ),
       ],
       onSelected: (String companyId) {
-        if (companyId == 'company') {
-          viewModel.onAddCompany(context);
-        } else if (companyId == 'logout') {
+        if (companyId == 'logout') {
           viewModel.onLogoutTap(context);
+        } else if (!state.isLoaded || state.isLoading || state.isSaving) {
+          showMessageDialog(
+              context: context, message: localization.waitForData);
+          return;
+        } else if (companyId == 'company') {
+          viewModel.onAddCompany(context);
         } else {
           final company =
               state.companies.firstWhere((company) => company.id == companyId);
@@ -196,10 +200,14 @@ class MenuDrawer extends StatelessWidget {
               ),
             ],
             onChanged: (dynamic value) {
-              if (value == 'company') {
-                viewModel.onAddCompany(context);
-              } else if (value == 'logout') {
+              if (value == 'logout') {
                 viewModel.onLogoutTap(context);
+              } else if (!state.isLoaded || state.isLoading || state.isSaving) {
+                showMessageDialog(
+                    context: context, message: localization.waitForData);
+                return;
+              } else if (value == 'company') {
+                viewModel.onAddCompany(context);
               } else {
                 final index = int.parse(value);
                 viewModel.onCompanyChanged(

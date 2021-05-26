@@ -280,6 +280,9 @@ class _$SettingsUIStateSerializer
       'tabIndex',
       serializers.serialize(object.tabIndex,
           specifiedType: const FullType(int)),
+      'selectedTemplate',
+      serializers.serialize(object.selectedTemplate,
+          specifiedType: const FullType(EmailTemplate)),
       'filterClearedAt',
       serializers.serialize(object.filterClearedAt,
           specifiedType: const FullType(int)),
@@ -356,6 +359,10 @@ class _$SettingsUIStateSerializer
         case 'tabIndex':
           result.tabIndex = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'selectedTemplate':
+          result.selectedTemplate = serializers.deserialize(value,
+              specifiedType: const FullType(EmailTemplate)) as EmailTemplate;
           break;
         case 'filter':
           result.filter = serializers.deserialize(value,
@@ -967,6 +974,8 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   final int tabIndex;
   @override
+  final EmailTemplate selectedTemplate;
+  @override
   final String filter;
   @override
   final int filterClearedAt;
@@ -988,6 +997,7 @@ class _$SettingsUIState extends SettingsUIState {
       this.updatedAt,
       this.section,
       this.tabIndex,
+      this.selectedTemplate,
       this.filter,
       this.filterClearedAt})
       : super._() {
@@ -1030,6 +1040,9 @@ class _$SettingsUIState extends SettingsUIState {
     if (tabIndex == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'tabIndex');
     }
+    if (selectedTemplate == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'selectedTemplate');
+    }
     if (filterClearedAt == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'filterClearedAt');
     }
@@ -1060,6 +1073,7 @@ class _$SettingsUIState extends SettingsUIState {
         updatedAt == other.updatedAt &&
         section == other.section &&
         tabIndex == other.tabIndex &&
+        selectedTemplate == other.selectedTemplate &&
         filter == other.filter &&
         filterClearedAt == other.filterClearedAt;
   }
@@ -1082,22 +1096,24 @@ class _$SettingsUIState extends SettingsUIState {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                company
+                                                                $jc(
+                                                                    0,
+                                                                    company
+                                                                        .hashCode),
+                                                                origCompany
                                                                     .hashCode),
-                                                            origCompany
-                                                                .hashCode),
-                                                        client.hashCode),
-                                                    origClient.hashCode),
-                                                group.hashCode),
-                                            origGroup.hashCode),
-                                        user.hashCode),
-                                    origUser.hashCode),
-                                entityType.hashCode),
-                            isChanged.hashCode),
-                        updatedAt.hashCode),
-                    section.hashCode),
-                tabIndex.hashCode),
+                                                            client.hashCode),
+                                                        origClient.hashCode),
+                                                    group.hashCode),
+                                                origGroup.hashCode),
+                                            user.hashCode),
+                                        origUser.hashCode),
+                                    entityType.hashCode),
+                                isChanged.hashCode),
+                            updatedAt.hashCode),
+                        section.hashCode),
+                    tabIndex.hashCode),
+                selectedTemplate.hashCode),
             filter.hashCode),
         filterClearedAt.hashCode));
   }
@@ -1118,6 +1134,7 @@ class _$SettingsUIState extends SettingsUIState {
           ..add('updatedAt', updatedAt)
           ..add('section', section)
           ..add('tabIndex', tabIndex)
+          ..add('selectedTemplate', selectedTemplate)
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt))
         .toString();
@@ -1188,6 +1205,11 @@ class SettingsUIStateBuilder
   int get tabIndex => _$this._tabIndex;
   set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
 
+  EmailTemplate _selectedTemplate;
+  EmailTemplate get selectedTemplate => _$this._selectedTemplate;
+  set selectedTemplate(EmailTemplate selectedTemplate) =>
+      _$this._selectedTemplate = selectedTemplate;
+
   String _filter;
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
@@ -1197,7 +1219,9 @@ class SettingsUIStateBuilder
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
-  SettingsUIStateBuilder();
+  SettingsUIStateBuilder() {
+    SettingsUIState._initializeBuilder(this);
+  }
 
   SettingsUIStateBuilder get _$this {
     if (_$v != null) {
@@ -1214,6 +1238,7 @@ class SettingsUIStateBuilder
       _updatedAt = _$v.updatedAt;
       _section = _$v.section;
       _tabIndex = _$v.tabIndex;
+      _selectedTemplate = _$v.selectedTemplate;
       _filter = _$v.filter;
       _filterClearedAt = _$v.filterClearedAt;
       _$v = null;
@@ -1253,6 +1278,7 @@ class SettingsUIStateBuilder
               updatedAt: updatedAt,
               section: section,
               tabIndex: tabIndex,
+              selectedTemplate: selectedTemplate,
               filter: filter,
               filterClearedAt: filterClearedAt);
     } catch (_) {

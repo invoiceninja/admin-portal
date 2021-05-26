@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
@@ -13,7 +14,6 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TemplatesAndRemindersScreen extends StatelessWidget {
@@ -38,6 +38,8 @@ class TemplatesAndRemindersVM {
   TemplatesAndRemindersVM({
     @required this.state,
     @required this.settings,
+    @required this.selectedTemplate,
+    @required this.onTemplateChanged,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
   });
@@ -47,9 +49,13 @@ class TemplatesAndRemindersVM {
 
     return TemplatesAndRemindersVM(
       state: state,
+      selectedTemplate: state.uiState.settingsUIState.selectedTemplate,
       settings: state.uiState.settingsUIState.settings,
       onSettingsChanged: (settings) {
         store.dispatch(UpdateSettings(settings: settings));
+      },
+      onTemplateChanged: (template) {
+        store.dispatch(UpdateSettingsTemplate(selectedTemplate: template));
       },
       onSavePressed: (context) {
         Debouncer.runOnComplete(() {
@@ -81,6 +87,8 @@ class TemplatesAndRemindersVM {
 
   final AppState state;
   final SettingsEntity settings;
+  final EmailTemplate selectedTemplate;
+  final Function(EmailTemplate) onTemplateChanged;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
 }

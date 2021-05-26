@@ -177,6 +177,7 @@ abstract class SettingsUIState extends Object
       updatedAt: 0,
       filterClearedAt: 0,
       tabIndex: 0,
+      selectedTemplate: EmailTemplate.invoice,
       section: section ?? kSettingsCompanyDetails,
     );
   }
@@ -213,6 +214,8 @@ abstract class SettingsUIState extends Object
 
   int get tabIndex;
 
+  EmailTemplate get selectedTemplate;
+
   @nullable
   String get filter;
 
@@ -229,6 +232,10 @@ abstract class SettingsUIState extends Object
       return company.settings;
     }
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(SettingsUIStateBuilder builder) =>
+      builder..selectedTemplate = EmailTemplate.invoice;
 
   static Serializer<SettingsUIState> get serializer =>
       _$settingsUIStateSerializer;
