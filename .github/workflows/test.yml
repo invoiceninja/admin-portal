@@ -51,6 +51,7 @@ jobs:
           channel: 'stable'
       - name: Setup App
         run: |
+          cp lib/.env.dart.example lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run iOS Flutter Driver tests
         run: flutter drive --target=test_driver/login_it.dart
