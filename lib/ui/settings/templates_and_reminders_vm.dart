@@ -38,6 +38,8 @@ class TemplatesAndRemindersVM {
   TemplatesAndRemindersVM({
     @required this.state,
     @required this.settings,
+    @required this.selectedTemplate,
+    @required this.onTemplateChanged,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
   });
@@ -47,9 +49,13 @@ class TemplatesAndRemindersVM {
 
     return TemplatesAndRemindersVM(
       state: state,
+      selectedTemplate: state.uiState.settingsUIState.selectedTemplate,
       settings: state.uiState.settingsUIState.settings,
       onSettingsChanged: (settings) {
         store.dispatch(UpdateSettings(settings: settings));
+      },
+      onTemplateChanged: (template) {
+        store.dispatch(UpdateSettingsTemplate(selectedTemplate: template));
       },
       onSavePressed: (context) {
         Debouncer.runOnComplete(() {
@@ -81,6 +87,8 @@ class TemplatesAndRemindersVM {
 
   final AppState state;
   final SettingsEntity settings;
+  final EmailTemplate selectedTemplate;
+  final Function(EmailTemplate) onTemplateChanged;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
 }

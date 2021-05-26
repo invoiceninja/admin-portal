@@ -177,6 +177,7 @@ abstract class SettingsUIState extends Object
       updatedAt: 0,
       filterClearedAt: 0,
       tabIndex: 0,
+      selectedTemplate: EmailTemplate.invoice,
       section: section ?? kSettingsCompanyDetails,
     );
   }

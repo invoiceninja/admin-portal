@@ -110,4 +110,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, UpdateSettingsTab>((state, action) {
     return state.rebuild((b) => b..tabIndex = action.tabIndex);
   }),
+  TypedReducer<SettingsUIState, UpdateSettingsTemplate>((state, action) {
+    return state.rebuild((b) => b..selectedTemplate = action.selectedTemplate);
+  }),
 ]);
