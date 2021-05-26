@@ -16,14 +16,15 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-void showRefreshDataDialog({@required BuildContext context}) async {
+void showRefreshDataDialog(
+    {@required BuildContext context, bool includeStatic = false}) async {
   final store = StoreProvider.of<AppState>(context);
   store.dispatch(RefreshData(
     completer: snackBarCompleter<Null>(
         context, AppLocalization.of(context).refreshComplete,
         shouldPop: true),
     clearData: true,
-    includeStatic: true,
+    includeStatic: includeStatic,
   ));
 
   await showDialog<AlertDialog>(

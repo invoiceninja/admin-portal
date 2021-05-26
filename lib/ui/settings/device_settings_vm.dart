@@ -54,7 +54,7 @@ class DeviceSettingsVM {
     return DeviceSettingsVM(
       state: store.state,
       onRefreshTap: (BuildContext context) =>
-          showRefreshDataDialog(context: context),
+          showRefreshDataDialog(context: context, includeStatic: true),
       onLogoutTap: (BuildContext context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).endedAllSessions);
