@@ -7,12 +7,14 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -60,10 +62,21 @@ class ClientPortalVM {
           Debouncer.runOnComplete(
             () {
               final settingsUIState = store.state.uiState.settingsUIState;
+
               switch (settingsUIState.entityType) {
                 case EntityType.company:
                   final completer = snackBarCompleter<Null>(
                       context, AppLocalization.of(context).savedSettings);
+
+                  final oldSubdomain = state.company.subdomain;
+                  final newSubdomain = settingsUIState.company.subdomain;
+                  if (oldSubdomain != newSubdomain) {
+                    completer.future.then((value) {
+                      showRefreshDataDialog(
+                          context: navigatorKey.currentContext);
+                    });
+                  }
+
                   store.dispatch(SaveCompanyRequest(
                       completer: completer, company: settingsUIState.company));
                   break;

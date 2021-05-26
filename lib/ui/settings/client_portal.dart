@@ -82,6 +82,8 @@ class _ClientPortalState extends State<ClientPortal>
   }
 
   void _validateSubdomain() {
+    setState(() => _isSubdomainUnique = false);
+
     _debouncer.run(() {
       final subdomain = _subdomainController.text.trim();
       final store = StoreProvider.of<AppState>(context);
@@ -90,7 +92,6 @@ class _ClientPortalState extends State<ClientPortal>
       final url = '${credentials.url}/check_subdomain';
 
       if (subdomain.isEmpty) {
-        setState(() => _isSubdomainUnique = false);
         return;
       }
 
@@ -110,6 +111,7 @@ class _ClientPortalState extends State<ClientPortal>
         setState(() {
           _isSubdomainUnique = true;
           _isCheckingSubdomain = false;
+          _onChanged();
         });
       }).catchError((Object error) {
         setState(() {
@@ -305,7 +307,6 @@ class _ClientPortalState extends State<ClientPortal>
                             RegExp(r'[a-z0-9\-]'),
                           ),
                         ],
-                        onSavePressed: viewModel.onSavePressed,
                       )
                     else
                       DecoratedFormField(
