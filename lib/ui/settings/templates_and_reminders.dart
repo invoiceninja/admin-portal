@@ -263,33 +263,47 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                     viewModel.onTemplateChanged(value);
                     _loadTemplate(value);
                   }),
-                  items: EmailTemplate.values
-                      .where((value) {
-                        if ([
-                              EmailTemplate.invoice,
-                              EmailTemplate.payment,
-                              EmailTemplate.payment_partial,
-                            ].contains(value) &&
-                            !company.isModuleEnabled(EntityType.invoice)) {
-                          return false;
-                        } else if (value == EmailTemplate.quote &&
-                            !company.isModuleEnabled(EntityType.quote)) {
-                          return false;
-                        } else if (value == EmailTemplate.credit &&
-                            !company.isModuleEnabled(EntityType.credit)) {
-                          return false;
-                        }
-                        // TODO remove this once statements are enabled
-                        if (value == EmailTemplate.statement) {
-                          return false;
-                        }
-                        return true;
-                      })
-                      .map((item) => DropdownMenuItem<EmailTemplate>(
-                            child: Text(localization.lookup(item.name)),
-                            value: item,
-                          ))
-                      .toList(),
+                  items: EmailTemplate.values.where((value) {
+                    if ([
+                          EmailTemplate.invoice,
+                          EmailTemplate.payment,
+                          EmailTemplate.payment_partial,
+                        ].contains(value) &&
+                        !company.isModuleEnabled(EntityType.invoice)) {
+                      return false;
+                    } else if (value == EmailTemplate.quote &&
+                        !company.isModuleEnabled(EntityType.quote)) {
+                      return false;
+                    } else if (value == EmailTemplate.credit &&
+                        !company.isModuleEnabled(EntityType.credit)) {
+                      return false;
+                    }
+                    // TODO remove this once statements are enabled
+                    if (value == EmailTemplate.statement) {
+                      return false;
+                    }
+                    return true;
+                  }).map((item) {
+                    var name = localization.lookup(item.name);
+                    if (item == EmailTemplate.reminder1) {
+                      name = localization.firstReminder;
+                    } else if (item == EmailTemplate.reminder2) {
+                      name = localization.secondReminder;
+                    } else if (item == EmailTemplate.reminder3) {
+                      name = localization.thirdReminder;
+                    } else if (item == EmailTemplate.custom1) {
+                      name = localization.firstCustom;
+                    } else if (item == EmailTemplate.custom2) {
+                      name = localization.secondCustom;
+                    } else if (item == EmailTemplate.custom3) {
+                      name = localization.thirdCustom;
+                    }
+
+                    return DropdownMenuItem<EmailTemplate>(
+                      child: Text(name),
+                      value: item,
+                    );
+                  }).toList(),
                 ),
                 DecoratedFormField(
                   label: localization.subject,

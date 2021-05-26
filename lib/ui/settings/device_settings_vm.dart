@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -50,28 +51,10 @@ class DeviceSettingsVM {
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
-    void _refreshData(BuildContext context) async {
-      store.dispatch(RefreshData(
-        completer: snackBarCompleter<Null>(
-            context, AppLocalization.of(context).refreshComplete,
-            shouldPop: true),
-        clearData: true,
-        includeStatic: true,
-      ));
-
-      await showDialog<AlertDialog>(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) => SimpleDialog(
-                children: <Widget>[LoadingDialog()],
-              ));
-
-      AppBuilder.of(context).rebuild();
-    }
-
     return DeviceSettingsVM(
       state: store.state,
-      onRefreshTap: (BuildContext context) => _refreshData(context),
+      onRefreshTap: (BuildContext context) =>
+          showRefreshDataDialog(context: context, includeStatic: true),
       onLogoutTap: (BuildContext context) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).endedAllSessions);

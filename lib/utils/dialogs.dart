@@ -5,13 +5,37 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
+void showRefreshDataDialog(
+    {@required BuildContext context, bool includeStatic = false}) async {
+  final store = StoreProvider.of<AppState>(context);
+  store.dispatch(RefreshData(
+    completer: snackBarCompleter<Null>(
+        context, AppLocalization.of(context).refreshComplete,
+        shouldPop: true),
+    clearData: true,
+    includeStatic: includeStatic,
+  ));
+
+  await showDialog<AlertDialog>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => SimpleDialog(
+            children: <Widget>[LoadingDialog()],
+          ));
+
+  AppBuilder.of(context).rebuild();
+}
 
 void showErrorDialog({
   @required BuildContext context,
@@ -335,8 +359,7 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.invoice)),
                   title: Text(localization.invoice),
                   onTap: () {
-                    handleEntityAction( invoice,
-                        EntityAction.cloneToInvoice);
+                    handleEntityAction(invoice, EntityAction.cloneToInvoice);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -345,8 +368,7 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.quote)),
                   title: Text(localization.quote),
                   onTap: () {
-                    handleEntityAction( invoice,
-                        EntityAction.cloneToQuote);
+                    handleEntityAction(invoice, EntityAction.cloneToQuote);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -355,8 +377,7 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.credit)),
                   title: Text(localization.credit),
                   onTap: () {
-                    handleEntityAction( invoice,
-                        EntityAction.cloneToCredit);
+                    handleEntityAction(invoice, EntityAction.cloneToCredit);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -365,8 +386,7 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.recurringInvoice)),
                   title: Text(localization.recurringInvoice),
                   onTap: () {
-                    handleEntityAction( invoice,
-                        EntityAction.cloneToRecurring);
+                    handleEntityAction(invoice, EntityAction.cloneToRecurring);
                     Navigator.of(context).pop();
                   },
                 ),
