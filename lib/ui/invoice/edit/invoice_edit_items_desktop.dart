@@ -572,7 +572,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TextFormField(
                         key: ValueKey(
-                            '__total_${index}_${lineItems[index].total}_${invoice.clientId}__'),
+                            '__total_${index}_${lineItems[index].total(invoice)}_${invoice.clientId}__'),
                         readOnly: true,
                         enabled: false,
                         initialValue: formatNumber(
