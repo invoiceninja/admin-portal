@@ -18,7 +18,7 @@ jobs:
           flutter-version: '2.0.5'
           channel: 'stable'
       - run: flutter pub get
-      #- run: flutter analyze
+      - run: flutter analyze
 
   drive_ios:
     strategy:

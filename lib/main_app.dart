@@ -96,6 +96,7 @@ extension NavigatorKeyUtils on GlobalKey<NavigatorState> {
   AppLocalization get localization {
     return AppLocalization.of(currentContext);
   }
+
   Store<AppState> get store {
     return StoreProvider.of<AppState>(currentContext);
   }
@@ -207,6 +208,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             ),
           );
 
+          final outlinedButtonTheme = OutlinedButton.styleFrom(
+            primary:
+                state.prefState.enableDarkMode ? Colors.white : Colors.black87,
+          );
+
           return StyledToast(
             locale: locale,
             duration: Duration(seconds: 3),
@@ -255,6 +261,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       buttonColor: accentColor,
                       textButtonTheme:
                           TextButtonThemeData(style: textButtonTheme),
+                      outlinedButtonTheme:
+                          OutlinedButtonThemeData(style: outlinedButtonTheme),
                     )
                   : ThemeData(
                       pageTransitionsTheme: pageTransitionsTheme,
@@ -314,6 +322,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       ),
                       textButtonTheme:
                           TextButtonThemeData(style: textButtonTheme),
+                      outlinedButtonTheme:
+                          OutlinedButtonThemeData(style: outlinedButtonTheme),
                     ),
               title: kAppName,
               onGenerateRoute: isMobile(context) ? null : generateRoute,

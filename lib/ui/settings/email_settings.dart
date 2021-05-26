@@ -159,10 +159,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                   Row(
                     children: [
                       Expanded(
-                        child: OutlineButton(
+                        child: OutlinedButton(
                           child: Text(localization.connectGmail.toUpperCase()),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
                           onPressed: () {
                             final store = StoreProvider.of<AppState>(context);
                             store.dispatch(ViewSettings(

@@ -274,13 +274,11 @@ class _UserDetailsState extends State<UserDetails>
                   children: [
                     if (state.isHosted && !isApple()) ...[
                       Expanded(
-                        child: OutlineButton(
+                        child: OutlinedButton(
                           child: Text((state.user.isConnectedToGoogle
                                   ? localization.disconnectGoogle
                                   : localization.connectGoogle)
                               .toUpperCase()),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
                           onPressed: () {
                             if (state.settingsUIState.isChanged) {
                               showMessageDialog(
@@ -299,10 +297,8 @@ class _UserDetailsState extends State<UserDetails>
                       ),
                       SizedBox(width: kTableColumnGap),
                       Expanded(
-                        child: OutlineButton(
+                        child: OutlinedButton(
                           child: Text(gmailButtonLabel.toUpperCase()),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
                           onPressed: !state.user.isConnectedToGoogle
                               ? null
                               : () async {
@@ -325,13 +321,11 @@ class _UserDetailsState extends State<UserDetails>
                       SizedBox(width: kTableColumnGap),
                     ],
                     Expanded(
-                      child: OutlineButton(
+                      child: OutlinedButton(
                         child: Text((state.user.isTwoFactorEnabled
                                 ? localization.disableTwoFactor
                                 : localization.enableTwoFactor)
                             .toUpperCase()),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
                           if (state.settingsUIState.isChanged) {
                             showMessageDialog(

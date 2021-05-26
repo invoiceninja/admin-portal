@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -313,7 +314,9 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
         autofocus: true,
         onChanged: (value) => _field = value,
         maxLength: widget.maxLength,
-        maxLengthEnforced: widget.maxLength != null,
+        maxLengthEnforcement: widget.maxLength != null
+            ? MaxLengthEnforcement.enforced
+            : MaxLengthEnforcement.none,
         buildCounter: (_, {currentLength, maxLength, isFocused}) => null,
         decoration: InputDecoration(
           labelText: widget.field,

@@ -574,7 +574,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           controller: _termsController,
                           keyboardType: TextInputType.multiline,
                           label: '',
-                          hint: invoice.isOld
+                          hint: invoice.isOld && !invoice.isRecurringInvoice
                               ? ''
                               : settings.getDefaultTerms(invoice.entityType),
                         ),
@@ -583,7 +583,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           controller: _footerController,
                           keyboardType: TextInputType.multiline,
                           label: '',
-                          hint: invoice.isOld
+                          hint: invoice.isOld && !invoice.isRecurringInvoice
                               ? ''
                               : settings.getDefaultFooter(invoice.entityType),
                         ),

@@ -251,8 +251,7 @@ class _FileImportState extends State<_FileImport> {
       children.add(Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Expanded(child: field),
         SizedBox(width: kTableColumnGap),
-        OutlineButton(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        OutlinedButton(
           child: Text(localization.selectFile),
           onPressed: () async {
             final multipartFile = await pickFile(
@@ -410,18 +409,14 @@ class __FileMapperState extends State<_FileMapper> {
         Row(
           children: [
             Expanded(
-              child: OutlineButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
+              child: OutlinedButton(
                 child: Text(localization.cancel),
                 onPressed: () => widget.onCancelPressed(),
               ),
             ),
             SizedBox(width: kTableColumnGap),
             Expanded(
-              child: OutlineButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
+              child: OutlinedButton(
                 child: Text(localization.import),
                 onPressed: () {
                   final bool isValid = widget.formKey.currentState.validate();
