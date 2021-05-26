@@ -432,7 +432,7 @@ class _DesignSettingsState extends State<DesignSettings> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-          child: OutlineButton(
+          child: OutlinedButton(
             child: Text(localization.viewDocs.toUpperCase()),
             onPressed: () =>
                 launch('https://invoiceninja.github.io/docs/custom-fields/'),

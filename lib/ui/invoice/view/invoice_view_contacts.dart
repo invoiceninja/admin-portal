@@ -107,10 +107,8 @@ class _InvitationListTile extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                  child: OutlineButton(
+                  child: OutlinedButton(
                 child: Text(localization.viewPortal.toUpperCase()),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
                 onPressed: () {
                   launch(
                       '${invitation.silentLink}&client_hash=${client.clientHash}',
@@ -120,10 +118,8 @@ class _InvitationListTile extends StatelessWidget {
               )),
               SizedBox(width: kTableColumnGap),
               Expanded(
-                  child: OutlineButton(
+                  child: OutlinedButton(
                 child: Text(localization.copyLink.toUpperCase()),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: invitation.link));
                   showToast(localization.copiedToClipboard

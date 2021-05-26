@@ -55,10 +55,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         listTiles.add(AppListTile(
           buttons: [
             Expanded(
-                child: OutlineButton(
+                child: OutlinedButton(
               child: Text(localization.viewPortal.toUpperCase()),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
               onPressed: () {
                 launch('${contact.silentLink}&client_hash=${client.clientHash}',
                     forceWebView: false, forceSafariVC: false);
@@ -66,10 +64,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             )),
             SizedBox(width: kTableColumnGap),
             Expanded(
-                child: OutlineButton(
+                child: OutlinedButton(
               child: Text(localization.copyLink.toUpperCase()),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: contact.link));
                 showToast(

@@ -517,10 +517,8 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
         Padding(
           padding:
               const EdgeInsets.only(left: 16, top: 20, right: 16, bottom: 8),
-          child: OutlineButton(
+          child: OutlinedButton(
             child: Text(localization.viewDateFormats.toUpperCase()),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
             onPressed: () =>
                 launch('https://www.php.net/manual/en/datetime.format.php'),
           ),
