@@ -116,8 +116,7 @@ List<String> filteredCreditsSelector(
     if (creditListState.custom1Filters.isNotEmpty &&
         !creditListState.custom1Filters.contains(credit.customValue1)) {
       return false;
-    }
-    if (creditListState.custom2Filters.isNotEmpty &&
+    } else if (creditListState.custom2Filters.isNotEmpty &&
         !creditListState.custom2Filters.contains(credit.customValue2)) {
       return false;
     }
