@@ -221,35 +221,37 @@ class _VariableGrid extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: GridView.count(
-        //physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.all(6),
-        shrinkWrap: true,
-        primary: true,
-        crossAxisCount: 2,
-        childAspectRatio: 4,
-        children: fields
-            .map(
-              (field) => TextButton(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '\$$field',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
+      child: LayoutBuilder(builder: (context, constraints) {
+        return GridView.count(
+          //physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.all(6),
+          shrinkWrap: true,
+          primary: true,
+          crossAxisCount: 2,
+          childAspectRatio: ((constraints.maxWidth / 2) - 8) / 200,
+          children: fields
+              .map(
+                (field) => TextButton(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '\$$field',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: '\$$field'));
+                    showToast(AppLocalization.of(context)
+                        .copiedToClipboard
+                        .replaceFirst(':value', '\$$field'));
+                  },
                 ),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: '\$$field'));
-                  showToast(AppLocalization.of(context)
-                      .copiedToClipboard
-                      .replaceFirst(':value', '\$$field'));
-                },
-              ),
-            )
-            .toList(),
-      ),
+              )
+              .toList(),
+        );
+      }),
     );
   }
 }

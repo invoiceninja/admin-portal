@@ -27,13 +27,11 @@ class FieldGrid extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 6),
+            SizedBox(height: 4),
             Text(
               value,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 19,
-              ),
+              style: TextStyle(fontSize: 18),
             ),
           ],
         ));
@@ -50,16 +48,18 @@ class FieldGrid extends StatelessWidget {
         Container(
           color: Theme.of(context).cardColor,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-            child: GridView.count(
-              physics: NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 12,
-              shrinkWrap: true,
-              primary: true,
-              crossAxisCount: 2,
-              children: fieldWidgets,
-              childAspectRatio: 2.5,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: LayoutBuilder(builder: (context, constraints) {
+              return GridView.count(
+                physics: NeverScrollableScrollPhysics(),
+                mainAxisSpacing: 12,
+                shrinkWrap: true,
+                primary: true,
+                crossAxisCount: 2,
+                children: fieldWidgets,
+                childAspectRatio: ((constraints.maxWidth / 2) - 8) / 54,
+              );
+            }),
           ),
         ),
         ListDivider(),
