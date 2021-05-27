@@ -113,13 +113,21 @@ List<String> filteredCreditsSelector(
         !client.matchesFilter(creditListState.filter)) {
       return false;
     }
+
     if (creditListState.custom1Filters.isNotEmpty &&
         !creditListState.custom1Filters.contains(credit.customValue1)) {
       return false;
     } else if (creditListState.custom2Filters.isNotEmpty &&
         !creditListState.custom2Filters.contains(credit.customValue2)) {
       return false;
+    } else if (creditListState.custom3Filters.isNotEmpty &&
+        !creditListState.custom3Filters.contains(credit.customValue3)) {
+      return false;
+    } else if (creditListState.custom4Filters.isNotEmpty &&
+        !creditListState.custom4Filters.contains(credit.customValue4)) {
+      return false;
     }
+
     return true;
   }).toList();
 
