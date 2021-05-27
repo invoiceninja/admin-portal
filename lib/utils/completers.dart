@@ -62,9 +62,14 @@ Completer<Null> errorCompleter(BuildContext context) {
 
 // https://stackoverflow.com/a/55119208/497368
 class Debouncer {
-  Debouncer({this.milliseconds = kMillisecondsToDebounceUpdate});
+  Debouncer({
+    this.milliseconds = kMillisecondsToDebounceUpdate,
+    this.sendFirstAction = false,
+  });
 
   final int milliseconds;
+  final bool sendFirstAction;
+
   static VoidCallback action;
   static Timer timer;
 
@@ -75,7 +80,11 @@ class Debouncer {
     }
 
     if (timer == null) {
-      action();
+      if (sendFirstAction) {
+        action();
+      } else {
+        Debouncer.action = action;
+      }
     } else {
       timer.cancel();
       Debouncer.action = action;
@@ -93,6 +102,7 @@ class Debouncer {
   static void complete() {
     if (action != null) {
       action();
+      action = null;
     }
   }
 

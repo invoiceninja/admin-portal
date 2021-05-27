@@ -264,308 +264,370 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     ),
                     */
-                    Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: TypeAheadFormField<String>(
-                          key: ValueKey('__line_item_${index}_name__'),
-                          initialValue: lineItems[index].productKey,
-                          noItemsFoundBuilder: (context) => SizedBox(),
-                          suggestionsCallback: (pattern) {
-                            return productIds
-                                .where((productId) => productState
-                                    .map[productId].productKey
-                                    .toLowerCase()
-                                    .contains(pattern.toLowerCase()))
-                                .toList();
-                            /*
-                        return productIds
-                            .where((productId) => productState.map[productId]
-                                .matchesFilter(pattern))
-                            .toList();
-                         */
-                          },
-                          itemBuilder: (context, productId) {
-                            // TODO fix this
-                            /*
-                        return ListTile(
-                          title: Text(productState.map[suggestion].productKey),
-                        );
-                         */
-                            return Listener(
-                              child: Container(
-                                color: Theme.of(context).cardColor,
-                                child: ListTile(
-                                  title: Text(
-                                      productState.map[productId].productKey),
+                    Focus(
+                      onFocusChange: (hasFocus) => Debouncer.complete(),
+                      skipTraversal: true,
+                      child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: TypeAheadFormField<String>(
+                            key: ValueKey('__line_item_${index}_name__'),
+                            initialValue: lineItems[index].productKey,
+                            noItemsFoundBuilder: (context) => SizedBox(),
+                            suggestionsCallback: (pattern) {
+                              return productIds
+                                  .where((productId) => productState
+                                      .map[productId].productKey
+                                      .toLowerCase()
+                                      .contains(pattern.toLowerCase()))
+                                  .toList();
+                              /*
+                          return productIds
+                              .where((productId) => productState.map[productId]
+                                  .matchesFilter(pattern))
+                              .toList();
+                           */
+                            },
+                            itemBuilder: (context, productId) {
+                              // TODO fix this
+                              /*
+                          return ListTile(
+                            title: Text(productState.map[suggestion].productKey),
+                          );
+                           */
+                              return Listener(
+                                child: Container(
+                                  color: Theme.of(context).cardColor,
+                                  child: ListTile(
+                                    title: Text(
+                                        productState.map[productId].productKey),
+                                  ),
                                 ),
-                              ),
-                              onPointerDown: (_) {
-                                if (!kIsWeb) {
-                                  return;
-                                }
+                                onPointerDown: (_) {
+                                  if (!kIsWeb) {
+                                    return;
+                                  }
 
-                                final item = lineItems[index];
-                                final product = productState.map[productId];
-                                final client =
-                                    state.clientState.get(invoice.clientId);
-                                final currency = state
-                                    .staticState.currencyMap[client.currencyId];
+                                  final item = lineItems[index];
+                                  final product = productState.map[productId];
+                                  final client =
+                                      state.clientState.get(invoice.clientId);
+                                  final currency = state.staticState
+                                      .currencyMap[client.currencyId];
 
-                                double cost = product.price;
-                                if (company.convertProductExchangeRate &&
-                                    invoice.clientId != null &&
-                                    client.currencyId != company.currencyId) {
-                                  cost = round(cost * invoice.exchangeRate,
-                                      currency.precision);
-                                }
+                                  double cost = product.price;
+                                  if (company.convertProductExchangeRate &&
+                                      invoice.clientId != null &&
+                                      client.currencyId != company.currencyId) {
+                                    cost = round(cost * invoice.exchangeRate,
+                                        currency.precision);
+                                  }
 
-                                final updatedItem = item.rebuild((b) => b
-                                  ..productKey = product.productKey
-                                  ..notes =
-                                      item.isTask ? item.notes : product.notes
-                                  ..cost = item.isTask && item.cost != 0
-                                      ? item.cost
-                                      : cost
-                                  ..quantity = item.isTask || item.quantity != 0
-                                      ? item.quantity
-                                      : viewModel.state.company.defaultQuantity
-                                          ? 1
-                                          : product.quantity
-                                  ..customValue1 = product.customValue1
-                                  ..customValue2 = product.customValue2
-                                  ..customValue3 = product.customValue3
-                                  ..customValue4 = product.customValue4
-                                  ..taxRate1 = product.taxRate1
-                                  ..taxName1 = product.taxName1
-                                  ..taxRate2 = product.taxRate2
-                                  ..taxName2 = product.taxName2
-                                  ..taxRate3 = product.taxRate3
-                                  ..taxName3 = product.taxName3);
-                                _onChanged(updatedItem, index, debounce: false);
-                                _updateTable();
-                              },
-                            );
-                          },
-                          onSuggestionSelected: (suggestion) {
-                            if (kIsWeb) {
-                              return;
-                            }
+                                  final updatedItem = item.rebuild((b) => b
+                                    ..productKey = product.productKey
+                                    ..notes =
+                                        item.isTask ? item.notes : product.notes
+                                    ..cost = item.isTask && item.cost != 0
+                                        ? item.cost
+                                        : cost
+                                    ..quantity =
+                                        item.isTask || item.quantity != 0
+                                            ? item.quantity
+                                            : viewModel.state.company
+                                                    .defaultQuantity
+                                                ? 1
+                                                : product.quantity
+                                    ..customValue1 = product.customValue1
+                                    ..customValue2 = product.customValue2
+                                    ..customValue3 = product.customValue3
+                                    ..customValue4 = product.customValue4
+                                    ..taxRate1 = product.taxRate1
+                                    ..taxName1 = product.taxName1
+                                    ..taxRate2 = product.taxRate2
+                                    ..taxName2 = product.taxName2
+                                    ..taxRate3 = product.taxRate3
+                                    ..taxName3 = product.taxName3);
+                                  _onChanged(updatedItem, index,
+                                      debounce: false);
+                                  _updateTable();
+                                },
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              if (kIsWeb) {
+                                return;
+                              }
 
-                            final item = lineItems[index];
-                            final product = productState.map[suggestion];
-                            final client =
-                                state.clientState.get(invoice.clientId);
+                              final item = lineItems[index];
+                              final product = productState.map[suggestion];
+                              final client =
+                                  state.clientState.get(invoice.clientId);
 
-                            double cost = product.price;
-                            if (company.convertProductExchangeRate &&
-                                invoice.clientId != null &&
-                                client.currencyId != company.currencyId) {
-                              cost = round(
-                                  cost * invoice.exchangeRate,
-                                  state
-                                      .staticState
-                                      .currencyMap[client?.currencyId ??
-                                          company.currencyId]
-                                      .precision);
-                            }
-                            final updatedItem = item.rebuild((b) => b
-                              ..productKey = product.productKey
-                              ..notes = item.isTask ? item.notes : product.notes
-                              ..cost = item.isTask && item.cost != 0
-                                  ? item.cost
-                                  : cost
-                              ..quantity = item.isTask || item.quantity != 0
-                                  ? item.quantity
-                                  : viewModel.state.company.defaultQuantity
-                                      ? 1
-                                      : product.quantity
-                              ..customValue1 = product.customValue1
-                              ..customValue2 = product.customValue2
-                              ..customValue3 = product.customValue3
-                              ..customValue4 = product.customValue4
-                              ..taxRate1 = product.taxRate1
-                              ..taxName1 = product.taxName1
-                              ..taxRate2 = product.taxRate2
-                              ..taxName2 = product.taxName2
-                              ..taxRate3 = product.taxRate3
-                              ..taxName3 = product.taxName3);
-                            _onChanged(updatedItem, index, debounce: false);
-                            _updateTable();
-                          },
-                          textFieldConfiguration:
-                              TextFieldConfiguration(onChanged: (value) {
-                            _onChanged(
-                                lineItems[index]
-                                    .rebuild((b) => b..productKey = value),
-                                index);
-                          }),
-                          autoFlipDirection: true,
-                          animationStart: 1,
-                          debounceDuration: Duration(seconds: 0),
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: GrowableFormField(
-                        key: ValueKey('__line_item_${index}_description__'),
-                        initialValue: lineItems[index].notes,
-                        onChanged: (value) => _onChanged(
-                            lineItems[index].rebuild((b) => b..notes = value),
-                            index),
-                        keyboardType: TextInputType.multiline,
+                              double cost = product.price;
+                              if (company.convertProductExchangeRate &&
+                                  invoice.clientId != null &&
+                                  client.currencyId != company.currencyId) {
+                                cost = round(
+                                    cost * invoice.exchangeRate,
+                                    state
+                                        .staticState
+                                        .currencyMap[client?.currencyId ??
+                                            company.currencyId]
+                                        .precision);
+                              }
+                              final updatedItem = item.rebuild((b) => b
+                                ..productKey = product.productKey
+                                ..notes =
+                                    item.isTask ? item.notes : product.notes
+                                ..cost = item.isTask && item.cost != 0
+                                    ? item.cost
+                                    : cost
+                                ..quantity = item.isTask || item.quantity != 0
+                                    ? item.quantity
+                                    : viewModel.state.company.defaultQuantity
+                                        ? 1
+                                        : product.quantity
+                                ..customValue1 = product.customValue1
+                                ..customValue2 = product.customValue2
+                                ..customValue3 = product.customValue3
+                                ..customValue4 = product.customValue4
+                                ..taxRate1 = product.taxRate1
+                                ..taxName1 = product.taxName1
+                                ..taxRate2 = product.taxRate2
+                                ..taxName2 = product.taxName2
+                                ..taxRate3 = product.taxRate3
+                                ..taxName3 = product.taxName3);
+                              _onChanged(updatedItem, index, debounce: false);
+                              _updateTable();
+                            },
+                            textFieldConfiguration:
+                                TextFieldConfiguration(onChanged: (value) {
+                              _onChanged(
+                                  lineItems[index]
+                                      .rebuild((b) => b..productKey = value),
+                                  index);
+                            }),
+                            autoFlipDirection: true,
+                            animationStart: 1,
+                            debounceDuration: Duration(seconds: 0),
+                          )),
+                    ),
+                    Focus(
+                      onFocusChange: (hasFocus) => Debouncer.complete(),
+                      skipTraversal: true,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: kTableColumnGap),
+                        child: GrowableFormField(
+                          key: ValueKey('__line_item_${index}_description__'),
+                          initialValue: lineItems[index].notes,
+                          onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild((b) => b..notes = value),
+                              index),
+                          keyboardType: TextInputType.multiline,
+                        ),
                       ),
                     ),
                     if (company.hasCustomField(customField1))
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: CustomField(
-                          field: customField1,
-                          value: lineItems[index].customValue1,
-                          hideFieldLabel: true,
-                          onChanged: (value) => _onChanged(
-                              lineItems[index]
-                                  .rebuild((b) => b..customValue1 = value),
-                              index),
-                          onSavePressed: widget.entityViewModel.onSavePressed,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: CustomField(
+                            field: customField1,
+                            value: lineItems[index].customValue1,
+                            hideFieldLabel: true,
+                            onChanged: (value) => _onChanged(
+                                lineItems[index]
+                                    .rebuild((b) => b..customValue1 = value),
+                                index),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
                         ),
                       ),
                     if (company.hasCustomField(customField2))
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: CustomField(
-                          field: customField2,
-                          value: lineItems[index].customValue2,
-                          hideFieldLabel: true,
-                          onChanged: (value) => _onChanged(
-                              lineItems[index]
-                                  .rebuild((b) => b..customValue2 = value),
-                              index),
-                          onSavePressed: widget.entityViewModel.onSavePressed,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: CustomField(
+                            field: customField2,
+                            value: lineItems[index].customValue2,
+                            hideFieldLabel: true,
+                            onChanged: (value) => _onChanged(
+                                lineItems[index]
+                                    .rebuild((b) => b..customValue2 = value),
+                                index),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
                         ),
                       ),
                     if (company.hasCustomField(CustomFieldType.product3))
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: CustomField(
-                          field: CustomFieldType.product3,
-                          value: lineItems[index].customValue3,
-                          hideFieldLabel: true,
-                          onChanged: (value) => _onChanged(
-                              lineItems[index]
-                                  .rebuild((b) => b..customValue3 = value),
-                              index),
-                          onSavePressed: widget.entityViewModel.onSavePressed,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: CustomField(
+                            field: CustomFieldType.product3,
+                            value: lineItems[index].customValue3,
+                            hideFieldLabel: true,
+                            onChanged: (value) => _onChanged(
+                                lineItems[index]
+                                    .rebuild((b) => b..customValue3 = value),
+                                index),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
                         ),
                       ),
                     if (company.hasCustomField(customField4))
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: CustomField(
-                          field: customField4,
-                          value: lineItems[index].customValue4,
-                          hideFieldLabel: true,
-                          onChanged: (value) => _onChanged(
-                              lineItems[index]
-                                  .rebuild((b) => b..customValue4 = value),
-                              index),
-                          onSavePressed: widget.entityViewModel.onSavePressed,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: CustomField(
+                            field: customField4,
+                            value: lineItems[index].customValue4,
+                            hideFieldLabel: true,
+                            onChanged: (value) => _onChanged(
+                                lineItems[index]
+                                    .rebuild((b) => b..customValue4 = value),
+                                index),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
                         ),
                       ),
                     if (hasTax1)
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: TaxRateDropdown(
-                          onSelected: (taxRate) => _onChanged(
-                              lineItems[index].rebuild((b) => b
-                                ..taxName1 = taxRate.name
-                                ..taxRate1 = taxRate.rate),
-                              index),
-                          labelText: null,
-                          initialTaxName: lineItems[index].taxName1,
-                          initialTaxRate: lineItems[index].taxRate1,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: TaxRateDropdown(
+                            onSelected: (taxRate) => _onChanged(
+                                lineItems[index].rebuild((b) => b
+                                  ..taxName1 = taxRate.name
+                                  ..taxRate1 = taxRate.rate),
+                                index),
+                            labelText: null,
+                            initialTaxName: lineItems[index].taxName1,
+                            initialTaxRate: lineItems[index].taxRate1,
+                          ),
                         ),
                       ),
                     if (hasTax2)
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: TaxRateDropdown(
-                          onSelected: (taxRate) => _onChanged(
-                              lineItems[index].rebuild((b) => b
-                                ..taxName2 = taxRate.name
-                                ..taxRate2 = taxRate.rate),
-                              index),
-                          labelText: null,
-                          initialTaxName: lineItems[index].taxName2,
-                          initialTaxRate: lineItems[index].taxRate2,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: TaxRateDropdown(
+                            onSelected: (taxRate) => _onChanged(
+                                lineItems[index].rebuild((b) => b
+                                  ..taxName2 = taxRate.name
+                                  ..taxRate2 = taxRate.rate),
+                                index),
+                            labelText: null,
+                            initialTaxName: lineItems[index].taxName2,
+                            initialTaxRate: lineItems[index].taxRate2,
+                          ),
                         ),
                       ),
                     if (hasTax3)
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: TaxRateDropdown(
-                          onSelected: (taxRate) => _onChanged(
-                              lineItems[index].rebuild((b) => b
-                                ..taxName3 = taxRate.name
-                                ..taxRate3 = taxRate.rate),
-                              index),
-                          labelText: null,
-                          initialTaxName: lineItems[index].taxName3,
-                          initialTaxRate: lineItems[index].taxRate3,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: TaxRateDropdown(
+                            onSelected: (taxRate) => _onChanged(
+                                lineItems[index].rebuild((b) => b
+                                  ..taxName3 = taxRate.name
+                                  ..taxRate3 = taxRate.rate),
+                                index),
+                            labelText: null,
+                            initialTaxName: lineItems[index].taxName3,
+                            initialTaxRate: lineItems[index].taxRate3,
+                          ),
                         ),
                       ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: DecoratedFormField(
-                        key: ValueKey('__line_item_${index}_cost__'),
-                        textAlign: TextAlign.right,
-                        initialValue: formatNumber(
-                            lineItems[index].cost, context,
-                            formatNumberType: FormatNumberType.inputMoney,
-                            clientId: invoice.clientId),
-                        onChanged: (value) => _onChanged(
-                            lineItems[index]
-                                .rebuild((b) => b..cost = parseDouble(value)),
-                            index),
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true, signed: true),
-                        onSavePressed: widget.entityViewModel.onSavePressed,
+                    Focus(
+                      onFocusChange: (hasFocus) => Debouncer.complete(),
+                      skipTraversal: true,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: kTableColumnGap),
+                        child: DecoratedFormField(
+                          key: ValueKey('__line_item_${index}_cost__'),
+                          textAlign: TextAlign.right,
+                          initialValue: formatNumber(
+                              lineItems[index].cost, context,
+                              formatNumberType: FormatNumberType.inputMoney,
+                              clientId: invoice.clientId),
+                          onChanged: (value) => _onChanged(
+                              lineItems[index]
+                                  .rebuild((b) => b..cost = parseDouble(value)),
+                              index),
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: true),
+                          onSavePressed: widget.entityViewModel.onSavePressed,
+                        ),
                       ),
                     ),
                     if (company.enableProductQuantity || widget.isTasks)
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: DecoratedFormField(
-                          key: ValueKey('__line_item_${index}_quantity__'),
-                          textAlign: TextAlign.right,
-                          initialValue: formatNumber(
-                              lineItems[index].quantity, context,
-                              formatNumberType: FormatNumberType.inputAmount,
-                              clientId: invoice.clientId),
-                          onChanged: (value) => _onChanged(
-                              lineItems[index].rebuild(
-                                  (b) => b..quantity = parseDouble(value)),
-                              index),
-                          keyboardType: TextInputType.numberWithOptions(
-                              decimal: true, signed: true),
-                          onSavePressed: widget.entityViewModel.onSavePressed,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: DecoratedFormField(
+                            key: ValueKey('__line_item_${index}_quantity__'),
+                            textAlign: TextAlign.right,
+                            initialValue: formatNumber(
+                                lineItems[index].quantity, context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.clientId),
+                            onChanged: (value) => _onChanged(
+                                lineItems[index].rebuild(
+                                    (b) => b..quantity = parseDouble(value)),
+                                index),
+                            keyboardType: TextInputType.numberWithOptions(
+                                decimal: true, signed: true),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
                         ),
                       ),
                     if (company.enableProductDiscount)
-                      Padding(
-                        padding: const EdgeInsets.only(right: kTableColumnGap),
-                        child: DecoratedFormField(
-                          key: ValueKey('__line_item_${index}_discount__'),
-                          textAlign: TextAlign.right,
-                          initialValue: formatNumber(
-                              lineItems[index].discount, context,
-                              formatNumberType: FormatNumberType.inputAmount,
-                              clientId: invoice.clientId),
-                          onChanged: (value) => _onChanged(
-                              lineItems[index].rebuild(
-                                  (b) => b..discount = parseDouble(value)),
-                              index),
-                          keyboardType: TextInputType.numberWithOptions(
-                              decimal: true, signed: true),
-                          onSavePressed: widget.entityViewModel.onSavePressed,
+                      Focus(
+                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(right: kTableColumnGap),
+                          child: DecoratedFormField(
+                            key: ValueKey('__line_item_${index}_discount__'),
+                            textAlign: TextAlign.right,
+                            initialValue: formatNumber(
+                                lineItems[index].discount, context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.clientId),
+                            onChanged: (value) => _onChanged(
+                                lineItems[index].rebuild(
+                                    (b) => b..discount = parseDouble(value)),
+                                index),
+                            keyboardType: TextInputType.numberWithOptions(
+                                decimal: true, signed: true),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
                         ),
                       ),
                     Padding(
