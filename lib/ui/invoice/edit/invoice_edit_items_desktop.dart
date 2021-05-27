@@ -65,6 +65,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     }
   }
 
+  void _onFocusChange() {
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      Debouncer.complete();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -265,7 +271,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     ),
                     */
                     Focus(
-                      onFocusChange: (hasFocus) => Debouncer.complete(),
+                      onFocusChange: (hasFocus) => _onFocusChange(),
                       skipTraversal: true,
                       child: Padding(
                           padding:
@@ -413,7 +419,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           )),
                     ),
                     Focus(
-                      onFocusChange: (hasFocus) => Debouncer.complete(),
+                      onFocusChange: (hasFocus) => _onFocusChange(),
                       skipTraversal: true,
                       child: Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
@@ -429,7 +435,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     ),
                     if (company.hasCustomField(customField1))
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
@@ -448,7 +454,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     if (company.hasCustomField(customField2))
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
@@ -467,7 +473,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     if (company.hasCustomField(CustomFieldType.product3))
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
@@ -486,7 +492,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     if (company.hasCustomField(customField4))
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
@@ -505,7 +511,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     if (hasTax1)
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
@@ -524,7 +530,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     if (hasTax2)
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
@@ -543,7 +549,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     if (hasTax3)
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
@@ -561,7 +567,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         ),
                       ),
                     Focus(
-                      onFocusChange: (hasFocus) => Debouncer.complete(),
+                      onFocusChange: (hasFocus) => _onFocusChange(),
                       skipTraversal: true,
                       child: Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
@@ -584,7 +590,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     ),
                     if (company.enableProductQuantity || widget.isTasks)
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
@@ -608,7 +614,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     if (company.enableProductDiscount)
                       Focus(
-                        onFocusChange: (hasFocus) => Debouncer.complete(),
+                        onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
                         child: Padding(
                           padding:
