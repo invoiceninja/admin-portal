@@ -35,7 +35,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_templatesAndReminders');
-  final _debouncer = Debouncer();
+  final _debouncer = Debouncer(sendFirstAction: true);
 
   String _lastSubject;
   String _lastBody;
@@ -451,7 +451,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   String _schedule;
 
   List<TextEditingController> _controllers = [];
-  final _debouncer = Debouncer();
+  final _debouncer = Debouncer(sendFirstAction: true);
 
   @override
   void dispose() {

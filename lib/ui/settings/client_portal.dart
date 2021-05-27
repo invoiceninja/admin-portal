@@ -50,7 +50,10 @@ class _ClientPortalState extends State<ClientPortal>
   bool _isSubdomainUnique = true;
   bool _isCheckingSubdomain = false;
 
-  final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
+  final _debouncer = Debouncer(
+    milliseconds: kMillisecondsToDebounceSave,
+    sendFirstAction: true,
+  );
   final _subdomainController = TextEditingController();
   final _portalDomainController = TextEditingController();
   final _customCssController = TextEditingController();
