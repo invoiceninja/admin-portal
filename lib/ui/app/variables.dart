@@ -228,7 +228,7 @@ class _VariableGrid extends StatelessWidget {
           shrinkWrap: true,
           primary: true,
           crossAxisCount: 2,
-          childAspectRatio: ((constraints.maxWidth / 2) - 8) / 200,
+          childAspectRatio: ((constraints.maxWidth / 2) - 8) / 50,
           children: fields
               .map(
                 (field) => TextButton(
