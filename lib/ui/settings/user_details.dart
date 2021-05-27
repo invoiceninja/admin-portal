@@ -67,7 +67,7 @@ class _UserDetailsState extends State<UserDetails>
   final _passwordController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-  final _debouncer = Debouncer();
+  final _debouncer = Debouncer(sendFirstAction: true);
 
   @override
   void initState() {

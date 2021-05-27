@@ -48,7 +48,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
   bool autoValidate = false;
-  final _debouncer = Debouncer();
+  final _debouncer = Debouncer(sendFirstAction: true);
 
   final _nameController = TextEditingController();
   final _idNumberController = TextEditingController();
