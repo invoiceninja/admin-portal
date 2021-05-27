@@ -57,6 +57,22 @@ class VendorOverview extends StatelessWidget {
           value: vendor.customValue2);
     }
 
+    if (vendor.customValue3.isNotEmpty) {
+      final label3 = company.getCustomFieldLabel(CustomFieldType.vendor3);
+      fields[label3] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.vendor3,
+          value: vendor.customValue3);
+    }
+
+    if (vendor.customValue4.isNotEmpty) {
+      final label4 = company.getCustomFieldLabel(CustomFieldType.vendor4);
+      fields[label4] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.vendor4,
+          value: vendor.customValue4);
+    }
+
     return ScrollableListView(
       children: <Widget>[
         EntityHeader(

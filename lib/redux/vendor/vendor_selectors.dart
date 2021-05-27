@@ -60,10 +60,14 @@ List<String> filteredVendorsSelector(
     if (vendorListState.custom1Filters.isNotEmpty &&
         !vendorListState.custom1Filters.contains(vendor.customValue1)) {
       return false;
-    }
-
-    if (vendorListState.custom2Filters.isNotEmpty &&
+    } else if (vendorListState.custom2Filters.isNotEmpty &&
         !vendorListState.custom2Filters.contains(vendor.customValue2)) {
+      return false;
+    } else if (vendorListState.custom3Filters.isNotEmpty &&
+        !vendorListState.custom3Filters.contains(vendor.customValue3)) {
+      return false;
+    } else if (vendorListState.custom4Filters.isNotEmpty &&
+        !vendorListState.custom4Filters.contains(vendor.customValue4)) {
       return false;
     }
 

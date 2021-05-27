@@ -259,17 +259,17 @@ List<String> filteredTasksSelector(
     if (taskListState.custom1Filters.isNotEmpty &&
         !taskListState.custom1Filters.contains(task.customValue1)) {
       return false;
-    }
-    if (taskListState.custom2Filters.isNotEmpty &&
+    } else if (taskListState.custom2Filters.isNotEmpty &&
         !taskListState.custom2Filters.contains(task.customValue2)) {
       return false;
-    }
-    /*
-    if (taskListState.filterEntityId != null &&
-        task.entityId != taskListState.filterEntityId) {
+    } else if (taskListState.custom3Filters.isNotEmpty &&
+        !taskListState.custom3Filters.contains(task.customValue3)) {
+      return false;
+    } else if (taskListState.custom4Filters.isNotEmpty &&
+        !taskListState.custom4Filters.contains(task.customValue4)) {
       return false;
     }
-    */
+
     return true;
   }).toList();
 
