@@ -323,13 +323,19 @@ class InvoiceOverview extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Text(label),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
               SizedBox(
                 width: 100.0,
                 child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(formatNumber(amount, context,
-                        clientId: invoice.clientId))),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    formatNumber(amount, context, clientId: invoice.clientId),
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ),
               ),
             ],
           ),

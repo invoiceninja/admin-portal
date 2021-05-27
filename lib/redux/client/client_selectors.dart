@@ -29,6 +29,27 @@ List<String> dropdownClientsSelector(
   return list;
 }
 
+var memoizedClientStatsForUser = memo2(
+    (String userId, BuiltMap<String, ClientEntity> clientMap) =>
+        clientStatsForUser(userId, clientMap));
+
+EntityStats clientStatsForUser(
+    String userId, BuiltMap<String, ClientEntity> clientMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  clientMap.forEach((clientId, client) {
+    if (client.assignedUserId == userId) {
+      if (client.isActive) {
+        countActive++;
+      } else if (client.isDeleted) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 var memoizedFilteredClientList = memo7((SelectionState selectionState,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltList<String> clientList,

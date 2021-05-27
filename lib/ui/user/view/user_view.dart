@@ -1,6 +1,7 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -52,6 +53,16 @@ class UserView extends StatelessWidget {
             secondLabel: localization.phone,
           ),
           ListDivider(),
+          if (userCompany.canViewOrCreate(EntityType.client))
+            EntitiesListTile(
+              entity: user,
+              isFilter: isFilter,
+              title: localization.clients,
+              entityType: EntityType.client,
+              subtitle:
+                  memoizedClientStatsForUser(user.id, state.clientState.map)
+                      .present(localization.active, localization.archived),
+            ),
           if (userCompany.canViewOrCreate(EntityType.invoice))
             EntitiesListTile(
               entity: user,
