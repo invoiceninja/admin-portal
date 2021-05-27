@@ -129,18 +129,17 @@ List<String> filteredProjectsSelector(
     if (projectListState.custom1Filters.isNotEmpty &&
         !projectListState.custom1Filters.contains(project.customValue1)) {
       return false;
-    }
-
-    if (projectListState.custom2Filters.isNotEmpty &&
+    } else if (projectListState.custom2Filters.isNotEmpty &&
         !projectListState.custom2Filters.contains(project.customValue2)) {
       return false;
-    }
-    /*
-    if (projectListState.filterEntityId != null &&
-        project.entityId != projectListState.filterEntityId) {
+    } else if (projectListState.custom3Filters.isNotEmpty &&
+        !projectListState.custom3Filters.contains(project.customValue3)) {
+      return false;
+    } else if (projectListState.custom4Filters.isNotEmpty &&
+        !projectListState.custom4Filters.contains(project.customValue4)) {
       return false;
     }
-    */
+
     return true;
   }).toList();
 

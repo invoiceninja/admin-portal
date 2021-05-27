@@ -167,11 +167,17 @@ List<String> filteredExpensesSelector(
     if (expenseListState.custom1Filters.isNotEmpty &&
         !expenseListState.custom1Filters.contains(expense.customValue1)) {
       return false;
-    }
-    if (expenseListState.custom2Filters.isNotEmpty &&
+    } else if (expenseListState.custom2Filters.isNotEmpty &&
         !expenseListState.custom2Filters.contains(expense.customValue2)) {
       return false;
+    } else if (expenseListState.custom3Filters.isNotEmpty &&
+        !expenseListState.custom3Filters.contains(expense.customValue3)) {
+      return false;
+    } else if (expenseListState.custom4Filters.isNotEmpty &&
+        !expenseListState.custom4Filters.contains(expense.customValue4)) {
+      return false;
     }
+
     return expense.matchesFilter(expenseListState.filter);
   }).toList();
 

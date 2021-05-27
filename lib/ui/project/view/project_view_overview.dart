@@ -75,6 +75,20 @@ class _ProjectOverviewState extends State<ProjectOverview> {
           field: CustomFieldType.project2,
           value: project.customValue2);
     }
+    if (project.customValue3.isNotEmpty) {
+      final label3 = company.getCustomFieldLabel(CustomFieldType.project3);
+      fields[label3] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.project3,
+          value: project.customValue3);
+    }
+    if (project.customValue2.isNotEmpty) {
+      final label4 = company.getCustomFieldLabel(CustomFieldType.project4);
+      fields[label4] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.project4,
+          value: project.customValue4);
+    }
 
     List<Widget> _buildView() {
       final widgets = <Widget>[

@@ -63,6 +63,22 @@ class _ProductOverviewState extends State<ProductOverview> {
           value: product.customValue2);
     }
 
+    if (product.customValue3.isNotEmpty) {
+      final label3 = company.getCustomFieldLabel(CustomFieldType.product3);
+      fields[label3] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.product3,
+          value: product.customValue3);
+    }
+
+    if (product.customValue4.isNotEmpty) {
+      final label4 = company.getCustomFieldLabel(CustomFieldType.product4);
+      fields[label4] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.product4,
+          value: product.customValue4);
+    }
+
     return ScrollableListView(
       children: <Widget>[
         EntityHeader(

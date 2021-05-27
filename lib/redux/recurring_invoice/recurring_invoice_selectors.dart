@@ -73,16 +73,13 @@ List<String> filteredRecurringInvoicesSelector(
     if (invoiceListState.custom1Filters.isNotEmpty &&
         !invoiceListState.custom1Filters.contains(invoice.customValue1)) {
       return false;
-    }
-    if (invoiceListState.custom2Filters.isNotEmpty &&
+    } else if (invoiceListState.custom2Filters.isNotEmpty &&
         !invoiceListState.custom2Filters.contains(invoice.customValue2)) {
       return false;
-    }
-    if (invoiceListState.custom3Filters.isNotEmpty &&
+    } else if (invoiceListState.custom3Filters.isNotEmpty &&
         !invoiceListState.custom3Filters.contains(invoice.customValue3)) {
       return false;
-    }
-    if (invoiceListState.custom4Filters.isNotEmpty &&
+    } else if (invoiceListState.custom4Filters.isNotEmpty &&
         !invoiceListState.custom4Filters.contains(invoice.customValue4)) {
       return false;
     }

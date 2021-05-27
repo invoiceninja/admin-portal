@@ -115,11 +115,17 @@ List<String> filteredProductsSelector(
     if (productListState.custom1Filters.isNotEmpty &&
         !productListState.custom1Filters.contains(product.customValue1)) {
       return false;
-    }
-    if (productListState.custom2Filters.isNotEmpty &&
+    } else if (productListState.custom2Filters.isNotEmpty &&
         !productListState.custom2Filters.contains(product.customValue2)) {
       return false;
+    } else if (productListState.custom3Filters.isNotEmpty &&
+        !productListState.custom3Filters.contains(product.customValue3)) {
+      return false;
+    } else if (productListState.custom4Filters.isNotEmpty &&
+        !productListState.custom4Filters.contains(product.customValue4)) {
+      return false;
     }
+
     return true;
   }).toList();
 

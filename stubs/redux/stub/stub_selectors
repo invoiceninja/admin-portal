@@ -71,11 +71,17 @@ List<String> filteredStubsSelector(
     if (stubListState.custom1Filters.isNotEmpty &&
         !stubListState.custom1Filters.contains(stub.customValue1)) {
       return false;
-    }
-    if (stubListState.custom2Filters.isNotEmpty &&
+    } else if (stubListState.custom2Filters.isNotEmpty &&
         !stubListState.custom2Filters.contains(stub.customValue2)) {
       return false;
+    } else if (stubListState.custom3Filters.isNotEmpty &&
+        !stubListState.custom3Filters.contains(stub.customValue3)) {
+      return false;
+    } else if (stubListState.custom4Filters.isNotEmpty &&
+        !stubListState.custom4Filters.contains(stub.customValue4)) {
+      return false;
     }
+
     return stub.matchesFilter(stubListState.filter);
   }).toList();
 

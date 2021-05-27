@@ -85,6 +85,22 @@ class _TaskOverviewState extends State<TaskOverview> {
           value: task.customValue2);
     }
 
+    if (task.customValue3.isNotEmpty) {
+      final label3 = company.getCustomFieldLabel(CustomFieldType.task3);
+      fields[label3] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.task3,
+          value: task.customValue3);
+    }
+
+    if (task.customValue4.isNotEmpty) {
+      final label4 = company.getCustomFieldLabel(CustomFieldType.task4);
+      fields[label4] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.task4,
+          value: task.customValue4);
+    }
+
     List<Widget> _buildView() {
       final widgets = <Widget>[
         EntityHeader(

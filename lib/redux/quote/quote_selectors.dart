@@ -68,7 +68,14 @@ List<String> filteredQuotesSelector(
     } else if (quoteListState.custom2Filters.isNotEmpty &&
         !quoteListState.custom2Filters.contains(quote.customValue2)) {
       return false;
+    } else if (quoteListState.custom3Filters.isNotEmpty &&
+        !quoteListState.custom3Filters.contains(quote.customValue3)) {
+      return false;
+    } else if (quoteListState.custom4Filters.isNotEmpty &&
+        !quoteListState.custom4Filters.contains(quote.customValue4)) {
+      return false;
     }
+
     return true;
   }).toList();
 
