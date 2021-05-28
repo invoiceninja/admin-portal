@@ -96,7 +96,7 @@ class ViewScaffold extends StatelessWidget {
           actions: entity.isNew
               ? []
               : [
-                  if (isSettings && isDesktop(context))
+                  if (isSettings && isDesktop(context) && !isFilter)
                     TextButton(
                         onPressed: () {
                           onBackPressed != null
