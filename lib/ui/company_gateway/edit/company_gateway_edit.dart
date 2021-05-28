@@ -181,22 +181,38 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         ?.supportsTokenBilling ==
                     true)
                   AppDropdownButton<String>(
-                      labelText: localization.captureCard,
-                      value: companyGateway.tokenBilling,
-                      onChanged: (dynamic value) => viewModel.onChanged(
-                          companyGateway
-                              .rebuild((b) => b..tokenBilling = value)),
-                      items: [
-                        CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                        CompanyGatewayEntity.TOKEN_BILLING_DISABLED
-                      ]
-                          .map((value) => DropdownMenuItem(
-                                child: Text(localization.lookup(value)),
-                                value: value,
-                              ))
-                          .toList())
+                    labelText: localization.captureCard,
+                    value: companyGateway.tokenBilling,
+                    onChanged: (dynamic value) => viewModel.onChanged(
+                        companyGateway.rebuild((b) => b..tokenBilling = value)),
+                    items: [
+                      CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                      CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                      CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                      CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                    ]
+                        .map((value) => DropdownMenuItem(
+                              child: Text(localization.lookup(value)),
+                              value: value,
+                            ))
+                        .toList(),
+                  ),
+                SizedBox(height: 16),
+                for (var gatewayTypeId in gateway.options.keys)
+                  SwitchListTile(
+                      title: Text(localization
+                          .lookup(kGatewayTypes[gatewayTypeId] ?? '')),
+                      activeColor: Theme.of(context).accentColor,
+                      value: companyGateway
+                          .getSettingsForGatewayTypeId(gatewayTypeId)
+                          .isEnabled,
+                      onChanged: (value) {
+                        final settings = companyGateway
+                            .getSettingsForGatewayTypeId(gatewayTypeId);
+                        viewModel.onChanged(companyGateway.rebuild((b) => b
+                          ..feesAndLimitsMap[gatewayTypeId] =
+                              settings.rebuild((b) => b..isEnabled = value)));
+                      }),
               ]),
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,6 +350,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       labelText: localization.paymentType,
                       value: _gatewayTypeId,
                       items: gateway.options.keys
+                          .where((gatewayTypeId) => companyGateway
+                              .getSettingsForGatewayTypeId(gatewayTypeId)
+                              .isEnabled)
                           .map((gatewayTypeId) => DropdownMenuItem(
                                 child: Text(localization.lookup(
                                     kGatewayTypes[gatewayTypeId] ?? '')),
@@ -346,20 +365,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         });
                       },
                     ),
-                    SizedBox(height: 16),
-                    SwitchListTile(
-                        title: Text(localization.enabled),
-                        activeColor: Theme.of(context).accentColor,
-                        value: companyGateway
-                            .getSettingsForGatewayTypeId(_gatewayTypeId)
-                            .isEnabled,
-                        onChanged: (value) {
-                          final settings = companyGateway
-                              .getSettingsForGatewayTypeId(_gatewayTypeId);
-                          viewModel.onChanged(companyGateway.rebuild((b) => b
-                            ..feesAndLimitsMap[_gatewayTypeId] =
-                                settings.rebuild((b) => b..isEnabled = value)));
-                        }),
                   ],
                 ),
               LimitEditor(
