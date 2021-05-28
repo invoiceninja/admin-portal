@@ -150,7 +150,7 @@ class _TimePickerState extends State<TimePicker> {
               dateTimeStr =
                   part.substring(0, 2) + ':' + part.substring(2, 4) + ':00';
             }
-          } else {
+          } else if (parts.isNotEmpty) {
             dateTimeStr = parts[0] + ':' + parts[1];
             if (parts[1].length == 1) {
               dateTimeStr += '0';

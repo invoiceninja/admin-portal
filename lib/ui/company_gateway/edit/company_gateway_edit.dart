@@ -57,8 +57,11 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final companyGateway = widget.viewModel.companyGateway;
     final gateway =
         widget.viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
-    final enabledGatewayIds = gateway.options.keys.where((gatewayTypeId) =>
-        companyGateway.getSettingsForGatewayTypeId(gatewayTypeId).isEnabled);
+
+    final enabledGatewayIds = (gateway?.options?.keys ?? []).where(
+        (gatewayTypeId) => companyGateway
+            .getSettingsForGatewayTypeId(gatewayTypeId)
+            .isEnabled);
 
     if (enabledGatewayIds.isNotEmpty) {
       _gatewayTypeId = enabledGatewayIds.first;
@@ -91,8 +94,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
     final disableSave = connectGateways.contains(companyGateway.gatewayId) &&
         companyGateway.isNew;
-    final enabledGatewayIds = gateway.options.keys.where((gatewayTypeId) =>
-        companyGateway.getSettingsForGatewayTypeId(gatewayTypeId).isEnabled);
+    final enabledGatewayIds = (gateway?.options?.keys ?? []).where(
+        (gatewayTypeId) => companyGateway
+            .getSettingsForGatewayTypeId(gatewayTypeId)
+            .isEnabled);
 
     return EditScaffold(
       title: viewModel.companyGateway.isNew
@@ -208,7 +213,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         .toList(),
                   ),
                 SizedBox(height: 16),
-                for (var gatewayTypeId in gateway.options.keys)
+                for (var gatewayTypeId in gateway?.options?.keys ?? <String>[])
                   SwitchListTile(
                       title: Text(localization
                           .lookup(kGatewayTypes[gatewayTypeId] ?? '')),
@@ -358,27 +363,26 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           else
             ScrollableListView(
               children: <Widget>[
-                if (gateway?.options != null && gateway.options.length > 1)
-                  FormCard(
-                    children: <Widget>[
-                      AppDropdownButton(
-                        labelText: localization.paymentType,
-                        value: _gatewayTypeId,
-                        items: enabledGatewayIds
-                            .map((gatewayTypeId) => DropdownMenuItem(
-                                  child: Text(localization.lookup(
-                                      kGatewayTypes[gatewayTypeId] ?? '')),
-                                  value: gatewayTypeId,
-                                ))
-                            .toList(),
-                        onChanged: (dynamic value) {
-                          setState(() {
-                            _gatewayTypeId = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                FormCard(
+                  children: <Widget>[
+                    AppDropdownButton(
+                      labelText: localization.paymentType,
+                      value: _gatewayTypeId,
+                      items: enabledGatewayIds
+                          .map((gatewayTypeId) => DropdownMenuItem(
+                                child: Text(localization.lookup(
+                                    kGatewayTypes[gatewayTypeId] ?? '')),
+                                value: gatewayTypeId,
+                              ))
+                          .toList(),
+                      onChanged: (dynamic value) {
+                        setState(() {
+                          _gatewayTypeId = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
                 if (enabledGatewayIds.contains(_gatewayTypeId)) ...[
                   LimitEditor(
                     key: ValueKey('__limits_${_gatewayTypeId}__'),
