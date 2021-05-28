@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'no_payment_types_enabled': 'No payment types enabled',
       'wait_for_data': 'Please wait for the data to finish loading',
       'net_total': 'Net Total',
       'has_taxes': 'Has Taxes',
@@ -60422,6 +60423,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get waitForData =>
       _localizedValues[localeCode]['wait_for_data'] ??
       _localizedValues['en']['wait_for_data'];
+
+  String get noPaymentTypesEnabled =>
+      _localizedValues[localeCode]['no_payment_types_enabled'] ??
+      _localizedValues['en']['no_payment_types_enabled'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
