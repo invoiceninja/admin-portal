@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
@@ -56,8 +57,15 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final companyGateway = widget.viewModel.companyGateway;
     final gateway =
         widget.viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
+    final enabledGatewayIds = gateway.options.keys.where((gatewayTypeId) =>
+        companyGateway.getSettingsForGatewayTypeId(gatewayTypeId).isEnabled);
 
-    _gatewayTypeId = gateway?.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
+    if (enabledGatewayIds.isNotEmpty) {
+      _gatewayTypeId = enabledGatewayIds.first;
+    } else {
+      _gatewayTypeId = gateway?.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
+    }
+
     super.didChangeDependencies();
   }
 
@@ -83,6 +91,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
     final disableSave = connectGateways.contains(companyGateway.gatewayId) &&
         companyGateway.isNew;
+    final enabledGatewayIds = gateway.options.keys.where((gatewayTypeId) =>
+        companyGateway.getSettingsForGatewayTypeId(gatewayTypeId).isEnabled);
 
     return EditScaffold(
       title: viewModel.companyGateway.isNew
@@ -181,22 +191,38 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         ?.supportsTokenBilling ==
                     true)
                   AppDropdownButton<String>(
-                      labelText: localization.captureCard,
-                      value: companyGateway.tokenBilling,
-                      onChanged: (dynamic value) => viewModel.onChanged(
-                          companyGateway
-                              .rebuild((b) => b..tokenBilling = value)),
-                      items: [
-                        CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                        CompanyGatewayEntity.TOKEN_BILLING_DISABLED
-                      ]
-                          .map((value) => DropdownMenuItem(
-                                child: Text(localization.lookup(value)),
-                                value: value,
-                              ))
-                          .toList())
+                    labelText: localization.captureCard,
+                    value: companyGateway.tokenBilling,
+                    onChanged: (dynamic value) => viewModel.onChanged(
+                        companyGateway.rebuild((b) => b..tokenBilling = value)),
+                    items: [
+                      CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                      CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                      CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                      CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                    ]
+                        .map((value) => DropdownMenuItem(
+                              child: Text(localization.lookup(value)),
+                              value: value,
+                            ))
+                        .toList(),
+                  ),
+                SizedBox(height: 16),
+                for (var gatewayTypeId in gateway.options.keys)
+                  SwitchListTile(
+                      title: Text(localization
+                          .lookup(kGatewayTypes[gatewayTypeId] ?? '')),
+                      activeColor: Theme.of(context).accentColor,
+                      value: companyGateway
+                          .getSettingsForGatewayTypeId(gatewayTypeId)
+                          .isEnabled,
+                      onChanged: (value) {
+                        final settings = companyGateway
+                            .getSettingsForGatewayTypeId(gatewayTypeId);
+                        viewModel.onChanged(companyGateway.rebuild((b) => b
+                          ..feesAndLimitsMap[gatewayTypeId] =
+                              settings.rebuild((b) => b..isEnabled = value)));
+                      }),
               ]),
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,57 +351,50 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 )
             ],
           ),
-          ScrollableListView(
-            children: <Widget>[
-              if (gateway?.options != null && gateway.options.length > 1)
-                FormCard(
-                  children: <Widget>[
-                    AppDropdownButton(
-                      labelText: localization.paymentType,
-                      value: _gatewayTypeId,
-                      items: gateway.options.keys
-                          .map((gatewayTypeId) => DropdownMenuItem(
-                                child: Text(localization.lookup(
-                                    kGatewayTypes[gatewayTypeId] ?? '')),
-                                value: gatewayTypeId,
-                              ))
-                          .toList(),
-                      onChanged: (dynamic value) {
-                        setState(() {
-                          _gatewayTypeId = value;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 16),
-                    SwitchListTile(
-                        title: Text(localization.enabled),
-                        activeColor: Theme.of(context).accentColor,
-                        value: companyGateway
-                            .getSettingsForGatewayTypeId(_gatewayTypeId)
-                            .isEnabled,
-                        onChanged: (value) {
-                          final settings = companyGateway
-                              .getSettingsForGatewayTypeId(_gatewayTypeId);
-                          viewModel.onChanged(companyGateway.rebuild((b) => b
-                            ..feesAndLimitsMap[_gatewayTypeId] =
-                                settings.rebuild((b) => b..isEnabled = value)));
-                        }),
-                  ],
-                ),
-              LimitEditor(
-                key: ValueKey('__limits_${_gatewayTypeId}__'),
-                gatewayTypeId: _gatewayTypeId,
-                viewModel: viewModel,
-                companyGateway: companyGateway,
-              ),
-              FeesEditor(
-                key: ValueKey('__fees_${_gatewayTypeId}__'),
-                gatewayTypeId: _gatewayTypeId,
-                viewModel: viewModel,
-                companyGateway: companyGateway,
-              ),
-            ],
-          ),
+          if (enabledGatewayIds.isEmpty)
+            Center(
+              child: HelpText(localization.noPaymentTypesEnabled),
+            )
+          else
+            ScrollableListView(
+              children: <Widget>[
+                if (gateway?.options != null && gateway.options.length > 1)
+                  FormCard(
+                    children: <Widget>[
+                      AppDropdownButton(
+                        labelText: localization.paymentType,
+                        value: _gatewayTypeId,
+                        items: enabledGatewayIds
+                            .map((gatewayTypeId) => DropdownMenuItem(
+                                  child: Text(localization.lookup(
+                                      kGatewayTypes[gatewayTypeId] ?? '')),
+                                  value: gatewayTypeId,
+                                ))
+                            .toList(),
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            _gatewayTypeId = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                if (enabledGatewayIds.contains(_gatewayTypeId)) ...[
+                  LimitEditor(
+                    key: ValueKey('__limits_${_gatewayTypeId}__'),
+                    gatewayTypeId: _gatewayTypeId,
+                    viewModel: viewModel,
+                    companyGateway: companyGateway,
+                  ),
+                  FeesEditor(
+                    key: ValueKey('__fees_${_gatewayTypeId}__'),
+                    gatewayTypeId: _gatewayTypeId,
+                    viewModel: viewModel,
+                    companyGateway: companyGateway,
+                  ),
+                ],
+              ],
+            ),
         ],
       ),
     );
