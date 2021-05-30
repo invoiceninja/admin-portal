@@ -423,7 +423,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           )),
                     ),
                     Focus(
-                      onFocusChange: (hasFocus) => _onFocusChange(),
+                      onFocusChange: (hasFocus) {
+                        _autocompleteFocusIndex = -1;
+                        _onFocusChange();
+                      },
                       skipTraversal: true,
                       child: Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
