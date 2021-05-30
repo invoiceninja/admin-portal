@@ -5,14 +5,14 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 class GrowableFormField extends StatefulWidget {
   const GrowableFormField({
     Key key,
-    this.initialValue,
-    this.onChanged,
-    this.keyboardType,
+    @required this.initialValue,
+    @required this.onChanged,
+    this.autofocus = false,
   }) : super(key: key);
 
   final String initialValue;
   final ValueChanged<String> onChanged;
-  final TextInputType keyboardType;
+  final bool autofocus;
 
   @override
   _GrowableFormFieldState createState() => _GrowableFormFieldState();
@@ -45,10 +45,11 @@ class _GrowableFormFieldState extends State<GrowableFormField> {
   @override
   Widget build(BuildContext context) {
     return DecoratedFormField(
+      autofocus: widget.autofocus,
       focusNode: _focusNode,
       initialValue: widget.initialValue,
       onChanged: widget.onChanged,
-      keyboardType: widget.keyboardType,
+      keyboardType: TextInputType.multiline,
       minLines: 1,
       // TODO remove this isWeb check/needed to prevent overflow
       maxLines: _hasFocus ? 20 : 2,

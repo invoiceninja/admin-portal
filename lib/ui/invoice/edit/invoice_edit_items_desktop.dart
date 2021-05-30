@@ -37,6 +37,7 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   final _debouncer = Debouncer();
   int _updatedAt;
+  int _autocompleteFocusIndex = -1;
 
   void _updateTable() {
     setState(() {
@@ -271,7 +272,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     ),
                     */
                     Focus(
-                      onFocusChange: (hasFocus) => _onFocusChange(),
+                      onFocusChange: (hasFocus) {
+                        _autocompleteFocusIndex = index;
+                        _onFocusChange();
+                      },
                       skipTraversal: true,
                       child: Padding(
                           padding:
@@ -419,17 +423,20 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           )),
                     ),
                     Focus(
-                      onFocusChange: (hasFocus) => _onFocusChange(),
+                      onFocusChange: (hasFocus) {
+                        _autocompleteFocusIndex = -1;
+                        _onFocusChange();
+                      },
                       skipTraversal: true,
                       child: Padding(
                         padding: const EdgeInsets.only(right: kTableColumnGap),
                         child: GrowableFormField(
                           key: ValueKey('__line_item_${index}_description__'),
+                          autofocus: _autocompleteFocusIndex == index,
                           initialValue: lineItems[index].notes,
                           onChanged: (value) => _onChanged(
                               lineItems[index].rebuild((b) => b..notes = value),
                               index),
-                          keyboardType: TextInputType.multiline,
                         ),
                       ),
                     ),
