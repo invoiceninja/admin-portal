@@ -44,8 +44,10 @@ class _DesignEditState extends State<DesignEdit>
       GlobalKey<FormState>(debugLabel: '_designEdit');
 
   final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
+  final _htmlDebouncer = Debouncer();
 
   final _nameController = TextEditingController();
+  final _htmlController = TextEditingController();
   final _headerController = TextEditingController();
   final _footerController = TextEditingController();
   final _bodyController = TextEditingController();
@@ -65,6 +67,7 @@ class _DesignEditState extends State<DesignEdit>
   @override
   void initState() {
     super.initState();
+    _htmlController.addListener(_onHtmlChanged);
     _focusNode = FocusScopeNode();
     _tabController = TabController(
         vsync: this, length: widget.viewModel.state.prefState.isMobile ? 7 : 6);
@@ -106,6 +109,10 @@ class _DesignEditState extends State<DesignEdit>
   void dispose() {
     _focusNode.dispose();
     _tabController.dispose();
+
+    _htmlController.removeListener(_onHtmlChanged);
+    _htmlController.dispose();
+
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -137,6 +144,14 @@ class _DesignEditState extends State<DesignEdit>
         widget.viewModel.onChanged(design);
         _loadPreview(context, design);
       }
+    });
+  }
+
+  void _onHtmlChanged() {
+    _htmlDebouncer.run(() {
+      setState(() {
+        _html = _htmlController.text;
+      });
     });
   }
 
@@ -175,6 +190,7 @@ class _DesignEditState extends State<DesignEdit>
 
             if (response != null) {
               if (_isDraftMode) {
+                _htmlController.text = response.body;
                 _html = response.body;
                 _pdfBytes = null;
               } else {
@@ -249,6 +265,7 @@ class _DesignEditState extends State<DesignEdit>
                       viewModel: viewModel,
                       isLoading: _isLoading,
                       nameController: _nameController,
+                      htmlController: _htmlController,
                       onLoadDesign: _loadDesign,
                       draftMode: _isDraftMode,
                       onDraftModeChanged: (value) => _setDraftMode(value),
@@ -298,6 +315,7 @@ class _DesignEditState extends State<DesignEdit>
                                   viewModel: viewModel,
                                   isLoading: _isLoading,
                                   nameController: _nameController,
+                                  htmlController: _htmlController,
                                   onLoadDesign: _loadDesign,
                                   draftMode: _isDraftMode,
                                   onDraftModeChanged: (value) =>
@@ -370,6 +388,7 @@ class DesignSettings extends StatefulWidget {
   const DesignSettings({
     @required this.viewModel,
     @required this.nameController,
+    @required this.htmlController,
     @required this.onLoadDesign,
     @required this.draftMode,
     @required this.onDraftModeChanged,
@@ -379,6 +398,7 @@ class DesignSettings extends StatefulWidget {
   final DesignEditVM viewModel;
   final Function(DesignEntity) onLoadDesign;
   final TextEditingController nameController;
+  final TextEditingController htmlController;
   final bool draftMode;
   final bool isLoading;
   final Function(bool) onDraftModeChanged;
@@ -438,7 +458,23 @@ class _DesignSettingsState extends State<DesignSettings> {
                 launch('https://invoiceninja.github.io/docs/custom-fields/'),
           ),
         ),
-        VariablesHelp(),
+        if (widget.draftMode)
+          FormCard(
+            child: TextField(
+              controller: widget.htmlController,
+              keyboardType: TextInputType.multiline,
+              minLines: 16,
+              maxLines: null,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+              style: TextStyle(
+                fontFeatures: [FontFeature.tabularFigures()],
+              ),
+            ),
+          )
+        else
+          VariablesHelp(),
       ],
     );
   }
