@@ -156,6 +156,8 @@ class _FileImport extends StatefulWidget {
 class _FileImportState extends State<_FileImport> {
   final Map<String, MultipartFile> _multipartFiles = <String, MultipartFile>{};
   bool _isLoading = false;
+  bool _importJsonData = false;
+  bool _importJsonSettings = false;
 
   void uploadJsonFile() {
     final localization = AppLocalization.of(context);
@@ -306,6 +308,23 @@ class _FileImportState extends State<_FileImport> {
     }
 
     children.add(SizedBox(height: 20));
+
+    if (widget.importType == ImportType.json) {
+      children.addAll([
+        SwitchListTile(
+          activeColor: Theme.of(context).accentColor,
+          title: Text(localization.importSettings),
+          value: _importJsonSettings,
+          onChanged: (value) => setState(() => _importJsonSettings = value),
+        ),
+        SwitchListTile(
+          activeColor: Theme.of(context).accentColor,
+          title: Text(localization.importData),
+          value: _importJsonData,
+          onChanged: (value) => setState(() => _importJsonData = value),
+        ),
+      ]);
+    }
 
     if (_isLoading)
       children.add(LinearProgressIndicator());
