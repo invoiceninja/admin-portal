@@ -165,23 +165,35 @@ class _FileImportState extends State<_FileImport> {
     if (!_multipartFiles.containsKey(ImportType.json)) {
       showErrorDialog(context: context, message: localization.jsonFileMissing);
       return;
+    } else if (!_importJsonData && !_importJsonSettings) {
+      showErrorDialog(
+          context: context, message: localization.jsonOptionMissing);
+      return;
     }
 
     final webClient = WebClient();
     final state = StoreProvider.of<AppState>(context).state;
     final credentials = state.credentials;
-    final url = '${credentials.url}/import_json';
+    String url = '${credentials.url}/import_json?';
+
+    if (_importJsonSettings) {
+      url += '&import_settings=true';
+    }
+
+    if (_importJsonData) {
+      url += '&import_data=true';
+    }
 
     setState(() => _isLoading = true);
 
-    webClient.post(
+    webClient
+        .post(
       url,
       credentials.token,
       multipartFiles: _multipartFiles.values.toList(),
-      data: {
-        '': '',
-      },
-    ).then((dynamic result) {
+      //data: {},
+    )
+        .then((dynamic result) {
       setState(() => {_isLoading = false, _multipartFiles.clear()});
 
       showToast(localization.startedImport);
@@ -290,7 +302,9 @@ class _FileImportState extends State<_FileImport> {
           child: Text(localization.selectFile),
           onPressed: () async {
             final multipartFile = await pickFile(
-              fileIndex: 'files[' + uploadPart.key + ']',
+              fileIndex: widget.importType == ImportType.json
+                  ? 'files'
+                  : 'files[' + uploadPart.key + ']',
               fileType: FileType.custom,
               allowedExtensions: [
                 widget.importType == ImportType.json ? 'json' : 'csv'

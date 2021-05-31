@@ -18,6 +18,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'import_data': 'Import Data',
       'import_settings': 'Import Settings',
       'json_file_missing': 'Please provide the JSON file',
+      'json_option_missing': 'Please select to import the settings and/or data',
       'json': 'JSON',
       'no_payment_types_enabled': 'No payment types enabled',
       'wait_for_data': 'Please wait for the data to finish loading',
@@ -60437,6 +60438,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get jsonFileMissing =>
       _localizedValues[localeCode]['json_file_missing'] ?? _localizedValues['en']['json_file_missing'];
+
+  String get jsonOptionMissing =>
+      _localizedValues[localeCode]['json_option_missing'] ?? _localizedValues['en']['json_option_missing'];
 
   String get importData =>
       _localizedValues[localeCode]['import_data'] ?? _localizedValues['en']['import_data'];
