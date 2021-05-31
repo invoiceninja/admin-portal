@@ -157,6 +157,38 @@ class _FileImportState extends State<_FileImport> {
   final Map<String, MultipartFile> _multipartFiles = <String, MultipartFile>{};
   bool _isLoading = false;
 
+  void uploadJsonFile() {
+    final localization = AppLocalization.of(context);
+
+    if (!_multipartFiles.containsKey(ImportType.json)) {
+      showErrorDialog(context: context, message: localization.jsonFileMissing);
+      return;
+    }
+
+    final webClient = WebClient();
+    final state = StoreProvider.of<AppState>(context).state;
+    final credentials = state.credentials;
+    final url = '${credentials.url}/import_json';
+
+    setState(() => _isLoading = true);
+
+    webClient.post(
+      url,
+      credentials.token,
+      multipartFiles: _multipartFiles.values.toList(),
+      data: {
+        '': '',
+      },
+    ).then((dynamic result) {
+      setState(() => {_isLoading = false, _multipartFiles.clear()});
+
+      showToast(localization.startedImport);
+    }).catchError((dynamic error) {
+      setState(() => _isLoading = false);
+      showErrorDialog(context: context, message: '$error');
+    });
+  }
+
   void uploadFile() {
     final localization = AppLocalization.of(context);
 
@@ -219,6 +251,7 @@ class _FileImportState extends State<_FileImport> {
               onChanged: (dynamic value) => widget.onImportTypeChanged(value),
               items: [
                 ImportType.csv,
+                ImportType.json,
                 ImportType.freshbooks,
                 ImportType.invoice2go,
                 ImportType.invoicely,
@@ -257,7 +290,9 @@ class _FileImportState extends State<_FileImport> {
             final multipartFile = await pickFile(
               fileIndex: 'files[' + uploadPart.key + ']',
               fileType: FileType.custom,
-              allowedExtensions: ['csv'],
+              allowedExtensions: [
+                widget.importType == ImportType.json ? 'json' : 'csv'
+              ],
             );
 
             if (multipartFile != null) {
@@ -278,7 +313,15 @@ class _FileImportState extends State<_FileImport> {
       children.add(AppButton(
         label: localization.import.toUpperCase(),
         iconData: MdiIcons.import,
-        onPressed: _multipartFiles == null ? null : () => uploadFile(),
+        onPressed: _multipartFiles == null
+            ? null
+            : () {
+                if (widget.importType == ImportType.json) {
+                  uploadJsonFile();
+                } else {
+                  uploadFile();
+                }
+              },
       ));
 
     return FormCard(

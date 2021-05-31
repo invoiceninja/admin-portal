@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'json_file_missing': 'Please provide the JSON file',
+      'json': 'JSON',
       'no_payment_types_enabled': 'No payment types enabled',
       'wait_for_data': 'Please wait for the data to finish loading',
       'net_total': 'Net Total',
@@ -60427,6 +60429,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get noPaymentTypesEnabled =>
       _localizedValues[localeCode]['no_payment_types_enabled'] ??
       _localizedValues['en']['no_payment_types_enabled'];
+
+  String get json =>
+      _localizedValues[localeCode]['json'] ?? _localizedValues['en']['json'];
+
+  String get jsonFileMissing =>
+      _localizedValues[localeCode]['json_file_missing'] ?? _localizedValues['en']['json_file_missing'];
 
 
   String lookup(String key) {

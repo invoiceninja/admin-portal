@@ -125,6 +125,10 @@ class ImportType extends EnumClass {
 
   Map<String, String> get uploadParts {
     switch (this) {
+      case ImportType.json:
+        return {
+          'json': 'json',
+        };
       case ImportType.csv:
         return {
           EntityType.client.toString(): 'clients',
