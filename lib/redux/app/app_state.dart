@@ -778,7 +778,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return !userCompany.settings.includeDeletedClients;
   }
 
-  bool get canAddCompany => userCompany.isOwner && companies.length < 10;
+  bool get canAddCompany =>
+      userCompany.isOwner && companies.length < 10 && !isDemo;
 
   bool get isMenuCollapsed =>
       (prefState.isNotMobile &&
