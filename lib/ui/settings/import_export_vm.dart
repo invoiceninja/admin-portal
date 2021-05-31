@@ -24,8 +24,6 @@ class ImportExportScreen extends StatelessWidget {
 class ImportExportVM {
   ImportExportVM({
     @required this.state,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
   });
 
   static ImportExportVM fromStore(Store<AppState> store) {
@@ -33,12 +31,8 @@ class ImportExportVM {
 
     return ImportExportVM(
       state: state,
-      onSavePressed: null,
-      onCancelPressed: null,
     );
   }
 
   final AppState state;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
 }

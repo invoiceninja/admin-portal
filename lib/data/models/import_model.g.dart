@@ -7,6 +7,7 @@ part of 'import_model.dart';
 // **************************************************************************
 
 const ImportType _$csv = const ImportType._('csv');
+const ImportType _$json = const ImportType._('json');
 const ImportType _$freshbooks = const ImportType._('freshbooks');
 const ImportType _$invoice2go = const ImportType._('invoice2go');
 const ImportType _$invoicely = const ImportType._('invoicely');
@@ -17,6 +18,8 @@ ImportType _$typeValueOf(String name) {
   switch (name) {
     case 'csv':
       return _$csv;
+    case 'json':
+      return _$json;
     case 'freshbooks':
       return _$freshbooks;
     case 'invoice2go':
@@ -35,6 +38,7 @@ ImportType _$typeValueOf(String name) {
 final BuiltSet<ImportType> _$typeValues =
     new BuiltSet<ImportType>(const <ImportType>[
   _$csv,
+  _$json,
   _$freshbooks,
   _$invoice2go,
   _$invoicely,

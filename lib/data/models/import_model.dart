@@ -114,9 +114,9 @@ class ImportType extends EnumClass {
   static Serializer<ImportType> get serializer => _$importTypeSerializer;
 
   static const ImportType csv = _$csv;
+  static const ImportType json = _$json;
   static const ImportType freshbooks = _$freshbooks;
   static const ImportType invoice2go = _$invoice2go;
-
   static const ImportType invoicely = _$invoicely;
   static const ImportType waveaccounting = _$waveaccounting;
   static const ImportType zoho = _$zoho;
@@ -125,6 +125,10 @@ class ImportType extends EnumClass {
 
   Map<String, String> get uploadParts {
     switch (this) {
+      case ImportType.json:
+        return {
+          'json': 'json',
+        };
       case ImportType.csv:
         return {
           EntityType.client.toString(): 'clients',

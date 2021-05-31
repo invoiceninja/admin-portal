@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'import_data': 'Import Data',
+      'import_settings': 'Import Settings',
+      'json_file_missing': 'Please provide the JSON file',
+      'json_option_missing': 'Please select to import the settings and/or data',
+      'json': 'JSON',
       'no_payment_types_enabled': 'No payment types enabled',
       'wait_for_data': 'Please wait for the data to finish loading',
       'net_total': 'Net Total',
@@ -60428,6 +60433,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['no_payment_types_enabled'] ??
       _localizedValues['en']['no_payment_types_enabled'];
 
+  String get json =>
+      _localizedValues[localeCode]['json'] ?? _localizedValues['en']['json'];
+
+  String get jsonFileMissing =>
+      _localizedValues[localeCode]['json_file_missing'] ?? _localizedValues['en']['json_file_missing'];
+
+  String get jsonOptionMissing =>
+      _localizedValues[localeCode]['json_option_missing'] ?? _localizedValues['en']['json_option_missing'];
+
+  String get importData =>
+      _localizedValues[localeCode]['import_data'] ?? _localizedValues['en']['import_data'];
+
+  String get importSettings =>
+      _localizedValues[localeCode]['import_settings'] ?? _localizedValues['en']['import_settings'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
