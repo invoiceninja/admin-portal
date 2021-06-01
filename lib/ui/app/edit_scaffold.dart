@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -10,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EditScaffold extends StatelessWidget {
   const EditScaffold({
@@ -73,8 +75,17 @@ class EditScaffold extends StatelessWidget {
         body: showUpgradeBanner
             ? Column(
                 children: [
-                  IconMessage(localization.upgradeToPaidPlan,
-                      color: Colors.orange),
+                  InkWell(
+                    child: IconMessage(
+                      localization.upgradeToPaidPlan,
+                      color: Colors.orange,
+                    ),
+                    onTap: () async {
+                      if (await canLaunch(kAppPlansURL)) {
+                        launch(kAppPlansURL);
+                      }
+                    },
+                  ),
                   Expanded(child: body),
                 ],
               )
