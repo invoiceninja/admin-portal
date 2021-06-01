@@ -236,76 +236,78 @@ class _AccountOverview extends StatelessWidget {
             )
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Expanded(
-                child: AppButton(
-                  label: localization.purchaseLicense.toUpperCase(),
-                  iconData: Icons.cloud_download,
-                  onPressed: () async {
-                    if (await canLaunch(kWhiteLabelUrl)) {
-                      launch(kWhiteLabelUrl);
-                    }
-                  },
+        if (state.isSelfHosted) ...[
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: AppButton(
+                    label: localization.purchaseLicense.toUpperCase(),
+                    iconData: Icons.cloud_download,
+                    onPressed: () async {
+                      if (await canLaunch(kWhiteLabelUrl)) {
+                        launch(kWhiteLabelUrl);
+                      }
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(width: kGutterWidth),
-              Expanded(
-                child: AppButton(
-                  label: localization.applyLicense.toUpperCase(),
-                  iconData: Icons.cloud_done,
-                  onPressed: state.isWhiteLabeled
-                      ? null
-                      : () {
-                          fieldCallback(
-                              context: context,
-                              title: localization.applyLicense,
-                              field: localization.license,
-                              maxLength: 24,
-                              callback: (value) {
-                                final state = viewModel.state;
-                                final credentials = state.credentials;
-                                final url =
-                                    '${credentials.url}/claim_license?license_key=$value';
+                SizedBox(width: kGutterWidth),
+                Expanded(
+                  child: AppButton(
+                    label: localization.applyLicense.toUpperCase(),
+                    iconData: Icons.cloud_done,
+                    onPressed: state.isWhiteLabeled
+                        ? null
+                        : () {
+                            fieldCallback(
+                                context: context,
+                                title: localization.applyLicense,
+                                field: localization.license,
+                                maxLength: 24,
+                                callback: (value) {
+                                  final state = viewModel.state;
+                                  final credentials = state.credentials;
+                                  final url =
+                                      '${credentials.url}/claim_license?license_key=$value';
 
-                                showDialog<AlertDialog>(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext context) =>
-                                        SimpleDialog(
-                                          children: <Widget>[LoadingDialog()],
-                                        ));
+                                  showDialog<AlertDialog>(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) =>
+                                          SimpleDialog(
+                                            children: <Widget>[LoadingDialog()],
+                                          ));
 
-                                WebClient()
-                                    .post(
-                                  url,
-                                  credentials.token,
-                                )
-                                    .then((dynamic response) {
-                                  if (Navigator.of(context).canPop()) {
-                                    Navigator.of(context).pop();
-                                  }
-                                  viewModel.onAppliedLicense();
-                                }).catchError((dynamic error) {
-                                  if (Navigator.of(context).canPop()) {
-                                    Navigator.of(context).pop();
-                                  }
-                                  showErrorDialog(
-                                      context: context, message: '$error');
+                                  WebClient()
+                                      .post(
+                                    url,
+                                    credentials.token,
+                                  )
+                                      .then((dynamic response) {
+                                    if (Navigator.of(context).canPop()) {
+                                      Navigator.of(context).pop();
+                                    }
+                                    viewModel.onAppliedLicense();
+                                  }).catchError((dynamic error) {
+                                    if (Navigator.of(context).canPop()) {
+                                      Navigator.of(context).pop();
+                                    }
+                                    showErrorDialog(
+                                        context: context, message: '$error');
+                                  });
                                 });
-                              });
-                        },
+                          },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
-          child: ListDivider(),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
+            child: ListDivider(),
+          ),
+        ],
         Padding(
             padding: const EdgeInsets.all(16),
             child: Row(children: [
