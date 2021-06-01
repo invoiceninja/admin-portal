@@ -306,9 +306,9 @@ class _FileImportState extends State<_FileImport> {
                   ? 'files'
                   : 'files[' + uploadPart.key + ']',
               fileType: FileType.custom,
-              allowedExtensions: [
-                widget.importType == ImportType.json ? 'json' : 'csv'
-              ],
+              allowedExtensions: widget.importType == ImportType.json
+                  ? ['json', 'zip']
+                  : ['csv'],
             );
 
             if (multipartFile != null) {
