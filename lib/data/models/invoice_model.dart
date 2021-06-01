@@ -607,6 +607,9 @@ abstract class InvoiceEntity extends Object
       case QuoteFields.validUntil:
         response = invoiceA.dueDate.compareTo(invoiceB.dueDate);
         break;
+      case InvoiceFields.nextSendDate:
+        response = invoiceA.nextSendDate.compareTo(invoiceB.nextSendDate);
+        break;
       case EntityFields.assignedTo:
         final userA = userMap[invoiceA.assignedUserId] ?? UserEntity();
         final userB = userMap[invoiceB.assignedUserId] ?? UserEntity();
