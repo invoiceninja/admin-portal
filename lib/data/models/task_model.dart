@@ -425,7 +425,7 @@ abstract class TaskEntity extends Object
         startDate = ((detail as List)[0]).round();
       }
 
-      if (startDate > 0) {
+      if (startDate != 0) {
         if ((detail as List)[1] == false || (detail as List)[1] == null) {
           endDate = 0;
         } else {
