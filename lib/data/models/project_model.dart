@@ -311,6 +311,8 @@ abstract class ProjectEntity extends Object
       haystacks: [
         name,
         number,
+        publicNotes,
+        privateNotes,
         customValue1,
         customValue2,
         customValue3,
@@ -326,6 +328,8 @@ abstract class ProjectEntity extends Object
       haystacks: [
         name,
         number,
+        publicNotes,
+        privateNotes,
         customValue1,
         customValue2,
         customValue3,
