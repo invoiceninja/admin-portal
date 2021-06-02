@@ -27,8 +27,14 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem(
     return taskADate.compareTo(taskBDate);
   });
 
-  for (var task in tasks) {
-    final item = convertTaskToInvoiceItem(task: task, context: context);
+  for (var i = 0; i < tasks.length; i++) {
+    final task = tasks[i];
+    var item = convertTaskToInvoiceItem(task: task, context: context);
+
+    if (i == 0) {
+      //item = item.rebuild((b) => b.notes = '##${project.name}\n\n${item.notes}');
+    }
+
     items.add(item);
   }
 
