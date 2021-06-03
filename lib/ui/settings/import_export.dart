@@ -162,7 +162,7 @@ class _FileImportState extends State<_FileImport> {
   void uploadJsonFile() {
     final localization = AppLocalization.of(context);
 
-    if (!_multipartFiles.containsKey(ImportType.json)) {
+    if (!_multipartFiles.containsKey(ImportType.json.toString())) {
       showErrorDialog(context: context, message: localization.jsonFileMissing);
       return;
     } else if (!_importJsonData && !_importJsonSettings) {
