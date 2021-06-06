@@ -117,12 +117,10 @@ class UserDetailsVM {
                   context: context,
                   callback: (password, idToken) {
                     store.dispatch(
-                      SaveAuthUserRequest(
-                        user: state.user
-                            .rebuild((b) => b..isTwoFactorEnabled = false),
+                      DisableTwoFactorRequest(
+                        completer: completer,
                         password: password,
                         idToken: idToken,
-                        completer: completer,
                       ),
                     );
                   });

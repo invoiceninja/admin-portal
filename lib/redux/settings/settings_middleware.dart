@@ -28,6 +28,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   final saveSettings = _saveSettings(repository);
   final uploadLogo = _uploadLogo(repository);
   final saveDocument = _saveDocument(repository);
+  final disableTwoFactor = _disableTwoFactor(repository);
 
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
@@ -35,6 +36,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
     TypedMiddleware<AppState, SaveAuthUserRequest>(saveAuthUser),
     TypedMiddleware<AppState, ConnecOAuthUserRequest>(connectOAuthUser),
     TypedMiddleware<AppState, ConnecGmailUserRequest>(connectGmailUser),
+    TypedMiddleware<AppState, DisableTwoFactorRequest>(disableTwoFactor),
     TypedMiddleware<AppState, SaveUserSettingsRequest>(saveSettings),
     TypedMiddleware<AppState, UploadLogoRequest>(uploadLogo),
     TypedMiddleware<AppState, SaveCompanyDocumentRequest>(saveDocument),
@@ -169,6 +171,33 @@ Middleware<AppState> _connectGmailUser(SettingsRepository settingsRepository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConnecGmailUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _disableTwoFactor(SettingsRepository settingsRepository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ConnecGmailUserRequest;
+
+    settingsRepository
+        .disableTwoFactor(
+            store.state.credentials, action.password, action.idToken)
+        .then((_) {
+      store.dispatch(DisableTwoFactorSuccess());
+      if (action.completer != null) {
+        action.completer.complete();
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DisableTwoFactorFailure(error));
       if ('$error'.contains('412')) {
         store.dispatch(UserUnverifiedPassword());
       }
