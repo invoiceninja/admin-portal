@@ -209,7 +209,6 @@ class _EntityListState extends State<EntityList> {
           initialFirstRowIndex =
               (selectedIndex / rowsPerPage).floor() * rowsPerPage;
         }
-        print('## initialFirstRowIndex: $initialFirstRowIndex');
 
         return Column(
           mainAxisSize: MainAxisSize.max,
@@ -233,7 +232,7 @@ class _EntityListState extends State<EntityList> {
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   child: AppPaginatedDataTable(
                     key: ValueKey(
-                        '__${uiState.filterEntityId}_${uiState.filterEntityType}_${listUIState.hashCode}__'),
+                        '__${uiState.filterEntityId}_${uiState.filterEntityType}__'),
                     onSelectAll: (value) {
                       final entities = entityList
                           .map((String entityId) => entityMap[entityId])
