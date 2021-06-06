@@ -170,4 +170,19 @@ class SettingsRepository {
 
     return companyResponse.data;
   }
+
+  Future<bool> disableTwoFactor(
+    Credentials credentials,
+    String password,
+    String idToken,
+  ) async {
+    await webClient.post(
+      '${credentials.url}/settings/disable_two_factor',
+      credentials.token,
+      idToken: idToken,
+      password: password,
+    );
+
+    return true;
+  }
 }

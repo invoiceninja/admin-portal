@@ -77,14 +77,19 @@ class EditScaffold extends StatelessWidget {
                 children: [
                   InkWell(
                     child: IconMessage(
-                      localization.upgradeToPaidPlan,
+                      state.userCompany.isOwner
+                          ? localization.upgradeToPaidPlan
+                          : localization.ownerUpgradeToPaidPlan,
                       color: Colors.orange,
                     ),
-                    onTap: () async {
-                      if (await canLaunch(kAppPlansURL)) {
-                        launch(kAppPlansURL);
-                      }
-                    },
+                    onTap: state.userCompany.isOwner
+                        ? () async {
+                            if (await canLaunch(kAppPlansURL)) {
+                              launch(
+                                  '$kAppPlansURL?email=${Uri.encodeQueryComponent(state.user.email)}');
+                            }
+                          }
+                        : null,
                   ),
                   Expanded(child: body),
                 ],

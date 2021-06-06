@@ -85,8 +85,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'page_layout': 'Page Layout',
       'portrait': 'Portrait',
       'landscape': 'Landscape',
+      'owner_upgrade_to_paid_plan':
+          'The account owner can upgrade to a paid plan to enable the advanced advanced settings',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -1831,7 +1833,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -3586,7 +3588,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -5341,7 +5343,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -7066,7 +7068,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -8816,7 +8818,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -10563,7 +10565,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -12309,7 +12311,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -14070,7 +14072,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -15817,7 +15819,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -17564,7 +17566,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -19313,7 +19315,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -21074,7 +21076,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -22848,7 +22850,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -24639,7 +24641,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -26435,7 +26437,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -28189,7 +28191,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -29935,7 +29937,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -31683,7 +31685,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -33435,7 +33437,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -35181,7 +35183,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -36928,7 +36930,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -38692,7 +38694,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -40440,7 +40442,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -42190,7 +42192,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -43938,7 +43940,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -45689,7 +45691,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -47440,7 +47442,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -49198,7 +49200,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -50975,7 +50977,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -52725,7 +52727,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -54470,7 +54472,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portrait': 'Portrait',
       'landscape': 'Landscape',
       'upgrade_to_paid_plan':
-          'Upgrade to a paid plan to enable the advanded settings',
+          'Upgrade to a paid plan to enable the advanced settings',
       'invoice_payment_terms': 'Invoice Payment Terms',
       'quote_valid_until': 'Quote Valid Until',
       'no_headers': 'No Headers',
@@ -60229,6 +60231,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get upgradeToPaidPlan =>
       _localizedValues[localeCode]['upgrade_to_paid_plan'] ?? '';
 
+  String get ownerUpgradeToPaidPlan =>
+      _localizedValues[localeCode]['owner_upgrade_to_paid_plan'] ?? '';
+
   String get pageLayout => _localizedValues[localeCode]['page_layout'] ?? '';
 
   String get portrait => _localizedValues[localeCode]['portrait'] ?? '';
@@ -60437,16 +60442,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['json'] ?? _localizedValues['en']['json'];
 
   String get jsonFileMissing =>
-      _localizedValues[localeCode]['json_file_missing'] ?? _localizedValues['en']['json_file_missing'];
+      _localizedValues[localeCode]['json_file_missing'] ??
+      _localizedValues['en']['json_file_missing'];
 
   String get jsonOptionMissing =>
-      _localizedValues[localeCode]['json_option_missing'] ?? _localizedValues['en']['json_option_missing'];
+      _localizedValues[localeCode]['json_option_missing'] ??
+      _localizedValues['en']['json_option_missing'];
 
   String get importData =>
-      _localizedValues[localeCode]['import_data'] ?? _localizedValues['en']['import_data'];
+      _localizedValues[localeCode]['import_data'] ??
+      _localizedValues['en']['import_data'];
 
   String get importSettings =>
-      _localizedValues[localeCode]['import_settings'] ?? _localizedValues['en']['import_settings'];
+      _localizedValues[localeCode]['import_settings'] ??
+      _localizedValues['en']['import_settings'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

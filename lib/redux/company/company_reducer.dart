@@ -118,6 +118,10 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
     (userCompany, action) =>
         userCompany.rebuild((b) => b..user.replace(action.user)),
   ),
+  TypedReducer<UserCompanyEntity, DisableTwoFactorSuccess>(
+    (userCompany, action) =>
+        userCompany.rebuild((b) => b..user.isTwoFactorEnabled = false),
+  ),
   TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(
       (userCompany, action) => userCompany
           .rebuild((b) => b..settings.replace(action.userCompany.settings))),

@@ -151,6 +151,27 @@ class ConnecOAuthUserFailure implements StopSaving {
   final Object error;
 }
 
+class DisableTwoFactorRequest implements StartSaving {
+  DisableTwoFactorRequest({
+    @required this.completer,
+    @required this.idToken,
+    @required this.password,
+  });
+
+  final Completer completer;
+  final String password;
+  final String idToken;
+}
+
+class DisableTwoFactorSuccess
+    implements StopSaving, PersistData, UserVerifiedPassword {}
+
+class DisableTwoFactorFailure implements StopSaving {
+  DisableTwoFactorFailure(this.error);
+
+  final Object error;
+}
+
 class ConnecGmailUserRequest implements StartSaving {
   ConnecGmailUserRequest({
     @required this.serverAuthCode,
