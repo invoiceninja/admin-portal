@@ -71,7 +71,6 @@ class _ProjectViewState extends State<ProjectView>
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
     final project = viewModel.project;
     final localization = AppLocalization.of(context);
     final documents = project.documents;
