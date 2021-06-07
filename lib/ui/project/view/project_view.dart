@@ -71,7 +71,6 @@ class _ProjectViewState extends State<ProjectView>
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
     final project = viewModel.project;
     final localization = AppLocalization.of(context);
     final documents = project.documents;
@@ -120,9 +119,7 @@ class _ProjectViewState extends State<ProjectView>
             BottomButtons(
               entity: project,
               action1: EntityAction.newTask,
-              action2: state.company.isModuleEnabled(EntityType.expense)
-                  ? EntityAction.newExpense
-                  : EntityAction.newInvoice,
+              action2: EntityAction.invoiceProject,
             ),
           ],
         );
