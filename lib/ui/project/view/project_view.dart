@@ -120,9 +120,7 @@ class _ProjectViewState extends State<ProjectView>
             BottomButtons(
               entity: project,
               action1: EntityAction.newTask,
-              action2: state.company.isModuleEnabled(EntityType.expense)
-                  ? EntityAction.newExpense
-                  : EntityAction.newInvoice,
+              action2: EntityAction.invoiceProject,
             ),
           ],
         );

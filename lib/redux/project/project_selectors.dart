@@ -32,7 +32,8 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem(
     var item = convertTaskToInvoiceItem(task: task, context: context);
 
     if (i == 0) {
-      //item = item.rebuild((b) => b.notes = '##${project.name}\n\n${item.notes}');
+      item =
+          item.rebuild((b) => b.notes = '## ${project.name}\n\n${item.notes}');
     }
 
     items.add(item);
