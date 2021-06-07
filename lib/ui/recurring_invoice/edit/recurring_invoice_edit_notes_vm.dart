@@ -41,13 +41,13 @@ class RecurringInvoiceEditNotesVM extends EntityEditNotesVM {
 
   factory RecurringInvoiceEditNotesVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
-    final quote = state.quoteUIState.editing;
+    final recurringInvoice = state.recurringInvoiceUIState.editing;
 
     return RecurringInvoiceEditNotesVM(
       company: state.company,
-      invoice: quote,
-      onChanged: (InvoiceEntity quote) =>
-          store.dispatch(UpdateRecurringInvoice(quote)),
+      invoice: recurringInvoice,
+      onChanged: (InvoiceEntity recurringInvoice) =>
+          store.dispatch(UpdateRecurringInvoice(recurringInvoice)),
     );
   }
 }
