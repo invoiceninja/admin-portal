@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -14,26 +16,49 @@ class FieldGrid extends StatelessWidget {
     final List<Widget> fieldWidgets = [];
 
     fields.forEach((field, value) {
+      Widget text = Text(
+        value.replaceAll('\n', ' '),
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontSize: 18),
+      );
+
+      if (value.contains('\n')) {
+        text = Tooltip(
+          message: value,
+          child: text,
+        );
+      }
+
       if (value != null && value.isNotEmpty) {
-        fieldWidgets.add(Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Flexible(
-              child: Text(
-                localization.lookup(field),
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: textColor.withOpacity(.65),
+        fieldWidgets.add(Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: value));
+              showToast(
+                localization.copiedToClipboard.replaceFirst(
+                  ':value',
+                  value.replaceAll('\n', ' '),
                 ),
-              ),
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                    localization.lookup(field),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: textColor.withOpacity(.65),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 4),
+                text,
+              ],
             ),
-            SizedBox(height: 4),
-            Text(
-              value,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 18),
-            ),
-          ],
+          ),
         ));
       }
     });
