@@ -125,7 +125,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                 viewModel: widget.viewModel,
               )
             : TabBarView(
-                key: ValueKey('__quote_${viewModel.invoice.id}__'),
+                key: ValueKey('__recurringInvoice_${viewModel.invoice.id}__'),
                 controller: _controller,
                 children: <Widget>[
                   RecurringInvoiceEditDetailsScreen(
@@ -143,7 +143,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
       ),
       bottomNavigationBar: InvoiceEditFooter(invoice: invoice),
       floatingActionButton: FloatingActionButton(
-        heroTag: 'quote_edit_fab',
+        heroTag: 'recurringInvoice_edit_fab',
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
           showDialog<InvoiceItemSelector>(
