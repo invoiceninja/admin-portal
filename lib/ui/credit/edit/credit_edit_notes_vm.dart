@@ -47,6 +47,7 @@ class CreditEditNotesVM extends EntityEditNotesVM {
       company: state.company,
       invoice: credit,
       onChanged: (InvoiceEntity credit) => store.dispatch(UpdateCredit(credit)),
+      state: state,
     );
   }
 }
