@@ -31,7 +31,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
   TabController _controller;
 
   static const kDetailsScreen = 0;
-  static const kItemScreen = 1;
+  static const kItemScreen = 2;
 
   // STARTER: controllers - do not remove comment
 
