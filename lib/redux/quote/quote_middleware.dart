@@ -33,6 +33,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
   final emailQuote = _emailQuote(repository);
   final bulkEmailQuotes = _bulkEmailQuotes(repository);
   final markSentQuote = _markSentQuote(repository);
+  final downloadQuotes = _downloadQuotes(repository);
   final saveDocument = _saveDocument(repository);
 
   return [
@@ -51,6 +52,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, EmailQuoteRequest>(emailQuote),
     TypedMiddleware<AppState, BulkEmailQuotesRequest>(bulkEmailQuotes),
     TypedMiddleware<AppState, MarkSentQuotesRequest>(markSentQuote),
+    TypedMiddleware<AppState, DownloadQuotesRequest>(downloadQuotes),
     TypedMiddleware<AppState, SaveQuoteDocumentRequest>(saveDocument),
   ];
 }
@@ -324,6 +326,29 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuoteFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _downloadQuotes(QuoteRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DownloadQuotesRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.invoiceIds, EntityAction.download)
+        .then((invoices) {
+      store.dispatch(DownloadQuotesSuccess());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DownloadQuotesFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

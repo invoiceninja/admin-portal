@@ -306,6 +306,21 @@ class DeleteCreditsFailure implements StopSaving {
   final List<InvoiceEntity> credits;
 }
 
+class DownloadCreditsRequest implements StartSaving {
+  DownloadCreditsRequest(this.completer, this.creditIds);
+
+  final Completer completer;
+  final List<String> creditIds;
+}
+
+class DownloadCreditsSuccess implements StopSaving {}
+
+class DownloadCreditsFailure implements StopSaving {
+  DownloadCreditsFailure(this.error);
+
+  final Object error;
+}
+
 class RestoreCreditsRequest implements StartSaving {
   RestoreCreditsRequest(this.completer, this.creditIds);
 
@@ -519,6 +534,11 @@ Future handleCreditAction(
               .toList())),
         filterEntity: state.clientState.map[credit.clientId],
       );
+      break;
+    case EntityAction.download:
+      store.dispatch(DownloadCreditsRequest(
+          snackBarCompleter<Null>(context, localization.exportedData),
+          creditIds));
       break;
     case EntityAction.restore:
       final message = creditIds.length > 1
