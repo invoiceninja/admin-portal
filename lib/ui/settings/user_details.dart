@@ -1,10 +1,8 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
-import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:built_collection/built_collection.dart';
@@ -52,13 +50,6 @@ class _UserDetailsState extends State<UserDetails>
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
   bool autoValidate = false;
-
-  static const GMAIL_DEFAULT = 0;
-  static const GMAIL_1_SIGN_IN = 1;
-  static const GMAIL_2_AUTHORIZE = 2;
-
-  int _connectGmailStep = GMAIL_DEFAULT;
-  String _password;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -136,64 +127,12 @@ class _UserDetailsState extends State<UserDetails>
     }
   }
 
-  void _connectToGmail() {
-    if (_connectGmailStep == GMAIL_DEFAULT) {
-      GoogleOAuth.signOut();
-      passwordCallback(
-          context: context,
-          skipOAuth: true,
-          callback: (password, idToken) async {
-            setState(() {
-              _connectGmailStep = GMAIL_1_SIGN_IN;
-              _password = password;
-            });
-          });
-    } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
-      try {
-        GoogleOAuth.grantOfflineAccess((idToken, accessToken, serverAuthCode) {
-          if (idToken.isEmpty || accessToken.isEmpty) {
-            GoogleOAuth.signOut();
-            setState(() {
-              _connectGmailStep = GMAIL_1_SIGN_IN;
-            });
-          } else {
-            setState(() {
-              _connectGmailStep = GMAIL_2_AUTHORIZE;
-            });
-          }
-        }, () {
-          // TODO Gmail always fails the first time
-          setState(() {
-            _connectGmailStep = GMAIL_2_AUTHORIZE;
-          });
-        });
-      } catch (error) {
-        showErrorDialog(context: context, message: error);
-      }
-    } else if (_connectGmailStep == GMAIL_2_AUTHORIZE) {
-      final completer = Completer<Null>();
-      completer.future.catchError((Object error) {
-        showErrorDialog(context: context, message: error);
-      });
-      widget.viewModel.onConnectGmailPressed(context, completer, _password);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final user = viewModel.user;
     final state = viewModel.state;
-
-    String gmailButtonLabel = localization.connectGmail;
-    if (state.user.isConnectedToGmail) {
-      gmailButtonLabel = localization.disconnectGmail;
-    } else if (_connectGmailStep == GMAIL_1_SIGN_IN) {
-      gmailButtonLabel = localization.step1SignIn;
-    } else if (_connectGmailStep == GMAIL_2_AUTHORIZE) {
-      gmailButtonLabel = localization.step2Authorize;
-    }
 
     return EditScaffold(
       title: localization.userDetails,
@@ -298,8 +237,11 @@ class _UserDetailsState extends State<UserDetails>
                       SizedBox(width: kTableColumnGap),
                       Expanded(
                         child: OutlinedButton(
-                          child: Text(gmailButtonLabel.toUpperCase()),
-                          onPressed: !state.user.isConnectedToGoogle
+                          child: Text((user.isConnectedToGmail
+                                  ? localization.disconnectGmail
+                                  : localization.connectGmail)
+                              .toUpperCase()),
+                          onPressed: !state.user.isConnectedToGoogle && false
                               ? null
                               : () async {
                                   if (state.settingsUIState.isChanged) {
@@ -313,7 +255,7 @@ class _UserDetailsState extends State<UserDetails>
                                   if (state.user.isConnectedToGmail) {
                                     viewModel.onDisconnectGmailPressed(context);
                                   } else {
-                                    _connectToGmail();
+                                    launch('$kAppProductionUrl/auth/google');
                                   }
                                 },
                         ),
