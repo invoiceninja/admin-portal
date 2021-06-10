@@ -370,6 +370,21 @@ class DeleteInvoicesFailure implements StopSaving {
   final List<InvoiceEntity> invoices;
 }
 
+class DownloadInvoicesRequest implements StartSaving {
+  DownloadInvoicesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class DownloadInvoicesSuccess implements StopSaving {}
+
+class DownloadInvoicesFailure implements StopSaving {
+  DownloadInvoicesFailure(this.error);
+
+  final Object error;
+}
+
 class RestoreInvoicesRequest implements StartSaving {
   RestoreInvoicesRequest(this.completer, this.invoiceIds);
 
@@ -636,6 +651,11 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               .toList())),
         filterEntity: state.clientState.map[invoice.clientId],
       );
+      break;
+    case EntityAction.download:
+      store.dispatch(DownloadInvoicesRequest(
+          snackBarCompleter<Null>(context, localization.exportedData),
+          invoiceIds));
       break;
     case EntityAction.restore:
       final message = invoiceIds.length > 1
