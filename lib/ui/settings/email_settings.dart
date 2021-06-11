@@ -272,6 +272,7 @@ class _EmailSettingsState extends State<EmailSettings> {
           FormCard(
             children: <Widget>[
               AppDropdownButton<int>(
+                  showBlank: true,
                   showUseDefault: true,
                   labelText: localization.sendTime,
                   value: settings.entitySendTime,
