@@ -283,16 +283,25 @@ class _EmailSettingsState extends State<EmailSettings> {
                     String timeLabel;
                     if (viewModel.state.company.settings.enableMilitaryTime) {
                       timeLabel = '$hour:00';
-                    } else if (hour > 12) {
-                      timeLabel = '${hour - 12}:00 PM';
                     } else {
-                      timeLabel = '$hour:00 AM';
+                      if (hour > 12) {
+                        timeLabel = '${hour - 12}:00 ';
+                      } else {
+                        timeLabel = '$hour:00 ';
+                      }
+
+                      if (hour < 12 || hour == 24) {
+                        timeLabel += 'AM';
+                      } else {
+                        timeLabel += 'PM';
+                      }
                     }
                     return DropdownMenuItem(
                       child: Text(timeLabel),
                       value: hour,
                     );
                   }).toList()),
+              SizedBox(height: 12),
               BoolDropdownButton(
                 label: localization.attachPdf,
                 value: settings.pdfEmailAttachment,
