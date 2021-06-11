@@ -475,7 +475,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           ),
                         ),
                       ),
-                    if (company.hasCustomField(CustomFieldType.product3))
+                    if (company.hasCustomField(customField3))
                       Focus(
                         onFocusChange: (hasFocus) => _onFocusChange(),
                         skipTraversal: true,
@@ -483,7 +483,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           padding:
                               const EdgeInsets.only(right: kTableColumnGap),
                           child: CustomField(
-                            field: CustomFieldType.product3,
+                            field: customField3,
                             value: lineItems[index].customValue3,
                             hideFieldLabel: true,
                             onChanged: (value) => _onChanged(
