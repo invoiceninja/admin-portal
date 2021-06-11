@@ -38,7 +38,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \'Refesh\' and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \'Refresh\' and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice',
       'activity_101': ':user updated recurring invoice',
       'activity_102': ':user archived recurring invoice',
@@ -1838,7 +1838,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -3652,7 +3652,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -5468,7 +5468,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -7251,7 +7251,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -9060,7 +9060,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -10866,7 +10866,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -12672,7 +12672,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -14496,7 +14496,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -16302,7 +16302,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -18108,7 +18108,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -19917,7 +19917,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -21737,7 +21737,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user a créé une facture récurrente :recurring_invoice',
       'activity_101':
           ':user a mis à jour une facture récurrente :recurring_invoice',
@@ -23619,7 +23619,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -25471,7 +25471,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -27326,7 +27326,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -29155,7 +29155,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -30957,7 +30957,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -32764,7 +32764,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -34575,7 +34575,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -36380,7 +36380,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -38186,7 +38186,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -40009,7 +40009,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -41816,7 +41816,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -43625,7 +43625,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -45432,7 +45432,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -47242,7 +47242,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -49052,7 +49052,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -50869,7 +50869,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -52714,7 +52714,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -54523,7 +54523,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
@@ -56327,7 +56327,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refesh\" and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \"Refresh\" and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice :recurring_invoice',
       'activity_101': ':user updated recurring invoice :recurring_invoice',
       'activity_102': ':user archived recurring invoice :recurring_invoice',
