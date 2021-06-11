@@ -1096,7 +1096,7 @@ class _$SettingsEntitySerializer
       result
         ..add('entity_send_time')
         ..add(serializers.serialize(object.entitySendTime,
-            specifiedType: const FullType(bool)));
+            specifiedType: const FullType(int)));
     }
     if (object.hasCustomDesign1 != null) {
       result
@@ -1850,7 +1850,7 @@ class _$SettingsEntitySerializer
           break;
         case 'entity_send_time':
           result.entitySendTime = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(int)) as int;
           break;
         case 'has_custom_design1_HIDDEN':
           result.hasCustomDesign1 = serializers.deserialize(value,
@@ -2229,7 +2229,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool hideEmptyColumnsOnPdf;
   @override
-  final bool entitySendTime;
+  final int entitySendTime;
   @override
   final bool hasCustomDesign1;
   @override
@@ -3728,9 +3728,9 @@ class SettingsEntityBuilder
   set hideEmptyColumnsOnPdf(bool hideEmptyColumnsOnPdf) =>
       _$this._hideEmptyColumnsOnPdf = hideEmptyColumnsOnPdf;
 
-  bool _entitySendTime;
-  bool get entitySendTime => _$this._entitySendTime;
-  set entitySendTime(bool entitySendTime) =>
+  int _entitySendTime;
+  int get entitySendTime => _$this._entitySendTime;
+  set entitySendTime(int entitySendTime) =>
       _$this._entitySendTime = entitySendTime;
 
   bool _hasCustomDesign1;
