@@ -36,6 +36,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final markInvoicePaid = _markInvoicePaid(repository);
   final reverseInvoices = _reverseInvoices(repository);
   final cancelInvoices = _cancelInvoices(repository);
+  final downloadInvoices = _downloadInvoices(repository);
   final saveDocument = _saveDocument(repository);
 
   return [
@@ -56,6 +57,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, MarkInvoicesPaidRequest>(markInvoicePaid),
     TypedMiddleware<AppState, ReverseInvoicesRequest>(reverseInvoices),
     TypedMiddleware<AppState, CancelInvoicesRequest>(cancelInvoices),
+    TypedMiddleware<AppState, DownloadInvoicesRequest>(downloadInvoices),
     TypedMiddleware<AppState, SaveInvoiceDocumentRequest>(saveDocument),
   ];
 }
@@ -310,6 +312,29 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkInvoicesSentFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _downloadInvoices(InvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DownloadInvoicesRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.invoiceIds, EntityAction.download)
+        .then((invoices) {
+      store.dispatch(DownloadInvoicesSuccess());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DownloadInvoicesFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

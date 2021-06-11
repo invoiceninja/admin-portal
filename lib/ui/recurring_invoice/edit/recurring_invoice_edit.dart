@@ -31,7 +31,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
   TabController _controller;
 
   static const kDetailsScreen = 0;
-  static const kItemScreen = 1;
+  static const kItemScreen = 2;
 
   // STARTER: controllers - do not remove comment
 
@@ -125,7 +125,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                 viewModel: widget.viewModel,
               )
             : TabBarView(
-                key: ValueKey('__quote_${viewModel.invoice.id}__'),
+                key: ValueKey('__recurring_invoice_${viewModel.invoice.id}__'),
                 controller: _controller,
                 children: <Widget>[
                   RecurringInvoiceEditDetailsScreen(
@@ -143,7 +143,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
       ),
       bottomNavigationBar: InvoiceEditFooter(invoice: invoice),
       floatingActionButton: FloatingActionButton(
-        heroTag: 'quote_edit_fab',
+        heroTag: 'recurring_invoice_edit_fab',
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
           showDialog<InvoiceItemSelector>(

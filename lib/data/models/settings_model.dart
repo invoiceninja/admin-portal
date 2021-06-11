@@ -775,6 +775,10 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'hide_empty_columns_on_pdf')
   bool get hideEmptyColumnsOnPdf;
 
+  @nullable
+  @BuiltValueField(wireName: 'entity_send_time')
+  int get entitySendTime;
+
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'has_custom_design1_HIDDEN')

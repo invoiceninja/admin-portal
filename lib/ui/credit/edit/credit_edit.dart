@@ -32,7 +32,7 @@ class _CreditEditState extends State<CreditEdit>
       GlobalKey<FormState>(debugLabel: '_creditEdit');
 
   static const kDetailsScreen = 0;
-  static const kItemScreen = 1;
+  static const kItemScreen = 2;
 
   //static const kNotesScreen = 2;
 

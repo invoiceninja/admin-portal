@@ -32,6 +32,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
   final emailCredit = _emailCredit(repository);
   final bulkEmailCredits = _bulkEmailCredits(repository);
   final markSentCredit = _markSentCredit(repository);
+  final downloadCredits = _downloadCredits(repository);
   final saveDocument = _saveDocument(repository);
 
   return [
@@ -49,6 +50,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
     TypedMiddleware<AppState, EmailCreditRequest>(emailCredit),
     TypedMiddleware<AppState, BulkEmailCreditsRequest>(bulkEmailCredits),
     TypedMiddleware<AppState, MarkSentCreditRequest>(markSentCredit),
+    TypedMiddleware<AppState, DownloadCreditsRequest>(downloadCredits),
     TypedMiddleware<AppState, SaveCreditDocumentRequest>(saveDocument),
   ];
 }
@@ -331,6 +333,29 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadCreditsFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _downloadCredits(CreditRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DownloadCreditsRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.creditIds, EntityAction.download)
+        .then((invoices) {
+      store.dispatch(DownloadCreditsSuccess());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DownloadCreditsFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

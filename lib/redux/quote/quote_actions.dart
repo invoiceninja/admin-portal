@@ -306,6 +306,21 @@ class DeleteQuotesFailure implements StopSaving {
   final List<InvoiceEntity> quotes;
 }
 
+class DownloadQuotesRequest implements StartSaving {
+  DownloadQuotesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class DownloadQuotesSuccess implements StopSaving {}
+
+class DownloadQuotesFailure implements StopSaving {
+  DownloadQuotesFailure(this.error);
+
+  final Object error;
+}
+
 class RestoreQuotesRequest implements StartSaving {
   RestoreQuotesRequest(this.completer, this.quoteIds);
 
@@ -532,6 +547,11 @@ Future handleQuoteAction(
           entity: quote.clone.rebuild((b) => b
             ..entityType = EntityType.recurringInvoice
             ..designId = designId));
+      break;
+    case EntityAction.download:
+      store.dispatch(DownloadQuotesRequest(
+          snackBarCompleter<Null>(context, localization.exportedData),
+          quoteIds));
       break;
     case EntityAction.restore:
       final message = quoteIds.length > 1
