@@ -271,6 +271,28 @@ class _EmailSettingsState extends State<EmailSettings> {
           ),
           FormCard(
             children: <Widget>[
+              AppDropdownButton<int>(
+                  showUseDefault: true,
+                  labelText: localization.sendTime,
+                  value: settings.entitySendTime,
+                  blankValue: null,
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..entitySendTime = value)),
+                  items: List<int>.generate(24, (i) => i).map((value) {
+                    final hour = value + 1;
+                    String timeLabel;
+                    if (viewModel.state.company.settings.enableMilitaryTime) {
+                      timeLabel = '$hour:00';
+                    } else if (hour > 12) {
+                      timeLabel = '${hour - 12}:00 PM';
+                    } else {
+                      timeLabel = '$hour:00 AM';
+                    }
+                    return DropdownMenuItem(
+                      child: Text(timeLabel),
+                      value: hour,
+                    );
+                  }).toList()),
               BoolDropdownButton(
                 label: localization.attachPdf,
                 value: settings.pdfEmailAttachment,

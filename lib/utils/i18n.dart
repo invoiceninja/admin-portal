@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'send_time': 'Send Time',
       'import_data': 'Import Data',
       'import_settings': 'Import Settings',
       'json_file_missing': 'Please provide the JSON file',
@@ -62365,6 +62366,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get importSettings =>
       _localizedValues[localeCode]['import_settings'] ??
       _localizedValues['en']['import_settings'];
+
+  String get sendTime =>
+      _localizedValues[localeCode]['send_time'] ??
+      _localizedValues['en']['send_time'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

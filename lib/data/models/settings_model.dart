@@ -777,7 +777,7 @@ abstract class SettingsEntity
 
   @nullable
   @BuiltValueField(wireName: 'entity_send_time')
-  bool get entitySendTime;
+  int get entitySendTime;
 
   // TODO remove this field
   @nullable
