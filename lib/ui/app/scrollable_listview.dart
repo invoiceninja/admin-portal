@@ -43,7 +43,6 @@ class _ScrollableListViewState extends State<ScrollableListView> {
         padding: widget.padding,
         children: widget.children,
         controller: widget.scrollController ?? _scrollController,
-        shrinkWrap: true,
       ),
     );
   }
@@ -96,14 +95,12 @@ class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
               itemBuilder: widget.itemBuilder,
               itemCount: widget.itemCount,
               controller: widget.scrollController ?? _scrollController,
-              shrinkWrap: true,
             )
           : ListView.builder(
               padding: widget.padding,
               itemBuilder: widget.itemBuilder,
               itemCount: widget.itemCount,
               controller: widget.scrollController ?? _scrollController,
-              shrinkWrap: true,
             ),
     );
   }
