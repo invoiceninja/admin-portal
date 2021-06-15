@@ -392,6 +392,7 @@ class _LoginState extends State<LoginView> {
                               label:
                                   '${localization.oneTimePassword} (${localization.optional})',
                               onSavePressed: (_) => _submitForm(),
+                              autofillHints: [AutofillHints.oneTimeCode],
                             ),
                           if (_isSelfHosted && !_recoverPassword)
                             PasswordFormField(
