@@ -1131,6 +1131,8 @@ class ReportResult {
 
   List<DataColumn> totalColumns(
       BuildContext context, Function(int, bool) onSortCallback) {
+    final store = StoreProvider.of<AppState>(context);
+    final company = store.state.company;
     final localization = AppLocalization.of(context);
     final sortedColumns = columns.toList()
       ..sort((String str1, String str2) => str1.compareTo(str2));
@@ -1155,7 +1157,9 @@ class ReportResult {
         ].contains(getReportColumnType(column, context)))
           DataColumn(
             label: Text(
-              localization.lookup(column),
+              company.getCustomFieldLabel(column).isEmpty
+                  ? localization.lookup(column)
+                  : company.getCustomFieldLabel(column),
               overflow: TextOverflow.ellipsis,
             ),
             numeric: true,
