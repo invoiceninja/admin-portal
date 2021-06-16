@@ -27,14 +27,14 @@ enum QuoteReportFields {
   valid_until,
   partial,
   auto_bill,
-  custom_value1,
-  custom_value2,
-  custom_value3,
-  custom_value4,
-  custom_surcharge1,
-  custom_surcharge2,
-  custom_surcharge3,
-  custom_surcharge4,
+  invoice1,
+  invoice2,
+  invoice3,
+  invoice4,
+  surcharge1,
+  surcharge2,
+  surcharge3,
+  surcharge4,
   updated_at,
   archived_at,
   is_deleted,
@@ -158,28 +158,28 @@ ReportResult quoteReport(
         case QuoteReportFields.auto_bill:
           value = quote.autoBill;
           break;
-        case QuoteReportFields.custom_value1:
+        case QuoteReportFields.invoice1:
           value = quote.customValue1;
           break;
-        case QuoteReportFields.custom_value2:
+        case QuoteReportFields.invoice2:
           value = quote.customValue2;
           break;
-        case QuoteReportFields.custom_value3:
+        case QuoteReportFields.invoice3:
           value = quote.customValue3;
           break;
-        case QuoteReportFields.custom_value4:
+        case QuoteReportFields.invoice4:
           value = quote.customValue4;
           break;
-        case QuoteReportFields.custom_surcharge1:
+        case QuoteReportFields.surcharge1:
           value = quote.customSurcharge1;
           break;
-        case QuoteReportFields.custom_surcharge2:
+        case QuoteReportFields.surcharge2:
           value = quote.customSurcharge2;
           break;
-        case QuoteReportFields.custom_surcharge3:
+        case QuoteReportFields.surcharge3:
           value = quote.customSurcharge3;
           break;
-        case QuoteReportFields.custom_surcharge4:
+        case QuoteReportFields.surcharge4:
           value = quote.customSurcharge4;
           break;
         case QuoteReportFields.updated_at:

@@ -20,10 +20,10 @@ enum PaymentReportFields {
   client_shipping_address2,
   transaction_reference,
   date,
-  custom_value1,
-  custom_value2,
-  custom_value3,
-  custom_value4,
+  payment1,
+  payment2,
+  payment3,
+  payment4,
 }
 
 var memoizedPaymentReport = memo6((
@@ -116,16 +116,16 @@ ReportResult paymentReport(
         case PaymentReportFields.date:
           value = payment.date;
           break;
-        case PaymentReportFields.custom_value1:
+        case PaymentReportFields.payment1:
           value = payment.customValue1;
           break;
-        case PaymentReportFields.custom_value2:
+        case PaymentReportFields.payment2:
           value = payment.customValue2;
           break;
-        case PaymentReportFields.custom_value3:
+        case PaymentReportFields.payment3:
           value = payment.customValue3;
           break;
-        case PaymentReportFields.custom_value4:
+        case PaymentReportFields.payment4:
           value = payment.customValue4;
           break;
       }

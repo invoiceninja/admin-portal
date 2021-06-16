@@ -549,7 +549,9 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
   final store = StoreProvider.of<AppState>(context);
   final company = store.state.userCompany.company;
 
-  if (company.hasCustomField(column)) {
+  if (column.startsWith('surcharge')) {
+    return ReportColumnType.number;
+  } else if (company.hasCustomField(column)) {
     return convertCustomFieldType(company.getCustomFieldType(column));
   } else if (EntityPresenter.isFieldNumeric(column)) {
     return ReportColumnType.number;

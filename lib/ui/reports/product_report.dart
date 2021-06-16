@@ -19,10 +19,10 @@ enum ProductReportFields {
   tax_rate1,
   tax_rate2,
   tax_rate3,
-  custom_value1,
-  custom_value2,
-  custom_value3,
-  custom_value4,
+  product1,
+  product2,
+  product3,
+  product4,
 }
 
 var memoizedProductReport = memo6((
@@ -107,16 +107,16 @@ ReportResult productReport(
         case ProductReportFields.tax_rate3:
           value = product.taxRate3;
           break;
-        case ProductReportFields.custom_value1:
+        case ProductReportFields.product1:
           value = product.customValue1;
           break;
-        case ProductReportFields.custom_value2:
+        case ProductReportFields.product2:
           value = product.customValue2;
           break;
-        case ProductReportFields.custom_value3:
+        case ProductReportFields.product3:
           value = product.customValue3;
           break;
-        case ProductReportFields.custom_value4:
+        case ProductReportFields.product4:
           value = product.customValue4;
           break;
       }

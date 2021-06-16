@@ -32,16 +32,16 @@ enum InvoiceReportFields {
   partial,
   partial_due_date,
   auto_bill,
-  custom_value1,
-  custom_value2,
-  custom_value3,
-  custom_value4,
+  invoice1,
+  invoice2,
+  invoice3,
+  invoice4,
   has_expenses,
   has_tasks,
-  custom_surcharge1,
-  custom_surcharge2,
-  custom_surcharge3,
-  custom_surcharge4,
+  surcharge1,
+  surcharge2,
+  surcharge3,
+  surcharge4,
   updated_at,
   archived_at,
   is_deleted,
@@ -188,16 +188,16 @@ ReportResult invoiceReport(
         case InvoiceReportFields.auto_bill:
           value = invoice.autoBill;
           break;
-        case InvoiceReportFields.custom_value1:
+        case InvoiceReportFields.invoice1:
           value = invoice.customValue1;
           break;
-        case InvoiceReportFields.custom_value2:
+        case InvoiceReportFields.invoice2:
           value = invoice.customValue2;
           break;
-        case InvoiceReportFields.custom_value3:
+        case InvoiceReportFields.invoice3:
           value = invoice.customValue3;
           break;
-        case InvoiceReportFields.custom_value4:
+        case InvoiceReportFields.invoice4:
           value = invoice.customValue4;
           break;
         case InvoiceReportFields.has_expenses:
@@ -206,16 +206,16 @@ ReportResult invoiceReport(
         case InvoiceReportFields.has_tasks:
           value = invoice.hasTasks;
           break;
-        case InvoiceReportFields.custom_surcharge1:
+        case InvoiceReportFields.surcharge1:
           value = invoice.customSurcharge1;
           break;
-        case InvoiceReportFields.custom_surcharge2:
+        case InvoiceReportFields.surcharge2:
           value = invoice.customSurcharge2;
           break;
-        case InvoiceReportFields.custom_surcharge3:
+        case InvoiceReportFields.surcharge3:
           value = invoice.customSurcharge3;
           break;
-        case InvoiceReportFields.custom_surcharge4:
+        case InvoiceReportFields.surcharge4:
           value = invoice.customSurcharge4;
           break;
         case InvoiceReportFields.updated_at:
