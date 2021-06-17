@@ -126,8 +126,18 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
       );
     }
 
+    final startLabel = task.isRunning
+        ? localization.stop
+        : task.getTaskTimes().isEmpty
+            ? localization.start
+            : localization.resume;
+
     return MouseRegion(
-      onHover: (event) => setState(() => _isHovered = true),
+      onHover: (event) {
+        if (state.prefState.isDesktop) {
+          setState(() => _isHovered = true);
+        }
+      },
       onExit: (event) => setState(() => _isHovered = false),
       child: InkWell(
         borderRadius: BorderRadius.circular(5),
@@ -136,7 +146,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
           child: Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                  color: widget.isSelected
+                  color: widget.isSelected && state.prefState.isDesktop
                       ? state.accentColor
                       : Colors.transparent,
                   width: 1),
@@ -159,7 +169,9 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                       Expanded(child: Text(task.description, maxLines: 3)),
                       if (task.isRunning)
                         Padding(
-                          padding: const EdgeInsets.only(left: 4, right: 1),
+                          padding: state.prefState.isDesktop
+                              ? EdgeInsets.only(left: 4, right: 1)
+                              : EdgeInsets.only(left: 8, right: 10, top: 4),
                           child: Icon(
                             Icons.play_arrow,
                             size: 16,
@@ -229,12 +241,9 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                             height: 24,
                             child: Center(
                               child: Text(
-                                  task.isRunning
-                                      ? localization.stop
-                                      : task.getTaskTimes().isEmpty
-                                          ? localization.start
-                                          : localization.resume,
-                                  style: TextStyle(fontSize: 12)),
+                                startLabel,
+                                style: TextStyle(fontSize: 12),
+                              ),
                             ),
                           ),
                         ),
@@ -270,7 +279,35 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                               size: 16,
                             ),
                           ),
-                        if (task.projectId.isNotEmpty)
+                        if (state.prefState.isMobile)
+                          PopupMenuButton<String>(
+                            itemBuilder: (BuildContext context) {
+                              return [
+                                localization.view,
+                                localization.edit,
+                                startLabel,
+                              ]
+                                  .map((value) => PopupMenuItem<String>(
+                                        child: Text(localization.lookup(value)),
+                                        value: value,
+                                      ))
+                                  .toList();
+                            },
+                            onSelected: (value) {
+                              if (value == startLabel) {
+                                handleEntityAction(
+                                    task,
+                                    task.isRunning
+                                        ? EntityAction.stop
+                                        : EntityAction.start);
+                              } else if (value == localization.view) {
+                                viewEntity(entity: task);
+                              } else if (value == localization.edit) {
+                                editEntity(context: context, entity: task);
+                              }
+                            },
+                          )
+                        else if (task.projectId.isNotEmpty)
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Icon(

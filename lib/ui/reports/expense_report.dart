@@ -29,10 +29,10 @@ enum ExpenseReportFields {
   invoice,
   invoice_amount,
   vendor,
-  custom_value1,
-  custom_value2,
-  custom_value3,
-  custom_value4,
+  expense1,
+  expense2,
+  expense3,
+  expense4,
   category,
 }
 
@@ -172,16 +172,16 @@ ReportResult expenseReport(
         case ExpenseReportFields.vendor:
           value = vendor?.listDisplayName;
           break;
-        case ExpenseReportFields.custom_value1:
+        case ExpenseReportFields.expense1:
           value = expense.customValue1;
           break;
-        case ExpenseReportFields.custom_value2:
+        case ExpenseReportFields.expense2:
           value = expense.customValue2;
           break;
-        case ExpenseReportFields.custom_value3:
+        case ExpenseReportFields.expense3:
           value = expense.customValue3;
           break;
-        case ExpenseReportFields.custom_value4:
+        case ExpenseReportFields.expense4:
           value = expense.customValue4;
           break;
         case ExpenseReportFields.category:

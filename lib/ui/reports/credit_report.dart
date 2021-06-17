@@ -30,14 +30,14 @@ enum CreditReportFields {
   partial,
   partial_due_date,
   auto_bill,
-  custom_value1,
-  custom_value2,
-  custom_value3,
-  custom_value4,
-  custom_surcharge1,
-  custom_surcharge2,
-  custom_surcharge3,
-  custom_surcharge4,
+  invoice1,
+  invoice2,
+  invoice3,
+  invoice4,
+  surcharge1,
+  surcharge2,
+  surcharge3,
+  surcharge4,
   updated_at,
   archived_at,
   is_deleted,
@@ -163,28 +163,28 @@ ReportResult creditReport(
         case CreditReportFields.auto_bill:
           value = credit.autoBill;
           break;
-        case CreditReportFields.custom_value1:
+        case CreditReportFields.invoice1:
           value = credit.customValue1;
           break;
-        case CreditReportFields.custom_value2:
+        case CreditReportFields.invoice2:
           value = credit.customValue2;
           break;
-        case CreditReportFields.custom_value3:
+        case CreditReportFields.invoice3:
           value = credit.customValue3;
           break;
-        case CreditReportFields.custom_value4:
+        case CreditReportFields.invoice4:
           value = credit.customValue4;
           break;
-        case CreditReportFields.custom_surcharge1:
+        case CreditReportFields.surcharge1:
           value = credit.customSurcharge1;
           break;
-        case CreditReportFields.custom_surcharge2:
+        case CreditReportFields.surcharge2:
           value = credit.customSurcharge2;
           break;
-        case CreditReportFields.custom_surcharge3:
+        case CreditReportFields.surcharge3:
           value = credit.customSurcharge3;
           break;
-        case CreditReportFields.custom_surcharge4:
+        case CreditReportFields.surcharge4:
           value = credit.customSurcharge4;
           break;
         case CreditReportFields.updated_at:

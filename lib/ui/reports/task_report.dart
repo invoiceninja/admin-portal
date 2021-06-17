@@ -30,10 +30,10 @@ enum TaskReportFields {
   client_address2,
   client_shipping_address1,
   client_shipping_address2,
-  custom_value1,
-  custom_value2,
-  custom_value3,
-  custom_value4,
+  task1,
+  task2,
+  task3,
+  task4,
   status,
 }
 
@@ -184,16 +184,16 @@ ReportResult taskReport(
         case TaskReportFields.client_shipping_address2:
           value = client.shippingAddress2;
           break;
-        case TaskReportFields.custom_value1:
+        case TaskReportFields.task1:
           value = task.customValue1;
           break;
-        case TaskReportFields.custom_value2:
+        case TaskReportFields.task2:
           value = task.customValue2;
           break;
-        case TaskReportFields.custom_value3:
+        case TaskReportFields.task3:
           value = task.customValue3;
           break;
-        case TaskReportFields.custom_value4:
+        case TaskReportFields.task4:
           value = task.customValue4;
           break;
         case TaskReportFields.status:
