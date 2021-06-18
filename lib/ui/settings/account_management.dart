@@ -212,6 +212,32 @@ class _AccountOverview extends StatelessWidget {
     final company = viewModel.company;
     final companies = state.companies;
 
+    String _getDataStats() {
+      String stats = '\n';
+      final localization = AppLocalization.of(context);
+      final state = viewModel.state;
+
+      if (state.clientState.list.isNotEmpty) {
+        final count = state.clientState.list.length;
+        stats += '\n- $count ' +
+            (count == 1 ? localization.client : localization.clients);
+      }
+
+      if (state.productState.list.isNotEmpty) {
+        final count = state.productState.list.length;
+        stats += '\n- $count ' +
+            (count == 1 ? localization.product : localization.products);
+      }
+
+      if (state.invoiceState.list.isNotEmpty) {
+        final count = state.invoiceState.list.length;
+        stats += '\n- $count ' +
+            (count == 1 ? localization.invoice : localization.invoices);
+      }
+
+      return stats;
+    }
+
     return ScrollableListView(
       children: <Widget>[
         AppHeader(
@@ -370,7 +396,8 @@ class _AccountOverview extends StatelessWidget {
                   onPressed: () {
                     confirmCallback(
                         context: context,
-                        message: localization.purgeDataMessage,
+                        message:
+                            localization.purgeDataMessage + _getDataStats(),
                         typeToConfirm: localization.purge.toLowerCase(),
                         callback: () {
                           passwordCallback(
@@ -402,6 +429,7 @@ class _AccountOverview extends StatelessWidget {
                         company.displayName.isEmpty
                             ? localization.newCompany
                             : company.displayName);
+                    message += _getDataStats();
 
                     confirmCallback(
                         context: context,
