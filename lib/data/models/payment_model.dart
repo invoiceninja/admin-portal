@@ -82,7 +82,7 @@ abstract class PaymentEntity extends Object
           : '',
       clientId: client?.id ?? '',
       privateNotes: '',
-      exchangeRate: 0.0,
+      exchangeRate: 1,
       exchangeCurrencyId: '',
       refunded: 0.0,
       applied: 0,

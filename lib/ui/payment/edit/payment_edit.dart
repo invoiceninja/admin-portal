@@ -313,6 +313,13 @@ class _PaymentEditState extends State<PaymentEdit> {
                 title: Text(localization.convertCurrency),
                 value: _showConvertCurrency,
                 onChanged: (value) {
+                  _exchangeRateController.removeListener(_onChanged);
+                  _exchangeRateController.text = '';
+                  _exchangeRateController.addListener(_onChanged);
+
+                  viewModel.onChanged(payment.rebuild((b) => b
+                    ..exchangeCurrencyId = ''
+                    ..exchangeRate = 1));
                   setState(() {
                     _showConvertCurrency = value;
                   });
@@ -320,7 +327,8 @@ class _PaymentEditState extends State<PaymentEdit> {
               ),
               if (_showConvertCurrency) ...[
                 EntityDropdown(
-                  key: ValueKey('__currency_${payment.exchangeCurrencyId}__'),
+                  key: ValueKey(
+                      '__currency_${payment.exchangeCurrencyId}_${_showConvertCurrency}__'),
                   entityType: EntityType.currency,
                   entityList:
                       memoizedCurrencyList(viewModel.staticState.currencyMap),
@@ -371,9 +379,12 @@ class _PaymentEditState extends State<PaymentEdit> {
                   child: DecoratedFormField(
                     key: ValueKey(
                         '__payment_amount_${payment.amount}_${payment.exchangeRate}__'),
-                    initialValue: formatNumber(
-                        payment.amount * payment.exchangeRate, context,
-                        formatNumberType: FormatNumberType.inputMoney),
+                    initialValue:
+                        payment.exchangeRate != 1 && payment.exchangeRate != 0
+                            ? formatNumber(
+                                payment.amount * payment.exchangeRate, context,
+                                formatNumberType: FormatNumberType.inputMoney)
+                            : '',
                     label: localization.convertedAmount,
                     onChanged: (value) {
                       _convertedAmount = parseDouble(value);
