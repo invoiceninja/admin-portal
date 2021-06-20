@@ -229,7 +229,7 @@ class _AccountOverview extends StatelessWidget {
             (count == 1 ? localization.product : localization.products);
       }
 
-      if (state.invoiceState.list.isNotEmpty) {
+      if (state.invoiceState.list.isNotEmpty && !state.company.isLarge) {
         final count = state.invoiceState.list.length;
         stats += '\n- $count ' +
             (count == 1 ? localization.invoice : localization.invoices);
