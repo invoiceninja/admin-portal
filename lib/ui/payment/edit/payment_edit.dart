@@ -47,10 +47,14 @@ class _PaymentEditState extends State<PaymentEdit> {
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
+  final _exchangeRateController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
   bool autoValidate = false;
+
+  bool _showConvertCurrency = false;
+  double _convertedAmount = 0;
 
   @override
   void didChangeDependencies() {
@@ -63,12 +67,15 @@ class _PaymentEditState extends State<PaymentEdit> {
       _custom2Controller,
       _custom3Controller,
       _custom4Controller,
+      _exchangeRateController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final payment = widget.viewModel.payment;
 
+    _showConvertCurrency =
+        payment.exchangeRate != 1 && payment.exchangeRate != 0;
     _amountController.text = formatNumber(payment.amount, context,
         formatNumberType: FormatNumberType.inputMoney);
     _numberController.text = payment.number;
@@ -78,6 +85,9 @@ class _PaymentEditState extends State<PaymentEdit> {
     _custom2Controller.text = payment.customValue2;
     _custom3Controller.text = payment.customValue3;
     _custom4Controller.text = payment.customValue4;
+    _exchangeRateController.text = formatNumber(payment.exchangeRate, context,
+        formatNumberType: FormatNumberType.inputMoney);
+
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
@@ -102,7 +112,8 @@ class _PaymentEditState extends State<PaymentEdit> {
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim());
+      ..customValue4 = _custom4Controller.text.trim()
+      ..exchangeRate = parseDouble(_exchangeRateController.text));
     if (payment != widget.viewModel.payment) {
       _debouncer.run(() {
         widget.viewModel.onChanged(payment);
@@ -295,18 +306,94 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
             ],
           ),
-          payment.isNew
-              ? FormCard(children: <Widget>[
-                  SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.sendEmail),
-                    value: payment.sendEmail ?? false,
-                    subtitle: Text(localization.emailReceipt),
-                    onChanged: (value) => viewModel.onChanged(
-                        payment.rebuild((b) => b..sendEmail = value)),
+          FormCard(
+            children: [
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.convertCurrency),
+                value: _showConvertCurrency,
+                onChanged: (value) {
+                  setState(() {
+                    _showConvertCurrency = value;
+                  });
+                },
+              ),
+              if (_showConvertCurrency) ...[
+                EntityDropdown(
+                  key: ValueKey('__currency_${payment.exchangeCurrencyId}__'),
+                  entityType: EntityType.currency,
+                  entityList:
+                      memoizedCurrencyList(viewModel.staticState.currencyMap),
+                  labelText: localization.currency,
+                  entityId: payment.exchangeCurrencyId,
+                  onSelected: (SelectableEntity currency) {
+                    double exchangeRate = 1;
+                    if (currency != null) {
+                      exchangeRate = state
+                          .staticState.currencyMap[currency?.id].exchangeRate;
+                    }
+
+                    _exchangeRateController.removeListener(_onChanged);
+                    _exchangeRateController.text = formatNumber(
+                        exchangeRate, context,
+                        formatNumberType: FormatNumberType.inputMoney);
+                    _exchangeRateController.addListener(_onChanged);
+
+                    viewModel.onChanged(payment.rebuild((b) => b
+                      ..exchangeCurrencyId = currency?.id ?? ''
+                      ..exchangeRate = exchangeRate));
+                  },
+                ),
+                DecoratedFormField(
+                  key: ValueKey(
+                      '__payment_amount_${payment.exchangeCurrencyId}__'),
+                  controller: _exchangeRateController,
+                  label: localization.exchangeRate,
+                  onSavePressed: viewModel.onSavePressed,
+                ),
+                Focus(
+                  onFocusChange: (hasFocus) {
+                    if (_convertedAmount == 0) {
+                      return;
+                    }
+
+                    final exchangeRate = _convertedAmount / payment.amount;
+                    _exchangeRateController.removeListener(_onChanged);
+                    _exchangeRateController.text = formatNumber(
+                        exchangeRate, context,
+                        formatNumberType: FormatNumberType.inputMoney);
+                    _exchangeRateController.addListener(_onChanged);
+
+                    viewModel.onChanged(
+                        payment.rebuild((b) => b..exchangeRate = exchangeRate));
+                    _convertedAmount = 0;
+                  },
+                  child: DecoratedFormField(
+                    key: ValueKey(
+                        '__payment_amount_${payment.amount}_${payment.exchangeRate}__'),
+                    initialValue: formatNumber(
+                        payment.amount * payment.exchangeRate, context,
+                        formatNumberType: FormatNumberType.inputMoney),
+                    label: localization.convertedAmount,
+                    onChanged: (value) {
+                      _convertedAmount = parseDouble(value);
+                    },
+                    onSavePressed: viewModel.onSavePressed,
                   ),
-                ])
-              : Container(),
+                ),
+                SizedBox(height: 16),
+              ],
+              if (payment.isNew)
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.sendEmail),
+                  value: payment.sendEmail ?? false,
+                  subtitle: Text(localization.emailReceipt),
+                  onChanged: (value) => viewModel
+                      .onChanged(payment.rebuild((b) => b..sendEmail = value)),
+                ),
+            ],
+          )
         ],
       ),
     );
