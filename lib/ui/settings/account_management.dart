@@ -248,6 +248,14 @@ class _AccountOverview extends StatelessWidget {
           secondLabel: localization.expiresOn,
           secondValue: formatDate(account.planExpires, context),
         ),
+        if (state.userCompany.ninjaPortalUrl.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 16, right: 20),
+            child: OutlinedButton(
+              child: Text(localization.viewPortal.toUpperCase()),
+              onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+            ),
+          ),
         FormCard(
           children: [
             SwitchListTile(
