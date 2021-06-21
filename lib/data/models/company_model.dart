@@ -707,6 +707,7 @@ abstract class UserCompanyEntity
       isAdmin: false,
       isOwner: false,
       permissions: '',
+      ninjaPortalUrl: '',
       permissionsUpdatedAt: 0,
       company: CompanyEntity(),
       user: UserEntity(),
@@ -752,6 +753,9 @@ abstract class UserCompanyEntity
 
   @nullable
   UserSettingsEntity get settings;
+
+  @BuiltValueField(wireName: 'ninja_portal_url')
+  String get ninjaPortalUrl;
 
   bool can(UserPermission permission, EntityType entityType) {
     if (entityType == null) {
@@ -801,8 +805,9 @@ abstract class UserCompanyEntity
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(UserCompanyEntityBuilder builder) =>
-      builder..permissionsUpdatedAt = 0;
+  static void _initializeBuilder(UserCompanyEntityBuilder builder) => builder
+    ..permissionsUpdatedAt = 0
+    ..ninjaPortalUrl = '';
 
   static Serializer<UserCompanyEntity> get serializer =>
       _$userCompanyEntitySerializer;
