@@ -170,7 +170,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         enabled: false,
                         label: localization.accountId,
                         initialValue:
-                            companyGateway.parsedConfig['account_id'] ?? '',
+                            (companyGateway.parsedConfig['accountId'] ?? '')
+                                .toString(),
                       )
                   else
                     GatewayConfigSettings(

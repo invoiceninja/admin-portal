@@ -57,7 +57,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _focusNode = FocusScopeNode();
     _controller = TabController(
-        vsync: this, length: 11, initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: 10, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -93,7 +93,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         isScrollable: true,
         tabs: [
           Tab(text: localization.generalSettings),
-          Tab(text: localization.invoiceOptions),
           Tab(text: localization.clientDetails),
           Tab(text: localization.companyDetails),
           Tab(text: localization.companyAddress),
@@ -238,10 +237,22 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         settings.rebuild((b) => b..secondaryColor = value)),
                     initialValue: settings.secondaryColor,
                   ),
+                  SizedBox(height: 16),
+                  BoolDropdownButton(
+                    label: localization.emptyColumns,
+                    value: settings.hideEmptyColumnsOnPdf ?? false,
+                    iconData: MdiIcons.table,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..hideEmptyColumnsOnPdf = value),
+                    ),
+                    enabledLabel: localization.hide,
+                    disabledLabel: localization.show,
+                  )
                 ],
               ),
             ],
           ),
+          /*
           ScrollableListView(
             padding: const EdgeInsets.all(10),
             children: <Widget>[
@@ -265,19 +276,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     enabledLabel: localization.allPages,
                     disabledLabel: localization.lastPage,
                   ),
-                  BoolDropdownButton(
-                    label: localization.emptyColumns,
-                    value: settings.hideEmptyColumnsOnPdf ?? false,
-                    iconData: MdiIcons.table,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..hideEmptyColumnsOnPdf = value),
-                    ),
-                    enabledLabel: localization.hide,
-                    disabledLabel: localization.show,
-                  )
                 ],
               ),
-              /*
               FormCard(
                 children: <Widget>[
                   BoolDropdownButton(
@@ -297,10 +297,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         settings.rebuild((b) => b..embedDocuments = value)),
                   ),
                 ],
-              ),
-               */
+              ),               
             ],
           ),
+          */
           FormCard(
             child: MultiSelectList(
               options: [

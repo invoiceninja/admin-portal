@@ -26,6 +26,7 @@ class PaymentPresenter extends EntityPresenter {
       PaymentFields.refunded,
       PaymentFields.privateNotes,
       PaymentFields.exchangeRate,
+      PaymentFields.convertedAmount,
       PaymentFields.customValue1,
       PaymentFields.customValue2,
       PaymentFields.customValue3,
@@ -62,6 +63,12 @@ class PaymentPresenter extends EntityPresenter {
             alignment: Alignment.centerRight,
             child: Text(formatNumber(payment.amount, context,
                 clientId: payment.clientId)));
+      case PaymentFields.convertedAmount:
+        return Align(
+            alignment: Alignment.centerRight,
+            child: Text(formatNumber(
+                payment.amount * payment.exchangeRate, context,
+                clientId: payment.exchangeCurrencyId)));
       case PaymentFields.status:
         return EntityStatusChip(entity: payment);
       case PaymentFields.customValue1:

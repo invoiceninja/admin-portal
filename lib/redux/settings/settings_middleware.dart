@@ -185,7 +185,7 @@ Middleware<AppState> _connectGmailUser(SettingsRepository settingsRepository) {
 
 Middleware<AppState> _disableTwoFactor(SettingsRepository settingsRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ConnecGmailUserRequest;
+    final action = dynamicAction as DisableTwoFactorRequest;
 
     settingsRepository
         .disableTwoFactor(

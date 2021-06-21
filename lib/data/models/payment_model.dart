@@ -57,6 +57,7 @@ class PaymentFields {
   static const String invoiceNumber = 'invoice_number';
   static const String privateNotes = 'private_notes';
   static const String exchangeRate = 'exchange_rate';
+  static const String convertedAmount = 'converted_amount';
   static const String exchangeCurrencyId = 'exchange_currency_id';
   static const String status = 'status';
   static const String gateway = 'gateway';
@@ -82,7 +83,7 @@ abstract class PaymentEntity extends Object
           : '',
       clientId: client?.id ?? '',
       privateNotes: '',
-      exchangeRate: 0.0,
+      exchangeRate: 1,
       exchangeCurrencyId: '',
       refunded: 0.0,
       applied: 0,

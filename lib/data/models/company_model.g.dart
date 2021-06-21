@@ -900,6 +900,9 @@ class _$UserCompanyEntitySerializer
       'permissions',
       serializers.serialize(object.permissions,
           specifiedType: const FullType(String)),
+      'ninja_portal_url',
+      serializers.serialize(object.ninjaPortalUrl,
+          specifiedType: const FullType(String)),
     ];
     if (object.notifications != null) {
       result
@@ -998,6 +1001,10 @@ class _$UserCompanyEntitySerializer
           result.settings.replace(serializers.deserialize(value,
                   specifiedType: const FullType(UserSettingsEntity))
               as UserSettingsEntity);
+          break;
+        case 'ninja_portal_url':
+          result.ninjaPortalUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -2969,6 +2976,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   final AccountEntity account;
   @override
   final UserSettingsEntity settings;
+  @override
+  final String ninjaPortalUrl;
 
   factory _$UserCompanyEntity(
           [void Function(UserCompanyEntityBuilder) updates]) =>
@@ -2984,7 +2993,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
       this.user,
       this.token,
       this.account,
-      this.settings})
+      this.settings,
+      this.ninjaPortalUrl})
       : super._() {
     if (isAdmin == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
@@ -2998,6 +3008,9 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     }
     if (permissions == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'permissions');
+    }
+    if (ninjaPortalUrl == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'ninjaPortalUrl');
     }
   }
 
@@ -3022,7 +3035,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         user == other.user &&
         token == other.token &&
         account == other.account &&
-        settings == other.settings;
+        settings == other.settings &&
+        ninjaPortalUrl == other.ninjaPortalUrl;
   }
 
   int __hashCode;
@@ -3036,16 +3050,18 @@ class _$UserCompanyEntity extends UserCompanyEntity {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, isAdmin.hashCode),
-                                        isOwner.hashCode),
-                                    permissionsUpdatedAt.hashCode),
-                                permissions.hashCode),
-                            notifications.hashCode),
-                        company.hashCode),
-                    user.hashCode),
-                token.hashCode),
-            account.hashCode),
-        settings.hashCode));
+                                    $jc(
+                                        $jc($jc(0, isAdmin.hashCode),
+                                            isOwner.hashCode),
+                                        permissionsUpdatedAt.hashCode),
+                                    permissions.hashCode),
+                                notifications.hashCode),
+                            company.hashCode),
+                        user.hashCode),
+                    token.hashCode),
+                account.hashCode),
+            settings.hashCode),
+        ninjaPortalUrl.hashCode));
   }
 
   @override
@@ -3060,7 +3076,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
           ..add('user', user)
           ..add('token', token)
           ..add('account', account)
-          ..add('settings', settings))
+          ..add('settings', settings)
+          ..add('ninjaPortalUrl', ninjaPortalUrl))
         .toString();
   }
 }
@@ -3116,6 +3133,11 @@ class UserCompanyEntityBuilder
   set settings(UserSettingsEntityBuilder settings) =>
       _$this._settings = settings;
 
+  String _ninjaPortalUrl;
+  String get ninjaPortalUrl => _$this._ninjaPortalUrl;
+  set ninjaPortalUrl(String ninjaPortalUrl) =>
+      _$this._ninjaPortalUrl = ninjaPortalUrl;
+
   UserCompanyEntityBuilder() {
     UserCompanyEntity._initializeBuilder(this);
   }
@@ -3132,6 +3154,7 @@ class UserCompanyEntityBuilder
       _token = _$v.token?.toBuilder();
       _account = _$v.account?.toBuilder();
       _settings = _$v.settings?.toBuilder();
+      _ninjaPortalUrl = _$v.ninjaPortalUrl;
       _$v = null;
     }
     return this;
@@ -3165,7 +3188,8 @@ class UserCompanyEntityBuilder
               user: _user?.build(),
               token: _token?.build(),
               account: _account?.build(),
-              settings: _settings?.build());
+              settings: _settings?.build(),
+              ninjaPortalUrl: ninjaPortalUrl);
     } catch (_) {
       String _$failedField;
       try {

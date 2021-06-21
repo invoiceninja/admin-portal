@@ -24,6 +24,8 @@ enum PaymentReportFields {
   payment2,
   payment3,
   payment4,
+  exchange_rate,
+  converted_amount,
 }
 
 var memoizedPaymentReport = memo6((
@@ -128,6 +130,12 @@ ReportResult paymentReport(
         case PaymentReportFields.payment4:
           value = payment.customValue4;
           break;
+        case PaymentReportFields.exchange_rate:
+          value = payment.exchangeRate;
+          break;
+        case PaymentReportFields.converted_amount:
+          value = payment.amount * payment.exchangeRate;
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -141,9 +149,12 @@ ReportResult paymentReport(
 
       if (value.runtimeType == bool) {
         row.add(payment.getReportBool(value: value));
+      } else if (column == PaymentReportFields.converted_amount) {
+        row.add(payment.getReportDouble(
+            value: value, currencyId: payment.exchangeCurrencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(payment.getReportDouble(
-            value: value, currencyId: client.settings.currencyId));
+            value: value, currencyId: payment.currencyId));
       } else {
         row.add(payment.getReportString(value: value));
       }

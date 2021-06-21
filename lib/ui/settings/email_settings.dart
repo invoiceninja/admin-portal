@@ -123,6 +123,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final settings = viewModel.settings;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
 
@@ -142,15 +143,20 @@ class _EmailSettingsState extends State<EmailSettings> {
           if (viewModel.state.authState.isHosted) ...[
             FormCard(children: <Widget>[
               BoolDropdownButton(
+                showBlank: state.uiState.settingsUIState.isFiltered,
                 label: localization.sendFromGmail,
-                value: settings.emailSendingMethod ==
-                    SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
+                value: settings.emailSendingMethod == null
+                    ? null
+                    : settings.emailSendingMethod ==
+                        SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
                 iconData: MdiIcons.gmail,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b
-                      ..emailSendingMethod = (value == true
-                          ? SettingsEntity.EMAIL_SENDING_METHOD_GMAIL
-                          : SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT))),
+                onChanged: (value) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..emailSendingMethod = (value == null
+                          ? null
+                          : value == true
+                              ? SettingsEntity.EMAIL_SENDING_METHOD_GMAIL
+                              : SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT))),
               ),
               if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
