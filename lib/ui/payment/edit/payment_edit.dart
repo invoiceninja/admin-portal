@@ -308,6 +308,15 @@ class _PaymentEditState extends State<PaymentEdit> {
           ),
           FormCard(
             children: [
+              if (payment.isNew)
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.sendEmail),
+                  value: payment.sendEmail ?? false,
+                  subtitle: Text(localization.emailReceipt),
+                  onChanged: (value) => viewModel
+                      .onChanged(payment.rebuild((b) => b..sendEmail = value)),
+                ),
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.convertCurrency),
@@ -392,17 +401,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     onSavePressed: viewModel.onSavePressed,
                   ),
                 ),
-                SizedBox(height: 16),
               ],
-              if (payment.isNew)
-                SwitchListTile(
-                  activeColor: Theme.of(context).accentColor,
-                  title: Text(localization.sendEmail),
-                  value: payment.sendEmail ?? false,
-                  subtitle: Text(localization.emailReceipt),
-                  onChanged: (value) => viewModel
-                      .onChanged(payment.rebuild((b) => b..sendEmail = value)),
-                ),
             ],
           )
         ],
