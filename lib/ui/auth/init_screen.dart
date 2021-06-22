@@ -17,7 +17,7 @@ class InitScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Expanded(
-                  child: Center(child: Image.asset('assets/images/logo.png')),
+                  child: Center(child: Image.asset('assets/images/icon.png')),
                 ),
                 SizedBox(
                   height: 4.0,

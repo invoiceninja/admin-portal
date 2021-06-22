@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -84,7 +85,7 @@ class MainScreen extends StatelessWidget {
           child: LoadingIndicator(),
           color: Theme.of(context).cardColor,
         );
-      } else if (!state.isUserConfirmed) {
+      } else if (!state.isUserConfirmed || !kReleaseMode) {
         return ConfirmEmailBuilder();
       }
 

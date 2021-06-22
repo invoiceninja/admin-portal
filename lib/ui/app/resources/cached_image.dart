@@ -44,7 +44,7 @@ class CachedImage extends StatelessWidget {
       imageUrl: url,
       placeholder: (context, url) => CircularProgressIndicator(),
       errorWidget: (context, url, Object error) =>
-          Image.asset('assets/images/logo.png', width: 32, height: 30),
+          Image.asset('assets/images/icon.png', width: 32, height: 30),
     );
   }
 }

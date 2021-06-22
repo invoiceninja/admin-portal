@@ -69,7 +69,7 @@ class MenuDrawer extends StatelessWidget {
             width: MenuDrawer.LOGO_WIDTH,
             url: company.settings.companyLogo,
           )
-        : Image.asset('assets/images/logo.png', width: MenuDrawer.LOGO_WIDTH);
+        : Image.asset('assets/images/icon.png', width: MenuDrawer.LOGO_WIDTH);
 
     Widget _companyListItem(CompanyEntity company) {
       final userCompany = state.userCompanyStates
@@ -896,7 +896,7 @@ void _showAbout(BuildContext context) async {
 
   final appLegalese = '© ${DateTime.now().year} Invoice Ninja';
   final apppIcon = Image.asset(
-    'assets/images/logo.png',
+    'assets/images/icon.png',
     width: 40.0,
     height: 40.0,
   );

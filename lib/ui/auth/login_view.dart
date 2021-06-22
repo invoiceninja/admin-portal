@@ -288,7 +288,7 @@ class _LoginState extends State<LoginView> {
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: Center(
                 child: InkWell(
-                  child: Image.asset('assets/images/logo.png',
+                  child: Image.asset('assets/images/icon.png',
                       width: 100, height: 100),
                   onTap: () {
                     launch(kSiteUrl, forceSafariVC: false, forceWebView: false);
