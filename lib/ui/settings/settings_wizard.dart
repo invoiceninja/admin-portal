@@ -344,6 +344,11 @@ class _SettingsWizardState extends State<SettingsWizard> {
                             currency,
                             SizedBox(height: 16),
                             darkMode,
+                            if (state.isHosted)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 32),
+                                child: Text(localization.subdomainGuide),
+                              )
                           ]
                         : [
                             Row(
@@ -388,6 +393,11 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                 Expanded(child: currency),
                               ],
                             ),
+                            if (state.isHosted)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 32),
+                                child: Text(localization.subdomainGuide),
+                              ),
                           ],
                   ),
           ),

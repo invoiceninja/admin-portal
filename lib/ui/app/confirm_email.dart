@@ -27,12 +27,17 @@ class ConfirmEmail extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Image.asset(
+                  'assets/images/icon.png',
+                  height: 80,
+                ),
+                SizedBox(height: 60),
                 Text(
                   localization.confirmYourEmailAddress,
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 100),
+                  padding: const EdgeInsets.only(top: 16, bottom: 80),
                   child: HelpText(state.user.email),
                 ),
                 Row(

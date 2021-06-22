@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -250,9 +251,15 @@ class _AccountOverview extends StatelessWidget {
         ),
         if (state.userCompany.ninjaPortalUrl.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(left: 20, top: 16, right: 20),
+            padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
             child: OutlinedButton(
-              child: Text(localization.viewPortal.toUpperCase()),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconText(
+                  icon: MdiIcons.openInNew,
+                  text: localization.viewPortal.toUpperCase(),
+                ),
+              ),
               onPressed: () => launch(state.userCompany.ninjaPortalUrl),
             ),
           ),

@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
@@ -20,6 +21,7 @@ import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -453,7 +455,13 @@ class _DesignSettingsState extends State<DesignSettings> {
         Padding(
           padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
           child: OutlinedButton(
-            child: Text(localization.viewDocs.toUpperCase()),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconText(
+                icon: MdiIcons.openInNew,
+                text: localization.viewDocs.toUpperCase(),
+              ),
+            ),
             onPressed: () =>
                 launch('https://invoiceninja.github.io/docs/custom-fields/'),
           ),

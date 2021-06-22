@@ -12,7 +12,7 @@ environment:
 flutter_icons:
   android: "launcher_icon"
   ios: false
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/icon.png"
 
 dependencies:
   flutter:
@@ -84,6 +84,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/logo.png
+    - assets/images/icon.png
     - assets/images/google-icon.png
     - assets/images/payment_types/

@@ -334,7 +334,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected: [
                 ...[
                   ClientFields.name,
-                  ClientFields.idNumber,
+                  ClientFields.number,
                   ClientFields.vatNumber,
                   ClientFields.address1,
                   ClientFields.address2,
@@ -628,6 +628,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 InvoiceTotalFields.customSurcharge4,
                 InvoiceTotalFields.totalTaxes,
                 InvoiceTotalFields.lineTaxes,
+                InvoiceTotalFields.total,
                 InvoiceTotalFields.paidToDate,
                 InvoiceTotalFields.outstanding,
               ].map((field) => '\$$field').toList(),

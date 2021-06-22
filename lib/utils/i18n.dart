@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'subdomain_guide':
+          'The subdomain is used in the client portal to personalize links to match your brand. ie, https://your-brand.invoicing.co',
       'send_time': 'Send Time',
       'import_data': 'Import Data',
       'import_settings': 'Import Settings',
@@ -39,7 +41,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'account_id': 'Account ID',
       'migration_not_yet_completed': 'The migration has not yet completed',
       'wizard_warning':
-          'If you are migrating from the legacy version stop here and begin the migration. Once the migration completes click \'Refresh\' and use the dropdown in the top left corner to switch companies.',
+          'If you are migrating from the legacy version stop here and begin the migration on Settings > Account Management. Once the migration completes click \'Refresh\' and use the dropdown in the top left corner to switch companies.',
       'activity_100': ':user created recurring invoice',
       'activity_101': ':user updated recurring invoice',
       'activity_102': ':user archived recurring invoice',
@@ -62370,6 +62372,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get sendTime =>
       _localizedValues[localeCode]['send_time'] ??
       _localizedValues['en']['send_time'];
+
+  String get subdomainGuide =>
+      _localizedValues[localeCode]['subdomain_guide'] ??
+      _localizedValues['en']['subdomain_guide'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
