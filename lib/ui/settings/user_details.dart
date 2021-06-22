@@ -241,7 +241,7 @@ class _UserDetailsState extends State<UserDetails>
                                   ? localization.disconnectGmail
                                   : localization.connectGmail)
                               .toUpperCase()),
-                          onPressed: !state.user.isConnectedToGoogle && false
+                          onPressed: !state.user.isConnectedToGoogle
                               ? null
                               : () async {
                                   if (state.settingsUIState.isChanged) {
