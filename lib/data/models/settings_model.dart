@@ -779,20 +779,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'entity_send_time')
   int get entitySendTime;
 
-  // TODO remove this field
   @nullable
-  @BuiltValueField(wireName: 'has_custom_design1_HIDDEN')
-  bool get hasCustomDesign1;
-
-  // TODO remove this field
-  @nullable
-  @BuiltValueField(wireName: 'has_custom_design2_HIDDEN')
-  bool get hasCustomDesign2;
-
-  // TODO remove this field
-  @nullable
-  @BuiltValueField(wireName: 'has_custom_design3_HIDDEN')
-  bool get hasCustomDesign3;
+  @BuiltValueField(wireName: 'show_all_tasks_client_portal')
+  String get clientPortalTasks;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
