@@ -441,21 +441,22 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                   ),
                   if (entityType == EntityType.recurringInvoice)
                     AppDropdownButton<String>(
-                        labelText: localization.autoBill,
-                        value: invoice.autoBill,
-                        onChanged: (dynamic value) => viewModel.onChanged(
-                            invoice.rebuild((b) => b..autoBill = value)),
-                        items: [
-                          SettingsEntity.AUTO_BILL_ALWAYS,
-                          SettingsEntity.AUTO_BILL_OPT_OUT,
-                          SettingsEntity.AUTO_BILL_OPT_IN,
-                          SettingsEntity.AUTO_BILL_OFF,
-                        ]
-                            .map((value) => DropdownMenuItem(
-                                  child: Text(localization.lookup(value)),
-                                  value: value,
-                                ))
-                            .toList()),
+                      labelText: localization.autoBill,
+                      value: invoice.autoBill,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..autoBill = value)),
+                      items: [
+                        SettingsEntity.AUTO_BILL_ALWAYS,
+                        SettingsEntity.AUTO_BILL_OPT_OUT,
+                        SettingsEntity.AUTO_BILL_OPT_IN,
+                        SettingsEntity.AUTO_BILL_OFF,
+                      ]
+                          .map((value) => DropdownMenuItem(
+                                child: Text(localization.lookup(value)),
+                                value: value,
+                              ))
+                          .toList(),
+                    ),
                   CustomField(
                     controller: _custom2Controller,
                     field: CustomFieldType.invoice2,

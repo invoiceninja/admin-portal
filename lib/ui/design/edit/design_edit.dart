@@ -505,8 +505,13 @@ class PdfDesignPreview extends StatefulWidget {
 class _PdfDesignPreviewState extends State<PdfDesignPreview> {
   PdfController _pdfController;
 
-  String get _pdfString =>
-      'data:application/pdf;base64,' + base64Encode(widget.pdfBytes);
+  String get _pdfString {
+    if (widget.pdfBytes == null) {
+      return '';
+    }
+
+    return 'data:application/pdf;base64,' + base64Encode(widget.pdfBytes);
+  }
 
   @override
   void didUpdateWidget(oldWidget) {

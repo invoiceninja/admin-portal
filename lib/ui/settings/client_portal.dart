@@ -227,6 +227,9 @@ class _ClientPortalState extends State<ClientPortal>
     final company = viewModel.company;
     final settings = viewModel.settings;
     final registrationUrl = portalRegistrationUrlSelector(state);
+    final portalUrl =
+        kAppProductionUrl.replaceFirst('//', '//${state.company.subdomain}.') +
+            '/...';
 
     return EditScaffold(
       title: localization.clientPortal,
@@ -260,6 +263,7 @@ class _ClientPortalState extends State<ClientPortal>
             children: <Widget>[
               if (state.isHosted && !state.settingsUIState.isFiltered)
                 FormCard(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     AppDropdownButton<String>(
                       labelText: localization.portalMode,
@@ -283,7 +287,7 @@ class _ClientPortalState extends State<ClientPortal>
                         ),
                       ],
                     ),
-                    if (company.portalMode == kClientPortalModeSubdomain)
+                    if (company.portalMode == kClientPortalModeSubdomain) ...[
                       DecoratedFormField(
                         label: localization.subdomain,
                         autovalidate: _autoValidate,
@@ -310,8 +314,12 @@ class _ClientPortalState extends State<ClientPortal>
                             RegExp(r'[a-z0-9\-]'),
                           ),
                         ],
-                      )
-                    else
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text(portalUrl),
+                      ),
+                    ] else
                       DecoratedFormField(
                         label: company.portalMode == kClientPortalModeDomain
                             ? localization.domainUrl

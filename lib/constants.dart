@@ -136,7 +136,7 @@ const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToReenterPassword = 1000 * 60 * 30; // 30 minutes
 const int kMillisecondsToDebounceUpdate = 500; // .5 second
-const int kMillisecondsToDebounceSave = 1000 * 2; // 2 seconds
+const int kMillisecondsToDebounceSave = 1500; // 1.5 seconds
 
 const String kLanguageEnglish = '1';
 

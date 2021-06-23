@@ -71,6 +71,10 @@ abstract class SettingsEntity
   static const AUTO_BILL_ON_SEND_DATE = 'on_send_date';
   static const AUTO_BILL_ON_DUE_DATE = 'on_due_date';
 
+  static const PORTAL_TASKS_ALL = 'all';
+  static const PORTAL_TASKS_INVOICED = 'invoiced';
+  static const PORTAL_TASKS_UNINVOICED = 'uninvoiced';
+
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;
@@ -779,20 +783,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'entity_send_time')
   int get entitySendTime;
 
-  // TODO remove this field
   @nullable
-  @BuiltValueField(wireName: 'has_custom_design1_HIDDEN')
-  bool get hasCustomDesign1;
-
-  // TODO remove this field
-  @nullable
-  @BuiltValueField(wireName: 'has_custom_design2_HIDDEN')
-  bool get hasCustomDesign2;
-
-  // TODO remove this field
-  @nullable
-  @BuiltValueField(wireName: 'has_custom_design3_HIDDEN')
-  bool get hasCustomDesign3;
+  @BuiltValueField(wireName: 'show_all_tasks_client_portal')
+  String get clientPortalTasks;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
