@@ -85,7 +85,7 @@ class MainScreen extends StatelessWidget {
           child: LoadingIndicator(),
           color: Theme.of(context).cardColor,
         );
-      } else if (!state.isUserConfirmed || !kReleaseMode) {
+      } else if (!state.isUserConfirmed) {
         return ConfirmEmailBuilder();
       }
 
