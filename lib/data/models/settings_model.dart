@@ -71,6 +71,10 @@ abstract class SettingsEntity
   static const AUTO_BILL_ON_SEND_DATE = 'on_send_date';
   static const AUTO_BILL_ON_DUE_DATE = 'on_due_date';
 
+  static const PORTAL_TASKS_ALL = 'all';
+  static const PORTAL_TASKS_INVOICED = 'invoiced';
+  static const PORTAL_TASKS_UNINVOICED = 'uninvoiced';
+
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;

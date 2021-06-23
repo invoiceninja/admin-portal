@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'tasks_shown_in_portal': 'Tasks Shown in Portal',
+      'uninvoiced': 'Uninvoiced',
       'subdomain_guide':
           'The subdomain is used in the client portal to personalize links to match your brand. ie, https://your-brand.invoicing.co',
       'send_time': 'Send Time',
@@ -62376,6 +62378,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get subdomainGuide =>
       _localizedValues[localeCode]['subdomain_guide'] ??
       _localizedValues['en']['subdomain_guide'];
+
+  String get tasksShownInPortal =>
+      _localizedValues[localeCode]['tasks_shown_in_portal'] ??
+      _localizedValues['en']['tasks_shown_in_portal'];
+
+  String get uninvoiced =>
+      _localizedValues[localeCode]['uninvoiced'] ??
+      _localizedValues['en']['uninvoiced'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
