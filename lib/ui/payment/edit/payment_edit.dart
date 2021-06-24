@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentEdit extends StatefulWidget {
@@ -119,6 +120,27 @@ class _PaymentEditState extends State<PaymentEdit> {
         widget.viewModel.onChanged(payment);
       });
     }
+  }
+
+  void convertCurrency(SelectableEntity currency) {
+    final viewModel = widget.viewModel;
+    final payment = viewModel.payment;
+    final state = viewModel.state;
+    double exchangeRate = 1;
+    if (currency != null) {
+      final client = state.clientState.get(payment.clientId);
+      exchangeRate = getExchangeRate(state.staticState.currencyMap,
+          fromCurrencyId: currency.id, toCurrencyId: client.currencyId);
+    }
+
+    _exchangeRateController.removeListener(_onChanged);
+    _exchangeRateController.text = formatNumber(exchangeRate, context,
+        formatNumberType: FormatNumberType.inputMoney);
+    _exchangeRateController.addListener(_onChanged);
+
+    viewModel.onChanged(payment.rebuild((b) => b
+      ..exchangeCurrencyId = currency?.id ?? ''
+      ..exchangeRate = exchangeRate));
   }
 
   @override
@@ -322,13 +344,19 @@ class _PaymentEditState extends State<PaymentEdit> {
                 title: Text(localization.convertCurrency),
                 value: _showConvertCurrency,
                 onChanged: (value) {
-                  _exchangeRateController.removeListener(_onChanged);
-                  _exchangeRateController.text = '';
-                  _exchangeRateController.addListener(_onChanged);
+                  if (!value) {
+                    _exchangeRateController.removeListener(_onChanged);
+                    _exchangeRateController.text = '';
+                    _exchangeRateController.addListener(_onChanged);
 
-                  viewModel.onChanged(payment.rebuild((b) => b
-                    ..exchangeCurrencyId = ''
-                    ..exchangeRate = 1));
+                    viewModel.onChanged(payment.rebuild((b) => b
+                      ..exchangeCurrencyId = ''
+                      ..exchangeRate = 1));
+                  } else {
+                    final currency = state
+                        .staticState.currencyMap[payment.exchangeCurrencyId];
+                    convertCurrency(currency);
+                  }
                   setState(() {
                     _showConvertCurrency = value;
                   });
@@ -343,23 +371,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                       memoizedCurrencyList(viewModel.staticState.currencyMap),
                   labelText: localization.currency,
                   entityId: payment.exchangeCurrencyId,
-                  onSelected: (SelectableEntity currency) {
-                    double exchangeRate = 1;
-                    if (currency != null) {
-                      exchangeRate = state
-                          .staticState.currencyMap[currency?.id].exchangeRate;
-                    }
-
-                    _exchangeRateController.removeListener(_onChanged);
-                    _exchangeRateController.text = formatNumber(
-                        exchangeRate, context,
-                        formatNumberType: FormatNumberType.inputMoney);
-                    _exchangeRateController.addListener(_onChanged);
-
-                    viewModel.onChanged(payment.rebuild((b) => b
-                      ..exchangeCurrencyId = currency?.id ?? ''
-                      ..exchangeRate = exchangeRate));
-                  },
+                  onSelected: (SelectableEntity currency) =>
+                      convertCurrency(currency),
                 ),
                 DecoratedFormField(
                   key: ValueKey(
@@ -370,11 +383,15 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
                 Focus(
                   onFocusChange: (hasFocus) {
+                    print('## _convertedAmount: $_convertedAmount');
                     if (_convertedAmount == 0) {
                       return;
                     }
 
-                    final exchangeRate = _convertedAmount / payment.amount;
+                    final amount = payment.isNew
+                        ? (paymentTotal - creditTotal)
+                        : payment.amount;
+                    final exchangeRate = _convertedAmount / amount;
                     _exchangeRateController.removeListener(_onChanged);
                     _exchangeRateController.text = formatNumber(
                         exchangeRate, context,
@@ -387,11 +404,15 @@ class _PaymentEditState extends State<PaymentEdit> {
                   },
                   child: DecoratedFormField(
                     key: ValueKey(
-                        '__payment_amount_${payment.amount}_${payment.exchangeRate}__'),
+                        '__payment_amount_${paymentTotal}_${creditTotal}_${payment.exchangeRate}__'),
                     initialValue:
                         payment.exchangeRate != 1 && payment.exchangeRate != 0
                             ? formatNumber(
-                                payment.amount * payment.exchangeRate, context,
+                                (payment.isNew
+                                        ? paymentTotal - creditTotal
+                                        : payment.amount) *
+                                    payment.exchangeRate,
+                                context,
                                 formatNumberType: FormatNumberType.inputMoney)
                             : '',
                     label: localization.convertedAmount,

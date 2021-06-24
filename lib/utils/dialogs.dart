@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 void showRefreshDataDialog(
     {@required BuildContext context, bool includeStatic = false}) async {
@@ -94,43 +95,45 @@ void confirmCallback({
         }
       }
 
-      return AlertDialog(
-        semanticLabel: localization.areYouSure,
-        title: Text(title),
-        content: typeToConfirm != null
-            ? Row(
-                children: [
-                  Flexible(
-                    child: Text(localization.pleaseTypeToConfirm
-                            .replaceFirst(':value', typeToConfirm) +
-                        ':'),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: DecoratedFormField(
-                      autofocus: true,
-                      onChanged: (value) => _typed = value,
-                      hint: typeToConfirm,
-                      onSavePressed: (context) => _onPressed(),
+      return PointerInterceptor(
+        child: AlertDialog(
+          semanticLabel: localization.areYouSure,
+          title: Text(title),
+          content: typeToConfirm != null
+              ? Row(
+                  children: [
+                    Flexible(
+                      child: Text(localization.pleaseTypeToConfirm
+                              .replaceFirst(':value', typeToConfirm) +
+                          ':'),
                     ),
-                  ),
-                ],
-              )
-            : content == null
-                ? null
-                : Text(content),
-        actions: <Widget>[
-          TextButton(
-              child: Text(localization.cancel.toUpperCase()),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          TextButton(
-            autofocus: true,
-            child: Text(localization.ok.toUpperCase()),
-            onPressed: () => _onPressed(),
-          )
-        ],
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: DecoratedFormField(
+                        autofocus: true,
+                        onChanged: (value) => _typed = value,
+                        hint: typeToConfirm,
+                        onSavePressed: (context) => _onPressed(),
+                      ),
+                    ),
+                  ],
+                )
+              : content == null
+                  ? null
+                  : Text(content),
+          actions: <Widget>[
+            TextButton(
+                child: Text(localization.cancel.toUpperCase()),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            TextButton(
+              autofocus: true,
+              child: Text(localization.ok.toUpperCase()),
+              onPressed: () => _onPressed(),
+            )
+          ],
+        ),
       );
     },
   );
