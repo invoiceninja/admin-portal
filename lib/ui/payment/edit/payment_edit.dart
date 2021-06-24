@@ -389,7 +389,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     }
 
                     final amount = payment.isNew
-                        ? (paymentTotal + creditTotal)
+                        ? (paymentTotal - creditTotal)
                         : payment.amount;
                     final exchangeRate = _convertedAmount / amount;
                     _exchangeRateController.removeListener(_onChanged);
@@ -409,7 +409,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         payment.exchangeRate != 1 && payment.exchangeRate != 0
                             ? formatNumber(
                                 (payment.isNew
-                                        ? paymentTotal + creditTotal
+                                        ? paymentTotal - creditTotal
                                         : payment.amount) *
                                     payment.exchangeRate,
                                 context,
