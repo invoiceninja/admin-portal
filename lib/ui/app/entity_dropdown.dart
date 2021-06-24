@@ -243,7 +243,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                       child: Container(
                         color: Theme.of(context).cardColor,
                         width: 250,
-                        constraints: BoxConstraints(maxHeight: 300),
+                        constraints: BoxConstraints(maxHeight: 270),
                         child: ScrollableListViewBuilder(
                           itemCount: options.length,
                           itemBuilder: (BuildContext context, int index) {
