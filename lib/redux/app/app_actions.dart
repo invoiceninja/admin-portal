@@ -27,6 +27,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -37,7 +38,10 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
@@ -1240,8 +1244,18 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
         case EntityType.webhook:
           store.dispatch(UpdateCurrentRoute(WebhookScreen.route));
           break;
+        case EntityType.expenseCategory:
+          store.dispatch(UpdateCurrentRoute(ExpenseCategoryScreen.route));
+          break;
+        case EntityType.taskStatus:
+          store.dispatch(UpdateCurrentRoute(TaskStatusScreen.route));
+          break;
+        case EntityType.subscription:
+          store.dispatch(UpdateCurrentRoute(SubscriptionScreen.route));
+          break;
         default:
-          print('ERROR: entty type not supported ${entities.first.entityType}');
+          print(
+              'ERROR: ${entities.first.entityType} entity type not supported');
       }
     }
   }
