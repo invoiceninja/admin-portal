@@ -48,13 +48,14 @@ class RecurringInvoiceListItem extends StatelessWidget {
         .colors[invoice.calculatedStatusId];
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
-    String subtitle = localization.lookup(kFrequencies[invoice.frequencyId]);
+    String subtitle = '';
     if (invoice.nextSendDate.isNotEmpty) {
-      if (subtitle.isNotEmpty) {
-        subtitle += ' • ';
-      }
       subtitle += formatDate(invoice.nextSendDate, context);
     }
+    if (subtitle.isNotEmpty) {
+      subtitle += ' • ';
+    }
+    subtitle += localization.lookup(kFrequencies[invoice.frequencyId]);
 
     return DismissibleEntity(
         isSelected: isDesktop(context) &&
