@@ -188,26 +188,23 @@ class VendorListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                subtitle: (filterMatch == null && vendor.isActive)
-                    ? null
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          filterMatch != null
-                              ? Text(filterMatch,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2
-                                      .copyWith(
-                                        color: textColor
-                                            .withOpacity(kLighterOpacity),
-                                      ))
-                              : SizedBox(),
-                          EntityStateLabel(vendor),
-                        ],
-                      ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    filterMatch != null
+                        ? Text(filterMatch,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2
+                                .copyWith(
+                                  color: textColor.withOpacity(kLighterOpacity),
+                                ))
+                        : Text(vendor.number),
+                    EntityStateLabel(vendor),
+                  ],
+                ),
               );
       }),
     );
