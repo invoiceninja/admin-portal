@@ -205,9 +205,10 @@ class ExpenseListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          (expense.number ?? '') +
+                          (expense.publicNotes ?? '') +
                               (expense.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.headline6,
+                          maxLines: 1,
                         ),
                       ),
                       Text(
@@ -220,7 +221,11 @@ class ExpenseListItem extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(subtitle ?? filterMatch,
+                    Text(
+                        filterMatch == null
+                            ? expense.number +
+                                (subtitle.isEmpty ? '' : ' • ' + subtitle)
+                            : filterMatch,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.subtitle2.copyWith(
