@@ -1170,7 +1170,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
           });
       Navigator.pop(context);
     }).catchError((dynamic error) {
-      print('error: $error');
+      print('## ERROR: $error');
       setState(() => _isSaving = false);
       showErrorDialog(context: context, message: '$error');
     });

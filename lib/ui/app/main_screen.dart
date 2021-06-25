@@ -612,7 +612,7 @@ class EntityScreens extends StatelessWidget {
           listWidget = ExpenseScreenBuilder();
           break;
         default:
-          print('Error: list widget not implemented for $entityType');
+          print('## ERROR: list widget not implemented for $entityType');
           break;
       }
     }

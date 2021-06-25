@@ -82,7 +82,7 @@ String getDesignIdForClientByEntity(
     case EntityType.credit:
       return settings.defaultCreditDesignId;
     default:
-      print('## Error: undefined entity type $entityType in design_selectors');
+      print('## ERROR: undefined entity type $entityType in design_selectors');
       return settings.defaultInvoiceDesignId;
   }
 }

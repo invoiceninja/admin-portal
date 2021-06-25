@@ -83,7 +83,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
     _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
 
     if (_entityMap == null) {
-      print('ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
+      print('## ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
     } else {
       final entity = _entityMap[widget.entityId];
       if (widget.overrideSuggestedLabel != null) {
@@ -110,7 +110,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
     _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
 
     if (_entityMap == null) {
-      print('ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
+      print('## ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
     } else {
       final entity = _entityMap[widget.entityId];
       if (widget.overrideSuggestedLabel != null) {

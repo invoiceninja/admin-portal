@@ -341,7 +341,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.settings:
         return null;
       default:
-        print('Error: getEntityMap $type not found');
+        print('## ERROR: getEntityMap $type not found');
         return null;
     }
   }

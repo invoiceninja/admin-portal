@@ -27,7 +27,7 @@ class GoogleOAuth {
 
       return true;
     } else {
-      print('## Error: sign in failed');
+      print('## ERROR: sign in failed');
       return false;
     }
   }
@@ -41,7 +41,7 @@ class GoogleOAuth {
 
       return true;
     } else {
-      print('## Error: sign up failed');
+      print('## ERROR: sign up failed');
       return false;
     }
   }
@@ -62,7 +62,7 @@ class GoogleOAuth {
 
       return true;
     } else {
-      print('## Error: grant offline failed');
+      print('## ERROR: grant offline failed');
       errorCallback();
       return false;
     }

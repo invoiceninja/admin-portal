@@ -825,7 +825,7 @@ abstract class SettingsEntity
       case EntityType.credit:
         return defaultCreditTerms;
       default:
-        print('## Error: getDefaultTerms not defined for $entityType');
+        print('## ERROR: getDefaultTerms not defined for $entityType');
         return '';
     }
   }
@@ -840,7 +840,7 @@ abstract class SettingsEntity
       case EntityType.credit:
         return defaultCreditFooter;
       default:
-        print('## Error: getDefaultFooter not defined for $entityType');
+        print('## ERROR: getDefaultFooter not defined for $entityType');
         return '';
     }
   }

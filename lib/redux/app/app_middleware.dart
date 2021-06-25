@@ -268,7 +268,7 @@ Middleware<AppState> _createLoadState(
         throw 'Unknown page: ${uiState.currentRoute}';
       }
     } catch (error) {
-      print('Error (app_middleware - load state): $error');
+      print('## ERROR (app_middleware - load state): $error');
 
       if (!kIsWeb && !await NetworkUtils.isOnline()) {
         showMessageDialog(
@@ -304,7 +304,7 @@ Middleware<AppState> _createLoadState(
           }
           AppBuilder.of(action.context).rebuild();
         }).catchError((Object error) {
-          print('Error (app_middleware - refresh): $error');
+          print('## ERROR (app_middleware - refresh): $error');
           store.dispatch(UserLogout());
         });
         store.dispatch(RefreshData(completer: completer, clearData: true));

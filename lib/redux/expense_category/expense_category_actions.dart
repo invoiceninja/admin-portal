@@ -333,7 +333,7 @@ void handleExpenseCategoryAction(BuildContext context,
       );
       break;
     default:
-      print('Error: unhandled action $action');
+      print('## ERROR: unhandled action $action');
       break;
   }
 }
