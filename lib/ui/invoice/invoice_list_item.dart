@@ -219,25 +219,19 @@ class InvoiceListItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: filterMatch == null
-                                ? Text(
-                                    (((invoice.number ?? '').isEmpty
-                                                ? localization.pending
-                                                : invoice.number) +
-                                            ' • ' +
-                                            formatDate(
-                                                invoice.dueDate.isNotEmpty
-                                                    ? invoice.dueDate
-                                                    : invoice.date,
-                                                context) +
-                                            (invoice.documents.isNotEmpty
-                                                ? '  📎'
-                                                : ''))
-                                        .trim(),
-                                    style: TextStyle(
-                                      color: textColor
-                                          .withOpacity(kLighterOpacity),
-                                    ),
-                                  )
+                                ? Text((((invoice.number ?? '').isEmpty
+                                            ? localization.pending
+                                            : invoice.number) +
+                                        ' • ' +
+                                        formatDate(
+                                            invoice.dueDate.isNotEmpty
+                                                ? invoice.dueDate
+                                                : invoice.date,
+                                            context) +
+                                        (invoice.documents.isNotEmpty
+                                            ? '  📎'
+                                            : ''))
+                                    .trim())
                                 : Text(
                                     filterMatch,
                                     maxLines: 3,

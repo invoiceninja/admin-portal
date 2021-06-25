@@ -219,10 +219,6 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                                 ? '  📎'
                                                 : ''))
                                         .trim(),
-                                    style: TextStyle(
-                                      color: textColor
-                                          .withOpacity(kLighterOpacity),
-                                    ),
                                   )
                                 : Text(
                                     filterMatch,
