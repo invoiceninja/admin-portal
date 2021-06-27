@@ -212,18 +212,6 @@ class FilterGroupsByState implements PersistUI {
   final EntityState state;
 }
 
-class FilterGroupsByCustom1 implements PersistUI {
-  FilterGroupsByCustom1(this.value);
-
-  final String value;
-}
-
-class FilterGroupsByCustom2 implements PersistUI {
-  FilterGroupsByCustom2(this.value);
-
-  final String value;
-}
-
 void handleGroupAction(
     BuildContext context, List<BaseEntity> groups, EntityAction action) {
   if (groups.isEmpty) {

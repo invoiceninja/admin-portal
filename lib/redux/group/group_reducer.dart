@@ -22,8 +22,6 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewGroupList>((completer, action) => false),
   TypedReducer<bool, FilterGroupsByState>((completer, action) => false),
   TypedReducer<bool, FilterGroups>((completer, action) => false),
-  TypedReducer<bool, FilterGroupsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterGroupsByCustom2>((completer, action) => false),
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
@@ -38,6 +36,9 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, SortGroups>((selectedId, action) => ''),
+  TypedReducer<String, FilterGroups>((selectedId, action) => ''),
+  TypedReducer<String, FilterGroupsByState>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.group ? '' : selectedId),
   TypedReducer<String, FilterByEntity>(
@@ -79,8 +80,6 @@ final groupListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortGroups>(_sortGroups),
   TypedReducer<ListUIState, FilterGroupsByState>(_filterGroupsByState),
   TypedReducer<ListUIState, FilterGroups>(_filterGroups),
-  TypedReducer<ListUIState, FilterGroupsByCustom1>(_filterGroupsByCustom1),
-  TypedReducer<ListUIState, FilterGroupsByCustom2>(_filterGroupsByCustom2),
   TypedReducer<ListUIState, StartGroupMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToGroupMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromGroupMultiselect>(
@@ -94,26 +93,6 @@ ListUIState _viewGroupList(ListUIState groupListState, ViewGroupList action) {
     ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
-}
-
-ListUIState _filterGroupsByCustom1(
-    ListUIState groupListState, FilterGroupsByCustom1 action) {
-  if (groupListState.custom1Filters.contains(action.value)) {
-    return groupListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
-  } else {
-    return groupListState.rebuild((b) => b..custom1Filters.add(action.value));
-  }
-}
-
-ListUIState _filterGroupsByCustom2(
-    ListUIState groupListState, FilterGroupsByCustom2 action) {
-  if (groupListState.custom2Filters.contains(action.value)) {
-    return groupListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
-  } else {
-    return groupListState.rebuild((b) => b..custom2Filters.add(action.value));
-  }
 }
 
 ListUIState _filterGroupsByState(
