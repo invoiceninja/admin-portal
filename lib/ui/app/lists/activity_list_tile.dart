@@ -26,8 +26,12 @@ class ActivityListTile extends StatelessWidget {
 
     final user = state.userState.map[activity.userId];
     final client = state.clientState.map[activity.clientId];
+    final vendor = state.vendorState.map[activity.vendorId];
     final invoice = state.invoiceState.map[activity.invoiceId];
     final quote = state.quoteState.map[activity.quoteId];
+    final credit = state.creditState.map[activity.creditId];
+    final recurringInvoice =
+        state.recurringInvoiceState.map[activity.recurringInvoiceId];
     final payment = state.paymentState.map[activity.paymentId];
     final task = state.taskState.map[activity.taskId];
     final expense = state.expenseState.map[activity.expenseId];
@@ -42,6 +46,9 @@ class ActivityListTile extends StatelessWidget {
       payment: payment,
       task: task,
       expense: expense,
+      credit: credit,
+      recurringInvoice: recurringInvoice,
+      vendor: vendor,
     );
 
     return ListTile(
