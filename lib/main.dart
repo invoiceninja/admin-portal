@@ -161,7 +161,7 @@ Future<AppState> _initialState(bool isTesting) async {
   if (kIsWeb) {
     reportErrors = WebUtils.getHtmlValue('report-errors') == '1';
     if (reportErrors) {
-      print('## ERROR reporting is enabled');
+      print('## Error reporting is enabled');
     }
   }
 
