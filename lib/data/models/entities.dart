@@ -567,6 +567,10 @@ abstract class ActivityEntity
   String get invoiceId;
 
   @nullable
+  @BuiltValueField(wireName: 'recurring_invoice_id')
+  String get recurringInvoiceId;
+
+  @nullable
   @BuiltValueField(wireName: 'quote_id')
   String get quoteId;
 
