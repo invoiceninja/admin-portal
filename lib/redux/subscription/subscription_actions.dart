@@ -319,7 +319,7 @@ void handleSubscriptionAction(
       );
       break;
     default:
-      print('Error: unhandled action $action in subscription_actions');
+      print('## ERROR: unhandled action $action in subscription_actions');
       break;
   }
 }

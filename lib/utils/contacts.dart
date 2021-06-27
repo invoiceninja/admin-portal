@@ -11,7 +11,7 @@ Future<Contact> getDeviceContact() async {
       openAppSettings();
     }
   } catch (e) {
-    print('Error: failed to get contact: $e');
+    print('## ERROR: failed to get contact: $e');
   }
 
   return null;

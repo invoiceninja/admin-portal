@@ -78,6 +78,13 @@ final selectedIdReducer = combineReducers<String>([
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, SortClients>((selectedId, action) => ''),
+  TypedReducer<String, FilterClients>((selectedId, action) => ''),
+  TypedReducer<String, FilterClientsByState>((selectedId, action) => ''),
+  TypedReducer<String, FilterClientsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String, FilterClientsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String, FilterClientsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String, FilterClientsByCustom4>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.client ? '' : selectedId),
   TypedReducer<String, FilterByEntity>(

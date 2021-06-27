@@ -203,6 +203,17 @@ class _EntityListState extends State<EntityList> {
         final selectedIndex =
             widget.entityList.indexOf(entityUIState.selectedId);
         final rowsPerPage = state.prefState.rowsPerPage;
+        final listStateHash = listUIState.stateFilters.hashCode ^
+            listUIState.filterClearedAt.hashCode ^
+            listUIState.custom1Filters.hashCode ^
+            listUIState.custom2Filters.hashCode ^
+            listUIState.custom3Filters.hashCode ^
+            listUIState.custom4Filters.hashCode ^
+            listUIState.filter.hashCode ^
+            listUIState.sortAscending.hashCode ^
+            listUIState.sortField.hashCode ^
+            listUIState.stateFilters.hashCode ^
+            listUIState.statusFilters.hashCode;
 
         int initialFirstRowIndex = 0;
         if (selectedIndex >= 0) {
@@ -232,7 +243,7 @@ class _EntityListState extends State<EntityList> {
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   child: AppPaginatedDataTable(
                     key: ValueKey(
-                        '__${uiState.filterEntityId}_${uiState.filterEntityType}__'),
+                        '__${uiState.filterEntityId}_${uiState.filterEntityType}_${listUIState.stateFilters.hashCode}_${listStateHash}__'),
                     onSelectAll: (value) {
                       final entities = entityList
                           .map((String entityId) => entityMap[entityId])

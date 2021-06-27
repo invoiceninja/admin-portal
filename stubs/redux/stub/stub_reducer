@@ -53,6 +53,13 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.stub.id),
     TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, SortStubs>((selectedId, action) => ''),
+  TypedReducer<String, FilterStubs>((selectedId, action) => ''),
+  TypedReducer<String, FilterStubsByState>((selectedId, action) => ''),
+  TypedReducer<String, FilterStubsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String, FilterStubsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String, FilterStubsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String, FilterStubsByCustom4>((selectedId, action) => ''),
   TypedReducer<String, FilterByEntity>((selectedId, action) =>
         action
                   .clearSelection

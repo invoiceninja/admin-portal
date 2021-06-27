@@ -221,7 +221,9 @@ class TaskListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          task.description +
+                          (task.description.isEmpty
+                                  ? task.number
+                                  : task.description) +
                               (task.documents.isNotEmpty ? '  📎' : ''),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -238,16 +240,8 @@ class TaskListItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(subtitle ?? filterMatch,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  .copyWith(
-                                    color:
-                                        textColor.withOpacity(kLighterOpacity),
-                                  )),
+                          Text(filterMatch == null ? subtitle : filterMatch,
+                              maxLines: 3, overflow: TextOverflow.ellipsis),
                           EntityStateLabel(task),
                         ],
                       ),

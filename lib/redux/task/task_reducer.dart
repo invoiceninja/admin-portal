@@ -67,6 +67,14 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, SortTasks>((selectedId, action) => ''),
+  TypedReducer<String, FilterTasks>((selectedId, action) => ''),
+  TypedReducer<String, FilterTasksByState>((selectedId, action) => ''),
+  TypedReducer<String, FilterTasksByStatus>((selectedId, action) => ''),
+  TypedReducer<String, FilterTasksByCustom1>((selectedId, action) => ''),
+  TypedReducer<String, FilterTasksByCustom2>((selectedId, action) => ''),
+  TypedReducer<String, FilterTasksByCustom3>((selectedId, action) => ''),
+  TypedReducer<String, FilterTasksByCustom4>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<TaskEntity>([

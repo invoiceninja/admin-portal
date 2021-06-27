@@ -40,6 +40,13 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, SortWebhooks>((selectedId, action) => ''),
+  TypedReducer<String, FilterWebhooks>((selectedId, action) => ''),
+  TypedReducer<String, FilterWebhooksByState>((selectedId, action) => ''),
+  TypedReducer<String, FilterWebhooksByCustom1>((selectedId, action) => ''),
+  TypedReducer<String, FilterWebhooksByCustom2>((selectedId, action) => ''),
+  TypedReducer<String, FilterWebhooksByCustom3>((selectedId, action) => ''),
+  TypedReducer<String, FilterWebhooksByCustom4>((selectedId, action) => ''),
   TypedReducer<String, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''

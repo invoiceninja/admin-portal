@@ -53,10 +53,6 @@ class GroupSettingsScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.group,
         onSelectedSortField: (value) => store.dispatch(SortGroups(value)),
-        onSelectedCustom1: (value) =>
-            store.dispatch(FilterGroupsByCustom1(value)),
-        onSelectedCustom2: (value) =>
-            store.dispatch(FilterGroupsByCustom2(value)),
         sortFields: [
           GroupFields.name,
         ],

@@ -514,6 +514,12 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(object.invoiceId,
             specifiedType: const FullType(String)));
     }
+    if (object.recurringInvoiceId != null) {
+      result
+        ..add('recurring_invoice_id')
+        ..add(serializers.serialize(object.recurringInvoiceId,
+            specifiedType: const FullType(String)));
+    }
     if (object.quoteId != null) {
       result
         ..add('quote_id')
@@ -617,6 +623,10 @@ class _$ActivityEntitySerializer
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'recurring_invoice_id':
+          result.recurringInvoiceId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'quote_id':
@@ -970,6 +980,8 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final String invoiceId;
   @override
+  final String recurringInvoiceId;
+  @override
   final String quoteId;
   @override
   final String paymentId;
@@ -1004,6 +1016,7 @@ class _$ActivityEntity extends ActivityEntity {
       this.clientId,
       this.userId,
       this.invoiceId,
+      this.recurringInvoiceId,
       this.quoteId,
       this.paymentId,
       this.creditId,
@@ -1052,6 +1065,7 @@ class _$ActivityEntity extends ActivityEntity {
         clientId == other.clientId &&
         userId == other.userId &&
         invoiceId == other.invoiceId &&
+        recurringInvoiceId == other.recurringInvoiceId &&
         quoteId == other.quoteId &&
         paymentId == other.paymentId &&
         creditId == other.creditId &&
@@ -1087,17 +1101,21 @@ class _$ActivityEntity extends ActivityEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            notes
+                                                                            $jc(
+                                                                                0,
+                                                                                notes
+                                                                                    .hashCode),
+                                                                            key
                                                                                 .hashCode),
-                                                                        key
+                                                                        activityTypeId
                                                                             .hashCode),
-                                                                    activityTypeId
+                                                                    clientId
                                                                         .hashCode),
-                                                                clientId
+                                                                userId
                                                                     .hashCode),
-                                                            userId.hashCode),
-                                                        invoiceId.hashCode),
+                                                            invoiceId.hashCode),
+                                                        recurringInvoiceId
+                                                            .hashCode),
                                                     quoteId.hashCode),
                                                 paymentId.hashCode),
                                             creditId.hashCode),
@@ -1121,6 +1139,7 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('clientId', clientId)
           ..add('userId', userId)
           ..add('invoiceId', invoiceId)
+          ..add('recurringInvoiceId', recurringInvoiceId)
           ..add('quoteId', quoteId)
           ..add('paymentId', paymentId)
           ..add('creditId', creditId)
@@ -1165,6 +1184,11 @@ class ActivityEntityBuilder
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
+
+  String _recurringInvoiceId;
+  String get recurringInvoiceId => _$this._recurringInvoiceId;
+  set recurringInvoiceId(String recurringInvoiceId) =>
+      _$this._recurringInvoiceId = recurringInvoiceId;
 
   String _quoteId;
   String get quoteId => _$this._quoteId;
@@ -1224,6 +1248,7 @@ class ActivityEntityBuilder
       _clientId = _$v.clientId;
       _userId = _$v.userId;
       _invoiceId = _$v.invoiceId;
+      _recurringInvoiceId = _$v.recurringInvoiceId;
       _quoteId = _$v.quoteId;
       _paymentId = _$v.paymentId;
       _creditId = _$v.creditId;
@@ -1264,6 +1289,7 @@ class ActivityEntityBuilder
             clientId: clientId,
             userId: userId,
             invoiceId: invoiceId,
+            recurringInvoiceId: recurringInvoiceId,
             quoteId: quoteId,
             paymentId: paymentId,
             creditId: creditId,

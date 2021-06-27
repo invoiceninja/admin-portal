@@ -180,21 +180,19 @@ class ClientListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                subtitle: (filterMatch == null && client.isActive)
-                    ? null
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          filterMatch != null
-                              ? Text(
-                                  filterMatch,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                )
-                              : SizedBox(),
-                          EntityStateLabel(client),
-                        ],
-                      ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    filterMatch != null
+                        ? Text(
+                            filterMatch,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : Text(client.number),
+                    EntityStateLabel(client),
+                  ],
+                ),
               );
       }),
     );

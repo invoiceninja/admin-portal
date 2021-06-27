@@ -57,7 +57,9 @@ class ExpenseListItem extends StatelessWidget {
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else if (client != null || vendor != null || category != null) {
-      final parts = <String>[];
+      final parts = <String>[
+        formatDate(expense.date, context),
+      ];
       if (category != null && category.isOld) {
         parts.add(category.name);
       }
@@ -205,9 +207,12 @@ class ExpenseListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          (expense.number ?? '') +
+                          (expense.publicNotes.isEmpty
+                                  ? expense.number
+                                  : expense.publicNotes) +
                               (expense.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.headline6,
+                          maxLines: 1,
                         ),
                       ),
                       Text(
@@ -220,7 +225,7 @@ class ExpenseListItem extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(subtitle ?? filterMatch,
+                    Text(filterMatch == null ? subtitle : filterMatch,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.subtitle2.copyWith(

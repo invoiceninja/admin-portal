@@ -21,8 +21,6 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewTaxRateList>((completer, action) => false),
   TypedReducer<bool, FilterTaxRatesByState>((completer, action) => false),
   TypedReducer<bool, FilterTaxRates>((completer, action) => false),
-  TypedReducer<bool, FilterTaxRatesByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterTaxRatesByCustom2>((completer, action) => false),
 ]);
 
 Reducer<String> selectedIdReducer = combineReducers([
@@ -37,6 +35,9 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, SortTaxRates>((selectedId, action) => ''),
+  TypedReducer<String, FilterTaxRates>((selectedId, action) => ''),
+  TypedReducer<String, FilterTaxRatesByState>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<TaxRateEntity>([
@@ -70,8 +71,6 @@ final taxRateListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortTaxRates>(_sortTaxRates),
   TypedReducer<ListUIState, FilterTaxRatesByState>(_filterTaxRatesByState),
   TypedReducer<ListUIState, FilterTaxRates>(_filterTaxRates),
-  TypedReducer<ListUIState, FilterTaxRatesByCustom1>(_filterTaxRatesByCustom1),
-  TypedReducer<ListUIState, FilterTaxRatesByCustom2>(_filterTaxRatesByCustom2),
   TypedReducer<ListUIState, StartTaxRateMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToTaxRateMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromTaxRateMultiselect>(
@@ -86,26 +85,6 @@ ListUIState _viewTaxRateList(
     ..selectedIds = null
     ..filter = null
     ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
-}
-
-ListUIState _filterTaxRatesByCustom1(
-    ListUIState taxRateListState, FilterTaxRatesByCustom1 action) {
-  if (taxRateListState.custom1Filters.contains(action.value)) {
-    return taxRateListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
-  } else {
-    return taxRateListState.rebuild((b) => b..custom1Filters.add(action.value));
-  }
-}
-
-ListUIState _filterTaxRatesByCustom2(
-    ListUIState taxRateListState, FilterTaxRatesByCustom2 action) {
-  if (taxRateListState.custom2Filters.contains(action.value)) {
-    return taxRateListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
-  } else {
-    return taxRateListState.rebuild((b) => b..custom2Filters.add(action.value));
-  }
 }
 
 ListUIState _filterTaxRatesByState(

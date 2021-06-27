@@ -73,6 +73,14 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, SortQuotes>((selectedId, action) => ''),
+  TypedReducer<String, FilterQuotes>((selectedId, action) => ''),
+  TypedReducer<String, FilterQuotesByState>((selectedId, action) => ''),
+  TypedReducer<String, FilterQuotesByStatus>((selectedId, action) => ''),
+  TypedReducer<String, FilterQuotesByCustom1>((selectedId, action) => ''),
+  TypedReducer<String, FilterQuotesByCustom2>((selectedId, action) => ''),
+  TypedReducer<String, FilterQuotesByCustom3>((selectedId, action) => ''),
+  TypedReducer<String, FilterQuotesByCustom4>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.quote ? '' : selectedId),
   TypedReducer<String, FilterByEntity>(

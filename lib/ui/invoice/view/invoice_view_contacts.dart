@@ -48,6 +48,10 @@ class _InvitationListTile extends StatelessWidget {
         (contact) => contact.id == invitation.contactId,
         orElse: () => ContactEntity());
 
+    if (contact.isNew) {
+      return SizedBox();
+    }
+
     Widget icon = Icon(Icons.contacts);
     switch (invitation.emailStatus) {
       case InvitationEntity.EMAIL_STATUS_DELIVERED:

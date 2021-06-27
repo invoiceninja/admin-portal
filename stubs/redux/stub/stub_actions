@@ -326,7 +326,7 @@ void handleStubAction(
         );
         break;
       default:
-        print('Error: unhandled action $action in stub_actions');
+        print('## ERROR: unhandled action $action in stub_actions');
         break;
 
   }

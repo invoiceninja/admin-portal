@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -281,266 +283,277 @@ class SettingsSearch extends StatelessWidget {
   final SettingsListVM viewModel;
   final String filter;
 
-  static const map = {
-    kSettingsCompanyDetails: [
-      [
-        'name',
-        'id_number',
-        'vat_number',
-        'website',
-        'email',
-        'phone',
-        'size',
-        'industry',
-      ],
-      [
-        'address',
-        'postal_code',
-        'country',
-      ],
-      [
-        'logo',
-      ],
-      [
-        'defaults',
-        'auto_bill',
-        'payment_type',
-        'payment_terms',
-        'online_payment_email',
-        'manual_payment_email',
-        'invoice_terms',
-        'invoice_footer',
-        'quote_terms',
-        'quote_footer',
-        'credit_terms',
-        'credit_footer',
-      ],
-      [
-        'default_documents',
-      ]
-    ],
-    kSettingsUserDetails: [
-      [
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-        'password',
-        'accent_color',
-        'connect_google',
-        'connect_gmail',
-        'enable_two_factor',
-      ],
-      [
-        'notifications',
-      ],
-    ],
-    kSettingsLocalization: [
-      [
-        'currency',
-        'language',
-        'timezone',
-        'date_format',
-        'military_time',
-        'first_month_of_the_year',
-      ],
-      [
-        'custom_labels',
-      ],
-    ],
-    kSettingsOnlinePayments: [
-      [
-        'company_gateways',
-        'auto_bill_on',
-        'use_available_credits',
-        'allow_over_payment',
-        'allow_under_payment',
-      ]
-    ],
-    kSettingsTaxSettings: [
-      [
-        'tax_settings',
-      ],
-    ],
-    kSettingsTaxRates: [
-      [
-        'tax_rates',
-      ],
-    ],
-    kSettingsProducts: [
-      [
-        'fill_products',
-        'update_products',
-        'convert_products',
-      ],
-    ],
-    kSettingsTasks: [
-      [
-        'task_settings',
-        'auto_start_tasks',
-        'show_tasks_table',
-      ],
-    ],
-    kSettingsTaskStatuses: [
-      [
-        'task_statuses',
-      ],
-    ],
-    kSettingsExpenses: [
-      [
-        'should_be_invoiced',
-        'mark_paid',
-      ],
-    ],
-    kSettingsExpenseCategories: [
-      [
-        'expense_categories',
-      ],
-    ],
-    kSettingsImportExport: [
-      [
-        'import',
-        'export',
-      ],
-    ],
-    kSettingsDeviceSettings: [
-      [
-        'rows_per_page',
-        'dark_mode',
-        'long_press_multiselect',
-        'biometric_authentication',
-        'refresh_data',
-      ],
-    ],
-    kSettingsAccountManagement: [
-      [
-        'api_tokens',
-        'api_webhooks',
-        'purge_data',
-        'delete_company',
-      ],
-      [
-        'enabled_modules',
-      ],
-      [
-        'password_timeout',
-        'web_session_timeout',
-      ],
-    ],
-    kSettingsInvoiceDesign: [
-      [
-        'invoice_design',
-        'quote_design',
-        'page_size',
-        'font_size',
-        'primary_font',
-        'secondary_font',
-        'primary_color',
-        'secondary_color',
-      ],
-      [
-        'all_pages_header',
-        'all_pages_footer',
-        'empty_columns',
-      ],
-    ],
-    kSettingsCustomDesigns: [
-      [
-        'custom_designs',
-      ],
-    ],
-    kSettingsCustomFields: [
-      [
-        'custom_fields',
-      ],
-    ],
-    kSettingsGeneratedNumbers: [
-      [
-        'number_padding',
-        'number_counter',
-        'recurring_prefix',
-        'reset_counter',
-        'invoice_number',
-        'client_number',
-        'credit_number',
-        'payment_number',
-      ],
-    ],
-    kSettingsClientPortal: [
-      [
-        'client_portal',
-        'dashboard',
-        'tasks',
-        'portal_mode',
-        'subdomain',
-        'domain',
-        'client_registration',
-        'document_upload',
-      ],
-      [
-        'enable_portal_password',
-        'show_accept_invoice_terms',
-        'show_accept_quote_terms',
-        'require_invoice_signature',
-        'require_quote_signature',
-      ],
-      [
-        'messages',
-      ],
-      [
-        'custom_css',
-      ],
-    ],
-    kSettingsEmailSettings: [
-      [
-        'send_from_gmail',
-        'email_design',
-        'reply_to_email',
-        'reply_to_name',
-        'bcc_email',
-        'attach_pdf',
-        'attach_documents',
-        'attach_ubl',
-        'email_signature',
-      ],
-    ],
-    kSettingsTemplatesAndReminders: [
-      [
-        'template',
-        'send_reminders',
-        'late_fees',
-      ]
-    ],
-    kSettingsGroupSettings: [
-      [
-        'groups',
-      ],
-    ],
-    kSettingsSubscriptions: [
-      [
-        'subscriptions',
-      ],
-    ],
-    kSettingsWorkflowSettings: [
-      [
-        'auto_email_invoice',
-        'auto_archive_invoice',
-        'lock_invoices',
-      ],
-      [
-        'auto_convert',
-      ],
-    ],
-    kSettingsUserManagement: [
-      [
-        'users',
-      ],
-    ]
-  };
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final company = store.state.company;
+
+    final map = {
+      kSettingsCompanyDetails: [
+        [
+          'name',
+          'id_number',
+          'vat_number',
+          'website',
+          'email',
+          'phone',
+          'size',
+          'industry',
+          if (company.hasCustomField(CustomFieldType.company1))
+            company.getCustomFieldLabel(CustomFieldType.company1),
+          if (company.hasCustomField(CustomFieldType.company2))
+            company.getCustomFieldLabel(CustomFieldType.company2),
+          if (company.hasCustomField(CustomFieldType.company3))
+            company.getCustomFieldLabel(CustomFieldType.company3),
+          if (company.hasCustomField(CustomFieldType.company4))
+            company.getCustomFieldLabel(CustomFieldType.company4)
+        ],
+        [
+          'address',
+          'postal_code',
+          'country',
+        ],
+        [
+          'logo',
+        ],
+        [
+          'defaults',
+          'auto_bill',
+          'payment_type',
+          'payment_terms',
+          'online_payment_email',
+          'manual_payment_email',
+          'invoice_terms',
+          'invoice_footer',
+          'quote_terms',
+          'quote_footer',
+          'credit_terms',
+          'credit_footer',
+        ],
+        [
+          'default_documents',
+        ]
+      ],
+      kSettingsUserDetails: [
+        [
+          'first_name',
+          'last_name',
+          'email',
+          'phone',
+          'password',
+          'accent_color',
+          'connect_google',
+          'connect_gmail',
+          'enable_two_factor',
+        ],
+        [
+          'notifications',
+        ],
+      ],
+      kSettingsLocalization: [
+        [
+          'currency',
+          'language',
+          'timezone',
+          'date_format',
+          'military_time',
+          'first_month_of_the_year',
+        ],
+        [
+          'custom_labels',
+        ],
+      ],
+      kSettingsOnlinePayments: [
+        [
+          'company_gateways',
+          'auto_bill_on',
+          'use_available_credits',
+          'allow_over_payment',
+          'allow_under_payment',
+        ]
+      ],
+      kSettingsTaxSettings: [
+        [
+          'tax_settings',
+        ],
+      ],
+      kSettingsTaxRates: [
+        [
+          'tax_rates',
+        ],
+      ],
+      kSettingsProducts: [
+        [
+          'fill_products',
+          'update_products',
+          'convert_products',
+        ],
+      ],
+      kSettingsTasks: [
+        [
+          'task_settings',
+          'auto_start_tasks',
+          'show_tasks_table',
+        ],
+      ],
+      kSettingsTaskStatuses: [
+        [
+          'task_statuses',
+        ],
+      ],
+      kSettingsExpenses: [
+        [
+          'should_be_invoiced',
+          'mark_paid',
+        ],
+      ],
+      kSettingsExpenseCategories: [
+        [
+          'expense_categories',
+        ],
+      ],
+      kSettingsImportExport: [
+        [
+          'import',
+          'export',
+        ],
+      ],
+      kSettingsDeviceSettings: [
+        [
+          'rows_per_page',
+          'dark_mode',
+          'long_press_multiselect',
+          'biometric_authentication',
+          'refresh_data',
+        ],
+      ],
+      kSettingsAccountManagement: [
+        [
+          'api_tokens',
+          'api_webhooks',
+          'purge_data',
+          'delete_company',
+        ],
+        [
+          'enabled_modules',
+        ],
+        [
+          'password_timeout',
+          'web_session_timeout',
+        ],
+      ],
+      kSettingsInvoiceDesign: [
+        [
+          'invoice_design',
+          'quote_design',
+          'page_size',
+          'font_size',
+          'primary_font',
+          'secondary_font',
+          'primary_color',
+          'secondary_color',
+        ],
+        [
+          'all_pages_header',
+          'all_pages_footer',
+          'empty_columns',
+        ],
+      ],
+      kSettingsCustomDesigns: [
+        [
+          'custom_designs',
+        ],
+      ],
+      kSettingsCustomFields: [
+        [
+          'custom_fields',
+        ],
+      ],
+      kSettingsGeneratedNumbers: [
+        [
+          'number_padding',
+          'number_counter',
+          'recurring_prefix',
+          'reset_counter',
+          'invoice_number',
+          'client_number',
+          'credit_number',
+          'payment_number',
+        ],
+      ],
+      kSettingsClientPortal: [
+        [
+          'client_portal',
+          'dashboard',
+          'tasks',
+          'portal_mode',
+          'subdomain',
+          'domain',
+          'client_registration',
+          'document_upload',
+        ],
+        [
+          'enable_portal_password',
+          'show_accept_invoice_terms',
+          'show_accept_quote_terms',
+          'require_invoice_signature',
+          'require_quote_signature',
+        ],
+        [
+          'messages',
+        ],
+        [
+          'custom_css',
+        ],
+      ],
+      kSettingsEmailSettings: [
+        [
+          'send_from_gmail',
+          'email_design',
+          'reply_to_email',
+          'reply_to_name',
+          'bcc_email',
+          'attach_pdf',
+          'attach_documents',
+          'attach_ubl',
+          'email_signature',
+        ],
+      ],
+      kSettingsTemplatesAndReminders: [
+        [
+          'template',
+          'send_reminders',
+          'late_fees',
+        ]
+      ],
+      kSettingsGroupSettings: [
+        [
+          'groups',
+        ],
+      ],
+      kSettingsSubscriptions: [
+        [
+          'subscriptions',
+        ],
+      ],
+      kSettingsWorkflowSettings: [
+        [
+          'auto_email_invoice',
+          'auto_archive_invoice',
+          'lock_invoices',
+        ],
+        [
+          'auto_convert',
+        ],
+      ],
+      kSettingsUserManagement: [
+        [
+          'users',
+        ],
+      ]
+    };
+
     return ScrollableListView(
       children: <Widget>[
         for (var section in map.keys)
