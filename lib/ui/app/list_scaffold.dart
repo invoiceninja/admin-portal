@@ -88,7 +88,10 @@ class ListScaffold extends StatelessWidget {
           Expanded(
               child: IconButton(
             icon: Icon(Icons.check_box),
-            onPressed: () => onCheckboxPressed(),
+            onPressed: state.prefState.showKanban &&
+                    state.uiState.mainRoute == '${EntityType.task}'
+                ? null
+                : () => onCheckboxPressed(),
           )),
         ...appBarLeadingActions,
       ],
