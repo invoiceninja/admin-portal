@@ -120,7 +120,7 @@ abstract class WebhookEntity extends Object
     EVENT_UPDATE_TASK: 'update_task',
     EVENT_DELETE_TASK: 'delete_task',
     EVENT_LATE_INVOICE: 'late_invoice',
-    EVENT_EXPIRED_QUOTE: 'expried_quote',
+    EVENT_EXPIRED_QUOTE: 'expired_quote',
     EVENT_REMIND_INVOICE: 'remind_invoice',
   };
 
