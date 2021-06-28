@@ -89,6 +89,7 @@ class TaskListVM {
           state.userState.map,
           state.projectState.map,
           state.invoiceState.map,
+          state.taskStatusState.map,
           state.taskState.list,
           state.taskListState),
       taskMap: state.taskState.map,

@@ -56,6 +56,7 @@ class KanbanVM {
           state.userState.map,
           state.projectState.map,
           state.invoiceState.map,
+          state.taskStatusState.map,
           state.taskState.list,
           state.taskListState),
       filteredTaskList: memoizedFilteredTaskList(
@@ -65,6 +66,7 @@ class KanbanVM {
           state.userState.map,
           state.projectState.map,
           state.invoiceState.map,
+          state.taskStatusState.map,
           state.taskState.list,
           state.taskListState),
       onBoardChanged: (completer, statusIds, taskIds) {

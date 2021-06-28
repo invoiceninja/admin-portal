@@ -427,7 +427,8 @@ class EntityScreens extends StatelessWidget {
           !state
               .getEntityMap(previewEntityType)
               .containsKey(entityUIState.selectedId)) {
-        child = BlankScreen(AppLocalization.of(context).noRecordSelected);
+        //child = BlankScreen(AppLocalization.of(context).noRecordSelected);
+        child = BlankScreen();
       } else {
         switch (previewEntityType) {
           case EntityType.client:
