@@ -51,6 +51,7 @@ class TaskScreenVM {
           state.userState.map,
           state.projectState.map,
           state.invoiceState.map,
+          state.taskStatusState.map,
           state.taskState.list,
           state.taskListState),
       userCompany: state.userCompany,

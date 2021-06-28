@@ -586,13 +586,15 @@ abstract class TaskEntity extends Object
   }
 
   int compareTo(
-      TaskEntity task,
-      String sortField,
-      bool sortAscending,
-      BuiltMap<String, UserEntity> userMap,
-      BuiltMap<String, ClientEntity> clientMap,
-      BuiltMap<String, ProjectEntity> projectMap,
-      BuiltMap<String, InvoiceEntity> invoiceMap) {
+    TaskEntity task,
+    String sortField,
+    bool sortAscending,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, TaskStatusEntity> taskStatusMap,
+  ) {
     int response = 0;
     final TaskEntity taskA = sortAscending ? this : task;
     final TaskEntity taskB = sortAscending ? task : this;
@@ -665,6 +667,19 @@ abstract class TaskEntity extends Object
         break;
       case TaskFields.number:
         response = taskA.number.compareTo(taskB.number);
+        break;
+      case TaskFields.status:
+        final taskAStatus = taskA.isRunning
+            ? -1
+            : taskA.isInvoiced
+                ? 999999
+                : taskStatusMap[taskA.statusId].statusOrder;
+        final taskBStatus = taskB.isRunning
+            ? -1
+            : taskB.isInvoiced
+                ? 999999
+                : taskStatusMap[taskB.statusId].statusOrder;
+        response = taskAStatus.compareTo(taskBStatus);
         break;
       default:
         print('## ERROR: sort by task.$sortField is not implemented');
