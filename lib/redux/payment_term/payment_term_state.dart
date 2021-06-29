@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'payment_term_state.g.dart';
 
@@ -47,9 +48,10 @@ abstract class PaymentTermState
 abstract class PaymentTermUIState extends Object
     with EntityUIState
     implements Built<PaymentTermUIState, PaymentTermUIStateBuilder> {
-  factory PaymentTermUIState() {
+  factory PaymentTermUIState(PrefStateSortField sortField) {
     return _$PaymentTermUIState._(
-      listUIState: ListUIState(PaymentTermFields.name),
+      listUIState: ListUIState(sortField.field ?? PaymentTermFields.name,
+          sortAscending: sortField?.ascending),
       editing: PaymentTermEntity(),
       selectedId: '',
       tabIndex: 0,

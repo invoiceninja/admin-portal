@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/subscription_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'subscription_state.g.dart';
 
@@ -55,9 +56,10 @@ abstract class SubscriptionState
 abstract class SubscriptionUIState extends Object
     with EntityUIState
     implements Built<SubscriptionUIState, SubscriptionUIStateBuilder> {
-  factory SubscriptionUIState() {
+  factory SubscriptionUIState(PrefStateSortField sortField) {
     return _$SubscriptionUIState._(
-      listUIState: ListUIState(SubscriptionFields.createdAt),
+      listUIState: ListUIState(sortField.field ?? SubscriptionFields.createdAt,
+          sortAscending: sortField?.ascending),
       editing: SubscriptionEntity(),
       selectedId: '',
       tabIndex: 0,

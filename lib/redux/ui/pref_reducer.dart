@@ -74,7 +74,8 @@ BuiltMap<EntityType, PrefStateSortField> _resortFields(
     BuiltMap<EntityType, PrefStateSortField> value,
     EntityType entityType,
     String field) {
-  final sortField = value[entityType] ?? PrefStateSortField(field);
+  final sortField =
+      value[entityType] ?? PrefStateSortField(field, field != 'number');
   final directon = sortField.rebuild((b) => b
     ..ascending = sortField.field != field || !sortField.ascending
     ..field = field);

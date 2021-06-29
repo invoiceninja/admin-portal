@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'user_state.g.dart';
 
@@ -41,9 +42,10 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
 abstract class UserUIState extends Object
     with EntityUIState
     implements Built<UserUIState, UserUIStateBuilder> {
-  factory UserUIState() {
+  factory UserUIState(PrefStateSortField sortField) {
     return _$UserUIState._(
-      listUIState: ListUIState(UserFields.firstName),
+      listUIState: ListUIState(sortField.field ?? UserFields.firstName,
+          sortAscending: sortField?.ascending),
       editing: UserEntity(),
       selectedId: '',
       tabIndex: 0,

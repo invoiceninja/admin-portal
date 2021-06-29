@@ -131,10 +131,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
 abstract class PrefStateSortField
     implements Built<PrefStateSortField, PrefStateSortFieldBuilder> {
-  factory PrefStateSortField(String field) {
+  factory PrefStateSortField(String field, bool ascending) {
     return _$PrefStateSortField._(
-      field: field ?? '',
-      ascending: true,
+      field: field,
+      ascending: ascending,
     );
   }
 

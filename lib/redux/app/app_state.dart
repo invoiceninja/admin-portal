@@ -107,7 +107,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
               .map((index) => UserCompanyState(reportErrors))
               .toList()),
-      uiState: UIState(currentRoute: currentRoute),
+      uiState: UIState(
+          currentRoute: currentRoute, sortFields: prefState?.sortFields),
       prefState: prefState ?? PrefState(),
     );
   }

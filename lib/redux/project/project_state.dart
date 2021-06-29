@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'project_state.g.dart';
 
@@ -55,9 +56,10 @@ abstract class ProjectState
 abstract class ProjectUIState extends Object
     with EntityUIState
     implements Built<ProjectUIState, ProjectUIStateBuilder> {
-  factory ProjectUIState() {
+  factory ProjectUIState(PrefStateSortField sortField) {
     return _$ProjectUIState._(
-      listUIState: ListUIState(ProjectFields.number, sortAscending: false),
+      listUIState: ListUIState(sortField.field ?? ProjectFields.number,
+          sortAscending: sortField?.ascending ?? false),
       editing: ProjectEntity(),
       selectedId: '',
       tabIndex: 0,

@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'document_state.g.dart';
 
@@ -35,9 +36,10 @@ abstract class DocumentState
 abstract class DocumentUIState extends Object
     with EntityUIState
     implements Built<DocumentUIState, DocumentUIStateBuilder> {
-  factory DocumentUIState() {
+  factory DocumentUIState(PrefStateSortField sortField) {
     return _$DocumentUIState._(
-      listUIState: ListUIState(DocumentFields.name),
+      listUIState: ListUIState(sortField.field ?? DocumentFields.name,
+          sortAscending: sortField?.ascending),
       editing: DocumentEntity(),
       selectedId: '',
       tabIndex: 0,

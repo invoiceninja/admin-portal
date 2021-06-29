@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/webhook_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'webhook_state.g.dart';
 
@@ -46,9 +47,10 @@ abstract class WebhookState
 abstract class WebhookUIState extends Object
     with EntityUIState
     implements Built<WebhookUIState, WebhookUIStateBuilder> {
-  factory WebhookUIState() {
+  factory WebhookUIState(PrefStateSortField sortField) {
     return _$WebhookUIState._(
-      listUIState: ListUIState(WebhookFields.targetUrl),
+      listUIState: ListUIState(sortField.field ?? WebhookFields.targetUrl,
+          sortAscending: sortField?.ascending),
       editing: WebhookEntity(),
       selectedId: '',
       tabIndex: 0,

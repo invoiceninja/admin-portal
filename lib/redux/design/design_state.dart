@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'design_state.g.dart';
 
@@ -55,9 +56,10 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
 abstract class DesignUIState extends Object
     with EntityUIState
     implements Built<DesignUIState, DesignUIStateBuilder> {
-  factory DesignUIState() {
+  factory DesignUIState(PrefStateSortField sortField) {
     return _$DesignUIState._(
-      listUIState: ListUIState(DesignFields.name),
+      listUIState: ListUIState(sortField.field ?? DesignFields.name,
+          sortAscending: sortField?.ascending),
       editing: DesignEntity(),
       selectedId: '',
       tabIndex: 0,

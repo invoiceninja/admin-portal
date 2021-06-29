@@ -3,9 +3,11 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'recurring_invoice_state.g.dart';
 
@@ -56,9 +58,10 @@ abstract class RecurringInvoiceState
 abstract class RecurringInvoiceUIState extends Object
     with EntityUIState
     implements Built<RecurringInvoiceUIState, RecurringInvoiceUIStateBuilder> {
-  factory RecurringInvoiceUIState() {
+  factory RecurringInvoiceUIState(PrefStateSortField sortField) {
     return _$RecurringInvoiceUIState._(
-      listUIState: ListUIState(InvoiceFields.number),
+      listUIState: ListUIState(sortField.field ?? RecurringInvoiceFields.number,
+          sortAscending: sortField?.ascending ?? false),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,
