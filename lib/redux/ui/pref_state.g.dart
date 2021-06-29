@@ -162,6 +162,12 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'colorTheme',
       serializers.serialize(object.colorTheme,
           specifiedType: const FullType(String)),
+      'sortFields',
+      serializers.serialize(object.sortFields,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(EntityType),
+            const FullType(PrefStateSortField)
+          ])),
       'companyPrefs',
       serializers.serialize(object.companyPrefs,
           specifiedType: const FullType(BuiltMap, const [
@@ -248,6 +254,13 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'colorTheme':
           result.colorTheme = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'sortFields':
+          result.sortFields.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(EntityType),
+                const FullType(PrefStateSortField)
+              ])));
           break;
         case 'companyPrefs':
           result.companyPrefs.replace(serializers.deserialize(value,
@@ -517,6 +530,8 @@ class _$PrefState extends PrefState {
   @override
   final String colorTheme;
   @override
+  final BuiltMap<EntityType, PrefStateSortField> sortFields;
+  @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
 
   factory _$PrefState([void Function(PrefStateBuilder) updates]) =>
@@ -539,6 +554,7 @@ class _$PrefState extends PrefState {
       this.requireAuthentication,
       this.rowsPerPage,
       this.colorTheme,
+      this.sortFields,
       this.companyPrefs})
       : super._() {
     if (appLayout == null) {
@@ -590,6 +606,9 @@ class _$PrefState extends PrefState {
     if (colorTheme == null) {
       throw new BuiltValueNullFieldError('PrefState', 'colorTheme');
     }
+    if (sortFields == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'sortFields');
+    }
     if (companyPrefs == null) {
       throw new BuiltValueNullFieldError('PrefState', 'companyPrefs');
     }
@@ -622,6 +641,7 @@ class _$PrefState extends PrefState {
         requireAuthentication == other.requireAuthentication &&
         rowsPerPage == other.rowsPerPage &&
         colorTheme == other.colorTheme &&
+        sortFields == other.sortFields &&
         companyPrefs == other.companyPrefs;
   }
 
@@ -645,28 +665,31 @@ class _$PrefState extends PrefState {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        appLayout
+                                                                        $jc(
+                                                                            0,
+                                                                            appLayout
+                                                                                .hashCode),
+                                                                        moduleLayout
                                                                             .hashCode),
-                                                                    moduleLayout
+                                                                    menuSidebarMode
                                                                         .hashCode),
-                                                                menuSidebarMode
+                                                                historySidebarMode
                                                                     .hashCode),
-                                                            historySidebarMode
+                                                            useSidebarEditor
                                                                 .hashCode),
-                                                        useSidebarEditor
+                                                        isPreviewVisible
                                                             .hashCode),
-                                                    isPreviewVisible.hashCode),
-                                                isPreviewEnabled.hashCode),
-                                            isMenuVisible.hashCode),
-                                        showKanban.hashCode),
-                                    isHistoryVisible.hashCode),
-                                enableDarkMode.hashCode),
-                            showFilterSidebar.hashCode),
-                        longPressSelectionIsDefault.hashCode),
-                    requireAuthentication.hashCode),
-                rowsPerPage.hashCode),
-            colorTheme.hashCode),
+                                                    isPreviewEnabled.hashCode),
+                                                isMenuVisible.hashCode),
+                                            showKanban.hashCode),
+                                        isHistoryVisible.hashCode),
+                                    enableDarkMode.hashCode),
+                                showFilterSidebar.hashCode),
+                            longPressSelectionIsDefault.hashCode),
+                        requireAuthentication.hashCode),
+                    rowsPerPage.hashCode),
+                colorTheme.hashCode),
+            sortFields.hashCode),
         companyPrefs.hashCode));
   }
 
@@ -689,6 +712,7 @@ class _$PrefState extends PrefState {
           ..add('requireAuthentication', requireAuthentication)
           ..add('rowsPerPage', rowsPerPage)
           ..add('colorTheme', colorTheme)
+          ..add('sortFields', sortFields)
           ..add('companyPrefs', companyPrefs))
         .toString();
   }
@@ -774,6 +798,12 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   String get colorTheme => _$this._colorTheme;
   set colorTheme(String colorTheme) => _$this._colorTheme = colorTheme;
 
+  MapBuilder<EntityType, PrefStateSortField> _sortFields;
+  MapBuilder<EntityType, PrefStateSortField> get sortFields =>
+      _$this._sortFields ??= new MapBuilder<EntityType, PrefStateSortField>();
+  set sortFields(MapBuilder<EntityType, PrefStateSortField> sortFields) =>
+      _$this._sortFields = sortFields;
+
   MapBuilder<String, CompanyPrefState> _companyPrefs;
   MapBuilder<String, CompanyPrefState> get companyPrefs =>
       _$this._companyPrefs ??= new MapBuilder<String, CompanyPrefState>();
@@ -802,6 +832,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _requireAuthentication = _$v.requireAuthentication;
       _rowsPerPage = _$v.rowsPerPage;
       _colorTheme = _$v.colorTheme;
+      _sortFields = _$v.sortFields?.toBuilder();
       _companyPrefs = _$v.companyPrefs?.toBuilder();
       _$v = null;
     }
@@ -843,6 +874,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               requireAuthentication: requireAuthentication,
               rowsPerPage: rowsPerPage,
               colorTheme: colorTheme,
+              sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
     } catch (_) {
       String _$failedField;
@@ -850,6 +882,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
         _$failedField = 'useSidebarEditor';
         useSidebarEditor.build();
 
+        _$failedField = 'sortFields';
+        sortFields.build();
         _$failedField = 'companyPrefs';
         companyPrefs.build();
       } catch (e) {
