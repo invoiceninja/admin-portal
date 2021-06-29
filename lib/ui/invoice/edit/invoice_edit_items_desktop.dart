@@ -163,9 +163,21 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
               TableHeader(company.getCustomFieldLabel(customField3)),
             if (company.hasCustomField(customField4))
               TableHeader(company.getCustomFieldLabel(customField4)),
-            if (hasTax1) TableHeader(localization.tax),
-            if (hasTax2) TableHeader(localization.tax),
-            if (hasTax3) TableHeader(localization.tax),
+            if (hasTax1)
+              TableHeader(localization.tax +
+                  (company.settings.enableInclusiveTaxes
+                      ? ' - ${localization.inclusive}'
+                      : '')),
+            if (hasTax2)
+              TableHeader(localization.tax +
+                  (company.settings.enableInclusiveTaxes
+                      ? ' - ${localization.inclusive}'
+                      : '')),
+            if (hasTax3)
+              TableHeader(localization.tax +
+                  (company.settings.enableInclusiveTaxes
+                      ? ' - ${localization.inclusive}'
+                      : '')),
             TableHeader(
                 widget.isTasks ? localization.rate : localization.unitCost),
             if (company.enableProductQuantity || widget.isTasks)

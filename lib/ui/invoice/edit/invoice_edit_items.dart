@@ -310,7 +310,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     _onChanged();
                   });
                 },
-                labelText: localization.tax,
+                labelText: localization.tax +
+                    (company.settings.enableInclusiveTaxes
+                        ? ' - ${localization.inclusive}'
+                        : ''),
                 initialTaxName: _taxRate1.name,
                 initialTaxRate: _taxRate1.rate,
               ),
@@ -322,7 +325,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     _onChanged();
                   });
                 },
-                labelText: localization.tax,
+                labelText: localization.tax +
+                    (company.settings.enableInclusiveTaxes
+                        ? ' - ${localization.inclusive}'
+                        : ''),
                 initialTaxName: _taxRate2.name,
                 initialTaxRate: _taxRate2.rate,
               ),
@@ -334,7 +340,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     _onChanged();
                   });
                 },
-                labelText: localization.tax,
+                labelText: localization.tax +
+                    (company.settings.enableInclusiveTaxes
+                        ? ' - ${localization.inclusive}'
+                        : ''),
                 initialTaxName: _taxRate3.name,
                 initialTaxRate: _taxRate3.rate,
               ),

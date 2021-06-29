@@ -731,7 +731,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         TaxRateDropdown(
                           onSelected: (taxRate) =>
                               viewModel.onChanged(invoice.applyTax(taxRate)),
-                          labelText: localization.tax,
+                          labelText: localization.tax +
+                              (company.settings.enableInclusiveTaxes
+                                  ? ' - ${localization.inclusive}'
+                                  : ''),
                           initialTaxName: invoice.taxName1,
                           initialTaxRate: invoice.taxRate1,
                         ),
@@ -740,7 +743,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         TaxRateDropdown(
                           onSelected: (taxRate) => viewModel.onChanged(
                               invoice.applyTax(taxRate, isSecond: true)),
-                          labelText: localization.tax,
+                          labelText: localization.tax +
+                              (company.settings.enableInclusiveTaxes
+                                  ? ' - ${localization.inclusive}'
+                                  : ''),
                           initialTaxName: invoice.taxName2,
                           initialTaxRate: invoice.taxRate2,
                         ),
@@ -749,7 +755,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         TaxRateDropdown(
                           onSelected: (taxRate) => viewModel.onChanged(
                               invoice.applyTax(taxRate, isThird: true)),
-                          labelText: localization.tax,
+                          labelText: localization.tax +
+                              (company.settings.enableInclusiveTaxes
+                                  ? ' - ${localization.inclusive}'
+                                  : ''),
                           initialTaxName: invoice.taxName3,
                           initialTaxRate: invoice.taxRate3,
                         ),
