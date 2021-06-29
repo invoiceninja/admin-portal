@@ -58,7 +58,7 @@ abstract class QuoteUIState extends Object
     implements Built<QuoteUIState, QuoteUIStateBuilder> {
   factory QuoteUIState(PrefStateSortField sortField) {
     return _$QuoteUIState._(
-      listUIState: ListUIState(sortField.field ?? QuoteFields.number,
+      listUIState: ListUIState(sortField?.field ?? QuoteFields.number,
           sortAscending: sortField?.ascending ?? false),
       editing: InvoiceEntity(),
       selectedId: '',

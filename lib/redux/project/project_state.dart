@@ -58,7 +58,7 @@ abstract class ProjectUIState extends Object
     implements Built<ProjectUIState, ProjectUIStateBuilder> {
   factory ProjectUIState(PrefStateSortField sortField) {
     return _$ProjectUIState._(
-      listUIState: ListUIState(sortField.field ?? ProjectFields.number,
+      listUIState: ListUIState(sortField?.field ?? ProjectFields.number,
           sortAscending: sortField?.ascending ?? false),
       editing: ProjectEntity(),
       selectedId: '',

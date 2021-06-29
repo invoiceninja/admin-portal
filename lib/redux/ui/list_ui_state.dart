@@ -6,11 +6,11 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 part 'list_ui_state.g.dart';
 
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
-  factory ListUIState(String sortField, {bool sortAscending = true}) {
+  factory ListUIState(String sortField, {bool sortAscending}) {
     return _$ListUIState._(
         filterClearedAt: 0,
         sortField: sortField,
-        sortAscending: sortAscending,
+        sortAscending: sortAscending ?? true,
         stateFilters: BuiltList<EntityState>(<EntityState>[
           EntityState.active,
         ]),

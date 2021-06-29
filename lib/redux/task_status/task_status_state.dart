@@ -58,7 +58,7 @@ abstract class TaskStatusUIState extends Object
     implements Built<TaskStatusUIState, TaskStatusUIStateBuilder> {
   factory TaskStatusUIState(PrefStateSortField sortField) {
     return _$TaskStatusUIState._(
-      listUIState: ListUIState(sortField.field ?? TaskStatusFields.order,
+      listUIState: ListUIState(sortField?.field ?? TaskStatusFields.order,
           sortAscending: sortField?.ascending),
       editing: TaskStatusEntity(),
       selectedId: '',

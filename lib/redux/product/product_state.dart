@@ -57,7 +57,7 @@ abstract class ProductUIState extends Object
     implements Built<ProductUIState, ProductUIStateBuilder> {
   factory ProductUIState(PrefStateSortField sortField) {
     return _$ProductUIState._(
-      listUIState: ListUIState(sortField.field ?? ProductFields.productKey,
+      listUIState: ListUIState(sortField?.field ?? ProductFields.productKey,
           sortAscending: sortField?.ascending),
       editing: ProductEntity(),
       selectedId: '',

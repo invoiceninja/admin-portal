@@ -48,7 +48,7 @@ abstract class TokenUIState extends Object
     implements Built<TokenUIState, TokenUIStateBuilder> {
   factory TokenUIState(PrefStateSortField sortField) {
     return _$TokenUIState._(
-      listUIState: ListUIState(sortField.field ?? TokenFields.name,
+      listUIState: ListUIState(sortField?.field ?? TokenFields.name,
           sortAscending: sortField?.ascending),
       editing: TokenEntity(),
       selectedId: '',

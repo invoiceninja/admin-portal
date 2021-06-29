@@ -56,7 +56,7 @@ abstract class CreditUIState extends Object
     implements Built<CreditUIState, CreditUIStateBuilder> {
   factory CreditUIState(PrefStateSortField sortField) {
     return _$CreditUIState._(
-      listUIState: ListUIState(sortField.field ?? CreditFields.number,
+      listUIState: ListUIState(sortField?.field ?? CreditFields.number,
           sortAscending: sortField?.ascending ?? false),
       editing: InvoiceEntity(),
       selectedId: '',

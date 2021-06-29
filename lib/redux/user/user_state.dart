@@ -44,7 +44,7 @@ abstract class UserUIState extends Object
     implements Built<UserUIState, UserUIStateBuilder> {
   factory UserUIState(PrefStateSortField sortField) {
     return _$UserUIState._(
-      listUIState: ListUIState(sortField.field ?? UserFields.firstName,
+      listUIState: ListUIState(sortField?.field ?? UserFields.firstName,
           sortAscending: sortField?.ascending),
       editing: UserEntity(),
       selectedId: '',

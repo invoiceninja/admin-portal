@@ -38,7 +38,7 @@ abstract class DocumentUIState extends Object
     implements Built<DocumentUIState, DocumentUIStateBuilder> {
   factory DocumentUIState(PrefStateSortField sortField) {
     return _$DocumentUIState._(
-      listUIState: ListUIState(sortField.field ?? DocumentFields.name,
+      listUIState: ListUIState(sortField?.field ?? DocumentFields.name,
           sortAscending: sortField?.ascending),
       editing: DocumentEntity(),
       selectedId: '',

@@ -58,7 +58,7 @@ abstract class SubscriptionUIState extends Object
     implements Built<SubscriptionUIState, SubscriptionUIStateBuilder> {
   factory SubscriptionUIState(PrefStateSortField sortField) {
     return _$SubscriptionUIState._(
-      listUIState: ListUIState(sortField.field ?? SubscriptionFields.createdAt,
+      listUIState: ListUIState(sortField?.field ?? SubscriptionFields.createdAt,
           sortAscending: sortField?.ascending),
       editing: SubscriptionEntity(),
       selectedId: '',

@@ -58,7 +58,7 @@ abstract class DesignUIState extends Object
     implements Built<DesignUIState, DesignUIStateBuilder> {
   factory DesignUIState(PrefStateSortField sortField) {
     return _$DesignUIState._(
-      listUIState: ListUIState(sortField.field ?? DesignFields.name,
+      listUIState: ListUIState(sortField?.field ?? DesignFields.name,
           sortAscending: sortField?.ascending),
       editing: DesignEntity(),
       selectedId: '',

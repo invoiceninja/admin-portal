@@ -58,7 +58,7 @@ abstract class ExpenseCategoryUIState extends Object
     implements Built<ExpenseCategoryUIState, ExpenseCategoryUIStateBuilder> {
   factory ExpenseCategoryUIState(PrefStateSortField sortField) {
     return _$ExpenseCategoryUIState._(
-      listUIState: ListUIState(sortField.field ?? ExpenseCategoryFields.name,
+      listUIState: ListUIState(sortField?.field ?? ExpenseCategoryFields.name,
           sortAscending: sortField?.ascending),
       editing: ExpenseCategoryEntity(),
       selectedId: '',

@@ -58,7 +58,7 @@ abstract class PaymentUIState extends Object
     implements Built<PaymentUIState, PaymentUIStateBuilder> {
   factory PaymentUIState(PrefStateSortField sortField) {
     return _$PaymentUIState._(
-      listUIState: ListUIState(sortField.field ?? PaymentFields.number,
+      listUIState: ListUIState(sortField?.field ?? PaymentFields.number,
           sortAscending: sortField?.ascending ?? false),
       editing: PaymentEntity(),
       selectedId: '',

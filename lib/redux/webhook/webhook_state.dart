@@ -49,7 +49,7 @@ abstract class WebhookUIState extends Object
     implements Built<WebhookUIState, WebhookUIStateBuilder> {
   factory WebhookUIState(PrefStateSortField sortField) {
     return _$WebhookUIState._(
-      listUIState: ListUIState(sortField.field ?? WebhookFields.targetUrl,
+      listUIState: ListUIState(sortField?.field ?? WebhookFields.targetUrl,
           sortAscending: sortField?.ascending),
       editing: WebhookEntity(),
       selectedId: '',

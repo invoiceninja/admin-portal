@@ -60,7 +60,8 @@ abstract class RecurringInvoiceUIState extends Object
     implements Built<RecurringInvoiceUIState, RecurringInvoiceUIStateBuilder> {
   factory RecurringInvoiceUIState(PrefStateSortField sortField) {
     return _$RecurringInvoiceUIState._(
-      listUIState: ListUIState(sortField.field ?? RecurringInvoiceFields.number,
+      listUIState: ListUIState(
+          sortField?.field ?? RecurringInvoiceFields.number,
           sortAscending: sortField?.ascending ?? false),
       editing: InvoiceEntity(),
       selectedId: '',

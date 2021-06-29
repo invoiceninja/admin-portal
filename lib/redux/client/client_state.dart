@@ -56,7 +56,7 @@ abstract class ClientUIState extends Object
     implements Built<ClientUIState, ClientUIStateBuilder> {
   factory ClientUIState(PrefStateSortField sortField) {
     return _$ClientUIState._(
-      listUIState: ListUIState(sortField.field ?? ClientFields.name,
+      listUIState: ListUIState(sortField?.field ?? ClientFields.name,
           sortAscending: sortField?.ascending),
       editing: ClientEntity(),
       editingContact: ContactEntity(),

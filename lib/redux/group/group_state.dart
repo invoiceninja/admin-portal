@@ -44,7 +44,7 @@ abstract class GroupUIState extends Object
     implements Built<GroupUIState, GroupUIStateBuilder> {
   factory GroupUIState(PrefStateSortField sortField) {
     return _$GroupUIState._(
-      listUIState: ListUIState(sortField.field ?? GroupFields.name,
+      listUIState: ListUIState(sortField?.field ?? GroupFields.name,
           sortAscending: sortField?.ascending),
       editing: GroupEntity(),
       selectedId: '',
