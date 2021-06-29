@@ -69,6 +69,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   String get colorTheme;
 
+  //BuiltMap<EntityType, BuiltMap<String, bool>> get sortFields;
+
   ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
       ? colorThemesMap[colorTheme]
       : colorThemesMap[kColorThemeLight];
@@ -123,6 +125,29 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..colorTheme = kColorThemeLight;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
+}
+
+abstract class PrefStateSortField
+    implements Built<PrefStateSortField, PrefStateSortFieldBuilder> {
+  factory PrefStateSortField() {
+    return _$PrefStateSortField._(
+      field: '',
+      ascending: '',
+    );
+  }
+
+  PrefStateSortField._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get field;
+
+  bool get ascending;
+
+  static Serializer<PrefStateSortField> get serializer =>
+      _$prefStateSortFieldSerializer;
 }
 
 abstract class CompanyPrefState
