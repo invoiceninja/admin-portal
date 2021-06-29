@@ -20,11 +20,6 @@ const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 const String kTransifexURL =
     'https://www.transifex.com/invoice-ninja/invoice-ninja/';
-
-//const String kAppleStoreUrl = 'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
-//const String kGoogleStoreUrl = 'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
-
-//const String kSourceCodeBackend = 'https://github.com/invoiceninja/invoiceninja';
 const String kSourceCodeBackend =
     'https://github.com/invoiceninja/invoiceninja/tree/v5-stable';
 const String kSourceCodeFrontend =
@@ -33,7 +28,7 @@ const String kSourceCodeFrontendSDK = 'https://pub.dev/packages/invoiceninja';
 
 const String kAppleStoreUrl = 'https://testflight.apple.com/join/MJ6WpaXh';
 const String kGoogleStoreUrl =
-    'https://play.google.com/apps/testing/com.invoiceninja.app';
+    'https://play.google.com/store/apps/details?id=com.invoiceninja.app';
 const String kGoogleFDroidUrl =
     'https://f-droid.org/packages/com.invoiceninja.app/';
 const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
