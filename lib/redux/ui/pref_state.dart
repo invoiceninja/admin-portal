@@ -28,6 +28,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       longPressSelectionIsDefault: true,
       showKanban: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
+      sortFields: BuiltMap<EntityType, PrefStateSortField>(),
     );
   }
 
@@ -69,7 +70,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   String get colorTheme;
 
-  //BuiltMap<EntityType, BuiltMap<String, bool>> get sortFields;
+  BuiltMap<EntityType, PrefStateSortField> get sortFields;
 
   ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
       ? colorThemesMap[colorTheme]
@@ -120,6 +121,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
+    ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
     ..showKanban = false
     ..isPreviewEnabled = true
     ..colorTheme = kColorThemeLight;
@@ -132,7 +134,7 @@ abstract class PrefStateSortField
   factory PrefStateSortField() {
     return _$PrefStateSortField._(
       field: '',
-      ascending: '',
+      ascending: false,
     );
   }
 
