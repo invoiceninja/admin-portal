@@ -202,7 +202,7 @@ class FilterSubscriptions implements PersistUI {
   final String filter;
 }
 
-class SortSubscriptions implements PersistUI {
+class SortSubscriptions implements PersistUI, PersistPrefs {
   SortSubscriptions(this.field);
 
   final String field;

@@ -257,7 +257,7 @@ class FilterTasks implements PersistUI {
   final String filter;
 }
 
-class SortTasks implements PersistUI {
+class SortTasks implements PersistUI, PersistPrefs {
   SortTasks(this.field);
 
   final String field;

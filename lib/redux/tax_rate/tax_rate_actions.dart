@@ -196,7 +196,7 @@ class FilterTaxRates implements PersistUI {
   final String filter;
 }
 
-class SortTaxRates implements PersistUI {
+class SortTaxRates implements PersistUI, PersistPrefs {
   SortTaxRates(this.field);
 
   final String field;

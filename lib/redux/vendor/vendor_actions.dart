@@ -229,7 +229,7 @@ class FilterVendors implements PersistUI {
   final String filter;
 }
 
-class SortVendors implements PersistUI {
+class SortVendors implements PersistUI, PersistPrefs {
   SortVendors(this.field);
 
   final String field;

@@ -347,7 +347,7 @@ class FilterCredits implements PersistUI {
   final String filter;
 }
 
-class SortCredits implements PersistUI {
+class SortCredits implements PersistUI, PersistPrefs {
   SortCredits(this.field);
 
   final String field;

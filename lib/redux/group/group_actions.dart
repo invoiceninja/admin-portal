@@ -200,7 +200,7 @@ class FilterGroups implements PersistUI {
   final String filter;
 }
 
-class SortGroups implements PersistUI {
+class SortGroups implements PersistUI, PersistPrefs {
   SortGroups(this.field);
 
   final String field;
