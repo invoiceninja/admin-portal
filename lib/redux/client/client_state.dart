@@ -6,6 +6,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'client_state.g.dart';
 
@@ -53,9 +54,10 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 abstract class ClientUIState extends Object
     with EntityUIState
     implements Built<ClientUIState, ClientUIStateBuilder> {
-  factory ClientUIState() {
+  factory ClientUIState(PrefStateSortField sortField) {
     return _$ClientUIState._(
-      listUIState: ListUIState(ClientFields.name),
+      listUIState: ListUIState(sortField?.field ?? ClientFields.name,
+          sortAscending: sortField?.ascending),
       editing: ClientEntity(),
       editingContact: ContactEntity(),
       saveCompleter: null,

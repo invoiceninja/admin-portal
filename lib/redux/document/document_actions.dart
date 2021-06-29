@@ -206,7 +206,7 @@ class FilterDocuments implements PersistUI {
   final String filter;
 }
 
-class SortDocuments implements PersistUI {
+class SortDocuments implements PersistUI, PersistPrefs {
   SortDocuments(this.field);
 
   final String field;

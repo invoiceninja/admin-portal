@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'tax_rate_state.g.dart';
 
@@ -34,9 +35,10 @@ abstract class TaxRateState
 abstract class TaxRateUIState extends Object
     with EntityUIState
     implements Built<TaxRateUIState, TaxRateUIStateBuilder> {
-  factory TaxRateUIState() {
+  factory TaxRateUIState(PrefStateSortField sortField) {
     return _$TaxRateUIState._(
-      listUIState: ListUIState(TaxRateFields.name),
+      listUIState: ListUIState(sortField?.field ?? TaxRateFields.name,
+          sortAscending: sortField?.ascending),
       editing: TaxRateEntity(),
       selectedId: '',
       tabIndex: 0,

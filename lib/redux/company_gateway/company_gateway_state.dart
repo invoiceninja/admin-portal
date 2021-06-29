@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'company_gateway_state.g.dart';
 
@@ -43,9 +44,10 @@ abstract class CompanyGatewayState
 abstract class CompanyGatewayUIState extends Object
     with EntityUIState
     implements Built<CompanyGatewayUIState, CompanyGatewayUIStateBuilder> {
-  factory CompanyGatewayUIState() {
+  factory CompanyGatewayUIState(PrefStateSortField sortField) {
     return _$CompanyGatewayUIState._(
-      listUIState: ListUIState(CompanyGatewayFields.name),
+      listUIState: ListUIState(sortField?.field ?? CompanyGatewayFields.name,
+          sortAscending: sortField?.ascending),
       editing: CompanyGatewayEntity(),
       selectedId: '',
       tabIndex: 0,

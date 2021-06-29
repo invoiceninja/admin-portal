@@ -202,7 +202,7 @@ class FilterExpenseCategories implements PersistUI {
   final String filter;
 }
 
-class SortExpenseCategories implements PersistUI {
+class SortExpenseCategories implements PersistUI, PersistPrefs {
   SortExpenseCategories(this.field);
 
   final String field;

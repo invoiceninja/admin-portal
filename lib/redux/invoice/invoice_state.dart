@@ -6,6 +6,7 @@ import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'invoice_state.g.dart';
 
@@ -54,9 +55,10 @@ abstract class InvoiceState
 abstract class InvoiceUIState extends Object
     with EntityUIState
     implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
-  factory InvoiceUIState() {
+  factory InvoiceUIState(PrefStateSortField sortField) {
     return _$InvoiceUIState._(
-      listUIState: ListUIState(InvoiceFields.number, sortAscending: false),
+      listUIState: ListUIState(sortField?.field ?? InvoiceFields.number,
+          sortAscending: sortField?.ascending ?? false),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,

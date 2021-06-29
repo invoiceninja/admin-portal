@@ -43,7 +43,6 @@ class DesignListBuilder extends StatelessWidget {
               final isInMultiselect = listState.isInMultiselect();
 
               return DesignListItem(
-                user: viewModel.state.user,
                 filter: viewModel.filter,
                 design: design,
                 isChecked: isInMultiselect && listState.isSelected(design.id),

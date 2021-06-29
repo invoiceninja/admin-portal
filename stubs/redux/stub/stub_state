@@ -52,9 +52,9 @@ abstract class StubState implements Built<StubState, StubStateBuilder> {
 
 abstract class StubUIState extends Object with EntityUIState implements Built<StubUIState, StubUIStateBuilder> {
 
-  factory StubUIState() {
+  factory StubUIState(PrefStateSortField sortField) {
     return _$StubUIState._(
-      listUIState: ListUIState(StubFields.name),
+      listUIState: ListUIState(sortField?.field ?? StubFields.name, sortAscending: sortField?.ascending),
       editing: StubEntity(),
       selectedId: '',
       tabIndex: 0,

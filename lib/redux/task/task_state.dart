@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'task_state.g.dart';
 
@@ -54,9 +55,10 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
 abstract class TaskUIState extends Object
     with EntityUIState
     implements Built<TaskUIState, TaskUIStateBuilder> {
-  factory TaskUIState() {
+  factory TaskUIState(PrefStateSortField sortField) {
     return _$TaskUIState._(
-      listUIState: ListUIState(TaskFields.number, sortAscending: false),
+      listUIState: ListUIState(sortField?.field ?? TaskFields.number,
+          sortAscending: sortField?.ascending ?? false),
       editing: TaskEntity(),
       selectedId: '',
       tabIndex: 0,

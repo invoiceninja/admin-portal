@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'quote_state.g.dart';
 
@@ -55,9 +56,10 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
 abstract class QuoteUIState extends Object
     with EntityUIState
     implements Built<QuoteUIState, QuoteUIStateBuilder> {
-  factory QuoteUIState() {
+  factory QuoteUIState(PrefStateSortField sortField) {
     return _$QuoteUIState._(
-      listUIState: ListUIState(QuoteFields.number, sortAscending: false),
+      listUIState: ListUIState(sortField?.field ?? QuoteFields.number,
+          sortAscending: sortField?.ascending ?? false),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,

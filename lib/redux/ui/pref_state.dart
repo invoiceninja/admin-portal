@@ -28,6 +28,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       longPressSelectionIsDefault: true,
       showKanban: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
+      sortFields: BuiltMap<EntityType, PrefStateSortField>(),
     );
   }
 
@@ -68,6 +69,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   int get rowsPerPage;
 
   String get colorTheme;
+
+  BuiltMap<EntityType, PrefStateSortField> get sortFields;
 
   ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
       ? colorThemesMap[colorTheme]
@@ -118,11 +121,35 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
+    ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
     ..showKanban = false
     ..isPreviewEnabled = true
     ..colorTheme = kColorThemeLight;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
+}
+
+abstract class PrefStateSortField
+    implements Built<PrefStateSortField, PrefStateSortFieldBuilder> {
+  factory PrefStateSortField(String field, bool ascending) {
+    return _$PrefStateSortField._(
+      field: field,
+      ascending: ascending,
+    );
+  }
+
+  PrefStateSortField._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get field;
+
+  bool get ascending;
+
+  static Serializer<PrefStateSortField> get serializer =>
+      _$prefStateSortFieldSerializer;
 }
 
 abstract class CompanyPrefState

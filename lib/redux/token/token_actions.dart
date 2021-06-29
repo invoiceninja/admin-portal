@@ -215,7 +215,7 @@ class FilterTokens implements PersistUI {
   final String filter;
 }
 
-class SortTokens implements PersistUI {
+class SortTokens implements PersistUI, PersistPrefs {
   SortTokens(this.field);
 
   final String field;

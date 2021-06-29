@@ -410,7 +410,7 @@ class FilterInvoices implements PersistUI {
   final String filter;
 }
 
-class SortInvoices implements PersistUI {
+class SortInvoices implements PersistUI, PersistPrefs {
   SortInvoices(this.field);
 
   final String field;

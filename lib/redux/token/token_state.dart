@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'token_state.g.dart';
 
@@ -45,9 +46,10 @@ abstract class TokenState implements Built<TokenState, TokenStateBuilder> {
 abstract class TokenUIState extends Object
     with EntityUIState
     implements Built<TokenUIState, TokenUIStateBuilder> {
-  factory TokenUIState() {
+  factory TokenUIState(PrefStateSortField sortField) {
     return _$TokenUIState._(
-      listUIState: ListUIState(TokenFields.name),
+      listUIState: ListUIState(sortField?.field ?? TokenFields.name,
+          sortAscending: sortField?.ascending),
       editing: TokenEntity(),
       selectedId: '',
       tabIndex: 0,

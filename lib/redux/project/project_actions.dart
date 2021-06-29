@@ -204,7 +204,7 @@ class FilterProjects implements PersistUI {
   final String filter;
 }
 
-class SortProjects implements PersistUI {
+class SortProjects implements PersistUI, PersistPrefs {
   SortProjects(this.field);
 
   final String field;

@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'expense_state.g.dart';
 
@@ -55,9 +56,10 @@ abstract class ExpenseState
 abstract class ExpenseUIState extends Object
     with EntityUIState
     implements Built<ExpenseUIState, ExpenseUIStateBuilder> {
-  factory ExpenseUIState() {
+  factory ExpenseUIState(PrefStateSortField sortField) {
     return _$ExpenseUIState._(
-      listUIState: ListUIState(ExpenseFields.number, sortAscending: false),
+      listUIState: ListUIState(sortField?.field ?? ExpenseFields.number,
+          sortAscending: sortField?.ascending ?? false),
       editing: ExpenseEntity(),
       selectedId: '',
       tabIndex: 0,

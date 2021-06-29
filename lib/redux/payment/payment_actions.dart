@@ -246,7 +246,7 @@ class FilterPayments implements PersistUI {
   final String filter;
 }
 
-class SortPayments implements PersistUI {
+class SortPayments implements PersistUI, PersistPrefs {
   SortPayments(this.field);
 
   final String field;

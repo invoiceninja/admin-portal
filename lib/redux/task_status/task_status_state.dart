@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/task_status_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'task_status_state.g.dart';
 
@@ -55,9 +56,10 @@ abstract class TaskStatusState
 abstract class TaskStatusUIState extends Object
     with EntityUIState
     implements Built<TaskStatusUIState, TaskStatusUIStateBuilder> {
-  factory TaskStatusUIState() {
+  factory TaskStatusUIState(PrefStateSortField sortField) {
     return _$TaskStatusUIState._(
-      listUIState: ListUIState(TaskStatusFields.order),
+      listUIState: ListUIState(sortField?.field ?? TaskStatusFields.order,
+          sortAscending: sortField?.ascending),
       editing: TaskStatusEntity(),
       selectedId: '',
       tabIndex: 0,

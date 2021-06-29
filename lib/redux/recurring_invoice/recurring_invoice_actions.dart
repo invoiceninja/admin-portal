@@ -308,7 +308,7 @@ class FilterRecurringInvoices implements PersistUI {
   final String filter;
 }
 
-class SortRecurringInvoices implements PersistUI {
+class SortRecurringInvoices implements PersistUI, PersistPrefs {
   SortRecurringInvoices(this.field);
 
   final String field;

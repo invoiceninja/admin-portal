@@ -290,7 +290,7 @@ class FilterUsers {
   final String filter;
 }
 
-class SortUsers implements PersistUI {
+class SortUsers implements PersistUI, PersistPrefs {
   SortUsers(this.field);
 
   final String field;

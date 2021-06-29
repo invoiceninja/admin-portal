@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'vendor_state.g.dart';
 
@@ -54,9 +55,10 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
 abstract class VendorUIState extends Object
     with EntityUIState
     implements Built<VendorUIState, VendorUIStateBuilder> {
-  factory VendorUIState() {
+  factory VendorUIState(PrefStateSortField sortField) {
     return _$VendorUIState._(
-      listUIState: ListUIState(VendorFields.number, sortAscending: false),
+      listUIState: ListUIState(sortField?.field ?? VendorFields.name,
+          sortAscending: sortField?.ascending),
       editing: VendorEntity(),
       editingContact: VendorContactEntity(),
       selectedId: '',

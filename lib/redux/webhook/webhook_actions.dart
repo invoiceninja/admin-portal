@@ -205,7 +205,7 @@ class FilterWebhooks implements PersistUI {
   final String filter;
 }
 
-class SortWebhooks implements PersistUI {
+class SortWebhooks implements PersistUI, PersistPrefs {
   SortWebhooks(this.field);
 
   final String field;

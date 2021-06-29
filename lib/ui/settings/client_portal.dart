@@ -276,14 +276,13 @@ class _ClientPortalState extends State<ClientPortal>
                           child: Text(localization.subdomain),
                           value: kClientPortalModeSubdomain,
                         ),
-                        if (state.isEnterprisePlan)
-                          DropdownMenuItem(
-                            child: Text(localization.domain),
-                            value: kClientPortalModeDomain,
-                          ),
                         DropdownMenuItem(
                           child: Text('iFrame'),
                           value: kClientPortalModeIFrame,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.domain),
+                          value: kClientPortalModeDomain,
                         ),
                       ],
                     ),
@@ -319,8 +318,9 @@ class _ClientPortalState extends State<ClientPortal>
                         padding: const EdgeInsets.only(top: 16),
                         child: Text(portalUrl),
                       ),
-                    ] else
+                    ] else ...[
                       DecoratedFormField(
+                        enabled: state.isEnterprisePlan,
                         label: company.portalMode == kClientPortalModeDomain
                             ? localization.domainUrl
                             : localization.iFrameUrl,
@@ -331,6 +331,12 @@ class _ClientPortalState extends State<ClientPortal>
                             : null,
                         onSavePressed: viewModel.onSavePressed,
                       ),
+                      if (!state.isEnterprisePlan)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text(localization.requiresAnEnterprisePlan),
+                        )
+                    ],
                   ],
                 ),
               FormCard(

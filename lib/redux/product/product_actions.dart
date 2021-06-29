@@ -188,7 +188,7 @@ class FilterProducts implements PersistUI {
   final String filter;
 }
 
-class SortProducts implements PersistUI {
+class SortProducts implements PersistUI, PersistPrefs {
   SortProducts(this.field);
 
   final String field;

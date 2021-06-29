@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
@@ -62,10 +63,86 @@ PrefState prefReducer(
       ..requireAuthentication =
           requireAuthenticationReducer(state.requireAuthentication, action)
       ..colorTheme = colorThemeReducer(state.colorTheme, action)
-      ..useSidebarEditor
-          .replace(sidebarEditorReducer(state.useSidebarEditor, action)),
+      ..useSidebarEditor.replace(
+        sidebarEditorReducer(state.useSidebarEditor, action),
+      )
+      ..sortFields.replace(sortFieldsReducer(state.sortFields, action)),
   );
 }
+
+BuiltMap<EntityType, PrefStateSortField> _resortFields(
+    BuiltMap<EntityType, PrefStateSortField> value,
+    EntityType entityType,
+    String field) {
+  final sortField =
+      value[entityType] ?? PrefStateSortField(field, field != 'number');
+  final directon = sortField.rebuild((b) => b
+    ..ascending = sortField.field != field || !sortField.ascending
+    ..field = field);
+  return value.rebuild((b) => b..[entityType] = directon);
+}
+
+Reducer<BuiltMap<EntityType, PrefStateSortField>> sortFieldsReducer =
+    combineReducers([
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortClients>(
+      (value, action) => _resortFields(value, EntityType.client, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortProducts>(
+      (value, action) =>
+          _resortFields(value, EntityType.product, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortInvoices>(
+      (value, action) =>
+          _resortFields(value, EntityType.invoice, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortPayments>(
+      (value, action) =>
+          _resortFields(value, EntityType.payment, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortRecurringInvoices>(
+      (value, action) =>
+          _resortFields(value, EntityType.recurringInvoice, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortQuotes>(
+      (value, action) => _resortFields(value, EntityType.quote, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortCredits>(
+      (value, action) => _resortFields(value, EntityType.credit, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortProjects>(
+      (value, action) =>
+          _resortFields(value, EntityType.project, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortTasks>(
+      (value, action) => _resortFields(value, EntityType.task, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortVendors>(
+      (value, action) => _resortFields(value, EntityType.vendor, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortExpenses>(
+      (value, action) =>
+          _resortFields(value, EntityType.expense, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortPaymentTerms>(
+      (value, action) =>
+          _resortFields(value, EntityType.payment, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortTaxRates>(
+      (value, action) =>
+          _resortFields(value, EntityType.taxRate, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortCompanyGateways>(
+      (value, action) =>
+          _resortFields(value, EntityType.companyGateway, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortUsers>(
+      (value, action) => _resortFields(value, EntityType.user, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortGroups>(
+      (value, action) => _resortFields(value, EntityType.group, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortDesigns>(
+      (value, action) => _resortFields(value, EntityType.design, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortTokens>(
+      (value, action) => _resortFields(value, EntityType.token, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortWebhooks>(
+      (value, action) =>
+          _resortFields(value, EntityType.webhook, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortExpenseCategories>(
+      (value, action) =>
+          _resortFields(value, EntityType.expenseCategory, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortTaskStatuses>(
+      (value, action) =>
+          _resortFields(value, EntityType.taskStatus, action.field)),
+  TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortSubscriptions>(
+      (value, action) =>
+          _resortFields(value, EntityType.subscription, action.field)),
+  // TODO add to starter.sh
+]);
 
 Reducer<BuiltMap<EntityType, bool>> sidebarEditorReducer = combineReducers([
   TypedReducer<BuiltMap<EntityType, bool>, ToggleEditorLayout>((value, action) {

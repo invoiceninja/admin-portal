@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
@@ -40,7 +41,10 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
-  factory UIState({String currentRoute}) {
+  factory UIState({
+    String currentRoute,
+    BuiltMap<EntityType, PrefStateSortField> sortFields,
+  }) {
     return _$UIState._(
       selectedCompanyIndex: 0,
       filterClearedAt: 0,
@@ -48,32 +52,37 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       previousRoute: '',
       previewStack: BuiltList<EntityType>(),
       dashboardUIState: DashboardUIState(),
-      productUIState: ProductUIState(),
-      clientUIState: ClientUIState(),
-      invoiceUIState: InvoiceUIState(),
-      // STARTER: constructor - do not remove comment
-      subscriptionUIState: SubscriptionUIState(),
-      taskStatusUIState: TaskStatusUIState(),
-      expenseCategoryUIState: ExpenseCategoryUIState(),
-      recurringInvoiceUIState: RecurringInvoiceUIState(),
-      webhookUIState: WebhookUIState(),
-      tokenUIState: TokenUIState(),
-      paymentTermUIState: PaymentTermUIState(),
-      designUIState: DesignUIState(),
-      creditUIState: CreditUIState(),
-      userUIState: UserUIState(),
-      taxRateUIState: TaxRateUIState(),
-      companyGatewayUIState: CompanyGatewayUIState(),
-      groupUIState: GroupUIState(),
-      documentUIState: DocumentUIState(),
-      expenseUIState: ExpenseUIState(),
-      vendorUIState: VendorUIState(),
-      taskUIState: TaskUIState(),
-      projectUIState: ProjectUIState(),
-      paymentUIState: PaymentUIState(),
-      quoteUIState: QuoteUIState(),
       settingsUIState: SettingsUIState(),
       reportsUIState: ReportsUIState(),
+      productUIState: ProductUIState(sortFields[EntityType.product]),
+      clientUIState: ClientUIState(sortFields[EntityType.client]),
+      invoiceUIState: InvoiceUIState(sortFields[EntityType.invoice]),
+      subscriptionUIState:
+          SubscriptionUIState(sortFields[EntityType.subscription]),
+      taskStatusUIState: TaskStatusUIState(sortFields[EntityType.taskStatus]),
+      expenseCategoryUIState:
+          ExpenseCategoryUIState(sortFields[EntityType.expenseCategory]),
+      recurringInvoiceUIState:
+          RecurringInvoiceUIState(sortFields[EntityType.recurringInvoice]),
+      webhookUIState: WebhookUIState(sortFields[EntityType.webhook]),
+      tokenUIState: TokenUIState(sortFields[EntityType.token]),
+      paymentTermUIState:
+          PaymentTermUIState(sortFields[EntityType.paymentTerm]),
+      designUIState: DesignUIState(sortFields[EntityType.design]),
+      creditUIState: CreditUIState(sortFields[EntityType.credit]),
+      userUIState: UserUIState(sortFields[EntityType.user]),
+      taxRateUIState: TaxRateUIState(sortFields[EntityType.taxRate]),
+      companyGatewayUIState:
+          CompanyGatewayUIState(sortFields[EntityType.companyGateway]),
+      groupUIState: GroupUIState(sortFields[EntityType.group]),
+      documentUIState: DocumentUIState(sortFields[EntityType.document]),
+      expenseUIState: ExpenseUIState(sortFields[EntityType.expense]),
+      vendorUIState: VendorUIState(sortFields[EntityType.vendor]),
+      taskUIState: TaskUIState(sortFields[EntityType.task]),
+      projectUIState: ProjectUIState(sortFields[EntityType.project]),
+      paymentUIState: PaymentUIState(sortFields[EntityType.payment]),
+      quoteUIState: QuoteUIState(sortFields[EntityType.quote]),
+      // STARTER: constructor - do not remove comment
     );
   }
 

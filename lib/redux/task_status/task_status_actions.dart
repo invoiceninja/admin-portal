@@ -202,7 +202,7 @@ class FilterTaskStatuses implements PersistUI {
   final String filter;
 }
 
-class SortTaskStatuses implements PersistUI {
+class SortTaskStatuses implements PersistUI, PersistPrefs {
   SortTaskStatuses(this.field);
 
   final String field;

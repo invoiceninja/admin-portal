@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/credit_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 
 part 'credit_state.g.dart';
 
@@ -53,9 +54,10 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
 abstract class CreditUIState extends Object
     with EntityUIState
     implements Built<CreditUIState, CreditUIStateBuilder> {
-  factory CreditUIState() {
+  factory CreditUIState(PrefStateSortField sortField) {
     return _$CreditUIState._(
-      listUIState: ListUIState(CreditFields.number, sortAscending: false),
+      listUIState: ListUIState(sortField?.field ?? CreditFields.number,
+          sortAscending: sortField?.ascending ?? false),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,

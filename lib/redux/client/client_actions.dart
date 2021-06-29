@@ -234,7 +234,7 @@ class FilterClients implements PersistUI {
   final String filter;
 }
 
-class SortClients implements PersistUI {
+class SortClients implements PersistUI, PersistPrefs {
   SortClients(this.field);
 
   final String field;

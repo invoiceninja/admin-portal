@@ -203,7 +203,7 @@ class FilterPaymentTerms implements PersistUI {
   final String filter;
 }
 
-class SortPaymentTerms implements PersistUI {
+class SortPaymentTerms implements PersistUI, PersistPrefs {
   SortPaymentTerms(this.field);
 
   final String field;

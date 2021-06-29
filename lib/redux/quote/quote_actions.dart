@@ -347,7 +347,7 @@ class FilterQuotes implements PersistUI {
   final String filter;
 }
 
-class SortQuotes implements PersistUI {
+class SortQuotes implements PersistUI, PersistPrefs {
   SortQuotes(this.field);
 
   final String field;

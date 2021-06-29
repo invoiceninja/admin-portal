@@ -90,6 +90,8 @@ final BuiltSet<AppSidebarMode> _$valuesSidebarMode =
 ]);
 
 Serializer<PrefState> _$prefStateSerializer = new _$PrefStateSerializer();
+Serializer<PrefStateSortField> _$prefStateSortFieldSerializer =
+    new _$PrefStateSortFieldSerializer();
 Serializer<CompanyPrefState> _$companyPrefStateSerializer =
     new _$CompanyPrefStateSerializer();
 Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
@@ -160,6 +162,12 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'colorTheme',
       serializers.serialize(object.colorTheme,
           specifiedType: const FullType(String)),
+      'sortFields',
+      serializers.serialize(object.sortFields,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(EntityType),
+            const FullType(PrefStateSortField)
+          ])),
       'companyPrefs',
       serializers.serialize(object.companyPrefs,
           specifiedType: const FullType(BuiltMap, const [
@@ -247,12 +255,68 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.colorTheme = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'sortFields':
+          result.sortFields.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(EntityType),
+                const FullType(PrefStateSortField)
+              ])));
+          break;
         case 'companyPrefs':
           result.companyPrefs.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(CompanyPrefState)
               ])));
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$PrefStateSortFieldSerializer
+    implements StructuredSerializer<PrefStateSortField> {
+  @override
+  final Iterable<Type> types = const [PrefStateSortField, _$PrefStateSortField];
+  @override
+  final String wireName = 'PrefStateSortField';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, PrefStateSortField object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'field',
+      serializers.serialize(object.field,
+          specifiedType: const FullType(String)),
+      'ascending',
+      serializers.serialize(object.ascending,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  PrefStateSortField deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PrefStateSortFieldBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'field':
+          result.field = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'ascending':
+          result.ascending = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -466,6 +530,8 @@ class _$PrefState extends PrefState {
   @override
   final String colorTheme;
   @override
+  final BuiltMap<EntityType, PrefStateSortField> sortFields;
+  @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
 
   factory _$PrefState([void Function(PrefStateBuilder) updates]) =>
@@ -488,6 +554,7 @@ class _$PrefState extends PrefState {
       this.requireAuthentication,
       this.rowsPerPage,
       this.colorTheme,
+      this.sortFields,
       this.companyPrefs})
       : super._() {
     if (appLayout == null) {
@@ -539,6 +606,9 @@ class _$PrefState extends PrefState {
     if (colorTheme == null) {
       throw new BuiltValueNullFieldError('PrefState', 'colorTheme');
     }
+    if (sortFields == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'sortFields');
+    }
     if (companyPrefs == null) {
       throw new BuiltValueNullFieldError('PrefState', 'companyPrefs');
     }
@@ -571,6 +641,7 @@ class _$PrefState extends PrefState {
         requireAuthentication == other.requireAuthentication &&
         rowsPerPage == other.rowsPerPage &&
         colorTheme == other.colorTheme &&
+        sortFields == other.sortFields &&
         companyPrefs == other.companyPrefs;
   }
 
@@ -594,28 +665,31 @@ class _$PrefState extends PrefState {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        appLayout
+                                                                        $jc(
+                                                                            0,
+                                                                            appLayout
+                                                                                .hashCode),
+                                                                        moduleLayout
                                                                             .hashCode),
-                                                                    moduleLayout
+                                                                    menuSidebarMode
                                                                         .hashCode),
-                                                                menuSidebarMode
+                                                                historySidebarMode
                                                                     .hashCode),
-                                                            historySidebarMode
+                                                            useSidebarEditor
                                                                 .hashCode),
-                                                        useSidebarEditor
+                                                        isPreviewVisible
                                                             .hashCode),
-                                                    isPreviewVisible.hashCode),
-                                                isPreviewEnabled.hashCode),
-                                            isMenuVisible.hashCode),
-                                        showKanban.hashCode),
-                                    isHistoryVisible.hashCode),
-                                enableDarkMode.hashCode),
-                            showFilterSidebar.hashCode),
-                        longPressSelectionIsDefault.hashCode),
-                    requireAuthentication.hashCode),
-                rowsPerPage.hashCode),
-            colorTheme.hashCode),
+                                                    isPreviewEnabled.hashCode),
+                                                isMenuVisible.hashCode),
+                                            showKanban.hashCode),
+                                        isHistoryVisible.hashCode),
+                                    enableDarkMode.hashCode),
+                                showFilterSidebar.hashCode),
+                            longPressSelectionIsDefault.hashCode),
+                        requireAuthentication.hashCode),
+                    rowsPerPage.hashCode),
+                colorTheme.hashCode),
+            sortFields.hashCode),
         companyPrefs.hashCode));
   }
 
@@ -638,6 +712,7 @@ class _$PrefState extends PrefState {
           ..add('requireAuthentication', requireAuthentication)
           ..add('rowsPerPage', rowsPerPage)
           ..add('colorTheme', colorTheme)
+          ..add('sortFields', sortFields)
           ..add('companyPrefs', companyPrefs))
         .toString();
   }
@@ -723,6 +798,12 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   String get colorTheme => _$this._colorTheme;
   set colorTheme(String colorTheme) => _$this._colorTheme = colorTheme;
 
+  MapBuilder<EntityType, PrefStateSortField> _sortFields;
+  MapBuilder<EntityType, PrefStateSortField> get sortFields =>
+      _$this._sortFields ??= new MapBuilder<EntityType, PrefStateSortField>();
+  set sortFields(MapBuilder<EntityType, PrefStateSortField> sortFields) =>
+      _$this._sortFields = sortFields;
+
   MapBuilder<String, CompanyPrefState> _companyPrefs;
   MapBuilder<String, CompanyPrefState> get companyPrefs =>
       _$this._companyPrefs ??= new MapBuilder<String, CompanyPrefState>();
@@ -751,6 +832,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _requireAuthentication = _$v.requireAuthentication;
       _rowsPerPage = _$v.rowsPerPage;
       _colorTheme = _$v.colorTheme;
+      _sortFields = _$v.sortFields?.toBuilder();
       _companyPrefs = _$v.companyPrefs?.toBuilder();
       _$v = null;
     }
@@ -792,6 +874,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               requireAuthentication: requireAuthentication,
               rowsPerPage: rowsPerPage,
               colorTheme: colorTheme,
+              sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
     } catch (_) {
       String _$failedField;
@@ -799,6 +882,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
         _$failedField = 'useSidebarEditor';
         useSidebarEditor.build();
 
+        _$failedField = 'sortFields';
+        sortFields.build();
         _$failedField = 'companyPrefs';
         companyPrefs.build();
       } catch (e) {
@@ -807,6 +892,102 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$PrefStateSortField extends PrefStateSortField {
+  @override
+  final String field;
+  @override
+  final bool ascending;
+
+  factory _$PrefStateSortField(
+          [void Function(PrefStateSortFieldBuilder) updates]) =>
+      (new PrefStateSortFieldBuilder()..update(updates)).build();
+
+  _$PrefStateSortField._({this.field, this.ascending}) : super._() {
+    if (field == null) {
+      throw new BuiltValueNullFieldError('PrefStateSortField', 'field');
+    }
+    if (ascending == null) {
+      throw new BuiltValueNullFieldError('PrefStateSortField', 'ascending');
+    }
+  }
+
+  @override
+  PrefStateSortField rebuild(
+          void Function(PrefStateSortFieldBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PrefStateSortFieldBuilder toBuilder() =>
+      new PrefStateSortFieldBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is PrefStateSortField &&
+        field == other.field &&
+        ascending == other.ascending;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, field.hashCode), ascending.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('PrefStateSortField')
+          ..add('field', field)
+          ..add('ascending', ascending))
+        .toString();
+  }
+}
+
+class PrefStateSortFieldBuilder
+    implements Builder<PrefStateSortField, PrefStateSortFieldBuilder> {
+  _$PrefStateSortField _$v;
+
+  String _field;
+  String get field => _$this._field;
+  set field(String field) => _$this._field = field;
+
+  bool _ascending;
+  bool get ascending => _$this._ascending;
+  set ascending(bool ascending) => _$this._ascending = ascending;
+
+  PrefStateSortFieldBuilder();
+
+  PrefStateSortFieldBuilder get _$this {
+    if (_$v != null) {
+      _field = _$v.field;
+      _ascending = _$v.ascending;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PrefStateSortField other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$PrefStateSortField;
+  }
+
+  @override
+  void update(void Function(PrefStateSortFieldBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$PrefStateSortField build() {
+    final _$result =
+        _$v ?? new _$PrefStateSortField._(field: field, ascending: ascending);
     replace(_$result);
     return _$result;
   }

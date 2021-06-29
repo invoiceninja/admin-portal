@@ -198,7 +198,7 @@ class FilterCompanyGateways implements PersistUI {
   final String filter;
 }
 
-class SortCompanyGateways implements PersistUI {
+class SortCompanyGateways implements PersistUI, PersistPrefs {
   SortCompanyGateways(this.field);
 
   final String field;
