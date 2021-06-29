@@ -90,6 +90,8 @@ final BuiltSet<AppSidebarMode> _$valuesSidebarMode =
 ]);
 
 Serializer<PrefState> _$prefStateSerializer = new _$PrefStateSerializer();
+Serializer<PrefStateSortField> _$prefStateSortFieldSerializer =
+    new _$PrefStateSortFieldSerializer();
 Serializer<CompanyPrefState> _$companyPrefStateSerializer =
     new _$CompanyPrefStateSerializer();
 Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
@@ -253,6 +255,55 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
                 const FullType(String),
                 const FullType(CompanyPrefState)
               ])));
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$PrefStateSortFieldSerializer
+    implements StructuredSerializer<PrefStateSortField> {
+  @override
+  final Iterable<Type> types = const [PrefStateSortField, _$PrefStateSortField];
+  @override
+  final String wireName = 'PrefStateSortField';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, PrefStateSortField object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'field',
+      serializers.serialize(object.field,
+          specifiedType: const FullType(String)),
+      'ascending',
+      serializers.serialize(object.ascending,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  PrefStateSortField deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PrefStateSortFieldBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'field':
+          result.field = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'ascending':
+          result.ascending = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -807,6 +858,102 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$PrefStateSortField extends PrefStateSortField {
+  @override
+  final String field;
+  @override
+  final bool ascending;
+
+  factory _$PrefStateSortField(
+          [void Function(PrefStateSortFieldBuilder) updates]) =>
+      (new PrefStateSortFieldBuilder()..update(updates)).build();
+
+  _$PrefStateSortField._({this.field, this.ascending}) : super._() {
+    if (field == null) {
+      throw new BuiltValueNullFieldError('PrefStateSortField', 'field');
+    }
+    if (ascending == null) {
+      throw new BuiltValueNullFieldError('PrefStateSortField', 'ascending');
+    }
+  }
+
+  @override
+  PrefStateSortField rebuild(
+          void Function(PrefStateSortFieldBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PrefStateSortFieldBuilder toBuilder() =>
+      new PrefStateSortFieldBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is PrefStateSortField &&
+        field == other.field &&
+        ascending == other.ascending;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, field.hashCode), ascending.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('PrefStateSortField')
+          ..add('field', field)
+          ..add('ascending', ascending))
+        .toString();
+  }
+}
+
+class PrefStateSortFieldBuilder
+    implements Builder<PrefStateSortField, PrefStateSortFieldBuilder> {
+  _$PrefStateSortField _$v;
+
+  String _field;
+  String get field => _$this._field;
+  set field(String field) => _$this._field = field;
+
+  bool _ascending;
+  bool get ascending => _$this._ascending;
+  set ascending(bool ascending) => _$this._ascending = ascending;
+
+  PrefStateSortFieldBuilder();
+
+  PrefStateSortFieldBuilder get _$this {
+    if (_$v != null) {
+      _field = _$v.field;
+      _ascending = _$v.ascending;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PrefStateSortField other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$PrefStateSortField;
+  }
+
+  @override
+  void update(void Function(PrefStateSortFieldBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$PrefStateSortField build() {
+    final _$result =
+        _$v ?? new _$PrefStateSortField._(field: field, ascending: ascending);
     replace(_$result);
     return _$result;
   }
