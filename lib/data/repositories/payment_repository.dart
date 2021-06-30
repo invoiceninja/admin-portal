@@ -64,10 +64,7 @@ class PaymentRepository {
     dynamic response;
 
     if (payment.isNew) {
-      var url = credentials.url + '/payments?';
-      if (sendEmail) {
-        url += '&email_receipt=true';
-      }
+      final url = '${credentials.url}/payments?email_receipt=$sendEmail';
       response =
           await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
