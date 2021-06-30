@@ -228,8 +228,7 @@ class _ClientPortalState extends State<ClientPortal>
     final settings = viewModel.settings;
     final registrationUrl = portalRegistrationUrlSelector(state);
     final portalUrl =
-        kAppProductionUrl.replaceFirst('//', '//${state.company.subdomain}.') +
-            '/...';
+        kAppProductionUrl.replaceFirst('//', '//${state.company.subdomain}.');
 
     return EditScaffold(
       title: localization.clientPortal,
