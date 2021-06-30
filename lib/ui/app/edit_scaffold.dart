@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -59,11 +60,15 @@ class EditScaffold extends StatelessWidget {
         (!state.isLoading && !state.isSaving);
     bool isCancelEnabled = false;
 
-    if (isAdvancedSettings && !state.isProPlan) {
-      showUpgradeBanner = true;
-      if (isEnabled) {
-        isCancelEnabled = true;
-        isEnabled = false;
+    if (!state.isProPlan) {
+      if (isAdvancedSettings) {
+        showUpgradeBanner = true;
+        if (isEnabled) {
+          isCancelEnabled = true;
+          isEnabled = false;
+        }
+      } else if (state.uiState.currentRoute == AccountManagementScreen.route) {
+        showUpgradeBanner = true;
       }
     }
 
