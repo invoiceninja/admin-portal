@@ -350,12 +350,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             .onChanged(invoice.rebuild((b) => b..date = date));
                       },
                     ),
-                    if (entityType != EntityType.credit)
                       DatePicker(
                         key: ValueKey('__terms_${client.id}__'),
-                        labelText: entityType == EntityType.quote
-                            ? localization.validUntil
-                            : localization.dueDate,
+                        labelText: entityType == EntityType.invoice
+                            ? localization.dueDate
+                            : localization.validUntil,
                         selectedDate: invoice.dueDate,
                         message: termsString,
                         onSelected: (date) {

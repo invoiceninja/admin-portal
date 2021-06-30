@@ -25,6 +25,7 @@ class CreditPresenter extends EntityPresenter {
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
       CreditFields.discount,
+      CreditFields.validUntil,
       CreditFields.poNumber,
       CreditFields.publicNotes,
       CreditFields.privateNotes,
@@ -58,6 +59,8 @@ class CreditPresenter extends EntityPresenter {
             .listDisplayName);
       case CreditFields.date:
         return Text(formatDate(credit.date, context));
+      case CreditFields.validUntil:
+        return Text(formatDate(credit.dueDate, context));
       case CreditFields.amount:
         return Align(
           alignment: Alignment.centerRight,

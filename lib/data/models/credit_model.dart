@@ -51,6 +51,7 @@ class CreditFields {
   static const String discount = 'discount';
   static const String poNumber = 'po_number';
   static const String date = 'date';
+  static const String validUntil = 'valid_until';
   static const String terms = 'terms';
   static const String footer = 'footer';
   static const String partial = 'partial';
