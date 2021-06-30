@@ -248,11 +248,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   viewModel.onChanged(invoice.rebuild((b) => b..date = date));
                 },
               ),
-              if (widget.entityType != EntityType.credit)
                 DatePicker(
-                  labelText: widget.entityType == EntityType.quote
-                      ? localization.validUntil
-                      : localization.dueDate,
+                  labelText: widget.entityType == EntityType.invoice
+                      ? localization.dueDate
+                      : localization.validUntil,
                   selectedDate: invoice.dueDate,
                   onSelected: (date) {
                     viewModel

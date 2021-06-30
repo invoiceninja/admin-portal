@@ -26,7 +26,7 @@ enum CreditReportFields {
   discount,
   po_number,
   date,
-  due_date,
+  valid_until,
   partial,
   partial_due_date,
   auto_bill,
@@ -79,7 +79,7 @@ ReportResult creditReport(
     CreditReportFields.amount,
     CreditReportFields.balance,
     CreditReportFields.date,
-    CreditReportFields.due_date,
+    CreditReportFields.valid_until,
     CreditReportFields.client
   ];
 
@@ -151,7 +151,7 @@ ReportResult creditReport(
         case CreditReportFields.date:
           value = credit.date;
           break;
-        case CreditReportFields.due_date:
+        case CreditReportFields.valid_until:
           value = credit.dueDate;
           break;
         case CreditReportFields.partial:

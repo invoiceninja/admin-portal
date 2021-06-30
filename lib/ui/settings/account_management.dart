@@ -349,33 +349,34 @@ class _AccountOverview extends StatelessWidget {
             child: ListDivider(),
           ),
         ],
-        Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(children: [
-              Expanded(
-                child: AppButton(
-                  label: localization.apiTokens.toUpperCase(),
-                  iconData: getEntityIcon(EntityType.token),
-                  onPressed: () {
-                    store.dispatch(ViewSettings(
-                      section: kSettingsTokens,
-                    ));
-                  },
+        if (state.isProPlan)
+          Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(children: [
+                Expanded(
+                  child: AppButton(
+                    label: localization.apiTokens.toUpperCase(),
+                    iconData: getEntityIcon(EntityType.token),
+                    onPressed: () {
+                      store.dispatch(ViewSettings(
+                        section: kSettingsTokens,
+                      ));
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(width: kGutterWidth),
-              Expanded(
-                child: AppButton(
-                  label: localization.apiWebhooks.toUpperCase(),
-                  iconData: getEntityIcon(EntityType.webhook),
-                  onPressed: () {
-                    store.dispatch(ViewSettings(
-                      section: kSettingsWebhooks,
-                    ));
-                  },
+                SizedBox(width: kGutterWidth),
+                Expanded(
+                  child: AppButton(
+                    label: localization.apiWebhooks.toUpperCase(),
+                    iconData: getEntityIcon(EntityType.webhook),
+                    onPressed: () {
+                      store.dispatch(ViewSettings(
+                        section: kSettingsWebhooks,
+                      ));
+                    },
+                  ),
                 ),
-              ),
-            ])),
+              ])),
         Padding(
             padding: const EdgeInsets.all(16),
             child: Row(children: [
