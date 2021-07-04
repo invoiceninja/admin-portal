@@ -462,8 +462,7 @@ class _DesignSettingsState extends State<DesignSettings> {
                 text: localization.viewDocs.toUpperCase(),
               ),
             ),
-            onPressed: () =>
-                launch('https://invoiceninja.github.io/docs/custom-fields/'),
+            onPressed: () => launch(kDocsCustomFieldsUrl),
           ),
         ),
         if (widget.draftMode)

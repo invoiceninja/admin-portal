@@ -15,6 +15,7 @@ class PaymentPresenter extends EntityPresenter {
       PaymentFields.amount,
       PaymentFields.invoiceNumber,
       PaymentFields.date,
+      PaymentFields.type,
       PaymentFields.transactionReference,
     ];
   }
@@ -44,6 +45,9 @@ class PaymentPresenter extends EntityPresenter {
     switch (field) {
       case PaymentFields.number:
         return Text(payment.number);
+      case PaymentFields.type:
+        return Text(
+            state.staticState.paymentTypeMap[payment.typeId]?.name ?? '');
       case PaymentFields.invoiceNumber:
         final numbers = payment.paymentables
             .map((paymentable) =>

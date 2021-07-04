@@ -20,6 +20,7 @@ enum PaymentReportFields {
   client_shipping_address2,
   transaction_reference,
   date,
+  type,
   payment1,
   payment2,
   payment3,
@@ -90,6 +91,9 @@ ReportResult paymentReport(
       switch (column) {
         case PaymentReportFields.number:
           value = payment.number;
+          break;
+        case PaymentReportFields.type:
+          value = staticState.paymentTypeMap[payment.typeId]?.name ?? '';
           break;
         case PaymentReportFields.amount:
           value = payment.amount;

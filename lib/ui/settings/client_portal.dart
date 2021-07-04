@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
@@ -25,6 +26,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientPortal extends StatefulWidget {
   const ClientPortal({
@@ -260,32 +262,36 @@ class _ClientPortalState extends State<ClientPortal>
         children: <Widget>[
           ScrollableListView(
             children: <Widget>[
-              if (state.isHosted && !state.settingsUIState.isFiltered)
+              if (!state.settingsUIState.isFiltered)
                 FormCard(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    AppDropdownButton<String>(
-                      labelText: localization.portalMode,
-                      value: viewModel.company.portalMode,
-                      onChanged: (dynamic value) => viewModel.onCompanyChanged(
-                          viewModel.company
-                              .rebuild((b) => b..portalMode = value)),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(localization.subdomain),
-                          value: kClientPortalModeSubdomain,
-                        ),
+                    if (state.isHosted)
+                      AppDropdownButton<String>(
+                        labelText: localization.portalMode,
+                        value: viewModel.company.portalMode,
+                        onChanged: (dynamic value) =>
+                            viewModel.onCompanyChanged(viewModel.company
+                                .rebuild((b) => b..portalMode = value)),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(localization.subdomain),
+                            value: kClientPortalModeSubdomain,
+                          ),
+                          /*
                         DropdownMenuItem(
                           child: Text('iFrame'),
                           value: kClientPortalModeIFrame,
                         ),
-                        DropdownMenuItem(
-                          child: Text(localization.domain),
-                          value: kClientPortalModeDomain,
-                        ),
-                      ],
-                    ),
-                    if (company.portalMode == kClientPortalModeSubdomain) ...[
+                        */
+                          DropdownMenuItem(
+                            child: Text(localization.domain),
+                            value: kClientPortalModeDomain,
+                          ),
+                        ],
+                      ),
+                    if (state.isHosted &&
+                        company.portalMode == kClientPortalModeSubdomain) ...[
                       DecoratedFormField(
                         label: localization.subdomain,
                         autovalidate: _autoValidate,
@@ -320,21 +326,40 @@ class _ClientPortalState extends State<ClientPortal>
                     ] else ...[
                       DecoratedFormField(
                         enabled: state.isEnterprisePlan,
-                        label: company.portalMode == kClientPortalModeDomain
+                        label: company.portalMode == kClientPortalModeDomain ||
+                                state.isSelfHosted
                             ? localization.domainUrl
                             : localization.iFrameUrl,
                         controller: _portalDomainController,
+                        hint: state.isSelfHosted
+                            ? localization.clientPortalDomainHint
+                            : '',
                         keyboardType: TextInputType.url,
-                        validator: (val) => val.isEmpty || val.trim().isEmpty
-                            ? localization.pleaseEnterAValue
-                            : null,
+                        validator: (val) =>
+                            (val.isEmpty || val.trim().isEmpty) &&
+                                    state.isHosted
+                                ? localization.pleaseEnterAValue
+                                : null,
                         onSavePressed: viewModel.onSavePressed,
                       ),
-                      if (!state.isEnterprisePlan)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16),
-                          child: Text(localization.requiresAnEnterprisePlan),
-                        )
+                      SizedBox(height: 16),
+                      if (state.isEnterprisePlan)
+                        if (company.portalMode == kClientPortalModeDomain &&
+                            state.isHosted)
+                          OutlinedButton(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: IconText(
+                                icon: MdiIcons.openInNew,
+                                text: localization.viewDocs.toUpperCase(),
+                              ),
+                            ),
+                            onPressed: () => launch(kDocsCustomDomainUrl),
+                          )
+                        else
+                          SizedBox()
+                      else
+                        Text(localization.requiresAnEnterprisePlan)
                     ],
                   ],
                 ),
