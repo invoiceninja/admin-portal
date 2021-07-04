@@ -343,8 +343,7 @@ class _ClientPortalState extends State<ClientPortal>
                                 text: localization.viewDocs.toUpperCase(),
                               ),
                             ),
-                            onPressed: () => launch(
-                                'https://invoiceninja.github.io/docs/hosted-custom-domain/'),
+                            onPressed: () => launch(kDocsCustomDomainUrl),
                           )
                         else
                           SizedBox()

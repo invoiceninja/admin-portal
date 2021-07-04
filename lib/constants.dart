@@ -35,6 +35,11 @@ const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
 const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
 
 const String kDocsUrl = 'https://invoiceninja.github.io/docs/getting-started/';
+const String kDocsCustomDomainUrl =
+    'https://invoiceninja.github.io/docs/hosted-custom-domain/';
+const String kDocsCustomFieldsUrl =
+    'https://invoiceninja.github.io/docs/custom-fields/';
+
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
     'https://app.swaggerhub.com/apis/invoiceninja/invoiceninja';
