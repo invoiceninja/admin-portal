@@ -50,6 +50,7 @@ class PaymentFields {
   static const String refunded = 'refunded';
   static const String transactionReference = 'transaction_reference';
   static const String date = 'date';
+  static const String type = 'type';
   static const String typeId = 'type_id';
   static const String client = 'client';
   static const String clientId = 'client_id';
