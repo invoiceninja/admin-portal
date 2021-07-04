@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
@@ -25,6 +26,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientPortal extends StatefulWidget {
   const ClientPortal({
@@ -262,7 +264,7 @@ class _ClientPortalState extends State<ClientPortal>
             children: <Widget>[
               if (state.isHosted && !state.settingsUIState.isFiltered)
                 FormCard(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     AppDropdownButton<String>(
                       labelText: localization.portalMode,
@@ -330,11 +332,24 @@ class _ClientPortalState extends State<ClientPortal>
                             : null,
                         onSavePressed: viewModel.onSavePressed,
                       ),
-                      if (!state.isEnterprisePlan)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16),
-                          child: Text(localization.requiresAnEnterprisePlan),
-                        )
+                      SizedBox(height: 16),
+                      if (state.isEnterprisePlan)
+                        if (company.portalMode == kClientPortalModeDomain)
+                          OutlinedButton(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: IconText(
+                                icon: MdiIcons.openInNew,
+                                text: localization.viewDocs.toUpperCase(),
+                              ),
+                            ),
+                            onPressed: () => launch(
+                                'https://invoiceninja.github.io/docs/hosted-custom-domain/'),
+                          )
+                        else
+                          SizedBox()
+                      else
+                        Text(localization.requiresAnEnterprisePlan)
                     ],
                   ],
                 ),
