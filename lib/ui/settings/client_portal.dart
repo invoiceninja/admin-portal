@@ -262,32 +262,36 @@ class _ClientPortalState extends State<ClientPortal>
         children: <Widget>[
           ScrollableListView(
             children: <Widget>[
-              if (state.isHosted && !state.settingsUIState.isFiltered)
+              if (!state.settingsUIState.isFiltered)
                 FormCard(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    AppDropdownButton<String>(
-                      labelText: localization.portalMode,
-                      value: viewModel.company.portalMode,
-                      onChanged: (dynamic value) => viewModel.onCompanyChanged(
-                          viewModel.company
-                              .rebuild((b) => b..portalMode = value)),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(localization.subdomain),
-                          value: kClientPortalModeSubdomain,
-                        ),
+                    if (state.isHosted)
+                      AppDropdownButton<String>(
+                        labelText: localization.portalMode,
+                        value: viewModel.company.portalMode,
+                        onChanged: (dynamic value) =>
+                            viewModel.onCompanyChanged(viewModel.company
+                                .rebuild((b) => b..portalMode = value)),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(localization.subdomain),
+                            value: kClientPortalModeSubdomain,
+                          ),
+                          /*
                         DropdownMenuItem(
                           child: Text('iFrame'),
                           value: kClientPortalModeIFrame,
                         ),
-                        DropdownMenuItem(
-                          child: Text(localization.domain),
-                          value: kClientPortalModeDomain,
-                        ),
-                      ],
-                    ),
-                    if (company.portalMode == kClientPortalModeSubdomain) ...[
+                        */
+                          DropdownMenuItem(
+                            child: Text(localization.domain),
+                            value: kClientPortalModeDomain,
+                          ),
+                        ],
+                      ),
+                    if (state.isHosted &&
+                        company.portalMode == kClientPortalModeSubdomain) ...[
                       DecoratedFormField(
                         label: localization.subdomain,
                         autovalidate: _autoValidate,
@@ -322,19 +326,26 @@ class _ClientPortalState extends State<ClientPortal>
                     ] else ...[
                       DecoratedFormField(
                         enabled: state.isEnterprisePlan,
-                        label: company.portalMode == kClientPortalModeDomain
+                        label: company.portalMode == kClientPortalModeDomain ||
+                                state.isSelfHosted
                             ? localization.domainUrl
                             : localization.iFrameUrl,
                         controller: _portalDomainController,
+                        hint: state.isSelfHosted
+                            ? localization.clientPortalDomainHint
+                            : '',
                         keyboardType: TextInputType.url,
-                        validator: (val) => val.isEmpty || val.trim().isEmpty
-                            ? localization.pleaseEnterAValue
-                            : null,
+                        validator: (val) =>
+                            (val.isEmpty || val.trim().isEmpty) &&
+                                    state.isHosted
+                                ? localization.pleaseEnterAValue
+                                : null,
                         onSavePressed: viewModel.onSavePressed,
                       ),
                       SizedBox(height: 16),
                       if (state.isEnterprisePlan)
-                        if (company.portalMode == kClientPortalModeDomain)
+                        if (company.portalMode == kClientPortalModeDomain &&
+                            state.isHosted)
                           OutlinedButton(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
