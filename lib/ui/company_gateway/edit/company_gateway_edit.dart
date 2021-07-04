@@ -86,6 +86,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final companyGateway = viewModel.companyGateway;
     final origCompanyGateway = state.companyGatewayState.get(companyGateway.id);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
+    final accountId =
+        (companyGateway.parsedConfig['accountId'] ?? '').toString();
 
     final connectGateways = [
       kGatewayStripeConnect,
@@ -154,7 +156,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       },
                     ),
                   if (connectGateways.contains(companyGateway.gatewayId))
-                    if (companyGateway.isNew)
+                    if (companyGateway.isNew || accountId.isEmpty)
                       AppButton(
                         label: localization.gatewaySetup.toUpperCase(),
                         onPressed: viewModel.state.isSaving
@@ -169,9 +171,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       DecoratedFormField(
                         enabled: false,
                         label: localization.accountId,
-                        initialValue:
-                            (companyGateway.parsedConfig['accountId'] ?? '')
-                                .toString(),
+                        initialValue: accountId,
                       )
                   else
                     GatewayConfigSettings(
