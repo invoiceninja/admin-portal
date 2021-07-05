@@ -571,7 +571,6 @@ class _DrawerTileState extends State<DrawerTile> {
             maxLines: 1,
             style: Theme.of(context).textTheme.bodyText1.copyWith(
                   fontSize: 14,
-                  color: textColor,
                 ),
           ),
           onTap: () {
