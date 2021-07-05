@@ -17,7 +17,7 @@ class InvoiceViewActivity extends StatefulWidget {
 class _InvoiceViewActivityState extends State<InvoiceViewActivity> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.client.isStale) {
+    if (widget.viewModel.invoice.isStale) {
       widget.viewModel.onRefreshed(context);
     }
     super.didChangeDependencies();
