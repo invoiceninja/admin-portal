@@ -552,52 +552,55 @@ class _DrawerTileState extends State<DrawerTile> {
               ? kDefaultDarkSelectedColorMenu
               : kDefaultLightSelectedColorMenu)
           : Colors.transparent,
-      child: ListTile(
-        dense: true,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 4),
-          child: Icon(
-            widget.icon,
-            size: 24,
-            color: textColor,
+      child: Opacity(
+        opacity: isSelected ? 1 : .8,
+        child: ListTile(
+          dense: true,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Icon(
+              widget.icon,
+              size: 22,
+              color: textColor,
+            ),
           ),
-        ),
-        title: Text(
-          widget.title,
-          key: ValueKey('menu_${widget.title}'),
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
-                fontSize: 16,
-                color: textColor,
-              ),
-          overflow: TextOverflow.clip,
-          maxLines: 1,
-        ),
-        onTap: () {
-          if (widget.entityType != null) {
-            viewEntitiesByType(
-              entityType: widget.entityType,
-            );
-          } else {
-            widget.onTap();
-          }
-        },
-        onLongPress: () => widget.onLongPress != null
-            ? widget.onLongPress()
-            : widget.entityType != null
-                ? createEntityByType(
-                    context: context,
-                    entityType: widget.entityType,
-                    applyFilter: false,
-                  )
-                : null,
-        /*
-            trailing: _isHovered ||
-                    !RendererBinding.instance.mouseTracker.mouseIsConnected
-                ? trailingWidget
-                : null,
+          title: Text(
+            widget.title,
+            key: ValueKey('menu_${widget.title}'),
+            overflow: TextOverflow.clip,
+            maxLines: 1,
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  fontSize: 14,
+                  color: textColor,
+                ),
+          ),
+          onTap: () {
+            if (widget.entityType != null) {
+              viewEntitiesByType(
+                entityType: widget.entityType,
+              );
+            } else {
+              widget.onTap();
+            }
+          },
+          onLongPress: () => widget.onLongPress != null
+              ? widget.onLongPress()
+              : widget.entityType != null
+                  ? createEntityByType(
+                      context: context,
+                      entityType: widget.entityType,
+                      applyFilter: false,
+                    )
+                  : null,
+          /*
+              trailing: _isHovered ||
+                      !RendererBinding.instance.mouseTracker.mouseIsConnected
+                  ? trailingWidget
+                  : null,
 
-             */
-        trailing: state.isMenuCollapsed ? null : trailingWidget,
+               */
+          trailing: state.isMenuCollapsed ? null : trailingWidget,
+        ),
       ),
     );
 
