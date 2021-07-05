@@ -416,6 +416,8 @@ abstract class CompanyEntity extends Object
 
   bool get hasTaxes => hasInvoiceTaxes || hasItemTaxes;
 
+  bool get isMigrated => companyKey.length == 32;
+
   bool get hasCustomSurcharge =>
       hasCustomField(CustomFieldType.surcharge1) ||
       hasCustomField(CustomFieldType.surcharge2) ||

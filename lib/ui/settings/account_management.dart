@@ -239,6 +239,18 @@ class _AccountOverview extends StatelessWidget {
       return stats;
     }
 
+    String secondValue;
+    String secondLabel;
+
+    if (account.plan.isEmpty) {
+      final clientLimit = viewModel.company.isMigrated ? 100 : 50;
+      secondLabel = localization.clients;
+      secondValue = '${viewModel.state.clientState.list.length} / $clientLimit';
+    } else {
+      secondLabel = localization.expiresOn;
+      secondValue = formatDate(account.planExpires, context);
+    }
+
     return ScrollableListView(
       children: <Widget>[
         AppHeader(
@@ -246,8 +258,8 @@ class _AccountOverview extends StatelessWidget {
           value: account.plan.isEmpty
               ? localization.free
               : localization.lookup(account.plan),
-          secondLabel: localization.expiresOn,
-          secondValue: formatDate(account.planExpires, context),
+          secondLabel: secondLabel,
+          secondValue: secondValue,
         ),
         if (state.userCompany.ninjaPortalUrl.isNotEmpty)
           Padding(
