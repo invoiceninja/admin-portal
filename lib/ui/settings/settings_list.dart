@@ -265,6 +265,7 @@ class SettingsListTile extends StatelessWidget {
         isSelected: viewModel.state.uiState.containsRoute('/$section') &&
             isDesktop(context),
         child: ListTile(
+          dense: isDesktop(context),
           leading: Padding(
             padding: const EdgeInsets.only(left: 6, top: 2),
             child: Icon(icon ?? icon, size: 22),

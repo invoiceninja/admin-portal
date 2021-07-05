@@ -451,7 +451,7 @@ class _LoginState extends State<LoginView> {
                                           ),
                                           LinkTextSpan(
                                             style: linkStyle,
-                                            url: kTermsOfServiceURL,
+                                            url: kPrivacyPolicyURL,
                                             text:
                                                 localization.privacyPolicyLink,
                                           ),

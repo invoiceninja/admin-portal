@@ -89,9 +89,11 @@ class EditScaffold extends StatelessWidget {
                     ),
                     onTap: state.userCompany.isOwner
                         ? () async {
-                            if (await canLaunch(kAppPlansURL)) {
+                            if (state.userCompany.ninjaPortalUrl.isEmpty) {
                               launch(
                                   '$kAppPlansURL?email=${Uri.encodeQueryComponent(state.user.email)}');
+                            } else {
+                              launch(state.userCompany.ninjaPortalUrl);
                             }
                           }
                         : null,
