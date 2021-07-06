@@ -169,7 +169,7 @@ class _ProductEditState extends State<ProductEdit> {
                 ),
                 if (company.enableProductQuantity)
                   DecoratedFormField(
-                    label: localization.quantity,
+                    label: localization.defaultQuantity,
                     controller: _quantityController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
