@@ -205,7 +205,7 @@ class _EntityListState extends State<EntityList> {
         final rowsPerPage = state.prefState.rowsPerPage;
 
         /*
-        final listStateHash = listUIState.stateFilters.hashCode ^
+        final listStateHash = 
             listUIState.filterClearedAt.hashCode ^
             listUIState.custom1Filters.hashCode ^
             listUIState.custom2Filters.hashCode ^
@@ -249,7 +249,7 @@ class _EntityListState extends State<EntityList> {
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   child: AppPaginatedDataTable(
                     key: ValueKey(
-                        '__${uiState.filterEntityId}_${uiState.filterEntityType}_${listUIState.stateFilters.hashCode}_${listStateHash}__'),
+                        '__${uiState.filterEntityId}_${uiState.filterEntityType}_${listStateHash}__'),
                     onSelectAll: (value) {
                       final entities = entityList
                           .map((String entityId) => entityMap[entityId])
