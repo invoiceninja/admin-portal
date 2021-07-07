@@ -475,6 +475,10 @@ abstract class ExpenseEntity extends Object
         break;
     }
 
+    if (response == 0) {
+      response = expense.number.toLowerCase().compareTo(number.toLowerCase());
+    }
+
     return response;
   }
 

@@ -258,6 +258,11 @@ abstract class ProductEntity extends Object
         break;
     }
 
+    if (response == 0) {
+      response =
+          product.productKey.toLowerCase().compareTo(productKey.toLowerCase());
+    }
+
     return response;
   }
 

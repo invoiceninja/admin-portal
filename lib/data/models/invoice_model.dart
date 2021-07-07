@@ -669,6 +669,10 @@ abstract class InvoiceEntity extends Object
         break;
     }
 
+    if (response == 0) {
+      response = invoice.number.toLowerCase().compareTo(number.toLowerCase());
+    }
+
     return response;
   }
 

@@ -302,6 +302,10 @@ abstract class ProjectEntity extends Object
         break;
     }
 
+    if (response == 0) {
+      response = project.number.toLowerCase().compareTo(number.toLowerCase());
+    }
+
     return response;
   }
 
