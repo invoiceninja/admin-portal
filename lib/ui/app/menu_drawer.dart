@@ -684,7 +684,7 @@ class SidebarFooter extends StatelessWidget {
                   ),
                   onPressed: () => _showUpdate(context),
                 ),
-            if (!kReleaseMode || (isHosted(context) && !isPaidAccount(context)))
+            if (isHosted(context) && !isPaidAccount(context) && !isApple())
               IconButton(
                 tooltip: isHosted(context)
                     ? localization.upgrade
