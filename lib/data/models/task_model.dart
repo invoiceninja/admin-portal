@@ -686,6 +686,10 @@ abstract class TaskEntity extends Object
         break;
     }
 
+    if (response == 0) {
+      response = task.number.toLowerCase().compareTo(number.toLowerCase());
+    }
+
     return response;
   }
 

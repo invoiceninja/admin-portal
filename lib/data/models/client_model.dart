@@ -519,6 +519,10 @@ abstract class ClientEntity extends Object
         break;
     }
 
+    if (response == 0) {
+      response = client.number.toLowerCase().compareTo(number.toLowerCase());
+    }
+
     return response;
   }
 

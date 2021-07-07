@@ -316,6 +316,10 @@ abstract class VendorEntity extends Object
         break;
     }
 
+    if (response == 0) {
+      response = vendor.number.toLowerCase().compareTo(number.toLowerCase());
+    }
+
     return response;
   }
 
