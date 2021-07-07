@@ -259,8 +259,7 @@ abstract class ProductEntity extends Object
     }
 
     if (response == 0) {
-      response =
-          product.productKey.toLowerCase().compareTo(productKey.toLowerCase());
+      response = product.createdAt.compareTo(createdAt);
     }
 
     return response;
