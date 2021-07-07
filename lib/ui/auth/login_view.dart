@@ -320,8 +320,6 @@ class _LoginState extends State<LoginView> {
                                   setState(() {
                                     _isSelfHosted = index == 1;
                                     _loginError = '';
-                                    _emailLogin = _isSelfHosted;
-                                    _createAccount = !_isSelfHosted;
                                   });
                                 },
                               ),

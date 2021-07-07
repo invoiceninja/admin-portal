@@ -261,7 +261,7 @@ class _AccountOverview extends StatelessWidget {
           secondLabel: secondLabel,
           secondValue: secondValue,
         ),
-        if (state.userCompany.ninjaPortalUrl.isNotEmpty)
+        if (state.userCompany.ninjaPortalUrl.isNotEmpty && !isApple())
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
             child: OutlinedButton(
