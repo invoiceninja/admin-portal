@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -73,7 +74,7 @@ class _LoginState extends State<LoginView> {
         _emailLogin = true;
         _createAccount = false;
       }
-    } else if (isApple()) {
+    } else if (isApple() || !GoogleOAuth.isEnabled) {
       _emailLogin = true;
       _hideGoogle = true;
     }

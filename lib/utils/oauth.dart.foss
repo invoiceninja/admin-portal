@@ -1,4 +1,7 @@
 class GoogleOAuth {
+  
+  static bool get isEnabled => false;
+
   static Future<bool> signIn(Function(String, String) callback, {bool isSilent = false}) async {
     //
   }
