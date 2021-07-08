@@ -309,7 +309,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
   String _fieldType = kFieldTypeSingleLineText;
 
   List<TextEditingController> _controllers = [];
-  final _debouncer = Debouncer(sendFirstAction: true);
+  //final _debouncer = Debouncer(sendFirstAction: true);
 
   @override
   void dispose() {
@@ -364,29 +364,29 @@ class _CustomFormFieldState extends State<CustomFormField> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      var value = _customFieldController.text.trim();
+    //_debouncer.run(() {
+    var value = _customFieldController.text.trim();
 
-      if (value.isEmpty) {
-        if ((widget.value ?? '').isNotEmpty) {
-          widget.onChanged('');
-        }
-        return;
+    if (value.isEmpty) {
+      if ((widget.value ?? '').isNotEmpty) {
+        widget.onChanged('');
       }
+      return;
+    }
 
-      if ([
-        kFieldTypeSingleLineText,
-        kFieldTypeDate,
-        kFieldTypeSwitch,
-      ].contains(_fieldType)) {
-        value = '$value|$_fieldType';
-      } else if (_fieldType == kFieldTypeDropdown) {
-        value =
-            '$value|${_optionsController.text.split(',').map((part) => part.trim()).join(',')}';
-      }
+    if ([
+      kFieldTypeSingleLineText,
+      kFieldTypeDate,
+      kFieldTypeSwitch,
+    ].contains(_fieldType)) {
+      value = '$value|$_fieldType';
+    } else if (_fieldType == kFieldTypeDropdown) {
+      value =
+          '$value|${_optionsController.text.split(',').map((part) => part.trim()).join(',')}';
+    }
 
-      widget.onChanged(value);
-    });
+    widget.onChanged(value);
+    //});
   }
 
   @override
