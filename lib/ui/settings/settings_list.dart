@@ -270,7 +270,10 @@ class SettingsListTile extends StatelessWidget {
             padding: const EdgeInsets.only(left: 6, top: 2),
             child: Icon(icon ?? icon, size: 22),
           ),
-          title: Text(localization.lookup(section)),
+          title: Text(
+            localization.lookup(section),
+            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
+          ),
           onTap: () => viewModel.loadSection(context, section, 0),
         ),
       ),
