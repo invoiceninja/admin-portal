@@ -65,9 +65,9 @@ jobs:
           git push      
           cd ..
 
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart --rewrite
           #cd ./build/web
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext map --ext js
+          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext map --ext js --rewrite
           #cd ../..
 
           #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
@@ -98,11 +98,11 @@ jobs:
           mv ./build/web/main.dart.js ./build/web/main.foss.dart.js
           mv ./build/web/main.dart.js.map ./build/web/main.foss.dart.js.map
 
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart
+          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart --rewrite
 
-          cd ./build/web
-          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext map --ext js
-          cd ../..
+          #cd ./build/web
+          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext map --ext js --rewrite
+          #cd ../..
 
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production 
