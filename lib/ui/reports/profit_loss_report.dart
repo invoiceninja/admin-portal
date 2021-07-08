@@ -118,7 +118,7 @@ ReportResult profitAndLossReport(
           value = client?.state;
           break;
         case ProfitAndLossReportFields.client_country:
-          value = staticState.countryMap[client?.countryId];
+          value = staticState.countryMap[client?.countryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.vendor:
           value = vendor?.listDisplayName;
@@ -136,7 +136,7 @@ ReportResult profitAndLossReport(
           value = vendor?.state;
           break;
         case ProfitAndLossReportFields.vendor_country:
-          value = staticState.countryMap[vendor?.countryId];
+          value = staticState.countryMap[vendor?.countryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.amount:
           value = payment?.amount;
@@ -180,7 +180,7 @@ ReportResult profitAndLossReport(
     final client = clientMap[expense.clientId];
     final vendor = vendorMap[expense.vendorId];
 
-    bool skip = expense.isDeleted || client.isDeleted;
+    bool skip = expense.isDeleted || (client?.isDeleted ?? false);
     final List<ReportElement> row = [];
 
     for (var column in columns) {
@@ -206,7 +206,7 @@ ReportResult profitAndLossReport(
           value = client?.state;
           break;
         case ProfitAndLossReportFields.client_country:
-          value = staticState.countryMap[client?.countryId];
+          value = staticState.countryMap[client?.countryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.vendor:
           value = vendor?.listDisplayName;
