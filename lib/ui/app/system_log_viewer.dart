@@ -59,7 +59,8 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                       localization.lookup(systemLog.type)),
                   isThreeLine: true,
                   subtitle: Text(localization.lookup(systemLog.event) +
-                      ' • ${client.displayName}\n' +
+                      (client.isOld ? ' • ${client.displayName}' : '') +
+                      '\n' +
                       formatDate(
                           convertTimestampToDateString(systemLog.createdAt),
                           context,
@@ -79,7 +80,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: logs == null ? SizedBox() : JsonViewerWidget(logs),
+                  child: JsonViewerWidget(logs ?? <String, dynamic>{}),
                 ),
               ),
             );
