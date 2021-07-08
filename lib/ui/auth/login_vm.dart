@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -17,6 +18,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_view.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -255,8 +257,10 @@ class LoginVM {
         completer.future.then((_) => _handleLogin(context: context));
       },
       onTokenLoginPressed: (BuildContext context, Completer<Null> completer,
-          {@required String token}) {
-        //
+          {@required String token}) async {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(kSharedPrefToken, TokenEntity.obscureToken(token));
+        prefs.setString(kSharedPrefUrl, kAppProductionUrl);
       },
     );
   }

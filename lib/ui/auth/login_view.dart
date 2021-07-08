@@ -314,6 +314,7 @@ class _LoginState extends State<LoginView> {
                 forceNarrow: calculateLayout(context) != AppLayout.mobile,
                 children: [
                   DecoratedFormField(
+                    autofocus: true,
                     label: localization.token,
                     controller: _tokenController,
                   ),
