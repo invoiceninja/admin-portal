@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -16,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -45,6 +47,7 @@ class _LoginState extends State<LoginView> {
   final _urlController = TextEditingController();
   final _secretController = TextEditingController();
   final _oneTimePasswordController = TextEditingController();
+  final _tokenController = TextEditingController();
 
   final _buttonController = RoundedLoadingButtonController();
 
@@ -52,6 +55,7 @@ class _LoginState extends State<LoginView> {
 
   String _loginError = '';
 
+  bool _tokenLogin = false;
   bool _emailLogin = false;
   bool _isSelfHosted = false;
   bool _createAccount = true;
@@ -73,7 +77,7 @@ class _LoginState extends State<LoginView> {
         _emailLogin = true;
         _createAccount = false;
       }
-    } else if (isApple()) {
+    } else if (isApple() || !GoogleOAuth.isEnabled) {
       _emailLogin = true;
       _hideGoogle = true;
     }
@@ -109,6 +113,8 @@ class _LoginState extends State<LoginView> {
     _passwordController.dispose();
     _urlController.dispose();
     _secretController.dispose();
+    _oneTimePasswordController.dispose();
+    _tokenController.dispose();
 
     super.dispose();
   }
@@ -293,9 +299,34 @@ class _LoginState extends State<LoginView> {
                   onTap: () {
                     launch(kSiteUrl, forceSafariVC: false, forceWebView: false);
                   },
+                  onLongPress: () {
+                    if (kReleaseMode) {
+                      return;
+                    }
+
+                    setState(() => _tokenLogin = !_tokenLogin);
+                  },
                 ),
               ),
             ),
+            if (_tokenLogin)
+              FormCard(
+                forceNarrow: calculateLayout(context) != AppLayout.mobile,
+                children: [
+                  DecoratedFormField(
+                    label: localization.token,
+                    controller: _tokenController,
+                  ),
+                  AppButton(
+                    label: localization.submit.toUpperCase(),
+                    onPressed: () {
+                      final Completer<Null> completer = Completer<Null>();
+                      viewModel.onTokenLoginPressed(context, completer,
+                          token: _tokenController.text);
+                    },
+                  )
+                ],
+              ),
             AnimatedOpacity(
               duration: Duration(milliseconds: 500),
               opacity: viewModel.authState.isAuthenticated ? 0 : 1,

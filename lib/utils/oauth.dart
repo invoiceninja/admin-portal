@@ -10,6 +10,8 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 class GoogleOAuth {
+  static bool get isEnabled => true;
+
   static Future<bool> signIn(Function(String, String) callback,
       {bool isSilent = false}) async {
     GoogleSignInAccount account;

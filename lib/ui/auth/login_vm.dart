@@ -48,6 +48,7 @@ class LoginVM {
     @required this.onSignUpPressed,
     @required this.onGoogleLoginPressed,
     @required this.onGoogleSignUpPressed,
+    @required this.onTokenLoginPressed,
   });
 
   AppState state;
@@ -78,6 +79,12 @@ class LoginVM {
     @required String email,
     @required String password,
   }) onSignUpPressed;
+
+  final Function(
+    BuildContext,
+    Completer<Null> completer, {
+    @required String token,
+  }) onTokenLoginPressed;
 
   final Function(BuildContext, Completer<Null> completer,
       {String url, String secret, String oneTimePassword}) onGoogleLoginPressed;
@@ -120,132 +127,137 @@ class LoginVM {
     }
 
     return LoginVM(
-        state: store.state,
-        isLoading: store.state.isLoading,
-        authState: store.state.authState,
-        onGoogleLoginPressed: (
-          BuildContext context,
-          Completer<Null> completer, {
-          @required String url,
-          @required String secret,
-          @required String oneTimePassword,
-        }) async {
-          try {
-            await GoogleOAuth.signOut();
-            final signedIn = await GoogleOAuth.signIn((idToken, accessToken) {
-              if (idToken.isEmpty || accessToken.isEmpty) {
-                GoogleOAuth.signOut();
-                completer.completeError(
-                    AppLocalization.of(context).anErrorOccurredTryAgain);
-              } else {
-                store.dispatch(OAuthLoginRequest(
-                  completer: completer,
-                  idToken: idToken,
-                  accessToken: accessToken,
-                  url: _formatApiUrl(url),
-                  secret: secret.trim(),
-                  platform: getPlatform(context),
-                  oneTimePassword: oneTimePassword,
-                ));
-                completer.future.then((_) => _handleLogin(context: context));
-              }
-            });
-            if (!signedIn) {
+      state: store.state,
+      isLoading: store.state.isLoading,
+      authState: store.state.authState,
+      onGoogleLoginPressed: (
+        BuildContext context,
+        Completer<Null> completer, {
+        @required String url,
+        @required String secret,
+        @required String oneTimePassword,
+      }) async {
+        try {
+          await GoogleOAuth.signOut();
+          final signedIn = await GoogleOAuth.signIn((idToken, accessToken) {
+            if (idToken.isEmpty || accessToken.isEmpty) {
+              GoogleOAuth.signOut();
               completer.completeError(
                   AppLocalization.of(context).anErrorOccurredTryAgain);
+            } else {
+              store.dispatch(OAuthLoginRequest(
+                completer: completer,
+                idToken: idToken,
+                accessToken: accessToken,
+                url: _formatApiUrl(url),
+                secret: secret.trim(),
+                platform: getPlatform(context),
+                oneTimePassword: oneTimePassword,
+              ));
+              completer.future.then((_) => _handleLogin(context: context));
             }
-          } catch (error) {
-            completer.completeError(error);
-            print('## onGoogleLoginPressed: $error');
+          });
+          if (!signedIn) {
+            completer.completeError(
+                AppLocalization.of(context).anErrorOccurredTryAgain);
           }
-        },
-        onGoogleSignUpPressed:
-            (BuildContext context, Completer<Null> completer) async {
-          try {
-            await GoogleOAuth.signOut();
-            final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
-              if (idToken.isEmpty || accessToken.isEmpty) {
-                GoogleOAuth.signOut();
-                completer.completeError(
-                    AppLocalization.of(context).anErrorOccurredTryAgain);
-              } else {
-                store.dispatch(OAuthSignUpRequest(
-                  completer: completer,
-                  idToken: idToken,
-                  accessToken: accessToken,
-                ));
-                completer.future.then(
-                    (_) => _handleLogin(context: context, isSignUp: true));
-              }
-            });
-            if (!signedIn) {
+        } catch (error) {
+          completer.completeError(error);
+          print('## onGoogleLoginPressed: $error');
+        }
+      },
+      onGoogleSignUpPressed:
+          (BuildContext context, Completer<Null> completer) async {
+        try {
+          await GoogleOAuth.signOut();
+          final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
+            if (idToken.isEmpty || accessToken.isEmpty) {
+              GoogleOAuth.signOut();
               completer.completeError(
                   AppLocalization.of(context).anErrorOccurredTryAgain);
+            } else {
+              store.dispatch(OAuthSignUpRequest(
+                completer: completer,
+                idToken: idToken,
+                accessToken: accessToken,
+              ));
+              completer.future
+                  .then((_) => _handleLogin(context: context, isSignUp: true));
             }
-          } catch (error) {
-            completer.completeError(error);
-            print('## onGoogleSignUpPressed: $error');
+          });
+          if (!signedIn) {
+            completer.completeError(
+                AppLocalization.of(context).anErrorOccurredTryAgain);
           }
-        },
-        onSignUpPressed: (
-          BuildContext context,
-          Completer<Null> completer, {
-          @required String email,
-          @required String password,
-        }) async {
-          if (store.state.isLoading) {
-            return;
-          }
+        } catch (error) {
+          completer.completeError(error);
+          print('## onGoogleSignUpPressed: $error');
+        }
+      },
+      onSignUpPressed: (
+        BuildContext context,
+        Completer<Null> completer, {
+        @required String email,
+        @required String password,
+      }) async {
+        if (store.state.isLoading) {
+          return;
+        }
 
-          store.dispatch(UserSignUpRequest(
-            completer: completer,
-            email: email.trim(),
-            password: password.trim(),
-          ));
-          completer.future
-              .then((_) => _handleLogin(context: context, isSignUp: true));
-        },
-        onRecoverPressed: (
-          BuildContext context,
-          Completer<Null> completer, {
-          @required String email,
-          @required String url,
-          @required String secret,
-        }) async {
-          if (store.state.isLoading) {
-            return;
-          }
+        store.dispatch(UserSignUpRequest(
+          completer: completer,
+          email: email.trim(),
+          password: password.trim(),
+        ));
+        completer.future
+            .then((_) => _handleLogin(context: context, isSignUp: true));
+      },
+      onRecoverPressed: (
+        BuildContext context,
+        Completer<Null> completer, {
+        @required String email,
+        @required String url,
+        @required String secret,
+      }) async {
+        if (store.state.isLoading) {
+          return;
+        }
 
-          store.dispatch(RecoverPasswordRequest(
-            completer: completer,
-            email: email.trim(),
-            url: _formatApiUrl(url),
-            secret: secret.trim(),
-          ));
-        },
-        onLoginPressed: (
-          BuildContext context,
-          Completer<Null> completer, {
-          @required String email,
-          @required String password,
-          @required String url,
-          @required String secret,
-          @required String oneTimePassword,
-        }) async {
-          if (store.state.isLoading) {
-            return;
-          }
+        store.dispatch(RecoverPasswordRequest(
+          completer: completer,
+          email: email.trim(),
+          url: _formatApiUrl(url),
+          secret: secret.trim(),
+        ));
+      },
+      onLoginPressed: (
+        BuildContext context,
+        Completer<Null> completer, {
+        @required String email,
+        @required String password,
+        @required String url,
+        @required String secret,
+        @required String oneTimePassword,
+      }) async {
+        if (store.state.isLoading) {
+          return;
+        }
 
-          store.dispatch(UserLoginRequest(
-            completer: completer,
-            email: email.trim(),
-            password: password.trim(),
-            url: _formatApiUrl(url),
-            secret: secret.trim(),
-            platform: getPlatform(context),
-            oneTimePassword: oneTimePassword.trim(),
-          ));
-          completer.future.then((_) => _handleLogin(context: context));
-        });
+        store.dispatch(UserLoginRequest(
+          completer: completer,
+          email: email.trim(),
+          password: password.trim(),
+          url: _formatApiUrl(url),
+          secret: secret.trim(),
+          platform: getPlatform(context),
+          oneTimePassword: oneTimePassword.trim(),
+        ));
+        completer.future.then((_) => _handleLogin(context: context));
+      },
+      onTokenLoginPressed: (BuildContext context, Completer<Null> completer,
+          {@required String token}) {
+        //
+      },
+    );
   }
 }
