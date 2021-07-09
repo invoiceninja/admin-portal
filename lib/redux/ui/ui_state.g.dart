@@ -34,6 +34,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'filterClearedAt',
       serializers.serialize(object.filterClearedAt,
           specifiedType: const FullType(int)),
+      'lastActivityAt',
+      serializers.serialize(object.lastActivityAt,
+          specifiedType: const FullType(int)),
       'dashboardUIState',
       serializers.serialize(object.dashboardUIState,
           specifiedType: const FullType(DashboardUIState)),
@@ -179,6 +182,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.filterClearedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'lastActivityAt':
+          result.lastActivityAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(serializers.deserialize(value,
                   specifiedType: const FullType(DashboardUIState))
@@ -317,6 +324,8 @@ class _$UIState extends UIState {
   @override
   final int filterClearedAt;
   @override
+  final int lastActivityAt;
+  @override
   final DashboardUIState dashboardUIState;
   @override
   final ProductUIState productUIState;
@@ -381,6 +390,7 @@ class _$UIState extends UIState {
       this.filterEntityType,
       this.filter,
       this.filterClearedAt,
+      this.lastActivityAt,
       this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
@@ -422,6 +432,9 @@ class _$UIState extends UIState {
     }
     if (filterClearedAt == null) {
       throw new BuiltValueNullFieldError('UIState', 'filterClearedAt');
+    }
+    if (lastActivityAt == null) {
+      throw new BuiltValueNullFieldError('UIState', 'lastActivityAt');
     }
     if (dashboardUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
@@ -522,6 +535,7 @@ class _$UIState extends UIState {
         filterEntityType == other.filterEntityType &&
         filter == other.filter &&
         filterClearedAt == other.filterClearedAt &&
+        lastActivityAt == other.lastActivityAt &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
@@ -571,7 +585,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), previewStack.hashCode), filterEntityId.hashCode), filterEntityType.hashCode), filter.hashCode), filterClearedAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode), invoiceUIState.hashCode), subscriptionUIState.hashCode), taskStatusUIState.hashCode), expenseCategoryUIState.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), previewStack.hashCode), filterEntityId.hashCode), filterEntityType.hashCode), filter.hashCode), filterClearedAt.hashCode), lastActivityAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode), invoiceUIState.hashCode), subscriptionUIState.hashCode), taskStatusUIState.hashCode), expenseCategoryUIState.hashCode),
                                                                                 recurringInvoiceUIState.hashCode),
                                                                             webhookUIState.hashCode),
                                                                         tokenUIState.hashCode),
@@ -604,6 +618,7 @@ class _$UIState extends UIState {
           ..add('filterEntityType', filterEntityType)
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt)
+          ..add('lastActivityAt', lastActivityAt)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
@@ -675,6 +690,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   int get filterClearedAt => _$this._filterClearedAt;
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
+
+  int _lastActivityAt;
+  int get lastActivityAt => _$this._lastActivityAt;
+  set lastActivityAt(int lastActivityAt) =>
+      _$this._lastActivityAt = lastActivityAt;
 
   DashboardUIStateBuilder _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
@@ -835,7 +855,9 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set reportsUIState(ReportsUIStateBuilder reportsUIState) =>
       _$this._reportsUIState = reportsUIState;
 
-  UIStateBuilder();
+  UIStateBuilder() {
+    UIState._initializeBuilder(this);
+  }
 
   UIStateBuilder get _$this {
     if (_$v != null) {
@@ -847,6 +869,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _filterEntityType = _$v.filterEntityType;
       _filter = _$v.filter;
       _filterClearedAt = _$v.filterClearedAt;
+      _lastActivityAt = _$v.lastActivityAt;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
@@ -905,6 +928,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               filterEntityType: filterEntityType,
               filter: filter,
               filterClearedAt: filterClearedAt,
+              lastActivityAt: lastActivityAt,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
