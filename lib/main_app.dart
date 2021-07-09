@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -65,7 +66,6 @@ import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/subscription/subscription_screen_vm.dart';
-
 import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
 import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
@@ -135,6 +135,26 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     super.initState();
 
     WebUtils.warnChanges(widget.store);
+
+    Timer.periodic(Duration(milliseconds: kMillisecondsToTimerRefreshData),
+        (_) {
+      final store = widget.store;
+      final state = store.state;
+
+      if (!state.isSelfHosted) {
+        return;
+      }
+
+      if (!state.authState.isAuthenticated) {
+        return;
+      }
+
+      if (!state.uiState.hasRecentActivity) {
+        return;
+      }
+
+      store.dispatch(RefreshData());
+    });
   }
 
   /*

@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
@@ -211,6 +212,15 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   bool get isInSettings => currentRoute.startsWith('/settings');
 
   bool get isPreviewing => previewStack.isNotEmpty;
+
+  bool get hasRecentActivity {
+    if (lastActivityAt == 0) {
+      return false;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - lastActivityAt <
+        kMillisecondsToRefreshStaticData;
+  }
 
   // ignore: unused_element
   static void _initializeBuilder(UIStateBuilder builder) =>
