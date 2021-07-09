@@ -65,7 +65,7 @@ class EntityStatusChip extends StatelessWidget {
         final expense = entity as ExpenseEntity;
         final category = state.expenseCategoryState.get(expense.categoryId);
         label = kExpenseStatuses[expense.statusId];
-        color = category.color.isNotEmpty
+        color = category.color.isNotEmpty && category.color != '#fff'
             ? convertHexStringToColor(category.color)
             : ExpenseStatusColors(state.prefState.colorThemeModel)
                 .colors[expense.statusId];
