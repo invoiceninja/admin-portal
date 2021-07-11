@@ -10,16 +10,16 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
-class MobileSessionTimeout extends StatefulWidget {
-  const MobileSessionTimeout({this.child});
+class WebSessionTimeout extends StatefulWidget {
+  const WebSessionTimeout({this.child});
 
   final Widget child;
 
   @override
-  _MobileSessionTimeoutState createState() => _MobileSessionTimeoutState();
+  _WebSessionTimeoutState createState() => _WebSessionTimeoutState();
 }
 
-class _MobileSessionTimeoutState extends State<MobileSessionTimeout> {
+class _WebSessionTimeoutState extends State<WebSessionTimeout> {
   Timer _timer;
 
   @override

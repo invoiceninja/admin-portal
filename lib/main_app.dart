@@ -14,8 +14,8 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
-import 'package:invoiceninja_flutter/ui/app/mobile_session_timeout.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/app/web_session_timeout.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/lock_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
@@ -207,7 +207,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: widget.store,
-      child: MobileSessionTimeout(
+      child: WebSessionTimeout(
         child: AppBuilder(builder: (context) {
           final store = widget.store;
           final state = store.state;
