@@ -95,8 +95,8 @@ jobs:
           git push
           cd ..
 
-          mv ./build/web/main.dart.js ./build/web/main.foss.dart.js
-          mv ./build/web/main.dart.js.map ./build/web/main.foss.dart.js.map
+          #mv ./build/web/main.dart.js ./build/web/main.foss.dart.js
+          #mv ./build/web/main.dart.js.map ./build/web/main.foss.dart.js.map
 
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart --rewrite
 

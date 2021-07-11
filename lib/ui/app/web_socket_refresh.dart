@@ -44,6 +44,10 @@ class _WebSocketRefreshState extends State<WebSocketRefresh> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
+    if (!state.isHosted) {
+      //return;
+    }
+
     final webClient = WebClient();
     final credentials = state.credentials;
     final url = '${credentials.url}/broadcasting/auth';
@@ -53,7 +57,7 @@ class _WebSocketRefreshState extends State<WebSocketRefresh> {
     webClient
         .post(url, credentials.token,
             data: json.encode(
-              {'channel_name': 'company.${state.company.companyKey}'},
+              {'channel_name': 'private-company.${state.company.companyKey}'},
             ))
         .then((dynamic value) {
       print('## RESPONSE: $value');
@@ -64,7 +68,6 @@ class _WebSocketRefreshState extends State<WebSocketRefresh> {
             'Content-type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ${value['auth']}',
-            'Origin': '://file'
           }).then((socket) {
         print('## CONNECTED');
         _socket = socket;
