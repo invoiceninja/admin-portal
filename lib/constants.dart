@@ -455,7 +455,7 @@ const kExpenseStatuses = {
 
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
-const String kDefaultAccentColor = '#0091EA';
+const String kDefaultAccentColor = '#2196f3';
 const String kDefaultDarkSelectedColorMenu = '#1E252F';
 const String kDefaultDarkSelectedColor = '#253750';
 const String kDefaultDarkBorderColor = '#393A3C';

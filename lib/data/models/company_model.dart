@@ -808,6 +808,11 @@ abstract class UserCompanyEntity
 
   // ignore: unused_element
   static void _initializeBuilder(UserCompanyEntityBuilder builder) => builder
+    ..settings.replace(UserSettingsEntity())
+    ..notifications.replace(BuiltMap<String, BuiltList<String>>().rebuild((b) =>
+        b
+          ..[kNotificationChannelEmail] =
+              BuiltList<String>(<String>[kNotificationsAll])))
     ..permissionsUpdatedAt = 0
     ..ninjaPortalUrl = '';
 
