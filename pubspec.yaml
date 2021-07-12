@@ -12,7 +12,7 @@ environment:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/icon.png"
+  image_path: "assets/images/mobile_icon.png"
 
 dependencies:
   flutter:
