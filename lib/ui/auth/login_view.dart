@@ -296,9 +296,12 @@ class _LoginState extends State<LoginView> {
                 child: InkWell(
                   child: Image.asset('assets/images/icon.png',
                       width: 100, height: 100),
-                  onTap: () {
-                    launch(kSiteUrl, forceSafariVC: false, forceWebView: false);
-                  },
+                  onTap: isApple()
+                      ? null
+                      : () {
+                          launch(kSiteUrl,
+                              forceSafariVC: false, forceWebView: false);
+                        },
                   onLongPress: () {
                     if (kReleaseMode) {
                       return;
@@ -355,7 +358,7 @@ class _LoginState extends State<LoginView> {
                                   });
                                 },
                               ),
-                            if (!_isSelfHosted)
+                            if (!_isSelfHosted && !isApple())
                               AppToggleButtons(
                                 tabLabels: [
                                   localization.signUp,
