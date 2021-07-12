@@ -89,9 +89,11 @@ abstract class TokenEntity extends Object
 
   String get name;
 
-  String get obscuredToken => base64Encode(utf8.encode(token));
+  String get obscuredToken => TokenEntity.obscureToken(token);
 
   bool get isMasked => token.substring(10) == 'xxxxxxxxxxx';
+
+  static String obscureToken(String value) => base64Encode(utf8.encode(value));
 
   static String unobscureToken(String value) {
     if (value == null || value.isEmpty) {

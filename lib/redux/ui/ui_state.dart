@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
@@ -20,13 +21,9 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
-
 import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
-
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
-
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
-
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
@@ -48,6 +45,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     return _$UIState._(
       selectedCompanyIndex: 0,
       filterClearedAt: 0,
+      lastActivityAt: 0,
       currentRoute: currentRoute ?? LoginScreen.route,
       previousRoute: '',
       previewStack: BuiltList<EntityType>(),
@@ -111,6 +109,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   int get filterClearedAt;
 
+  int get lastActivityAt;
+
   DashboardUIState get dashboardUIState;
 
   ProductUIState get productUIState;
@@ -164,8 +164,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   ReportsUIState get reportsUIState;
 
-  static Serializer<UIState> get serializer => _$uIStateSerializer;
-
   bool containsRoute(String route) {
     if (route == null || route.isEmpty) {
       return false;
@@ -214,4 +212,19 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   bool get isInSettings => currentRoute.startsWith('/settings');
 
   bool get isPreviewing => previewStack.isNotEmpty;
+
+  bool get hasRecentActivity {
+    if (lastActivityAt == 0) {
+      return false;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - lastActivityAt <
+        kMillisecondsToRefreshStaticData;
+  }
+
+  // ignore: unused_element
+  static void _initializeBuilder(UIStateBuilder builder) =>
+      builder..lastActivityAt = 0;
+
+  static Serializer<UIState> get serializer => _$uIStateSerializer;
 }

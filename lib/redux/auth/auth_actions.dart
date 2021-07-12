@@ -37,11 +37,6 @@ class OAuthLoginRequest implements StartLoading {
   final String oneTimePassword;
 }
 
-class TokenLogin {
-  TokenLogin(this.token);
-  final String token;
-}
-
 class UserLoadUrl {
   UserLoadUrl({this.url});
 

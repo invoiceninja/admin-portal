@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.53+53
+version: 5.0.54+54
 author: Hillel Coren
 homepage: https://invoiceninja.com
 documentation: http://docs.invoiceninja.com
@@ -11,8 +11,8 @@ environment:
 
 flutter_icons:
   android: "launcher_icon"
-  ios: false
-  image_path: "assets/images/icon.png"
+  ios: true
+  image_path: "assets/images/mobile_icon.png"
 
 dependencies:
   flutter:

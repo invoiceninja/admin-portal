@@ -67,6 +67,7 @@ UIState uiReducer(UIState state, dynamic action) {
     ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
     ..filterEntityId = filterEntityIdReducer(
         state.filterEntityId, state.filterEntityType, action)
+    ..lastActivityAt = lastActivityReducer(state.lastActivityAt, action)
     ..selectedCompanyIndex =
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..previousRoute = state.currentRoute == currentRoute
@@ -145,6 +146,12 @@ String filterEntityIdReducer(
 
   return entityId;
 }
+
+Reducer<int> lastActivityReducer = combineReducers([
+  TypedReducer<int, UpdateCurrentRoute>((state, action) {
+    return DateTime.now().millisecondsSinceEpoch;
+  }),
+]);
 
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {

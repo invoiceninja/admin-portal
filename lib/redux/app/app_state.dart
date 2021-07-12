@@ -748,10 +748,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isSelfHosted ? isWhiteLabeled : (isProPlan || isEnterprisePlan);
 
   bool get isUserConfirmed {
-    if (!kReleaseMode) {
-      return true;
-    }
-
     if (isSelfHosted) {
       return true;
     }

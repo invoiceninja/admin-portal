@@ -808,6 +808,11 @@ abstract class UserCompanyEntity
 
   // ignore: unused_element
   static void _initializeBuilder(UserCompanyEntityBuilder builder) => builder
+    ..settings.replace(UserSettingsEntity())
+    ..notifications.replace(BuiltMap<String, BuiltList<String>>().rebuild((b) =>
+        b
+          ..[kNotificationChannelEmail] =
+              BuiltList<String>(<String>[kNotificationsAll])))
     ..permissionsUpdatedAt = 0
     ..ninjaPortalUrl = '';
 
@@ -859,7 +864,10 @@ abstract class UserSettingsEntity
 
   // ignore: unused_element
   static void _initializeBuilder(UserSettingsEntityBuilder builder) => builder
+    ..accentColor = kDefaultAccentColor
     ..numberYearsActive = 3
+    ..tableColumns.replace(BuiltMap<String, BuiltList<String>>())
+    ..reportSettings.replace(BuiltMap<String, ReportSettingsEntity>())
     ..includeDeletedClients = false;
 
   static Serializer<UserSettingsEntity> get serializer =>

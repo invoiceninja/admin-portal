@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.53';
+const String kClientVersion = '5.0.54';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -130,6 +130,7 @@ const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;
 const int kMaxPostSeconds = 30;
 const int kMaxRawPostSeconds = 180;
+const int kMillisecondsToTimerRefreshData = 1000 * 60 * 5; // 5 minutes
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kUpdatedAtBufferSeconds = 600;
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
@@ -454,7 +455,7 @@ const kExpenseStatuses = {
 
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
-const String kDefaultAccentColor = '#0091EA';
+const String kDefaultAccentColor = '#2196f3';
 const String kDefaultDarkSelectedColorMenu = '#1E252F';
 const String kDefaultDarkSelectedColor = '#253750';
 const String kDefaultDarkBorderColor = '#393A3C';
