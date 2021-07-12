@@ -57,7 +57,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
   void _addBlankItem(CompanyEntity company) {
     widget.onItemsSelected(
-        [InvoiceItemEntity(quantity: company.defaultQuantity ? 1 : null)]);
+        [InvoiceItemEntity(quantity: company.defaultQuantity ? 1 : 0)]);
     Navigator.pop(context);
   }
 

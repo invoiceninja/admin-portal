@@ -107,7 +107,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
 
     if (lineItems.where((item) => item.isEmpty).isEmpty) {
-      lineItems.add(InvoiceItemEntity());
+      lineItems
+          .add(InvoiceItemEntity(quantity: company.defaultQuantity ? 1 : 0));
     }
 
     int lastIndex = 4;
@@ -355,8 +356,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     ..quantity =
                                         item.isTask || item.quantity != 0
                                             ? item.quantity
-                                            : viewModel.state.company
-                                                    .defaultQuantity
+                                            : product.quantity == 0
                                                 ? 1
                                                 : product.quantity
                                     ..customValue1 = product.customValue1
@@ -406,7 +406,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     : cost
                                 ..quantity = item.isTask || item.quantity != 0
                                     ? item.quantity
-                                    : viewModel.state.company.defaultQuantity
+                                    : product.quantity == 0
                                         ? 1
                                         : product.quantity
                                 ..customValue1 = product.customValue1

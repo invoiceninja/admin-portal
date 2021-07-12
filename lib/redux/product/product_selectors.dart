@@ -26,11 +26,7 @@ InvoiceItemEntity convertProductToInvoiceItem({
       ..productKey = product.productKey
       ..notes = product.notes
       ..cost = cost
-      ..quantity = company.enableProductQuantity
-          ? product.quantity
-          : company.defaultQuantity
-              ? 1
-              : null
+      ..quantity = product.quantity == 0 ? 1 : product.quantity
       ..customValue1 = product.customValue1
       ..customValue2 = product.customValue2
       ..customValue3 = product.customValue3
@@ -42,9 +38,7 @@ InvoiceItemEntity convertProductToInvoiceItem({
       ..taxName3 = company.numberOfItemTaxRates >= 3 ? product.taxName3 : ''
       ..taxRate3 = company.numberOfItemTaxRates >= 3 ? product.taxRate3 : 0);
   } else {
-    return InvoiceItemEntity(
-        productKey: product.productKey,
-        quantity: company.defaultQuantity ? 1 : null);
+    return InvoiceItemEntity(productKey: product.productKey);
   }
 }
 

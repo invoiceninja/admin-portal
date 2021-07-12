@@ -29,6 +29,8 @@ class _WebSocketRefreshState extends State<WebSocketRefresh> {
   void didUpdateWidget(WebSocketRefresh oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    return;
+
     if (kReleaseMode) {
       return;
     }

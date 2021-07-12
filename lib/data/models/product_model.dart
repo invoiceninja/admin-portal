@@ -76,7 +76,7 @@ abstract class ProductEntity extends Object
       notes: '',
       cost: 0,
       price: 0,
-      quantity: (state?.company?.defaultQuantity ?? true) ? 1 : 0,
+      quantity: 1,
       taxName1: '',
       taxRate1: 0,
       taxName2: '',
