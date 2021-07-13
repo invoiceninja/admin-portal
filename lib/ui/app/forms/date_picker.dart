@@ -45,9 +45,7 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   void didChangeDependencies() {
-    if (widget.message != null && (widget.selectedDate ?? '').isEmpty) {
-      _textController.text = widget.message;
-    } else {
+    if ((widget.selectedDate ?? '').isNotEmpty) {
       _textController.text = formatDate(widget.selectedDate, context);
     }
 
@@ -105,12 +103,17 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
+    var label = widget.labelText;
+    if (widget.message != null && (widget.selectedDate ?? '').isEmpty) {
+      label += ' • ${widget.message}';
+    }
+
     return DecoratedFormField(
       focusNode: _focusNode,
       validator: widget.validator,
       controller: _textController,
       decoration: InputDecoration(
-          labelText: _pendingValue ?? widget.labelText ?? '',
+          labelText: _pendingValue ?? label ?? '',
           suffixIcon:
               widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
                   ? IconButton(

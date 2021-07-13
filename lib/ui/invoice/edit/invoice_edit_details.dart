@@ -136,6 +136,20 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final originalInvoice =
         state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
 
+    final client = state.clientState.get(invoice.clientId);
+    final settings = SettingsEntity(
+      clientSettings: client.settings,
+      groupSettings: state.groupState.get(client.groupId).settings,
+      companySettings: state.company.settings,
+    );
+    final terms = widget.entityType == EntityType.quote
+        ? settings.defaultValidUntil
+        : settings.defaultPaymentTerms;
+    String termsString;
+    if ((terms ?? '').isNotEmpty) {
+      termsString = '${localization.net} $terms';
+    }
+
     return ScrollableListView(
       children: <Widget>[
         FormCard(
@@ -248,16 +262,17 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   viewModel.onChanged(invoice.rebuild((b) => b..date = date));
                 },
               ),
-                DatePicker(
-                  labelText: widget.entityType == EntityType.invoice
-                      ? localization.dueDate
-                      : localization.validUntil,
-                  selectedDate: invoice.dueDate,
-                  onSelected: (date) {
-                    viewModel
-                        .onChanged(invoice.rebuild((b) => b..dueDate = date));
-                  },
-                ),
+              DatePicker(
+                labelText: widget.entityType == EntityType.invoice
+                    ? localization.dueDate
+                    : localization.validUntil,
+                selectedDate: invoice.dueDate,
+                message: termsString,
+                onSelected: (date) {
+                  viewModel
+                      .onChanged(invoice.rebuild((b) => b..dueDate = date));
+                },
+              ),
               DecoratedFormField(
                 label: localization.partialDeposit,
                 controller: _partialController,
