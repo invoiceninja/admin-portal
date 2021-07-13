@@ -27,8 +27,9 @@ class ExpenseEditSettings extends StatefulWidget {
 }
 
 class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
-  bool showPaymentFields = false;
-  bool showConvertCurrencyFields = false;
+  bool _showPaymentFields = false;
+  bool _showConvertCurrencyFields = false;
+  double _convertedAmount = 0;
 
   final _transactionReferenceController = TextEditingController();
   final _exchangeRateController = TextEditingController();
@@ -54,8 +55,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
-    showPaymentFields = expense.paymentDate.isNotEmpty;
-    showConvertCurrencyFields =
+    _showPaymentFields = expense.paymentDate.isNotEmpty;
+    _showConvertCurrencyFields =
         expense.exchangeRate != 0 && expense.exchangeRate != 1;
 
     super.didChangeDependencies();
@@ -128,7 +129,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             SwitchListTile(
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.markPaid),
-              value: showPaymentFields,
+              value: _showPaymentFields,
               subtitle: Text(localization.markPaidHelp),
               onChanged: (value) {
                 if (value) {
@@ -143,10 +144,10 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     _transactionReferenceController.text = '';
                   });
                 }
-                setState(() => showPaymentFields = value);
+                setState(() => _showPaymentFields = value);
               },
             ),
-            showPaymentFields
+            _showPaymentFields
                 ? Column(
                     children: <Widget>[
                       SizedBox(height: 8),
@@ -184,9 +185,9 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.convertCurrency),
               subtitle: Text(localization.convertCurrencyHelp),
-              value: showConvertCurrencyFields,
+              value: _showConvertCurrencyFields,
               onChanged: (value) {
-                setState(() => showConvertCurrencyFields = value);
+                setState(() => _showConvertCurrencyFields = value);
                 if (value) {
                   _setCurrency(
                       staticState.currencyMap[expense.invoiceCurrencyId]);
@@ -199,7 +200,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 }
               },
             ),
-            showConvertCurrencyFields
+            _showConvertCurrencyFields
                 ? Column(
                     children: <Widget>[
                       SizedBox(height: 8),
@@ -220,6 +221,41 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
                         label: localization.exchangeRate,
+                      ),
+                      Focus(
+                        onFocusChange: (hasFocus) {
+                          if (_convertedAmount == 0) {
+                            return;
+                          }
+
+                          final amount = expense.grossAmount;
+                          final exchangeRate = _convertedAmount / amount;
+                          _exchangeRateController.removeListener(_onChanged);
+                          _exchangeRateController.text = formatNumber(
+                              exchangeRate, context,
+                              formatNumberType: FormatNumberType.inputMoney);
+                          _exchangeRateController.addListener(_onChanged);
+
+                          viewModel.onChanged(expense
+                              .rebuild((b) => b..exchangeRate = exchangeRate));
+                          _convertedAmount = 0;
+                        },
+                        child: DecoratedFormField(
+                          key: ValueKey(
+                              '__expense_amount_${expense.grossAmount}_${expense.exchangeRate}__'),
+                          initialValue: expense.exchangeRate != 1 &&
+                                  expense.exchangeRate != 0
+                              ? formatNumber(
+                                  expense.grossAmount * expense.exchangeRate,
+                                  context,
+                                  formatNumberType: FormatNumberType.inputMoney)
+                              : '',
+                          label: localization.convertedAmount,
+                          onChanged: (value) {
+                            _convertedAmount = parseDouble(value);
+                          },
+                          onSavePressed: viewModel.onSavePressed,
+                        ),
                       ),
                       SizedBox(height: 16),
                     ],
