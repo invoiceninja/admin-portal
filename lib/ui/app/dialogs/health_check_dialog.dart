@@ -113,7 +113,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   isValid: _response.phpVersion.isOkay,
                   subtitle: webPhpVersion == cliPhpVersion
                       ? 'v$webPhpVersion'
-                      : 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion}',
+                      : 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion',
                 ),
                 if (!_response.execEnabled)
                   _HealthListTile(
