@@ -788,7 +788,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markPaid);
         }
 
-        if (isQuote && !isApproved && (invoiceId ?? '').isEmpty) {
+        if (isQuote && (invoiceId ?? '').isEmpty) {
           actions.add(EntityAction.convertToInvoice);
         }
       }
