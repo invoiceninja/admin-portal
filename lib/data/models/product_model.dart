@@ -45,7 +45,7 @@ abstract class ProductItemResponse
 
 class ProductFields {
   static const String productKey = 'product_key';
-  static const String notes = 'notes';
+  static const String description = 'description';
   static const String cost = 'cost';
   static const String price = 'price';
   static const String quantity = 'quantity';
@@ -76,7 +76,7 @@ abstract class ProductEntity extends Object
       notes: '',
       cost: 0,
       price: 0,
-      quantity: (state?.company?.defaultQuantity ?? true) ? 1 : 0,
+      quantity: 1,
       taxName1: '',
       taxRate1: 0,
       taxName2: '',
@@ -202,7 +202,7 @@ abstract class ProductEntity extends Object
       case ProductFields.archivedAt:
         response = productA.archivedAt.compareTo(productB.archivedAt);
         break;
-      case ProductFields.notes:
+      case ProductFields.description:
         response = productA.notes
             .toLowerCase()
             .compareTo(productB.notes.toLowerCase());

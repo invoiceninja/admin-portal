@@ -16,8 +16,7 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..expenseId = expense.id
     ..productKey = categoryMap[expense.categoryId]?.name ?? ''
     ..notes = expense.publicNotes
-    ..quantity =
-        company.defaultQuantity || !company.enableProductQuantity ? 1 : null
+    ..quantity = 1
     ..cost = company.settings.enableInclusiveTaxes
         ? expense.convertedAmount
         : expense.convertedNetAmount

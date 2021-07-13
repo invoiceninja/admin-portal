@@ -9,7 +9,7 @@ class ProductPresenter extends EntityPresenter {
 
     return [
       ProductFields.productKey,
-      ProductFields.notes,
+      ProductFields.description,
       if (company.enableProductCost) ProductFields.cost,
       ProductFields.price,
       if (company.enableProductQuantity) ProductFields.quantity,
@@ -41,7 +41,7 @@ class ProductPresenter extends EntityPresenter {
     switch (field) {
       case ProductFields.productKey:
         return Text(product.productKey);
-      case ProductFields.notes:
+      case ProductFields.description:
         return Text(product.notes);
       case ProductFields.cost:
         return Align(
