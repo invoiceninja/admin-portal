@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -62,6 +63,9 @@ class RecurringInvoiceScreen extends StatelessWidget {
         onSelectedSortField: (value) {
           store.dispatch(SortRecurringInvoices(value));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterRecurringInvoicesByStatus(status));
+        },
         sortFields: [
           RecurringInvoiceFields.number,
           RecurringInvoiceFields.nextSendDate,
@@ -77,6 +81,33 @@ class RecurringInvoiceScreen extends StatelessWidget {
             store.dispatch(StartRecurringInvoiceMultiselect());
           }
         },
+        statuses: [
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = kRecurringInvoiceStatusDraft
+              ..name = localization.draft,
+          ),
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = kRecurringInvoiceStatusPending
+              ..name = localization.pending,
+          ),
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = kRecurringInvoiceStatusActive
+              ..name = localization.active,
+          ),
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = kRecurringInvoiceStatusPaused
+              ..name = localization.paused,
+          ),
+          InvoiceStatusEntity().rebuild(
+            (b) => b
+              ..id = kRecurringInvoiceStatusCompleted
+              ..name = localization.completed,
+          ),
+        ],
         customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
