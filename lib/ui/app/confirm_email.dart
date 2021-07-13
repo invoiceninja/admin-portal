@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ConfirmEmail extends StatelessWidget {
@@ -45,23 +46,47 @@ class ConfirmEmail extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: viewModel.onResendPressed,
-                      child: Text(localization.resendEmail),
+                      child: Text(localization.resendEmail.toUpperCase()),
                     ),
                     SizedBox(
                       width: kTableColumnGap,
                     ),
+                    TextButton(
+                      onPressed: () {
+                        passwordCallback(
+                          context: context,
+                          callback: (password, idToken) {
+                            fieldCallback(
+                              callback: (value) {
+                                viewModel.onChangeEmail(
+                                    context, value, password, idToken);
+                              },
+                              field: localization.email,
+                              context: context,
+                              title: localization.changeEmail,
+                            );
+                          },
+                        );
+                      },
+                      child: Text(localization.changeEmail.toUpperCase()),
+                    ),
+                    SizedBox(
+                      width: kTableColumnGap,
+                    ),
+                    /*
                     if (state.user.lastEmailAddress.isNotEmpty) ...[
                       TextButton(
                         onPressed: () => viewModel.onUseLastPressed(context),
-                        child: Text(localization.useLastEmail),
+                        child: Text(localization.useLastEmail.toUpperCase()),
                       ),
                       SizedBox(
                         width: kTableColumnGap,
                       ),
                     ],
-                    ElevatedButton(
+                    */
+                    TextButton(
                       onPressed: viewModel.onRefreshPressed,
-                      child: Text(localization.refresh),
+                      child: Text(localization.refreshData.toUpperCase()),
                     ),
                   ],
                 )

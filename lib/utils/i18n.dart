@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
       'tasks_shown_in_portal': 'Tasks Shown in Portal',
@@ -62392,6 +62393,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientPortalDomainHint =>
       _localizedValues[localeCode]['client_portal_domain_hint'] ??
       _localizedValues['en']['client_portal_domain_hint'];
+
+  String get changeEmail =>
+      _localizedValues[localeCode]['change_email'] ??
+      _localizedValues['en']['change_email'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
