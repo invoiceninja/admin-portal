@@ -350,18 +350,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             .onChanged(invoice.rebuild((b) => b..date = date));
                       },
                     ),
-                      DatePicker(
-                        key: ValueKey('__terms_${client.id}__'),
-                        labelText: entityType == EntityType.invoice
-                            ? localization.dueDate
-                            : localization.validUntil,
-                        selectedDate: invoice.dueDate,
-                        message: termsString,
-                        onSelected: (date) {
-                          viewModel.onChanged(
-                              invoice.rebuild((b) => b..dueDate = date));
-                        },
-                      ),
+                    DatePicker(
+                      key: ValueKey('__terms_${client.id}__'),
+                      labelText: entityType == EntityType.invoice
+                          ? localization.dueDate
+                          : localization.validUntil,
+                      selectedDate: invoice.dueDate,
+                      message: termsString,
+                      onSelected: (date) {
+                        viewModel.onChanged(
+                            invoice.rebuild((b) => b..dueDate = date));
+                      },
+                    ),
                     DecoratedFormField(
                       label: localization.partialDeposit,
                       controller: _partialController,

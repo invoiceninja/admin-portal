@@ -693,6 +693,8 @@ abstract class InvoiceEntity extends Object
         return true;
       } else if (status.id == kInvoiceStatusViewed && isViewed) {
         return true;
+      } else if (status.id == kRecurringInvoiceStatusPending && isPending) {
+        return true;
       }
     }
 
@@ -945,6 +947,11 @@ abstract class InvoiceEntity extends Object
 
   bool get isUpcoming => isActive && !isPaid && !isPastDue && isSent;
 
+  bool get isPending =>
+      isRecurring &&
+      statusId == kRecurringInvoiceStatusActive &&
+      (lastSentDate ?? '').isEmpty;
+
   String get calculateRemainingCycles =>
       remainingCycles == -1 ? 'endless' : remainingCycles;
 
@@ -953,9 +960,7 @@ abstract class InvoiceEntity extends Object
       return kInvoiceStatusPastDue;
     }
 
-    if (isRecurring &&
-        statusId == kRecurringInvoiceStatusActive &&
-        (lastSentDate ?? '').isEmpty) {
+    if (isPending) {
       return kRecurringInvoiceStatusPending;
     }
 
