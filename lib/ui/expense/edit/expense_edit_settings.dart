@@ -88,7 +88,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     final expense = viewModel.expense;
 
     final exchangeRate = currency == null
-        ? 1
+        ? 1.0
         : getExchangeRate(viewModel.state.staticState.currencyMap,
             fromCurrencyId: expense.currencyId, toCurrencyId: currency.id);
 

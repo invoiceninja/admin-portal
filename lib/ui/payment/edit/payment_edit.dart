@@ -383,7 +383,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
                 Focus(
                   onFocusChange: (hasFocus) {
-                    print('## _convertedAmount: $_convertedAmount');
                     if (_convertedAmount == 0) {
                       return;
                     }
