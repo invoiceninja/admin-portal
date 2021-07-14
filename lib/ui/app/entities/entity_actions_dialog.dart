@@ -97,7 +97,10 @@ class EntityActionListTile extends StatelessWidget {
 
     return ListTile(
       leading: Icon(getEntityActionIcon(action)),
-      title: Text(localization.lookup(action.toString())),
+      title: Text(
+        localization.lookup(action.toString()),
+        overflow: TextOverflow.ellipsis,
+      ),
       onTap: () {
         if (completer != null) {
           completer.complete(null);
