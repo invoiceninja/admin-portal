@@ -6,28 +6,21 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownTaskStatusList = memo5(
+var memoizedDropdownTaskStatusList = memo4(
     (BuiltMap<String, TaskStatusEntity> taskStatusMap,
             BuiltList<String> taskStatusList,
             StaticState staticState,
-            BuiltMap<String, UserEntity> userMap,
-            String clientId) =>
+            BuiltMap<String, UserEntity> userMap) =>
         dropdownTaskStatusesSelector(
-            taskStatusMap, taskStatusList, staticState, userMap, clientId));
+            taskStatusMap, taskStatusList, staticState, userMap));
 
 List<String> dropdownTaskStatusesSelector(
     BuiltMap<String, TaskStatusEntity> taskStatusMap,
     BuiltList<String> taskStatusList,
     StaticState staticState,
-    BuiltMap<String, UserEntity> userMap,
-    String clientId) {
+    BuiltMap<String, UserEntity> userMap) {
   final list = taskStatusList.where((taskStatusId) {
     final taskStatus = taskStatusMap[taskStatusId];
-    /*
-    if (clientId != null && clientId > 0 && taskStatus.clientId != clientId) {
-      return false;
-    }
-    */
     return taskStatus.isActive;
   }).toList();
 

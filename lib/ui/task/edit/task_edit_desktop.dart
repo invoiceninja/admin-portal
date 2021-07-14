@@ -240,8 +240,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         state.taskStatusState.map,
                         state.taskStatusState.list,
                         state.staticState,
-                        state.userState.map,
-                        task.clientId),
+                        state.userState.map),
                     onChanged: (selectedId) {
                       final taskStatus = state.taskStatusState.map[selectedId];
                       viewModel.onChanged(task.rebuild((b) => b
