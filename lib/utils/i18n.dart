@@ -18,8 +18,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'free_trial': 'Free Trial',
       'free_trial_help':
           'All accounts receive a two week trial of the pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days': 'The free trial ends in :count days',
-      'free_trial_ends_today': 'Today is the last day of the free trial',
+      'free_trial_ends_in_days':
+          'The pro plan trial ends in :count days, click to upgrade.',
+      'free_trial_ends_today':
+          'Today is the last day of the pro plan trial, click to upgrade.',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -62418,7 +62420,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get freeTrialEndsToday =>
       _localizedValues[localeCode]['free_trial_ends_today'] ??
       _localizedValues['en']['free_trial_ends_today'];
-
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

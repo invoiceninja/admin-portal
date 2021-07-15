@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -63,7 +64,15 @@ class EditScaffold extends StatelessWidget {
         ? localization.upgradeToPaidPlan
         : localization.ownerUpgradeToPaidPlan;
     if (state.account.isTrial) {
-      upgradeMessage = '${localization.freeTrial} • $upgradeMessage';
+      final trialStarted = convertSqlDateToDateTime(state.account.trialStarted);
+      final trialEnds = DateTime.now().add(Duration(days: 14));
+      final countDays = trialEnds.difference(trialStarted).inDays;
+      if (countDays == 1) {
+        upgradeMessage = localization.freeTrialEndsToday;
+      } else {
+        upgradeMessage = localization.freeTrialEndsInDays
+            .replaceFirst(':count', countDays.toString());
+      }
     }
 
     if (!state.isProPlan || state.account.isTrial) {
