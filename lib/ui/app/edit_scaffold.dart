@@ -59,8 +59,14 @@ class EditScaffold extends StatelessWidget {
             state.settingsUIState.isChanged) &&
         (!state.isLoading && !state.isSaving);
     bool isCancelEnabled = false;
+    String upgradeMessage = state.userCompany.isOwner
+        ? localization.upgradeToPaidPlan
+        : localization.ownerUpgradeToPaidPlan;
+    if (state.account.isTrial) {
+      upgradeMessage = '${localization.freeTrial} • $upgradeMessage';
+    }
 
-    if (!state.isProPlan) {
+    if (!state.isProPlan || state.account.isTrial) {
       if (isAdvancedSettings && !isApple()) {
         showUpgradeBanner = true;
         if (isEnabled) {
@@ -82,9 +88,7 @@ class EditScaffold extends StatelessWidget {
                 children: [
                   InkWell(
                     child: IconMessage(
-                      state.userCompany.isOwner
-                          ? localization.upgradeToPaidPlan
-                          : localization.ownerUpgradeToPaidPlan,
+                      upgradeMessage,
                       color: Colors.orange,
                     ),
                     onTap: state.userCompany.isOwner

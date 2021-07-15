@@ -22,6 +22,7 @@ abstract class AccountEntity
       disableAutoUpdate: false,
       defaultCompanyId: '',
       trialPlan: '',
+      trialStarted: '',
     );
   }
 
@@ -35,6 +36,9 @@ abstract class AccountEntity
 
   @BuiltValueField(wireName: 'trial_plan')
   String get trialPlan;
+
+  @BuiltValueField(wireName: 'trial_started')
+  String get trialStarted;
 
   @BuiltValueField(wireName: 'default_url')
   String get defaultUrl;
@@ -85,6 +89,7 @@ abstract class AccountEntity
     ..isSchedulerRunning = false
     ..disableAutoUpdate = false
     ..trialPlan = ''
+    ..trialStarted = ''
     ..defaultCompanyId = '';
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
