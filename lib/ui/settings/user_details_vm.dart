@@ -198,7 +198,7 @@ class UserDetailsVM {
         Debouncer.runOnComplete(() {
           final localization = AppLocalization.of(context);
           final completer =
-              snackBarCompleter<Null>(context, localization.savedSettings);
+              snackBarCompleter<Null>(context, localization.updatedUser);
           final appBuilder = AppBuilder.of(context);
           final origUserSettings = state.userCompany.settings;
 

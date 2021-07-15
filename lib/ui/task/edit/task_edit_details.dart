@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -184,7 +185,11 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               entityType: EntityType.taskStatus,
               labelText: localization.status,
               entityId: task.statusId,
-              entityIds: state.taskStatusState.list.toList(),
+              entityIds: memoizedDropdownTaskStatusList(
+                  state.taskStatusState.map,
+                  state.taskStatusState.list,
+                  state.staticState,
+                  state.userState.map),
               onChanged: (selectedId) {
                 final taskStatus = state.taskStatusState.map[selectedId];
                 viewModel.onChanged(task.rebuild((b) => b

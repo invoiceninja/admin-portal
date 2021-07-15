@@ -242,7 +242,7 @@ class _AccountOverview extends StatelessWidget {
     String secondValue;
     String secondLabel;
 
-    if (account.plan.isEmpty) {
+    if (account.plan.isEmpty || account.isTrial) {
       final clientLimit = viewModel.company.isMigrated ? 100 : 50;
       secondLabel = localization.clients;
       secondValue = '${viewModel.state.clientState.list.length} / $clientLimit';
@@ -257,9 +257,12 @@ class _AccountOverview extends StatelessWidget {
           label: localization.plan,
           value: account.plan.isEmpty
               ? localization.free
-              : localization.lookup(account.plan),
+              : account.isTrial
+                  ? '${localization.pro} • ${localization.freeTrial}'
+                  : localization.lookup(account.plan),
           secondLabel: secondLabel,
           secondValue: secondValue,
+          message: account.isTrial ? localization.freeTrialHelp : null,
         ),
         if (state.userCompany.ninjaPortalUrl.isNotEmpty && !isApple())
           Padding(

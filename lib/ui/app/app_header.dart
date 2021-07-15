@@ -7,12 +7,14 @@ class AppHeader extends StatelessWidget {
     @required this.value,
     this.secondLabel,
     this.secondValue,
+    this.message,
   });
 
   final String label;
   final String value;
   final String secondLabel;
   final String secondValue;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -69,15 +71,22 @@ class AppHeader extends StatelessWidget {
     }
 
     return FormCard(
-      child: Row(
-        children: [
-          Expanded(child: _value1()),
-          if ((secondValue ?? '').isNotEmpty) ...[
-            SizedBox(width: 8),
-            Expanded(child: _value2()),
+      children: [
+        Row(
+          children: [
+            Expanded(child: _value1()),
+            if ((secondValue ?? '').isNotEmpty) ...[
+              SizedBox(width: 8),
+              Expanded(child: _value2()),
+            ],
           ],
-        ],
-      ),
+        ),
+        if (message != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Text(message),
+          )
+      ],
     );
   }
 }

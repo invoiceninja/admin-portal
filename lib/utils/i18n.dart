@@ -15,6 +15,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'check_status': 'Check Status',
+      'free_trial': 'Free Trial',
+      'free_trial_help':
+          'All accounts receive a two week trial of the pro plan, once the trial ends your account will automatically change to the free plan.',
+      'free_trial_ends_in_days':
+          'The pro plan trial ends in :count days, click to upgrade.',
+      'free_trial_ends_today':
+          'Today is the last day of the pro plan trial, click to upgrade.',
+      'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
       'tasks_shown_in_portal': 'Tasks Shown in Portal',
@@ -62392,6 +62401,30 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientPortalDomainHint =>
       _localizedValues[localeCode]['client_portal_domain_hint'] ??
       _localizedValues['en']['client_portal_domain_hint'];
+
+  String get changeEmail =>
+      _localizedValues[localeCode]['change_email'] ??
+      _localizedValues['en']['change_email'];
+
+  String get freeTrial =>
+      _localizedValues[localeCode]['free_trial'] ??
+      _localizedValues['en']['free_trial'];
+
+  String get freeTrialHelp =>
+      _localizedValues[localeCode]['free_trial_help'] ??
+      _localizedValues['en']['free_trial_help'];
+
+  String get freeTrialEndsInDays =>
+      _localizedValues[localeCode]['free_trial_ends_in_days'] ??
+      _localizedValues['en']['free_trial_ends_in_days'];
+
+  String get freeTrialEndsToday =>
+      _localizedValues[localeCode]['free_trial_ends_today'] ??
+      _localizedValues['en']['free_trial_ends_today'];
+
+  String get checkStatus =>
+      _localizedValues[localeCode]['check_status'] ??
+      _localizedValues['en']['check_status'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -559,31 +559,54 @@ class _LoginState extends State<LoginView> {
                           ),
                         ),
                       ),
-                      Column(
+                      SizedBox(height: 8),
+                      Flex(
+                        direction: calculateLayout(context) == AppLayout.desktop
+                            ? Axis.horizontal
+                            : Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           if (!_createAccount && _emailLogin)
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _recoverPassword = !_recoverPassword;
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, top: 8, right: 16, bottom: 8),
+                                child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      if (!_recoverPassword)
+                                        Icon(MdiIcons.lock, size: 16),
+                                      SizedBox(width: 8),
+                                      Text(_recoverPassword
+                                          ? localization.cancel
+                                          : localization.recoverPassword),
+                                    ]),
+                              ),
+                            ),
+                          if (!_recoverPassword && !_isSelfHosted)
+                            InkWell(
+                              onTap: () => launch(kStatusCheckUrl),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, top: 8, right: 16, bottom: 8),
+                                child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    if (!_recoverPassword)
-                                      Icon(MdiIcons.lock, size: 16),
-                                    AppTextButton(
-                                        label: _recoverPassword
-                                            ? localization.cancel
-                                            : localization.recoverPassword,
-                                        onPressed: () {
-                                          setState(() {
-                                            _recoverPassword =
-                                                !_recoverPassword;
-                                          });
-                                        }),
-                                  ]),
-                            ),
+                                  children: [
+                                    Icon(Icons.security, size: 16),
+                                    SizedBox(width: 8),
+                                    Text(localization.checkStatus)
+                                  ],
+                                ),
+                              ),
+                            )
                         ],
                       ),
                     ],

@@ -21,6 +21,12 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'trial_plan',
+      serializers.serialize(object.trialPlan,
+          specifiedType: const FullType(String)),
+      'trial_started',
+      serializers.serialize(object.trialStarted,
+          specifiedType: const FullType(String)),
       'default_url',
       serializers.serialize(object.defaultUrl,
           specifiedType: const FullType(String)),
@@ -72,6 +78,14 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'trial_plan':
+          result.trialPlan = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'trial_started':
+          result.trialStarted = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'default_url':
@@ -129,6 +143,10 @@ class _$AccountEntity extends AccountEntity {
   @override
   final String id;
   @override
+  final String trialPlan;
+  @override
+  final String trialStarted;
+  @override
   final String defaultUrl;
   @override
   final bool reportErrors;
@@ -156,6 +174,8 @@ class _$AccountEntity extends AccountEntity {
 
   _$AccountEntity._(
       {this.id,
+      this.trialPlan,
+      this.trialStarted,
       this.defaultUrl,
       this.reportErrors,
       this.plan,
@@ -170,6 +190,12 @@ class _$AccountEntity extends AccountEntity {
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'id');
+    }
+    if (trialPlan == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'trialPlan');
+    }
+    if (trialStarted == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'trialStarted');
     }
     if (defaultUrl == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'defaultUrl');
@@ -218,6 +244,8 @@ class _$AccountEntity extends AccountEntity {
     if (identical(other, this)) return true;
     return other is AccountEntity &&
         id == other.id &&
+        trialPlan == other.trialPlan &&
+        trialStarted == other.trialStarted &&
         defaultUrl == other.defaultUrl &&
         reportErrors == other.reportErrors &&
         plan == other.plan &&
@@ -244,7 +272,11 @@ class _$AccountEntity extends AccountEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, id.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc($jc(0, id.hashCode),
+                                                        trialPlan.hashCode),
+                                                    trialStarted.hashCode),
                                                 defaultUrl.hashCode),
                                             reportErrors.hashCode),
                                         plan.hashCode),
@@ -262,6 +294,8 @@ class _$AccountEntity extends AccountEntity {
   String toString() {
     return (newBuiltValueToStringHelper('AccountEntity')
           ..add('id', id)
+          ..add('trialPlan', trialPlan)
+          ..add('trialStarted', trialStarted)
           ..add('defaultUrl', defaultUrl)
           ..add('reportErrors', reportErrors)
           ..add('plan', plan)
@@ -284,6 +318,14 @@ class AccountEntityBuilder
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
+
+  String _trialPlan;
+  String get trialPlan => _$this._trialPlan;
+  set trialPlan(String trialPlan) => _$this._trialPlan = trialPlan;
+
+  String _trialStarted;
+  String get trialStarted => _$this._trialStarted;
+  set trialStarted(String trialStarted) => _$this._trialStarted = trialStarted;
 
   String _defaultUrl;
   String get defaultUrl => _$this._defaultUrl;
@@ -341,6 +383,8 @@ class AccountEntityBuilder
   AccountEntityBuilder get _$this {
     if (_$v != null) {
       _id = _$v.id;
+      _trialPlan = _$v.trialPlan;
+      _trialStarted = _$v.trialStarted;
       _defaultUrl = _$v.defaultUrl;
       _reportErrors = _$v.reportErrors;
       _plan = _$v.plan;
@@ -375,6 +419,8 @@ class AccountEntityBuilder
     final _$result = _$v ??
         new _$AccountEntity._(
             id: id,
+            trialPlan: trialPlan,
+            trialStarted: trialStarted,
             defaultUrl: defaultUrl,
             reportErrors: reportErrors,
             plan: plan,

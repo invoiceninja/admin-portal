@@ -21,6 +21,8 @@ abstract class AccountEntity
       isSchedulerRunning: false,
       disableAutoUpdate: false,
       defaultCompanyId: '',
+      trialPlan: '',
+      trialStarted: '',
     );
   }
 
@@ -31,6 +33,12 @@ abstract class AccountEntity
   int get hashCode;
 
   String get id;
+
+  @BuiltValueField(wireName: 'trial_plan')
+  String get trialPlan;
+
+  @BuiltValueField(wireName: 'trial_started')
+  String get trialStarted;
 
   @BuiltValueField(wireName: 'default_url')
   String get defaultUrl;
@@ -72,12 +80,16 @@ abstract class AccountEntity
     return Version.parse(currentVersion) < Version.parse(latestVersion);
   }
 
+  bool get isTrial => trialPlan.isNotEmpty;
+
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
     ..debugEnabled = false
     ..isDocker = false
     ..isSchedulerRunning = false
     ..disableAutoUpdate = false
+    ..trialPlan = ''
+    ..trialStarted = ''
     ..defaultCompanyId = '';
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
