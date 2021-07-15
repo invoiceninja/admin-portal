@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'free_trial': 'Free Trial',
+      'free_trial_help':
+          'All accounts receive a two week trial of the pro plan, once the trial ends your account will automatically change to the free plan.',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -62397,6 +62400,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get changeEmail =>
       _localizedValues[localeCode]['change_email'] ??
       _localizedValues['en']['change_email'];
+
+  String get freeTrial =>
+      _localizedValues[localeCode]['free_trial'] ??
+      _localizedValues['en']['free_trial'];
+
+  String get freeTrialHelp =>
+      _localizedValues[localeCode]['free_trial_help'] ??
+      _localizedValues['en']['free_trial_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

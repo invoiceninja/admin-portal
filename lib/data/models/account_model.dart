@@ -76,6 +76,8 @@ abstract class AccountEntity
     return Version.parse(currentVersion) < Version.parse(latestVersion);
   }
 
+  bool get isTrial => trialPlan.isNotEmpty;
+
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
     ..debugEnabled = false
