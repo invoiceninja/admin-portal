@@ -21,6 +21,7 @@ abstract class AccountEntity
       isSchedulerRunning: false,
       disableAutoUpdate: false,
       defaultCompanyId: '',
+      trialPlan: '',
     );
   }
 
@@ -31,6 +32,9 @@ abstract class AccountEntity
   int get hashCode;
 
   String get id;
+
+  @BuiltValueField(wireName: 'trial_plan')
+  String get trialPlan;
 
   @BuiltValueField(wireName: 'default_url')
   String get defaultUrl;
@@ -78,6 +82,7 @@ abstract class AccountEntity
     ..isDocker = false
     ..isSchedulerRunning = false
     ..disableAutoUpdate = false
+    ..trialPlan = ''
     ..defaultCompanyId = '';
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
