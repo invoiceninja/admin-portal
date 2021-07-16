@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
@@ -79,6 +78,7 @@ class _LoginState extends State<LoginView> {
       }
     } else if (isApple() || !GoogleOAuth.isEnabled) {
       _emailLogin = true;
+      _createAccount = false;
       _hideGoogle = true;
     }
   }

@@ -95,6 +95,7 @@ class ClientFields {
   static const String shippingState = 'shipping_state';
   static const String shippingPostalCode = 'shipping_postal_code';
   static const String shippingCountry = 'shipping_country';
+  static const String group = 'group';
 }
 
 abstract class ClientEntity extends Object
@@ -513,6 +514,9 @@ abstract class ClientEntity extends Object
         break;
       case ClientFields.documents:
         response = clientA.documents.length.compareTo(clientA.documents.length);
+        break;
+      case ClientFields.group:
+        response = clientA.groupId.compareTo(clientB.groupId);
         break;
       default:
         print('## ERROR: sort by client.$sortField not implemented');

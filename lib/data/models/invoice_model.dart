@@ -1117,6 +1117,12 @@ class ProductItemFields {
   static const String custom2 = 'product2';
   static const String custom3 = 'product3';
   static const String custom4 = 'product4';
+  /*
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
+  */
 }
 
 class TaskItemFields {
@@ -1131,6 +1137,12 @@ class TaskItemFields {
   static const String custom2 = 'task2';
   static const String custom3 = 'task3';
   static const String custom4 = 'task4';
+  /*
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
+  */
 }
 
 abstract class InvoiceItemEntity

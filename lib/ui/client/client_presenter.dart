@@ -41,6 +41,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.custom3,
       ClientFields.custom4,
       ClientFields.documents,
+      ClientFields.group,
     ];
   }
 
@@ -116,6 +117,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(formatNumber(client.settings.defaultTaskRate, context));
       case ClientFields.documents:
         return Text('${client.documents.length}');
+      case ClientFields.group:
+        return Text(state.groupState.get(client.groupId).name);
     }
 
     return super.getField(field: field, context: context);

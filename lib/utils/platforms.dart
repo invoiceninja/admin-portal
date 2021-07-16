@@ -40,7 +40,7 @@ String getPdfRequirements(BuildContext context) {
 String getPlatform(BuildContext context) =>
     Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android';
 
-String getAppURL(BuildContext context) {
+String getRateAppURL(BuildContext context) {
   switch (Theme.of(context).platform) {
     case TargetPlatform.android:
       return kGoogleStoreUrl;
