@@ -128,7 +128,6 @@ void confirmCallback({
                   Navigator.pop(context);
                 }),
             TextButton(
-              autofocus: true,
               child: Text(localization.ok.toUpperCase()),
               onPressed: () => _onPressed(),
             )
