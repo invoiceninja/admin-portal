@@ -85,7 +85,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
     return EditScaffold(
       title: localization.invoiceDesign,
-      isAdvancedSettings: true,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),

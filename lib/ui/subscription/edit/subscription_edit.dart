@@ -182,7 +182,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       title: subscription.isNew
           ? localization.newSubscription
           : localization.editSubscription,
-      isAdvancedSettings: true,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
