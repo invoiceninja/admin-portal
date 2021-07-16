@@ -22,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -903,6 +904,10 @@ void _showAbout(BuildContext context) async {
     height: 40.0,
   );
 
+  final daysActive = DateTime.now()
+      .difference(convertTimestampToDate(state.company.createdAt))
+      .inDays;
+
   showDialog<Null>(
       context: context,
       builder: (BuildContext context) {
@@ -960,35 +965,7 @@ void _showAbout(BuildContext context) async {
                     subtitle: Text(state.user.email),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            style: aboutTextStyle,
-                            text: localization.thankYouForUsingOurApp +
-                                '\n\n' +
-                                localization.ifYouLikeIt,
-                          ),
-                          TextSpan(
-                            style: linkStyle,
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                launch(getAppURL(context),
-                                    forceSafariVC: false);
-                              },
-                            text: ' ' + localization.clickHere + ' ',
-                          ),
-                          TextSpan(
-                            style: aboutTextStyle,
-                            text: localization.toRateIt,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30),
+                    padding: const EdgeInsets.only(top: 4),
                     child: AppButton(
                       label: localization.appPlatforms.toUpperCase(),
                       iconData: MdiIcons.desktopMac,
@@ -1127,6 +1104,13 @@ void _showAbout(BuildContext context) async {
                         iconData: MdiIcons.cloudDownload,
                         color: Colors.orange,
                         onPressed: () => _showUpdate(context),
+                      ),
+                    if (daysActive > 100)
+                      AppButton(
+                        label: localization.reviewApp.toUpperCase(),
+                        iconData: Icons.star,
+                        color: Colors.grey,
+                        onPressed: () => launch(getRateAppURL(context)),
                       ),
                   ],
                 ],
