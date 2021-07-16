@@ -34,7 +34,7 @@ const String kGoogleFDroidUrl =
 const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
 const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
 
-const String kDocsUrl = 'https://invoiceninja.github.io/docs/getting-started/';
+const String kDocsUrl = 'https://invoiceninja.github.io/docs';
 const String kDocsCustomDomainUrl =
     'https://invoiceninja.github.io/docs/hosted-custom-domain/';
 const String kDocsCustomFieldsUrl =
