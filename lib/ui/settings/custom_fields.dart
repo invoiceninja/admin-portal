@@ -83,7 +83,6 @@ class _CustomFieldsState extends State<CustomFields>
 
     return EditScaffold(
       title: localization.customFields,
-      isAdvancedSettings: true,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),

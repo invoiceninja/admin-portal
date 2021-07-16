@@ -234,7 +234,6 @@ class _ClientPortalState extends State<ClientPortal>
 
     return EditScaffold(
       title: localization.clientPortal,
-      isAdvancedSettings: true,
       onSavePressed: (context) => _onSavePressed(context),
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),

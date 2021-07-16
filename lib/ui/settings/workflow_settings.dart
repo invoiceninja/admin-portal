@@ -68,7 +68,6 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
 
     return EditScaffold(
       title: localization.workflowSettings,
-      isAdvancedSettings: true,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),

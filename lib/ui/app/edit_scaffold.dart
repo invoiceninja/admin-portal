@@ -28,7 +28,6 @@ class EditScaffold extends StatelessWidget {
     this.appBarBottom,
     this.saveLabel,
     this.isFullscreen = false,
-    this.isAdvancedSettings = false,
     this.onActionPressed,
     this.actions,
   }) : super(key: key);
@@ -45,7 +44,6 @@ class EditScaffold extends StatelessWidget {
   final Widget bottomNavigationBar;
   final String saveLabel;
   final bool isFullscreen;
-  final bool isAdvancedSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +63,9 @@ class EditScaffold extends StatelessWidget {
         : localization.ownerUpgradeToPaidPlan;
     if (state.account.isTrial) {
       final trialStarted = convertSqlDateToDateTime(state.account.trialStarted);
-      final trialEnds = DateTime.now().add(Duration(days: 14));
+      final trialEnds = trialStarted.add(Duration(days: 14));
       final countDays = trialEnds.difference(trialStarted).inDays;
-      if (countDays == 1) {
+      if (countDays <= 1) {
         upgradeMessage = localization.freeTrialEndsToday;
       } else {
         upgradeMessage = localization.freeTrialEndsInDays
@@ -76,7 +74,7 @@ class EditScaffold extends StatelessWidget {
     }
 
     if (!state.isProPlan || state.account.isTrial) {
-      if (isAdvancedSettings) {
+      if (kAdvancedSettings.contains(state.uiState.subRoute)) {
         showUpgradeBanner = true;
         if (!state.isProPlan && isEnabled) {
           isCancelEnabled = true;

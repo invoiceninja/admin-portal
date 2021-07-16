@@ -725,7 +725,9 @@ class SidebarFooter extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.help_outline),
-              onPressed: () => launch(kDocsUrl),
+              onPressed: () {
+                launch(kDocsUrl);
+              },
               tooltip: localization.help,
             ),
             IconButton(

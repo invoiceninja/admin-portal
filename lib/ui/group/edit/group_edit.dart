@@ -79,7 +79,6 @@ class _GroupEditState extends State<GroupEdit> {
     return EditScaffold(
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       title: group.isNew ? localization.newGroup : localization.editGroup,
-      isAdvancedSettings: true,
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
