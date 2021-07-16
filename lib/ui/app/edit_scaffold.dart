@@ -75,8 +75,8 @@ class EditScaffold extends StatelessWidget {
       }
     }
 
-    if (!state.isProPlan || state.account.isTrial) {
-      if (isAdvancedSettings && !isApple()) {
+    if ((!state.isProPlan || state.account.isTrial) && !isApple()) {
+      if (isAdvancedSettings) {
         showUpgradeBanner = true;
         if (isEnabled) {
           isCancelEnabled = true;

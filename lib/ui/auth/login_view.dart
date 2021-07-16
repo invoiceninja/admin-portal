@@ -78,6 +78,7 @@ class _LoginState extends State<LoginView> {
       }
     } else if (isApple() || !GoogleOAuth.isEnabled) {
       _emailLogin = true;
+      _createAccount = false;
       _hideGoogle = true;
     }
   }

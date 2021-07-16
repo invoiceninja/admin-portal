@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -892,10 +891,6 @@ void _showAbout(BuildContext context) async {
   final Store<AppState> store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final ThemeData themeData = Theme.of(context);
-  final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
-  final TextStyle linkStyle =
-      themeData.textTheme.bodyText2.copyWith(color: themeData.accentColor);
 
   final appLegalese = '© ${DateTime.now().year} Invoice Ninja';
   final apppIcon = Image.asset(
