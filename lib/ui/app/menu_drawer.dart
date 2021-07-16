@@ -727,7 +727,7 @@ class SidebarFooter extends StatelessWidget {
               icon: Icon(Icons.help_outline),
               onPressed: () {
                 String url = kDocsUrl;
-                final subRoute = state.uiState.subRoute;
+                final subRoute = state.uiState.baseSubRoute;
 
                 if (state.uiState.isInSettings) {
                   if (kAdvancedSettings.contains(subRoute)) {
@@ -738,9 +738,6 @@ class SidebarFooter extends StatelessWidget {
                 } else {
                   url += '/getting-started';
                 }
-
-                url = url.replaceAll('_edit', '');
-                url = url.replaceAll('_view', '');
 
                 launch(url);
               },

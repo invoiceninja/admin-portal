@@ -396,8 +396,8 @@ const String kSettingsTaskStatusView = 'task_status_view';
 const String kSettingsTaskStatusEdit = 'task_status_edit';
 
 const List<String> kAdvancedSettings = [
-  kSettingsCustomDesignsEdit,
-  kSettingsGroupSettingsEdit,
+  kSettingsCustomDesigns,
+  kSettingsGroupSettings,
   kSettingsClientPortal,
   kSettingsCustomFields,
   kSettingsEmailSettings,
@@ -405,8 +405,8 @@ const List<String> kAdvancedSettings = [
   kSettingsInvoiceDesign,
   kSettingsTemplatesAndReminders,
   kSettingsWorkflowSettings,
-  kSettingsSubscriptionsEdit,
-  kSettingsUserManagementEdit,
+  kSettingsSubscriptions,
+  kSettingsUserManagement,
 ];
 
 const String kReportClient = 'client';
