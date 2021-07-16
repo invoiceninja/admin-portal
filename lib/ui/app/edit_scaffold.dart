@@ -75,10 +75,10 @@ class EditScaffold extends StatelessWidget {
       }
     }
 
-    if ((!state.isProPlan || state.account.isTrial) && !isApple()) {
+    if (!state.isProPlan || state.account.isTrial) {
       if (isAdvancedSettings) {
         showUpgradeBanner = true;
-        if (isEnabled) {
+        if (!state.isProPlan && isEnabled) {
           isCancelEnabled = true;
           isEnabled = false;
         }
@@ -92,7 +92,7 @@ class EditScaffold extends StatelessWidget {
         return true;
       },
       child: Scaffold(
-        body: showUpgradeBanner
+        body: showUpgradeBanner && !isApple()
             ? Column(
                 children: [
                   InkWell(
