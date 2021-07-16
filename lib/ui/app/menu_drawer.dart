@@ -1105,14 +1105,14 @@ void _showAbout(BuildContext context) async {
                         color: Colors.orange,
                         onPressed: () => _showUpdate(context),
                       ),
-                    if (daysActive > 100)
-                      AppButton(
-                        label: localization.reviewApp.toUpperCase(),
-                        iconData: Icons.star,
-                        color: Colors.grey,
-                        onPressed: () => launch(getRateAppURL(context)),
-                      ),
                   ],
+                  if (daysActive > 100 || true)
+                    AppButton(
+                      label: localization.reviewApp.toUpperCase(),
+                      iconData: Icons.star,
+                      color: Colors.purple,
+                      onPressed: () => launch(getRateAppURL(context)),
+                    ),
                 ],
               ),
             ),
