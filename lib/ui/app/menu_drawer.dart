@@ -726,7 +726,20 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.help_outline),
               onPressed: () {
-                launch(kDocsUrl);
+                String url = kDocsUrl;
+                final subRoute = state.uiState.baseSubRoute;
+
+                if (state.uiState.isInSettings) {
+                  if (kAdvancedSettings.contains(subRoute)) {
+                    url += '/advanced-settings/#$subRoute';
+                  } else {
+                    url += '/basic-settings/#$subRoute';
+                  }
+                } else {
+                  url += '/getting-started';
+                }
+
+                launch(url);
               },
               tooltip: localization.help,
             ),

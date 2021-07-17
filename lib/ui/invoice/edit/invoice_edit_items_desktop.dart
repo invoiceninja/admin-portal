@@ -349,8 +349,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   final updatedItem = item.rebuild((b) => b
                                     ..productKey = product.productKey
                                     ..notes =
-                                        item.isTask ? item.notes : product.notes
-                                    ..cost = item.isTask && item.cost != 0
+                                        item.isTask || !company.fillProducts
+                                            ? item.notes
+                                            : product.notes
+                                    ..cost = (item.isTask && item.cost != 0) ||
+                                            !company.fillProducts
                                         ? item.cost
                                         : cost
                                     ..quantity =
@@ -399,9 +402,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               }
                               final updatedItem = item.rebuild((b) => b
                                 ..productKey = product.productKey
-                                ..notes =
-                                    item.isTask ? item.notes : product.notes
-                                ..cost = item.isTask && item.cost != 0
+                                ..notes = item.isTask || !company.fillProducts
+                                    ? item.notes
+                                    : product.notes
+                                ..cost = (item.isTask && item.cost != 0) ||
+                                        !company.fillProducts
                                     ? item.cost
                                     : cost
                                 ..quantity = item.isTask || item.quantity != 0

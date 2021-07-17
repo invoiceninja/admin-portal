@@ -34,7 +34,7 @@ const String kGoogleFDroidUrl =
 const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
 const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
 
-const String kDocsUrl = 'https://invoiceninja.github.io/docs/getting-started/';
+const String kDocsUrl = 'https://invoiceninja.github.io/docs';
 const String kDocsCustomDomainUrl =
     'https://invoiceninja.github.io/docs/hosted-custom-domain/';
 const String kDocsCustomFieldsUrl =
@@ -396,8 +396,8 @@ const String kSettingsTaskStatusView = 'task_status_view';
 const String kSettingsTaskStatusEdit = 'task_status_edit';
 
 const List<String> kAdvancedSettings = [
-  kSettingsCustomDesignsEdit,
-  kSettingsGroupSettingsEdit,
+  kSettingsCustomDesigns,
+  kSettingsGroupSettings,
   kSettingsClientPortal,
   kSettingsCustomFields,
   kSettingsEmailSettings,
@@ -405,8 +405,8 @@ const List<String> kAdvancedSettings = [
   kSettingsInvoiceDesign,
   kSettingsTemplatesAndReminders,
   kSettingsWorkflowSettings,
-  kSettingsSubscriptionsEdit,
-  kSettingsUserManagementEdit,
+  kSettingsSubscriptions,
+  kSettingsUserManagement,
 ];
 
 const String kReportClient = 'client';

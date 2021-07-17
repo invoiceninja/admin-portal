@@ -74,7 +74,7 @@ class EditScaffold extends StatelessWidget {
     }
 
     if (!state.isProPlan || state.account.isTrial) {
-      if (kAdvancedSettings.contains(state.uiState.subRoute)) {
+      if (kAdvancedSettings.contains(state.uiState.baseSubRoute)) {
         showUpgradeBanner = true;
         if (!state.isProPlan && isEnabled) {
           isCancelEnabled = true;
