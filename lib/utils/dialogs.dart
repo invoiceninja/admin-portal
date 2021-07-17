@@ -130,6 +130,7 @@ void confirmCallback({
             TextButton(
               child: Text(localization.ok.toUpperCase()),
               onPressed: () => _onPressed(),
+              autofocus: typeToConfirm == null,
             )
           ],
         ),
