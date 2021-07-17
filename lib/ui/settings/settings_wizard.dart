@@ -334,8 +334,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                 style: Theme.of(context).textTheme.headline6,
                               ),
                             ),
-                            if (countCompanies == 1)
-                              Text(localization.wizardWarning),
                             companyName,
                             if (state.isHosted) subdomain,
                             firstName,
@@ -365,11 +363,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
                               ],
                             ),
                             SizedBox(height: 16),
-                            if (countCompanies == 1)
-                              Padding(
-                                child: Text(localization.wizardWarning),
-                                padding: const EdgeInsets.only(bottom: 8),
-                              ),
                             Row(
                               children: [
                                 Expanded(child: companyName),
