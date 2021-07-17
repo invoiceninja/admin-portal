@@ -40,6 +40,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   final _amountController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
@@ -51,6 +53,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
       _amountController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers
@@ -62,6 +66,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
         formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = expense.customValue1;
     _custom2Controller.text = expense.customValue2;
+    _custom3Controller.text = expense.customValue3;
+    _custom4Controller.text = expense.customValue4;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -85,7 +91,9 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
       ..number = _numberController.text.trim()
       ..amount = parseDouble(_amountController.text)
       ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
     if (expense != viewModel.expense) {
       _debouncer.run(() {
         viewModel.onChanged(expense);
@@ -285,6 +293,18 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               controller: _custom2Controller,
               field: CustomFieldType.expense2,
               value: expense.customValue2,
+              onSavePressed: viewModel.onSavePressed,
+            ),
+            CustomField(
+              controller: _custom3Controller,
+              field: CustomFieldType.expense3,
+              value: expense.customValue3,
+              onSavePressed: viewModel.onSavePressed,
+            ),
+            CustomField(
+              controller: _custom4Controller,
+              field: CustomFieldType.expense4,
+              value: expense.customValue4,
               onSavePressed: viewModel.onSavePressed,
             ),
           ],
