@@ -121,6 +121,8 @@ List<String> filteredExpensesSelector(
 
   final list = expenseMap.keys.where((expenseId) {
     final expense = expenseMap[expenseId];
+    final expenseCategory =
+        expenseCategoryMap[expense.categoryId] ?? ExpenseCategoryEntity();
     final vendor =
         vendorMap[expense.vendorId] ?? VendorEntity(id: expense.vendorId);
     final client =
@@ -177,7 +179,8 @@ List<String> filteredExpensesSelector(
       return false;
     }
 
-    return expense.matchesFilter(expenseListState.filter);
+    return expense.matchesFilter(expenseListState.filter) ||
+        expenseCategory.matchesFilter(expenseListState.filter);
   }).toList();
 
   list.sort((expenseAId, expenseBId) {
