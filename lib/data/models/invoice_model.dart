@@ -102,6 +102,7 @@ class InvoiceTotalFields {
   static const String customSurcharge4 = 'custom_surcharge4';
   static const String paidToDate = 'paid_to_date';
   static const String outstanding = 'outstanding';
+  static const String netSubtotal = 'net_subtotal';
 }
 
 abstract class InvoiceEntity extends Object

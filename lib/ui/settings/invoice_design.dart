@@ -607,6 +607,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [
                 InvoiceTotalFields.subtotal,
+                InvoiceTotalFields.netSubtotal,
                 InvoiceTotalFields.discount,
                 InvoiceTotalFields.lineTaxes,
                 InvoiceTotalFields.totalTaxes,
