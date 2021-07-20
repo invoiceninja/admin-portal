@@ -20,14 +20,23 @@ class DesignPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    final designState = store.state.designState;
+    final state = store.state;
+    final designState = state.designState;
 
     return AppDropdownButton<String>(
       value: initialValue ?? designState.cleanDesign.id,
       onChanged: (dynamic value) => onSelected(designState.map[value]),
       items: designState.list
-          .where((designId) =>
-              designState.map[designId].isActive || designId == initialValue)
+          .where((designId) {
+            /*
+            if (state.isHosted &&
+                !state.isPaidAccount &&
+                !state.account.isTrial) {}
+            */
+
+            return designState.map[designId].isActive ||
+                designId == initialValue;
+          })
           .map((value) => DropdownMenuItem(
                 value: value,
                 child: Text(designState.map[value].displayName),
