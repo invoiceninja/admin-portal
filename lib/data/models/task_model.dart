@@ -673,12 +673,12 @@ abstract class TaskEntity extends Object
             ? -1
             : taskA.isInvoiced
                 ? 999999
-                : taskStatusMap[taskA.statusId].statusOrder;
+                : (taskStatusMap[taskA.statusId]?.statusOrder ?? 0);
         final taskBStatus = taskB.isRunning
             ? -1
             : taskB.isInvoiced
                 ? 999999
-                : taskStatusMap[taskB.statusId].statusOrder;
+                : (taskStatusMap[taskB.statusId]?.statusOrder ?? 0);
         response = taskAStatus.compareTo(taskBStatus);
         break;
       default:
