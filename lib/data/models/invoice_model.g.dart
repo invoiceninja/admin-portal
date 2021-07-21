@@ -733,7 +733,7 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.cost, specifiedType: const FullType(double)),
       'product_cost',
       serializers.serialize(object.productCost,
-          specifiedType: const FullType(String)),
+          specifiedType: const FullType(double)),
       'quantity',
       serializers.serialize(object.quantity,
           specifiedType: const FullType(double)),
@@ -824,7 +824,7 @@ class _$InvoiceItemEntitySerializer
           break;
         case 'product_cost':
           result.productCost = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(double)) as double;
           break;
         case 'quantity':
           result.quantity = serializers.deserialize(value,
@@ -2473,7 +2473,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double cost;
   @override
-  final String productCost;
+  final double productCost;
   @override
   final double quantity;
   @override
@@ -2703,9 +2703,9 @@ class InvoiceItemEntityBuilder
   double get cost => _$this._cost;
   set cost(double cost) => _$this._cost = cost;
 
-  String _productCost;
-  String get productCost => _$this._productCost;
-  set productCost(String productCost) => _$this._productCost = productCost;
+  double _productCost;
+  double get productCost => _$this._productCost;
+  set productCost(double productCost) => _$this._productCost = productCost;
 
   double _quantity;
   double get quantity => _$this._quantity;
