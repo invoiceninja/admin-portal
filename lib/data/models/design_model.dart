@@ -92,6 +92,7 @@ abstract class DesignEntity extends Object
       archivedAt: 0,
       isDeleted: false,
       isChanged: false,
+      isFree: true,
       name: '',
       design: design ??
           state?.designState?.cleanDesign?.design ??
@@ -122,6 +123,9 @@ abstract class DesignEntity extends Object
 
   @BuiltValueField(wireName: 'is_custom')
   bool get isCustom;
+
+  @BuiltValueField(wireName: 'is_free')
+  bool get isFree;
 
   DesignEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -211,6 +215,11 @@ abstract class DesignEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+
+  // ignore: unused_element
+  static void _initializeBuilder(DesignEntityBuilder builder) => builder
+    ..isFree = true);
+
 
   static Serializer<DesignEntity> get serializer => _$designEntitySerializer;
 }
