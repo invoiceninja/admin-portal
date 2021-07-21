@@ -56,8 +56,7 @@ const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 const String kGitHubLangUrl =
     'https://github.com/invoiceninja/invoiceninja/blob/master/resources/lang/en/texts.php';
-const String kStatusCheckUrl =
-    'https://ohdear.app/status-page/invoice-ninja-status-page';
+const String kStatusCheckUrl = 'https://status.invoiceninja.com';
 
 enum AppEnvironment {
   hosted,
