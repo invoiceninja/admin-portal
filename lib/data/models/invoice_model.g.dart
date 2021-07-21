@@ -731,6 +731,9 @@ class _$InvoiceItemEntitySerializer
           specifiedType: const FullType(String)),
       'cost',
       serializers.serialize(object.cost, specifiedType: const FullType(double)),
+      'product_cost',
+      serializers.serialize(object.productCost,
+          specifiedType: const FullType(String)),
       'quantity',
       serializers.serialize(object.quantity,
           specifiedType: const FullType(double)),
@@ -818,6 +821,10 @@ class _$InvoiceItemEntitySerializer
         case 'cost':
           result.cost = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'product_cost':
+          result.productCost = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'quantity':
           result.quantity = serializers.deserialize(value,
@@ -2466,6 +2473,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double cost;
   @override
+  final String productCost;
+  @override
   final double quantity;
   @override
   final String taxName1;
@@ -2506,6 +2515,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       {this.productKey,
       this.notes,
       this.cost,
+      this.productCost,
       this.quantity,
       this.taxName1,
       this.taxRate1,
@@ -2531,6 +2541,9 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     }
     if (cost == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'cost');
+    }
+    if (productCost == null) {
+      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'productCost');
     }
     if (quantity == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'quantity');
@@ -2585,6 +2598,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
+        productCost == other.productCost &&
         quantity == other.quantity &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
@@ -2624,18 +2638,12 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                productKey
-                                                                                    .hashCode),
-                                                                            notes
-                                                                                .hashCode),
-                                                                        cost
-                                                                            .hashCode),
-                                                                    quantity
-                                                                        .hashCode),
-                                                                taxName1
-                                                                    .hashCode),
+                                                                            $jc($jc(0, productKey.hashCode),
+                                                                                notes.hashCode),
+                                                                            cost.hashCode),
+                                                                        productCost.hashCode),
+                                                                    quantity.hashCode),
+                                                                taxName1.hashCode),
                                                             taxRate1.hashCode),
                                                         taxName2.hashCode),
                                                     taxRate2.hashCode),
@@ -2658,6 +2666,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('productKey', productKey)
           ..add('notes', notes)
           ..add('cost', cost)
+          ..add('productCost', productCost)
           ..add('quantity', quantity)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
@@ -2693,6 +2702,10 @@ class InvoiceItemEntityBuilder
   double _cost;
   double get cost => _$this._cost;
   set cost(double cost) => _$this._cost = cost;
+
+  String _productCost;
+  String get productCost => _$this._productCost;
+  set productCost(String productCost) => _$this._productCost = productCost;
 
   double _quantity;
   double get quantity => _$this._quantity;
@@ -2758,13 +2771,16 @@ class InvoiceItemEntityBuilder
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
 
-  InvoiceItemEntityBuilder();
+  InvoiceItemEntityBuilder() {
+    InvoiceItemEntity._initializeBuilder(this);
+  }
 
   InvoiceItemEntityBuilder get _$this {
     if (_$v != null) {
       _productKey = _$v.productKey;
       _notes = _$v.notes;
       _cost = _$v.cost;
+      _productCost = _$v.productCost;
       _quantity = _$v.quantity;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
@@ -2806,6 +2822,7 @@ class InvoiceItemEntityBuilder
             productKey: productKey,
             notes: notes,
             cost: cost,
+            productCost: productCost,
             quantity: quantity,
             taxName1: taxName1,
             taxRate1: taxRate1,
