@@ -1195,7 +1195,7 @@ abstract class InvoiceItemEntity
   double get cost;
 
   @BuiltValueField(wireName: 'product_cost')
-  String get productCost;
+  double get productCost;
 
   double get quantity;
 
@@ -1340,10 +1340,9 @@ abstract class InvoiceItemEntity
     return item;
   }
 
-    // ignore: unused_element
-  static void _initializeBuilder(InvoiceItemEntityBuilder builder) => builder
-    ..proudctCost = 0);
-
+  // ignore: unused_element
+  static void _initializeBuilder(InvoiceItemEntityBuilder builder) =>
+      builder..productCost = 0;
 
   static Serializer<InvoiceItemEntity> get serializer =>
       _$invoiceItemEntitySerializer;

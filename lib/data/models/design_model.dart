@@ -217,9 +217,8 @@ abstract class DesignEntity extends Object
   FormatNumberType get listDisplayAmountType => null;
 
   // ignore: unused_element
-  static void _initializeBuilder(DesignEntityBuilder builder) => builder
-    ..isFree = true);
-
+  static void _initializeBuilder(DesignEntityBuilder builder) =>
+      builder..isFree = true;
 
   static Serializer<DesignEntity> get serializer => _$designEntitySerializer;
 }
