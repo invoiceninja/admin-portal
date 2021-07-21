@@ -88,6 +88,7 @@ class InvoiceFields {
   static const String reminderLastSent = 'reminder_last_sent';
   static const String exchangeRate = 'exchange_rate';
   static const String isViewed = 'is_viewed';
+  static const String autoBillEnabled = 'auto_bill_enabled';
 }
 
 class InvoiceTotalFields {
