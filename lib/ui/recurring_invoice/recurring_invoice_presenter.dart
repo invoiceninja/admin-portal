@@ -21,7 +21,6 @@ class RecurringInvoicePresenter extends EntityPresenter {
       RecurringInvoiceFields.frequency,
       RecurringInvoiceFields.dueDateDays,
       RecurringInvoiceFields.autoBill,
-      RecurringInvoiceFields.autoBillEnabled,
     ];
   }
 
@@ -124,9 +123,6 @@ class RecurringInvoicePresenter extends EntityPresenter {
                         .replaceFirst(':count', '${invoice.dueDateDays}'));
       case RecurringInvoiceFields.autoBill:
         return Text(localization.lookup(invoice.autoBill));
-      case RecurringInvoiceFields.autoBillEnabled:
-        return Text(localization.lookup(
-            invoice.autoBillEnabled ? localization.yes : localization.no));
     }
 
     return super.getField(field: field, context: context);
