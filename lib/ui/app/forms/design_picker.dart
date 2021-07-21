@@ -28,14 +28,14 @@ class DesignPicker extends StatelessWidget {
       onChanged: (dynamic value) => onSelected(designState.map[value]),
       items: designState.list
           .where((designId) {
-            /*
+            final design = designState.map[designId];
             if (state.isHosted &&
                 !state.isPaidAccount &&
-                !state.account.isTrial) {}
-            */
-
-            return designState.map[designId].isActive ||
-                designId == initialValue;
+                !state.account.isTrial &&
+                !design.isFree) {
+              return false;
+            }
+            return design.isActive || designId == initialValue;
           })
           .map((value) => DropdownMenuItem(
                 value: value,

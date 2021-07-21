@@ -48,6 +48,8 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'pdf_engine')
   String get pdfEngine;
 
+  String get queue;
+
   static Serializer<HealthCheckResponse> get serializer =>
       _$healthCheckResponseSerializer;
 }

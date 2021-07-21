@@ -26,6 +26,7 @@ InvoiceItemEntity convertProductToInvoiceItem({
       ..productKey = product.productKey
       ..notes = product.notes
       ..cost = cost
+      ..productCost = product.cost
       ..quantity = product.quantity == 0 ? 1 : product.quantity
       ..customValue1 = product.customValue1
       ..customValue2 = product.customValue2

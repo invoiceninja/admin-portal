@@ -3,7 +3,7 @@
 Client app for the [Invoice Ninja](https://github.com/invoiceninja/invoiceninja) web app.
 
 - Google Play Store: [v4](https://play.google.com/store/apps/details?id=com.invoiceninja.flutter) | [v5](https://play.google.com/store/apps/details?id=com.invoiceninja.app)
-- Apple App Store: [v4](https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8) | [v5](https://testflight.apple.com/join/MJ6WpaXh)
+- Apple App Store: [v4](https://itunes.apple.com/us/app/invoice-ninja/id1435514417) | [v5](https://apps.apple.com/us/app/invoice-ninja-v5/id1503970375)
 
 <p align="center">
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/1.png" alt="Dashboard" width="200"/>

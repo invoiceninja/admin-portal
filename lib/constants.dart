@@ -26,7 +26,8 @@ const String kSourceCodeFrontend =
     'https://github.com/invoiceninja/flutter-client';
 const String kSourceCodeFrontendSDK = 'https://pub.dev/packages/invoiceninja';
 
-const String kAppleStoreUrl = 'https://testflight.apple.com/join/MJ6WpaXh';
+const String kAppleStoreUrl =
+    'https://apps.apple.com/us/app/invoice-ninja-v5/id1503970375';
 const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.app';
 const String kGoogleFDroidUrl =
@@ -55,8 +56,7 @@ const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 const String kGitHubLangUrl =
     'https://github.com/invoiceninja/invoiceninja/blob/master/resources/lang/en/texts.php';
-const String kStatusCheckUrl =
-    'https://ohdear.app/status-page/invoice-ninja-status-page';
+const String kStatusCheckUrl = 'https://status.invoiceninja.com';
 
 enum AppEnvironment {
   hosted,

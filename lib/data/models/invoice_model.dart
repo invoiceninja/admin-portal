@@ -1111,6 +1111,7 @@ class ProductItemFields {
   static const String item = 'item';
   static const String description = 'description';
   static const String unitCost = 'unit_cost';
+  static const String productCost = 'product_cost';
   static const String tax = 'tax';
   static const String quantity = 'quantity';
   static const String lineTotal = 'line_total';
@@ -1131,6 +1132,7 @@ class TaskItemFields {
   static const String service = 'service';
   static const String description = 'description';
   static const String rate = 'rate';
+  static const String serviceCost = 'service_cost';
   static const String tax = 'tax';
   static const String hours = 'hours';
   static const String lineTotal = 'line_total';
@@ -1154,6 +1156,7 @@ abstract class InvoiceItemEntity
       productKey: productKey ?? '',
       notes: '',
       cost: 0,
+      productCost: 0,
       quantity: quantity ?? 1,
       taxName1: '',
       taxRate1: 0,
@@ -1190,6 +1193,9 @@ abstract class InvoiceItemEntity
   String get notes;
 
   double get cost;
+
+  @BuiltValueField(wireName: 'product_cost')
+  double get productCost;
 
   double get quantity;
 
@@ -1333,6 +1339,10 @@ abstract class InvoiceItemEntity
 
     return item;
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(InvoiceItemEntityBuilder builder) =>
+      builder..productCost = 0;
 
   static Serializer<InvoiceItemEntity> get serializer =>
       _$invoiceItemEntitySerializer;

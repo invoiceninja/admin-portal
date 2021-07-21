@@ -140,5 +140,9 @@ String portalRegistrationUrlSelector(AppState state) {
     url += '/' + state.company.companyKey;
   }
 
+  if (state.isHosted) {
+    url = url.replaceFirst('//', '//${state.company.subdomain}.');
+  }
+
   return url;
 }

@@ -108,7 +108,11 @@ ReportResult lineItemReport(
             value = lineItem.quantity;
             break;
           case InvoiceItemReportFields.cost:
-            value = productId == null ? 0.0 : productMap[productId].cost;
+            if (lineItem.productCost != 0) {
+              value = lineItem.productCost;
+            } else {
+              value = productId == null ? 0.0 : productMap[productId].cost;
+            }
             break;
           case InvoiceItemReportFields.profit:
             value = lineItem.netTotal(invoice, precision) -

@@ -356,6 +356,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                             !company.fillProducts
                                         ? item.cost
                                         : cost
+                                    ..productCost = product.cost
                                     ..quantity =
                                         item.isTask || item.quantity != 0
                                             ? item.quantity
@@ -409,6 +410,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                         !company.fillProducts
                                     ? item.cost
                                     : cost
+                                ..productCost = product.cost
                                 ..quantity = item.isTask || item.quantity != 0
                                     ? item.quantity
                                     : product.quantity == 0
