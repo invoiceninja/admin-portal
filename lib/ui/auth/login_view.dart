@@ -291,11 +291,10 @@ class _LoginState extends State<LoginView> {
         ScrollableListView(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              padding: EdgeInsets.only(top: 25, bottom: 15),
               child: Center(
                 child: InkWell(
-                  child: Image.asset('assets/images/icon.png',
-                      width: 100, height: 100),
+                  child: Image.asset('assets/images/logo.png', height: 66),
                   onTap: isApple()
                       ? null
                       : () {

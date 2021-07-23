@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -819,6 +820,21 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return isFullScreen;
   }
 
+  bool get hasRecentlyEnteredPassword {
+    if (Config.DEMO_MODE) {
+      return true;
+    }
+
+    if (authState.lastEnteredPasswordAt == 0) {
+      return false;
+    }
+
+    final millisecondsSinceEnteredPassword =
+        DateTime.now().millisecondsSinceEpoch - authState.lastEnteredPasswordAt;
+
+    return millisecondsSinceEnteredPassword < company.passwordTimeout;
+  }
+
   @override
   String toString() {
     final companyUpdated = userCompanyState.lastUpdated == null ||
@@ -865,7 +881,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}'
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
         '\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}'
-        '\nPassword: $passwordUpdated${authState.hasRecentlyEnteredPassword ? '' : ' [S]'}'
+        '\nPassword: $passwordUpdated${hasRecentlyEnteredPassword ? '' : ' [S]'}'
         '\n';
   }
 }
