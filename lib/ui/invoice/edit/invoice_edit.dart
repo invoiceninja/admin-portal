@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dar
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -46,7 +47,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 4, initialIndex: index);
+    _controller = TabController(vsync: this, length: 5, initialIndex: index);
   }
 
   @override
@@ -120,6 +121,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 Tab(
                   text: localization.notes,
                 ),
+                Tab(
+                  text: localization.pdf,
+                ),
               ],
             ),
       body: Form(
@@ -142,6 +146,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                     viewModel: widget.viewModel,
                   ),
                   InvoiceEditNotesScreen(),
+                  InvoiceEditPDFScreen(),
                 ],
               ),
       ),
