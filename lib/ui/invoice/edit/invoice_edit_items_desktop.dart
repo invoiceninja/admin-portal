@@ -23,13 +23,11 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
     @required this.viewModel,
     @required this.entityViewModel,
     @required this.isTasks,
-    @required this.onChanged,
   });
 
   final EntityEditItemsVM viewModel;
   final EntityEditVM entityViewModel;
   final bool isTasks;
-  final Function onChanged;
 
   @override
   _InvoiceEditItemsDesktopState createState() =>
@@ -57,16 +55,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
     if (index == lineItems.length) {
       viewModel.onChangedInvoiceItem(lineItem, index);
-      widget.onChanged();
     } else if (lineItem != lineItems[index]) {
       if (debounce) {
         _debouncer.run(() {
           viewModel.onChangedInvoiceItem(lineItem, index);
-          widget.onChanged();
         });
       } else {
         viewModel.onChangedInvoiceItem(lineItem, index);
-        widget.onChanged();
       }
     }
   }

@@ -25,7 +25,7 @@ class InvoiceEditItemsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceEditItemsVM>(
       converter: (Store<AppState> store) {
-        return InvoiceEditItemsVM.fromStore(store, isTasks);
+        return InvoiceEditItemsVM.fromStore(store, onChanged, isTasks);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
@@ -33,7 +33,6 @@ class InvoiceEditItemsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             isTasks: isTasks,
-            onChanged: onChanged,
           );
         } else {
           return InvoiceEditItems(
@@ -97,17 +96,25 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
           onMovedInvoiceItem: onMovedInvoiceItem,
         );
 
-  factory InvoiceEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
+  factory InvoiceEditItemsVM.fromStore(
+    Store<AppState> store,
+    Function onChanged,
+    bool isTasks,
+  ) {
     return InvoiceEditItemsVM(
       state: store.state,
       company: store.state.company,
       invoice: store.state.invoiceUIState.editing,
       invoiceItemIndex: store.state.invoiceUIState.editingItemIndex,
-      addLineItem: () =>
-          store.dispatch(AddInvoiceItem(invoiceItem: InvoiceItemEntity())),
+      addLineItem: () {
+        store.dispatch(AddInvoiceItem(invoiceItem: InvoiceItemEntity()));
+        onChanged();
+      },
       deleteLineItem: null,
-      onRemoveInvoiceItemPressed: (index) =>
-          store.dispatch(DeleteInvoiceItem(index)),
+      onRemoveInvoiceItemPressed: (index) {
+        store.dispatch(DeleteInvoiceItem(index));
+        onChanged();
+      },
       clearSelectedInvoiceItem: () => store.dispatch(EditInvoiceItem()),
       onChangedInvoiceItem: (invoiceItem, index) {
         final invoice = store.state.invoiceUIState.editing;
@@ -121,10 +128,14 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
           store.dispatch(
               UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
         }
+        onChanged();
       },
-      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
-        MoveInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
-      ),
+      onMovedInvoiceItem: (oldIndex, newIndex) {
+        store.dispatch(
+          MoveInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+        onChanged();
+      },
     );
   }
 }

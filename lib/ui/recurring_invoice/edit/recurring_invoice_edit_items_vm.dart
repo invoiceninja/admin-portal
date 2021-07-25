@@ -26,7 +26,7 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, RecurringInvoiceEditItemsVM>(
       converter: (Store<AppState> store) {
-        return RecurringInvoiceEditItemsVM.fromStore(store, isTasks);
+        return RecurringInvoiceEditItemsVM.fromStore(store, onChanged, isTasks);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
@@ -34,7 +34,6 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             isTasks: isTasks,
-            onChanged: onChanged,
           );
         } else {
           return InvoiceEditItems(
@@ -73,16 +72,19 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
         );
 
   factory RecurringInvoiceEditItemsVM.fromStore(
-      Store<AppState> store, bool isTasks) {
+      Store<AppState> store, Function onChanged, bool isTasks) {
     return RecurringInvoiceEditItemsVM(
       state: store.state,
       company: store.state.company,
       invoice: store.state.recurringInvoiceUIState.editing,
       invoiceItemIndex: store.state.recurringInvoiceUIState.editingItemIndex,
-      onRemoveInvoiceItemPressed: (index) =>
-          store.dispatch(DeleteRecurringInvoiceItem(index)),
-      onDoneInvoiceItemPressed: () =>
-          store.dispatch(EditRecurringInvoiceItem()),
+      onRemoveInvoiceItemPressed: (index) {
+        store.dispatch(DeleteRecurringInvoiceItem(index));
+        onChanged();
+      },
+      onDoneInvoiceItemPressed: () {
+        store.dispatch(EditRecurringInvoiceItem());
+      },
       onChangedInvoiceItem: (item, index) {
         final invoice = store.state.recurringInvoiceUIState.editing;
         if (index == invoice.lineItems.length) {
@@ -94,10 +96,14 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
         } else {
           store.dispatch(UpdateRecurringInvoiceItem(item: item, index: index));
         }
+        onChanged();
       },
-      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
-        MoveRecurringInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
-      ),
+      onMovedInvoiceItem: (oldIndex, newIndex) {
+        store.dispatch(
+          MoveRecurringInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+        onChanged();
+      },
     );
   }
 }

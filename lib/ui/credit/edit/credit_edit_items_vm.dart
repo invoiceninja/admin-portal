@@ -26,7 +26,7 @@ class CreditEditItemsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CreditEditItemsVM>(
       converter: (Store<AppState> store) {
-        return CreditEditItemsVM.fromStore(store, isTasks);
+        return CreditEditItemsVM.fromStore(store, onChanged, isTasks);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
@@ -34,7 +34,6 @@ class CreditEditItemsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             isTasks: isTasks,
-            onChanged: onChanged,
           );
         } else {
           return InvoiceEditItems(
@@ -72,15 +71,19 @@ class CreditEditItemsVM extends EntityEditItemsVM {
           onMovedInvoiceItem: onMovedInvoiceItem,
         );
 
-  factory CreditEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
+  factory CreditEditItemsVM.fromStore(
+      Store<AppState> store, Function onChanged, bool isTasks) {
     return CreditEditItemsVM(
       state: store.state,
       company: store.state.company,
       invoice: store.state.creditUIState.editing,
       invoiceItemIndex: store.state.creditUIState.editingItemIndex,
-      onRemoveInvoiceItemPressed: (index) =>
-          store.dispatch(DeleteCreditItem(index)),
-      onDoneInvoiceItemPressed: () => store.dispatch(EditCreditItem()),
+      onRemoveInvoiceItemPressed: (index) {
+        store.dispatch(DeleteCreditItem(index));
+      },
+      onDoneInvoiceItemPressed: () {
+        store.dispatch(EditCreditItem());
+      },
       onChangedInvoiceItem: (creditItem, index) {
         final credit = store.state.creditUIState.editing;
         if (index == credit.lineItems.length) {
@@ -94,9 +97,11 @@ class CreditEditItemsVM extends EntityEditItemsVM {
               .dispatch(UpdateCreditItem(creditItem: creditItem, index: index));
         }
       },
-      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
-        MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex),
-      ),
+      onMovedInvoiceItem: (oldIndex, newIndex) {
+        store.dispatch(
+          MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+      },
     );
   }
 }
