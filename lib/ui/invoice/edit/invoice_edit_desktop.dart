@@ -79,7 +79,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
-  final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebouncePDF);
+  final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
   bool _isLoading = true;
   String _pdfString;
@@ -197,25 +197,21 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   void loadPdf() async {
     final viewModel = widget.viewModel;
 
+    _pdfDebouncer.run(() {
+      _loadPdf();
+    });
+  }
+
+  void _loadPdf() async {
+    final viewModel = widget.viewModel;
     if (!viewModel.invoice.hasClient) {
       return;
     }
 
-    if (_pdfString == null && _pdfController == null) {
-      _loadPdf();
-    } else {
-      _pdfDebouncer.run(() {
-        _loadPdf();
-      });
-    }
-  }
-
-  void _loadPdf() async {
     setState(() {
       _isLoading = true;
     });
 
-    final viewModel = widget.viewModel;
     final credentials = viewModel.state.credentials;
     final webClient = WebClient();
     final url =
@@ -303,8 +299,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       //autofocus: true,
                       clientId: invoice.clientId,
                       clientState: state.clientState,
-                      onSelected: (client) =>
-                          viewModel.onClientChanged(context, invoice, client),
+                      onSelected: (client) {
+                        viewModel.onClientChanged(context, invoice, client);
+                        loadPdf();
+                      },
                       onAddPressed: (completer) =>
                           viewModel.onAddClientPressed(context, completer),
                     )
@@ -354,8 +352,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       labelText: (invoice.lastSentDate ?? '').isNotEmpty
                           ? localization.nextSendDate
                           : localization.startDate,
-                      onSelected: (date) => viewModel.onChanged(
-                          invoice.rebuild((b) => b..nextSendDate = date)),
+                      onSelected: (date) {
+                        viewModel.onChanged(
+                            invoice.rebuild((b) => b..nextSendDate = date));
+                        loadPdf();
+                      },
                       selectedDate: invoice.nextSendDate,
                       firstDate: DateTime.now(),
                     ),
@@ -382,8 +383,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     AppDropdownButton<String>(
                       labelText: localization.dueDate,
                       value: invoice.dueDateDays ?? '',
-                      onChanged: (dynamic value) => viewModel.onChanged(
-                          invoice.rebuild((b) => b..dueDateDays = value)),
+                      onChanged: (dynamic value) {
+                        viewModel.onChanged(
+                            invoice.rebuild((b) => b..dueDateDays = value));
+                        loadPdf();
+                      },
                       items: [
                         DropdownMenuItem(
                           child: Text(localization.usePaymentTerms),
@@ -416,6 +420,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       onSelected: (date) {
                         viewModel
                             .onChanged(invoice.rebuild((b) => b..date = date));
+                        loadPdf();
                       },
                     ),
                     DatePicker(
@@ -428,6 +433,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       onSelected: (date) {
                         viewModel.onChanged(
                             invoice.rebuild((b) => b..dueDate = date));
+                        loadPdf();
                       },
                     ),
                     DecoratedFormField(
@@ -454,6 +460,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         onSelected: (date) {
                           viewModel.onChanged(
                               invoice.rebuild((b) => b..partialDueDate = date));
+                          loadPdf();
                         },
                       ),
                   ],
@@ -679,9 +686,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 Expanded(
                                   child: DesignPicker(
                                     initialValue: invoice.designId,
-                                    onSelected: (value) => viewModel.onChanged(
-                                        invoice.rebuild(
-                                            (b) => b..designId = value.id)),
+                                    onSelected: (value) {
+                                      viewModel.onChanged(invoice.rebuild(
+                                          (b) => b..designId = value.id));
+                                      loadPdf();
+                                    },
                                   ),
                                 ),
                                 SizedBox(
@@ -800,8 +809,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       if (company.enableFirstInvoiceTaxRate ||
                           invoice.taxName1.isNotEmpty)
                         TaxRateDropdown(
-                          onSelected: (taxRate) =>
-                              viewModel.onChanged(invoice.applyTax(taxRate)),
+                          onSelected: (taxRate) {
+                            viewModel.onChanged(invoice.applyTax(taxRate));
+                            loadPdf();
+                          },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
                                   ? ' - ${localization.inclusive}'
@@ -812,8 +823,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       if (company.enableSecondInvoiceTaxRate ||
                           invoice.taxName2.isNotEmpty)
                         TaxRateDropdown(
-                          onSelected: (taxRate) => viewModel.onChanged(
-                              invoice.applyTax(taxRate, isSecond: true)),
+                          onSelected: (taxRate) {
+                            viewModel.onChanged(
+                                invoice.applyTax(taxRate, isSecond: true));
+                            loadPdf();
+                          },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
                                   ? ' - ${localization.inclusive}'
@@ -824,8 +838,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       if (company.enableThirdInvoiceTaxRate ||
                           invoice.taxName3.isNotEmpty)
                         TaxRateDropdown(
-                          onSelected: (taxRate) => viewModel.onChanged(
-                              invoice.applyTax(taxRate, isThird: true)),
+                          onSelected: (taxRate) {
+                            viewModel.onChanged(
+                                invoice.applyTax(taxRate, isThird: true));
+                            loadPdf();
+                          },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
                                   ? ' - ${localization.inclusive}'
