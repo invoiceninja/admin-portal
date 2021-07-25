@@ -208,7 +208,7 @@ Map<String, String> _getHeaders(
   }
 
   if ((password ?? '').isNotEmpty) {
-    headers['X-API-PASSWORD'] = password;
+    headers['X-API-PASSWORD-BASE64'] = base64Encode(utf8.encode(password));
   }
 
   return headers;

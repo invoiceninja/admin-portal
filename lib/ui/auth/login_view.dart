@@ -291,11 +291,10 @@ class _LoginState extends State<LoginView> {
         ScrollableListView(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              padding: EdgeInsets.only(top: 25, bottom: 15),
               child: Center(
                 child: InkWell(
-                  child: Image.asset('assets/images/icon.png',
-                      width: 100, height: 100),
+                  child: Image.asset('assets/images/logo.png', height: 66),
                   onTap: isApple()
                       ? null
                       : () {
@@ -576,7 +575,7 @@ class _LoginState extends State<LoginView> {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 16, top: 8, right: 16, bottom: 8),
+                                    left: 20, top: 12, right: 20, bottom: 12),
                                 child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -595,7 +594,7 @@ class _LoginState extends State<LoginView> {
                               onTap: () => launch(kStatusCheckUrl),
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 16, top: 8, right: 16, bottom: 8),
+                                    left: 20, top: 12, right: 20, bottom: 12),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
