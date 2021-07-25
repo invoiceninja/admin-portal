@@ -80,6 +80,7 @@ class CreditEditItemsVM extends EntityEditItemsVM {
       invoiceItemIndex: store.state.creditUIState.editingItemIndex,
       onRemoveInvoiceItemPressed: (index) {
         store.dispatch(DeleteCreditItem(index));
+        onChanged();
       },
       onDoneInvoiceItemPressed: () {
         store.dispatch(EditCreditItem());
@@ -96,11 +97,13 @@ class CreditEditItemsVM extends EntityEditItemsVM {
           store
               .dispatch(UpdateCreditItem(creditItem: creditItem, index: index));
         }
+        onChanged();
       },
       onMovedInvoiceItem: (oldIndex, newIndex) {
         store.dispatch(
           MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex),
         );
+        onChanged();
       },
     );
   }

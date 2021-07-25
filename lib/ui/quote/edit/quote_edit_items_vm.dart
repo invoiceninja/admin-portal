@@ -78,6 +78,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
       invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
       onRemoveInvoiceItemPressed: (index) {
         store.dispatch(DeleteQuoteItem(index));
+        onChanged();
       },
       onDoneInvoiceItemPressed: () {
         store.dispatch(EditQuoteItem());
@@ -89,11 +90,13 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
         } else {
           store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
         }
+        onChanged();
       },
       onMovedInvoiceItem: (oldIndex, newIndex) {
         store.dispatch(
           MoveQuoteItem(oldIndex: oldIndex, newIndex: newIndex),
         );
+        onChanged();
       },
     );
   }
