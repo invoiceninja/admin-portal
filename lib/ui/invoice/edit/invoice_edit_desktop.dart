@@ -189,14 +189,22 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     if (invoice != widget.viewModel.invoice) {
       _debouncer.run(() {
         widget.viewModel.onChanged(invoice);
-        _pdfDebouncer.run(() {
-          loadPdf();
-        });
+        loadPdf();
       });
     }
   }
 
   void loadPdf() async {
+    if (_pdfString == null && _pdfController == null) {
+      _loadPdf();
+    } else {
+      _pdfDebouncer.run(() {
+        _loadPdf();
+      });
+    }
+  }
+
+  void _loadPdf() async {
     setState(() {
       _isLoading = true;
     });
@@ -568,19 +576,23 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
           CreditEditItemsScreen(
             viewModel: widget.entityViewModel,
             isTasks: _showTasksTable,
+            onChanged: () => loadPdf(),
           )
         else if (entityType == EntityType.quote)
           QuoteEditItemsScreen(
             viewModel: widget.entityViewModel,
+            onChanged: () => loadPdf(),
           )
         else if (entityType == EntityType.invoice)
           InvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
+            onChanged: () => loadPdf(),
             isTasks: _showTasksTable,
           )
         else if (entityType == EntityType.recurringInvoice)
           RecurringInvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
+            onChanged: () => loadPdf(),
             isTasks: _showTasksTable,
           )
         else
@@ -861,31 +873,34 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        /*
-        Stack(
-          children: [
-            if (_isLoading) LinearProgressIndicator(),
-            if (_pdfString != null)
-              kIsWeb
-                  ? HtmlElementView(viewType: _pdfString)
-                  : Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: PdfView(controller: _pdfController),
-                    )
-          ],
-        )*/
-        if (_pdfString != null)
-          Container(
-              height: 1200,
-              child: kIsWeb
-                  ? Padding(
-                      padding: const EdgeInsets.only(right: 11),
-                      child: HtmlElementView(viewType: _pdfString),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: PdfView(controller: _pdfController),
-                    ))
+        Container(
+          height: 1200,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              if (_pdfString != null)
+                kIsWeb
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 11),
+                        child: HtmlElementView(viewType: _pdfString),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: PdfView(controller: _pdfController),
+                      ),
+              if (_isLoading)
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    LinearProgressIndicator(),
+                    Expanded(
+                      child: SizedBox(),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        )
       ],
     );
   }

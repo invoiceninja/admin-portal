@@ -13,10 +13,12 @@ class InvoiceEditItemsScreen extends StatelessWidget {
   const InvoiceEditItemsScreen({
     Key key,
     @required this.viewModel,
+    this.onChanged,
     this.isTasks = false,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
+  final Function onChanged;
   final bool isTasks;
 
   @override
@@ -31,6 +33,7 @@ class InvoiceEditItemsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             isTasks: isTasks,
+            onChanged: onChanged,
           );
         } else {
           return InvoiceEditItems(

@@ -14,9 +14,11 @@ class QuoteEditItemsScreen extends StatelessWidget {
   const QuoteEditItemsScreen({
     Key key,
     @required this.viewModel,
+    this.onChanged,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
+  final Function onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class QuoteEditItemsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             isTasks: false,
+            onChanged: onChanged,
           );
         } else {
           return InvoiceEditItems(

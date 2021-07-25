@@ -14,10 +14,12 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
   const RecurringInvoiceEditItemsScreen({
     Key key,
     @required this.viewModel,
+    this.onChanged,
     this.isTasks = false,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
+  final Function onChanged;
   final bool isTasks;
 
   @override
@@ -32,6 +34,7 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             isTasks: isTasks,
+            onChanged: onChanged,
           );
         } else {
           return InvoiceEditItems(
