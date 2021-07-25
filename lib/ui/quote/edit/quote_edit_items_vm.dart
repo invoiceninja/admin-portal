@@ -14,17 +14,15 @@ class QuoteEditItemsScreen extends StatelessWidget {
   const QuoteEditItemsScreen({
     Key key,
     @required this.viewModel,
-    this.onChanged,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
-  final Function onChanged;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteEditItemsVM>(
       converter: (Store<AppState> store) {
-        return QuoteEditItemsVM.fromStore(store, onChanged);
+        return QuoteEditItemsVM.fromStore(store);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
@@ -69,8 +67,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
           onMovedInvoiceItem: onMovedInvoiceItem,
         );
 
-  factory QuoteEditItemsVM.fromStore(
-      Store<AppState> store, Function onChanged) {
+  factory QuoteEditItemsVM.fromStore(Store<AppState> store) {
     return QuoteEditItemsVM(
       state: store.state,
       company: store.state.company,
@@ -78,7 +75,6 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
       invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
       onRemoveInvoiceItemPressed: (index) {
         store.dispatch(DeleteQuoteItem(index));
-        onChanged();
       },
       onDoneInvoiceItemPressed: () {
         store.dispatch(EditQuoteItem());
@@ -90,13 +86,11 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
         } else {
           store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
         }
-        onChanged();
       },
       onMovedInvoiceItem: (oldIndex, newIndex) {
         store.dispatch(
           MoveQuoteItem(oldIndex: oldIndex, newIndex: newIndex),
         );
-        onChanged();
       },
     );
   }

@@ -14,19 +14,17 @@ class CreditEditItemsScreen extends StatelessWidget {
   const CreditEditItemsScreen({
     Key key,
     @required this.viewModel,
-    this.onChanged,
     this.isTasks = false,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
-  final Function onChanged;
   final bool isTasks;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CreditEditItemsVM>(
       converter: (Store<AppState> store) {
-        return CreditEditItemsVM.fromStore(store, onChanged, isTasks);
+        return CreditEditItemsVM.fromStore(store, isTasks);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
@@ -71,8 +69,7 @@ class CreditEditItemsVM extends EntityEditItemsVM {
           onMovedInvoiceItem: onMovedInvoiceItem,
         );
 
-  factory CreditEditItemsVM.fromStore(
-      Store<AppState> store, Function onChanged, bool isTasks) {
+  factory CreditEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
     return CreditEditItemsVM(
       state: store.state,
       company: store.state.company,
@@ -80,7 +77,6 @@ class CreditEditItemsVM extends EntityEditItemsVM {
       invoiceItemIndex: store.state.creditUIState.editingItemIndex,
       onRemoveInvoiceItemPressed: (index) {
         store.dispatch(DeleteCreditItem(index));
-        onChanged();
       },
       onDoneInvoiceItemPressed: () {
         store.dispatch(EditCreditItem());
@@ -97,13 +93,11 @@ class CreditEditItemsVM extends EntityEditItemsVM {
           store
               .dispatch(UpdateCreditItem(creditItem: creditItem, index: index));
         }
-        onChanged();
       },
       onMovedInvoiceItem: (oldIndex, newIndex) {
         store.dispatch(
           MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex),
         );
-        onChanged();
       },
     );
   }

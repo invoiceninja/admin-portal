@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
@@ -79,11 +81,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
-  final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
-
-  bool _isLoading = true;
-  String _pdfString;
-  PdfController _pdfController;
 
   @override
   void initState() {
@@ -149,8 +146,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
-    loadPdf();
-
     super.didChangeDependencies();
   }
 
@@ -163,7 +158,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       controller.removeListener(_onChanged);
       controller.dispose();
     });
-    _pdfController?.dispose();
 
     super.dispose();
   }
@@ -189,61 +183,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     if (invoice != widget.viewModel.invoice) {
       _debouncer.run(() {
         widget.viewModel.onChanged(invoice);
-        loadPdf();
       });
     }
-  }
-
-  void loadPdf() async {
-    final viewModel = widget.viewModel;
-
-    _pdfDebouncer.run(() {
-      _loadPdf();
-    });
-  }
-
-  void _loadPdf() async {
-    final viewModel = widget.viewModel;
-    if (!viewModel.invoice.hasClient) {
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    final credentials = viewModel.state.credentials;
-    final webClient = WebClient();
-    String url =
-        '${credentials.url}/live_preview?entity=${viewModel.invoice.entityType.snakeCase}';
-    if (viewModel.state.isHosted) {
-      //url = url.replaceFirst('//staging', '//swoole');
-    }
-
-    final data =
-        serializers.serializeWith(InvoiceEntity.serializer, viewModel.invoice);
-    webClient
-        .post(url, credentials.token,
-            data: json.encode(data), rawResponse: true)
-        .then((dynamic response) {
-      setState(() {
-        _isLoading = false;
-
-        if (kIsWeb) {
-          _pdfString =
-              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-          WebUtils.registerWebView(_pdfString);
-        } else {
-          final document = PdfDocument.openData(response.bodyBytes);
-          _pdfController?.dispose();
-          _pdfController = PdfController(document: document);
-        }
-      });
-    }).catchError((dynamic error) {
-      setState(() {
-        _isLoading = false;
-      });
-    });
   }
 
   @override
@@ -304,7 +245,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       clientState: state.clientState,
                       onSelected: (client) {
                         viewModel.onClientChanged(context, invoice, client);
-                        loadPdf();
                       },
                       onAddPressed: (completer) =>
                           viewModel.onAddClientPressed(context, completer),
@@ -358,7 +298,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       onSelected: (date) {
                         viewModel.onChanged(
                             invoice.rebuild((b) => b..nextSendDate = date));
-                        loadPdf();
                       },
                       selectedDate: invoice.nextSendDate,
                       firstDate: DateTime.now(),
@@ -389,7 +328,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       onChanged: (dynamic value) {
                         viewModel.onChanged(
                             invoice.rebuild((b) => b..dueDateDays = value));
-                        loadPdf();
                       },
                       items: [
                         DropdownMenuItem(
@@ -423,7 +361,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       onSelected: (date) {
                         viewModel
                             .onChanged(invoice.rebuild((b) => b..date = date));
-                        loadPdf();
                       },
                     ),
                     DatePicker(
@@ -436,7 +373,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       onSelected: (date) {
                         viewModel.onChanged(
                             invoice.rebuild((b) => b..dueDate = date));
-                        loadPdf();
                       },
                     ),
                     DecoratedFormField(
@@ -463,7 +399,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         onSelected: (date) {
                           viewModel.onChanged(
                               invoice.rebuild((b) => b..partialDueDate = date));
-                          loadPdf();
                         },
                       ),
                   ],
@@ -592,23 +527,19 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
           CreditEditItemsScreen(
             viewModel: widget.entityViewModel,
             isTasks: _showTasksTable,
-            onChanged: () => loadPdf(),
           )
         else if (entityType == EntityType.quote)
           QuoteEditItemsScreen(
             viewModel: widget.entityViewModel,
-            onChanged: () => loadPdf(),
           )
         else if (entityType == EntityType.invoice)
           InvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
-            onChanged: () => loadPdf(),
             isTasks: _showTasksTable,
           )
         else if (entityType == EntityType.recurringInvoice)
           RecurringInvoiceEditItemsScreen(
             viewModel: widget.entityViewModel,
-            onChanged: () => loadPdf(),
             isTasks: _showTasksTable,
           )
         else
@@ -692,7 +623,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     onSelected: (value) {
                                       viewModel.onChanged(invoice.rebuild(
                                           (b) => b..designId = value.id));
-                                      loadPdf();
                                     },
                                   ),
                                 ),
@@ -814,7 +744,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         TaxRateDropdown(
                           onSelected: (taxRate) {
                             viewModel.onChanged(invoice.applyTax(taxRate));
-                            loadPdf();
                           },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
@@ -829,7 +758,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           onSelected: (taxRate) {
                             viewModel.onChanged(
                                 invoice.applyTax(taxRate, isSecond: true));
-                            loadPdf();
                           },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
@@ -844,7 +772,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           onSelected: (taxRate) {
                             viewModel.onChanged(
                                 invoice.applyTax(taxRate, isThird: true));
-                            loadPdf();
                           },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
@@ -899,35 +826,127 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        if (_pdfString != null || _pdfController != null)
-          Container(
-            height: 1200,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                kIsWeb
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 11),
-                        child: HtmlElementView(viewType: _pdfString),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: PdfView(controller: _pdfController),
-                      ),
-                if (_isLoading)
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      LinearProgressIndicator(),
-                      Expanded(
-                        child: SizedBox(),
-                      ),
-                    ],
-                  ),
+        _PdfPreview(invoice: invoice),
+      ],
+    );
+  }
+}
+
+class _PdfPreview extends StatefulWidget {
+  const _PdfPreview({Key key, @required this.invoice}) : super(key: key);
+
+  final InvoiceEntity invoice;
+
+  @override
+  __PdfPreviewState createState() => __PdfPreviewState();
+}
+
+class __PdfPreviewState extends State<_PdfPreview> {
+  final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
+
+  bool _isLoading = true;
+  String _pdfString;
+  PdfController _pdfController;
+
+  @override
+  void didUpdateWidget(_PdfPreview oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.invoice != oldWidget.invoice) {
+      loadPdf();
+    }
+  }
+
+  @override
+  void dispose() {
+    _pdfController?.dispose();
+
+    super.dispose();
+  }
+
+  void loadPdf() async {
+    _pdfDebouncer.run(() {
+      _loadPdf();
+    });
+  }
+
+  void _loadPdf() async {
+    if (!widget.invoice.hasClient) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final credentials = state.credentials;
+    final webClient = WebClient();
+    String url =
+        '${credentials.url}/live_preview?entity=${widget.invoice.entityType.snakeCase}';
+    if (state.isHosted) {
+      //url = url.replaceFirst('//staging', '//swoole');
+    }
+
+    final data =
+        serializers.serializeWith(InvoiceEntity.serializer, widget.invoice);
+    webClient
+        .post(url, credentials.token,
+            data: json.encode(data), rawResponse: true)
+        .then((dynamic response) {
+      setState(() {
+        _isLoading = false;
+
+        if (kIsWeb) {
+          _pdfString =
+              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
+          WebUtils.registerWebView(_pdfString);
+        } else {
+          final document = PdfDocument.openData(response.bodyBytes);
+          _pdfController?.dispose();
+          _pdfController = PdfController(document: document);
+        }
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_pdfString == null && _pdfController == null) {
+      return SizedBox();
+    }
+
+    return Container(
+      height: 1200,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          kIsWeb
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 11),
+                  child: HtmlElementView(viewType: _pdfString),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: PdfView(controller: _pdfController),
+                ),
+          if (_isLoading)
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                LinearProgressIndicator(),
+                Expanded(
+                  child: SizedBox(),
+                ),
               ],
             ),
-          )
-      ],
+        ],
+      ),
     );
   }
 }

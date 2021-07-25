@@ -14,19 +14,17 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
   const RecurringInvoiceEditItemsScreen({
     Key key,
     @required this.viewModel,
-    this.onChanged,
     this.isTasks = false,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
-  final Function onChanged;
   final bool isTasks;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, RecurringInvoiceEditItemsVM>(
       converter: (Store<AppState> store) {
-        return RecurringInvoiceEditItemsVM.fromStore(store, onChanged, isTasks);
+        return RecurringInvoiceEditItemsVM.fromStore(store, isTasks);
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
@@ -72,7 +70,7 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
         );
 
   factory RecurringInvoiceEditItemsVM.fromStore(
-      Store<AppState> store, Function onChanged, bool isTasks) {
+      Store<AppState> store, bool isTasks) {
     return RecurringInvoiceEditItemsVM(
       state: store.state,
       company: store.state.company,
@@ -80,7 +78,6 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
       invoiceItemIndex: store.state.recurringInvoiceUIState.editingItemIndex,
       onRemoveInvoiceItemPressed: (index) {
         store.dispatch(DeleteRecurringInvoiceItem(index));
-        onChanged();
       },
       onDoneInvoiceItemPressed: () {
         store.dispatch(EditRecurringInvoiceItem());
@@ -96,13 +93,11 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
         } else {
           store.dispatch(UpdateRecurringInvoiceItem(item: item, index: index));
         }
-        onChanged();
       },
       onMovedInvoiceItem: (oldIndex, newIndex) {
         store.dispatch(
           MoveRecurringInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
         );
-        onChanged();
       },
     );
   }
