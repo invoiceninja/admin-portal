@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
@@ -76,6 +78,10 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.viewModel.invoice.hasClient) {
+      return HelpText(AppLocalization.of(context).noClientSelected);
+    }
+
     if (_pdfString == null && _pdfController == null) {
       return Center(
         child: CircularProgressIndicator(),
