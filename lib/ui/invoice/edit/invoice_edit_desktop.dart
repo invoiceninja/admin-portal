@@ -195,6 +195,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   }
 
   void loadPdf() async {
+    final viewModel = widget.viewModel;
+
+    if (!viewModel.invoice.hasClient) {
+      return;
+    }
+
     if (_pdfString == null && _pdfController == null) {
       _loadPdf();
     } else {
@@ -873,12 +879,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        Container(
-          height: 1200,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (_pdfString != null)
+        if (_pdfString != null || _pdfController != null)
+          Container(
+            height: 1200,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
                 kIsWeb
                     ? Padding(
                         padding: const EdgeInsets.only(right: 11),
@@ -888,19 +894,19 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         padding: const EdgeInsets.all(8),
                         child: PdfView(controller: _pdfController),
                       ),
-              if (_isLoading)
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    LinearProgressIndicator(),
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                  ],
-                ),
-            ],
-          ),
-        )
+                if (_isLoading)
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      LinearProgressIndicator(),
+                      Expanded(
+                        child: SizedBox(),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          )
       ],
     );
   }
