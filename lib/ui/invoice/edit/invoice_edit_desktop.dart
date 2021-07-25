@@ -149,6 +149,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
+    loadPdf();
+
     super.didChangeDependencies();
   }
 
@@ -859,7 +861,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        SizedBox(height: 16),
         /*
         Stack(
           children: [
@@ -874,9 +875,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
           ],
         )*/
         if (_pdfString != null)
-          Expanded(
+          Container(
+              height: 1200,
               child: kIsWeb
-                  ? HtmlElementView(viewType: _pdfString)
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 11),
+                      child: HtmlElementView(viewType: _pdfString),
+                    )
                   : Padding(
                       padding: const EdgeInsets.all(8),
                       child: PdfView(controller: _pdfController),
