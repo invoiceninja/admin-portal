@@ -28,7 +28,6 @@ class EntityDropdown extends StatefulWidget {
     this.entityId,
     this.onAddPressed,
     this.autofocus = false,
-    this.showUseDefault = false,
     this.onFieldSubmitted,
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
@@ -48,7 +47,6 @@ class EntityDropdown extends StatefulWidget {
   final Function(Completer<SelectableEntity> completer) onAddPressed;
   final Function(BaseEntity) overrideSuggestedAmount;
   final Function(BaseEntity) overrideSuggestedLabel;
-  final bool showUseDefault;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -78,7 +76,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   void didChangeDependencies() {
-    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
 
@@ -89,8 +86,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
       if (widget.overrideSuggestedLabel != null) {
         _textController.text = widget.overrideSuggestedLabel(entity);
       } else {
-        _textController.text = entity?.listDisplayName ??
-            (widget.showUseDefault ? localization.useDefault : '');
+        _textController.text = entity?.listDisplayName ?? '';
       }
     }
 

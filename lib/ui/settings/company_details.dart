@@ -336,7 +336,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         company
                             .rebuild((b) => b..industryId = industry?.id ?? ''),
                       ),
-                      showUseDefault: state.settingsUIState.isFiltered,
                     ),
                   ],
                 ),
@@ -387,7 +386,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       onSelected: (SelectableEntity country) =>
                           viewModel.onSettingsChanged(settings
                               .rebuild((b) => b..countryId = country?.id)),
-                      showUseDefault: state.settingsUIState.isFiltered,
                     ),
                   ],
                 )
@@ -481,7 +479,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     onSelected: (paymentType) => viewModel.onSettingsChanged(
                         settings.rebuild(
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),
-                    showUseDefault: state.settingsUIState.isFiltered,
                   ),
                   if (company.isModuleEnabled(EntityType.invoice))
                     AppDropdownButton<String>(

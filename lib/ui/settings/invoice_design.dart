@@ -209,7 +209,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       onSelected: (font) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..primaryFont = font?.id)),
                       allowClearing: state.settingsUIState.isFiltered,
-                      showUseDefault: state.settingsUIState.isFiltered,
                     ),
                   ),
                   EntityDropdown(
@@ -222,7 +221,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     onSelected: (font) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..secondaryFont = font?.id)),
                     allowClearing: state.settingsUIState.isFiltered,
-                    showUseDefault: state.settingsUIState.isFiltered,
                   ),
                   FormColorPicker(
                     labelText: localization.primaryColor,
