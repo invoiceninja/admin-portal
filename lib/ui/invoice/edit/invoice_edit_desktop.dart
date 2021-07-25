@@ -214,8 +214,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
     final credentials = viewModel.state.credentials;
     final webClient = WebClient();
-    final url =
+    String url =
         '${credentials.url}/live_preview?entity=${viewModel.invoice.entityType.snakeCase}';
+    if (viewModel.state.isHosted) {
+      //url = url.replaceFirst('//staging', '//swoole');
+    }
 
     final data =
         serializers.serializeWith(InvoiceEntity.serializer, viewModel.invoice);
