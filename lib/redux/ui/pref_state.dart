@@ -29,6 +29,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       showKanban: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
+      customColors: BuiltMap<String, String>(),
     );
   }
 
@@ -47,6 +48,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   AppSidebarMode get historySidebarMode;
 
   BuiltMap<EntityType, bool> get useSidebarEditor;
+
+  BuiltMap<String, String> get customColors;
 
   bool get isPreviewVisible;
 
@@ -122,6 +125,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
+    ..customColors.replace(BuiltMap<String, String>())
     ..showKanban = false
     ..isPreviewEnabled = true
     ..colorTheme = kColorThemeLight;
