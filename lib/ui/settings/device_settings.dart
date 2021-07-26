@@ -88,7 +88,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
           controller: _controller,
           isScrollable: false,
           tabs: [
-            Tab(text: localization.settings),
+            Tab(text: localization.options),
             Tab(text: localization.colors),
           ],
         ),
