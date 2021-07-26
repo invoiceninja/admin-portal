@@ -116,9 +116,12 @@ class ActivityListTile extends StatelessWidget {
           Text(formatDate(
               convertTimestampToDateString(activity.updatedAt), context,
               showTime: true)),
+          (activity.ip ?? '').isNotEmpty
+              ? Text(' • ' + activity.ip)
+              : SizedBox(),
           (activity.notes ?? '').isNotEmpty
-              ? Text(' • ${localization.lookup(activity.notes)}')
-              : Container(),
+              ? Text(' • ' + localization.lookup(activity.notes).trim())
+              : SizedBox(),
         ],
       ),
     );
