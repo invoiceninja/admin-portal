@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
@@ -73,11 +74,17 @@ class EntityDataTableSource extends AppDataTableSource {
       }
     }
 
-    final backgroundColor = isSelected && isDesktop(context)
-        ? convertHexStringToColor(state.prefState.enableDarkMode
-            ? kDefaultDarkSelectedColor
-            : kDefaultLightSelectedColor)
-        : null;
+    Color backgroundColor;
+    final rowColor =
+        state.prefState.customColors[PrefState.THEME_ALTERNATE_ROW_COLOR] ?? '';
+
+    if (isSelected && isDesktop(context)) {
+      backgroundColor = convertHexStringToColor(state.prefState.enableDarkMode
+          ? kDefaultDarkSelectedColor
+          : kDefaultLightSelectedColor);
+    } else if (rowColor.isNotEmpty && index % 2 == 0) {
+      backgroundColor = convertHexStringToColor(rowColor);
+    }
 
     return DataRow(
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
