@@ -501,11 +501,32 @@ class _DrawerTileState extends State<DrawerTile> {
             (state.uiState.filterEntityType == null ||
                 !state.prefState.showFilterSidebar);
 
-    final textColor = Theme.of(context)
+    final prefState = state.prefState;
+    final inactiveColor =
+        prefState.customColors[PrefState.THEME_SIDEBAR_COLOR] ?? '';
+    final activeColor =
+        prefState.customColors[PrefState.THEME_SIDEBAR_SELECTED_COLOR] ?? '';
+
+    Color color = Colors.transparent;
+    Color textColor = Theme.of(context)
         .textTheme
         .bodyText1
         .color
         .withOpacity(isSelected ? 1 : .7);
+
+    if (isSelected) {
+      if (activeColor.isNotEmpty) {
+        color = convertHexStringToColor(activeColor);
+      } else {
+        color = convertHexStringToColor(enableDarkMode
+            ? kDefaultDarkSelectedColorMenu
+            : kDefaultLightSelectedColorMenu);
+      }
+    } else {
+      if (inactiveColor.isNotEmpty) {
+        color = convertHexStringToColor(inactiveColor);
+      }
+    }
 
     Widget trailingWidget;
     if (!state.isMenuCollapsed) {
@@ -546,27 +567,6 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
-    final prefState = state.prefState;
-    final inactiveColor =
-        prefState.customColors[PrefState.THEME_SIDEBAR_COLOR] ?? '';
-    final activeColor =
-        prefState.customColors[PrefState.THEME_SIDEBAR_SELECTED_COLOR] ?? '';
-
-    Color color = Colors.transparent;
-    if (isSelected) {
-      if (activeColor.isNotEmpty) {
-        color = convertHexStringToColor(activeColor);
-      } else {
-        color = convertHexStringToColor(enableDarkMode
-            ? kDefaultDarkSelectedColorMenu
-            : kDefaultLightSelectedColorMenu);
-      }
-    } else {
-      if (inactiveColor.isNotEmpty) {
-        color = convertHexStringToColor(inactiveColor);
-      }
-    }
-
     Widget child = Material(
       color: color,
       child: Opacity(
@@ -588,6 +588,7 @@ class _DrawerTileState extends State<DrawerTile> {
             maxLines: 1,
             style: Theme.of(context).textTheme.bodyText1.copyWith(
                   fontSize: 14,
+                  color: textColor,
                 ),
           ),
           onTap: () {
