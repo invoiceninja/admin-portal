@@ -35,9 +35,11 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   PrefState._();
 
-  static const THEME_SIDEBAR_COLOR = 'sidebar_color';
-  static const THEME_SIDEBAR_SELECTED_COLOR = 'sidebar_selected_color';
-  static const THEME_SIDEBAR_FONT_COLOR = 'sidebar_font_color';
+  static const THEME_SIDEBAR_ACTIVE_COLOR = 'sidebar_active_color';
+  static const THEME_SIDEBAR_ACTIVE_FONT_COLOR = 'sidebar_active_font_color';
+  static const THEME_SIDEBAR_INACTIVE_COLOR = 'sidebar_inactive_color';
+  static const THEME_SIDEBAR_INACTIVE_FONT_COLOR =
+      'sidebar_inactive_font_color';
   static const THEME_TABLE_HEADER_COLOR = 'table_header_color';
   static const THEME_ALTERNATE_ROW_COLOR = 'alternate_row_color';
 

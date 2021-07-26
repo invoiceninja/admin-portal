@@ -318,18 +318,24 @@ class _DeviceSettingsState extends State<DeviceSettings>
               ]),
               FormCard(
                 children: [
-                  FormColorPicker(
-                    labelText: localization.sidebarColor,
-                    initialValue:
-                        prefState.customColors[PrefState.THEME_SIDEBAR_COLOR],
-                    onSelected: (value) {
-                      viewModel.onCustomColorsChanged(
-                          context,
-                          prefState.customColors.rebuild((b) =>
-                              b[PrefState.THEME_SIDEBAR_COLOR] = value ?? ''));
-                    },
-                  ),
-                ],
+                  PrefState.THEME_SIDEBAR_ACTIVE_COLOR,
+                  PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR,
+                  PrefState.THEME_SIDEBAR_INACTIVE_COLOR,
+                  PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR,
+                ]
+                    .map(
+                      (selector) => FormColorPicker(
+                        labelText: localization.lookup(selector),
+                        initialValue: prefState.customColors[selector],
+                        onSelected: (value) {
+                          viewModel.onCustomColorsChanged(
+                              context,
+                              prefState.customColors
+                                  .rebuild((b) => b[selector] = value ?? ''));
+                        },
+                      ),
+                    )
+                    .toList(),
               )
             ],
           )

@@ -426,10 +426,13 @@ class SettingsSearch extends StatelessWidget {
       kSettingsDeviceSettings: [
         [
           'rows_per_page',
-          'dark_mode',
           'long_press_multiselect',
           'biometric_authentication',
           'refresh_data',
+        ],
+        [
+          'dark_mode',
+          'custom_colors',
         ],
       ],
       kSettingsAccountManagement: [

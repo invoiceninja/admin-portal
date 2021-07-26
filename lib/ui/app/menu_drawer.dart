@@ -503,9 +503,9 @@ class _DrawerTileState extends State<DrawerTile> {
 
     final prefState = state.prefState;
     final inactiveColor =
-        prefState.customColors[PrefState.THEME_SIDEBAR_COLOR] ?? '';
+        prefState.customColors[PrefState.THEME_SIDEBAR_INACTIVE_COLOR] ?? '';
     final activeColor =
-        prefState.customColors[PrefState.THEME_SIDEBAR_SELECTED_COLOR] ?? '';
+        prefState.customColors[PrefState.THEME_SIDEBAR_ACTIVE_COLOR] ?? '';
 
     Color color = Colors.transparent;
     Color textColor = Theme.of(context)
