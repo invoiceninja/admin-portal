@@ -143,11 +143,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: Table(
-        defaultColumnWidth: FixedColumnWidth(100),
         columnWidths: {
-          0: FractionColumnWidth(.15),
-          1: FractionColumnWidth(.25),
-          lastIndex: FixedColumnWidth(0),
+          0: FlexColumnWidth(1.3),
+          1: FlexColumnWidth(2.2),
+          lastIndex: FixedColumnWidth(40),
         },
         // TODO change to top once we can set maxLines to 2
         defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
