@@ -189,7 +189,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                       entityIds: gmailUserIds,
                       overrideSuggestedLabel: (entity) {
                         final user = entity as UserEntity;
-                        return '${user.fullName} <${user.email}>';
+                        return '${user.fullName} • ${user.email}';
                       },
                     ),
                   ),

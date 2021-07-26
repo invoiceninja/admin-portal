@@ -1211,7 +1211,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                     decoration: InputDecoration(
                       labelText: localization.from,
                     ),
-                    initialValue: '${user.fullName} <${user.email}>',
+                    initialValue: '${user.fullName} • ${user.email}',
                   ),
                   SizedBox(height: 10),
                   TextFormField(
