@@ -162,7 +162,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         children: [
           TableRow(
             children: [
-              TableHeader(localization.item),
+              TableHeader(
+                localization.item,
+                isFirst: true,
+              ),
               TableHeader(localization.description),
               if (company.hasCustomField(customField1))
                 TableHeader(company.getCustomFieldLabel(customField1)),
@@ -739,10 +742,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 }
 
 class TableHeader extends StatelessWidget {
-  const TableHeader(this.label, {this.isNumeric = false});
+  const TableHeader(
+    this.label, {
+    this.isNumeric = false,
+    this.isFirst = false,
+  });
 
   final String label;
   final bool isNumeric;
+  final bool isFirst;
 
   @override
   Widget build(BuildContext context) {
@@ -761,6 +769,7 @@ class TableHeader extends StatelessWidget {
         top: tableHeaderColor.isEmpty ? 0 : 8,
         bottom: tableHeaderColor.isEmpty ? 8 : 16,
         right: isNumeric ? kTableColumnGap : 0,
+        left: tableHeaderColor.isNotEmpty && isFirst ? 4 : 0,
       ),
       child: Text(
         label,
