@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'sidebar_color': 'Sidebar Color',
+      'sidebar_selected_color': 'Sidebar Selected Color',
+      'sidebar_font_color': 'Sidebar Font Color',
+      'alternate_row_color': 'Alternate Row Color',
+      'table_header_color': 'Table Header Color',
       'net_subtotal': 'Net Subtotal',
       'review_app': 'Review App',
       'check_status': 'Check Status',
@@ -62367,6 +62372,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get netSubtotal =>
       _localizedValues[localeCode]['net_subtotal'] ??
       _localizedValues['en']['net_subtotal'];
+
+  String get sidebarColor =>
+      _localizedValues[localeCode]['sidebar_color'] ??
+      _localizedValues['en']['sidebar_color'];
+
+  String get sidebarSelectedColor =>
+      _localizedValues[localeCode]['sidebar_selected_color'] ??
+      _localizedValues['en']['sidebar_selected_color'];
+
+  String get sidebarFontColor =>
+      _localizedValues[localeCode]['sidebar_font_color'] ??
+      _localizedValues['en']['sidebar_font_color'];
+
+  String get alternateRowColor =>
+      _localizedValues[localeCode]['alternate_row_color'] ??
+      _localizedValues['en']['alternate_row_color'];
+
+  String get tableHeaderColor =>
+      _localizedValues[localeCode]['table_header_color'] ??
+      _localizedValues['en']['table_header_color'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

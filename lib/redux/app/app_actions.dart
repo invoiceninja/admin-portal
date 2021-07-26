@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -129,6 +130,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.alwaysShowFilterSidebar,
     this.rowsPerPage,
     this.colorTheme,
+    this.customColors,
   });
 
   final AppLayout appLayout;
@@ -147,6 +149,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final String accentColor;
   final int rowsPerPage;
   final String colorTheme;
+  final BuiltMap<String, String> customColors;
 }
 
 class LoadAccountSuccess implements StopLoading {

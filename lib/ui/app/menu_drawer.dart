@@ -546,12 +546,29 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
+    final prefState = state.prefState;
+    final inactiveColor =
+        prefState.customColors[PrefState.THEME_SIDEBAR_COLOR] ?? '';
+    final activeColor =
+        prefState.customColors[PrefState.THEME_SIDEBAR_SELECTED_COLOR] ?? '';
+
+    Color color = Colors.transparent;
+    if (isSelected) {
+      if (activeColor.isNotEmpty) {
+        color = convertHexStringToColor(activeColor);
+      } else {
+        color = convertHexStringToColor(enableDarkMode
+            ? kDefaultDarkSelectedColorMenu
+            : kDefaultLightSelectedColorMenu);
+      }
+    } else {
+      if (inactiveColor.isNotEmpty) {
+        color = convertHexStringToColor(inactiveColor);
+      }
+    }
+
     Widget child = Material(
-      color: isSelected
-          ? convertHexStringToColor(enableDarkMode
-              ? kDefaultDarkSelectedColorMenu
-              : kDefaultLightSelectedColorMenu)
-          : Colors.transparent,
+      color: color,
       child: Opacity(
         opacity: isSelected ? 1 : .8,
         child: ListTile(

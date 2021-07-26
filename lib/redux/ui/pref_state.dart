@@ -35,6 +35,12 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   PrefState._();
 
+  static const THEME_SIDEBAR_COLOR = 'sidebar_color';
+  static const THEME_SIDEBAR_SELECTED_COLOR = 'sidebar_selected_color';
+  static const THEME_SIDEBAR_FONT_COLOR = 'sidebar_font_color';
+  static const THEME_TABLE_HEADER_COLOR = 'table_header_color';
+  static const THEME_ALTERNATE_ROW_COLOR = 'alternate_row_color';
+
   @override
   @memoized
   int get hashCode;

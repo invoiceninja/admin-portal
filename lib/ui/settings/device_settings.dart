@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_vm.dart';
@@ -198,6 +199,17 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   ],
                   onChanged: (dynamic value) =>
                       viewModel.onColorThemeChanged(context, value),
+                ),
+                FormColorPicker(
+                  labelText: localization.sidebarColor,
+                  initialValue:
+                      prefState.customColors[PrefState.THEME_SIDEBAR_COLOR],
+                  onSelected: (value) {
+                    viewModel.onCustomColorsChanged(
+                        context,
+                        prefState.customColors.rebuild((b) =>
+                            b[PrefState.THEME_SIDEBAR_COLOR] = value ?? ''));
+                  },
                 ),
                 FutureBuilder(
                   future: viewModel.authenticationSupported,
