@@ -504,8 +504,13 @@ class _DrawerTileState extends State<DrawerTile> {
     final prefState = state.prefState;
     final inactiveColor =
         prefState.customColors[PrefState.THEME_SIDEBAR_INACTIVE_COLOR] ?? '';
+    final inactiveFontColor =
+        prefState.customColors[PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
+            '';
     final activeColor =
         prefState.customColors[PrefState.THEME_SIDEBAR_ACTIVE_COLOR] ?? '';
+    final activeFontColor =
+        prefState.customColors[PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR] ?? '';
 
     Color color = Colors.transparent;
     Color textColor = Theme.of(context)
@@ -522,9 +527,15 @@ class _DrawerTileState extends State<DrawerTile> {
             ? kDefaultDarkSelectedColorMenu
             : kDefaultLightSelectedColorMenu);
       }
+      if (activeFontColor.isNotEmpty) {
+        textColor = convertHexStringToColor(activeFontColor);
+      }
     } else {
       if (inactiveColor.isNotEmpty) {
         color = convertHexStringToColor(inactiveColor);
+      }
+      if (inactiveFontColor.isNotEmpty) {
+        textColor = convertHexStringToColor(inactiveFontColor);
       }
     }
 
