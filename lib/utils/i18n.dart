@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'colors': 'Colors',
       'sidebar_color': 'Sidebar Color',
       'sidebar_selected_color': 'Sidebar Selected Color',
       'sidebar_font_color': 'Sidebar Font Color',
@@ -62392,6 +62393,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get tableHeaderColor =>
       _localizedValues[localeCode]['table_header_color'] ??
       _localizedValues['en']['table_header_color'];
+
+  String get colors =>
+      _localizedValues[localeCode]['colors'] ??
+      _localizedValues['en']['colors'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

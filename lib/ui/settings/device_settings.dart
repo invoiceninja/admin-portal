@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
@@ -29,9 +33,36 @@ class DeviceSettings extends StatefulWidget {
   _DeviceSettingsState createState() => _DeviceSettingsState();
 }
 
-class _DeviceSettingsState extends State<DeviceSettings> {
+class _DeviceSettingsState extends State<DeviceSettings>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_deviceSettings');
+
+  TabController _controller;
+  FocusScopeNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    final settingsUIState = widget.viewModel.state.settingsUIState;
+    _focusNode = FocusScopeNode();
+    _controller = TabController(
+        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+    _controller.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onTabChanged);
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,91 +83,175 @@ class _DeviceSettingsState extends State<DeviceSettings> {
         centerTitle: false,
         automaticallyImplyLeading: isMobile(context),
         title: Text(localization.deviceSettings),
+        bottom: TabBar(
+          key: ValueKey(state.settingsUIState.updatedAt),
+          controller: _controller,
+          isScrollable: false,
+          tabs: [
+            Tab(text: localization.settings),
+            Tab(text: localization.colors),
+          ],
+        ),
       ),
-      body: Form(
-        key: _formKey,
-        child: ScrollableListView(
-          children: <Widget>[
-            FormCard(
-              children: <Widget>[
-                BoolDropdownButton(
-                  label: localization.layout,
-                  value: prefState.appLayout == AppLayout.mobile,
-                  onChanged: (value) {
-                    viewModel.onLayoutChanged(
-                        context, value ? AppLayout.mobile : AppLayout.desktop);
-                  },
-                  enabledLabel: localization.mobile,
-                  disabledLabel: localization.desktop,
-                ),
-                if (state.prefState.isDesktop) ...[
+      body: AppTabForm(
+        tabController: _controller,
+        formKey: _formKey,
+        focusNode: _focusNode,
+        children: [
+          ScrollableListView(
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
                   BoolDropdownButton(
-                    label: localization.menuSidebar,
-                    value: prefState.menuSidebarMode == AppSidebarMode.float,
+                    label: localization.layout,
+                    value: prefState.appLayout == AppLayout.mobile,
                     onChanged: (value) {
-                      viewModel.onMenuModeChanged(
-                        context,
-                        value ? AppSidebarMode.float : AppSidebarMode.collapse,
-                      );
+                      viewModel.onLayoutChanged(context,
+                          value ? AppLayout.mobile : AppLayout.desktop);
                     },
-                    enabledLabel: localization.float,
-                    disabledLabel: localization.collapse,
+                    enabledLabel: localization.mobile,
+                    disabledLabel: localization.desktop,
                   ),
+                  if (state.prefState.isDesktop) ...[
+                    BoolDropdownButton(
+                      label: localization.menuSidebar,
+                      value: prefState.menuSidebarMode == AppSidebarMode.float,
+                      onChanged: (value) {
+                        viewModel.onMenuModeChanged(
+                          context,
+                          value
+                              ? AppSidebarMode.float
+                              : AppSidebarMode.collapse,
+                        );
+                      },
+                      enabledLabel: localization.float,
+                      disabledLabel: localization.collapse,
+                    ),
+                    BoolDropdownButton(
+                      label: localization.historySidebar,
+                      value:
+                          prefState.historySidebarMode == AppSidebarMode.float,
+                      onChanged: (value) {
+                        viewModel.onHistoryModeChanged(
+                          context,
+                          value ? AppSidebarMode.float : AppSidebarMode.visible,
+                        );
+                      },
+                      enabledLabel: localization.float,
+                      disabledLabel: localization.showOrHide,
+                    ),
+                    BoolDropdownButton(
+                      label: localization.previewSidebar,
+                      value: prefState.isPreviewEnabled,
+                      onChanged: (value) {
+                        viewModel.onPreviewSidebarChanged(context, value);
+                      },
+                      enabledLabel: localization.enabled,
+                      disabledLabel: localization.disabled,
+                    ),
+                  ],
                   BoolDropdownButton(
-                    label: localization.historySidebar,
-                    value: prefState.historySidebarMode == AppSidebarMode.float,
+                    label: localization.listLongPress,
+                    value: !prefState.longPressSelectionIsDefault,
                     onChanged: (value) {
-                      viewModel.onHistoryModeChanged(
-                        context,
-                        value ? AppSidebarMode.float : AppSidebarMode.visible,
-                      );
+                      viewModel.onLongPressSelectionIsDefault(context, !value);
                     },
-                    enabledLabel: localization.float,
-                    disabledLabel: localization.showOrHide,
+                    enabledLabel: localization.showActions,
+                    disabledLabel: localization.startMultiselect,
                   ),
-                  BoolDropdownButton(
-                    label: localization.previewSidebar,
-                    value: prefState.isPreviewEnabled,
-                    onChanged: (value) {
-                      viewModel.onPreviewSidebarChanged(context, value);
-                    },
-                    enabledLabel: localization.enabled,
-                    disabledLabel: localization.disabled,
+                  AppDropdownButton<int>(
+                    blankValue: null,
+                    labelText: localization.rowsPerPage,
+                    value: prefState.rowsPerPage,
+                    onChanged: (dynamic value) =>
+                        viewModel.onRowsPerPageChanged(context, value),
+                    items: [
+                      10,
+                      25,
+                      50,
+                      // 100, // TODO optimize datatables to support this
+                    ]
+                        .map(
+                          (value) => DropdownMenuItem(
+                            child: Text('$value'),
+                            value: value,
+                          ),
+                        )
+                        .toList(),
                   ),
                 ],
-                BoolDropdownButton(
-                  label: localization.listLongPress,
-                  value: !prefState.longPressSelectionIsDefault,
-                  onChanged: (value) {
-                    viewModel.onLongPressSelectionIsDefault(context, !value);
-                  },
-                  enabledLabel: localization.showActions,
-                  disabledLabel: localization.startMultiselect,
-                ),
-                AppDropdownButton<int>(
-                  blankValue: null,
-                  labelText: localization.rowsPerPage,
-                  value: prefState.rowsPerPage,
-                  onChanged: (dynamic value) =>
-                      viewModel.onRowsPerPageChanged(context, value),
-                  items: [
-                    10,
-                    25,
-                    50,
-                    // 100, // TODO optimize datatables to support this
-                  ]
-                      .map(
-                        (value) => DropdownMenuItem(
-                          child: Text('$value'),
-                          value: value,
-                        ),
-                      )
-                      .toList(),
-                ),
-              ],
-            ),
-            FormCard(
-              children: <Widget>[
+              ),
+              FormCard(
+                children: <Widget>[
+                  FutureBuilder(
+                    future: viewModel.authenticationSupported,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData && snapshot.data == true) {
+                        return SwitchListTile(
+                          title: Text(localization.biometricAuthentication),
+                          value: prefState.requireAuthentication,
+                          onChanged: (value) => viewModel
+                              .onRequireAuthenticationChanged(context, value),
+                          secondary: Icon(prefState.requireAuthentication
+                              ? MdiIcons.lock
+                              : MdiIcons.lockOpen),
+                          activeColor: Theme.of(context).accentColor,
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  ),
+                  /*
+                  SwitchListTile(
+                    title: Text(localization.fullWidthEditor),
+                    value: prefState.fullWidthEditor,
+                    onChanged: (value) =>
+                        viewModel.onFullWidthEditorChanged(context, value),
+                    secondary: Icon(getEntityIcon(EntityType.invoice)),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                   */
+                  Builder(builder: (BuildContext context) {
+                    return ListTile(
+                      leading: Icon(Icons.refresh),
+                      title: Text(localization.refreshData),
+                      subtitle: LiveText(() {
+                        return localization.lastUpdated +
+                            ': ' +
+                            timeago.format(convertTimestampToDate(
+                                (state.userCompanyState.lastUpdated / 1000)
+                                    .round()));
+                      }),
+                      onTap: () {
+                        viewModel.onRefreshTap(context);
+                      },
+                    );
+                  }),
+                  ListTile(
+                    leading: Icon(Icons.logout),
+                    title: Text(localization.endAllSessions),
+                    /*
+                    subtitle: Text(countSessions == 1
+                        ? localization.countSession
+                        : localization.countSession
+                            .replaceFirst(':count', '$countSessions')),
+                            */
+                    onTap: () {
+                      confirmCallback(
+                          context: context,
+                          callback: () {
+                            viewModel.onLogoutTap(context);
+                          });
+                    },
+                  ),
+                ],
+              )
+            ],
+          ),
+          ScrollableListView(
+            children: [
+              FormCard(children: [
                 SwitchListTile(
                   title: Text(localization.darkMode),
                   value: prefState.enableDarkMode,
@@ -147,7 +262,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       : MdiIcons.themeLightDark),
                   activeColor: Theme.of(context).accentColor,
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 16),
                 AppDropdownButton<String>(
                   showUseDefault: true,
                   labelText: localization.colorTheme,
@@ -200,87 +315,25 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   onChanged: (dynamic value) =>
                       viewModel.onColorThemeChanged(context, value),
                 ),
-                FormColorPicker(
-                  labelText: localization.sidebarColor,
-                  initialValue:
-                      prefState.customColors[PrefState.THEME_SIDEBAR_COLOR],
-                  onSelected: (value) {
-                    viewModel.onCustomColorsChanged(
-                        context,
-                        prefState.customColors.rebuild((b) =>
-                            b[PrefState.THEME_SIDEBAR_COLOR] = value ?? ''));
-                  },
-                ),
-                FutureBuilder(
-                  future: viewModel.authenticationSupported,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData && snapshot.data == true) {
-                      return SwitchListTile(
-                        title: Text(localization.biometricAuthentication),
-                        value: prefState.requireAuthentication,
-                        onChanged: (value) => viewModel
-                            .onRequireAuthenticationChanged(context, value),
-                        secondary: Icon(prefState.requireAuthentication
-                            ? MdiIcons.lock
-                            : MdiIcons.lockOpen),
-                        activeColor: Theme.of(context).accentColor,
-                      );
-                    } else {
-                      return SizedBox();
-                    }
-                  },
-                ),
-                /*
-                SwitchListTile(
-                  title: Text(localization.fullWidthEditor),
-                  value: prefState.fullWidthEditor,
-                  onChanged: (value) =>
-                      viewModel.onFullWidthEditorChanged(context, value),
-                  secondary: Icon(getEntityIcon(EntityType.invoice)),
-                  activeColor: Theme.of(context).accentColor,
-                ),
-                 */
-              ],
-            ),
-            FormCard(
-              children: <Widget>[
-                Builder(builder: (BuildContext context) {
-                  return ListTile(
-                    leading: Icon(Icons.refresh),
-                    title: Text(localization.refreshData),
-                    subtitle: LiveText(() {
-                      return localization.lastUpdated +
-                          ': ' +
-                          timeago.format(convertTimestampToDate(
-                              (state.userCompanyState.lastUpdated / 1000)
-                                  .round()));
-                    }),
-                    onTap: () {
-                      viewModel.onRefreshTap(context);
+              ]),
+              FormCard(
+                children: [
+                  FormColorPicker(
+                    labelText: localization.sidebarColor,
+                    initialValue:
+                        prefState.customColors[PrefState.THEME_SIDEBAR_COLOR],
+                    onSelected: (value) {
+                      viewModel.onCustomColorsChanged(
+                          context,
+                          prefState.customColors.rebuild((b) =>
+                              b[PrefState.THEME_SIDEBAR_COLOR] = value ?? ''));
                     },
-                  );
-                }),
-                ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text(localization.endAllSessions),
-                  /*
-                  subtitle: Text(countSessions == 1
-                      ? localization.countSession
-                      : localization.countSession
-                          .replaceFirst(':count', '$countSessions')),
-                          */
-                  onTap: () {
-                    confirmCallback(
-                        context: context,
-                        callback: () {
-                          viewModel.onLogoutTap(context);
-                        });
-                  },
-                ),
-              ],
-            )
-          ],
-        ),
+                  ),
+                ],
+              )
+            ],
+          )
+        ],
       ),
     );
   }
