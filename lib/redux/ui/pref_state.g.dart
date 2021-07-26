@@ -129,6 +129,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       serializers.serialize(object.useSidebarEditor,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(EntityType), const FullType(bool)])),
+      'customColors',
+      serializers.serialize(object.customColors,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
       'isPreviewVisible',
       serializers.serialize(object.isPreviewVisible,
           specifiedType: const FullType(bool)),
@@ -210,6 +214,11 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.useSidebarEditor.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(EntityType), const FullType(bool)])));
+          break;
+        case 'customColors':
+          result.customColors.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
           break;
         case 'isPreviewVisible':
           result.isPreviewVisible = serializers.deserialize(value,
@@ -508,6 +517,8 @@ class _$PrefState extends PrefState {
   @override
   final BuiltMap<EntityType, bool> useSidebarEditor;
   @override
+  final BuiltMap<String, String> customColors;
+  @override
   final bool isPreviewVisible;
   @override
   final bool isPreviewEnabled;
@@ -543,6 +554,7 @@ class _$PrefState extends PrefState {
       this.menuSidebarMode,
       this.historySidebarMode,
       this.useSidebarEditor,
+      this.customColors,
       this.isPreviewVisible,
       this.isPreviewEnabled,
       this.isMenuVisible,
@@ -571,6 +583,9 @@ class _$PrefState extends PrefState {
     }
     if (useSidebarEditor == null) {
       throw new BuiltValueNullFieldError('PrefState', 'useSidebarEditor');
+    }
+    if (customColors == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'customColors');
     }
     if (isPreviewVisible == null) {
       throw new BuiltValueNullFieldError('PrefState', 'isPreviewVisible');
@@ -630,6 +645,7 @@ class _$PrefState extends PrefState {
         menuSidebarMode == other.menuSidebarMode &&
         historySidebarMode == other.historySidebarMode &&
         useSidebarEditor == other.useSidebarEditor &&
+        customColors == other.customColors &&
         isPreviewVisible == other.isPreviewVisible &&
         isPreviewEnabled == other.isPreviewEnabled &&
         isMenuVisible == other.isMenuVisible &&
@@ -666,16 +682,19 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            appLayout
+                                                                            $jc(
+                                                                                0,
+                                                                                appLayout
+                                                                                    .hashCode),
+                                                                            moduleLayout
                                                                                 .hashCode),
-                                                                        moduleLayout
+                                                                        menuSidebarMode
                                                                             .hashCode),
-                                                                    menuSidebarMode
+                                                                    historySidebarMode
                                                                         .hashCode),
-                                                                historySidebarMode
+                                                                useSidebarEditor
                                                                     .hashCode),
-                                                            useSidebarEditor
+                                                            customColors
                                                                 .hashCode),
                                                         isPreviewVisible
                                                             .hashCode),
@@ -701,6 +720,7 @@ class _$PrefState extends PrefState {
           ..add('menuSidebarMode', menuSidebarMode)
           ..add('historySidebarMode', historySidebarMode)
           ..add('useSidebarEditor', useSidebarEditor)
+          ..add('customColors', customColors)
           ..add('isPreviewVisible', isPreviewVisible)
           ..add('isPreviewEnabled', isPreviewEnabled)
           ..add('isMenuVisible', isMenuVisible)
@@ -745,6 +765,12 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _$this._useSidebarEditor ??= new MapBuilder<EntityType, bool>();
   set useSidebarEditor(MapBuilder<EntityType, bool> useSidebarEditor) =>
       _$this._useSidebarEditor = useSidebarEditor;
+
+  MapBuilder<String, String> _customColors;
+  MapBuilder<String, String> get customColors =>
+      _$this._customColors ??= new MapBuilder<String, String>();
+  set customColors(MapBuilder<String, String> customColors) =>
+      _$this._customColors = customColors;
 
   bool _isPreviewVisible;
   bool get isPreviewVisible => _$this._isPreviewVisible;
@@ -821,6 +847,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _menuSidebarMode = _$v.menuSidebarMode;
       _historySidebarMode = _$v.historySidebarMode;
       _useSidebarEditor = _$v.useSidebarEditor?.toBuilder();
+      _customColors = _$v.customColors?.toBuilder();
       _isPreviewVisible = _$v.isPreviewVisible;
       _isPreviewEnabled = _$v.isPreviewEnabled;
       _isMenuVisible = _$v.isMenuVisible;
@@ -863,6 +890,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               menuSidebarMode: menuSidebarMode,
               historySidebarMode: historySidebarMode,
               useSidebarEditor: useSidebarEditor.build(),
+              customColors: customColors.build(),
               isPreviewVisible: isPreviewVisible,
               isPreviewEnabled: isPreviewEnabled,
               isMenuVisible: isMenuVisible,
@@ -881,6 +909,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       try {
         _$failedField = 'useSidebarEditor';
         useSidebarEditor.build();
+        _$failedField = 'customColors';
+        customColors.build();
 
         _$failedField = 'sortFields';
         sortFields.build();
