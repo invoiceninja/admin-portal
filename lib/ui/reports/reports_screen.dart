@@ -1491,6 +1491,11 @@ class ReportNumberValue extends ReportElement {
 
   @override
   String renderText(BuildContext context, String column) {
+    if (currencyId == null) {
+      return formatNumber(value, context,
+          formatNumberType: FormatNumberType.double);
+    }
+
     return formatNumber(value, context,
         currencyId: currencyId, formatNumberType: formatNumberType);
   }
