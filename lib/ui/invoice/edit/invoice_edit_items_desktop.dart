@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -13,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -140,6 +145,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       lastIndex++;
     }
 
+    final tableHeaderColor =
+        state.prefState.customColors[PrefState.THEME_TABLE_HEADER_COLOR] ?? '';
+
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: Table(
@@ -152,42 +160,50 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
         key: ValueKey('__datatable_${_updatedAt}__'),
         children: [
-          TableRow(children: [
-            TableHeader(localization.item),
-            TableHeader(localization.description),
-            if (company.hasCustomField(customField1))
-              TableHeader(company.getCustomFieldLabel(customField1)),
-            if (company.hasCustomField(customField2))
-              TableHeader(company.getCustomFieldLabel(customField2)),
-            if (company.hasCustomField(customField3))
-              TableHeader(company.getCustomFieldLabel(customField3)),
-            if (company.hasCustomField(customField4))
-              TableHeader(company.getCustomFieldLabel(customField4)),
-            if (hasTax1)
-              TableHeader(localization.tax +
-                  (company.settings.enableInclusiveTaxes
-                      ? ' - ${localization.inclusive}'
-                      : '')),
-            if (hasTax2)
-              TableHeader(localization.tax +
-                  (company.settings.enableInclusiveTaxes
-                      ? ' - ${localization.inclusive}'
-                      : '')),
-            if (hasTax3)
-              TableHeader(localization.tax +
-                  (company.settings.enableInclusiveTaxes
-                      ? ' - ${localization.inclusive}'
-                      : '')),
-            TableHeader(
-                widget.isTasks ? localization.rate : localization.unitCost),
-            if (company.enableProductQuantity || widget.isTasks)
+          TableRow(
+            children: [
+              TableHeader(localization.item),
+              TableHeader(localization.description),
+              if (company.hasCustomField(customField1))
+                TableHeader(company.getCustomFieldLabel(customField1)),
+              if (company.hasCustomField(customField2))
+                TableHeader(company.getCustomFieldLabel(customField2)),
+              if (company.hasCustomField(customField3))
+                TableHeader(company.getCustomFieldLabel(customField3)),
+              if (company.hasCustomField(customField4))
+                TableHeader(company.getCustomFieldLabel(customField4)),
+              if (hasTax1)
+                TableHeader(localization.tax +
+                    (company.settings.enableInclusiveTaxes
+                        ? ' - ${localization.inclusive}'
+                        : '')),
+              if (hasTax2)
+                TableHeader(localization.tax +
+                    (company.settings.enableInclusiveTaxes
+                        ? ' - ${localization.inclusive}'
+                        : '')),
+              if (hasTax3)
+                TableHeader(localization.tax +
+                    (company.settings.enableInclusiveTaxes
+                        ? ' - ${localization.inclusive}'
+                        : '')),
               TableHeader(
-                  widget.isTasks ? localization.hours : localization.quantity),
-            if (company.enableProductDiscount)
-              TableHeader(localization.discount),
-            TableHeader(localization.lineTotal),
-            TableHeader(''),
-          ]),
+                  widget.isTasks ? localization.rate : localization.unitCost),
+              if (company.enableProductQuantity || widget.isTasks)
+                TableHeader(widget.isTasks
+                    ? localization.hours
+                    : localization.quantity),
+              if (company.enableProductDiscount)
+                TableHeader(localization.discount),
+              TableHeader(localization.lineTotal),
+              TableHeader(''),
+            ],
+            decoration: tableHeaderColor.isNotEmpty
+                ? BoxDecoration(
+                    color: convertHexStringToColor(tableHeaderColor),
+                  )
+                : null,
+          ),
           for (var index = 0; index < lineItems.length; index++)
             if ((lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
                     widget.isTasks) ||
@@ -730,9 +746,18 @@ class TableHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    final tableHeaderColor =
+        state.prefState.customColors[PrefState.THEME_TABLE_HEADER_COLOR] ?? '';
+
     return Padding(
-      padding:
-          EdgeInsets.only(bottom: 8, right: isNumeric ? kTableColumnGap : 0),
+      padding: EdgeInsets.only(
+        top: tableHeaderColor.isEmpty ? 0 : 8,
+        bottom: tableHeaderColor.isEmpty ? 8 : 16,
+        right: isNumeric ? kTableColumnGap : 0,
+      ),
       child: Text(
         label,
         textAlign: isNumeric ? TextAlign.right : TextAlign.left,
