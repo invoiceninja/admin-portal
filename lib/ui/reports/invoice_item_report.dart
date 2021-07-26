@@ -86,7 +86,8 @@ ReportResult lineItemReport(
   for (var entry in invoiceMap.entries) {
     final invoice = entry.value;
     final client = clientMap[invoice.clientId];
-    final precision = staticState.currencyMap[client.currencyId].precision;
+    final precision =
+        staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
     if (invoice.isDeleted || client.isDeleted) {
       continue;
@@ -179,11 +180,8 @@ ReportResult lineItemReport(
 
         if (value.runtimeType == bool) {
           row.add(invoice.getReportBool(value: value));
-        } else if (value.runtimeType == double) {
+        } else if (value.runtimeType == double || value.runtimeType == int) {
           row.add(invoice.getReportDouble(
-              value: value, currencyId: client.currencyId));
-        } else if (value.runtimeType == int) {
-          row.add(invoice.getReportInt(
               value: value, currencyId: client.currencyId));
         } else {
           row.add(invoice.getReportString(value: value));

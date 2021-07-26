@@ -131,7 +131,7 @@ Future<AppState> _initialState(bool isTesting) async {
 
   String url = WebUtils.browserUrl ?? prefs.getString(kSharedPrefUrl) ?? '';
   if (!kReleaseMode) {
-    url = kAppStagingUrl;
+    //url = kAppStagingUrl;
   }
   //url = kAppProductionUrl;
   //url = kAppDemoUrl;
