@@ -595,7 +595,8 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.poNumber.compareTo(invoiceB.poNumber);
         break;
       case InvoiceFields.status:
-        response = invoiceA.statusId.compareTo(invoiceB.statusId);
+        response =
+            invoiceA.calculatedStatusId.compareTo(invoiceB.calculatedStatusId);
         break;
       case EntityFields.state:
         final stateA =
