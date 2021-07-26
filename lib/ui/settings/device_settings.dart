@@ -322,8 +322,9 @@ class _DeviceSettingsState extends State<DeviceSettings>
                   PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR,
                   PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR,
                   PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR,
+                  PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR,
+                  PrefState.THEME_INVOICE_HEADER_FONT_COLOR,
                   PrefState.THEME_ALTERNATE_ROW_COLOR,
-                  PrefState.THEME_TABLE_HEADER_COLOR,
                 ]
                     .map(
                       (selector) => FormColorPicker(

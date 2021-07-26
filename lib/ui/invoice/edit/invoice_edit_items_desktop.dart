@@ -5,7 +5,6 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -145,8 +144,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       lastIndex++;
     }
 
-    final tableHeaderColor =
-        state.prefState.customColors[PrefState.THEME_TABLE_HEADER_COLOR] ?? '';
+    final tableHeaderColor = state.prefState
+            .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+        '';
 
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
@@ -749,8 +749,12 @@ class TableHeader extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final tableHeaderColor =
-        state.prefState.customColors[PrefState.THEME_TABLE_HEADER_COLOR] ?? '';
+    final tableHeaderColor = state.prefState
+            .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+        '';
+    final tableFontColor = state.prefState
+            .customColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+        '';
 
     return Padding(
       padding: EdgeInsets.only(
@@ -761,7 +765,10 @@ class TableHeader extends StatelessWidget {
       child: Text(
         label,
         textAlign: isNumeric ? TextAlign.right : TextAlign.left,
-        style: TextStyle(color: Colors.grey),
+        style: TextStyle(
+            color: tableFontColor.isNotEmpty
+                ? convertHexStringToColor(tableFontColor)
+                : Colors.grey),
       ),
     );
   }

@@ -22,7 +22,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'sidebar_inactive_background_color': 'Sidebar Inactive Background Color',
       'sidebar_inactive_font_color': 'Sidebar Inactive Font Color',
       'alternate_row_color': 'Alternate Row Color',
-      'table_header_color': 'Table Header Color',
+      'invoice_header_background_color': 'Invoice Header Background Color',
+      'invoice_header_font_color': 'Invoice Header Font Color',
       'net_subtotal': 'Net Subtotal',
       'review_app': 'Review App',
       'check_status': 'Check Status',
@@ -62396,9 +62397,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['alternate_row_color'] ??
       _localizedValues['en']['alternate_row_color'];
 
-  String get tableHeaderColor =>
-      _localizedValues[localeCode]['table_header_color'] ??
-      _localizedValues['en']['table_header_color'];
+  String get invoiceHeaderBackgroundColor =>
+      _localizedValues[localeCode]['invoice_header_background_color'] ??
+      _localizedValues['en']['invoice_header_background_color'];
+
+  String get invoiceHeaderFontColor =>
+      _localizedValues[localeCode]['invoice_header_font_color'] ??
+      _localizedValues['en']['invoice_header_font_color'];
 
   String get colors =>
       _localizedValues[localeCode]['colors'] ??

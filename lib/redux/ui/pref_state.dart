@@ -42,7 +42,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       'sidebar_inactive_background_color';
   static const THEME_SIDEBAR_INACTIVE_FONT_COLOR =
       'sidebar_inactive_font_color';
-  static const THEME_TABLE_HEADER_COLOR = 'table_header_color';
+  static const THEME_INVOICE_HEADER_BACKGROUND_COLOR =
+      'invoice_header_background_color';
+  static const THEME_INVOICE_HEADER_FONT_COLOR = 'invoice_header_font_color';
   static const THEME_ALTERNATE_ROW_COLOR = 'alternate_row_color';
 
   @override
