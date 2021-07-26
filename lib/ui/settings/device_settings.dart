@@ -318,9 +318,9 @@ class _DeviceSettingsState extends State<DeviceSettings>
               ]),
               FormCard(
                 children: [
-                  PrefState.THEME_SIDEBAR_ACTIVE_COLOR,
+                  PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR,
                   PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR,
-                  PrefState.THEME_SIDEBAR_INACTIVE_COLOR,
+                  PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR,
                   PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR,
                 ]
                     .map(

@@ -502,13 +502,15 @@ class _DrawerTileState extends State<DrawerTile> {
                 !state.prefState.showFilterSidebar);
 
     final prefState = state.prefState;
-    final inactiveColor =
-        prefState.customColors[PrefState.THEME_SIDEBAR_INACTIVE_COLOR] ?? '';
+    final inactiveColor = prefState
+            .customColors[PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+        '';
     final inactiveFontColor =
         prefState.customColors[PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
             '';
-    final activeColor =
-        prefState.customColors[PrefState.THEME_SIDEBAR_ACTIVE_COLOR] ?? '';
+    final activeColor = prefState
+            .customColors[PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR] ??
+        '';
     final activeFontColor =
         prefState.customColors[PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR] ?? '';
 

@@ -17,9 +17,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       // STARTER: lang key - do not remove comment
       'custom_colors': 'Custom Colors',
       'colors': 'Colors',
-      'sidebar_active_color': 'Sidebar Active Color',
+      'sidebar_active_background_color': 'Sidebar Active Background Color',
       'sidebar_active_font_color': 'Sidebar Active Font Color',
-      'sidebar_inactive_color': 'Sidebar Inactive Color',
+      'sidebar_inactive_background_color': 'Sidebar Inactive Background Color',
       'sidebar_inactive_font_color': 'Sidebar Inactive Font Color',
       'alternate_row_color': 'Alternate Row Color',
       'table_header_color': 'Table Header Color',
@@ -62376,17 +62376,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['net_subtotal'] ??
       _localizedValues['en']['net_subtotal'];
 
-  String get sidebarActiveColor =>
-      _localizedValues[localeCode]['sidebar_active_color'] ??
-      _localizedValues['en']['sidebar_active_color'];
+  String get sidebarActiveBackgroundColor =>
+      _localizedValues[localeCode]['sidebar_active_background_color'] ??
+      _localizedValues['en']['sidebar_active_background_color'];
 
   String get sidebarActiveFontColor =>
       _localizedValues[localeCode]['sidebar_active_font_color'] ??
       _localizedValues['en']['sidebar_active_font_color'];
 
-  String get sidebarInactiveColor =>
-      _localizedValues[localeCode]['sidebar_inactive_color'] ??
-      _localizedValues['en']['sidebar_inactive_color'];
+  String get sidebarInactiveBackgroundColor =>
+      _localizedValues[localeCode]['sidebar_inactive_background_color'] ??
+      _localizedValues['en']['sidebar_inactive_background_color'];
 
   String get sidebarInactiveFontColor =>
       _localizedValues[localeCode]['sidebar_inactive_font_color'] ??
