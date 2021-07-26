@@ -56,6 +56,9 @@ class MenuDrawer extends StatelessWidget {
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
     final company = viewModel.selectedCompany;
+    final inactiveColor = state.prefState
+            .customColors[PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+        '';
 
     if (company == null) {
       return Container();
@@ -240,7 +243,9 @@ class MenuDrawer extends StatelessWidget {
                   ? SizedBox()
                   : Expanded(
                       child: Container(
-                      color: Theme.of(context).cardColor,
+                      color: inactiveColor.isNotEmpty
+                          ? convertHexStringToColor(inactiveColor)
+                          : Theme.of(context).cardColor,
                       child: ScrollableListView(
                         hideMobileThumb: true,
                         children: <Widget>[
