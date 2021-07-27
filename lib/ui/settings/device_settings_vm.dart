@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings.dart';
@@ -144,8 +145,8 @@ class DeviceSettingsVM {
           },
         ),
         onCustomColorsChanged: (context, customColors) {
-          print('## COOLRS: $customColors');
           store.dispatch(UpdateUserPreferences(customColors: customColors));
+          store.dispatch(UpdatedSetting());
         });
   }
 

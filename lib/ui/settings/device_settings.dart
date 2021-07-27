@@ -265,7 +265,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                 SizedBox(height: 16),
                 AppDropdownButton<String>(
                   showUseDefault: true,
-                  labelText: localization.colorTheme,
+                  labelText: localization.statusColorTheme,
                   value: state.prefState.colorTheme,
                   items: [
                     ...colorThemesMap.keys
@@ -318,27 +318,75 @@ class _DeviceSettingsState extends State<DeviceSettings>
               ]),
               FormCard(
                 children: [
-                  PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR,
-                  PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR,
-                  PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR,
-                  PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR,
-                  PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR,
-                  PrefState.THEME_INVOICE_HEADER_FONT_COLOR,
-                  PrefState.THEME_ALTERNATE_ROW_COLOR,
-                ]
-                    .map(
-                      (selector) => FormColorPicker(
-                        labelText: localization.lookup(selector),
-                        initialValue: prefState.customColors[selector],
-                        onSelected: (value) {
+                  AppDropdownButton<String>(
+                      labelText: localization.loadColorTheme,
+                      value: '',
+                      onChanged: (dynamic value) {
+                        if (value == 'default') {
                           viewModel.onCustomColorsChanged(
                               context,
                               prefState.customColors
-                                  .rebuild((b) => b[selector] = value ?? ''));
-                        },
-                      ),
-                    )
-                    .toList(),
+                                  .rebuild((b) => b..clear()));
+                        } else if (value == 'legacy') {
+                          viewModel.onCustomColorsChanged(
+                            context,
+                            prefState.customColors.rebuild(
+                              (b) => b.addAll(
+                                <String, String>{
+                                  PrefState
+                                          .THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR:
+                                      '#444444',
+                                  PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR:
+                                      '#FFFFFF',
+                                  PrefState
+                                          .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR:
+                                      '#2F2F2F',
+                                  PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR:
+                                      '#FFFFFF',
+                                  PrefState
+                                          .THEME_INVOICE_HEADER_BACKGROUND_COLOR:
+                                      '#777777',
+                                  PrefState.THEME_INVOICE_HEADER_FONT_COLOR:
+                                      '#FFFFFF',
+                                  PrefState
+                                          .THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR:
+                                      '#F9F9F9',
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      items: [
+                        DropdownMenuItem(
+                            child: Text(localization.defaultClearAll),
+                            value: 'default'),
+                        DropdownMenuItem(
+                            child: Text(localization.legacy), value: 'legacy'),
+                      ]),
+                  ...[
+                    PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR,
+                    PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR,
+                    PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR,
+                    PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR,
+                    PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR,
+                    PrefState.THEME_INVOICE_HEADER_FONT_COLOR,
+                    PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR,
+                  ]
+                      .map(
+                        (selector) => FormColorPicker(
+                          labelText: localization.lookup(selector),
+                          initialValue: prefState.customColors[selector],
+                          onSelected: (value) {
+                            viewModel.onCustomColorsChanged(
+                                context,
+                                prefState.customColors
+                                    .rebuild((b) => b[selector] = value ?? ''));
+                          },
+                        ),
+                      )
+                      .toList()
+                ],
               )
             ],
           )

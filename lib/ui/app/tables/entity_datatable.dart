@@ -75,8 +75,9 @@ class EntityDataTableSource extends AppDataTableSource {
     }
 
     Color backgroundColor;
-    final rowColor =
-        state.prefState.customColors[PrefState.THEME_ALTERNATE_ROW_COLOR] ?? '';
+    final rowColor = state.prefState.customColors[
+            PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
+        '';
 
     if (isSelected && isDesktop(context)) {
       backgroundColor = convertHexStringToColor(state.prefState.enableDarkMode
