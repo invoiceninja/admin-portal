@@ -151,6 +151,9 @@ List<String> filteredExpensesSelector(
       } else if (filterEntityType == EntityType.invoice &&
           expense.invoiceId != filterEntityId) {
         return false;
+      } else if (filterEntityType == EntityType.group &&
+          client.groupId != filterEntityId) {
+        return false;
       }
     } else if (expense.vendorId != null && !vendor.isActive) {
       return false;

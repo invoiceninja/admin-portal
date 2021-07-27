@@ -285,6 +285,9 @@ List<String> filteredTasksSelector(
       } else if (filterEntityType == EntityType.taskStatus &&
           task.statusId != filterEntityId) {
         return false;
+      } else if (filterEntityType == EntityType.group &&
+          client.groupId != filterEntityId) {
+        return false;
       }
     } else if (task.clientId != null && !client.isActive) {
       return false;
