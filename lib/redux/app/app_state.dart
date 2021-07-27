@@ -180,7 +180,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       return true;
     }
 
-    return userCompany?.settings?.accentColor != null;
+    return (userCompany?.settings?.accentColor ?? '').isNotEmpty;
   }
 
   Color get linkColor => prefState.enableDarkMode
