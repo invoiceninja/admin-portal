@@ -119,6 +119,9 @@ List<String> filteredProjectsSelector(
       } else if (filterEntityType == EntityType.user &&
           !user.matchesEntityFilter(filterEntityType, filterEntityId)) {
         return false;
+      } else if (filterEntityType == EntityType.group &&
+          client.groupId != filterEntityId) {
+        return false;
       }
     } else if (!client.isActive) {
       return false;
