@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'export_colors': 'Export Colors',
+      'import_colors': 'Import Colors',
       'default_clear_all': 'Default - Clear All',
       'contrast': 'Contrast',
       'custom_colors': 'Custom Colors',
@@ -62430,6 +62432,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get contrast =>
       _localizedValues[localeCode]['contrast'] ??
       _localizedValues['en']['contrast'];
+
+  String get exportColors =>
+      _localizedValues[localeCode]['export_colors'] ??
+      _localizedValues['en']['export_colors'];
+
+  String get importColors =>
+      _localizedValues[localeCode]['import_colors'] ??
+      _localizedValues['en']['import_colors'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -366,15 +369,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                             child: Text(localization.contrast),
                             value: 'contrast'),
                       ]),
-                  ...[
-                    PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR,
-                    PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR,
-                    PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR,
-                    PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR,
-                    PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR,
-                    PrefState.THEME_INVOICE_HEADER_FONT_COLOR,
-                    PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR,
-                  ]
+                  ...PrefState.THEME_COLORS
                       .map(
                         (selector) => FormColorPicker(
                           labelText: localization.lookup(selector),
@@ -387,7 +382,50 @@ class _DeviceSettingsState extends State<DeviceSettings>
                           },
                         ),
                       )
-                      .toList()
+                      .toList(),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            final colors = PrefState.THEME_COLORS
+                                .map((selector) =>
+                                    prefState.customColors[selector] ?? '')
+                                .toList();
+                            Clipboard.setData(
+                                ClipboardData(text: colors.join(',')));
+                            showToast(localization.copiedToClipboard
+                                .replaceFirst(':value', colors.join(',')));
+                          },
+                          child: Text(localization.exportColors.toUpperCase()),
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            fieldCallback(
+                              context: context,
+                              field: localization.colors,
+                              callback: (value) {
+                                final colors = value.split(',');
+                                var customColors = prefState.customColors;
+                                for (var i = 0; i < colors.length; i++) {
+                                  customColors = customColors.rebuild((b) =>
+                                      b[PrefState.THEME_COLORS[i]] = colors[i]);
+                                }
+                                viewModel.onCustomColorsChanged(
+                                    context, customColors);
+                              },
+                              title: localization.importColors,
+                            );
+                          },
+                          child: Text(localization.importColors.toUpperCase()),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               )
             ],

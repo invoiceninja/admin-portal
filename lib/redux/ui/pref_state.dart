@@ -48,6 +48,16 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   static const THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR =
       'table_alternate_row_background_color';
 
+  static const THEME_COLORS = [
+    PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR,
+    PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR,
+    PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR,
+    PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR,
+    PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR,
+    PrefState.THEME_INVOICE_HEADER_FONT_COLOR,
+    PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR,
+  ];
+
   @override
   @memoized
   int get hashCode;
