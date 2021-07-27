@@ -55,7 +55,7 @@ class BoolDropdownButton extends StatelessWidget {
           border: _showBlank ? null : InputBorder.none,
           labelText: label,
         ),
-        isEmpty: '${value ?? ''}'.isEmpty && !state.settingsUIState.isFiltered,
+        isEmpty: '${value ?? ''}'.isEmpty,
         child: _showBlank
             ? DropdownButtonHideUnderline(
                 child: DropdownButton<bool>(
@@ -91,7 +91,7 @@ class BoolDropdownButton extends StatelessWidget {
                       onTap: () => onChanged(false),
                       child: ConstrainedBox(
                         constraints:
-                            BoxConstraints(minWidth: 125, minHeight: 36),
+                            BoxConstraints(minWidth: 150, minHeight: 36),
                         child: Row(
                           children: [
                             IgnorePointer(
@@ -112,7 +112,7 @@ class BoolDropdownButton extends StatelessWidget {
                       onTap: () => onChanged(true),
                       child: ConstrainedBox(
                         constraints:
-                            BoxConstraints(minWidth: 125, minHeight: 36),
+                            BoxConstraints(minWidth: 150, minHeight: 36),
                         child: Row(
                           children: [
                             IgnorePointer(

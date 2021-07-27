@@ -488,6 +488,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
           ]),
           () => new MapBuilder<EntityType, BuiltList<String>>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(EntityType), const FullType(bool)]), () => new MapBuilder<EntityType, bool>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(String)]), () => new MapBuilder<String, String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(EntityType), const FullType(PrefStateSortField)]), () => new MapBuilder<EntityType, PrefStateSortField>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CompanyPrefState)]), () => new MapBuilder<String, CompanyPrefState>())
       ..addBuilderFactory(

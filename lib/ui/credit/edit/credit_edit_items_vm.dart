@@ -75,9 +75,12 @@ class CreditEditItemsVM extends EntityEditItemsVM {
       company: store.state.company,
       invoice: store.state.creditUIState.editing,
       invoiceItemIndex: store.state.creditUIState.editingItemIndex,
-      onRemoveInvoiceItemPressed: (index) =>
-          store.dispatch(DeleteCreditItem(index)),
-      onDoneInvoiceItemPressed: () => store.dispatch(EditCreditItem()),
+      onRemoveInvoiceItemPressed: (index) {
+        store.dispatch(DeleteCreditItem(index));
+      },
+      onDoneInvoiceItemPressed: () {
+        store.dispatch(EditCreditItem());
+      },
       onChangedInvoiceItem: (creditItem, index) {
         final credit = store.state.creditUIState.editing;
         if (index == credit.lineItems.length) {
@@ -91,9 +94,11 @@ class CreditEditItemsVM extends EntityEditItemsVM {
               .dispatch(UpdateCreditItem(creditItem: creditItem, index: index));
         }
       },
-      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
-        MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex),
-      ),
+      onMovedInvoiceItem: (oldIndex, newIndex) {
+        store.dispatch(
+          MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+      },
     );
   }
 }

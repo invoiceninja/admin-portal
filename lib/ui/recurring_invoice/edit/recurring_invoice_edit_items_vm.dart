@@ -76,10 +76,12 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
       company: store.state.company,
       invoice: store.state.recurringInvoiceUIState.editing,
       invoiceItemIndex: store.state.recurringInvoiceUIState.editingItemIndex,
-      onRemoveInvoiceItemPressed: (index) =>
-          store.dispatch(DeleteRecurringInvoiceItem(index)),
-      onDoneInvoiceItemPressed: () =>
-          store.dispatch(EditRecurringInvoiceItem()),
+      onRemoveInvoiceItemPressed: (index) {
+        store.dispatch(DeleteRecurringInvoiceItem(index));
+      },
+      onDoneInvoiceItemPressed: () {
+        store.dispatch(EditRecurringInvoiceItem());
+      },
       onChangedInvoiceItem: (item, index) {
         final invoice = store.state.recurringInvoiceUIState.editing;
         if (index == invoice.lineItems.length) {
@@ -92,9 +94,11 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
           store.dispatch(UpdateRecurringInvoiceItem(item: item, index: index));
         }
       },
-      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
-        MoveRecurringInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
-      ),
+      onMovedInvoiceItem: (oldIndex, newIndex) {
+        store.dispatch(
+          MoveRecurringInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+      },
     );
   }
 }

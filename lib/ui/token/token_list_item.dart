@@ -75,7 +75,7 @@ class TokenListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(user.fullName),
+            Text(user.listDisplayName),
             subtitle != null && subtitle.isNotEmpty
                 ? Text(
                     subtitle,

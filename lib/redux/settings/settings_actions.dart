@@ -49,6 +49,8 @@ class UpdateSettingsTab implements PersistUI {
   final int tabIndex;
 }
 
+class UpdatedSetting implements PersistUI {}
+
 class UpdateSettingsTemplate implements PersistUI {
   UpdateSettingsTemplate({@required this.selectedTemplate});
 

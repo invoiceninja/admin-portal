@@ -63,6 +63,7 @@ PrefState prefReducer(
       ..requireAuthentication =
           requireAuthenticationReducer(state.requireAuthentication, action)
       ..colorTheme = colorThemeReducer(state.colorTheme, action)
+      ..customColors.replace(customColorsReducer(state.customColors, action))
       ..useSidebarEditor.replace(
         sidebarEditorReducer(state.useSidebarEditor, action),
       )
@@ -282,6 +283,13 @@ Reducer<bool> requireAuthenticationReducer = combineReducers([
 Reducer<String> colorThemeReducer = combineReducers([
   TypedReducer<String, UpdateUserPreferences>((currentColorTheme, action) {
     return action.colorTheme ?? currentColorTheme;
+  }),
+]);
+
+Reducer<BuiltMap<String, String>> customColorsReducer = combineReducers([
+  TypedReducer<BuiltMap<String, String>, UpdateUserPreferences>(
+      (customColors, action) {
+    return action.customColors ?? customColors;
   }),
 ]);
 

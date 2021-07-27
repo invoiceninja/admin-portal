@@ -29,10 +29,34 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       showKanban: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
+      customColors: BuiltMap<String, String>(),
     );
   }
 
   PrefState._();
+
+  static const THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR =
+      'sidebar_active_background_color';
+  static const THEME_SIDEBAR_ACTIVE_FONT_COLOR = 'sidebar_active_font_color';
+  static const THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR =
+      'sidebar_inactive_background_color';
+  static const THEME_SIDEBAR_INACTIVE_FONT_COLOR =
+      'sidebar_inactive_font_color';
+  static const THEME_INVOICE_HEADER_BACKGROUND_COLOR =
+      'invoice_header_background_color';
+  static const THEME_INVOICE_HEADER_FONT_COLOR = 'invoice_header_font_color';
+  static const THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR =
+      'table_alternate_row_background_color';
+
+  static const THEME_COLORS = [
+    PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR,
+    PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR,
+    PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR,
+    PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR,
+    PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR,
+    PrefState.THEME_INVOICE_HEADER_FONT_COLOR,
+    PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR,
+  ];
 
   @override
   @memoized
@@ -47,6 +71,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   AppSidebarMode get historySidebarMode;
 
   BuiltMap<EntityType, bool> get useSidebarEditor;
+
+  BuiltMap<String, String> get customColors;
 
   bool get isPreviewVisible;
 
@@ -122,6 +148,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
+    ..customColors.replace(BuiltMap<String, String>())
     ..showKanban = false
     ..isPreviewEnabled = true
     ..colorTheme = kColorThemeLight;

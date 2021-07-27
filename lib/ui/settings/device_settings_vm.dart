@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings.dart';
@@ -47,103 +49,112 @@ class DeviceSettingsVM {
     @required this.onColorThemeChanged,
     @required this.onRowsPerPageChanged,
     @required this.onPreviewSidebarChanged,
+    @required this.onCustomColorsChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
     return DeviceSettingsVM(
-      state: store.state,
-      onRefreshTap: (BuildContext context) =>
-          showRefreshDataDialog(context: context, includeStatic: true),
-      onLogoutTap: (BuildContext context) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).endedAllSessions);
-        store.dispatch(UserLogoutAll(completer: completer));
-      },
-      onDarkModeChanged: (BuildContext context, bool value) async {
-        store.dispatch(UpdateUserPreferences(enableDarkMode: value));
-        AppBuilder.of(context).rebuild();
-      },
-      onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
-        store.dispatch(
-            UpdateUserPreferences(longPressSelectionIsDefault: value));
-      },
-      onMenuModeChanged: (context, value) async {
-        if (store.state.prefState.menuSidebarMode == value) {
-          return;
-        }
-
-        store.dispatch(UpdateUserPreferences(menuMode: value));
-      },
-      onHistoryModeChanged: (context, value) async {
-        if (store.state.prefState.historySidebarMode == value) {
-          return;
-        }
-
-        store.dispatch(UpdateUserPreferences(historyMode: value));
-      },
-      onColorThemeChanged: (context, value) async {
-        if (store.state.prefState.colorTheme != value) {
-          store.dispatch(UpdateUserPreferences(colorTheme: value));
-        }
-      },
-      onPreviewSidebarChanged: (context, value) {
-        store.dispatch(UpdateUserPreferences(isPreviewEnabled: value));
-      },
-      onRowsPerPageChanged: (context, value) {
-        store.dispatch(UpdateUserPreferences(rowsPerPage: value));
-      },
-      onAlwaysShowSidebarChanged: (context, value) {
-        store.dispatch(UpdateUserPreferences(alwaysShowFilterSidebar: value));
-      },
-      onLayoutChanged: (BuildContext context, AppLayout value) async {
-        if (store.state.prefState.appLayout == value) {
-          return;
-        }
-        store.dispatch(UpdateUserPreferences(appLayout: value));
-        AppBuilder.of(context).rebuild();
-        WidgetsBinding.instance.addPostFrameCallback((duration) {
-          if (value == AppLayout.mobile) {
-            store.dispatch(ViewDashboard());
-          } else {
-            store.dispatch(ViewMainScreen(addDelay: true));
+        state: store.state,
+        onRefreshTap: (BuildContext context) =>
+            showRefreshDataDialog(context: context, includeStatic: true),
+        onLogoutTap: (BuildContext context) {
+          final completer = snackBarCompleter<Null>(
+              context, AppLocalization.of(context).endedAllSessions);
+          store.dispatch(UserLogoutAll(completer: completer));
+        },
+        onDarkModeChanged: (BuildContext context, bool value) async {
+          store.dispatch(UpdateUserPreferences(enableDarkMode: value));
+          AppBuilder.of(context).rebuild();
+        },
+        onLongPressSelectionIsDefault:
+            (BuildContext context, bool value) async {
+          store.dispatch(
+              UpdateUserPreferences(longPressSelectionIsDefault: value));
+        },
+        onMenuModeChanged: (context, value) async {
+          if (store.state.prefState.menuSidebarMode == value) {
+            return;
           }
+
+          store.dispatch(UpdateUserPreferences(menuMode: value));
+        },
+        onHistoryModeChanged: (context, value) async {
+          if (store.state.prefState.historySidebarMode == value) {
+            return;
+          }
+
+          store.dispatch(UpdateUserPreferences(historyMode: value));
+        },
+        onColorThemeChanged: (context, value) async {
+          if (store.state.prefState.colorTheme != value) {
+            store.dispatch(UpdateUserPreferences(colorTheme: value));
+          }
+        },
+        onPreviewSidebarChanged: (context, value) {
+          store.dispatch(UpdateUserPreferences(isPreviewEnabled: value));
+        },
+        onRowsPerPageChanged: (context, value) {
+          store.dispatch(UpdateUserPreferences(rowsPerPage: value));
+        },
+        onAlwaysShowSidebarChanged: (context, value) {
+          store.dispatch(UpdateUserPreferences(alwaysShowFilterSidebar: value));
+        },
+        onLayoutChanged: (BuildContext context, AppLayout value) async {
+          if (store.state.prefState.appLayout == value) {
+            return;
+          }
+          store.dispatch(UpdateUserPreferences(appLayout: value));
+          AppBuilder.of(context).rebuild();
+          WidgetsBinding.instance.addPostFrameCallback((duration) {
+            if (value == AppLayout.mobile) {
+              store.dispatch(ViewDashboard());
+            } else {
+              store.dispatch(ViewMainScreen(addDelay: true));
+            }
+          });
+        },
+        onRequireAuthenticationChanged:
+            (BuildContext context, bool value) async {
+          bool authenticated = false;
+          try {
+            authenticated = await LocalAuthentication()
+                .authenticateWithBiometrics(
+                    localizedReason:
+                        AppLocalization.of(context).authenticateToChangeSetting,
+                    useErrorDialogs: true,
+                    stickyAuth: false);
+          } catch (e) {
+            print(e);
+          }
+          if (authenticated) {
+            store.dispatch(UpdateUserPreferences(requireAuthentication: value));
+          } else {}
+        },
+        //authenticationSupported: LocalAuthentication().canCheckBiometrics,
+        // TODO remove this once issue is resolved:
+        // https://github.com/flutter/flutter/issues/24339
+        authenticationSupported: Future<bool>(
+          () async {
+            bool enable = false;
+            try {
+              enable = await LocalAuthentication().canCheckBiometrics;
+            } catch (e) {
+              // do nothing
+            }
+            return enable;
+          },
+        ),
+        onCustomColorsChanged: (context, customColors) {
+          store.dispatch(UpdateUserPreferences(customColors: customColors));
+          store.dispatch(UpdatedSetting());
         });
-      },
-      onRequireAuthenticationChanged: (BuildContext context, bool value) async {
-        bool authenticated = false;
-        try {
-          authenticated = await LocalAuthentication()
-              .authenticateWithBiometrics(
-                  localizedReason:
-                      AppLocalization.of(context).authenticateToChangeSetting,
-                  useErrorDialogs: true,
-                  stickyAuth: false);
-        } catch (e) {
-          print(e);
-        }
-        if (authenticated) {
-          store.dispatch(UpdateUserPreferences(requireAuthentication: value));
-        } else {}
-      },
-      //authenticationSupported: LocalAuthentication().canCheckBiometrics,
-      // TODO remove this once issue is resolved:
-      // https://github.com/flutter/flutter/issues/24339
-      authenticationSupported: Future<bool>(() async {
-        bool enable = false;
-        try {
-          enable = await LocalAuthentication().canCheckBiometrics;
-        } catch (e) {
-          // do nothing
-        }
-        return enable;
-      }),
-    );
   }
 
   final AppState state;
   final Function(BuildContext) onRefreshTap;
   final Function(BuildContext) onLogoutTap;
   final Function(BuildContext, bool) onDarkModeChanged;
+  final Function(BuildContext, BuiltMap<String, String>) onCustomColorsChanged;
   final Function(BuildContext, bool) onPreviewSidebarChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;

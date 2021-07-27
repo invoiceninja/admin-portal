@@ -163,7 +163,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     label: localization.helpTranslate,
                     child: EntityDropdown(
                       key: ValueKey('__language_${settings.languageId}__'),
-                      showUseDefault: state.settingsUIState.isFiltered,
                       entityType: EntityType.language,
                       entityList:
                           memoizedLanguageList(state.staticState.languageMap),
@@ -176,7 +175,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   ),
                   EntityDropdown(
                     key: ValueKey('__timezone_${settings.timezoneId}__'),
-                    showUseDefault: state.settingsUIState.isFiltered,
                     entityType: EntityType.timezone,
                     entityList:
                         memoizedTimezoneList(state.staticState.timezoneMap),
@@ -188,7 +186,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   ),
                   EntityDropdown(
                     key: ValueKey('__date_format_${settings.dateFormatId}__'),
-                    showUseDefault: state.settingsUIState.isFiltered,
                     entityType: EntityType.dateFormat,
                     entityList:
                         memoizedDateFormatList(state.staticState.dateFormatMap),

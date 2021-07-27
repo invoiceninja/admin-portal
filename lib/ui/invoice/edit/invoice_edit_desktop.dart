@@ -1,7 +1,15 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
@@ -235,8 +243,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       //autofocus: true,
                       clientId: invoice.clientId,
                       clientState: state.clientState,
-                      onSelected: (client) =>
-                          viewModel.onClientChanged(context, invoice, client),
+                      onSelected: (client) {
+                        viewModel.onClientChanged(context, invoice, client);
+                      },
                       onAddPressed: (completer) =>
                           viewModel.onAddClientPressed(context, completer),
                     )
@@ -286,8 +295,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       labelText: (invoice.lastSentDate ?? '').isNotEmpty
                           ? localization.nextSendDate
                           : localization.startDate,
-                      onSelected: (date) => viewModel.onChanged(
-                          invoice.rebuild((b) => b..nextSendDate = date)),
+                      onSelected: (date) {
+                        viewModel.onChanged(
+                            invoice.rebuild((b) => b..nextSendDate = date));
+                      },
                       selectedDate: invoice.nextSendDate,
                       firstDate: DateTime.now(),
                     ),
@@ -314,8 +325,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     AppDropdownButton<String>(
                       labelText: localization.dueDate,
                       value: invoice.dueDateDays ?? '',
-                      onChanged: (dynamic value) => viewModel.onChanged(
-                          invoice.rebuild((b) => b..dueDateDays = value)),
+                      onChanged: (dynamic value) {
+                        viewModel.onChanged(
+                            invoice.rebuild((b) => b..dueDateDays = value));
+                      },
                       items: [
                         DropdownMenuItem(
                           child: Text(localization.usePaymentTerms),
@@ -607,9 +620,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 Expanded(
                                   child: DesignPicker(
                                     initialValue: invoice.designId,
-                                    onSelected: (value) => viewModel.onChanged(
-                                        invoice.rebuild(
-                                            (b) => b..designId = value.id)),
+                                    onSelected: (value) {
+                                      viewModel.onChanged(invoice.rebuild(
+                                          (b) => b..designId = value.id));
+                                    },
                                   ),
                                 ),
                                 SizedBox(
@@ -728,8 +742,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       if (company.enableFirstInvoiceTaxRate ||
                           invoice.taxName1.isNotEmpty)
                         TaxRateDropdown(
-                          onSelected: (taxRate) =>
-                              viewModel.onChanged(invoice.applyTax(taxRate)),
+                          onSelected: (taxRate) {
+                            viewModel.onChanged(invoice.applyTax(taxRate));
+                          },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
                                   ? ' - ${localization.inclusive}'
@@ -740,8 +755,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       if (company.enableSecondInvoiceTaxRate ||
                           invoice.taxName2.isNotEmpty)
                         TaxRateDropdown(
-                          onSelected: (taxRate) => viewModel.onChanged(
-                              invoice.applyTax(taxRate, isSecond: true)),
+                          onSelected: (taxRate) {
+                            viewModel.onChanged(
+                                invoice.applyTax(taxRate, isSecond: true));
+                          },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
                                   ? ' - ${localization.inclusive}'
@@ -752,8 +769,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       if (company.enableThirdInvoiceTaxRate ||
                           invoice.taxName3.isNotEmpty)
                         TaxRateDropdown(
-                          onSelected: (taxRate) => viewModel.onChanged(
-                              invoice.applyTax(taxRate, isThird: true)),
+                          onSelected: (taxRate) {
+                            viewModel.onChanged(
+                                invoice.applyTax(taxRate, isThird: true));
+                          },
                           labelText: localization.tax +
                               (company.settings.enableInclusiveTaxes
                                   ? ' - ${localization.inclusive}'
@@ -807,8 +826,141 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        SizedBox(height: 16),
+        _PdfPreview(invoice: invoice),
       ],
+    );
+  }
+}
+
+class _PdfPreview extends StatefulWidget {
+  const _PdfPreview({Key key, @required this.invoice}) : super(key: key);
+
+  final InvoiceEntity invoice;
+
+  @override
+  __PdfPreviewState createState() => __PdfPreviewState();
+}
+
+class __PdfPreviewState extends State<_PdfPreview> {
+  final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
+
+  bool _isLoading = true;
+  String _pdfString;
+  PdfController _pdfController;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    loadPdf();
+  }
+
+  @override
+  void didUpdateWidget(_PdfPreview oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.invoice != oldWidget.invoice) {
+      loadPdf();
+    }
+  }
+
+  @override
+  void dispose() {
+    _pdfController?.dispose();
+
+    super.dispose();
+  }
+
+  void loadPdf() async {
+    if (_pdfController == null && _pdfString == null) {
+      _loadPdf();
+    } else {
+      _pdfDebouncer.run(() {
+        _loadPdf();
+      });
+    }
+  }
+
+  void _loadPdf() async {
+    if (!widget.invoice.hasClient) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final credentials = state.credentials;
+    final webClient = WebClient();
+    String url =
+        '${credentials.url}/live_preview?entity=${widget.invoice.entityType.snakeCase}';
+    if (widget.invoice.isOld) {
+      url += '&entity_id=${widget.invoice.id}';
+    }
+    if (state.isHosted) {
+      //url = url.replaceFirst('//staging', '//swoole');
+    }
+
+    final data =
+        serializers.serializeWith(InvoiceEntity.serializer, widget.invoice);
+    webClient
+        .post(url, credentials.token,
+            data: json.encode(data), rawResponse: true)
+        .then((dynamic response) {
+      setState(() {
+        _isLoading = false;
+
+        if (kIsWeb) {
+          _pdfString =
+              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
+          WebUtils.registerWebView(_pdfString);
+        } else {
+          final document = PdfDocument.openData(response.bodyBytes);
+          _pdfController?.dispose();
+          _pdfController = PdfController(document: document);
+        }
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_pdfString == null && _pdfController == null) {
+      return SizedBox();
+    }
+
+    return Container(
+      height: 1200,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          kIsWeb
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 11),
+                  child: HtmlElementView(viewType: _pdfString),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: PdfView(controller: _pdfController),
+                ),
+          if (_isLoading)
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                LinearProgressIndicator(),
+                Expanded(
+                  child: SizedBox(),
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 }

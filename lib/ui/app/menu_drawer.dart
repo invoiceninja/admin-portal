@@ -56,6 +56,9 @@ class MenuDrawer extends StatelessWidget {
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
     final company = viewModel.selectedCompany;
+    final inactiveColor = state.prefState
+            .customColors[PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+        '';
 
     if (company == null) {
       return Container();
@@ -240,7 +243,9 @@ class MenuDrawer extends StatelessWidget {
                   ? SizedBox()
                   : Expanded(
                       child: Container(
-                      color: Theme.of(context).cardColor,
+                      color: inactiveColor.isNotEmpty
+                          ? convertHexStringToColor(inactiveColor)
+                          : Theme.of(context).cardColor,
                       child: ScrollableListView(
                         hideMobileThumb: true,
                         children: <Widget>[
@@ -501,11 +506,45 @@ class _DrawerTileState extends State<DrawerTile> {
             (state.uiState.filterEntityType == null ||
                 !state.prefState.showFilterSidebar);
 
-    final textColor = Theme.of(context)
+    final prefState = state.prefState;
+    final inactiveColor = prefState
+            .customColors[PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+        '';
+    final inactiveFontColor =
+        prefState.customColors[PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
+            '';
+    final activeColor = prefState
+            .customColors[PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR] ??
+        '';
+    final activeFontColor =
+        prefState.customColors[PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR] ?? '';
+
+    Color color = Colors.transparent;
+    Color textColor = Theme.of(context)
         .textTheme
         .bodyText1
         .color
         .withOpacity(isSelected ? 1 : .7);
+
+    if (isSelected) {
+      if (activeColor.isNotEmpty) {
+        color = convertHexStringToColor(activeColor);
+      } else {
+        color = convertHexStringToColor(enableDarkMode
+            ? kDefaultDarkSelectedColorMenu
+            : kDefaultLightSelectedColorMenu);
+      }
+      if (activeFontColor.isNotEmpty) {
+        textColor = convertHexStringToColor(activeFontColor);
+      }
+    } else {
+      if (inactiveColor.isNotEmpty) {
+        color = convertHexStringToColor(inactiveColor);
+      }
+      if (inactiveFontColor.isNotEmpty) {
+        textColor = convertHexStringToColor(inactiveFontColor);
+      }
+    }
 
     Widget trailingWidget;
     if (!state.isMenuCollapsed) {
@@ -547,11 +586,7 @@ class _DrawerTileState extends State<DrawerTile> {
     }
 
     Widget child = Material(
-      color: isSelected
-          ? convertHexStringToColor(enableDarkMode
-              ? kDefaultDarkSelectedColorMenu
-              : kDefaultLightSelectedColorMenu)
-          : Colors.transparent,
+      color: color,
       child: Opacity(
         opacity: isSelected ? 1 : .8,
         child: ListTile(
@@ -571,6 +606,7 @@ class _DrawerTileState extends State<DrawerTile> {
             maxLines: 1,
             style: Theme.of(context).textTheme.bodyText1.copyWith(
                   fontSize: 14,
+                  color: textColor,
                 ),
           ),
           onTap: () {
@@ -1211,7 +1247,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                     decoration: InputDecoration(
                       labelText: localization.from,
                     ),
-                    initialValue: '${user.fullName} <${user.email}>',
+                    initialValue: '${user.fullName} • ${user.email}',
                   ),
                   SizedBox(height: 10),
                   TextFormField(

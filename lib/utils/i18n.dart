@@ -15,6 +15,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'export_colors': 'Export Colors',
+      'import_colors': 'Import Colors',
+      'default_clear_all': 'Default - Clear All',
+      'contrast': 'Contrast',
+      'custom_colors': 'Custom Colors',
+      'colors': 'Colors',
+      'sidebar_active_background_color': 'Sidebar Active Background Color',
+      'sidebar_active_font_color': 'Sidebar Active Font Color',
+      'sidebar_inactive_background_color': 'Sidebar Inactive Background Color',
+      'sidebar_inactive_font_color': 'Sidebar Inactive Font Color',
+      'table_alternate_row_background_color':
+          'Table Alternate Row Background Color',
+      'invoice_header_background_color': 'Invoice Header Background Color',
+      'invoice_header_font_color': 'Invoice Header Font Color',
       'net_subtotal': 'Net Subtotal',
       'review_app': 'Review App',
       'check_status': 'Check Status',
@@ -1828,7 +1842,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_name2': 'Tax Name 2',
       'tax_name3': 'Tax Name 3',
       'transaction_id': 'Transaction ID',
-      'color_theme': 'Color Theme',
+      'status_color_theme': 'Status Color Theme',
+      'load_color_theme': 'Load Color Theme',
     },
     'sq': {
       'import_data': 'Importo të dhëna',
@@ -61826,8 +61841,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get convertedTotal =>
       _localizedValues[localeCode]['converted_total'] ?? '';
 
-  String get colorTheme => _localizedValues[localeCode]['color_theme'] ?? '';
-
   String get emailSentToConfirmEmail =>
       _localizedValues[localeCode]['email_sent_to_confirm_email'] ?? '';
 
@@ -62367,6 +62380,66 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get netSubtotal =>
       _localizedValues[localeCode]['net_subtotal'] ??
       _localizedValues['en']['net_subtotal'];
+
+  String get sidebarActiveBackgroundColor =>
+      _localizedValues[localeCode]['sidebar_active_background_color'] ??
+      _localizedValues['en']['sidebar_active_background_color'];
+
+  String get sidebarActiveFontColor =>
+      _localizedValues[localeCode]['sidebar_active_font_color'] ??
+      _localizedValues['en']['sidebar_active_font_color'];
+
+  String get sidebarInactiveBackgroundColor =>
+      _localizedValues[localeCode]['sidebar_inactive_background_color'] ??
+      _localizedValues['en']['sidebar_inactive_background_color'];
+
+  String get sidebarInactiveFontColor =>
+      _localizedValues[localeCode]['sidebar_inactive_font_color'] ??
+      _localizedValues['en']['sidebar_inactive_font_color'];
+
+  String get tableAlternateRowBackgroundColor =>
+      _localizedValues[localeCode]['table_alternate_row_background_color'] ??
+      _localizedValues['en']['table_alternate_row_background_color'];
+
+  String get invoiceHeaderBackgroundColor =>
+      _localizedValues[localeCode]['invoice_header_background_color'] ??
+      _localizedValues['en']['invoice_header_background_color'];
+
+  String get invoiceHeaderFontColor =>
+      _localizedValues[localeCode]['invoice_header_font_color'] ??
+      _localizedValues['en']['invoice_header_font_color'];
+
+  String get colors =>
+      _localizedValues[localeCode]['colors'] ??
+      _localizedValues['en']['colors'];
+
+  String get customColors =>
+      _localizedValues[localeCode]['custom_colors'] ??
+      _localizedValues['en']['custom_colors'];
+
+  String get statusColorTheme =>
+      _localizedValues[localeCode]['status_color_theme'] ??
+      _localizedValues['en']['status_color_theme'];
+
+  String get loadColorTheme =>
+      _localizedValues[localeCode]['load_color_theme'] ??
+      _localizedValues['en']['load_color_theme'];
+
+  String get defaultClearAll =>
+      _localizedValues[localeCode]['default_clear_all'] ??
+      _localizedValues['en']['default_clear_all'];
+
+  String get contrast =>
+      _localizedValues[localeCode]['contrast'] ??
+      _localizedValues['en']['contrast'];
+
+  String get exportColors =>
+      _localizedValues[localeCode]['export_colors'] ??
+      _localizedValues['en']['export_colors'];
+
+  String get importColors =>
+      _localizedValues[localeCode]['import_colors'] ??
+      _localizedValues['en']['import_colors'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -69,7 +69,7 @@ class UserListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  user.fullName,
+                  user.listDisplayName,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

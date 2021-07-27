@@ -73,9 +73,12 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
       company: store.state.company,
       invoice: store.state.quoteUIState.editing,
       invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
-      onRemoveInvoiceItemPressed: (index) =>
-          store.dispatch(DeleteQuoteItem(index)),
-      onDoneInvoiceItemPressed: () => store.dispatch(EditQuoteItem()),
+      onRemoveInvoiceItemPressed: (index) {
+        store.dispatch(DeleteQuoteItem(index));
+      },
+      onDoneInvoiceItemPressed: () {
+        store.dispatch(EditQuoteItem());
+      },
       onChangedInvoiceItem: (quoteItem, index) {
         final quote = store.state.quoteUIState.editing;
         if (index == quote.lineItems.length) {
@@ -84,9 +87,11 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
           store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
         }
       },
-      onMovedInvoiceItem: (oldIndex, newIndex) => store.dispatch(
-        MoveQuoteItem(oldIndex: oldIndex, newIndex: newIndex),
-      ),
+      onMovedInvoiceItem: (oldIndex, newIndex) {
+        store.dispatch(
+          MoveQuoteItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+      },
     );
   }
 }
