@@ -16,7 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'default_clear_all': 'Default - Clear All',
-      'legacy': 'Legacy',
+      'contrast': 'Contrast',
       'custom_colors': 'Custom Colors',
       'colors': 'Colors',
       'sidebar_active_background_color': 'Sidebar Active Background Color',
@@ -62427,9 +62427,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['default_clear_all'] ??
       _localizedValues['en']['default_clear_all'];
 
-  String get legacy =>
-      _localizedValues[localeCode]['legacy'] ??
-      _localizedValues['en']['legacy'];
+  String get contrast =>
+      _localizedValues[localeCode]['contrast'] ??
+      _localizedValues['en']['contrast'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

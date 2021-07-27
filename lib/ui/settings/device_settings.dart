@@ -327,7 +327,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                               context,
                               prefState.customColors
                                   .rebuild((b) => b..clear()));
-                        } else if (value == 'legacy') {
+                        } else if (value == 'contrast') {
+                          final enableDarkMode = state.prefState.enableDarkMode;
                           viewModel.onCustomColorsChanged(
                             context,
                             prefState.customColors.rebuild(
@@ -350,7 +351,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                                       '#FFFFFF',
                                   PrefState
                                           .THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR:
-                                      '#F9F9F9',
+                                      enableDarkMode ? '#090909' : '#F9F9F9',
                                 },
                               ),
                             ),
@@ -362,7 +363,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                             child: Text(localization.defaultClearAll),
                             value: 'default'),
                         DropdownMenuItem(
-                            child: Text(localization.legacy), value: 'legacy'),
+                            child: Text(localization.contrast),
+                            value: 'contrast'),
                       ]),
                   ...[
                     PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR,
