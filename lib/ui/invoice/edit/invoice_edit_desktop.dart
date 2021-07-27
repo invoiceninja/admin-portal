@@ -849,6 +849,13 @@ class __PdfPreviewState extends State<_PdfPreview> {
   PdfController _pdfController;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    loadPdf();
+  }
+
+  @override
   void didUpdateWidget(_PdfPreview oldWidget) {
     super.didUpdateWidget(oldWidget);
 
@@ -865,9 +872,13 @@ class __PdfPreviewState extends State<_PdfPreview> {
   }
 
   void loadPdf() async {
-    _pdfDebouncer.run(() {
+    if (_pdfController == null && _pdfString == null) {
       _loadPdf();
-    });
+    } else {
+      _pdfDebouncer.run(() {
+        _loadPdf();
+      });
+    }
   }
 
   void _loadPdf() async {
@@ -885,6 +896,9 @@ class __PdfPreviewState extends State<_PdfPreview> {
     final webClient = WebClient();
     String url =
         '${credentials.url}/live_preview?entity=${widget.invoice.entityType.snakeCase}';
+    if (widget.invoice.isOld) {
+      url += '&entity_id=${widget.invoice.id}';
+    }
     if (state.isHosted) {
       //url = url.replaceFirst('//staging', '//swoole');
     }

@@ -46,6 +46,9 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     final webClient = WebClient();
     String url =
         '${credentials.url}/live_preview?entity=${viewModel.invoice.entityType.snakeCase}';
+    if (viewModel.invoice.isOld) {
+      url += '&entity_id=${viewModel.invoice.id}';
+    }
     if (viewModel.state.isHosted) {
       //url = url.replaceFirst('//staging', '//swoole');
     }
