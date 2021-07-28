@@ -40,6 +40,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class InvoiceEditDesktop extends StatefulWidget {
   const InvoiceEditDesktop({
@@ -965,7 +966,9 @@ class __PdfPreviewState extends State<_PdfPreview> {
           kIsWeb
               ? Padding(
                   padding: const EdgeInsets.only(right: 11),
-                  child: HtmlElementView(viewType: _pdfString),
+                  child: PointerInterceptor(
+                    child: HtmlElementView(viewType: _pdfString),
+                  ),
                 )
               : Padding(
                   padding: const EdgeInsets.all(8),
