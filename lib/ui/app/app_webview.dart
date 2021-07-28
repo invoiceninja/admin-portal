@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -52,8 +54,9 @@ class _MobileWebViewState extends State<_MobileWebView>
     super.didUpdateWidget(oldWidget);
 
     if (widget.html != oldWidget.html) {
-      _webViewController.loadUrl(
-          Uri.dataFromString(widget.html, mimeType: 'text/html').toString());
+      _webViewController.loadUrl(Uri.dataFromString(widget.html,
+              mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+          .toString());
     }
   }
 
@@ -62,8 +65,9 @@ class _MobileWebViewState extends State<_MobileWebView>
     super.build(context);
 
     return WebView(
-      initialUrl:
-          Uri.dataFromString(widget.html, mimeType: 'text/html').toString(),
+      initialUrl: Uri.dataFromString(widget.html,
+              mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+          .toString(),
       onWebViewCreated: (WebViewController webViewController) {
         _webViewController = webViewController;
       },
