@@ -904,7 +904,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
   }
 
   void _loadPdf() async {
-    if (!widget.invoice.hasClient) {
+    if (!widget.invoice.hasClient || _isLoading) {
       return;
     }
 

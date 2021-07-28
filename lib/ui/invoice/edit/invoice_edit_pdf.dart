@@ -34,7 +34,7 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     super.didChangeDependencies();
 
     final viewModel = widget.viewModel;
-    if (!viewModel.invoice.hasClient) {
+    if (!viewModel.invoice.hasClient || _isLoading) {
       return;
     }
 
