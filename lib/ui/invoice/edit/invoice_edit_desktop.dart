@@ -866,7 +866,7 @@ class _PdfPreview extends StatefulWidget {
 class __PdfPreviewState extends State<_PdfPreview> {
   final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
-  bool _isLoading = true;
+  bool _isLoading = false;
   String _pdfString;
   PdfController _pdfController;
 

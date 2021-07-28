@@ -25,7 +25,7 @@ class InvoiceEditPDF extends StatefulWidget {
 }
 
 class InvoiceEditPDFState extends State<InvoiceEditPDF> {
-  bool _isLoading = true;
+  bool _isLoading = false;
   String _pdfString;
   PdfController _pdfController;
 
