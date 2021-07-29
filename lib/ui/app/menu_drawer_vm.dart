@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -124,7 +125,10 @@ class MenuDrawerVM {
             callback: () async {
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context).addedCompany,
-                  shouldPop: true);
+                  shouldPop: true)
+                ..future.then((value) {
+                  AppBuilder.of(navigatorKey.currentContext).rebuild();
+                });
 
               store
                   .dispatch(AddCompany(context: context, completer: completer));

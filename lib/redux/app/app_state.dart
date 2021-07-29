@@ -882,6 +882,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
         '\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}'
         '\nPassword: $passwordUpdated${hasRecentlyEnteredPassword ? '' : ' [S]'}'
+        '\nAccent: $hasAccentColor ${userCompany?.settings?.accentColor ?? ''}'
         '\n';
   }
 }

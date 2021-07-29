@@ -34,7 +34,7 @@ class AppButton extends StatelessWidget {
               alignment: MainAxisAlignment.center,
             )
           : Text(label, overflow: TextOverflow.ellipsis),
-      onPressed: () => onPressed(),
+      onPressed: onPressed,
     );
 
     return Padding(

@@ -264,7 +264,10 @@ class _AccountOverview extends StatelessWidget {
           secondValue: secondValue,
           message: account.isTrial ? localization.freeTrialHelp : null,
         ),
-        if (state.userCompany.ninjaPortalUrl.isNotEmpty && !isApple())
+        if (state.userCompany.ninjaPortalUrl.isNotEmpty &&
+            !isApple() &&
+            state.isHosted &&
+            state.isPaidAccount)
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
             child: OutlinedButton(

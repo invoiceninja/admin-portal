@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'previous_page': 'Previous Page',
+      'next_page': 'Next Page',
       'export_colors': 'Export Colors',
       'import_colors': 'Import Colors',
       'default_clear_all': 'Default - Clear All',
@@ -34,11 +36,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
       'free_trial_help':
-          'All accounts receive a two week trial of the pro plan, once the trial ends your account will automatically change to the free plan.',
+          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
       'free_trial_ends_in_days':
-          'The pro plan trial ends in :count days, click to upgrade.',
+          'The Pro plan trial ends in :count days, click to upgrade.',
       'free_trial_ends_today':
-          'Today is the last day of the pro plan trial, click to upgrade.',
+          'Today is the last day of the Pro plan trial, click to upgrade.',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -1280,7 +1282,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'no_record_selected': 'No record selected',
       'error_unsaved_changes': 'Please save or cancel your changes',
       'download': 'Download',
-      'requires_an_enterprise_plan': 'Requires an enterprise plan',
+      'requires_an_enterprise_plan': 'Requires an Enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
       'document': 'Document',
@@ -62441,6 +62443,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['import_colors'] ??
       _localizedValues['en']['import_colors'];
 
+  String get previousPage =>
+      _localizedValues[localeCode]['previous_page'] ??
+      _localizedValues['en']['previous_page'];
+
+  String get nextPage =>
+      _localizedValues[localeCode]['next_page'] ??
+      _localizedValues['en']['next_page'];
+      
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 

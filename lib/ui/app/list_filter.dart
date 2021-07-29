@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -30,6 +31,7 @@ class ListFilter extends StatefulWidget {
 class _ListFilterState extends State<ListFilter> {
   TextEditingController _filterController;
   FocusNode _focusNode;
+  final _debouncer = Debouncer();
 
   @override
   void initState() {
@@ -140,7 +142,9 @@ class _ListFilterState extends State<ListFilter> {
           ),
           autocorrect: false,
           onChanged: (value) {
-            widget.onFilterChanged(value);
+            _debouncer.run(() {
+              widget.onFilterChanged(value);
+            });
           },
           controller: _filterController,
         ),
