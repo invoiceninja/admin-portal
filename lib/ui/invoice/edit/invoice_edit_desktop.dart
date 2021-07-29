@@ -6,9 +6,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -28,7 +28,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
@@ -40,7 +39,6 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class InvoiceEditDesktop extends StatefulWidget {
   const InvoiceEditDesktop({
@@ -846,8 +844,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            _PdfPreview(invoice: invoice),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: _PdfPreview(invoice: invoice),
+            ),
           ],
         ),
       ),
@@ -867,8 +867,9 @@ class _PdfPreview extends StatefulWidget {
 class __PdfPreviewState extends State<_PdfPreview> {
   final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
+  int _pageCount = 1;
+  int _currentPage = 1;
   bool _isLoading = false;
-  String _pdfString;
   PdfController _pdfController;
 
   @override
@@ -895,7 +896,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
   }
 
   void loadPdf() async {
-    if (_pdfController == null && _pdfString == null) {
+    if (_pdfController == null) {
       _loadPdf();
     } else {
       _pdfDebouncer.run(() {
@@ -935,14 +936,11 @@ class __PdfPreviewState extends State<_PdfPreview> {
       setState(() {
         _isLoading = false;
 
-        if (kIsWeb) {
-          _pdfString =
-              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-          WebUtils.registerWebView(_pdfString);
-        } else {
-          final document = PdfDocument.openData(response.bodyBytes);
-          _pdfController?.dispose();
+        final document = PdfDocument.openData(response.bodyBytes);
+        if (_pdfController == null) {
           _pdfController = PdfController(document: document);
+        } else {
+          _pdfController.loadDocument(document);
         }
       });
     }).catchError((dynamic error) {
@@ -954,36 +952,78 @@ class __PdfPreviewState extends State<_PdfPreview> {
 
   @override
   Widget build(BuildContext context) {
-    if (_pdfString == null && _pdfController == null) {
+    final localization = AppLocalization.of(context);
+
+    if (_pdfController == null) {
       return SizedBox();
     }
 
     return Container(
-      height: 1200,
+      height: 1000,
       child: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         children: [
-          kIsWeb
-              ? Padding(
-                  padding: const EdgeInsets.only(right: 11),
-                  child: PointerInterceptor(
-                    child: HtmlElementView(viewType: _pdfString),
+          Column(
+            children: [
+              if (_pageCount > 1)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppButton(
+                          label: localization.previousPage,
+                          iconData: MdiIcons.pagePrevious,
+                          onPressed: _currentPage == 1
+                              ? null
+                              : () {
+                                  _pdfController.previousPage(
+                                    duration: Duration(
+                                        milliseconds:
+                                            kDefaultAnimationDuration),
+                                    curve: Curves.easeInOutCubic,
+                                  );
+                                }),
+                      SizedBox(width: kTableColumnGap),
+                      AppButton(
+                          label: localization.nextPage,
+                          iconData: MdiIcons.pageNext,
+                          onPressed: _currentPage == _pageCount
+                              ? null
+                              : () {
+                                  _pdfController.nextPage(
+                                    duration: Duration(
+                                        milliseconds:
+                                            kDefaultAnimationDuration),
+                                    curve: Curves.easeInOutCubic,
+                                  );
+                                }),
+                    ],
                   ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: PdfView(controller: _pdfController),
                 ),
+              Expanded(
+                child: PdfView(
+                  controller: _pdfController,
+                  //pageSnapping: false,
+                  onDocumentLoaded: (document) {
+                    setState(() {
+                      _pageCount = document?.pagesCount ?? 0;
+                      _currentPage = 1;
+                    });
+                  },
+                  onPageChanged: (page) {
+                    setState(() {
+                      _currentPage = page;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
           if (_isLoading)
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                LinearProgressIndicator(),
-                Expanded(
-                  child: SizedBox(),
-                ),
-              ],
-            ),
+            Center(
+              child: CircularProgressIndicator(),
+            )
         ],
       ),
     );
