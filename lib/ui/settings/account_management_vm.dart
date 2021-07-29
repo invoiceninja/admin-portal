@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management.dart';
@@ -82,6 +83,7 @@ class AccountManagementVM {
                   ..future.then((value) {
                     store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(ViewDashboard());
+                    AppBuilder.of(navigatorKey.currentContext).rebuild();
 
                     if (Navigator.of(context).canPop()) {
                       Navigator.of(context).pop();
