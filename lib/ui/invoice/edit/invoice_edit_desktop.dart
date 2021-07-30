@@ -972,6 +972,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AppButton(
+                          width: 180,
                           label: localization.previousPage,
                           iconData: MdiIcons.pagePrevious,
                           onPressed: _currentPage == 1
@@ -986,6 +987,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                                 }),
                       SizedBox(width: kTableColumnGap),
                       AppButton(
+                          width: 180,
                           label: localization.nextPage,
                           iconData: MdiIcons.pageNext,
                           onPressed: _currentPage == _pageCount
