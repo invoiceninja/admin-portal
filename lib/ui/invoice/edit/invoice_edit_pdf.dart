@@ -49,7 +49,7 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     if (viewModel.invoice.isOld) {
       url += '&entity_id=${viewModel.invoice.id}';
     }
-    if (viewModel.state.isHosted) {
+    if (viewModel.state.isProduction) {
       url = url.replaceFirst('//', '//preview.');
     }
 
