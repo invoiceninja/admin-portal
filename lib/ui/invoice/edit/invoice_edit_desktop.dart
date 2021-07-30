@@ -923,7 +923,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
     if (widget.invoice.isOld) {
       url += '&entity_id=${widget.invoice.id}';
     }
-    if (state.isHosted) {
+    if (state.isProduction) {
       url = url.replaceFirst('//', '//preview.');
     }
 
