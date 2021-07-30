@@ -959,7 +959,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
     }
 
     return Container(
-      height: 1000,
+      height: 1100,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -1008,6 +1008,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                   controller: _pdfController,
                   pageSnapping: false,
                   physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
                   onDocumentLoaded: (document) {
                     setState(() {
                       _pageCount = document?.pagesCount ?? 0;
