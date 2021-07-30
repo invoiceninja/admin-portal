@@ -1004,22 +1004,25 @@ class __PdfPreviewState extends State<_PdfPreview> {
                   ),
                 ),
               Expanded(
-                child: PdfView(
-                  controller: _pdfController,
-                  pageSnapping: false,
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  onDocumentLoaded: (document) {
-                    setState(() {
-                      _pageCount = document?.pagesCount ?? 0;
-                      _currentPage = 1;
-                    });
-                  },
-                  onPageChanged: (page) {
-                    setState(() {
-                      _currentPage = page;
-                    });
-                  },
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: PdfView(
+                    controller: _pdfController,
+                    //pageSnapping: false,
+                    //physics: NeverScrollableScrollPhysics(),
+                    //scrollDirection: Axis.vertical,
+                    onDocumentLoaded: (document) {
+                      setState(() {
+                        _pageCount = document?.pagesCount ?? 0;
+                        _currentPage = 1;
+                      });
+                    },
+                    onPageChanged: (page) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    },
+                  ),
                 ),
               ),
             ],
