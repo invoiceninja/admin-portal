@@ -645,6 +645,7 @@ abstract class GatewayEntity extends Object
   static String getClientUrl({String gatewayId, String customerReference}) {
     switch (gatewayId) {
       case kGatewayStripe:
+      case kGatewayStripeConnect:
         return 'https://dashboard.stripe.com/customers/$customerReference';
       default:
         return null;
@@ -654,6 +655,7 @@ abstract class GatewayEntity extends Object
   static String getPaymentUrl({String gatewayId, String transactionReference}) {
     switch (gatewayId) {
       case kGatewayStripe:
+      case kGatewayStripeConnect:
         return 'https://dashboard.stripe.com/payments/$transactionReference';
       default:
         return null;
