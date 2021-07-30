@@ -1006,7 +1006,8 @@ class __PdfPreviewState extends State<_PdfPreview> {
               Expanded(
                 child: PdfView(
                   controller: _pdfController,
-                  //pageSnapping: false,
+                  pageSnapping: false,
+                  physics: NeverScrollableScrollPhysics(),
                   onDocumentLoaded: (document) {
                     setState(() {
                       _pageCount = document?.pagesCount ?? 0;
