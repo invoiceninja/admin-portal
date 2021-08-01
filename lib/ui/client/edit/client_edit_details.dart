@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -125,8 +126,16 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final client = viewModel.client;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
     return FormCard(
+      padding: isFullscreen
+          ? const EdgeInsets.only(
+              left: kMobileDialogPadding,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding / 2,
+            )
+          : null,
       children: <Widget>[
         DecoratedFormField(
           key: ValueKey(localization.name),
