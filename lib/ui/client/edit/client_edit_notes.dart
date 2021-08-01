@@ -79,47 +79,42 @@ class ClientEditNotesState extends State<ClientEditNotes> {
     final state = viewModel.state;
     final client = viewModel.client;
 
-    return ScrollableListView(
+    return FormCard(
       children: <Widget>[
-        FormCard(
-          children: <Widget>[
-            DecoratedFormField(
-              maxLines: 4,
-              controller: _publicNotesController,
-              keyboardType: TextInputType.multiline,
-              label: localization.publicNotes,
-            ),
-            DecoratedFormField(
-              maxLines: 4,
-              controller: _privateNotesController,
-              keyboardType: TextInputType.multiline,
-              label: localization.privateNotes,
-            ),
-            AppDropdownButton(
-              value: client.sizeId,
-              labelText: localization.size,
-              items: memoizedSizeList(state.staticState.sizeMap)
-                  .map((sizeId) => DropdownMenuItem(
-                        child: Text(state.staticState.sizeMap[sizeId].name),
-                        value: sizeId,
-                      ))
-                  .toList(),
-              onChanged: (dynamic sizeId) => viewModel.onChanged(
-                client.rebuild((b) => b..sizeId = sizeId),
-              ),
-              showBlank: true,
-            ),
-            EntityDropdown(
-              key: ValueKey('__industry_${client.industryId}__'),
-              entityType: EntityType.industry,
-              entityList:
-                  memoizedIndustryList(viewModel.staticState.industryMap),
-              labelText: localization.industry,
-              entityId: client.industryId,
-              onSelected: (SelectableEntity industry) => viewModel.onChanged(
-                  client.rebuild((b) => b..industryId = industry?.id ?? '')),
-            ),
-          ],
+        DecoratedFormField(
+          maxLines: 4,
+          controller: _publicNotesController,
+          keyboardType: TextInputType.multiline,
+          label: localization.publicNotes,
+        ),
+        DecoratedFormField(
+          maxLines: 4,
+          controller: _privateNotesController,
+          keyboardType: TextInputType.multiline,
+          label: localization.privateNotes,
+        ),
+        AppDropdownButton(
+          value: client.sizeId,
+          labelText: localization.size,
+          items: memoizedSizeList(state.staticState.sizeMap)
+              .map((sizeId) => DropdownMenuItem(
+                    child: Text(state.staticState.sizeMap[sizeId].name),
+                    value: sizeId,
+                  ))
+              .toList(),
+          onChanged: (dynamic sizeId) => viewModel.onChanged(
+            client.rebuild((b) => b..sizeId = sizeId),
+          ),
+          showBlank: true,
+        ),
+        EntityDropdown(
+          key: ValueKey('__industry_${client.industryId}__'),
+          entityType: EntityType.industry,
+          entityList: memoizedIndustryList(viewModel.staticState.industryMap),
+          labelText: localization.industry,
+          entityId: client.industryId,
+          onSelected: (SelectableEntity industry) => viewModel.onChanged(
+              client.rebuild((b) => b..industryId = industry?.id ?? '')),
         ),
       ],
     );

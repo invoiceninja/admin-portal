@@ -21,7 +21,6 @@ class ClientEditFooter extends StatelessWidget {
     final state = store.state;
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.client] ?? false;
-    final displayName = client.calculateDisplayName;
 
     return BottomAppBar(
       elevation: 0,
@@ -55,7 +54,7 @@ class ClientEditFooter extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, top: 8),
                   child: Text(
-                    displayName.isEmpty ? localization.newClient : displayName,
+                    client.calculateDisplayName,
                     style: TextStyle(
                       color: state.prefState.enableDarkMode
                           ? Colors.white

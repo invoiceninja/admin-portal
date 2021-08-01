@@ -91,59 +91,53 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
     final viewModel = widget.viewModel;
     final client = viewModel.client;
 
-    return ScrollableListView(children: <Widget>[
-      FormCard(
-        children: <Widget>[
-          DecoratedFormField(
-            controller: _shippingAddress1Controller,
-            label: localization.address1,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            controller: _shippingAddress2Controller,
-            label: localization.address2,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            controller: _shippingCityController,
-            label: localization.city,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            controller: _shippingStateController,
-            label: localization.state,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            controller: _shippingPostalCodeController,
-            label: localization.postalCode,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          EntityDropdown(
-            key: ValueKey('__country_${client.shippingCountryId}__'),
-            entityType: EntityType.country,
-            entityList: memoizedCountryList(viewModel.staticState.countryMap),
-            labelText: localization.country,
-            entityId: client.shippingCountryId,
-            onSelected: (SelectableEntity country) => viewModel.onChanged(client
-                .rebuild((b) => b..shippingCountryId = country?.id ?? '')),
-          ),
-        ],
-      ),
-      client.hasBillingAddress && client.areAddressesDifferent
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: AppButton(
-                label: localization.copyBilling.toUpperCase(),
-                onPressed: () {
-                  viewModel.copyBillingAddress();
-                  WidgetsBinding.instance.addPostFrameCallback((duration) {
-                    didChangeDependencies();
-                  });
-                },
-              ),
-            )
-          : SizedBox(),
-    ]);
+    return FormCard(
+      children: <Widget>[
+        DecoratedFormField(
+          controller: _shippingAddress1Controller,
+          label: localization.address1,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _shippingAddress2Controller,
+          label: localization.address2,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _shippingCityController,
+          label: localization.city,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _shippingStateController,
+          label: localization.state,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _shippingPostalCodeController,
+          label: localization.postalCode,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        EntityDropdown(
+          key: ValueKey('__country_${client.shippingCountryId}__'),
+          entityType: EntityType.country,
+          entityList: memoizedCountryList(viewModel.staticState.countryMap),
+          labelText: localization.country,
+          entityId: client.shippingCountryId,
+          onSelected: (SelectableEntity country) => viewModel.onChanged(
+              client.rebuild((b) => b..shippingCountryId = country?.id ?? '')),
+        ),
+        if (client.hasBillingAddress && client.areAddressesDifferent)
+          AppButton(
+            label: localization.copyBilling.toUpperCase(),
+            onPressed: () {
+              viewModel.copyBillingAddress();
+              WidgetsBinding.instance.addPostFrameCallback((duration) {
+                didChangeDependencies();
+              });
+            },
+          )
+      ],
+    );
   }
 }

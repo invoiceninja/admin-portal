@@ -59,6 +59,9 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final state = widget.clientViewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.client);
 
     List<Widget> contacts;
 
@@ -93,17 +96,23 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
       });
     }
 
-    return ScrollableListView(
-      children: []
-        ..addAll(contacts)
-        ..add(Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: AppButton(
-            label: localization.addContact.toUpperCase(),
-            onPressed: () => viewModel.onAddContactPressed(),
-          ),
-        )),
-    );
+    final children = <Widget>[]
+      ..addAll(contacts)
+      ..add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: AppButton(
+          label: localization.addContact.toUpperCase(),
+          onPressed: () => viewModel.onAddContactPressed(),
+        ),
+      ));
+
+    return isFullscreen
+        ? Column(
+            children: children,
+          )
+        : ScrollableListView(
+            children: children,
+          );
   }
 }
 

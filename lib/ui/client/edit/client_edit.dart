@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_notes.dart';
@@ -97,30 +99,38 @@ class _ClientEditState extends State<ClientEdit>
       body: Form(
         key: _formKey,
         child: isFullscreen
-            ? ClientEditDetails(
-                viewModel: viewModel,
-              )
+            ? ClientEditDesktop(viewModel: viewModel)
             : TabBarView(
                 key: ValueKey(viewModel.client.id),
                 controller: _controller,
                 children: <Widget>[
-                  ClientEditDetails(
-                    viewModel: viewModel,
+                  ScrollableListView(
+                    children: [
+                      ClientEditDetails(viewModel: viewModel),
+                    ],
                   ),
                   ClientEditContactsScreen(
                     viewModel: viewModel,
                   ),
-                  ClientEditNotes(
-                    viewModel: viewModel,
+                  ScrollableListView(
+                    children: [
+                      ClientEditNotes(viewModel: viewModel),
+                    ],
                   ),
-                  ClientEditSettings(
-                    viewModel: viewModel,
+                  ScrollableListView(
+                    children: [
+                      ClientEditSettings(viewModel: viewModel),
+                    ],
                   ),
-                  ClientEditBillingAddress(
-                    viewModel: viewModel,
+                  ScrollableListView(
+                    children: [
+                      ClientEditBillingAddress(viewModel: viewModel),
+                    ],
                   ),
-                  ClientEditShippingAddress(
-                    viewModel: viewModel,
+                  ScrollableListView(
+                    children: [
+                      ClientEditShippingAddress(viewModel: viewModel),
+                    ],
                   ),
                 ],
               ),

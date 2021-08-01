@@ -80,99 +80,90 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     final company = state.company;
     final client = viewModel.client;
 
-    return ScrollableListView(
+    return FormCard(
       children: <Widget>[
-        FormCard(
-          children: <Widget>[
-            EntityDropdown(
-              key: ValueKey('__currency_${client.currencyId}__'),
-              entityType: EntityType.currency,
-              entityList:
-                  memoizedCurrencyList(viewModel.staticState.currencyMap),
-              labelText: localization.currency,
-              entityId: client.currencyId,
-              onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  client.rebuild(
-                      (b) => b..settings.currencyId = currency?.id ?? '')),
-            ),
-            EntityDropdown(
-              key: ValueKey('__language_${client.languageId}__'),
-              entityType: EntityType.language,
-              entityList:
-                  memoizedLanguageList(viewModel.staticState.languageMap),
-              labelText: localization.language,
-              entityId: client.languageId,
-              onSelected: (SelectableEntity language) => viewModel.onChanged(
-                  client.rebuild(
-                      (b) => b..settings.languageId = language?.id ?? '')),
-            ),
-            if (company.isModuleEnabled(EntityType.invoice))
-              AppDropdownButton<String>(
-                showBlank: true,
-                labelText: localization.invoicePaymentTerms,
-                items: memoizedDropdownPaymentTermList(
-                        state.paymentTermState.map, state.paymentTermState.list)
-                    .map((paymentTermId) {
-                  final paymentTerm = state.paymentTermState.map[paymentTermId];
-                  return DropdownMenuItem<String>(
-                    child: Text(paymentTerm.name),
-                    value: paymentTerm.numDays.toString(),
-                  );
-                }).toList(),
-                value: '${client.settings.defaultPaymentTerms}',
-                onChanged: (dynamic numDays) {
-                  viewModel.onChanged(client.rebuild((b) => b
-                    ..settings.defaultPaymentTerms =
-                        numDays == null ? null : '$numDays'));
-                },
-              ),
-            if (company.isModuleEnabled(EntityType.quote))
-              AppDropdownButton<String>(
-                showBlank: true,
-                labelText: localization.quoteValidUntil,
-                items: memoizedDropdownPaymentTermList(
-                        state.paymentTermState.map, state.paymentTermState.list)
-                    .map((paymentTermId) {
-                  final paymentTerm = state.paymentTermState.map[paymentTermId];
-                  return DropdownMenuItem<String>(
-                    child: Text(paymentTerm.name),
-                    value: paymentTerm.numDays.toString(),
-                  );
-                }).toList(),
-                value: '${client.settings.defaultValidUntil}',
-                onChanged: (dynamic numDays) {
-                  viewModel.onChanged(client.rebuild((b) => b
-                    ..settings.defaultValidUntil =
-                        numDays == null ? null : '$numDays'));
-                },
-              ),
-            DecoratedFormField(
-              controller: _taskRateController,
-              isMoney: true,
-              label: localization.taskRate,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            /*
-            BoolDropdownButton(
-              label: localization.emailReminders,
-              value: client.settings.sendReminders,
-              showBlank: true,
-              onChanged: (value) => viewModel.onChanged(
-                  client.rebuild((b) => b..settings.sendReminders = value)),
-            )
-             */
-          ],
+        EntityDropdown(
+          key: ValueKey('__currency_${client.currencyId}__'),
+          entityType: EntityType.currency,
+          entityList: memoizedCurrencyList(viewModel.staticState.currencyMap),
+          labelText: localization.currency,
+          entityId: client.currencyId,
+          onSelected: (SelectableEntity currency) => viewModel.onChanged(client
+              .rebuild((b) => b..settings.currencyId = currency?.id ?? '')),
         ),
-        FormCard(children: <Widget>[
-          SwitchListTile(
-            activeColor: Theme.of(context).accentColor,
-            title: Text(localization.emailReminders),
-            subtitle: Text(localization.enabled),
-            value: client.settings.sendReminders ?? true,
-            onChanged: (value) => viewModel.onChanged(client.rebuild((b) =>
-                b..settings.sendReminders = value == true ? null : false)),
+        EntityDropdown(
+          key: ValueKey('__language_${client.languageId}__'),
+          entityType: EntityType.language,
+          entityList: memoizedLanguageList(viewModel.staticState.languageMap),
+          labelText: localization.language,
+          entityId: client.languageId,
+          onSelected: (SelectableEntity language) => viewModel.onChanged(client
+              .rebuild((b) => b..settings.languageId = language?.id ?? '')),
+        ),
+        if (company.isModuleEnabled(EntityType.invoice))
+          AppDropdownButton<String>(
+            showBlank: true,
+            labelText: localization.invoicePaymentTerms,
+            items: memoizedDropdownPaymentTermList(
+                    state.paymentTermState.map, state.paymentTermState.list)
+                .map((paymentTermId) {
+              final paymentTerm = state.paymentTermState.map[paymentTermId];
+              return DropdownMenuItem<String>(
+                child: Text(paymentTerm.name),
+                value: paymentTerm.numDays.toString(),
+              );
+            }).toList(),
+            value: '${client.settings.defaultPaymentTerms}',
+            onChanged: (dynamic numDays) {
+              viewModel.onChanged(client.rebuild((b) => b
+                ..settings.defaultPaymentTerms =
+                    numDays == null ? null : '$numDays'));
+            },
           ),
-        ]),
+        if (company.isModuleEnabled(EntityType.quote))
+          AppDropdownButton<String>(
+            showBlank: true,
+            labelText: localization.quoteValidUntil,
+            items: memoizedDropdownPaymentTermList(
+                    state.paymentTermState.map, state.paymentTermState.list)
+                .map((paymentTermId) {
+              final paymentTerm = state.paymentTermState.map[paymentTermId];
+              return DropdownMenuItem<String>(
+                child: Text(paymentTerm.name),
+                value: paymentTerm.numDays.toString(),
+              );
+            }).toList(),
+            value: '${client.settings.defaultValidUntil}',
+            onChanged: (dynamic numDays) {
+              viewModel.onChanged(client.rebuild((b) => b
+                ..settings.defaultValidUntil =
+                    numDays == null ? null : '$numDays'));
+            },
+          ),
+        DecoratedFormField(
+          controller: _taskRateController,
+          isMoney: true,
+          label: localization.taskRate,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        /*
+        BoolDropdownButton(
+          label: localization.emailReminders,
+          value: client.settings.sendReminders,
+          showBlank: true,
+          onChanged: (value) => viewModel.onChanged(
+              client.rebuild((b) => b..settings.sendReminders = value)),
+        )
+         */
+        SizedBox(height: 20),
+        SwitchListTile(
+          activeColor: Theme.of(context).accentColor,
+          title: Text(localization.emailReminders),
+          subtitle: Text(localization.enabled),
+          value: client.settings.sendReminders ?? true,
+          onChanged: (value) => viewModel.onChanged(client.rebuild(
+              (b) => b..settings.sendReminders = value == true ? null : false)),
+        ),
       ],
     );
   }

@@ -90,63 +90,57 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
     final viewModel = widget.viewModel;
     final client = viewModel.client;
 
-    return ScrollableListView(children: <Widget>[
-      FormCard(
-        children: <Widget>[
-          DecoratedFormField(
-            controller: _address1Controller,
-            label: localization.address1,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _address2Controller,
-            label: localization.address2,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _cityController,
-            label: localization.city,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _stateController,
-            label: localization.state,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _postalCodeController,
-            label: localization.postalCode,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          EntityDropdown(
-            key: ValueKey('__country_${client.countryId}__'),
-            entityType: EntityType.country,
-            entityList: memoizedCountryList(viewModel.staticState.countryMap),
-            labelText: localization.country,
-            entityId: client.countryId,
-            onSelected: (SelectableEntity country) => viewModel.onChanged(
-                client.rebuild((b) => b..countryId = country?.id ?? '')),
-          ),
-        ],
-      ),
-      client.hasShippingAddress && client.areAddressesDifferent
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: AppButton(
-                label: localization.copyShipping.toUpperCase(),
-                onPressed: () {
-                  viewModel.copyShippingAddress();
-                  WidgetsBinding.instance.addPostFrameCallback((duration) {
-                    didChangeDependencies();
-                  });
-                },
-              ),
-            )
-          : SizedBox(),
-    ]);
+    return FormCard(
+      children: <Widget>[
+        DecoratedFormField(
+          controller: _address1Controller,
+          label: localization.address1,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          autocorrect: false,
+          controller: _address2Controller,
+          label: localization.address2,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          autocorrect: false,
+          controller: _cityController,
+          label: localization.city,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          autocorrect: false,
+          controller: _stateController,
+          label: localization.state,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          autocorrect: false,
+          controller: _postalCodeController,
+          label: localization.postalCode,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        EntityDropdown(
+          key: ValueKey('__country_${client.countryId}__'),
+          entityType: EntityType.country,
+          entityList: memoizedCountryList(viewModel.staticState.countryMap),
+          labelText: localization.country,
+          entityId: client.countryId,
+          onSelected: (SelectableEntity country) => viewModel.onChanged(
+              client.rebuild((b) => b..countryId = country?.id ?? '')),
+        ),
+        if (client.hasShippingAddress && client.areAddressesDifferent)
+          AppButton(
+            label: localization.copyShipping.toUpperCase(),
+            onPressed: () {
+              viewModel.copyShippingAddress();
+              WidgetsBinding.instance.addPostFrameCallback((duration) {
+                didChangeDependencies();
+              });
+            },
+          )
+      ],
+    );
   }
 }
