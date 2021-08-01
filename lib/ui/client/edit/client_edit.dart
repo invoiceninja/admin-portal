@@ -99,7 +99,10 @@ class _ClientEditState extends State<ClientEdit>
       body: Form(
         key: _formKey,
         child: isFullscreen
-            ? ClientEditDesktop(viewModel: viewModel)
+            ? ClientEditDesktop(
+                viewModel: viewModel,
+                key: ValueKey(viewModel.client.id),
+              )
             : TabBarView(
                 key: ValueKey(viewModel.client.id),
                 controller: _controller,
