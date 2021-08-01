@@ -100,7 +100,12 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
     final children = <Widget>[]
       ..addAll(contacts)
       ..add(Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.only(
+          left: 25,
+          top: 0,
+          right: 25,
+          bottom: 6,
+        ),
         child: AppButton(
           label: localization.addContact.toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
@@ -110,6 +115,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
     return isFullscreen
         ? Column(
             children: children,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
           )
         : ScrollableListView(
             children: children,
