@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -79,8 +80,16 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     final state = viewModel.state;
     final company = state.company;
     final client = viewModel.client;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
     return FormCard(
+      padding: isFullscreen
+          ? const EdgeInsets.only(
+              left: kMobileDialogPadding / 2,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding / 2,
+            )
+          : null,
       children: <Widget>[
         EntityDropdown(
           key: ValueKey('__currency_${client.currencyId}__'),

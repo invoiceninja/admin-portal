@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -284,6 +285,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final company = viewModel.company;
+    final state = widget.clientViewModel.state;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
     final column = Column(
       mainAxisSize: MainAxisSize.min,
@@ -397,6 +400,14 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               )
             ],
           )
-        : FormCard(child: column);
+        : FormCard(
+            child: column,
+            padding: isFullscreen
+                ? const EdgeInsets.only(
+                    left: kMobileDialogPadding / 2,
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                  )
+                : null);
   }
 }
