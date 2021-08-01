@@ -370,6 +370,9 @@ class EntityScreens extends StatelessWidget {
         case TaskScreen.route:
           child = TaskEditScreen();
           break;
+        case ClientScreen.route:
+          child = ClientEditScreen();
+          break;
         default:
           switch (uiState.currentRoute) {
             case DesignEditScreen.route:
