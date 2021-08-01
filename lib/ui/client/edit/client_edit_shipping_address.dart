@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -90,8 +91,17 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final isFullscreen =
+        viewModel.state.prefState.isEditorFullScreen(EntityType.client);
 
     return FormCard(
+      padding: isFullscreen
+          ? const EdgeInsets.only(
+              left: kMobileDialogPadding / 2,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding,
+            )
+          : null,
       children: <Widget>[
         DecoratedFormField(
           controller: _shippingAddress1Controller,
