@@ -964,6 +964,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
         alignment: Alignment.topCenter,
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (_pageCount > 1)
                 Padding(
