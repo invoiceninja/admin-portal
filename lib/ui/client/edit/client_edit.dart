@@ -68,56 +68,62 @@ class _ClientEditState extends State<ClientEdit>
 
         viewModel.onSavePressed(context);
       },
-      appBarBottom: TabBar(
-        controller: _controller,
-        isScrollable: true,
-        tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.contacts,
-          ),
-          Tab(
-            text: localization.notes,
-          ),
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.billingAddress,
-          ),
-          Tab(
-            text: localization.shippingAddress,
-          ),
-        ],
-      ),
+      appBarBottom: isFullscreen
+          ? null
+          : TabBar(
+              controller: _controller,
+              isScrollable: true,
+              tabs: [
+                Tab(
+                  text: localization.details,
+                ),
+                Tab(
+                  text: localization.contacts,
+                ),
+                Tab(
+                  text: localization.notes,
+                ),
+                Tab(
+                  text: localization.settings,
+                ),
+                Tab(
+                  text: localization.billingAddress,
+                ),
+                Tab(
+                  text: localization.shippingAddress,
+                ),
+              ],
+            ),
       body: Form(
         key: _formKey,
-        child: TabBarView(
-          key: ValueKey(viewModel.client.id),
-          controller: _controller,
-          children: <Widget>[
-            ClientEditDetails(
-              viewModel: viewModel,
-            ),
-            ClientEditContactsScreen(
-              viewModel: viewModel,
-            ),
-            ClientEditNotes(
-              viewModel: viewModel,
-            ),
-            ClientEditSettings(
-              viewModel: viewModel,
-            ),
-            ClientEditBillingAddress(
-              viewModel: viewModel,
-            ),
-            ClientEditShippingAddress(
-              viewModel: viewModel,
-            ),
-          ],
-        ),
+        child: isFullscreen
+            ? ClientEditDetails(
+                viewModel: viewModel,
+              )
+            : TabBarView(
+                key: ValueKey(viewModel.client.id),
+                controller: _controller,
+                children: <Widget>[
+                  ClientEditDetails(
+                    viewModel: viewModel,
+                  ),
+                  ClientEditContactsScreen(
+                    viewModel: viewModel,
+                  ),
+                  ClientEditNotes(
+                    viewModel: viewModel,
+                  ),
+                  ClientEditSettings(
+                    viewModel: viewModel,
+                  ),
+                  ClientEditBillingAddress(
+                    viewModel: viewModel,
+                  ),
+                  ClientEditShippingAddress(
+                    viewModel: viewModel,
+                  ),
+                ],
+              ),
       ),
       bottomNavigationBar: ClientEditFooter(client: client),
     );
