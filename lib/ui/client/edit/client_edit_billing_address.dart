@@ -104,7 +104,9 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
       children: <Widget>[
         DecoratedFormField(
           controller: _address1Controller,
-          label: localization.address1,
+          label: isFullscreen
+              ? localization.billingAddress1
+              : localization.address1,
           onSavePressed: viewModel.onSavePressed,
         ),
         DecoratedFormField(

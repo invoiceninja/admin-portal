@@ -105,7 +105,9 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
       children: <Widget>[
         DecoratedFormField(
           controller: _shippingAddress1Controller,
-          label: localization.address1,
+          label: isFullscreen
+              ? localization.shippingAddress1
+              : localization.address1,
           onSavePressed: viewModel.onSavePressed,
         ),
         DecoratedFormField(
