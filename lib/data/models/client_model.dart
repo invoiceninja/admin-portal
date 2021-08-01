@@ -645,6 +645,14 @@ abstract class ClientEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  String get calculateDisplayName {
+    if (name.isNotEmpty) {
+      return name;
+    } else {
+      return primaryContact.fullNameOrEmail;
+    }
+  }
+
   bool get areAddressesDifferent =>
       address1 != shippingAddress1 ||
       address2 != shippingAddress2 ||
@@ -796,6 +804,14 @@ abstract class ContactEntity extends Object
     return (firstName + ' ' + lastName).trim();
   }
 
+  String get fullNameOrEmail {
+    if (fullName.isNotEmpty) {
+      return fullName;
+    } else {
+      return email;
+    }
+  }
+
   String get fullNameWithEmail {
     String name = fullName;
 
@@ -856,7 +872,7 @@ abstract class ContactEntity extends Object
 
   @override
   String get listDisplayName {
-    return fullName;
+    return fullNameOrEmail;
   }
 
   @override

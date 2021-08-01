@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_details.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_shipping_address.dart';
@@ -45,8 +47,12 @@ class _ClientEditState extends State<ClientEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final state = viewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.client);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       entity: client,
       title: client.isNew ? localization.newClient : localization.editClient,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
@@ -113,6 +119,7 @@ class _ClientEditState extends State<ClientEdit>
           ],
         ),
       ),
+      bottomNavigationBar: ClientEditFooter(client: client),
     );
   }
 }
