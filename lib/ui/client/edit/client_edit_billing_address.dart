@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -89,64 +89,70 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final isFullscreen =
+        viewModel.state.prefState.isEditorFullScreen(EntityType.client);
 
-    return ScrollableListView(children: <Widget>[
-      FormCard(
-        children: <Widget>[
-          DecoratedFormField(
-            controller: _address1Controller,
-            label: localization.address1,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _address2Controller,
-            label: localization.address2,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _cityController,
-            label: localization.city,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _stateController,
-            label: localization.state,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _postalCodeController,
-            label: localization.postalCode,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          EntityDropdown(
-            key: ValueKey('__country_${client.countryId}__'),
-            entityType: EntityType.country,
-            entityList: memoizedCountryList(viewModel.staticState.countryMap),
-            labelText: localization.country,
-            entityId: client.countryId,
-            onSelected: (SelectableEntity country) => viewModel.onChanged(
-                client.rebuild((b) => b..countryId = country?.id ?? '')),
-          ),
-        ],
-      ),
-      client.hasShippingAddress && client.areAddressesDifferent
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: AppButton(
-                label: localization.copyShipping.toUpperCase(),
-                onPressed: () {
-                  viewModel.copyShippingAddress();
-                  WidgetsBinding.instance.addPostFrameCallback((duration) {
-                    didChangeDependencies();
-                  });
-                },
-              ),
+    return FormCard(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      padding: isFullscreen
+          ? const EdgeInsets.only(
+              left: kMobileDialogPadding / 2,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding,
             )
-          : SizedBox(),
-    ]);
+          : null,
+      children: <Widget>[
+        DecoratedFormField(
+          controller: _address1Controller,
+          label: isFullscreen
+              ? localization.billingAddress1
+              : localization.address1,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          autocorrect: false,
+          controller: _address2Controller,
+          label: localization.address2,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          autocorrect: false,
+          controller: _cityController,
+          label: localization.city,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          autocorrect: false,
+          controller: _stateController,
+          label: localization.state,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          autocorrect: false,
+          controller: _postalCodeController,
+          label: localization.postalCode,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        EntityDropdown(
+          key: ValueKey('__country_${client.countryId}__'),
+          entityType: EntityType.country,
+          entityList: memoizedCountryList(viewModel.staticState.countryMap),
+          labelText: localization.country,
+          entityId: client.countryId,
+          onSelected: (SelectableEntity country) => viewModel.onChanged(
+              client.rebuild((b) => b..countryId = country?.id ?? '')),
+        ),
+        if (client.hasShippingAddress && client.areAddressesDifferent)
+          AppButton(
+            label: localization.copyShipping.toUpperCase(),
+            onPressed: () {
+              viewModel.copyShippingAddress();
+              WidgetsBinding.instance.addPostFrameCallback((duration) {
+                didChangeDependencies();
+              });
+            },
+          )
+      ],
+    );
   }
 }

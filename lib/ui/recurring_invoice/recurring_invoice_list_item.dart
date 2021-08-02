@@ -42,10 +42,11 @@ class RecurringInvoiceListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
-    final statusLabel =
-        localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]);
-    final statusColor = InvoiceStatusColors(state.prefState.colorThemeModel)
-        .colors[invoice.calculatedStatusId];
+    final statusLabel = localization
+        .lookup(kRecurringInvoiceStatuses[invoice.calculatedStatusId]);
+    final statusColor =
+        RecurringInvoiceStatusColors(state.prefState.colorThemeModel)
+            .colors[invoice.calculatedStatusId];
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     String subtitle = '';

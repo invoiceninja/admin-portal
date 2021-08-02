@@ -796,6 +796,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final isPdf = subRoute == 'pdf';
 
     if (<String>[
+      ClientScreen.route,
       InvoiceScreen.route,
       QuoteScreen.route,
       CreditScreen.route,
@@ -807,6 +808,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       } else if (isEdit) {
         if (mainRoute == TaskScreen.route) {
           isFullScreen = prefState.isEditorFullScreen(EntityType.task);
+        } else if (mainRoute == ClientScreen.route) {
+          isFullScreen = prefState.isEditorFullScreen(EntityType.client);
         } else {
           isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);
         }

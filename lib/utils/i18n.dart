@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'add_second_contact': 'Add Second Contact',
       'previous_page': 'Previous Page',
       'next_page': 'Next Page',
       'export_colors': 'Export Colors',
@@ -62450,7 +62451,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get nextPage =>
       _localizedValues[localeCode]['next_page'] ??
       _localizedValues['en']['next_page'];
-      
+
+  String get addSecondContact =>
+      _localizedValues[localeCode]['add_second_contact'] ??
+      _localizedValues['en']['add_second_contact'];
+
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 

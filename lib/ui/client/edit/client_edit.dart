@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_details.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_shipping_address.dart';
@@ -45,8 +49,12 @@ class _ClientEditState extends State<ClientEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final state = viewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.client);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       entity: client,
       title: client.isNew ? localization.newClient : localization.editClient,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
@@ -62,57 +70,75 @@ class _ClientEditState extends State<ClientEdit>
 
         viewModel.onSavePressed(context);
       },
-      appBarBottom: TabBar(
-        controller: _controller,
-        isScrollable: true,
-        tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.contacts,
-          ),
-          Tab(
-            text: localization.notes,
-          ),
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.billingAddress,
-          ),
-          Tab(
-            text: localization.shippingAddress,
-          ),
-        ],
-      ),
+      appBarBottom: isFullscreen
+          ? null
+          : TabBar(
+              controller: _controller,
+              isScrollable: true,
+              tabs: [
+                Tab(
+                  text: localization.details,
+                ),
+                Tab(
+                  text: localization.contacts,
+                ),
+                Tab(
+                  text: localization.notes,
+                ),
+                Tab(
+                  text: localization.settings,
+                ),
+                Tab(
+                  text: localization.billingAddress,
+                ),
+                Tab(
+                  text: localization.shippingAddress,
+                ),
+              ],
+            ),
       body: Form(
         key: _formKey,
-        child: TabBarView(
-          key: ValueKey(viewModel.client.id),
-          controller: _controller,
-          children: <Widget>[
-            ClientEditDetails(
-              viewModel: viewModel,
-            ),
-            ClientEditContactsScreen(
-              viewModel: viewModel,
-            ),
-            ClientEditNotes(
-              viewModel: viewModel,
-            ),
-            ClientEditSettings(
-              viewModel: viewModel,
-            ),
-            ClientEditBillingAddress(
-              viewModel: viewModel,
-            ),
-            ClientEditShippingAddress(
-              viewModel: viewModel,
-            ),
-          ],
-        ),
+        child: isFullscreen
+            ? ClientEditDesktop(
+                viewModel: viewModel,
+                key: ValueKey(viewModel.client.id),
+              )
+            : TabBarView(
+                key: ValueKey(viewModel.client.id),
+                controller: _controller,
+                children: <Widget>[
+                  ScrollableListView(
+                    children: [
+                      ClientEditDetails(viewModel: viewModel),
+                    ],
+                  ),
+                  ClientEditContactsScreen(
+                    viewModel: viewModel,
+                  ),
+                  ScrollableListView(
+                    children: [
+                      ClientEditNotes(viewModel: viewModel),
+                    ],
+                  ),
+                  ScrollableListView(
+                    children: [
+                      ClientEditSettings(viewModel: viewModel),
+                    ],
+                  ),
+                  ScrollableListView(
+                    children: [
+                      ClientEditBillingAddress(viewModel: viewModel),
+                    ],
+                  ),
+                  ScrollableListView(
+                    children: [
+                      ClientEditShippingAddress(viewModel: viewModel),
+                    ],
+                  ),
+                ],
+              ),
       ),
+      bottomNavigationBar: ClientEditFooter(client: client),
     );
   }
 }

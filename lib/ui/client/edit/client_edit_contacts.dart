@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -59,6 +60,9 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final state = widget.clientViewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.client);
 
     List<Widget> contacts;
 
@@ -93,17 +97,32 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
       });
     }
 
-    return ScrollableListView(
-      children: []
-        ..addAll(contacts)
-        ..add(Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: AppButton(
-            label: localization.addContact.toUpperCase(),
-            onPressed: () => viewModel.onAddContactPressed(),
-          ),
-        )),
-    );
+    final children = <Widget>[]
+      ..addAll(contacts)
+      ..add(Padding(
+        padding: const EdgeInsets.only(
+          left: 25,
+          top: 0,
+          right: 25,
+          bottom: 6,
+        ),
+        child: AppButton(
+          label: (client.contacts.length == 1
+                  ? localization.addSecondContact
+                  : localization.addContact)
+              .toUpperCase(),
+          onPressed: () => viewModel.onAddContactPressed(),
+        ),
+      ));
+
+    return isFullscreen
+        ? Column(
+            children: children,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+          )
+        : ScrollableListView(
+            children: children,
+          );
   }
 }
 
@@ -275,11 +294,14 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final company = viewModel.company;
+    final state = widget.clientViewModel.state;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
     final column = Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         DecoratedFormField(
+          autofocus: widget.isDialog,
           controller: _firstNameController,
           validator: (String val) => !viewModel.client.hasNameSet
               ? AppLocalization.of(context).pleaseEnterAClientOrContactName
@@ -388,6 +410,14 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               )
             ],
           )
-        : FormCard(child: column);
+        : FormCard(
+            child: column,
+            padding: isFullscreen
+                ? const EdgeInsets.only(
+                    left: kMobileDialogPadding / 2,
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                  )
+                : null);
   }
 }

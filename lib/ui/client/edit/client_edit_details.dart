@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/contacts.dart';
@@ -125,104 +125,109 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final client = viewModel.client;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
-    return ScrollableListView(
+    return FormCard(
+      padding: isFullscreen
+          ? const EdgeInsets.only(
+              left: kMobileDialogPadding,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding / 2,
+            )
+          : null,
       children: <Widget>[
-        FormCard(
-          children: <Widget>[
-            DecoratedFormField(
-              key: ValueKey(localization.name),
-              autofocus: true,
-              controller: _nameController,
-              validator: (String val) => !viewModel.client.hasNameSet
-                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-                  : null,
-              onSavePressed: viewModel.onSavePressed,
-              decoration: InputDecoration(
-                labelText: localization.name,
-                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
-                    ? IconButton(
-                        alignment: Alignment.bottomCenter,
-                        color: Theme.of(context).cardColor,
-                        icon: Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () async {
-                          final contact = await getDeviceContact();
-                          if (contact != null) {
-                            setState(() {
-                              _setContactControllers(contact);
-                            });
-                          }
-                        })
-                    : null,
-              ),
-            ),
-            if (client.isOld)
-              DecoratedFormField(
-                label: localization.number,
-                controller: _numberController,
-              ),
-            DynamicSelector(
-              entityType: EntityType.group,
-              entityIds: memoizedGroupList(state.groupState.map),
-              entityId: client.groupId,
-              onChanged: (groupId) => viewModel
-                  .onChanged(client.rebuild((b) => b..groupId = groupId)),
-            ),
-            UserPicker(
-              userId: client.assignedUserId,
-              onChanged: (userId) => viewModel
-                  .onChanged(client.rebuild((b) => b..assignedUserId = userId)),
-            ),
-            DecoratedFormField(
-              label: localization.idNumber,
-              controller: _idNumberController,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            DecoratedFormField(
-              label: localization.vatNumber,
-              controller: _vatNumberController,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            DecoratedFormField(
-              label: localization.website,
-              controller: _websiteController,
-              keyboardType: TextInputType.url,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            DecoratedFormField(
-              label: localization.phone,
-              controller: _phoneController,
-              keyboardType: TextInputType.phone,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            CustomField(
-              controller: _custom1Controller,
-              field: CustomFieldType.client1,
-              value: client.customValue1,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            CustomField(
-              controller: _custom2Controller,
-              field: CustomFieldType.client2,
-              value: client.customValue2,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            CustomField(
-              controller: _custom3Controller,
-              field: CustomFieldType.client3,
-              value: client.customValue3,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            CustomField(
-              controller: _custom4Controller,
-              field: CustomFieldType.client4,
-              value: client.customValue4,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-          ],
+        DecoratedFormField(
+          key: ValueKey(localization.name),
+          autofocus: true,
+          controller: _nameController,
+          validator: (String val) => !viewModel.client.hasNameSet
+              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+              : null,
+          onSavePressed: viewModel.onSavePressed,
+          decoration: InputDecoration(
+            labelText: localization.name,
+            suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                ? IconButton(
+                    alignment: Alignment.bottomCenter,
+                    color: Theme.of(context).cardColor,
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () async {
+                      final contact = await getDeviceContact();
+                      if (contact != null) {
+                        setState(() {
+                          _setContactControllers(contact);
+                        });
+                      }
+                    })
+                : null,
+          ),
+        ),
+        if (client.isOld)
+          DecoratedFormField(
+            label: localization.number,
+            controller: _numberController,
+          ),
+        if (memoizedGroupList(state.groupState.map).isNotEmpty)
+          DynamicSelector(
+            entityType: EntityType.group,
+            entityIds: memoizedGroupList(state.groupState.map),
+            entityId: client.groupId,
+            onChanged: (groupId) => viewModel
+                .onChanged(client.rebuild((b) => b..groupId = groupId)),
+          ),
+        UserPicker(
+          userId: client.assignedUserId,
+          onChanged: (userId) => viewModel
+              .onChanged(client.rebuild((b) => b..assignedUserId = userId)),
+        ),
+        DecoratedFormField(
+          label: localization.idNumber,
+          controller: _idNumberController,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          label: localization.vatNumber,
+          controller: _vatNumberController,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          label: localization.website,
+          controller: _websiteController,
+          keyboardType: TextInputType.url,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          label: localization.phone,
+          controller: _phoneController,
+          keyboardType: TextInputType.phone,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        CustomField(
+          controller: _custom1Controller,
+          field: CustomFieldType.client1,
+          value: client.customValue1,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        CustomField(
+          controller: _custom2Controller,
+          field: CustomFieldType.client2,
+          value: client.customValue2,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        CustomField(
+          controller: _custom3Controller,
+          field: CustomFieldType.client3,
+          value: client.customValue3,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        CustomField(
+          controller: _custom4Controller,
+          field: CustomFieldType.client4,
+          value: client.customValue4,
+          onSavePressed: viewModel.onSavePressed,
         ),
       ],
     );

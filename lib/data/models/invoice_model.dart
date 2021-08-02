@@ -1292,7 +1292,7 @@ abstract class InvoiceItemEntity
       productKey.isEmpty &&
       notes.isEmpty &&
       cost == 0 &&
-      quantity == 0 &&
+      (quantity == 0 || quantity == 1) &&
       customValue1.isEmpty &&
       customValue2.isEmpty &&
       customValue3.isEmpty &&
