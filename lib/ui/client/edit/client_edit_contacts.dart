@@ -107,7 +107,10 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
           bottom: 6,
         ),
         child: AppButton(
-          label: localization.addContact.toUpperCase(),
+          label: (client.contacts.length == 1
+                  ? localization.addSecondContact
+                  : localization.addContact)
+              .toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
         ),
       ));
@@ -298,6 +301,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         DecoratedFormField(
+          autofocus: widget.isDialog,
           controller: _firstNameController,
           validator: (String val) => !viewModel.client.hasNameSet
               ? AppLocalization.of(context).pleaseEnterAClientOrContactName
