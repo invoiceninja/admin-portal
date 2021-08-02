@@ -14,8 +14,13 @@ class UserPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
+    final userIds = memoizedUserList(state.userState.map);
 
-    if (!state.userCompany.isAdmin) {
+    if (!state.userCompany.isAdmin || userIds.length == 1) {
+      return SizedBox();
+    }
+
+    if (state.isHosted && !state.isEnterprisePlan) {
       return SizedBox();
     }
 
@@ -23,7 +28,7 @@ class UserPicker extends StatelessWidget {
       onChanged: onChanged,
       entityType: EntityType.user,
       entityId: userId,
-      entityIds: memoizedUserList(state.userState.map),
+      entityIds: userIds,
     );
   }
 }

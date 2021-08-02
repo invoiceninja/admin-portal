@@ -170,13 +170,14 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             label: localization.number,
             controller: _numberController,
           ),
-        DynamicSelector(
-          entityType: EntityType.group,
-          entityIds: memoizedGroupList(state.groupState.map),
-          entityId: client.groupId,
-          onChanged: (groupId) =>
-              viewModel.onChanged(client.rebuild((b) => b..groupId = groupId)),
-        ),
+        if (memoizedGroupList(state.groupState.map).isNotEmpty)
+          DynamicSelector(
+            entityType: EntityType.group,
+            entityIds: memoizedGroupList(state.groupState.map),
+            entityId: client.groupId,
+            onChanged: (groupId) => viewModel
+                .onChanged(client.rebuild((b) => b..groupId = groupId)),
+          ),
         UserPicker(
           userId: client.assignedUserId,
           onChanged: (userId) => viewModel

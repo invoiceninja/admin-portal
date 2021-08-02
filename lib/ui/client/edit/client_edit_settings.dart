@@ -148,30 +148,24 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                     numDays == null ? null : '$numDays'));
             },
           ),
-        DecoratedFormField(
-          controller: _taskRateController,
-          isMoney: true,
-          label: localization.taskRate,
-          onSavePressed: viewModel.onSavePressed,
-        ),
-        /*
-        BoolDropdownButton(
-          label: localization.emailReminders,
-          value: client.settings.sendReminders,
-          showBlank: true,
-          onChanged: (value) => viewModel.onChanged(
-              client.rebuild((b) => b..settings.sendReminders = value)),
-        )
-         */
-        SizedBox(height: 20),
-        SwitchListTile(
-          activeColor: Theme.of(context).accentColor,
-          title: Text(localization.emailReminders),
-          subtitle: Text(localization.enabled),
-          value: client.settings.sendReminders ?? true,
-          onChanged: (value) => viewModel.onChanged(client.rebuild(
-              (b) => b..settings.sendReminders = value == true ? null : false)),
-        ),
+        if (company.isModuleEnabled(EntityType.task))
+          DecoratedFormField(
+            controller: _taskRateController,
+            isMoney: true,
+            label: localization.taskRate,
+            onSavePressed: viewModel.onSavePressed,
+          ),
+        if (company.isModuleEnabled(EntityType.invoice)) ...[
+          SizedBox(height: 20),
+          SwitchListTile(
+            activeColor: Theme.of(context).accentColor,
+            title: Text(localization.emailReminders),
+            subtitle: Text(localization.enabled),
+            value: client.settings.sendReminders ?? true,
+            onChanged: (value) => viewModel.onChanged(client.rebuild((b) =>
+                b..settings.sendReminders = value == true ? null : false)),
+          ),
+        ],
       ],
     );
   }
