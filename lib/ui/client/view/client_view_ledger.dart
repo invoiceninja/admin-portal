@@ -84,8 +84,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
         final entity = state.getEntityMap(ledger.entityType)[ledger.entityId];
 
         if (entity == null) {
-          print(
-              'Error: unable to find entity ${ledger.entityType}-${ledger.entityId}');
+          print('Error: unable to find entity $ledger');
           return SizedBox();
         }
 
