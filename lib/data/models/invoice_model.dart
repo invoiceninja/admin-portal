@@ -930,6 +930,8 @@ abstract class InvoiceEntity extends Object
   bool get isRunning =>
       isRecurring && statusId == kRecurringInvoiceStatusActive;
 
+  bool get isDraft => statusId == kInvoiceStatusDraft;
+
   bool get isSent => statusId != kInvoiceStatusDraft;
 
   bool get isUnpaid => statusId != kInvoiceStatusPaid;
