@@ -98,26 +98,24 @@ class _CreditEditState extends State<CreditEdit>
         EntityAction.emailCredit,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
-      appBarBottom: isFullscreen
-          ? null
-          : TabBar(
-              controller: _controller,
-              //isScrollable: true,
-              tabs: [
-                Tab(
-                  text: localization.details,
-                ),
-                Tab(
-                  text: localization.contacts,
-                ),
-                Tab(
-                  text: localization.items,
-                ),
-                Tab(
-                  text: localization.notes,
-                ),
-              ],
-            ),
+      appBarBottom: TabBar(
+        controller: _controller,
+        //isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.contacts,
+          ),
+          Tab(
+            text: localization.items,
+          ),
+          Tab(
+            text: localization.notes,
+          ),
+        ],
+      ),
       body: Form(
         key: _formKey,
         child: isFullscreen

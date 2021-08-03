@@ -98,9 +98,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
         EntityAction.viewPdf,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
-      appBarBottom: isFullscreen
-          ? null
-          : TabBar(
+      appBarBottom:TabBar(
               controller: _controller,
               //isScrollable: true,
               tabs: [

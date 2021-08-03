@@ -70,32 +70,30 @@ class _ClientEditState extends State<ClientEdit>
 
         viewModel.onSavePressed(context);
       },
-      appBarBottom: isFullscreen
-          ? null
-          : TabBar(
-              controller: _controller,
-              isScrollable: true,
-              tabs: [
-                Tab(
-                  text: localization.details,
-                ),
-                Tab(
-                  text: localization.contacts,
-                ),
-                Tab(
-                  text: localization.notes,
-                ),
-                Tab(
-                  text: localization.settings,
-                ),
-                Tab(
-                  text: localization.billingAddress,
-                ),
-                Tab(
-                  text: localization.shippingAddress,
-                ),
-              ],
-            ),
+      appBarBottom: TabBar(
+        controller: _controller,
+        isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.contacts,
+          ),
+          Tab(
+            text: localization.notes,
+          ),
+          Tab(
+            text: localization.settings,
+          ),
+          Tab(
+            text: localization.billingAddress,
+          ),
+          Tab(
+            text: localization.shippingAddress,
+          ),
+        ],
+      ),
       body: Form(
         key: _formKey,
         child: isFullscreen

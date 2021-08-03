@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_address.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
@@ -45,8 +46,12 @@ class _VendorEditState extends State<VendorEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
+    final state = viewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.vendor);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       entity: vendor,
       title: vendor.isNew ? localization.newVendor : localization.editVendor,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),

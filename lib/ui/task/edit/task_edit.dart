@@ -102,20 +102,18 @@ class _TaskEditState extends State<TaskEdit>
 
         viewModel.onSavePressed(context);
       },
-      appBarBottom: isFullscreen
-          ? null
-          : TabBar(
-              controller: _controller,
-              //isScrollable: true,
-              tabs: [
-                Tab(
-                  text: localization.details,
-                ),
-                Tab(
-                  text: localization.times,
-                ),
-              ],
-            ),
+      appBarBottom: TabBar(
+        controller: _controller,
+        //isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.times,
+          ),
+        ],
+      ),
       body: Form(
         key: _formKey,
         child: isFullscreen
