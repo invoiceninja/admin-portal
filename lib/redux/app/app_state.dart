@@ -180,7 +180,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       return true;
     }
 
-    final color = (userCompany?.settings?.accentColor ?? '');
+    final color = userCompany?.settings?.accentColor ?? '';
 
     if (color == '#ffffff' && !prefState.enableDarkMode) {
       return false;

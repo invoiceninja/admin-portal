@@ -325,7 +325,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       labelText: localization.loadColorTheme,
                       value: '',
                       onChanged: (dynamic value) {
-                        if (value == 'default') {
+                        if (value == 'clear_all') {
                           viewModel.onCustomColorsChanged(
                               context,
                               prefState.customColors
@@ -363,8 +363,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       },
                       items: [
                         DropdownMenuItem(
-                            child: Text(localization.defaultClearAll),
-                            value: 'default'),
+                            child: Text(localization.clearAll),
+                            value: 'clear_all'),
                         DropdownMenuItem(
                             child: Text(localization.contrast),
                             value: 'contrast'),
