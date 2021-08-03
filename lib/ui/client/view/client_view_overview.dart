@@ -177,6 +177,25 @@ class ClientOverview extends StatelessWidget {
                 memoizedInvoiceStatsForClient(client.id, state.invoiceState.map)
                     .present(localization.active, localization.archived),
           ),
+        if (company.isModuleEnabled(EntityType.task))
+          EntitiesListTile(
+            entity: client,
+            isFilter: isFilter,
+            entityType: EntityType.task,
+            title: localization.tasks,
+            subtitle: memoizedTaskStatsForClient(client.id, state.taskState.map)
+                .present(localization.active, localization.archived),
+          ),
+        if (company.isModuleEnabled(EntityType.expense))
+          EntitiesListTile(
+            entity: client,
+            isFilter: isFilter,
+            entityType: EntityType.expense,
+            title: localization.expenses,
+            subtitle:
+                memoizedExpenseStatsForClient(client.id, state.expenseState.map)
+                    .present(localization.active, localization.archived),
+          ),
         if (company.isModuleEnabled(EntityType.payment))
           EntitiesListTile(
             entity: client,
@@ -225,25 +244,6 @@ class ClientOverview extends StatelessWidget {
             title: localization.projects,
             subtitle:
                 memoizedProjectStatsForClient(client.id, state.projectState.map)
-                    .present(localization.active, localization.archived),
-          ),
-        if (company.isModuleEnabled(EntityType.task))
-          EntitiesListTile(
-            entity: client,
-            isFilter: isFilter,
-            entityType: EntityType.task,
-            title: localization.tasks,
-            subtitle: memoizedTaskStatsForClient(client.id, state.taskState.map)
-                .present(localization.active, localization.archived),
-          ),
-        if (company.isModuleEnabled(EntityType.expense))
-          EntitiesListTile(
-            entity: client,
-            isFilter: isFilter,
-            entityType: EntityType.expense,
-            title: localization.expenses,
-            subtitle:
-                memoizedExpenseStatsForClient(client.id, state.expenseState.map)
                     .present(localization.active, localization.archived),
           ),
         if ((client.publicNotes ?? '').isNotEmpty) ...[

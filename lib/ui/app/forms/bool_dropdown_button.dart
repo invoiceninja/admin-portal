@@ -91,7 +91,7 @@ class BoolDropdownButton extends StatelessWidget {
                       onTap: () => onChanged(false),
                       child: ConstrainedBox(
                         constraints:
-                            BoxConstraints(minWidth: 150, minHeight: 36),
+                            BoxConstraints(minWidth: 120, minHeight: 36),
                         child: Row(
                           children: [
                             IgnorePointer(
@@ -112,7 +112,7 @@ class BoolDropdownButton extends StatelessWidget {
                       onTap: () => onChanged(true),
                       child: ConstrainedBox(
                         constraints:
-                            BoxConstraints(minWidth: 150, minHeight: 36),
+                            BoxConstraints(minWidth: 120, minHeight: 36),
                         child: Row(
                           children: [
                             IgnorePointer(
