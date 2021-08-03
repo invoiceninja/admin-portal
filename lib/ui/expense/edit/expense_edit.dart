@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_settings.dart';
@@ -52,10 +53,11 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final expense = viewModel.expense;
     final state = viewModel.state;
     final store = StoreProvider.of<AppState>(context);
-    final useSidebarEditor =
-        state.prefState.useSidebarEditor[EntityType.expense] ?? false;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.expense);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       entity: expense,
       title: expense.isNew ? localization.newExpense : localization.editExpense,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
@@ -91,21 +93,26 @@ class _ExpenseEditState extends State<ExpenseEdit>
       ),
       body: Form(
         key: _formKey,
-        child: TabBarView(
-          key: ValueKey(viewModel.expense.id),
-          controller: _controller,
-          children: <Widget>[
-            ExpenseEditDetails(
-              viewModel: widget.viewModel,
-            ),
-            ExpenseEditNotes(
-              viewModel: widget.viewModel,
-            ),
-            ExpenseEditSettings(
-              viewModel: widget.viewModel,
-            ),
-          ],
-        ),
+        child: isFullscreen
+            ? ExpenseEditDesktop(
+                viewModel: viewModel,
+                key: ValueKey(viewModel.expense.id),
+              )
+            : TabBarView(
+                key: ValueKey(viewModel.expense.id),
+                controller: _controller,
+                children: <Widget>[
+                  ExpenseEditDetails(
+                    viewModel: widget.viewModel,
+                  ),
+                  ExpenseEditNotes(
+                    viewModel: widget.viewModel,
+                  ),
+                  ExpenseEditSettings(
+                    viewModel: widget.viewModel,
+                  ),
+                ],
+              ),
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
@@ -120,17 +127,17 @@ class _ExpenseEditState extends State<ExpenseEdit>
               children: [
                 if (isDesktop(context))
                   Tooltip(
-                    message: useSidebarEditor
-                        ? localization.fullscreenEditor
-                        : localization.sidebarEditor,
+                    message: isFullscreen
+                        ? localization.sidebarEditor
+                        : localization.fullscreenEditor,
                     child: InkWell(
                       onTap: () => store
                           .dispatch(ToggleEditorLayout(EntityType.expense)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Icon(useSidebarEditor
-                            ? Icons.chevron_left
-                            : Icons.chevron_right),
+                        child: Icon(isFullscreen
+                            ? Icons.chevron_right
+                            : Icons.chevron_left),
                       ),
                     ),
                   ),
