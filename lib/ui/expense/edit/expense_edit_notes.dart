@@ -88,13 +88,13 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
               : null,
           children: <Widget>[
             DecoratedFormField(
-              maxLines: 8,
+              maxLines: 10,
               controller: _publicNotesController,
               keyboardType: TextInputType.multiline,
               label: localization.publicNotes,
             ),
             DecoratedFormField(
-              maxLines: 8,
+              maxLines: 10,
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
               label: localization.privateNotes,
