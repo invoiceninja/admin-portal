@@ -376,6 +376,9 @@ class EntityScreens extends StatelessWidget {
         case VendorScreen.route:
           child = VendorEditScreen();
           break;
+        case ExpenseScreen.route:
+          child = ExpenseEditScreen();
+          break;
         default:
           switch (uiState.currentRoute) {
             case DesignEditScreen.route:
