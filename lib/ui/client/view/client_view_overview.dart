@@ -206,16 +206,6 @@ class ClientOverview extends StatelessWidget {
                     client.id, state.paymentState.map, state.invoiceState.map)
                 .present(localization.active, localization.archived),
           ),
-        if (company.isModuleEnabled(EntityType.recurringInvoice))
-          EntitiesListTile(
-            entity: client,
-            isFilter: isFilter,
-            entityType: EntityType.recurringInvoice,
-            title: localization.recurringInvoices,
-            subtitle: memoizedRecurringInvoiceStatsForClient(
-                    client.id, state.recurringInvoiceState.map)
-                .present(localization.active, localization.archived),
-          ),
         if (company.isModuleEnabled(EntityType.quote))
           EntitiesListTile(
             entity: client,
@@ -245,6 +235,16 @@ class ClientOverview extends StatelessWidget {
             subtitle:
                 memoizedProjectStatsForClient(client.id, state.projectState.map)
                     .present(localization.active, localization.archived),
+          ),
+        if (company.isModuleEnabled(EntityType.recurringInvoice))
+          EntitiesListTile(
+            entity: client,
+            isFilter: isFilter,
+            entityType: EntityType.recurringInvoice,
+            title: localization.recurringInvoices,
+            subtitle: memoizedRecurringInvoiceStatsForClient(
+                    client.id, state.recurringInvoiceState.map)
+                .present(localization.active, localization.archived),
           ),
         if ((client.publicNotes ?? '').isNotEmpty) ...[
           IconMessage(client.publicNotes),
