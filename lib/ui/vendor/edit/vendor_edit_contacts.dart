@@ -98,9 +98,17 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
     final children = <Widget>[]
       ..addAll(contacts)
       ..add(Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.only(
+          left: 25,
+          top: 0,
+          right: 25,
+          bottom: 6,
+        ),
         child: AppButton(
-          label: localization.addContact.toUpperCase(),
+          label: (vendor.contacts.length == 1
+                  ? localization.addSecondContact
+                  : localization.addContact)
+              .toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
         ),
       ));
