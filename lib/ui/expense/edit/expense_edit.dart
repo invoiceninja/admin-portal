@@ -1,7 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_settings.dart';
@@ -9,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEdit extends StatefulWidget {
   const ExpenseEdit({
@@ -45,8 +51,13 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
+    final state = viewModel.state;
+    final store = StoreProvider.of<AppState>(context);
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.expense);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       entity: expense,
       title: expense.isNew ? localization.newExpense : localization.editExpense,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
@@ -82,21 +93,26 @@ class _ExpenseEditState extends State<ExpenseEdit>
       ),
       body: Form(
         key: _formKey,
-        child: TabBarView(
-          key: ValueKey(viewModel.expense.id),
-          controller: _controller,
-          children: <Widget>[
-            ExpenseEditDetails(
-              viewModel: widget.viewModel,
-            ),
-            ExpenseEditNotes(
-              viewModel: widget.viewModel,
-            ),
-            ExpenseEditSettings(
-              viewModel: widget.viewModel,
-            ),
-          ],
-        ),
+        child: isFullscreen
+            ? ExpenseEditDesktop(
+                viewModel: viewModel,
+                key: ValueKey(viewModel.expense.id),
+              )
+            : TabBarView(
+                key: ValueKey(viewModel.expense.id),
+                controller: _controller,
+                children: <Widget>[
+                  ExpenseEditDetails(
+                    viewModel: widget.viewModel,
+                  ),
+                  ExpenseEditNotes(
+                    viewModel: widget.viewModel,
+                  ),
+                  ExpenseEditSettings(
+                    viewModel: widget.viewModel,
+                  ),
+                ],
+              ),
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
@@ -109,27 +125,24 @@ class _ExpenseEditState extends State<ExpenseEdit>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                /*
                 if (isDesktop(context))
                   Tooltip(
-                    message: useSidebarEditor
-                        ? localization.fullscreenEditor
-                        : localization.sidebarEditor,
+                    message: isFullscreen
+                        ? localization.sidebarEditor
+                        : localization.fullscreenEditor,
                     child: InkWell(
-                      onTap: () =>
-                          store.dispatch(ToggleEditorLayout(EntityType.task)),
+                      onTap: () => store
+                          .dispatch(ToggleEditorLayout(EntityType.expense)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Icon(useSidebarEditor
-                            ? Icons.chevron_left
-                            : Icons.chevron_right),
+                        child: Icon(isFullscreen
+                            ? Icons.chevron_right
+                            : Icons.chevron_left),
                       ),
                     ),
                   ),
-                  */
                 AppBorder(
-                  //isLeft: isDesktop(context),
-                  isLeft: false,
+                  isLeft: isDesktop(context),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: Align(

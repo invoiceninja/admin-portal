@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -109,10 +110,19 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     final staticState = viewModel.state.staticState;
     final company = viewModel.company;
     final expense = viewModel.expense;
+    final state = widget.viewModel.state;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
 
     return ScrollableListView(
       children: <Widget>[
         FormCard(
+          padding: isFullscreen
+              ? const EdgeInsets.only(
+                  left: kMobileDialogPadding / 2,
+                  top: kMobileDialogPadding,
+                  right: kMobileDialogPadding,
+                )
+              : null,
           children: <Widget>[
             expense.isInvoiced
                 ? SizedBox()
@@ -221,6 +231,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
                         label: localization.exchangeRate,
+                        isPercent: true,
                       ),
                       Focus(
                         onFocusChange: (hasFocus) {
@@ -251,6 +262,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                                   formatNumberType: FormatNumberType.inputMoney)
                               : '',
                           label: localization.convertedAmount,
+                          isMoney: true,
                           onChanged: (value) {
                             _convertedAmount = parseDouble(value);
                           },
@@ -274,6 +286,13 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
         ),
         if (company.numberOfItemTaxRates > 0)
           FormCard(
+            padding: isFullscreen
+                ? const EdgeInsets.only(
+                    left: kMobileDialogPadding / 2,
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding,
+                  )
+                : null,
             children: [
               BoolDropdownButton(
                 label: localization.enterTaxes,
@@ -282,6 +301,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 value: expense.calculateTaxByAmount ?? false,
                 onChanged: (value) => viewModel.onChanged(
                     expense.rebuild((b) => b..calculateTaxByAmount = value)),
+                minWidth: 80,
               ),
               SizedBox(height: 16),
               SwitchListTile(

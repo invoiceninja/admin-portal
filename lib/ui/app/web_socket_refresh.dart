@@ -1,12 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+/*
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+*/
 
 class WebSocketRefresh extends StatefulWidget {
   const WebSocketRefresh({
@@ -23,7 +25,7 @@ class WebSocketRefresh extends StatefulWidget {
 }
 
 class _WebSocketRefreshState extends State<WebSocketRefresh> {
-  WebSocket _socket;
+  //WebSocket _socket;
 
   @override
   void didUpdateWidget(WebSocketRefresh oldWidget) {
@@ -31,6 +33,7 @@ class _WebSocketRefreshState extends State<WebSocketRefresh> {
 
     return;
 
+    /*
     if (kReleaseMode) {
       return;
     }
@@ -81,6 +84,7 @@ class _WebSocketRefreshState extends State<WebSocketRefresh> {
         print('## ERROR: $error');
       });
     });
+    */
   }
 
   @override
