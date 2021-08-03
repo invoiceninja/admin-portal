@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
@@ -71,10 +73,19 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = widget.viewModel.state;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
 
     return ScrollableListView(
       children: <Widget>[
         FormCard(
+          padding: isFullscreen
+              ? const EdgeInsets.only(
+                  left: kMobileDialogPadding / 2,
+                  top: kMobileDialogPadding,
+                  right: kMobileDialogPadding / 2,
+                )
+              : null,
           children: <Widget>[
             DecoratedFormField(
               maxLines: 8,

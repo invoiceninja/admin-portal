@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -112,6 +113,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
     final staticState = viewModel.state.staticState;
     final vendorState = viewModel.state.vendorState;
     final clientState = viewModel.state.clientState;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
 
     final amountField = DecoratedFormField(
       controller: _amountController,
@@ -123,6 +125,13 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
     return ScrollableListView(
       children: <Widget>[
         FormCard(
+          padding: isFullscreen
+              ? const EdgeInsets.only(
+                  left: kMobileDialogPadding,
+                  top: kMobileDialogPadding,
+                  right: kMobileDialogPadding / 2,
+                )
+              : null,
           children: <Widget>[
             if (expense.isOld)
               DecoratedFormField(
