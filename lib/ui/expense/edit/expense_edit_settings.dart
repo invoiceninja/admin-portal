@@ -231,6 +231,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
                         label: localization.exchangeRate,
+                        isPercent: true,
                       ),
                       Focus(
                         onFocusChange: (hasFocus) {
@@ -261,6 +262,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                                   formatNumberType: FormatNumberType.inputMoney)
                               : '',
                           label: localization.convertedAmount,
+                          isMoney: true,
                           onChanged: (value) {
                             _convertedAmount = parseDouble(value);
                           },

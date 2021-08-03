@@ -120,6 +120,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       label: localization.amount,
       onSavePressed: viewModel.onSavePressed,
+      isMoney: true,
     );
 
     return ScrollableListView(
