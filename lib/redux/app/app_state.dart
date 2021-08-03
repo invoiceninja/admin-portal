@@ -180,7 +180,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       return true;
     }
 
-    return (userCompany?.settings?.accentColor ?? '').isNotEmpty;
+    final color = (userCompany?.settings?.accentColor ?? '');
+
+    if (color == '#ffffff' && !prefState.enableDarkMode) {
+      return false;
+    }
+
+    return color.isNotEmpty;
   }
 
   Color get linkColor => prefState.enableDarkMode
@@ -191,8 +197,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       ? convertHexStringToColor('#FFFFFF')
       : convertHexStringToColor('#000000');
 
-  Color get accentColor => convertHexStringToColor(
-      userCompany?.settings?.accentColor ?? kDefaultAccentColor);
+  Color get accentColor {
+    var color = userCompany?.settings?.accentColor ?? kDefaultAccentColor;
+
+    if (color == '#ffffff' && !prefState.enableDarkMode) {
+      color = '#000000';
+    }
+
+    return convertHexStringToColor(color);
+  }
 
   String get appVersion {
     String version = 'v';
