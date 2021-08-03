@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -906,15 +907,18 @@ class _FeesEditorState extends State<FeesEditor> {
             initialTaxRate: settings.taxRate3,
           ),
         SizedBox(height: 16),
-        SwitchListTile(
-          value: settings.adjustFeePercent,
-          onChanged: (value) => viewModel.onChanged(companyGateway.rebuild(
-              (b) => b
-                ..feesAndLimitsMap[widget.gatewayTypeId] =
-                    settings.rebuild((b) => b..adjustFeePercent = value))),
-          title: Text(localization.adjustFeePercent),
-          activeColor: Theme.of(context).accentColor,
-          subtitle: Text(localization.adjustFeePercentHelp),
+        LearnMoreUrl(
+          url: kGatewayFeeHelpURL,
+          child: SwitchListTile(
+            value: settings.adjustFeePercent,
+            onChanged: (value) => viewModel.onChanged(companyGateway.rebuild(
+                (b) => b
+                  ..feesAndLimitsMap[widget.gatewayTypeId] =
+                      settings.rebuild((b) => b..adjustFeePercent = value))),
+            title: Text(localization.adjustFeePercent),
+            activeColor: Theme.of(context).accentColor,
+            subtitle: Text(localization.adjustFeePercentHelp),
+          ),
         ),
       ],
     );
