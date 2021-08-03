@@ -3,7 +3,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -87,46 +86,44 @@ class VendorEditAddressState extends State<VendorEditAddress> {
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
 
-    return ScrollableListView(children: <Widget>[
-      FormCard(
-        children: <Widget>[
-          DecoratedFormField(
-            controller: _address1Controller,
-            label: localization.address1,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            controller: _address2Controller,
-            label: localization.address2,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            controller: _cityController,
-            label: localization.city,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            controller: _stateController,
-            label: localization.state,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          DecoratedFormField(
-            controller: _postalCodeController,
-            label: localization.postalCode,
-            onSavePressed: viewModel.onSavePressed,
-          ),
-          EntityDropdown(
-            key: ValueKey('__country_${vendor.countryId}__'),
-            entityType: EntityType.country,
-            entityList:
-                memoizedCountryList(viewModel.state.staticState.countryMap),
-            labelText: localization.country,
-            entityId: vendor.countryId,
-            onSelected: (SelectableEntity country) => viewModel
-                .onChanged(vendor.rebuild((b) => b..countryId = country?.id)),
-          ),
-        ],
-      ),
-    ]);
+    return FormCard(
+      children: <Widget>[
+        DecoratedFormField(
+          controller: _address1Controller,
+          label: localization.address1,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _address2Controller,
+          label: localization.address2,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _cityController,
+          label: localization.city,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _stateController,
+          label: localization.state,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _postalCodeController,
+          label: localization.postalCode,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        EntityDropdown(
+          key: ValueKey('__country_${vendor.countryId}__'),
+          entityType: EntityType.country,
+          entityList:
+              memoizedCountryList(viewModel.state.staticState.countryMap),
+          labelText: localization.country,
+          entityId: vendor.countryId,
+          onSelected: (SelectableEntity country) => viewModel
+              .onChanged(vendor.rebuild((b) => b..countryId = country?.id)),
+        ),
+      ],
+    );
   }
 }

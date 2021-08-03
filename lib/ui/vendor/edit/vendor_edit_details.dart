@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/contacts.dart';
@@ -123,97 +122,93 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
 
-    return ScrollableListView(
+    return FormCard(
       children: <Widget>[
-        FormCard(
-          children: <Widget>[
-            DecoratedFormField(
-              key: ValueKey(localization.name),
-              autofocus: true,
-              controller: _nameController,
-              validator: (String val) => val == null || val.isEmpty
-                  ? AppLocalization.of(context).pleaseEnterAName
-                  : null,
-              onSavePressed: viewModel.onSavePressed,
-              decoration: InputDecoration(
-                labelText: localization.name,
-                suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
-                    ? IconButton(
-                        alignment: Alignment.bottomCenter,
-                        color: Theme.of(context).cardColor,
-                        icon: Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () async {
-                          final contact = await getDeviceContact();
-                          if (contact != null) {
-                            setState(() {
-                              _setContactControllers(contact);
-                            });
-                          }
-                        })
-                    : null,
-              ),
-            ),
-            if (vendor.isOld)
-              DecoratedFormField(
-                label: localization.number,
-                controller: _numberController,
-                onSavePressed: viewModel.onSavePressed,
-              ),
-            UserPicker(
-              userId: vendor.assignedUserId,
-              onChanged: (userId) => viewModel
-                  .onChanged(vendor.rebuild((b) => b..assignedUserId = userId)),
-            ),
-            DecoratedFormField(
-              controller: _idNumberController,
-              label: localization.idNumber,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            DecoratedFormField(
-              controller: _vatNumberController,
-              label: localization.vatNumber,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            DecoratedFormField(
-              controller: _websiteController,
-              label: localization.website,
-              keyboardType: TextInputType.url,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            DecoratedFormField(
-              controller: _phoneController,
-              label: localization.phone,
-              keyboardType: TextInputType.phone,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            CustomField(
-              controller: _custom1Controller,
-              field: CustomFieldType.vendor1,
-              value: vendor.customValue1,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            CustomField(
-              controller: _custom2Controller,
-              field: CustomFieldType.vendor2,
-              value: vendor.customValue2,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            CustomField(
-              controller: _custom3Controller,
-              field: CustomFieldType.vendor3,
-              value: vendor.customValue3,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-            CustomField(
-              controller: _custom4Controller,
-              field: CustomFieldType.vendor4,
-              value: vendor.customValue4,
-              onSavePressed: viewModel.onSavePressed,
-            ),
-          ],
+        DecoratedFormField(
+          key: ValueKey(localization.name),
+          autofocus: true,
+          controller: _nameController,
+          validator: (String val) => val == null || val.isEmpty
+              ? AppLocalization.of(context).pleaseEnterAName
+              : null,
+          onSavePressed: viewModel.onSavePressed,
+          decoration: InputDecoration(
+            labelText: localization.name,
+            suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                ? IconButton(
+                    alignment: Alignment.bottomCenter,
+                    color: Theme.of(context).cardColor,
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () async {
+                      final contact = await getDeviceContact();
+                      if (contact != null) {
+                        setState(() {
+                          _setContactControllers(contact);
+                        });
+                      }
+                    })
+                : null,
+          ),
+        ),
+        if (vendor.isOld)
+          DecoratedFormField(
+            label: localization.number,
+            controller: _numberController,
+            onSavePressed: viewModel.onSavePressed,
+          ),
+        UserPicker(
+          userId: vendor.assignedUserId,
+          onChanged: (userId) => viewModel
+              .onChanged(vendor.rebuild((b) => b..assignedUserId = userId)),
+        ),
+        DecoratedFormField(
+          controller: _idNumberController,
+          label: localization.idNumber,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _vatNumberController,
+          label: localization.vatNumber,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _websiteController,
+          label: localization.website,
+          keyboardType: TextInputType.url,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        DecoratedFormField(
+          controller: _phoneController,
+          label: localization.phone,
+          keyboardType: TextInputType.phone,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        CustomField(
+          controller: _custom1Controller,
+          field: CustomFieldType.vendor1,
+          value: vendor.customValue1,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        CustomField(
+          controller: _custom2Controller,
+          field: CustomFieldType.vendor2,
+          value: vendor.customValue2,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        CustomField(
+          controller: _custom3Controller,
+          field: CustomFieldType.vendor3,
+          value: vendor.customValue3,
+          onSavePressed: viewModel.onSavePressed,
+        ),
+        CustomField(
+          controller: _custom4Controller,
+          field: CustomFieldType.vendor4,
+          value: vendor.customValue4,
+          onSavePressed: viewModel.onSavePressed,
         ),
       ],
     );
