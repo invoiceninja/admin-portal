@@ -14,6 +14,7 @@ class BoolDropdownButton extends StatelessWidget {
     this.helpLabel,
     this.disabledLabel,
     this.iconData,
+    this.minWidth,
   });
 
   final String label;
@@ -24,6 +25,7 @@ class BoolDropdownButton extends StatelessWidget {
   final bool showBlank;
   final String enabledLabel;
   final String disabledLabel;
+  final double minWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +92,8 @@ class BoolDropdownButton extends StatelessWidget {
                     InkWell(
                       onTap: () => onChanged(false),
                       child: ConstrainedBox(
-                        constraints:
-                            BoxConstraints(minWidth: 120, minHeight: 36),
+                        constraints: BoxConstraints(
+                            minWidth: minWidth ?? 120, minHeight: 36),
                         child: Row(
                           children: [
                             IgnorePointer(
@@ -111,8 +113,8 @@ class BoolDropdownButton extends StatelessWidget {
                     InkWell(
                       onTap: () => onChanged(true),
                       child: ConstrainedBox(
-                        constraints:
-                            BoxConstraints(minWidth: 120, minHeight: 36),
+                        constraints: BoxConstraints(
+                            minWidth: minWidth ?? 120, minHeight: 36),
                         child: Row(
                           children: [
                             IgnorePointer(

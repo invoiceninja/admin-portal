@@ -301,6 +301,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 value: expense.calculateTaxByAmount ?? false,
                 onChanged: (value) => viewModel.onChanged(
                     expense.rebuild((b) => b..calculateTaxByAmount = value)),
+                minWidth: 80,
               ),
               SizedBox(height: 16),
               SwitchListTile(
