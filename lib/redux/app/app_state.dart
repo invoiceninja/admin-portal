@@ -797,6 +797,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
     if (<String>[
       ClientScreen.route,
+      VendorScreen.route,
       InvoiceScreen.route,
       QuoteScreen.route,
       CreditScreen.route,
@@ -810,6 +811,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
           isFullScreen = prefState.isEditorFullScreen(EntityType.task);
         } else if (mainRoute == ClientScreen.route) {
           isFullScreen = prefState.isEditorFullScreen(EntityType.client);
+        } else if (mainRoute == VendorScreen.route) {
+          isFullScreen = prefState.isEditorFullScreen(EntityType.vendor);
         } else {
           isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);
         }
