@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -279,6 +281,9 @@ class _SettingsWizardState extends State<SettingsWizard> {
             UpdateUserPreferences(
               enableDarkMode: isDark,
               colorTheme: isDark ? kColorThemeDark : kColorThemeLight,
+              customColors: isDark
+                  ? BuiltMap<String, String>()
+                  : BuiltMap<String, String>(PrefState.CONTRAST_COLORS),
             ),
           );
           AppBuilder.of(context).rebuild();

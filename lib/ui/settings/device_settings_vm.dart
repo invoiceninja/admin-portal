@@ -63,7 +63,13 @@ class DeviceSettingsVM {
           store.dispatch(UserLogoutAll(completer: completer));
         },
         onDarkModeChanged: (BuildContext context, bool value) async {
-          store.dispatch(UpdateUserPreferences(enableDarkMode: value));
+          store.dispatch(UpdateUserPreferences(
+              enableDarkMode: value,
+              colorTheme: value ? kColorThemeDark : kColorThemeLight,
+              customColors: value
+                  ? BuiltMap<String, String>()
+                  : BuiltMap<String, String>(PrefState.CONTRAST_COLORS)));
+          store.dispatch(UpdatedSetting());
           AppBuilder.of(context).rebuild();
         },
         onLongPressSelectionIsDefault:

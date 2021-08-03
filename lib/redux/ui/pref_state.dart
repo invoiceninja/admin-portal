@@ -58,6 +58,16 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR,
   ];
 
+  static const CONTRAST_COLORS = {
+    PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR: '#444444',
+    PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR: '#FFFFFF',
+    PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR: '#2F2F2F',
+    PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR: '#FFFFFF',
+    PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR: '#777777',
+    PrefState.THEME_INVOICE_HEADER_FONT_COLOR: '#FFFFFF',
+    PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR: '#F9F9F9',
+  };
+
   @override
   @memoized
   int get hashCode;
@@ -148,7 +158,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
-    ..customColors.replace(BuiltMap<String, String>())
+    ..customColors.replace(BuiltMap<String, String>(PrefState.CONTRAST_COLORS))
     ..showKanban = false
     ..isPreviewEnabled = true
     ..colorTheme = kColorThemeLight;
