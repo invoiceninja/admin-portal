@@ -192,6 +192,15 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
 
+  void _onDoneContactPressed() {
+    if (widget.isDialog) {
+      widget.viewModel.onDoneContactPressed(context);
+      Navigator.of(context).pop();
+    } else {
+      widget.vendorViewModel.onSavePressed(context);
+    }
+  }
+
   @override
   void didChangeDependencies() {
     if (_controllers.isNotEmpty) {
@@ -269,6 +278,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
       children: [
         DecoratedFormField(
           controller: _firstNameController,
+          onSavePressed: (_) => _onDoneContactPressed(),
           decoration: InputDecoration(
             labelText: localization.firstName,
             suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
@@ -292,10 +302,12 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
         ),
         DecoratedFormField(
           controller: _lastNameController,
+          onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.lastName,
         ),
         DecoratedFormField(
           controller: _emailController,
+          onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.email,
           keyboardType: TextInputType.emailAddress,
           validator: (value) => value.isNotEmpty && !value.contains('@')
@@ -304,6 +316,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
         ),
         DecoratedFormField(
           controller: _phoneController,
+          onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.phone,
           keyboardType: TextInputType.phone,
         ),
