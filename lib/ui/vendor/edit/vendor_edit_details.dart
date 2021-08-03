@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -121,8 +122,17 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
+    final state = viewModel.state;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.vendor);
 
     return FormCard(
+      padding: isFullscreen
+          ? const EdgeInsets.only(
+              left: kMobileDialogPadding,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding / 2,
+            )
+          : null,
       children: <Widget>[
         DecoratedFormField(
           key: ValueKey(localization.name),

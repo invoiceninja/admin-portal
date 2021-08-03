@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -76,8 +77,17 @@ class VendorEditNotesState extends State<VendorEditNotes> {
     final viewModel = widget.viewModel;
     final staticState = viewModel.state.staticState;
     final vendor = viewModel.vendor;
+    final state = viewModel.state;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.vendor);
 
     return FormCard(
+      padding: isFullscreen
+          ? const EdgeInsets.only(
+              left: kMobileDialogPadding,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding / 2,
+            )
+          : null,
       children: <Widget>[
         EntityDropdown(
           key: ValueKey('__currency_${vendor.currencyId}__'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -85,8 +86,17 @@ class VendorEditAddressState extends State<VendorEditAddress> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
+    final isFullscreen =
+        viewModel.state.prefState.isEditorFullScreen(EntityType.vendor);
 
     return FormCard(
+      padding: isFullscreen
+          ? const EdgeInsets.only(
+              left: kMobileDialogPadding / 2,
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding,
+            )
+          : null,
       children: <Widget>[
         DecoratedFormField(
           controller: _address1Controller,
