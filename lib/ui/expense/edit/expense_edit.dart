@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
@@ -9,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEdit extends StatefulWidget {
   const ExpenseEdit({
@@ -45,6 +50,10 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
+    final state = viewModel.state;
+    final store = StoreProvider.of<AppState>(context);
+    final useSidebarEditor =
+        state.prefState.useSidebarEditor[EntityType.expense] ?? false;
 
     return EditScaffold(
       entity: expense,
@@ -109,15 +118,14 @@ class _ExpenseEditState extends State<ExpenseEdit>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                /*
                 if (isDesktop(context))
                   Tooltip(
                     message: useSidebarEditor
                         ? localization.fullscreenEditor
                         : localization.sidebarEditor,
                     child: InkWell(
-                      onTap: () =>
-                          store.dispatch(ToggleEditorLayout(EntityType.task)),
+                      onTap: () => store
+                          .dispatch(ToggleEditorLayout(EntityType.expense)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Icon(useSidebarEditor
@@ -126,10 +134,8 @@ class _ExpenseEditState extends State<ExpenseEdit>
                       ),
                     ),
                   ),
-                  */
                 AppBorder(
-                  //isLeft: isDesktop(context),
-                  isLeft: false,
+                  isLeft: isDesktop(context),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: Align(
