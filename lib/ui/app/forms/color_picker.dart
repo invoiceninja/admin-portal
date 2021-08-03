@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -42,7 +43,8 @@ class _FormColorPickerState extends State<FormColorPicker> {
     Colors.purple,
     Colors.deepPurple,
     Colors.indigo,
-    Colors.blue,
+    //Colors.blue,
+    convertHexStringToColor(kDefaultAccentColor),
     Colors.lightBlue,
     Colors.cyan,
     Colors.teal,

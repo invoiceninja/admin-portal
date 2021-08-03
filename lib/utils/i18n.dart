@@ -20,7 +20,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'next_page': 'Next Page',
       'export_colors': 'Export Colors',
       'import_colors': 'Import Colors',
-      'default_clear_all': 'Default - Clear All',
+      'clear_all': 'Clear All',
       'contrast': 'Contrast',
       'custom_colors': 'Custom Colors',
       'colors': 'Colors',
@@ -62428,9 +62428,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['load_color_theme'] ??
       _localizedValues['en']['load_color_theme'];
 
-  String get defaultClearAll =>
-      _localizedValues[localeCode]['default_clear_all'] ??
-      _localizedValues['en']['default_clear_all'];
+  String get clearAll =>
+      _localizedValues[localeCode]['clear_all'] ??
+      _localizedValues['en']['clear_all'];
 
   String get contrast =>
       _localizedValues[localeCode]['contrast'] ??

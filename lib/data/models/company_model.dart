@@ -866,7 +866,7 @@ abstract class UserSettingsEntity
 
   // ignore: unused_element
   static void _initializeBuilder(UserSettingsEntityBuilder builder) => builder
-    //..accentColor = kDefaultAccentColor
+    ..accentColor = kDefaultAccentColor
     ..numberYearsActive = 3
     ..tableColumns.replace(BuiltMap<String, BuiltList<String>>())
     ..reportSettings.replace(BuiltMap<String, ReportSettingsEntity>())
