@@ -2,13 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class VendorEditContactsScreen extends StatelessWidget {
-  const VendorEditContactsScreen({Key key}) : super(key: key);
+  const VendorEditContactsScreen({Key key, @required this.viewModel})
+      : super(key: key);
+
+  final VendorEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +23,7 @@ class VendorEditContactsScreen extends StatelessWidget {
       builder: (context, vm) {
         return VendorEditContacts(
           viewModel: vm,
+          vendorViewModel: viewModel,
         );
       },
     );

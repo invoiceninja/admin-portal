@@ -393,6 +393,18 @@ abstract class VendorEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  String get calculateDisplayName {
+    if (name.isNotEmpty) {
+      return name;
+    } else {
+      return primaryContact.fullNameOrEmail;
+    }
+  }
+
+  VendorContactEntity get primaryContact =>
+      contacts.firstWhere((contact) => contact.isPrimary,
+          orElse: () => VendorContactEntity());
+
   bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
 
   bool get hasUser => assignedUserId != null && assignedUserId.isNotEmpty;
@@ -454,6 +466,14 @@ abstract class VendorContactEntity extends Object
 
   String get fullName {
     return (firstName + ' ' + lastName).trim();
+  }
+
+  String get fullNameOrEmail {
+    if (fullName.isNotEmpty) {
+      return fullName;
+    } else {
+      return email;
+    }
   }
 
   @override

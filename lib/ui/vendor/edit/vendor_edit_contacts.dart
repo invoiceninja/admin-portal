@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -19,9 +21,11 @@ class VendorEditContacts extends StatefulWidget {
   const VendorEditContacts({
     Key key,
     @required this.viewModel,
+    @required this.vendorViewModel,
   }) : super(key: key);
 
   final VendorEditContactsVM viewModel;
+  final VendorEditVM vendorViewModel;
 
   @override
   _VendorEditContactsState createState() => _VendorEditContactsState();
@@ -39,6 +43,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
 
           return VendorContactEditDetails(
             viewModel: viewModel,
+            vendorViewModel: widget.vendorViewModel,
             key: Key(contact.entityKey),
             contact: contact,
             isDialog: vendor.contacts.length > 1,
@@ -53,6 +58,9 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
+    final state = widget.vendorViewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.vendor);
 
     List<Widget> contacts;
 
@@ -68,6 +76,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
       contacts = [
         VendorContactEditDetails(
           viewModel: viewModel,
+          vendorViewModel: widget.vendorViewModel,
           key: Key(contact.entityKey),
           contact: contact,
           isDialog: vendor.contacts.length > 1,
@@ -86,17 +95,32 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
       });
     }
 
-    return ScrollableListView(
-      children: []
-        ..addAll(contacts)
-        ..add(Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: AppButton(
-            label: localization.addContact.toUpperCase(),
-            onPressed: () => viewModel.onAddContactPressed(),
-          ),
-        )),
-    );
+    final children = <Widget>[]
+      ..addAll(contacts)
+      ..add(Padding(
+        padding: const EdgeInsets.only(
+          left: 25,
+          top: 0,
+          right: 25,
+          bottom: 6,
+        ),
+        child: AppButton(
+          label: (vendor.contacts.length == 1
+                  ? localization.addSecondContact
+                  : localization.addContact)
+              .toUpperCase(),
+          onPressed: () => viewModel.onAddContactPressed(),
+        ),
+      ));
+
+    return isFullscreen
+        ? Column(
+            children: children,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+          )
+        : ScrollableListView(
+            children: children,
+          );
   }
 }
 
@@ -144,12 +168,14 @@ class VendorContactEditDetails extends StatefulWidget {
     @required this.index,
     @required this.contact,
     @required this.viewModel,
+    @required this.vendorViewModel,
     @required this.isDialog,
   }) : super(key: key);
 
   final int index;
   final VendorContactEntity contact;
   final VendorEditContactsVM viewModel;
+  final VendorEditVM vendorViewModel;
   final bool isDialog;
 
   @override
@@ -165,6 +191,15 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
+
+  void _onDoneContactPressed() {
+    if (widget.isDialog) {
+      widget.viewModel.onDoneContactPressed(context);
+      Navigator.of(context).pop();
+    } else {
+      widget.vendorViewModel.onSavePressed(context);
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -236,11 +271,14 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = widget.vendorViewModel.state;
+    final isFullscreen = state.prefState.isEditorFullScreen(EntityType.vendor);
 
     final column = Column(
       children: [
         DecoratedFormField(
           controller: _firstNameController,
+          onSavePressed: (_) => _onDoneContactPressed(),
           decoration: InputDecoration(
             labelText: localization.firstName,
             suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
@@ -264,10 +302,12 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
         ),
         DecoratedFormField(
           controller: _lastNameController,
+          onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.lastName,
         ),
         DecoratedFormField(
           controller: _emailController,
+          onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.email,
           keyboardType: TextInputType.emailAddress,
           validator: (value) => value.isNotEmpty && !value.contains('@')
@@ -276,6 +316,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
         ),
         DecoratedFormField(
           controller: _phoneController,
+          onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.phone,
           keyboardType: TextInputType.phone,
         ),
@@ -303,6 +344,14 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
                   })
             ],
           )
-        : FormCard(child: column);
+        : FormCard(
+            child: column,
+            padding: isFullscreen
+                ? const EdgeInsets.only(
+                    left: kMobileDialogPadding / 2,
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                  )
+                : null);
   }
 }

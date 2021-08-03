@@ -103,29 +103,27 @@ class _InvoiceEditState extends State<InvoiceEdit>
         EntityAction.markPaid,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
-      appBarBottom: isFullscreen
-          ? null
-          : TabBar(
-              controller: _controller,
-              isScrollable: true,
-              tabs: [
-                Tab(
-                  text: localization.details,
-                ),
-                Tab(
-                  text: localization.contacts,
-                ),
-                Tab(
-                  text: localization.items,
-                ),
-                Tab(
-                  text: localization.notes,
-                ),
-                Tab(
-                  text: localization.pdf,
-                ),
-              ],
-            ),
+      appBarBottom: TabBar(
+        controller: _controller,
+        isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.contacts,
+          ),
+          Tab(
+            text: localization.items,
+          ),
+          Tab(
+            text: localization.notes,
+          ),
+          Tab(
+            text: localization.pdf,
+          ),
+        ],
+      ),
       body: Form(
         key: _formKey,
         child: isFullscreen

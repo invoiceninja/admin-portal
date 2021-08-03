@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_address.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_details.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -44,8 +48,12 @@ class _VendorEditState extends State<VendorEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
+    final state = viewModel.state;
+    final prefState = state.prefState;
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.vendor);
 
     return EditScaffold(
+      isFullscreen: isFullscreen,
       entity: vendor,
       title: vendor.isNew ? localization.newVendor : localization.editVendor,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
@@ -84,23 +92,43 @@ class _VendorEditState extends State<VendorEdit>
       ),
       body: Form(
         key: _formKey,
-        child: TabBarView(
-          key: ValueKey(viewModel.vendor.id),
-          controller: _controller,
-          children: <Widget>[
-            VendorEditDetails(
-              viewModel: widget.viewModel,
-            ),
-            VendorEditContactsScreen(),
-            VendorEditNotes(
-              viewModel: widget.viewModel,
-            ),
-            VendorEditAddress(
-              viewModel: widget.viewModel,
-            ),
-          ],
-        ),
+        child: isFullscreen
+            ? VendorEditDesktop(
+                viewModel: viewModel,
+                key: ValueKey(viewModel.vendor.id),
+              )
+            : TabBarView(
+                key: ValueKey(viewModel.vendor.id),
+                controller: _controller,
+                children: <Widget>[
+                  ScrollableListView(
+                    children: [
+                      VendorEditDetails(
+                        viewModel: widget.viewModel,
+                      ),
+                    ],
+                  ),
+                  VendorEditContactsScreen(
+                    viewModel: widget.viewModel,
+                  ),
+                  ScrollableListView(
+                    children: [
+                      VendorEditNotes(
+                        viewModel: widget.viewModel,
+                      ),
+                    ],
+                  ),
+                  ScrollableListView(
+                    children: [
+                      VendorEditAddress(
+                        viewModel: widget.viewModel,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
       ),
+      bottomNavigationBar: VendorEditFooter(vendor: vendor),
     );
   }
 }
