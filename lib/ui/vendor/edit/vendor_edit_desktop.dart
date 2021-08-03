@@ -36,7 +36,9 @@ class VendorEditDesktop extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  VendorEditContactsScreen(),
+                  VendorEditContactsScreen(
+                    viewModel: viewModel,
+                  ),
                 ],
               ),
             ),
