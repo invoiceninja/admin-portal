@@ -21,7 +21,7 @@ enum TaxRateReportFields {
   currency
 }
 
-var memoizedTaxReport = memo9((
+var memoizedInvoiceTaxReport = memo9((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, TaxRateEntity> taxRateMap,
@@ -51,8 +51,8 @@ ReportResult taxReport(
 
   final reportSettings = userCompany.settings.reportSettings;
   final taxRateReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportTax)
-          ? reportSettings[kReportTax]
+      reportSettings != null && reportSettings.containsKey(kReportInvoiceTax)
+          ? reportSettings[kReportInvoiceTax]
           : ReportSettingsEntity();
 
   final defaultColumns = [

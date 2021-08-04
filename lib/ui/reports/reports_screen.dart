@@ -73,34 +73,36 @@ class ReportsScreen extends StatelessWidget {
           filter == DateRange.custom.toString();
     }).isNotEmpty;
 
+    final reports = [
+      kReportClient,
+      if (state.company.isModuleEnabled(EntityType.invoice)) ...[
+        kReportInvoice,
+        kReportInvoiceItem,
+        kReportPayment,
+        if (state.company.hasTaxes) ...[
+          kReportInvoiceTax,
+          kReportPaymentTax,
+        ],
+      ],
+      if (state.company.isModuleEnabled(EntityType.quote)) ...[
+        kReportQuote,
+        kReportQuoteItem,
+      ],
+      if (state.company.isModuleEnabled(EntityType.credit)) kReportCredit,
+      kReportDocument,
+      kReportExpense,
+      kReportProduct,
+      kReportProfitAndLoss,
+      kReportTask,
+    ]..sort((a, b) => a.compareTo(b));
+
     final reportChildren = [
       AppDropdownButton<String>(
         labelText: localization.report,
         value: reportsState.report,
         onChanged: (dynamic value) =>
             viewModel.onSettingsChanged(report: value),
-        items: [
-          kReportClient,
-          if (state.company.isModuleEnabled(EntityType.invoice)) ...[
-            kReportInvoice,
-            kReportInvoiceItem,
-            kReportPayment,
-            if (state.company.hasTaxes) ...[
-              kReportTax,
-              kReportPaymentTax,
-            ],
-          ],
-          if (state.company.isModuleEnabled(EntityType.quote)) ...[
-            kReportQuote,
-            kReportQuoteItem,
-          ],
-          if (state.company.isModuleEnabled(EntityType.credit)) kReportCredit,
-          kReportDocument,
-          kReportExpense,
-          kReportProduct,
-          kReportProfitAndLoss,
-          kReportTask,
-        ]
+        items: reports
             .map((report) => DropdownMenuItem(
                   value: report,
                   child: Text(localization.lookup(report)),
