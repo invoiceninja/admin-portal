@@ -553,6 +553,8 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
 
   if (column.startsWith('surcharge')) {
     return ReportColumnType.number;
+  } else if (column == 'duration') {
+    return ReportColumnType.duration;
   } else if (company.hasCustomField(column)) {
     return convertCustomFieldType(company.getCustomFieldType(column));
   } else if (EntityPresenter.isFieldNumeric(column)) {
@@ -565,8 +567,6 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.date;
   } else if (column == 'age') {
     return ReportColumnType.age;
-  } else if (column == 'duration') {
-    return ReportColumnType.duration;
   } else if (column.startsWith('is_')) {
     return ReportColumnType.bool;
   } else {
