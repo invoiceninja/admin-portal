@@ -158,21 +158,22 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             showCurrencyCode: false,
                             currencyId: settings.currencyId),
                   ),
-                  LearnMoreUrl(
-                    url: kTransifexURL,
-                    label: localization.helpTranslate,
-                    child: EntityDropdown(
-                      key: ValueKey('__language_${settings.languageId}__'),
-                      entityType: EntityType.language,
-                      entityList:
-                          memoizedLanguageList(state.staticState.languageMap),
-                      labelText: localization.language,
-                      entityId: settings.languageId,
-                      onSelected: (SelectableEntity language) =>
-                          viewModel.onSettingsChanged(settings
-                              .rebuild((b) => b..languageId = language?.id)),
+                  if (!state.isDemo)
+                    LearnMoreUrl(
+                      url: kTransifexURL,
+                      label: localization.helpTranslate,
+                      child: EntityDropdown(
+                        key: ValueKey('__language_${settings.languageId}__'),
+                        entityType: EntityType.language,
+                        entityList:
+                            memoizedLanguageList(state.staticState.languageMap),
+                        labelText: localization.language,
+                        entityId: settings.languageId,
+                        onSelected: (SelectableEntity language) =>
+                            viewModel.onSettingsChanged(settings
+                                .rebuild((b) => b..languageId = language?.id)),
+                      ),
                     ),
-                  ),
                   EntityDropdown(
                     key: ValueKey('__timezone_${settings.timezoneId}__'),
                     entityType: EntityType.timezone,
