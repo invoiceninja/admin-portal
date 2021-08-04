@@ -79,15 +79,14 @@ class DecoratedFormField extends StatelessWidget {
     final enterShouldSubmit =
         isDesktop(context) && onSavePressed != null && (maxLines ?? 1) <= 1;
 
-    if (showClear && hasValue && key == null) {
+    if (showClear && hasValue && key == null && controller != null) {
       if (suffixIcon == null && enabled) {
         suffixIconButton = Focus(
           skipTraversal: true,
           descendantsAreFocusable: false,
           child: IconButton(
             icon: Icon(Icons.clear),
-            onPressed: () =>
-                controller != null ? controller.text = '' : onChanged(''),
+            onPressed: () => controller.text = '',
           ),
         );
       }
