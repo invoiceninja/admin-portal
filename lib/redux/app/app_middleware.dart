@@ -482,6 +482,7 @@ Middleware<AppState> _createDataRefreshed() {
       if (response.userCompanies.length == 1) {
         final userCompany = response.userCompanies.first;
         store.dispatch(LoadCompanySuccess(userCompany));
+        store.dispatch(PersistData());
       } else {
         for (int i = 0;
             i < min(response.userCompanies.length, kMaxNumberOfCompanies);
@@ -497,9 +498,7 @@ Middleware<AppState> _createDataRefreshed() {
           store.dispatch(
               SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
           store.dispatch(LoadCompanySuccess(userCompany));
-          if (!userCompany.company.isLarge) {
-            store.dispatch(PersistData());
-          }
+          store.dispatch(PersistData());
         }
       }
     } catch (error) {
