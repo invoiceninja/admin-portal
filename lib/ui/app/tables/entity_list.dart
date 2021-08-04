@@ -396,11 +396,17 @@ class _EntityListState extends State<EntityList> {
                                           Text(
                                             localization.more,
                                             style: TextStyle(
-                                                color: state.headerTextColor),
+                                                color: state.prefState
+                                                        .enableDarkMode
+                                                    ? Colors.white
+                                                    : Colors.black),
                                           ),
                                           SizedBox(width: 4),
                                           Icon(Icons.arrow_drop_down,
-                                              color: state.headerTextColor),
+                                              color:
+                                                  state.prefState.enableDarkMode
+                                                      ? Colors.white
+                                                      : Colors.black),
                                         ],
                                       ),
                                     ),
