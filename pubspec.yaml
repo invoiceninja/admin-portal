@@ -3,16 +3,18 @@ description: Client for Invoice Ninja
 version: 5.0.56+56
 author: Hillel Coren
 homepage: https://invoiceninja.com
-documentation: http://docs.invoiceninja.com
+documentation: https://invoiceninja.github.io
 publish_to: none
 
 environment:
   sdk: ">=2.9.0 <3.0.0"
 
 flutter_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
   image_path: "assets/images/mobile_icon.png"
+  adaptive_icon_foreground: "assets/images/mobile_icon.png"
+  adaptive_icon_background: "#0091EA"
 
 dependencies:
   flutter:
