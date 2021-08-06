@@ -144,6 +144,7 @@ class _ProductEditState extends State<ProductEdit> {
           key: ValueKey(widget.viewModel.product.id),
           children: <Widget>[
             FormCard(
+              isLast: true,
               children: <Widget>[
                 DecoratedFormField(
                   autofocus: true,

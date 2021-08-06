@@ -93,6 +93,7 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     return ScrollableListView(
       children: <Widget>[
         FormCard(
+          isLast: true,
           children: <Widget>[
             DecoratedFormField(
               maxLines: 4,

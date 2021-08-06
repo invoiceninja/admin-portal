@@ -119,12 +119,16 @@ bool matchesString({String haystack, String needle}) {
     return true;
   }
 
+  return haystack.toLowerCase().contains(needle.toLowerCase());
+
+  /*
   String regExp = '';
   needle.toLowerCase().runes.forEach((int rune) {
     final character = RegExp.escape(String.fromCharCode(rune));
     regExp += character + '.*?';
   });
   return RegExp(regExp).hasMatch(haystack.toLowerCase());
+  */
 }
 
 String matchesStringsValue({
@@ -153,6 +157,13 @@ String matchesStringValue({String haystack, String needle}) {
     return null;
   }
 
+  if (haystack.toLowerCase().contains(needle.toLowerCase())) {
+    return haystack;
+  } else {
+    return null;
+  }
+
+  /*
   String regExp = '';
   needle.toLowerCase().runes.forEach((int rune) {
     final character = RegExp.escape(String.fromCharCode(rune));
@@ -164,6 +175,7 @@ String matchesStringValue({String haystack, String needle}) {
   } else {
     return null;
   }
+  */
 }
 
 int secondToLastIndexOf(String string, String pattern) {
