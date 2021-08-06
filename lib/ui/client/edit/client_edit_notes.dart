@@ -81,6 +81,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
     return FormCard(
+      isLast: true,
       padding: isFullscreen
           ? const EdgeInsets.only(
               left: kMobileDialogPadding,

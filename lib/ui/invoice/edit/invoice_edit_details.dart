@@ -153,6 +153,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     return ScrollableListView(
       children: <Widget>[
         FormCard(
+          isLast: true,
           children: <Widget>[
             invoice.isNew
                 ? ClientPicker(

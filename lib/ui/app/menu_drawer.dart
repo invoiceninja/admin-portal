@@ -777,7 +777,7 @@ class SidebarFooter extends StatelessWidget {
 
                 launch(url);
               },
-              tooltip: localization.help,
+              tooltip: localization.userGuide,
             ),
             IconButton(
               icon: Icon(Icons.info_outline),
