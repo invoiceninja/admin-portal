@@ -85,6 +85,7 @@ class _ProductSettingsState extends State<ProductSettings> {
             ],
           ),
           FormCard(
+            isLast: true,
             children: <Widget>[
               /*
               SwitchListTile(

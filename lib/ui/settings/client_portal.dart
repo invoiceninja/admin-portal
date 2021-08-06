@@ -390,6 +390,7 @@ class _ClientPortalState extends State<ClientPortal>
                 ],
               ),
               FormCard(
+                isLast: true,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (!state.settingsUIState.isFiltered) ...[
@@ -507,6 +508,7 @@ class _ClientPortalState extends State<ClientPortal>
                 ],
               ),
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   BoolDropdownButton(
                     label: localization.requireInvoiceSignature,
@@ -539,6 +541,7 @@ class _ClientPortalState extends State<ClientPortal>
           ScrollableListView(
             children: <Widget>[
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   DecoratedFormField(
                     controller: _customMessageDashboard,
@@ -567,6 +570,7 @@ class _ClientPortalState extends State<ClientPortal>
           ScrollableListView(
             children: <Widget>[
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   DecoratedFormField(
                     label: localization.header,

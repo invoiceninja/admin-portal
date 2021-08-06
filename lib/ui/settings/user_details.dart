@@ -301,6 +301,7 @@ class _UserDetailsState extends State<UserDetails>
                 ),
               ),
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   FormColorPicker(
                     labelText: localization.accentColor,

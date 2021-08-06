@@ -307,6 +307,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
               ),
               if (!state.settingsUIState.isFiltered)
                 FormCard(
+                  isLast: true,
                   children: <Widget>[
                     AppDropdownButton(
                       showUseDefault: true,
@@ -345,6 +346,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
             child: ScrollableListView(
               children: <Widget>[
                 FormCard(
+                  isLast: true,
                   children: <Widget>[
                     DecoratedFormField(
                       label: localization.address1,
@@ -590,6 +592,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     ),
                   ]),
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   if (company.isModuleEnabled(EntityType.invoice)) ...[
                     DecoratedFormField(

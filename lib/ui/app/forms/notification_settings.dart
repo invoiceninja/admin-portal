@@ -39,6 +39,7 @@ class NotificationSettings extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         FormCard(
+          isLast: true,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[

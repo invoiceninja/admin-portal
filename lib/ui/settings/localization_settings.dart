@@ -208,6 +208,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
               ),
               if (!state.settingsUIState.isFiltered)
                 FormCard(
+                  isLast: true,
                   children: <Widget>[
                     /*
                 AppDropdownButton(
@@ -251,6 +252,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
           ScrollableListView(
             children: [
               FormCard(
+                isLast: true,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
