@@ -126,6 +126,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.vendor);
 
     return FormCard(
+      isLast: true,
       padding: isFullscreen
           ? const EdgeInsets.only(
               left: kMobileDialogPadding,

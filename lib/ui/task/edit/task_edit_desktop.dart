@@ -430,7 +430,10 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
               ],
             ),
           ),
-        )
+        ),
+        SizedBox(
+          height: kMobileDialogPadding,
+        ),
       ],
     );
   }

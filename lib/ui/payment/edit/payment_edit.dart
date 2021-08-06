@@ -329,6 +329,7 @@ class _PaymentEditState extends State<PaymentEdit> {
             ],
           ),
           FormCard(
+            isLast: true,
             children: [
               if (payment.isNew)
                 SwitchListTile(

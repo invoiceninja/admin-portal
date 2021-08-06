@@ -123,6 +123,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     return ScrollableListView(
       children: <Widget>[
         FormCard(
+          isLast: true,
           children: <Widget>[
             if (!task.isInvoiced) ...[
               EntityDropdown(

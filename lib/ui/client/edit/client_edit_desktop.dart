@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_billing_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
@@ -60,6 +61,9 @@ class ClientEditDesktop extends StatelessWidget {
               ),
             ),
           ],
+        ),
+        SizedBox(
+          height: kMobileDialogPadding,
         ),
       ],
     );
