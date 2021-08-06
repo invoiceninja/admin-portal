@@ -5,11 +5,12 @@ import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 class FormCard extends StatelessWidget {
   const FormCard({
     Key key,
-    this.forceNarrow = false,
     this.children,
     this.child,
     this.crossAxisAlignment,
     this.padding,
+    this.isLast = false,
+    this.forceNarrow = false,
   }) : super(key: key);
 
   final Widget child;
@@ -17,6 +18,7 @@ class FormCard extends StatelessWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final bool forceNarrow;
   final EdgeInsets padding;
+  final bool isLast;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +33,11 @@ class FormCard extends StatelessWidget {
                   vertical: kMobileDialogPadding,
                   horizontal: (MediaQuery.of(context).size.width - 400) / 2,
                 )
-              : const EdgeInsets.only(
+              : EdgeInsets.only(
                   left: kMobileDialogPadding,
                   top: kMobileDialogPadding,
                   right: kMobileDialogPadding,
+                  bottom: isLast ? kMobileDialogPadding : 0,
                 )),
       child: Card(
         elevation: 4.0,

@@ -93,6 +93,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
         viewModel.state.prefState.isEditorFullScreen(EntityType.client);
 
     return FormCard(
+      isLast: true,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       padding: isFullscreen
           ? const EdgeInsets.only(
