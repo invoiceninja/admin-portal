@@ -41,7 +41,11 @@ class _ListFilterState extends State<ListFilter> {
   }
 
   void onFocusChanged() {
-    setState(() {});
+    // Check is needed to prevent the TextField from
+    // refocusing when the users tries to tab out
+    if (_focusNode.hasFocus) {
+      setState(() {});
+    }
   }
 
   String get _getPlaceholder {
