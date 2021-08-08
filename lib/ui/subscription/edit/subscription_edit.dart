@@ -243,6 +243,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 ],
               ),
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   EntityDropdown(
                     key: ValueKey('__products_${subscription.productIds}__'),
@@ -380,6 +381,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 ],
               ),
               FormCard(
+                isLast: true,
                 children: [
                   DecoratedFormField(
                     label: localization.returnUrl,
@@ -449,6 +451,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
           ),
           ScrollableListView(children: [
             FormCard(
+              isLast: true,
               children: [
                 DecoratedFormField(
                   label: localization.webhookUrl,

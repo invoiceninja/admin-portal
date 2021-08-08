@@ -98,35 +98,39 @@ class _DurationPickerState extends State<DurationPicker> {
           labelText: _pendingDuration != null
               ? formatDuration(_pendingDuration)
               : (widget.labelText ?? ''),
-          suffixIcon: widget.allowClearing &&
-                  (widget.selectedDuration != null &&
-                      widget.selectedDuration.inSeconds != 0)
-              ? IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    _textController.text = '';
-                    widget.onSelected(Duration(seconds: 0));
-                  },
-                )
-              : PopupMenuButton<int>(
-                  padding: EdgeInsets.zero,
-                  initialValue: null,
-                  itemBuilder: (BuildContext context) =>
-                      [15, 30, 45, 60, 75, 90, 105, 120]
-                          .map((minutes) => PopupMenuItem<int>(
-                                child: Text(formatDuration(
-                                    Duration(minutes: minutes),
-                                    showSeconds: false)),
-                                value: minutes,
-                              ))
-                          .toList(),
-                  onSelected: (minutes) {
-                    final duration = Duration(minutes: minutes);
-                    _textController.text = formatDuration(duration);
-                    widget.onSelected(duration);
-                  },
-                  child: const Icon(Icons.arrow_drop_down),
-                )),
+          suffixIcon: Focus(
+            skipTraversal: true,
+            descendantsAreFocusable: false,
+            child: widget.allowClearing &&
+                    (widget.selectedDuration != null &&
+                        widget.selectedDuration.inSeconds != 0)
+                ? IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      _textController.text = '';
+                      widget.onSelected(Duration(seconds: 0));
+                    },
+                  )
+                : PopupMenuButton<int>(
+                    padding: EdgeInsets.zero,
+                    initialValue: null,
+                    itemBuilder: (BuildContext context) =>
+                        [15, 30, 45, 60, 75, 90, 105, 120]
+                            .map((minutes) => PopupMenuItem<int>(
+                                  child: Text(formatDuration(
+                                      Duration(minutes: minutes),
+                                      showSeconds: false)),
+                                  value: minutes,
+                                ))
+                            .toList(),
+                    onSelected: (minutes) {
+                      final duration = Duration(minutes: minutes);
+                      _textController.text = formatDuration(duration);
+                      widget.onSelected(duration);
+                    },
+                    child: const Icon(Icons.arrow_drop_down),
+                  ),
+          )),
     );
   }
 }

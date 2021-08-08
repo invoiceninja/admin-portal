@@ -185,6 +185,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                 ],
               ),
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   FutureBuilder(
                     future: viewModel.authenticationSupported,
@@ -320,6 +321,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                 ),
               ]),
               FormCard(
+                isLast: true,
                 children: [
                   AppDropdownButton<String>(
                       labelText: localization.loadColorTheme,

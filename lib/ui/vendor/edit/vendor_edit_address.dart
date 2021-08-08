@@ -90,6 +90,7 @@ class VendorEditAddressState extends State<VendorEditAddress> {
         viewModel.state.prefState.isEditorFullScreen(EntityType.vendor);
 
     return FormCard(
+      isLast: true,
       padding: isFullscreen
           ? const EdgeInsets.only(
               left: kMobileDialogPadding / 2,

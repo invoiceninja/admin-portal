@@ -196,6 +196,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ],
               ),
               FormCard(
+                isLast: true,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   LearnMoreUrl(
@@ -299,6 +300,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ),
           */
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 ...[
@@ -354,6 +356,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 CompanyFields.name,
@@ -391,6 +394,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 CompanyFields.name,
@@ -426,6 +430,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 ...[
@@ -464,6 +469,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 ...[
@@ -499,6 +505,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 ...[
@@ -534,6 +541,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 ProductItemFields.item,
@@ -568,6 +576,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 TaskItemFields.service,
@@ -602,6 +611,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),
           FormCard(
+            isLast: true,
             child: MultiSelectList(
               options: [
                 InvoiceTotalFields.subtotal,

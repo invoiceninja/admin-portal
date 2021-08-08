@@ -8,6 +8,7 @@ import 'package:intl/number_symbols.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -31,8 +32,22 @@ int parseInt(String value, {bool zeroIsNull = false}) {
 
 double parseDouble(String value, {bool zeroIsNull = false}) {
   // check for comma as decimal separator
-  final RegExp regExp = RegExp(r',[\d]{1,2}$');
-  if (regExp.hasMatch(value)) {
+  final state = StoreProvider.of<AppState>(navigatorKey.currentContext).state;
+  final currency =
+      state.staticState.currencyMap[state.company.settings.currencyId] ??
+          CurrencyEntity();
+  final country =
+      state.staticState.countryMap[state.company.settings.countryId] ??
+          CountryEntity();
+
+  var decimalSeparator = currency.decimalSeparator;
+  if (currency.id == kCurrencyEuro) {
+    if ((country.decimalSeparator ?? '').isNotEmpty) {
+      decimalSeparator = country.decimalSeparator;
+    }
+  }
+
+  if (decimalSeparator == ',' && value.contains(',')) {
     value = value.replaceAll('.', '');
     value = value.replaceAll(',', '.');
   }

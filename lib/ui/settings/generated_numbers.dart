@@ -237,6 +237,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           ScrollableListView(
             children: <Widget>[
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   AppDropdownButton<int>(
                     showUseDefault: true,
@@ -591,6 +592,7 @@ class HelpPanel extends StatelessWidget {
 
     return FormCard(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        isLast: true,
         children: fields
             .where((field) => showVendorFields || !field.startsWith('vendor'))
             .where((field) =>

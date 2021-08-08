@@ -275,6 +275,7 @@ class _EmailSettingsState extends State<EmailSettings> {
             ],
           ),
           FormCard(
+            isLast: true,
             children: <Widget>[
               AppDropdownButton<int>(
                   showBlank: true,

@@ -147,6 +147,7 @@ class _ProjectEditState extends State<ProjectEdit> {
             key: ValueKey(viewModel.project.id),
             children: <Widget>[
               FormCard(
+                isLast: true,
                 children: <Widget>[
                   DecoratedFormField(
                     controller: _nameController,

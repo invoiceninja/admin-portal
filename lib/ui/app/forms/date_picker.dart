@@ -113,20 +113,24 @@ class _DatePickerState extends State<DatePicker> {
       validator: widget.validator,
       controller: _textController,
       decoration: InputDecoration(
-          labelText: _pendingValue ?? label ?? '',
-          suffixIcon:
-              widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
-                  ? IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        _textController.text = '';
-                        widget.onSelected('');
-                      },
-                    )
-                  : IconButton(
-                      icon: Icon(Icons.date_range),
-                      onPressed: () => _showDatePicker(),
-                    )),
+        labelText: _pendingValue ?? label ?? '',
+        suffixIcon: Focus(
+            skipTraversal: true,
+            descendantsAreFocusable: false,
+            child:
+                widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
+                    ? IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          _textController.text = '';
+                          widget.onSelected('');
+                        },
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.date_range),
+                        onPressed: () => _showDatePicker(),
+                      )),
+      ),
       onChanged: (value) {
         if (value.isEmpty) {
           widget.onSelected('');

@@ -32,6 +32,7 @@ class DecoratedFormField extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.decoration,
     this.focusNode,
+    this.suffixIconButton,
     this.isMoney = false,
     this.isPercent = false,
     this.showClear = true,
@@ -55,6 +56,7 @@ class DecoratedFormField extends StatelessWidget {
   final ValueChanged<String> onFieldSubmitted;
   final ValueChanged<String> onChanged;
   final Icon suffixIcon;
+  final IconButton suffixIconButton;
   final Iterable<String> autofillHints;
   final Function(BuildContext) onSavePressed;
   final TextAlign textAlign;
@@ -67,7 +69,7 @@ class DecoratedFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget suffixIconButton;
+    Widget iconButton = suffixIconButton;
 
     final hasValue =
         (initialValue ?? '').isNotEmpty || (controller?.text ?? '').isNotEmpty;
@@ -80,14 +82,10 @@ class DecoratedFormField extends StatelessWidget {
         isDesktop(context) && onSavePressed != null && (maxLines ?? 1) <= 1;
 
     if (showClear && hasValue && key == null && controller != null) {
-      if (suffixIcon == null && enabled) {
-        suffixIconButton = Focus(
-          skipTraversal: true,
-          descendantsAreFocusable: false,
-          child: IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () => controller.text = '',
-          ),
+      if (suffixIconButton == null && suffixIcon == null && enabled) {
+        iconButton = IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () => controller.text = '',
         );
       }
     }
@@ -98,7 +96,7 @@ class DecoratedFormField extends StatelessWidget {
     } else if (label == null) {
       inputDecoration = null;
     } else {
-      var icon = suffixIcon ?? suffixIconButton;
+      var icon = suffixIcon ?? iconButton;
       if (icon == null) {
         if (isMoney) {
           final state = StoreProvider.of<AppState>(context).state;
@@ -116,7 +114,13 @@ class DecoratedFormField extends StatelessWidget {
       inputDecoration = InputDecoration(
           labelText: label,
           hintText: hint,
-          suffixIcon: icon,
+          suffixIcon: icon == null
+              ? null
+              : Focus(
+                  child: icon,
+                  skipTraversal: true,
+                  descendantsAreFocusable: false,
+                ),
           floatingLabelBehavior:
               (hint ?? '').isNotEmpty && (label ?? '').isEmpty
                   ? FloatingLabelBehavior.always

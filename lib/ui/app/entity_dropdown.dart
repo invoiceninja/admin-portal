@@ -172,123 +172,118 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final iconButton = showClear
+        ? IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              _textController.text = '';
+              widget.onSelected(null);
+            },
+          )
+        : widget.onAddPressed != null
+            ? IconButton(
+                icon: Icon(Icons.add_circle_outline),
+                tooltip: AppLocalization.of(context).createNew,
+                onPressed: () {
+                  final Completer<SelectableEntity> completer =
+                      Completer<SelectableEntity>();
+                  widget.onAddPressed(completer);
+                  completer.future.then(
+                    (entity) {
+                      widget.onSelected(entity);
+                    },
+                  );
+                },
+              )
+            : null;
 
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
-      return Stack(
-        alignment: Alignment.centerRight,
-        children: <Widget>[
-          RawAutocomplete<SelectableEntity>(
-            focusNode: _focusNode,
-            textEditingController: _textController,
-            optionsBuilder: (TextEditingValue textEditingValue) {
-              final options =
-                  (widget.entityList ?? widget.entityMap.keys.toList())
-                      .map((entityId) => _entityMap[entityId])
-                      .where((entity) =>
-                          entity?.matchesFilter(textEditingValue.text) ?? false)
-                      .toList();
+      return RawAutocomplete<SelectableEntity>(
+        focusNode: _focusNode,
+        textEditingController: _textController,
+        optionsBuilder: (TextEditingValue textEditingValue) {
+          final options = (widget.entityList ?? widget.entityMap.keys.toList())
+              .map((entityId) => _entityMap[entityId])
+              .where((entity) =>
+                  entity?.matchesFilter(textEditingValue.text) ?? false)
+              .toList();
 
-              if (options.length == 1 && options[0].id == widget.entityId) {
-                return <SelectableEntity>[];
-              }
+          if (options.length == 1 && options[0].id == widget.entityId) {
+            return <SelectableEntity>[];
+          }
 
-              return options;
+          return options;
+        },
+        displayStringForOption: (entity) => entity.listDisplayName,
+        onSelected: (entity) {
+          /*
+          _textController.text = widget.overrideSuggestedLabel != null
+              ? widget.overrideSuggestedLabel(entity)
+              : entity?.listDisplayName;
+              */
+
+          if (entity?.id == widget.entityId) {
+            return;
+          }
+
+          widget.onSelected(entity);
+        },
+        fieldViewBuilder: (BuildContext context,
+            TextEditingController textEditingController,
+            FocusNode focusNode,
+            VoidCallback onFieldSubmitted) {
+          return DecoratedFormField(
+            validator: widget.validator,
+            showClear: showClear,
+            label: widget.labelText,
+            autofocus: widget.autofocus ?? false,
+            controller: textEditingController,
+            focusNode: focusNode,
+            onFieldSubmitted: (String value) {
+              onFieldSubmitted();
             },
-            displayStringForOption: (entity) => entity.listDisplayName,
-            onSelected: (entity) {
-              /*
-              _textController.text = widget.overrideSuggestedLabel != null
-                  ? widget.overrideSuggestedLabel(entity)
-                  : entity?.listDisplayName;
-                  */
-
-              if (entity?.id == widget.entityId) {
-                return;
-              }
-
-              widget.onSelected(entity);
-            },
-            fieldViewBuilder: (BuildContext context,
-                TextEditingController textEditingController,
-                FocusNode focusNode,
-                VoidCallback onFieldSubmitted) {
-              return DecoratedFormField(
-                validator: widget.validator,
-                showClear: showClear,
-                label: widget.labelText,
-                autofocus: widget.autofocus ?? false,
-                controller: textEditingController,
-                focusNode: focusNode,
-                onFieldSubmitted: (String value) {
-                  onFieldSubmitted();
-                },
-                onChanged: (value) => _filter = value,
-              );
-            },
-            optionsViewBuilder: (BuildContext context,
-                AutocompleteOnSelected<SelectableEntity> onSelected,
-                Iterable<SelectableEntity> options) {
-              return Theme(
-                data: theme,
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Material(
-                    elevation: 4,
-                    child: AppBorder(
-                      child: Container(
-                        color: Theme.of(context).cardColor,
-                        width: 250,
-                        constraints: BoxConstraints(maxHeight: 270),
-                        child: ScrollableListViewBuilder(
-                          itemCount: options.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              color: Theme.of(context).cardColor,
-                              child: _EntityListTile(
-                                onTap: (entity) => onSelected(entity),
-                                entity: options.elementAt(index),
-                                filter: _filter,
-                                overrideSuggestedAmount:
-                                    widget.overrideSuggestedAmount,
-                                overrideSuggestedLabel:
-                                    widget.overrideSuggestedLabel,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+            onChanged: (value) => _filter = value,
+            suffixIconButton: iconButton,
+          );
+        },
+        optionsViewBuilder: (BuildContext context,
+            AutocompleteOnSelected<SelectableEntity> onSelected,
+            Iterable<SelectableEntity> options) {
+          return Theme(
+            data: theme,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                elevation: 4,
+                child: AppBorder(
+                  child: Container(
+                    color: Theme.of(context).cardColor,
+                    width: 250,
+                    constraints: BoxConstraints(maxHeight: 270),
+                    child: ScrollableListViewBuilder(
+                      itemCount: options.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          color: Theme.of(context).cardColor,
+                          child: _EntityListTile(
+                            onTap: (entity) => onSelected(entity),
+                            entity: options.elementAt(index),
+                            filter: _filter,
+                            overrideSuggestedAmount:
+                                widget.overrideSuggestedAmount,
+                            overrideSuggestedLabel:
+                                widget.overrideSuggestedLabel,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
-              );
-            },
-          ),
-          showClear
-              ? IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    _textController.text = '';
-                    widget.onSelected(null);
-                  },
-                )
-              : widget.onAddPressed != null
-                  ? IconButton(
-                      icon: Icon(Icons.add_circle_outline),
-                      tooltip: AppLocalization.of(context).createNew,
-                      onPressed: () {
-                        final Completer<SelectableEntity> completer =
-                            Completer<SelectableEntity>();
-                        widget.onAddPressed(completer);
-                        completer.future.then(
-                          (entity) {
-                            widget.onSelected(entity);
-                          },
-                        );
-                      },
-                    )
-                  : SizedBox(),
-        ],
+              ),
+            ),
+          );
+        },
       );
     }
 

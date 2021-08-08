@@ -107,6 +107,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                   ),
                 ]),
                 FormCard(
+                  isLast: true,
                   children: <Widget>[
                     AppDropdownButton<String>(
                       showUseDefault: true,
@@ -132,6 +133,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
             ScrollableListView(
               children: <Widget>[
                 FormCard(
+                  isLast: true,
                   children: <Widget>[
                     BoolDropdownButton(
                       label: localization.autoConvertQuote,
