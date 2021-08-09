@@ -124,12 +124,13 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
 Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as UserSignUpRequest;
+    final state = store.state;
 
     repository
         .signUp(
-      email: action.email,
-      password: action.password,
-    )
+            email: action.email,
+            password: action.password,
+            referralCode: state.authState.referralCode)
         .then((data) {
       _saveAuthLocal(kAppProductionUrl);
 
@@ -188,12 +189,13 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
 Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as OAuthSignUpRequest;
+    final state = store.state;
 
     repository
         .oauthSignUp(
-      accessToken: action.accessToken,
-      idToken: action.idToken,
-    )
+            accessToken: action.accessToken,
+            idToken: action.idToken,
+            referralCode: state.authState.referralCode)
         .then((data) {
       _saveAuthLocal(kAppProductionUrl);
 

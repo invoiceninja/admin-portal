@@ -15,7 +15,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       isAuthenticated: false,
       isInitialized: false,
       lastEnteredPasswordAt: 0,
-      referralCode: referralCode,
+      referralCode: referralCode ?? '',
     );
   }
 

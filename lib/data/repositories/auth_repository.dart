@@ -21,10 +21,11 @@ class AuthRepository {
   final WebClient webClient;
 
   Future<LoginResponse> signUp({
-    String url,
-    String email,
-    String password,
-    String secret,
+    @required String url,
+    @required String email,
+    @required String password,
+    @required String secret,
+    @required String referralCode,
   }) async {
     final credentials = {
       'email': email,
@@ -39,12 +40,15 @@ class AuthRepository {
     }
 
     return sendRequest(
-        url: formatApiUrl(url) + '/signup', data: credentials, secret: secret);
+        url: formatApiUrl(url) + '/signup?rc=$referralCode',
+        data: credentials,
+        secret: secret);
   }
 
   Future<LoginResponse> oauthSignUp({
     @required String idToken,
     @required String accessToken,
+    @required String referralCode,
   }) async {
     final credentials = {
       'terms_of_service': true,
@@ -56,7 +60,8 @@ class AuthRepository {
     };
 
     return sendRequest(
-        url: formatApiUrl(Constants.hostedApiUrl) + '/oauth_login?create=true',
+        url: formatApiUrl(Constants.hostedApiUrl) +
+            '/oauth_login?create=true&rc=$referralCode',
         data: credentials,
         secret: Config.API_SECRET);
   }

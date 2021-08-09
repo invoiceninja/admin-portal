@@ -94,8 +94,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     @required PrefState prefState,
     @required bool reportErrors,
-    @required String referralCode,
     String url,
+    String referralCode,
     String currentRoute,
   }) {
     return _$AppState._(
