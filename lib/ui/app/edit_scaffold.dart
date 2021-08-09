@@ -83,6 +83,9 @@ class EditScaffold extends StatelessWidget {
       } else if (state.uiState.currentRoute == AccountManagementScreen.route) {
         showUpgradeBanner = true;
       }
+    } else if (kSettingsCompanyGatewaysEdit
+        .contains(state.uiState.baseSubRoute)) {
+      isCancelEnabled = true;
     }
 
     return WillPopScope(
