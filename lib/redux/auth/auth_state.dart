@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 part 'auth_state.g.dart';
 
 abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
-  factory AuthState({String url}) {
+  factory AuthState({String url, String referralCode}) {
     return _$AuthState._(
       email: '',
       password: '',
@@ -15,6 +15,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       isAuthenticated: false,
       isInitialized: false,
       lastEnteredPasswordAt: 0,
+      referralCode: referralCode,
     );
   }
 
@@ -38,6 +39,8 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   int get lastEnteredPasswordAt;
 
+  String get referralCode;
+
   bool get isHosted {
     final cleanUrl = cleanApiUrl(url);
 
@@ -59,6 +62,10 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   bool get isSelfHost => !isHosted;
 
   bool get isStaging => cleanApiUrl(url) == kAppStagingUrl;
+
+  // ignore: unused_element
+  static void _initializeBuilder(AuthStateBuilder builder) =>
+      builder..referralCode = '';
 
   static Serializer<AuthState> get serializer => _$authStateSerializer;
 }

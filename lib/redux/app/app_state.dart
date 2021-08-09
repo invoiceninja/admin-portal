@@ -94,6 +94,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     @required PrefState prefState,
     @required bool reportErrors,
+    @required String referralCode,
     String url,
     String currentRoute,
   }) {
@@ -102,7 +103,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isSaving: false,
       isTesting: false,
       lastError: '',
-      authState: AuthState(url: url),
+      authState: AuthState(
+        url: url,
+        referralCode: referralCode,
+      ),
       staticState: StaticState(),
       userCompanyStates: BuiltList(
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
