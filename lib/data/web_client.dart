@@ -34,7 +34,7 @@ class WebClient {
     }
 
     final http.Response response = await http.Client().get(
-      url,
+      Uri.parse(url),
       headers: _getHeaders(url, token),
     );
 
@@ -80,7 +80,7 @@ class WebClient {
     } else {
       response = await http.Client()
           .post(
-            url,
+            Uri.parse(url),
             body: data,
             headers: _getHeaders(
               url,
@@ -134,7 +134,7 @@ class WebClient {
           fileIndex: fileIndex, data: data, method: 'PUT');
     } else {
       response = await http.Client().put(
-        url,
+        Uri.parse(url),
         body: data,
         headers: _getHeaders(
           url,
@@ -167,7 +167,7 @@ class WebClient {
     print('Delete: $url');
 
     final http.Response response = await http.Client().delete(
-      url,
+      Uri.parse(url),
       headers: _getHeaders(
         url,
         token,

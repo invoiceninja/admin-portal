@@ -53,6 +53,7 @@ class GoogleOAuth {
         .requestScopes(['https://www.googleapis.com/auth/gmail.send']);
   }
 
+  /*
   static Future<bool> grantOfflineAccess(
       Function(String, String, String) successCallback,
       Function errorCallback) async {
@@ -69,6 +70,7 @@ class GoogleOAuth {
       return false;
     }
   }
+  */
 
   static Future<GoogleSignInAccount> signOut() async {
     return await _googleSignIn.signOut();

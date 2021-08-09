@@ -16,12 +16,10 @@ Future<MultipartFile> pickFile(
       allowedExtensions: allowedExtensions,
     );
   } else {
-    final permissionType = fileType == FileType.image && Platform.isIOS
-        ? Permission.photos
-        : Permission.storage;
-    final permissionStatus = await [permissionType].request();
-    final permission =
-        permissionStatus[permissionType] ?? PermissionStatus.undetermined;
+    final permission = await (fileType == FileType.image && Platform.isIOS
+        ? Permission.photos.status
+        : Permission.storage.status);
+
     if (permission == PermissionStatus.granted) {
       return _pickFile(
         fileIndex: fileIndex,

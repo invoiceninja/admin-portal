@@ -3,6 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  native_pdf_renderer
+  sentry_flutter
   url_launcher_windows
 )
 

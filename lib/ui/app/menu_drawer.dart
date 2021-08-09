@@ -262,21 +262,23 @@ class MenuDrawer extends StatelessWidget {
                                 ),
                               )
                             else
-                              ListTile(
-                                tileColor: Colors.red.shade800,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(bottom: 6),
-                                  child: IconText(
-                                    icon: Icons.warning,
-                                    text: localization.debugModeIsEnabled,
+                              Material(
+                                child: ListTile(
+                                  tileColor: Colors.red.shade800,
+                                  title: Padding(
+                                    padding: const EdgeInsets.only(bottom: 6),
+                                    child: IconText(
+                                      icon: Icons.warning,
+                                      text: localization.debugModeIsEnabled,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    localization.debugModeIsEnabledHelp,
                                     style: TextStyle(color: Colors.white),
                                   ),
+                                  onTap: () => launch(kDebugModeUrl),
                                 ),
-                                subtitle: Text(
-                                  localization.debugModeIsEnabledHelp,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onTap: () => launch(kDebugModeUrl),
                               ),
                           if (state.company.isDisabled &&
                               state.userCompany.isAdmin)
@@ -297,26 +299,28 @@ class MenuDrawer extends StatelessWidget {
                                 ),
                               )
                             else
-                              ListTile(
-                                tileColor: Colors.orange.shade800,
-                                title: Padding(
-                                  padding: const EdgeInsets.only(bottom: 6),
-                                  child: IconText(
-                                    icon: Icons.warning,
-                                    text: localization.warning,
+                              Material(
+                                child: ListTile(
+                                  tileColor: Colors.orange.shade800,
+                                  title: Padding(
+                                    padding: const EdgeInsets.only(bottom: 6),
+                                    child: IconText(
+                                      icon: Icons.warning,
+                                      text: localization.warning,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    localization.companyDisabledWarning,
                                     style: TextStyle(color: Colors.white),
                                   ),
+                                  onTap: () {
+                                    store.dispatch(ViewSettings(
+                                      section: kSettingsAccountManagement,
+                                      company: company,
+                                    ));
+                                  },
                                 ),
-                                subtitle: Text(
-                                  localization.companyDisabledWarning,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onTap: () {
-                                  store.dispatch(ViewSettings(
-                                    section: kSettingsAccountManagement,
-                                    company: company,
-                                  ));
-                                },
                               ),
                           DrawerTile(
                             company: company,

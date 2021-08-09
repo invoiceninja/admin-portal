@@ -56,6 +56,7 @@ class UserDetailsVM {
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
       onConnectGmailPressed: (context, completer, password) async {
+        /*
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).connectedGmail);
         try {
@@ -85,6 +86,7 @@ class UserDetailsVM {
         } catch (error) {
           completer.completeError(error);
         }
+        */
       },
       onDisconnectGmailPressed: (context) {
         confirmCallback(

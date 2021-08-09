@@ -14,9 +14,11 @@ class GoogleOAuth {
     //
   }
 
+  /*
   static Future<bool> grantOfflineAccess(Function(String, String, String) successCallback, Function errorCallback) async {
     //
   }
+  */
 
   static void signOut() async {
     //
