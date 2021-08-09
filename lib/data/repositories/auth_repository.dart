@@ -21,10 +21,10 @@ class AuthRepository {
   final WebClient webClient;
 
   Future<LoginResponse> signUp({
-    @required String url,
+    String url,
+    String secret,
     @required String email,
     @required String password,
-    @required String secret,
     @required String referralCode,
   }) async {
     final credentials = {
