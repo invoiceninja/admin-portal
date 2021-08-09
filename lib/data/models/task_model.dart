@@ -296,8 +296,7 @@ abstract class TaskEntity extends Object
     ..isDeleted = false
     ..invoiceId = ''
     ..duration = 0
-    ..documents.clear()
-    ..timeLog = '[]');
+    ..documents.clear());
 
   TaskEntity toggle() => isRunning ? stop() : start();
 

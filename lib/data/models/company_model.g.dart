@@ -124,6 +124,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'oauth_password_required',
       serializers.serialize(object.oauthPasswordRequired,
           specifiedType: const FullType(bool)),
+      'markdown_enabled',
+      serializers.serialize(object.markdownEnabled,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -455,6 +458,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'oauth_password_required':
           result.oauthPasswordRequired = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'markdown_enabled':
+          result.markdownEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
@@ -1284,6 +1291,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool oauthPasswordRequired;
   @override
+  final bool markdownEnabled;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1419,6 +1428,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.sessionTimeout,
       this.passwordTimeout,
       this.oauthPasswordRequired,
+      this.markdownEnabled,
       this.groups,
       this.activities,
       this.taxRates,
@@ -1574,6 +1584,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (oauthPasswordRequired == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'oauthPasswordRequired');
+    }
+    if (markdownEnabled == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'markdownEnabled');
     }
     if (groups == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'groups');
@@ -1758,6 +1771,7 @@ class _$CompanyEntity extends CompanyEntity {
         sessionTimeout == other.sessionTimeout &&
         passwordTimeout == other.passwordTimeout &&
         oauthPasswordRequired == other.oauthPasswordRequired &&
+        markdownEnabled == other.markdownEnabled &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -1831,7 +1845,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
                                                                                 invoiceExpenseDocuments.hashCode),
                                                                             invoiceTaskDocuments.hashCode),
                                                                         invoiceTaskTimelog.hashCode),
@@ -1887,6 +1901,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('sessionTimeout', sessionTimeout)
           ..add('passwordTimeout', passwordTimeout)
           ..add('oauthPasswordRequired', oauthPasswordRequired)
+          ..add('markdownEnabled', markdownEnabled)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2090,6 +2105,11 @@ class CompanyEntityBuilder
   bool get oauthPasswordRequired => _$this._oauthPasswordRequired;
   set oauthPasswordRequired(bool oauthPasswordRequired) =>
       _$this._oauthPasswordRequired = oauthPasswordRequired;
+
+  bool _markdownEnabled;
+  bool get markdownEnabled => _$this._markdownEnabled;
+  set markdownEnabled(bool markdownEnabled) =>
+      _$this._markdownEnabled = markdownEnabled;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -2389,6 +2409,7 @@ class CompanyEntityBuilder
       _sessionTimeout = _$v.sessionTimeout;
       _passwordTimeout = _$v.passwordTimeout;
       _oauthPasswordRequired = _$v.oauthPasswordRequired;
+      _markdownEnabled = _$v.markdownEnabled;
       _groups = _$v.groups?.toBuilder();
       _activities = _$v.activities?.toBuilder();
       _taxRates = _$v.taxRates?.toBuilder();
@@ -2494,6 +2515,7 @@ class CompanyEntityBuilder
               sessionTimeout: sessionTimeout,
               passwordTimeout: passwordTimeout,
               oauthPasswordRequired: oauthPasswordRequired,
+              markdownEnabled: markdownEnabled,
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),

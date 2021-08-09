@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'enable_markdown': 'Enable Markdown',
+      'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
       'add_second_contact': 'Add Second Contact',
       'previous_page': 'Previous Page',
@@ -62461,6 +62463,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['user_guide'] ??
       _localizedValues['en']['user_guide'];
 
+  String get enableMarkdown =>
+      _localizedValues[localeCode]['enable_markdown'] ??
+      _localizedValues['en']['enable_markdown'];
+
+  String get enableMarkdownHelp =>
+      _localizedValues[localeCode]['enable_markdown_help'] ??
+      _localizedValues['en']['enable_markdown_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

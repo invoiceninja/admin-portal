@@ -292,7 +292,17 @@ class _AccountOverview extends StatelessWidget {
               title: Text(localization.activateCompany),
               subtitle: Text(localization.activateCompanyHelp),
               activeColor: Theme.of(context).accentColor,
-            )
+            ),
+            SwitchListTile(
+              value: company.markdownEnabled,
+              onChanged: (value) {
+                viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..markdownEnabled = value));
+              },
+              title: Text(localization.enableMarkdown),
+              subtitle: Text(localization.enableMarkdownHelp),
+              activeColor: Theme.of(context).accentColor,
+            ),
           ],
         ),
         if (state.isSelfHosted) ...[

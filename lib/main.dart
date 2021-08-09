@@ -162,8 +162,10 @@ Future<AppState> _initialState(bool isTesting) async {
   }
 
   bool reportErrors = false;
+  String referralCode = '';
   if (kIsWeb) {
     reportErrors = WebUtils.getHtmlValue('report-errors') == '1';
+    referralCode = WebUtils.getHtmlValue('rc');
     if (reportErrors) {
       print('## Error reporting is enabled');
     }
@@ -172,6 +174,7 @@ Future<AppState> _initialState(bool isTesting) async {
   return AppState(
     prefState: prefState,
     url: Config.DEMO_MODE ? '' : url,
+    referralCode: referralCode,
     reportErrors: reportErrors,
     currentRoute: browserRoute,
   );

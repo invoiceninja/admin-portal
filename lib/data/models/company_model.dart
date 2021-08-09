@@ -97,6 +97,7 @@ abstract class CompanyEntity extends Object
       sessionTimeout: 0,
       passwordTimeout: 30 * 60 * 1000,
       oauthPasswordRequired: false,
+      markdownEnabled: true,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -229,6 +230,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'oauth_password_required')
   bool get oauthPasswordRequired;
+
+  @BuiltValueField(wireName: 'markdown_enabled')
+  bool get markdownEnabled;
 
   BuiltList<GroupEntity> get groups;
 
@@ -536,6 +540,7 @@ abstract class CompanyEntity extends Object
     ..oauthPasswordRequired = false
     ..invoiceTaskDatelog = true
     ..showTaskEndDate = false
+    ..markdownEnabled = true
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>());
 
