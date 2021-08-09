@@ -38,6 +38,9 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
       'lastEnteredPasswordAt',
       serializers.serialize(object.lastEnteredPasswordAt,
           specifiedType: const FullType(int)),
+      'referralCode',
+      serializers.serialize(object.referralCode,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -82,6 +85,10 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
           result.lastEnteredPasswordAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'referralCode':
+          result.referralCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -104,6 +111,8 @@ class _$AuthState extends AuthState {
   final bool isAuthenticated;
   @override
   final int lastEnteredPasswordAt;
+  @override
+  final String referralCode;
 
   factory _$AuthState([void Function(AuthStateBuilder) updates]) =>
       (new AuthStateBuilder()..update(updates)).build();
@@ -115,7 +124,8 @@ class _$AuthState extends AuthState {
       this.secret,
       this.isInitialized,
       this.isAuthenticated,
-      this.lastEnteredPasswordAt})
+      this.lastEnteredPasswordAt,
+      this.referralCode})
       : super._() {
     if (email == null) {
       throw new BuiltValueNullFieldError('AuthState', 'email');
@@ -138,6 +148,9 @@ class _$AuthState extends AuthState {
     if (lastEnteredPasswordAt == null) {
       throw new BuiltValueNullFieldError('AuthState', 'lastEnteredPasswordAt');
     }
+    if (referralCode == null) {
+      throw new BuiltValueNullFieldError('AuthState', 'referralCode');
+    }
   }
 
   @override
@@ -157,7 +170,8 @@ class _$AuthState extends AuthState {
         secret == other.secret &&
         isInitialized == other.isInitialized &&
         isAuthenticated == other.isAuthenticated &&
-        lastEnteredPasswordAt == other.lastEnteredPasswordAt;
+        lastEnteredPasswordAt == other.lastEnteredPasswordAt &&
+        referralCode == other.referralCode;
   }
 
   int __hashCode;
@@ -167,12 +181,14 @@ class _$AuthState extends AuthState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, email.hashCode), password.hashCode),
-                        url.hashCode),
-                    secret.hashCode),
-                isInitialized.hashCode),
-            isAuthenticated.hashCode),
-        lastEnteredPasswordAt.hashCode));
+                    $jc(
+                        $jc($jc($jc(0, email.hashCode), password.hashCode),
+                            url.hashCode),
+                        secret.hashCode),
+                    isInitialized.hashCode),
+                isAuthenticated.hashCode),
+            lastEnteredPasswordAt.hashCode),
+        referralCode.hashCode));
   }
 
   @override
@@ -184,7 +200,8 @@ class _$AuthState extends AuthState {
           ..add('secret', secret)
           ..add('isInitialized', isInitialized)
           ..add('isAuthenticated', isAuthenticated)
-          ..add('lastEnteredPasswordAt', lastEnteredPasswordAt))
+          ..add('lastEnteredPasswordAt', lastEnteredPasswordAt)
+          ..add('referralCode', referralCode))
         .toString();
   }
 }
@@ -223,7 +240,13 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   set lastEnteredPasswordAt(int lastEnteredPasswordAt) =>
       _$this._lastEnteredPasswordAt = lastEnteredPasswordAt;
 
-  AuthStateBuilder();
+  String _referralCode;
+  String get referralCode => _$this._referralCode;
+  set referralCode(String referralCode) => _$this._referralCode = referralCode;
+
+  AuthStateBuilder() {
+    AuthState._initializeBuilder(this);
+  }
 
   AuthStateBuilder get _$this {
     if (_$v != null) {
@@ -234,6 +257,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
       _isInitialized = _$v.isInitialized;
       _isAuthenticated = _$v.isAuthenticated;
       _lastEnteredPasswordAt = _$v.lastEnteredPasswordAt;
+      _referralCode = _$v.referralCode;
       _$v = null;
     }
     return this;
@@ -262,7 +286,8 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
             secret: secret,
             isInitialized: isInitialized,
             isAuthenticated: isAuthenticated,
-            lastEnteredPasswordAt: lastEnteredPasswordAt);
+            lastEnteredPasswordAt: lastEnteredPasswordAt,
+            referralCode: referralCode);
     replace(_$result);
     return _$result;
   }
