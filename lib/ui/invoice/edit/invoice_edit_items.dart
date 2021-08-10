@@ -192,13 +192,13 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..customValue3 = _custom3Controller.text.trim()
       ..customValue4 = _custom4Controller.text.trim());
 
-    if (_taxRate1 != null && !_taxRate1.isEmpty) {
+    if (_taxRate1 != null) {
       invoiceItem = invoiceItem.applyTax(_taxRate1);
     }
-    if (_taxRate2 != null && !_taxRate2.isEmpty) {
+    if (_taxRate2 != null) {
       invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
     }
-    if (_taxRate3 != null && !_taxRate3.isEmpty) {
+    if (_taxRate3 != null) {
       invoiceItem = invoiceItem.applyTax(_taxRate3, isThird: true);
     }
 
