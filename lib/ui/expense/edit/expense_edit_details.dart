@@ -168,7 +168,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                       (client as ClientEntity)?.settings?.currencyId ??
                           company.currencyId;
                   viewModel.onChanged(expense.rebuild((b) => b
-                    ..clientId = client?.id
+                    ..clientId = client?.id ?? ''
                     ..invoiceCurrencyId = currencyId));
                 },
                 onAddPressed: (completer) {
