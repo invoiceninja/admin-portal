@@ -104,7 +104,7 @@ ReportResult invoiceReport(
 
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
-    final client = clientMap[invoice.clientId];
+    final client = clientMap[invoice.clientId] ?? ClientEntity();
     if (invoice.isDraft || invoice.isDeleted || client.isDeleted) {
       continue;
     }

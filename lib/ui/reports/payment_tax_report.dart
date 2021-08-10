@@ -77,7 +77,7 @@ ReportResult paymentTaxReport(
   }
 
   for (var paymentId in paymentMap.keys) {
-    final payment = paymentMap[paymentId];
+    final payment = paymentMap[paymentId] ?? PaymentEntity();
 
     if (payment.isActive) {
       final client = clientMap[payment.clientId];

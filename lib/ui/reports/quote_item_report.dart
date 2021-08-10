@@ -85,7 +85,7 @@ ReportResult lineItemReport(
 
   for (var entry in invoiceMap.entries) {
     final invoice = entry.value;
-    final client = clientMap[invoice.clientId];
+    final client = clientMap[invoice.clientId] ?? ClientEntity();
     final precision =
         staticState.currencyMap[client.currencyId]?.precision ?? 2;
 

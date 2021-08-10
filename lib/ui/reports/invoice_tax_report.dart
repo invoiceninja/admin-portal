@@ -76,7 +76,7 @@ ReportResult taxReport(
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
     if (invoice.isActive && invoice.isSent) {
-      final client = clientMap[invoice.clientId];
+      final client = clientMap[invoice.clientId] ?? ClientEntity();
       final precision = staticState.currencyMap[client.currencyId].precision;
       final taxes = invoice.getTaxes(precision);
 

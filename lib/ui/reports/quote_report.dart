@@ -93,7 +93,7 @@ ReportResult quoteReport(
 
   for (var quoteId in quoteMap.keys) {
     final quote = quoteMap[quoteId];
-    final client = clientMap[quote.clientId];
+    final client = clientMap[quote.clientId] ?? ClientEntity();
     //final vendor = vendorMap[quote.vendorId];
 
     if (quote.isDraft || quote.isDeleted || client.isDeleted) {
