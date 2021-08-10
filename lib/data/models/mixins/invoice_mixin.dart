@@ -60,6 +60,7 @@ abstract class CalculateInvoiceTotal {
     lineItems.forEach((item) {
       final double taxRate1 = round(item.taxRate1, 3);
       final double taxRate2 = round(item.taxRate2, 3);
+      final double taxRate3 = round(item.taxRate3, 3);
 
       final lineTotal = getItemTaxable(item, total, precision);
 
@@ -159,6 +160,7 @@ abstract class CalculateInvoiceTotal {
       final double itemDiscount = round(item.discount, precision);
       final double taxRate1 = round(item.taxRate1, 3);
       final double taxRate2 = round(item.taxRate2, 3);
+      final double taxRate3 = round(item.taxRate3, 3);
       double lineTotal = qty * cost;
 
       if (itemDiscount != 0) {
@@ -181,6 +183,9 @@ abstract class CalculateInvoiceTotal {
       }
       if (taxRate2 != 0) {
         itemTax += round(lineTotal * taxRate2 / 100, precision);
+      }
+      if (taxRate3 != 0) {
+        itemTax += round(lineTotal * taxRate3 / 100, precision);
       }
     });
 
