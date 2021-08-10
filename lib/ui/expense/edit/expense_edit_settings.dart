@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -284,37 +285,38 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 })
           ],
         ),
-        if (company.numberOfItemTaxRates > 0)
-          FormCard(
-            padding: isFullscreen
-                ? const EdgeInsets.only(
-                    left: kMobileDialogPadding / 2,
-                    top: kMobileDialogPadding,
-                    right: kMobileDialogPadding,
-                  )
-                : null,
-            children: [
-              BoolDropdownButton(
-                label: localization.enterTaxes,
-                enabledLabel: localization.byAmount,
-                disabledLabel: localization.byRate,
-                value: expense.calculateTaxByAmount ?? false,
-                onChanged: (value) => viewModel.onChanged(
-                    expense.rebuild((b) => b..calculateTaxByAmount = value)),
-                minWidth: 80,
-              ),
-              SizedBox(height: 16),
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.inclusiveTaxes),
-                value: expense.usesInclusiveTaxes,
-                subtitle: Text(
-                    '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
-                onChanged: (value) => viewModel.onChanged(
-                    expense.rebuild((b) => b..usesInclusiveTaxes = value)),
-              ),
-            ],
-          ),
+        FormCard(
+          padding: isFullscreen
+              ? const EdgeInsets.only(
+                  left: kMobileDialogPadding / 2,
+                  top: kMobileDialogPadding,
+                  right: kMobileDialogPadding,
+                )
+              : null,
+          children: company.numberOfItemTaxRates == 0
+              ? [Text(localization.expenseTaxHelp)]
+              : [
+                  BoolDropdownButton(
+                    label: localization.enterTaxes,
+                    enabledLabel: localization.byAmount,
+                    disabledLabel: localization.byRate,
+                    value: expense.calculateTaxByAmount ?? false,
+                    onChanged: (value) => viewModel.onChanged(expense
+                        .rebuild((b) => b..calculateTaxByAmount = value)),
+                    minWidth: 80,
+                  ),
+                  SizedBox(height: 16),
+                  SwitchListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.inclusiveTaxes),
+                    value: expense.usesInclusiveTaxes,
+                    subtitle: Text(
+                        '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
+                    onChanged: (value) => viewModel.onChanged(
+                        expense.rebuild((b) => b..usesInclusiveTaxes = value)),
+                  ),
+                ],
+        ),
       ],
     );
   }

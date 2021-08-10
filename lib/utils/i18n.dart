@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'expense_tax_help': 'Item tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -62470,6 +62471,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enableMarkdownHelp =>
       _localizedValues[localeCode]['enable_markdown_help'] ??
       _localizedValues['en']['enable_markdown_help'];
+
+  String get expenseTaxHelp =>
+      _localizedValues[localeCode]['expense_tax_help'] ??
+      _localizedValues['en']['expense_tax_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
