@@ -559,10 +559,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               const EdgeInsets.only(right: kTableColumnGap),
                           child: TaxRateDropdown(
                             onSelected: (taxRate) => _onChanged(
-                                lineItems[index].rebuild((b) => b
-                                  ..taxName1 = taxRate.name
-                                  ..taxRate1 = taxRate.rate),
-                                index),
+                              lineItems[index].rebuild((b) => b
+                                ..taxName1 = taxRate.name
+                                ..taxRate1 = taxRate.rate),
+                              index,
+                              debounce: false,
+                            ),
                             labelText: null,
                             initialTaxName: lineItems[index].taxName1,
                             initialTaxRate: lineItems[index].taxRate1,
@@ -578,10 +580,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               const EdgeInsets.only(right: kTableColumnGap),
                           child: TaxRateDropdown(
                             onSelected: (taxRate) => _onChanged(
-                                lineItems[index].rebuild((b) => b
-                                  ..taxName2 = taxRate.name
-                                  ..taxRate2 = taxRate.rate),
-                                index),
+                              lineItems[index].rebuild((b) => b
+                                ..taxName2 = taxRate.name
+                                ..taxRate2 = taxRate.rate),
+                              index,
+                              debounce: false,
+                            ),
                             labelText: null,
                             initialTaxName: lineItems[index].taxName2,
                             initialTaxRate: lineItems[index].taxRate2,
@@ -597,10 +601,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               const EdgeInsets.only(right: kTableColumnGap),
                           child: TaxRateDropdown(
                             onSelected: (taxRate) => _onChanged(
-                                lineItems[index].rebuild((b) => b
-                                  ..taxName3 = taxRate.name
-                                  ..taxRate3 = taxRate.rate),
-                                index),
+                              lineItems[index].rebuild((b) => b
+                                ..taxName3 = taxRate.name
+                                ..taxRate3 = taxRate.rate),
+                              index,
+                              debounce: false,
+                            ),
                             labelText: null,
                             initialTaxName: lineItems[index].taxName3,
                             initialTaxRate: lineItems[index].taxRate3,
