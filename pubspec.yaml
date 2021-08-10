@@ -71,8 +71,8 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   test: ^1.6.3
-  #flutter_test:
-  #  sdk: flutter
+  flutter_test:
+    sdk: flutter
   build_runner: ^2.1.0
   built_value_generator: ^8.1.1
   faker: ^2.0.0
