@@ -24,7 +24,10 @@ class GoogleOAuth {
 
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
-        callback(value.idToken, value.accessToken);
+        callback(
+          value.idToken ?? '',
+          value.accessToken ?? '',
+        );
       });
 
       return true;
@@ -38,7 +41,10 @@ class GoogleOAuth {
     final account = await _googleSignIn.signIn();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
-        callback(value.idToken, value.accessToken);
+        callback(
+          value.idToken ?? '',
+          value.accessToken ?? '',
+        );
       });
 
       return true;
