@@ -61,7 +61,7 @@ jobs:
           cp -r ../build/web/* ./public/
           rm ./public/index.html
           git add .
-          git commit -m 'New admin portal [hosted]'
+          #git commit -m 'New admin portal [hosted]'
           git push
           cd ..
 
