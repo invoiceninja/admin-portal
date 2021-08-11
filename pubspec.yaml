@@ -21,6 +21,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  google_sign_in: ^5.0.7
   flutter_redux: ^0.8.2
   redux_logging: ^0.5.0
   http: ^0.13.3
@@ -61,12 +62,10 @@ dependencies:
   draggable_scrollbar: ^0.1.0
   boardview: ^0.2.2
   pointer_interceptor: ^0.9.0
+  contacts_service: ^0.6.1
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
 
-  google_sign_in: ^5.0.7
-  contacts_service: ^0.6.1
-  
 dev_dependencies:
   flutter_driver:
     sdk: flutter
