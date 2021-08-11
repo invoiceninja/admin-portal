@@ -29,15 +29,17 @@ class EntityPresenter {
       return name;
     }
 
-    if (isMobile(context) ||
-        [
+    if ([
           EntityType.client,
           EntityType.vendor,
           EntityType.project,
           EntityType.user,
           EntityType.product,
-        ].contains(entity.entityType)) {
+        ].contains(entity.entityType) ||
+        isMobile(context)) {
       return name;
+    } else if (isMobile(context)) {
+      return '$type $name';
     } else {
       return '$type  ›  $name';
     }
