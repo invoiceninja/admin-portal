@@ -23,7 +23,7 @@ const String kTransifexURL =
 const String kSourceCodeBackend =
     'https://github.com/invoiceninja/invoiceninja/tree/v5-stable';
 const String kSourceCodeFrontend =
-    'https://github.com/invoiceninja/flutter-client';
+    'https://github.com/invoiceninja/admin-portal';
 const String kSourceCodeFrontendSDK = 'https://pub.dev/packages/invoiceninja';
 
 const String kAppleStoreUrl =
