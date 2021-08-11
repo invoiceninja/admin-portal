@@ -168,7 +168,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                       (client as ClientEntity)?.settings?.currencyId ??
                           company.currencyId;
                   viewModel.onChanged(expense.rebuild((b) => b
-                    ..clientId = client?.id
+                    ..clientId = client?.id ?? ''
                     ..invoiceCurrencyId = currencyId));
                 },
                 onAddPressed: (completer) {
@@ -249,17 +249,17 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 TaxRateDropdown(
                   onSelected: (taxRate) =>
                       viewModel.onChanged(expense.rebuild((b) => b
-                        ..taxRate3 = taxRate.rate
-                        ..taxName3 = taxRate.name)),
+                        ..taxRate2 = taxRate.rate
+                        ..taxName2 = taxRate.name)),
                   labelText: localization.tax,
-                  initialTaxName: expense.taxName3,
-                  initialTaxRate: expense.taxRate3,
+                  initialTaxName: expense.taxName2,
+                  initialTaxRate: expense.taxRate2,
                 ),
             if (company.enableThirdItemTaxRate || expense.taxName3.isNotEmpty)
               if (expense.calculateTaxByAmount == true)
                 TaxRateField(
-                  initialTaxAmount: expense.taxAmount1,
-                  initialTaxName: expense.taxName1,
+                  initialTaxAmount: expense.taxAmount3,
+                  initialTaxName: expense.taxName3,
                   onNameChanged: (name) => viewModel
                       .onChanged(expense.rebuild((b) => b..taxName3 = name)),
                   onAmountChanged: (amount) => viewModel.onChanged(

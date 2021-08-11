@@ -544,13 +544,7 @@ abstract class ExpenseEntity extends Object
   }
 
   @override
-  String get listDisplayName {
-    if (publicNotes != null && publicNotes.isNotEmpty) {
-      return publicNotes;
-    } else {
-      return number ?? '';
-    }
-  }
+  String get listDisplayName => number ?? '';
 
   bool isBetween(String startDate, String endDate) {
     return (startDate ?? '').compareTo(date ?? '') <= 0 &&

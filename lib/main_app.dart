@@ -118,8 +118,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     bool authenticated = false;
 
     try {
-      authenticated = await LocalAuthentication().authenticateWithBiometrics(
+      authenticated = await LocalAuthentication().authenticate(
           localizedReason: 'Please authenticate to access the app',
+          biometricOnly: true,
           useErrorDialogs: true,
           stickyAuth: false);
     } catch (e) {

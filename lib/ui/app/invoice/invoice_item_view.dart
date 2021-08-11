@@ -50,6 +50,12 @@ class InvoiceItemListTile extends StatelessWidget {
       subtitle += ' • $taxRate2 ${invoiceItem.taxName2}';
     }
 
+    if (invoiceItem.taxRate3 != 0) {
+      final taxRate3 = formatNumber(invoiceItem.taxRate3, context,
+          formatNumberType: FormatNumberType.percent);
+      subtitle += ' • $taxRate3 ${invoiceItem.taxName3}';
+    }
+
     final List<String> parts = [];
     if (invoiceItem.customValue1.isNotEmpty) {
       parts.add(formatCustomValue(

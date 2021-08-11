@@ -94,7 +94,7 @@ ReportResult creditReport(
 
   for (var creditId in creditMap.keys) {
     final credit = creditMap[creditId];
-    final client = clientMap[credit.clientId];
+    final client = clientMap[credit.clientId] ?? ClientEntity();
     if (credit.isDraft || credit.isDeleted || client.isDeleted) {
       continue;
     }

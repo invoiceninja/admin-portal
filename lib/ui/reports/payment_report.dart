@@ -75,8 +75,8 @@ ReportResult paymentReport(
   }
 
   for (var paymentId in paymentMap.keys) {
-    final payment = paymentMap[paymentId];
-    final client = clientMap[payment.clientId];
+    final payment = paymentMap[paymentId] ?? PaymentEntity();
+    final client = clientMap[payment.clientId] ?? ClientEntity();
 
     if (payment.isDeleted || client.isDeleted) {
       continue;

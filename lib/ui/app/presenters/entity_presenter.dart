@@ -34,6 +34,7 @@ class EntityPresenter {
       EntityType.vendor,
       EntityType.project,
       EntityType.user,
+      EntityType.product,
     ].contains(entity.entityType)) {
       return name;
     } else if (isMobile(context)) {

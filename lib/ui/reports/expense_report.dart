@@ -99,9 +99,9 @@ ReportResult expenseReport(
 
   for (var expenseId in expenseMap.keys) {
     final expense = expenseMap[expenseId];
-    final client = clientMap[expense.clientId];
-    final invoice = invoiceMap[expense.invoiceId];
-    final vendor = vendorMap[expense.vendorId];
+    final client = clientMap[expense.clientId] ?? ClientEntity();
+    final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
+    final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
 
     if (expense.isDeleted) {
       continue;

@@ -123,12 +123,12 @@ class DeviceSettingsVM {
             (BuildContext context, bool value) async {
           bool authenticated = false;
           try {
-            authenticated = await LocalAuthentication()
-                .authenticateWithBiometrics(
-                    localizedReason:
-                        AppLocalization.of(context).authenticateToChangeSetting,
-                    useErrorDialogs: true,
-                    stickyAuth: false);
+            authenticated = await LocalAuthentication().authenticate(
+                localizedReason:
+                    AppLocalization.of(context).authenticateToChangeSetting,
+                biometricOnly: true,
+                useErrorDialogs: true,
+                stickyAuth: false);
           } catch (e) {
             print(e);
           }

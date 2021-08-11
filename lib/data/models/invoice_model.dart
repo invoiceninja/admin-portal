@@ -1295,6 +1295,12 @@ abstract class InvoiceItemEntity
       notes.isEmpty &&
       cost == 0 &&
       (quantity == 0 || quantity == 1) &&
+      taxName1.isEmpty &&
+      taxRate1 == 0 &&
+      taxName2.isEmpty &&
+      taxRate2 == 0 &&
+      taxName3.isEmpty &&
+      taxRate3 == 0 &&
       customValue1.isEmpty &&
       customValue2.isEmpty &&
       customValue3.isEmpty &&

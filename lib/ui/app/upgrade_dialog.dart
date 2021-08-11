@@ -1,3 +1,15 @@
+import 'package:flutter/material.dart';
+
+class UpgradeDialog extends StatelessWidget {
+  const UpgradeDialog({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox();
+  }
+}
+
+/*
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -260,3 +272,4 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     );
   }
 }
+*/

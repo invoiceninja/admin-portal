@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_json_viewer/flutter_json_viewer.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:flutter_json_widget/flutter_json_widget.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -67,7 +67,7 @@ class _StateInspectorState extends State<StateInspector> {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(4),
-                child: JsonViewerWidget(
+                child: JsonViewer(
                   filterJson(data: data, filter: _filter),
                 ),
               ),

@@ -284,37 +284,38 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 })
           ],
         ),
-        if (company.numberOfItemTaxRates > 0)
-          FormCard(
-            padding: isFullscreen
-                ? const EdgeInsets.only(
-                    left: kMobileDialogPadding / 2,
-                    top: kMobileDialogPadding,
-                    right: kMobileDialogPadding,
-                  )
-                : null,
-            children: [
-              BoolDropdownButton(
-                label: localization.enterTaxes,
-                enabledLabel: localization.byAmount,
-                disabledLabel: localization.byRate,
-                value: expense.calculateTaxByAmount ?? false,
-                onChanged: (value) => viewModel.onChanged(
-                    expense.rebuild((b) => b..calculateTaxByAmount = value)),
-                minWidth: 80,
-              ),
-              SizedBox(height: 16),
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.inclusiveTaxes),
-                value: expense.usesInclusiveTaxes,
-                subtitle: Text(
-                    '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
-                onChanged: (value) => viewModel.onChanged(
-                    expense.rebuild((b) => b..usesInclusiveTaxes = value)),
-              ),
-            ],
-          ),
+        FormCard(
+          padding: isFullscreen
+              ? const EdgeInsets.only(
+                  left: kMobileDialogPadding / 2,
+                  top: kMobileDialogPadding,
+                  right: kMobileDialogPadding,
+                )
+              : null,
+          children: company.numberOfItemTaxRates == 0
+              ? [Text(localization.expenseTaxHelp)]
+              : [
+                  BoolDropdownButton(
+                    label: localization.enterTaxes,
+                    enabledLabel: localization.byAmount,
+                    disabledLabel: localization.byRate,
+                    value: expense.calculateTaxByAmount ?? false,
+                    onChanged: (value) => viewModel.onChanged(expense
+                        .rebuild((b) => b..calculateTaxByAmount = value)),
+                    minWidth: 80,
+                  ),
+                  SizedBox(height: 16),
+                  SwitchListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.inclusiveTaxes),
+                    value: expense.usesInclusiveTaxes,
+                    subtitle: Text(
+                        '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
+                    onChanged: (value) => viewModel.onChanged(
+                        expense.rebuild((b) => b..usesInclusiveTaxes = value)),
+                  ),
+                ],
+        ),
       ],
     );
   }

@@ -54,15 +54,10 @@ class DocumentGrid extends StatelessWidget {
                       iconData: Icons.camera_alt,
                       label: localization.takePicture,
                       onPressed: () async {
-                        final permissionStatus =
-                            await [Permission.camera].request();
-                        final permission =
-                            permissionStatus[Permission.camera] ??
-                                PermissionStatus.undetermined;
-
-                        if (permission == PermissionStatus.granted) {
+                        final status = await Permission.camera.status;
+                        if (status == PermissionStatus.granted) {
                           final image = await ImagePicker()
-                              .getImage(source: ImageSource.camera);
+                              .pickImage(source: ImageSource.camera);
                           if (image != null && image.path != null) {
                             final bytes = await image.readAsBytes();
                             final multipartFile = MultipartFile.fromBytes(
@@ -282,7 +277,7 @@ class DocumentPreview extends StatelessWidget {
           fit: BoxFit.cover,
           key: ValueKey(document.preview),
           imageUrl: document.url,
-          imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+          //imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
           httpHeaders: {'X-API-TOKEN': state.credentials.token},
           placeholder: (context, url) => Container(
                 height: height,

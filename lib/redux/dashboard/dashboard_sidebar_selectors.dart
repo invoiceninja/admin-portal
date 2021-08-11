@@ -84,7 +84,9 @@ List<PaymentEntity> _recentPayments({
 }) {
   final payments = <PaymentEntity>[];
   final oneMonthAgo =
-      DateTime.now().subtract(Duration(days: 30)).millisecondsSinceEpoch / 1000;
+      (DateTime.now().subtract(Duration(days: 30)).millisecondsSinceEpoch /
+              1000)
+          .round();
   paymentMap.forEach((index, payment) {
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);

@@ -89,8 +89,8 @@ ReportResult profitAndLossReport(
 
   for (var paymentId in paymentMap.keys) {
     final payment = paymentMap[paymentId];
-    final client = clientMap[payment.clientId];
-    final vendor = vendorMap[payment.vendorId];
+    final client = clientMap[payment.clientId] ?? ClientEntity();
+    final vendor = vendorMap[payment.vendorId] ?? VendorEntity();
 
     bool skip = payment.isDeleted || client.isDeleted;
     final List<ReportElement> row = [];
@@ -177,8 +177,8 @@ ReportResult profitAndLossReport(
 
   for (var expenseId in expenseMap.keys) {
     final expense = expenseMap[expenseId];
-    final client = clientMap[expense.clientId];
-    final vendor = vendorMap[expense.vendorId];
+    final client = clientMap[expense.clientId] ?? ClientEntity();
+    final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
 
     bool skip = expense.isDeleted || (client?.isDeleted ?? false);
     final List<ReportElement> row = [];
