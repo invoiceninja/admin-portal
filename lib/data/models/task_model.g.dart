@@ -43,7 +43,7 @@ class _$TaskListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -87,7 +87,7 @@ class _$TaskItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -110,16 +110,19 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
   Iterable<Object> serialize(Serializers serializers, TaskTime object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
-    if (object.startDate != null) {
+    Object value;
+    value = object.startDate;
+    if (value != null) {
       result
         ..add('startDate')
-        ..add(serializers.serialize(object.startDate,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
-    if (object.endDate != null) {
+    value = object.endDate;
+    if (value != null) {
       result
         ..add('endDate')
-        ..add(serializers.serialize(object.endDate,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
     return result;
@@ -134,7 +137,7 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'startDate':
           result.startDate = serializers.deserialize(value,
@@ -215,40 +218,46 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.statusOrder != null) {
+    Object value;
+    value = object.statusOrder;
+    if (value != null) {
       result
         ..add('status_order')
-        ..add(serializers.serialize(object.statusOrder,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.showAsRunning != null) {
+    value = object.showAsRunning;
+    if (value != null) {
       result
         ..add('showAsRunning')
-        ..add(serializers.serialize(object.showAsRunning,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isChanged != null) {
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -263,7 +272,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'description':
           result.description = serializers.deserialize(value,
@@ -379,9 +388,7 @@ class _$TaskListResponse extends TaskListResponse {
       (new TaskListResponseBuilder()..update(updates)).build();
 
   _$TaskListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('TaskListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'TaskListResponse', 'data');
   }
 
   @override
@@ -423,8 +430,9 @@ class TaskListResponseBuilder
   TaskListResponseBuilder();
 
   TaskListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -432,9 +440,7 @@ class TaskListResponseBuilder
 
   @override
   void replace(TaskListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskListResponse;
   }
 
@@ -473,9 +479,7 @@ class _$TaskItemResponse extends TaskItemResponse {
       (new TaskItemResponseBuilder()..update(updates)).build();
 
   _$TaskItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('TaskItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'TaskItemResponse', 'data');
   }
 
   @override
@@ -516,8 +520,9 @@ class TaskItemResponseBuilder
   TaskItemResponseBuilder();
 
   TaskItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -525,9 +530,7 @@ class TaskItemResponseBuilder
 
   @override
   void replace(TaskItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskItemResponse;
   }
 
@@ -613,9 +616,10 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
   TaskTimeBuilder();
 
   TaskTimeBuilder get _$this {
-    if (_$v != null) {
-      _startDate = _$v.startDate;
-      _endDate = _$v.endDate;
+    final $v = _$v;
+    if ($v != null) {
+      _startDate = $v.startDate;
+      _endDate = $v.endDate;
       _$v = null;
     }
     return this;
@@ -623,9 +627,7 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
 
   @override
   void replace(TaskTime other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskTime;
   }
 
@@ -722,60 +724,30 @@ class _$TaskEntity extends TaskEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (description == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'description');
-    }
-    if (number == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'number');
-    }
-    if (duration == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'duration');
-    }
-    if (invoiceId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'invoiceId');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'clientId');
-    }
-    if (rate == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'rate');
-    }
-    if (projectId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'projectId');
-    }
-    if (timeLog == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'timeLog');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'customValue4');
-    }
-    if (statusId == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'statusId');
-    }
-    if (documents == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'documents');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        description, 'TaskEntity', 'description');
+    BuiltValueNullFieldError.checkNotNull(number, 'TaskEntity', 'number');
+    BuiltValueNullFieldError.checkNotNull(duration, 'TaskEntity', 'duration');
+    BuiltValueNullFieldError.checkNotNull(invoiceId, 'TaskEntity', 'invoiceId');
+    BuiltValueNullFieldError.checkNotNull(clientId, 'TaskEntity', 'clientId');
+    BuiltValueNullFieldError.checkNotNull(rate, 'TaskEntity', 'rate');
+    BuiltValueNullFieldError.checkNotNull(projectId, 'TaskEntity', 'projectId');
+    BuiltValueNullFieldError.checkNotNull(timeLog, 'TaskEntity', 'timeLog');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'TaskEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'TaskEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'TaskEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'TaskEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(statusId, 'TaskEntity', 'statusId');
+    BuiltValueNullFieldError.checkNotNull(documents, 'TaskEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(createdAt, 'TaskEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(updatedAt, 'TaskEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'TaskEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'TaskEntity', 'id');
   }
 
   @override
@@ -998,31 +970,32 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   }
 
   TaskEntityBuilder get _$this {
-    if (_$v != null) {
-      _description = _$v.description;
-      _number = _$v.number;
-      _duration = _$v.duration;
-      _invoiceId = _$v.invoiceId;
-      _clientId = _$v.clientId;
-      _rate = _$v.rate;
-      _projectId = _$v.projectId;
-      _timeLog = _$v.timeLog;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _statusId = _$v.statusId;
-      _statusOrder = _$v.statusOrder;
-      _documents = _$v.documents?.toBuilder();
-      _showAsRunning = _$v.showAsRunning;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _description = $v.description;
+      _number = $v.number;
+      _duration = $v.duration;
+      _invoiceId = $v.invoiceId;
+      _clientId = $v.clientId;
+      _rate = $v.rate;
+      _projectId = $v.projectId;
+      _timeLog = $v.timeLog;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _statusId = $v.statusId;
+      _statusOrder = $v.statusOrder;
+      _documents = $v.documents.toBuilder();
+      _showAsRunning = $v.showAsRunning;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1030,9 +1003,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
 
   @override
   void replace(TaskEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskEntity;
   }
 
@@ -1047,30 +1018,39 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
     try {
       _$result = _$v ??
           new _$TaskEntity._(
-              description: description,
-              number: number,
-              duration: duration,
-              invoiceId: invoiceId,
-              clientId: clientId,
-              rate: rate,
-              projectId: projectId,
-              timeLog: timeLog,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
-              statusId: statusId,
+              description: BuiltValueNullFieldError.checkNotNull(
+                  description, 'TaskEntity', 'description'),
+              number: BuiltValueNullFieldError.checkNotNull(
+                  number, 'TaskEntity', 'number'),
+              duration: BuiltValueNullFieldError.checkNotNull(
+                  duration, 'TaskEntity', 'duration'),
+              invoiceId: BuiltValueNullFieldError.checkNotNull(
+                  invoiceId, 'TaskEntity', 'invoiceId'),
+              clientId: BuiltValueNullFieldError.checkNotNull(
+                  clientId, 'TaskEntity', 'clientId'),
+              rate: BuiltValueNullFieldError.checkNotNull(
+                  rate, 'TaskEntity', 'rate'),
+              projectId: BuiltValueNullFieldError.checkNotNull(
+                  projectId, 'TaskEntity', 'projectId'),
+              timeLog: BuiltValueNullFieldError.checkNotNull(
+                  timeLog, 'TaskEntity', 'timeLog'),
+              customValue1:
+                  BuiltValueNullFieldError.checkNotNull(customValue1, 'TaskEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'TaskEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'TaskEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'TaskEntity', 'customValue4'),
+              statusId: BuiltValueNullFieldError.checkNotNull(statusId, 'TaskEntity', 'statusId'),
               statusOrder: statusOrder,
               documents: documents.build(),
               showAsRunning: showAsRunning,
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'TaskEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'TaskEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'TaskEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'TaskEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1087,4 +1067,4 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

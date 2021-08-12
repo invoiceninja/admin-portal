@@ -49,7 +49,7 @@ class _$StaticDataListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -97,7 +97,7 @@ class _$StaticDataItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -185,7 +185,7 @@ class _$StaticDataEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'currencies':
           result.currencies.replace(serializers.deserialize(value,
@@ -298,7 +298,7 @@ class _$TemplateEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'subject':
           result.subject = serializers.deserialize(value,
@@ -324,9 +324,8 @@ class _$StaticDataListResponse extends StaticDataListResponse {
       (new StaticDataListResponseBuilder()..update(updates)).build();
 
   _$StaticDataListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('StaticDataListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'StaticDataListResponse', 'data');
   }
 
   @override
@@ -370,8 +369,9 @@ class StaticDataListResponseBuilder
   StaticDataListResponseBuilder();
 
   StaticDataListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -379,9 +379,7 @@ class StaticDataListResponseBuilder
 
   @override
   void replace(StaticDataListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StaticDataListResponse;
   }
 
@@ -420,9 +418,8 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
       (new StaticDataItemResponseBuilder()..update(updates)).build();
 
   _$StaticDataItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('StaticDataItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'StaticDataItemResponse', 'data');
   }
 
   @override
@@ -466,8 +463,9 @@ class StaticDataItemResponseBuilder
   StaticDataItemResponseBuilder();
 
   StaticDataItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -475,9 +473,7 @@ class StaticDataItemResponseBuilder
 
   @override
   void replace(StaticDataItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StaticDataItemResponse;
   }
 
@@ -551,42 +547,29 @@ class _$StaticDataEntity extends StaticDataEntity {
       this.invoiceStatus,
       this.templates})
       : super._() {
-    if (currencies == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'currencies');
-    }
-    if (sizes == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'sizes');
-    }
-    if (industries == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'industries');
-    }
-    if (timezones == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'timezones');
-    }
-    if (gateways == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'gateways');
-    }
-    if (dateFormats == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'dateFormats');
-    }
-    if (datetimeFormats == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'datetimeFormats');
-    }
-    if (languages == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'languages');
-    }
-    if (paymentTypes == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'paymentTypes');
-    }
-    if (countries == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'countries');
-    }
-    if (invoiceStatus == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'invoiceStatus');
-    }
-    if (templates == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'templates');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        currencies, 'StaticDataEntity', 'currencies');
+    BuiltValueNullFieldError.checkNotNull(sizes, 'StaticDataEntity', 'sizes');
+    BuiltValueNullFieldError.checkNotNull(
+        industries, 'StaticDataEntity', 'industries');
+    BuiltValueNullFieldError.checkNotNull(
+        timezones, 'StaticDataEntity', 'timezones');
+    BuiltValueNullFieldError.checkNotNull(
+        gateways, 'StaticDataEntity', 'gateways');
+    BuiltValueNullFieldError.checkNotNull(
+        dateFormats, 'StaticDataEntity', 'dateFormats');
+    BuiltValueNullFieldError.checkNotNull(
+        datetimeFormats, 'StaticDataEntity', 'datetimeFormats');
+    BuiltValueNullFieldError.checkNotNull(
+        languages, 'StaticDataEntity', 'languages');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentTypes, 'StaticDataEntity', 'paymentTypes');
+    BuiltValueNullFieldError.checkNotNull(
+        countries, 'StaticDataEntity', 'countries');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceStatus, 'StaticDataEntity', 'invoiceStatus');
+    BuiltValueNullFieldError.checkNotNull(
+        templates, 'StaticDataEntity', 'templates');
   }
 
   @override
@@ -739,19 +722,20 @@ class StaticDataEntityBuilder
   StaticDataEntityBuilder();
 
   StaticDataEntityBuilder get _$this {
-    if (_$v != null) {
-      _currencies = _$v.currencies?.toBuilder();
-      _sizes = _$v.sizes?.toBuilder();
-      _industries = _$v.industries?.toBuilder();
-      _timezones = _$v.timezones?.toBuilder();
-      _gateways = _$v.gateways?.toBuilder();
-      _dateFormats = _$v.dateFormats?.toBuilder();
-      _datetimeFormats = _$v.datetimeFormats?.toBuilder();
-      _languages = _$v.languages?.toBuilder();
-      _paymentTypes = _$v.paymentTypes?.toBuilder();
-      _countries = _$v.countries?.toBuilder();
-      _invoiceStatus = _$v.invoiceStatus?.toBuilder();
-      _templates = _$v.templates?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _currencies = $v.currencies.toBuilder();
+      _sizes = $v.sizes.toBuilder();
+      _industries = $v.industries.toBuilder();
+      _timezones = $v.timezones.toBuilder();
+      _gateways = $v.gateways.toBuilder();
+      _dateFormats = $v.dateFormats.toBuilder();
+      _datetimeFormats = $v.datetimeFormats.toBuilder();
+      _languages = $v.languages.toBuilder();
+      _paymentTypes = $v.paymentTypes.toBuilder();
+      _countries = $v.countries.toBuilder();
+      _invoiceStatus = $v.invoiceStatus.toBuilder();
+      _templates = $v.templates.toBuilder();
       _$v = null;
     }
     return this;
@@ -759,9 +743,7 @@ class StaticDataEntityBuilder
 
   @override
   void replace(StaticDataEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StaticDataEntity;
   }
 
@@ -836,12 +818,8 @@ class _$TemplateEntity extends TemplateEntity {
       (new TemplateEntityBuilder()..update(updates)).build();
 
   _$TemplateEntity._({this.subject, this.body}) : super._() {
-    if (subject == null) {
-      throw new BuiltValueNullFieldError('TemplateEntity', 'subject');
-    }
-    if (body == null) {
-      throw new BuiltValueNullFieldError('TemplateEntity', 'body');
-    }
+    BuiltValueNullFieldError.checkNotNull(subject, 'TemplateEntity', 'subject');
+    BuiltValueNullFieldError.checkNotNull(body, 'TemplateEntity', 'body');
   }
 
   @override
@@ -890,9 +868,10 @@ class TemplateEntityBuilder
   TemplateEntityBuilder();
 
   TemplateEntityBuilder get _$this {
-    if (_$v != null) {
-      _subject = _$v.subject;
-      _body = _$v.body;
+    final $v = _$v;
+    if ($v != null) {
+      _subject = $v.subject;
+      _body = $v.body;
       _$v = null;
     }
     return this;
@@ -900,9 +879,7 @@ class TemplateEntityBuilder
 
   @override
   void replace(TemplateEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TemplateEntity;
   }
 
@@ -913,11 +890,15 @@ class TemplateEntityBuilder
 
   @override
   _$TemplateEntity build() {
-    final _$result =
-        _$v ?? new _$TemplateEntity._(subject: subject, body: body);
+    final _$result = _$v ??
+        new _$TemplateEntity._(
+            subject: BuiltValueNullFieldError.checkNotNull(
+                subject, 'TemplateEntity', 'subject'),
+            body: BuiltValueNullFieldError.checkNotNull(
+                body, 'TemplateEntity', 'body'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -45,7 +45,7 @@ class _$ClientListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -89,7 +89,7 @@ class _$ClientItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -248,34 +248,39 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.loadedAt != null) {
+    Object value;
+    value = object.loadedAt;
+    if (value != null) {
       result
         ..add('loadedAt')
-        ..add(serializers.serialize(object.loadedAt,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.isChanged != null) {
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -290,7 +295,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'group_settings_id':
           result.groupId = serializers.deserialize(value,
@@ -570,28 +575,33 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -607,7 +617,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'first_name':
           result.firstName = serializers.deserialize(value,
@@ -713,9 +723,7 @@ class _$ClientListResponse extends ClientListResponse {
       (new ClientListResponseBuilder()..update(updates)).build();
 
   _$ClientListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ClientListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'ClientListResponse', 'data');
   }
 
   @override
@@ -759,8 +767,9 @@ class ClientListResponseBuilder
   ClientListResponseBuilder();
 
   ClientListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -768,9 +777,7 @@ class ClientListResponseBuilder
 
   @override
   void replace(ClientListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientListResponse;
   }
 
@@ -809,9 +816,7 @@ class _$ClientItemResponse extends ClientItemResponse {
       (new ClientItemResponseBuilder()..update(updates)).build();
 
   _$ClientItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ClientItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'ClientItemResponse', 'data');
   }
 
   @override
@@ -854,8 +859,9 @@ class ClientItemResponseBuilder
   ClientItemResponseBuilder();
 
   ClientItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -863,9 +869,7 @@ class ClientItemResponseBuilder
 
   @override
   void replace(ClientItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientItemResponse;
   }
 
@@ -1049,138 +1053,78 @@ class _$ClientEntity extends ClientEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (groupId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'groupId');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'name');
-    }
-    if (displayName == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'displayName');
-    }
-    if (balance == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'balance');
-    }
-    if (creditBalance == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'creditBalance');
-    }
-    if (paidToDate == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'paidToDate');
-    }
-    if (clientHash == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'clientHash');
-    }
-    if (address1 == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'address1');
-    }
-    if (address2 == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'address2');
-    }
-    if (city == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'city');
-    }
-    if (state == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'state');
-    }
-    if (postalCode == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'postalCode');
-    }
-    if (countryId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'countryId');
-    }
-    if (phone == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'phone');
-    }
-    if (privateNotes == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'privateNotes');
-    }
-    if (publicNotes == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'publicNotes');
-    }
-    if (website == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'website');
-    }
-    if (industryId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'industryId');
-    }
-    if (sizeId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'sizeId');
-    }
-    if (vatNumber == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'vatNumber');
-    }
-    if (idNumber == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'idNumber');
-    }
-    if (number == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'number');
-    }
-    if (shippingAddress1 == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress1');
-    }
-    if (shippingAddress2 == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress2');
-    }
-    if (shippingCity == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'shippingCity');
-    }
-    if (shippingState == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'shippingState');
-    }
-    if (shippingPostalCode == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'shippingPostalCode');
-    }
-    if (shippingCountryId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'shippingCountryId');
-    }
-    if (settings == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'settings');
-    }
-    if (lastLogin == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'lastLogin');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'customValue4');
-    }
-    if (contacts == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'contacts');
-    }
-    if (activities == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'activities');
-    }
-    if (ledger == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'ledger');
-    }
-    if (gatewayTokens == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'gatewayTokens');
-    }
-    if (documents == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'documents');
-    }
-    if (systemLogs == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'systemLogs');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(groupId, 'ClientEntity', 'groupId');
+    BuiltValueNullFieldError.checkNotNull(name, 'ClientEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        displayName, 'ClientEntity', 'displayName');
+    BuiltValueNullFieldError.checkNotNull(balance, 'ClientEntity', 'balance');
+    BuiltValueNullFieldError.checkNotNull(
+        creditBalance, 'ClientEntity', 'creditBalance');
+    BuiltValueNullFieldError.checkNotNull(
+        paidToDate, 'ClientEntity', 'paidToDate');
+    BuiltValueNullFieldError.checkNotNull(
+        clientHash, 'ClientEntity', 'clientHash');
+    BuiltValueNullFieldError.checkNotNull(address1, 'ClientEntity', 'address1');
+    BuiltValueNullFieldError.checkNotNull(address2, 'ClientEntity', 'address2');
+    BuiltValueNullFieldError.checkNotNull(city, 'ClientEntity', 'city');
+    BuiltValueNullFieldError.checkNotNull(state, 'ClientEntity', 'state');
+    BuiltValueNullFieldError.checkNotNull(
+        postalCode, 'ClientEntity', 'postalCode');
+    BuiltValueNullFieldError.checkNotNull(
+        countryId, 'ClientEntity', 'countryId');
+    BuiltValueNullFieldError.checkNotNull(phone, 'ClientEntity', 'phone');
+    BuiltValueNullFieldError.checkNotNull(
+        privateNotes, 'ClientEntity', 'privateNotes');
+    BuiltValueNullFieldError.checkNotNull(
+        publicNotes, 'ClientEntity', 'publicNotes');
+    BuiltValueNullFieldError.checkNotNull(website, 'ClientEntity', 'website');
+    BuiltValueNullFieldError.checkNotNull(
+        industryId, 'ClientEntity', 'industryId');
+    BuiltValueNullFieldError.checkNotNull(sizeId, 'ClientEntity', 'sizeId');
+    BuiltValueNullFieldError.checkNotNull(
+        vatNumber, 'ClientEntity', 'vatNumber');
+    BuiltValueNullFieldError.checkNotNull(idNumber, 'ClientEntity', 'idNumber');
+    BuiltValueNullFieldError.checkNotNull(number, 'ClientEntity', 'number');
+    BuiltValueNullFieldError.checkNotNull(
+        shippingAddress1, 'ClientEntity', 'shippingAddress1');
+    BuiltValueNullFieldError.checkNotNull(
+        shippingAddress2, 'ClientEntity', 'shippingAddress2');
+    BuiltValueNullFieldError.checkNotNull(
+        shippingCity, 'ClientEntity', 'shippingCity');
+    BuiltValueNullFieldError.checkNotNull(
+        shippingState, 'ClientEntity', 'shippingState');
+    BuiltValueNullFieldError.checkNotNull(
+        shippingPostalCode, 'ClientEntity', 'shippingPostalCode');
+    BuiltValueNullFieldError.checkNotNull(
+        shippingCountryId, 'ClientEntity', 'shippingCountryId');
+    BuiltValueNullFieldError.checkNotNull(settings, 'ClientEntity', 'settings');
+    BuiltValueNullFieldError.checkNotNull(
+        lastLogin, 'ClientEntity', 'lastLogin');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'ClientEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'ClientEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'ClientEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'ClientEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(contacts, 'ClientEntity', 'contacts');
+    BuiltValueNullFieldError.checkNotNull(
+        activities, 'ClientEntity', 'activities');
+    BuiltValueNullFieldError.checkNotNull(ledger, 'ClientEntity', 'ledger');
+    BuiltValueNullFieldError.checkNotNull(
+        gatewayTokens, 'ClientEntity', 'gatewayTokens');
+    BuiltValueNullFieldError.checkNotNull(
+        documents, 'ClientEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(
+        systemLogs, 'ClientEntity', 'systemLogs');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'ClientEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'ClientEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'ClientEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'ClientEntity', 'id');
   }
 
   @override
@@ -1569,56 +1513,57 @@ class ClientEntityBuilder
   }
 
   ClientEntityBuilder get _$this {
-    if (_$v != null) {
-      _groupId = _$v.groupId;
-      _loadedAt = _$v.loadedAt;
-      _name = _$v.name;
-      _displayName = _$v.displayName;
-      _balance = _$v.balance;
-      _creditBalance = _$v.creditBalance;
-      _paidToDate = _$v.paidToDate;
-      _clientHash = _$v.clientHash;
-      _address1 = _$v.address1;
-      _address2 = _$v.address2;
-      _city = _$v.city;
-      _state = _$v.state;
-      _postalCode = _$v.postalCode;
-      _countryId = _$v.countryId;
-      _phone = _$v.phone;
-      _privateNotes = _$v.privateNotes;
-      _publicNotes = _$v.publicNotes;
-      _website = _$v.website;
-      _industryId = _$v.industryId;
-      _sizeId = _$v.sizeId;
-      _vatNumber = _$v.vatNumber;
-      _idNumber = _$v.idNumber;
-      _number = _$v.number;
-      _shippingAddress1 = _$v.shippingAddress1;
-      _shippingAddress2 = _$v.shippingAddress2;
-      _shippingCity = _$v.shippingCity;
-      _shippingState = _$v.shippingState;
-      _shippingPostalCode = _$v.shippingPostalCode;
-      _shippingCountryId = _$v.shippingCountryId;
-      _settings = _$v.settings?.toBuilder();
-      _lastLogin = _$v.lastLogin;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _contacts = _$v.contacts?.toBuilder();
-      _activities = _$v.activities?.toBuilder();
-      _ledger = _$v.ledger?.toBuilder();
-      _gatewayTokens = _$v.gatewayTokens?.toBuilder();
-      _documents = _$v.documents?.toBuilder();
-      _systemLogs = _$v.systemLogs?.toBuilder();
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _groupId = $v.groupId;
+      _loadedAt = $v.loadedAt;
+      _name = $v.name;
+      _displayName = $v.displayName;
+      _balance = $v.balance;
+      _creditBalance = $v.creditBalance;
+      _paidToDate = $v.paidToDate;
+      _clientHash = $v.clientHash;
+      _address1 = $v.address1;
+      _address2 = $v.address2;
+      _city = $v.city;
+      _state = $v.state;
+      _postalCode = $v.postalCode;
+      _countryId = $v.countryId;
+      _phone = $v.phone;
+      _privateNotes = $v.privateNotes;
+      _publicNotes = $v.publicNotes;
+      _website = $v.website;
+      _industryId = $v.industryId;
+      _sizeId = $v.sizeId;
+      _vatNumber = $v.vatNumber;
+      _idNumber = $v.idNumber;
+      _number = $v.number;
+      _shippingAddress1 = $v.shippingAddress1;
+      _shippingAddress2 = $v.shippingAddress2;
+      _shippingCity = $v.shippingCity;
+      _shippingState = $v.shippingState;
+      _shippingPostalCode = $v.shippingPostalCode;
+      _shippingCountryId = $v.shippingCountryId;
+      _settings = $v.settings.toBuilder();
+      _lastLogin = $v.lastLogin;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _contacts = $v.contacts.toBuilder();
+      _activities = $v.activities.toBuilder();
+      _ledger = $v.ledger.toBuilder();
+      _gatewayTokens = $v.gatewayTokens.toBuilder();
+      _documents = $v.documents.toBuilder();
+      _systemLogs = $v.systemLogs.toBuilder();
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1626,9 +1571,7 @@ class ClientEntityBuilder
 
   @override
   void replace(ClientEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientEntity;
   }
 
@@ -1643,41 +1586,50 @@ class ClientEntityBuilder
     try {
       _$result = _$v ??
           new _$ClientEntity._(
-              groupId: groupId,
+              groupId: BuiltValueNullFieldError.checkNotNull(
+                  groupId, 'ClientEntity', 'groupId'),
               loadedAt: loadedAt,
-              name: name,
-              displayName: displayName,
-              balance: balance,
-              creditBalance: creditBalance,
-              paidToDate: paidToDate,
-              clientHash: clientHash,
-              address1: address1,
-              address2: address2,
-              city: city,
-              state: state,
-              postalCode: postalCode,
-              countryId: countryId,
-              phone: phone,
-              privateNotes: privateNotes,
-              publicNotes: publicNotes,
-              website: website,
-              industryId: industryId,
-              sizeId: sizeId,
-              vatNumber: vatNumber,
-              idNumber: idNumber,
-              number: number,
-              shippingAddress1: shippingAddress1,
-              shippingAddress2: shippingAddress2,
-              shippingCity: shippingCity,
-              shippingState: shippingState,
-              shippingPostalCode: shippingPostalCode,
-              shippingCountryId: shippingCountryId,
+              name: BuiltValueNullFieldError.checkNotNull(
+                  name, 'ClientEntity', 'name'),
+              displayName: BuiltValueNullFieldError.checkNotNull(
+                  displayName, 'ClientEntity', 'displayName'),
+              balance: BuiltValueNullFieldError.checkNotNull(
+                  balance, 'ClientEntity', 'balance'),
+              creditBalance: BuiltValueNullFieldError.checkNotNull(
+                  creditBalance, 'ClientEntity', 'creditBalance'),
+              paidToDate: BuiltValueNullFieldError.checkNotNull(
+                  paidToDate, 'ClientEntity', 'paidToDate'),
+              clientHash: BuiltValueNullFieldError.checkNotNull(
+                  clientHash, 'ClientEntity', 'clientHash'),
+              address1: BuiltValueNullFieldError.checkNotNull(
+                  address1, 'ClientEntity', 'address1'),
+              address2:
+                  BuiltValueNullFieldError.checkNotNull(address2, 'ClientEntity', 'address2'),
+              city: BuiltValueNullFieldError.checkNotNull(city, 'ClientEntity', 'city'),
+              state: BuiltValueNullFieldError.checkNotNull(state, 'ClientEntity', 'state'),
+              postalCode: BuiltValueNullFieldError.checkNotNull(postalCode, 'ClientEntity', 'postalCode'),
+              countryId: BuiltValueNullFieldError.checkNotNull(countryId, 'ClientEntity', 'countryId'),
+              phone: BuiltValueNullFieldError.checkNotNull(phone, 'ClientEntity', 'phone'),
+              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, 'ClientEntity', 'privateNotes'),
+              publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, 'ClientEntity', 'publicNotes'),
+              website: BuiltValueNullFieldError.checkNotNull(website, 'ClientEntity', 'website'),
+              industryId: BuiltValueNullFieldError.checkNotNull(industryId, 'ClientEntity', 'industryId'),
+              sizeId: BuiltValueNullFieldError.checkNotNull(sizeId, 'ClientEntity', 'sizeId'),
+              vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, 'ClientEntity', 'vatNumber'),
+              idNumber: BuiltValueNullFieldError.checkNotNull(idNumber, 'ClientEntity', 'idNumber'),
+              number: BuiltValueNullFieldError.checkNotNull(number, 'ClientEntity', 'number'),
+              shippingAddress1: BuiltValueNullFieldError.checkNotNull(shippingAddress1, 'ClientEntity', 'shippingAddress1'),
+              shippingAddress2: BuiltValueNullFieldError.checkNotNull(shippingAddress2, 'ClientEntity', 'shippingAddress2'),
+              shippingCity: BuiltValueNullFieldError.checkNotNull(shippingCity, 'ClientEntity', 'shippingCity'),
+              shippingState: BuiltValueNullFieldError.checkNotNull(shippingState, 'ClientEntity', 'shippingState'),
+              shippingPostalCode: BuiltValueNullFieldError.checkNotNull(shippingPostalCode, 'ClientEntity', 'shippingPostalCode'),
+              shippingCountryId: BuiltValueNullFieldError.checkNotNull(shippingCountryId, 'ClientEntity', 'shippingCountryId'),
               settings: settings.build(),
-              lastLogin: lastLogin,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
+              lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, 'ClientEntity', 'lastLogin'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'ClientEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ClientEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ClientEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ClientEntity', 'customValue4'),
               contacts: contacts.build(),
               activities: activities.build(),
               ledger: ledger.build(),
@@ -1685,13 +1637,13 @@ class ClientEntityBuilder
               documents: documents.build(),
               systemLogs: systemLogs.build(),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ClientEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ClientEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ClientEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'ClientEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1794,60 +1746,38 @@ class _$ContactEntity extends ContactEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (firstName == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'firstName');
-    }
-    if (lastName == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'lastName');
-    }
-    if (email == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'email');
-    }
-    if (password == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'password');
-    }
-    if (phone == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'phone');
-    }
-    if (contactKey == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'contactKey');
-    }
-    if (isPrimary == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'isPrimary');
-    }
-    if (sendEmail == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'sendEmail');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'customValue4');
-    }
-    if (lastLogin == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'lastLogin');
-    }
-    if (link == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'link');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        firstName, 'ContactEntity', 'firstName');
+    BuiltValueNullFieldError.checkNotNull(
+        lastName, 'ContactEntity', 'lastName');
+    BuiltValueNullFieldError.checkNotNull(email, 'ContactEntity', 'email');
+    BuiltValueNullFieldError.checkNotNull(
+        password, 'ContactEntity', 'password');
+    BuiltValueNullFieldError.checkNotNull(phone, 'ContactEntity', 'phone');
+    BuiltValueNullFieldError.checkNotNull(
+        contactKey, 'ContactEntity', 'contactKey');
+    BuiltValueNullFieldError.checkNotNull(
+        isPrimary, 'ContactEntity', 'isPrimary');
+    BuiltValueNullFieldError.checkNotNull(
+        sendEmail, 'ContactEntity', 'sendEmail');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'ContactEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'ContactEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'ContactEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'ContactEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(
+        lastLogin, 'ContactEntity', 'lastLogin');
+    BuiltValueNullFieldError.checkNotNull(link, 'ContactEntity', 'link');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'ContactEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'ContactEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'ContactEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'ContactEntity', 'id');
   }
 
   @override
@@ -2054,29 +1984,30 @@ class ContactEntityBuilder
   ContactEntityBuilder();
 
   ContactEntityBuilder get _$this {
-    if (_$v != null) {
-      _firstName = _$v.firstName;
-      _lastName = _$v.lastName;
-      _email = _$v.email;
-      _password = _$v.password;
-      _phone = _$v.phone;
-      _contactKey = _$v.contactKey;
-      _isPrimary = _$v.isPrimary;
-      _sendEmail = _$v.sendEmail;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _lastLogin = _$v.lastLogin;
-      _link = _$v.link;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _firstName = $v.firstName;
+      _lastName = $v.lastName;
+      _email = $v.email;
+      _password = $v.password;
+      _phone = $v.phone;
+      _contactKey = $v.contactKey;
+      _isPrimary = $v.isPrimary;
+      _sendEmail = $v.sendEmail;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _lastLogin = $v.lastLogin;
+      _link = $v.link;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -2084,9 +2015,7 @@ class ContactEntityBuilder
 
   @override
   void replace(ContactEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ContactEntity;
   }
 
@@ -2099,31 +2028,41 @@ class ContactEntityBuilder
   _$ContactEntity build() {
     final _$result = _$v ??
         new _$ContactEntity._(
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            phone: phone,
-            contactKey: contactKey,
-            isPrimary: isPrimary,
-            sendEmail: sendEmail,
-            customValue1: customValue1,
-            customValue2: customValue2,
-            customValue3: customValue3,
-            customValue4: customValue4,
-            lastLogin: lastLogin,
-            link: link,
+            firstName: BuiltValueNullFieldError.checkNotNull(
+                firstName, 'ContactEntity', 'firstName'),
+            lastName: BuiltValueNullFieldError.checkNotNull(
+                lastName, 'ContactEntity', 'lastName'),
+            email: BuiltValueNullFieldError.checkNotNull(
+                email, 'ContactEntity', 'email'),
+            password: BuiltValueNullFieldError.checkNotNull(
+                password, 'ContactEntity', 'password'),
+            phone: BuiltValueNullFieldError.checkNotNull(
+                phone, 'ContactEntity', 'phone'),
+            contactKey: BuiltValueNullFieldError.checkNotNull(
+                contactKey, 'ContactEntity', 'contactKey'),
+            isPrimary: BuiltValueNullFieldError.checkNotNull(
+                isPrimary, 'ContactEntity', 'isPrimary'),
+            sendEmail: BuiltValueNullFieldError.checkNotNull(
+                sendEmail, 'ContactEntity', 'sendEmail'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, 'ContactEntity', 'customValue1'),
+            customValue2:
+                BuiltValueNullFieldError.checkNotNull(customValue2, 'ContactEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ContactEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ContactEntity', 'customValue4'),
+            lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, 'ContactEntity', 'lastLogin'),
+            link: BuiltValueNullFieldError.checkNotNull(link, 'ContactEntity', 'link'),
             isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ContactEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ContactEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ContactEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: id);
+            id: BuiltValueNullFieldError.checkNotNull(id, 'ContactEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

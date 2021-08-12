@@ -30,12 +30,13 @@ class EntityPresenter {
     }
 
     if ([
-      EntityType.client,
-      EntityType.vendor,
-      EntityType.project,
-      EntityType.user,
-      EntityType.product,
-    ].contains(entity.entityType)) {
+          EntityType.client,
+          EntityType.vendor,
+          EntityType.project,
+          EntityType.user,
+          EntityType.product,
+        ].contains(entity.entityType) ||
+        isMobile(context)) {
       return name;
     } else if (isMobile(context)) {
       return '$type $name';

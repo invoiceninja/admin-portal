@@ -411,7 +411,7 @@ class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'message':
           result.message = serializers.deserialize(value,
@@ -456,7 +456,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.userCompanies.replace(serializers.deserialize(value,
@@ -502,88 +502,103 @@ class _$ActivityEntitySerializer
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
     ];
-    if (object.clientId != null) {
+    Object value;
+    value = object.clientId;
+    if (value != null) {
       result
         ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.invoiceId != null) {
+    value = object.invoiceId;
+    if (value != null) {
       result
         ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.recurringInvoiceId != null) {
+    value = object.recurringInvoiceId;
+    if (value != null) {
       result
         ..add('recurring_invoice_id')
-        ..add(serializers.serialize(object.recurringInvoiceId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.quoteId != null) {
+    value = object.quoteId;
+    if (value != null) {
       result
         ..add('quote_id')
-        ..add(serializers.serialize(object.quoteId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.paymentId != null) {
+    value = object.paymentId;
+    if (value != null) {
       result
         ..add('payment_id')
-        ..add(serializers.serialize(object.paymentId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.creditId != null) {
+    value = object.creditId;
+    if (value != null) {
       result
         ..add('credit_id')
-        ..add(serializers.serialize(object.creditId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.expenseId != null) {
+    value = object.expenseId;
+    if (value != null) {
       result
         ..add('expense_id')
-        ..add(serializers.serialize(object.expenseId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.isSystem != null) {
+    value = object.isSystem;
+    if (value != null) {
       result
         ..add('is_system')
-        ..add(serializers.serialize(object.isSystem,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.ip != null) {
+    value = object.ip;
+    if (value != null) {
       result
         ..add('ip')
-        ..add(serializers.serialize(object.ip,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.contactId != null) {
+    value = object.contactId;
+    if (value != null) {
       result
         ..add('contact_id')
-        ..add(serializers.serialize(object.contactId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.taskId != null) {
+    value = object.taskId;
+    if (value != null) {
       result
         ..add('task_id')
-        ..add(serializers.serialize(object.taskId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.projectId != null) {
+    value = object.projectId;
+    if (value != null) {
       result
         ..add('project_id')
-        ..add(serializers.serialize(object.projectId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.vendorId != null) {
+    value = object.vendorId;
+    if (value != null) {
       result
         ..add('vendor_id')
-        ..add(serializers.serialize(object.vendorId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.tokenId != null) {
+    value = object.tokenId;
+    if (value != null) {
       result
         ..add('token_id')
-        ..add(serializers.serialize(object.tokenId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -599,7 +614,7 @@ class _$ActivityEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'notes':
           result.notes = serializers.deserialize(value,
@@ -707,22 +722,26 @@ class _$LedgerEntitySerializer implements StructuredSerializer<LedgerEntity> {
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
     ];
-    if (object.invoiceId != null) {
+    Object value;
+    value = object.invoiceId;
+    if (value != null) {
       result
         ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.creditId != null) {
+    value = object.creditId;
+    if (value != null) {
       result
         ..add('credit_id')
-        ..add(serializers.serialize(object.creditId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.paymentId != null) {
+    value = object.paymentId;
+    if (value != null) {
       result
         ..add('payment_id')
-        ..add(serializers.serialize(object.paymentId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -737,7 +756,7 @@ class _$LedgerEntitySerializer implements StructuredSerializer<LedgerEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'notes':
           result.notes = serializers.deserialize(value,
@@ -782,9 +801,7 @@ class _$ErrorMessage extends ErrorMessage {
       (new ErrorMessageBuilder()..update(updates)).build();
 
   _$ErrorMessage._({this.message}) : super._() {
-    if (message == null) {
-      throw new BuiltValueNullFieldError('ErrorMessage', 'message');
-    }
+    BuiltValueNullFieldError.checkNotNull(message, 'ErrorMessage', 'message');
   }
 
   @override
@@ -825,8 +842,9 @@ class ErrorMessageBuilder
   ErrorMessageBuilder();
 
   ErrorMessageBuilder get _$this {
-    if (_$v != null) {
-      _message = _$v.message;
+    final $v = _$v;
+    if ($v != null) {
+      _message = $v.message;
       _$v = null;
     }
     return this;
@@ -834,9 +852,7 @@ class ErrorMessageBuilder
 
   @override
   void replace(ErrorMessage other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ErrorMessage;
   }
 
@@ -847,7 +863,10 @@ class ErrorMessageBuilder
 
   @override
   _$ErrorMessage build() {
-    final _$result = _$v ?? new _$ErrorMessage._(message: message);
+    final _$result = _$v ??
+        new _$ErrorMessage._(
+            message: BuiltValueNullFieldError.checkNotNull(
+                message, 'ErrorMessage', 'message'));
     replace(_$result);
     return _$result;
   }
@@ -863,12 +882,9 @@ class _$LoginResponse extends LoginResponse {
       (new LoginResponseBuilder()..update(updates)).build();
 
   _$LoginResponse._({this.userCompanies, this.static}) : super._() {
-    if (userCompanies == null) {
-      throw new BuiltValueNullFieldError('LoginResponse', 'userCompanies');
-    }
-    if (static == null) {
-      throw new BuiltValueNullFieldError('LoginResponse', 'static');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        userCompanies, 'LoginResponse', 'userCompanies');
+    BuiltValueNullFieldError.checkNotNull(static, 'LoginResponse', 'static');
   }
 
   @override
@@ -920,9 +936,10 @@ class LoginResponseBuilder
   LoginResponseBuilder();
 
   LoginResponseBuilder get _$this {
-    if (_$v != null) {
-      _userCompanies = _$v.userCompanies?.toBuilder();
-      _static = _$v.static?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _userCompanies = $v.userCompanies.toBuilder();
+      _static = $v.static.toBuilder();
       _$v = null;
     }
     return this;
@@ -930,9 +947,7 @@ class LoginResponseBuilder
 
   @override
   void replace(LoginResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LoginResponse;
   }
 
@@ -1030,21 +1045,13 @@ class _$ActivityEntity extends ActivityEntity {
       this.vendorId,
       this.tokenId})
       : super._() {
-    if (notes == null) {
-      throw new BuiltValueNullFieldError('ActivityEntity', 'notes');
-    }
-    if (key == null) {
-      throw new BuiltValueNullFieldError('ActivityEntity', 'key');
-    }
-    if (activityTypeId == null) {
-      throw new BuiltValueNullFieldError('ActivityEntity', 'activityTypeId');
-    }
-    if (userId == null) {
-      throw new BuiltValueNullFieldError('ActivityEntity', 'userId');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ActivityEntity', 'updatedAt');
-    }
+    BuiltValueNullFieldError.checkNotNull(notes, 'ActivityEntity', 'notes');
+    BuiltValueNullFieldError.checkNotNull(key, 'ActivityEntity', 'key');
+    BuiltValueNullFieldError.checkNotNull(
+        activityTypeId, 'ActivityEntity', 'activityTypeId');
+    BuiltValueNullFieldError.checkNotNull(userId, 'ActivityEntity', 'userId');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'ActivityEntity', 'updatedAt');
   }
 
   @override
@@ -1241,26 +1248,27 @@ class ActivityEntityBuilder
   ActivityEntityBuilder();
 
   ActivityEntityBuilder get _$this {
-    if (_$v != null) {
-      _notes = _$v.notes;
-      _key = _$v.key;
-      _activityTypeId = _$v.activityTypeId;
-      _clientId = _$v.clientId;
-      _userId = _$v.userId;
-      _invoiceId = _$v.invoiceId;
-      _recurringInvoiceId = _$v.recurringInvoiceId;
-      _quoteId = _$v.quoteId;
-      _paymentId = _$v.paymentId;
-      _creditId = _$v.creditId;
-      _updatedAt = _$v.updatedAt;
-      _expenseId = _$v.expenseId;
-      _isSystem = _$v.isSystem;
-      _ip = _$v.ip;
-      _contactId = _$v.contactId;
-      _taskId = _$v.taskId;
-      _projectId = _$v.projectId;
-      _vendorId = _$v.vendorId;
-      _tokenId = _$v.tokenId;
+    final $v = _$v;
+    if ($v != null) {
+      _notes = $v.notes;
+      _key = $v.key;
+      _activityTypeId = $v.activityTypeId;
+      _clientId = $v.clientId;
+      _userId = $v.userId;
+      _invoiceId = $v.invoiceId;
+      _recurringInvoiceId = $v.recurringInvoiceId;
+      _quoteId = $v.quoteId;
+      _paymentId = $v.paymentId;
+      _creditId = $v.creditId;
+      _updatedAt = $v.updatedAt;
+      _expenseId = $v.expenseId;
+      _isSystem = $v.isSystem;
+      _ip = $v.ip;
+      _contactId = $v.contactId;
+      _taskId = $v.taskId;
+      _projectId = $v.projectId;
+      _vendorId = $v.vendorId;
+      _tokenId = $v.tokenId;
       _$v = null;
     }
     return this;
@@ -1268,9 +1276,7 @@ class ActivityEntityBuilder
 
   @override
   void replace(ActivityEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ActivityEntity;
   }
 
@@ -1283,17 +1289,22 @@ class ActivityEntityBuilder
   _$ActivityEntity build() {
     final _$result = _$v ??
         new _$ActivityEntity._(
-            notes: notes,
-            key: key,
-            activityTypeId: activityTypeId,
+            notes: BuiltValueNullFieldError.checkNotNull(
+                notes, 'ActivityEntity', 'notes'),
+            key: BuiltValueNullFieldError.checkNotNull(
+                key, 'ActivityEntity', 'key'),
+            activityTypeId: BuiltValueNullFieldError.checkNotNull(
+                activityTypeId, 'ActivityEntity', 'activityTypeId'),
             clientId: clientId,
-            userId: userId,
+            userId: BuiltValueNullFieldError.checkNotNull(
+                userId, 'ActivityEntity', 'userId'),
             invoiceId: invoiceId,
             recurringInvoiceId: recurringInvoiceId,
             quoteId: quoteId,
             paymentId: paymentId,
             creditId: creditId,
-            updatedAt: updatedAt,
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, 'ActivityEntity', 'updatedAt'),
             expenseId: expenseId,
             isSystem: isSystem,
             ip: ip,
@@ -1335,18 +1346,12 @@ class _$LedgerEntity extends LedgerEntity {
       this.creditId,
       this.paymentId})
       : super._() {
-    if (notes == null) {
-      throw new BuiltValueNullFieldError('LedgerEntity', 'notes');
-    }
-    if (balance == null) {
-      throw new BuiltValueNullFieldError('LedgerEntity', 'balance');
-    }
-    if (adjustment == null) {
-      throw new BuiltValueNullFieldError('LedgerEntity', 'adjustment');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('LedgerEntity', 'createdAt');
-    }
+    BuiltValueNullFieldError.checkNotNull(notes, 'LedgerEntity', 'notes');
+    BuiltValueNullFieldError.checkNotNull(balance, 'LedgerEntity', 'balance');
+    BuiltValueNullFieldError.checkNotNull(
+        adjustment, 'LedgerEntity', 'adjustment');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'LedgerEntity', 'createdAt');
   }
 
   @override
@@ -1433,14 +1438,15 @@ class LedgerEntityBuilder
   LedgerEntityBuilder();
 
   LedgerEntityBuilder get _$this {
-    if (_$v != null) {
-      _notes = _$v.notes;
-      _balance = _$v.balance;
-      _adjustment = _$v.adjustment;
-      _createdAt = _$v.createdAt;
-      _invoiceId = _$v.invoiceId;
-      _creditId = _$v.creditId;
-      _paymentId = _$v.paymentId;
+    final $v = _$v;
+    if ($v != null) {
+      _notes = $v.notes;
+      _balance = $v.balance;
+      _adjustment = $v.adjustment;
+      _createdAt = $v.createdAt;
+      _invoiceId = $v.invoiceId;
+      _creditId = $v.creditId;
+      _paymentId = $v.paymentId;
       _$v = null;
     }
     return this;
@@ -1448,9 +1454,7 @@ class LedgerEntityBuilder
 
   @override
   void replace(LedgerEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LedgerEntity;
   }
 
@@ -1463,10 +1467,14 @@ class LedgerEntityBuilder
   _$LedgerEntity build() {
     final _$result = _$v ??
         new _$LedgerEntity._(
-            notes: notes,
-            balance: balance,
-            adjustment: adjustment,
-            createdAt: createdAt,
+            notes: BuiltValueNullFieldError.checkNotNull(
+                notes, 'LedgerEntity', 'notes'),
+            balance: BuiltValueNullFieldError.checkNotNull(
+                balance, 'LedgerEntity', 'balance'),
+            adjustment: BuiltValueNullFieldError.checkNotNull(
+                adjustment, 'LedgerEntity', 'adjustment'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'LedgerEntity', 'createdAt'),
             invoiceId: invoiceId,
             creditId: creditId,
             paymentId: paymentId);
@@ -1475,4 +1483,4 @@ class LedgerEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

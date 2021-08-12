@@ -41,7 +41,7 @@ class _$QuoteListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -85,7 +85,7 @@ class _$QuoteItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -107,9 +107,7 @@ class _$QuoteListResponse extends QuoteListResponse {
       (new QuoteListResponseBuilder()..update(updates)).build();
 
   _$QuoteListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('QuoteListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'QuoteListResponse', 'data');
   }
 
   @override
@@ -151,8 +149,9 @@ class QuoteListResponseBuilder
   QuoteListResponseBuilder();
 
   QuoteListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -160,9 +159,7 @@ class QuoteListResponseBuilder
 
   @override
   void replace(QuoteListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$QuoteListResponse;
   }
 
@@ -201,9 +198,7 @@ class _$QuoteItemResponse extends QuoteItemResponse {
       (new QuoteItemResponseBuilder()..update(updates)).build();
 
   _$QuoteItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('QuoteItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'QuoteItemResponse', 'data');
   }
 
   @override
@@ -244,8 +239,9 @@ class QuoteItemResponseBuilder
   QuoteItemResponseBuilder();
 
   QuoteItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -253,9 +249,7 @@ class QuoteItemResponseBuilder
 
   @override
   void replace(QuoteItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$QuoteItemResponse;
   }
 
@@ -285,4 +279,4 @@ class QuoteItemResponseBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

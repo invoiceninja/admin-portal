@@ -49,7 +49,7 @@ class _$GatewayTokenListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -97,7 +97,7 @@ class _$GatewayTokenItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -152,28 +152,33 @@ class _$GatewayTokenEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -189,7 +194,7 @@ class _$GatewayTokenEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'token':
           result.token = serializers.deserialize(value,
@@ -270,34 +275,39 @@ class _$GatewayTokenMetaEntitySerializer
       Serializers serializers, GatewayTokenMetaEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
-    if (object.brand != null) {
+    Object value;
+    value = object.brand;
+    if (value != null) {
       result
         ..add('brand')
-        ..add(serializers.serialize(object.brand,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.last4 != null) {
+    value = object.last4;
+    if (value != null) {
       result
         ..add('last4')
-        ..add(serializers.serialize(object.last4,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.type != null) {
+    value = object.type;
+    if (value != null) {
       result
         ..add('type')
-        ..add(serializers.serialize(object.type,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.expMonth != null) {
+    value = object.expMonth;
+    if (value != null) {
       result
         ..add('exp_month')
-        ..add(serializers.serialize(object.expMonth,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.expYear != null) {
+    value = object.expYear;
+    if (value != null) {
       result
         ..add('exp_year')
-        ..add(serializers.serialize(object.expYear,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -313,7 +323,7 @@ class _$GatewayTokenMetaEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'brand':
           result.brand = serializers.deserialize(value,
@@ -351,9 +361,8 @@ class _$GatewayTokenListResponse extends GatewayTokenListResponse {
       (new GatewayTokenListResponseBuilder()..update(updates)).build();
 
   _$GatewayTokenListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'GatewayTokenListResponse', 'data');
   }
 
   @override
@@ -398,8 +407,9 @@ class GatewayTokenListResponseBuilder
   GatewayTokenListResponseBuilder();
 
   GatewayTokenListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -407,9 +417,7 @@ class GatewayTokenListResponseBuilder
 
   @override
   void replace(GatewayTokenListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GatewayTokenListResponse;
   }
 
@@ -448,9 +456,8 @@ class _$GatewayTokenItemResponse extends GatewayTokenItemResponse {
       (new GatewayTokenItemResponseBuilder()..update(updates)).build();
 
   _$GatewayTokenItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'GatewayTokenItemResponse', 'data');
   }
 
   @override
@@ -495,8 +502,9 @@ class GatewayTokenItemResponseBuilder
   GatewayTokenItemResponseBuilder();
 
   GatewayTokenItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -504,9 +512,7 @@ class GatewayTokenItemResponseBuilder
 
   @override
   void replace(GatewayTokenItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GatewayTokenItemResponse;
   }
 
@@ -586,38 +592,23 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (token == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'token');
-    }
-    if (customerReference == null) {
-      throw new BuiltValueNullFieldError(
-          'GatewayTokenEntity', 'customerReference');
-    }
-    if (companyGatewayId == null) {
-      throw new BuiltValueNullFieldError(
-          'GatewayTokenEntity', 'companyGatewayId');
-    }
-    if (gatewayTypeId == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'gatewayTypeId');
-    }
-    if (isDefault == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'isDefault');
-    }
-    if (meta == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'meta');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(token, 'GatewayTokenEntity', 'token');
+    BuiltValueNullFieldError.checkNotNull(
+        customerReference, 'GatewayTokenEntity', 'customerReference');
+    BuiltValueNullFieldError.checkNotNull(
+        companyGatewayId, 'GatewayTokenEntity', 'companyGatewayId');
+    BuiltValueNullFieldError.checkNotNull(
+        gatewayTypeId, 'GatewayTokenEntity', 'gatewayTypeId');
+    BuiltValueNullFieldError.checkNotNull(
+        isDefault, 'GatewayTokenEntity', 'isDefault');
+    BuiltValueNullFieldError.checkNotNull(meta, 'GatewayTokenEntity', 'meta');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'GatewayTokenEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'GatewayTokenEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'GatewayTokenEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'GatewayTokenEntity', 'id');
   }
 
   @override
@@ -772,21 +763,22 @@ class GatewayTokenEntityBuilder
   GatewayTokenEntityBuilder();
 
   GatewayTokenEntityBuilder get _$this {
-    if (_$v != null) {
-      _token = _$v.token;
-      _customerReference = _$v.customerReference;
-      _companyGatewayId = _$v.companyGatewayId;
-      _gatewayTypeId = _$v.gatewayTypeId;
-      _isDefault = _$v.isDefault;
-      _meta = _$v.meta?.toBuilder();
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _token = $v.token;
+      _customerReference = $v.customerReference;
+      _companyGatewayId = $v.companyGatewayId;
+      _gatewayTypeId = $v.gatewayTypeId;
+      _isDefault = $v.isDefault;
+      _meta = $v.meta.toBuilder();
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -794,9 +786,7 @@ class GatewayTokenEntityBuilder
 
   @override
   void replace(GatewayTokenEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GatewayTokenEntity;
   }
 
@@ -811,20 +801,28 @@ class GatewayTokenEntityBuilder
     try {
       _$result = _$v ??
           new _$GatewayTokenEntity._(
-              token: token,
-              customerReference: customerReference,
-              companyGatewayId: companyGatewayId,
-              gatewayTypeId: gatewayTypeId,
-              isDefault: isDefault,
+              token: BuiltValueNullFieldError.checkNotNull(
+                  token, 'GatewayTokenEntity', 'token'),
+              customerReference: BuiltValueNullFieldError.checkNotNull(
+                  customerReference, 'GatewayTokenEntity', 'customerReference'),
+              companyGatewayId: BuiltValueNullFieldError.checkNotNull(
+                  companyGatewayId, 'GatewayTokenEntity', 'companyGatewayId'),
+              gatewayTypeId: BuiltValueNullFieldError.checkNotNull(
+                  gatewayTypeId, 'GatewayTokenEntity', 'gatewayTypeId'),
+              isDefault: BuiltValueNullFieldError.checkNotNull(
+                  isDefault, 'GatewayTokenEntity', 'isDefault'),
               meta: meta.build(),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(
+                  createdAt, 'GatewayTokenEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(
+                  updatedAt, 'GatewayTokenEntity', 'updatedAt'),
+              archivedAt:
+                  BuiltValueNullFieldError.checkNotNull(archivedAt, 'GatewayTokenEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'GatewayTokenEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -929,12 +927,13 @@ class GatewayTokenMetaEntityBuilder
   GatewayTokenMetaEntityBuilder();
 
   GatewayTokenMetaEntityBuilder get _$this {
-    if (_$v != null) {
-      _brand = _$v.brand;
-      _last4 = _$v.last4;
-      _type = _$v.type;
-      _expMonth = _$v.expMonth;
-      _expYear = _$v.expYear;
+    final $v = _$v;
+    if ($v != null) {
+      _brand = $v.brand;
+      _last4 = $v.last4;
+      _type = $v.type;
+      _expMonth = $v.expMonth;
+      _expYear = $v.expYear;
       _$v = null;
     }
     return this;
@@ -942,9 +941,7 @@ class GatewayTokenMetaEntityBuilder
 
   @override
   void replace(GatewayTokenMetaEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GatewayTokenMetaEntity;
   }
 
@@ -967,4 +964,4 @@ class GatewayTokenMetaEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

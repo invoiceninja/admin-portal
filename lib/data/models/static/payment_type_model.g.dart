@@ -47,7 +47,7 @@ class _$PaymentTypeListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$PaymentTypeItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -139,7 +139,7 @@ class _$PaymentTypeEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -165,9 +165,8 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
       (new PaymentTypeListResponseBuilder()..update(updates)).build();
 
   _$PaymentTypeListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('PaymentTypeListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'PaymentTypeListResponse', 'data');
   }
 
   @override
@@ -212,8 +211,9 @@ class PaymentTypeListResponseBuilder
   PaymentTypeListResponseBuilder();
 
   PaymentTypeListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -221,9 +221,7 @@ class PaymentTypeListResponseBuilder
 
   @override
   void replace(PaymentTypeListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTypeListResponse;
   }
 
@@ -262,9 +260,8 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
       (new PaymentTypeItemResponseBuilder()..update(updates)).build();
 
   _$PaymentTypeItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('PaymentTypeItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'PaymentTypeItemResponse', 'data');
   }
 
   @override
@@ -309,8 +306,9 @@ class PaymentTypeItemResponseBuilder
   PaymentTypeItemResponseBuilder();
 
   PaymentTypeItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -318,9 +316,7 @@ class PaymentTypeItemResponseBuilder
 
   @override
   void replace(PaymentTypeItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTypeItemResponse;
   }
 
@@ -361,12 +357,8 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
       (new PaymentTypeEntityBuilder()..update(updates)).build();
 
   _$PaymentTypeEntity._({this.name, this.id}) : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('PaymentTypeEntity', 'name');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('PaymentTypeEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'PaymentTypeEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(id, 'PaymentTypeEntity', 'id');
   }
 
   @override
@@ -413,9 +405,10 @@ class PaymentTypeEntityBuilder
   PaymentTypeEntityBuilder();
 
   PaymentTypeEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -423,9 +416,7 @@ class PaymentTypeEntityBuilder
 
   @override
   void replace(PaymentTypeEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTypeEntity;
   }
 
@@ -436,10 +427,15 @@ class PaymentTypeEntityBuilder
 
   @override
   _$PaymentTypeEntity build() {
-    final _$result = _$v ?? new _$PaymentTypeEntity._(name: name, id: id);
+    final _$result = _$v ??
+        new _$PaymentTypeEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'PaymentTypeEntity', 'name'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'PaymentTypeEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

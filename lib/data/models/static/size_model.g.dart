@@ -42,7 +42,7 @@ class _$SizeListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -86,7 +86,7 @@ class _$SizeItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -127,7 +127,7 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -153,9 +153,7 @@ class _$SizeListResponse extends SizeListResponse {
       (new SizeListResponseBuilder()..update(updates)).build();
 
   _$SizeListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('SizeListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'SizeListResponse', 'data');
   }
 
   @override
@@ -197,8 +195,9 @@ class SizeListResponseBuilder
   SizeListResponseBuilder();
 
   SizeListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -206,9 +205,7 @@ class SizeListResponseBuilder
 
   @override
   void replace(SizeListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SizeListResponse;
   }
 
@@ -247,9 +244,7 @@ class _$SizeItemResponse extends SizeItemResponse {
       (new SizeItemResponseBuilder()..update(updates)).build();
 
   _$SizeItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('SizeItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'SizeItemResponse', 'data');
   }
 
   @override
@@ -290,8 +285,9 @@ class SizeItemResponseBuilder
   SizeItemResponseBuilder();
 
   SizeItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -299,9 +295,7 @@ class SizeItemResponseBuilder
 
   @override
   void replace(SizeItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SizeItemResponse;
   }
 
@@ -341,12 +335,8 @@ class _$SizeEntity extends SizeEntity {
       (new SizeEntityBuilder()..update(updates)).build();
 
   _$SizeEntity._({this.name, this.id}) : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('SizeEntity', 'name');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('SizeEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'SizeEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(id, 'SizeEntity', 'id');
   }
 
   @override
@@ -391,9 +381,10 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
   SizeEntityBuilder();
 
   SizeEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -401,9 +392,7 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
 
   @override
   void replace(SizeEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SizeEntity;
   }
 
@@ -414,10 +403,14 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
 
   @override
   _$SizeEntity build() {
-    final _$result = _$v ?? new _$SizeEntity._(name: name, id: id);
+    final _$result = _$v ??
+        new _$SizeEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'SizeEntity', 'name'),
+            id: BuiltValueNullFieldError.checkNotNull(id, 'SizeEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

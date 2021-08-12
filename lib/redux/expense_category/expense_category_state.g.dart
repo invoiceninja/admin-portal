@@ -51,7 +51,7 @@ class _$ExpenseCategoryStateSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'map':
           result.map.replace(serializers.deserialize(value,
@@ -95,23 +95,27 @@ class _$ExpenseCategoryUIStateSerializer
       serializers.serialize(object.tabIndex,
           specifiedType: const FullType(int)),
     ];
-    if (object.editing != null) {
+    Object value;
+    value = object.editing;
+    if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(object.editing,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(ExpenseCategoryEntity)));
     }
-    if (object.selectedId != null) {
+    value = object.selectedId;
+    if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(object.selectedId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.forceSelected != null) {
+    value = object.forceSelected;
+    if (value != null) {
       result
         ..add('forceSelected')
-        ..add(serializers.serialize(object.forceSelected,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
     return result;
   }
@@ -126,7 +130,7 @@ class _$ExpenseCategoryUIStateSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
@@ -167,12 +171,8 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
       (new ExpenseCategoryStateBuilder()..update(updates)).build();
 
   _$ExpenseCategoryState._({this.map, this.list}) : super._() {
-    if (map == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryState', 'map');
-    }
-    if (list == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryState', 'list');
-    }
+    BuiltValueNullFieldError.checkNotNull(map, 'ExpenseCategoryState', 'map');
+    BuiltValueNullFieldError.checkNotNull(list, 'ExpenseCategoryState', 'list');
   }
 
   @override
@@ -223,9 +223,10 @@ class ExpenseCategoryStateBuilder
   ExpenseCategoryStateBuilder();
 
   ExpenseCategoryStateBuilder get _$this {
-    if (_$v != null) {
-      _map = _$v.map?.toBuilder();
-      _list = _$v.list?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _map = $v.map.toBuilder();
+      _list = $v.list.toBuilder();
       _$v = null;
     }
     return this;
@@ -233,9 +234,7 @@ class ExpenseCategoryStateBuilder
 
   @override
   void replace(ExpenseCategoryState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryState;
   }
 
@@ -297,13 +296,10 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
-    if (listUIState == null) {
-      throw new BuiltValueNullFieldError(
-          'ExpenseCategoryUIState', 'listUIState');
-    }
-    if (tabIndex == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryUIState', 'tabIndex');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        listUIState, 'ExpenseCategoryUIState', 'listUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        tabIndex, 'ExpenseCategoryUIState', 'tabIndex');
   }
 
   @override
@@ -399,14 +395,15 @@ class ExpenseCategoryUIStateBuilder
   ExpenseCategoryUIStateBuilder();
 
   ExpenseCategoryUIStateBuilder get _$this {
-    if (_$v != null) {
-      _editing = _$v.editing?.toBuilder();
-      _listUIState = _$v.listUIState?.toBuilder();
-      _selectedId = _$v.selectedId;
-      _forceSelected = _$v.forceSelected;
-      _tabIndex = _$v.tabIndex;
-      _saveCompleter = _$v.saveCompleter;
-      _cancelCompleter = _$v.cancelCompleter;
+    final $v = _$v;
+    if ($v != null) {
+      _editing = $v.editing?.toBuilder();
+      _listUIState = $v.listUIState.toBuilder();
+      _selectedId = $v.selectedId;
+      _forceSelected = $v.forceSelected;
+      _tabIndex = $v.tabIndex;
+      _saveCompleter = $v.saveCompleter;
+      _cancelCompleter = $v.cancelCompleter;
       _$v = null;
     }
     return this;
@@ -414,9 +411,7 @@ class ExpenseCategoryUIStateBuilder
 
   @override
   void replace(ExpenseCategoryUIState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryUIState;
   }
 
@@ -435,7 +430,8 @@ class ExpenseCategoryUIStateBuilder
               listUIState: listUIState.build(),
               selectedId: selectedId,
               forceSelected: forceSelected,
-              tabIndex: tabIndex,
+              tabIndex: BuiltValueNullFieldError.checkNotNull(
+                  tabIndex, 'ExpenseCategoryUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -456,4 +452,4 @@ class ExpenseCategoryUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -47,7 +47,7 @@ class _$ProjectListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$ProjectItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -172,28 +172,33 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -209,7 +214,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -317,9 +322,7 @@ class _$ProjectListResponse extends ProjectListResponse {
       (new ProjectListResponseBuilder()..update(updates)).build();
 
   _$ProjectListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ProjectListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'ProjectListResponse', 'data');
   }
 
   @override
@@ -363,8 +366,9 @@ class ProjectListResponseBuilder
   ProjectListResponseBuilder();
 
   ProjectListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -372,9 +376,7 @@ class ProjectListResponseBuilder
 
   @override
   void replace(ProjectListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProjectListResponse;
   }
 
@@ -413,9 +415,7 @@ class _$ProjectItemResponse extends ProjectItemResponse {
       (new ProjectItemResponseBuilder()..update(updates)).build();
 
   _$ProjectItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ProjectItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'ProjectItemResponse', 'data');
   }
 
   @override
@@ -458,8 +458,9 @@ class ProjectItemResponseBuilder
   ProjectItemResponseBuilder();
 
   ProjectItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -467,9 +468,7 @@ class ProjectItemResponseBuilder
 
   @override
   void replace(ProjectItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProjectItemResponse;
   }
 
@@ -572,60 +571,37 @@ class _$ProjectEntity extends ProjectEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'name');
-    }
-    if (color == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'color');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'clientId');
-    }
-    if (taskRate == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'taskRate');
-    }
-    if (dueDate == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'dueDate');
-    }
-    if (privateNotes == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'privateNotes');
-    }
-    if (publicNotes == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'publicNotes');
-    }
-    if (budgetedHours == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'budgetedHours');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'customValue4');
-    }
-    if (number == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'number');
-    }
-    if (documents == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'documents');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'ProjectEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(color, 'ProjectEntity', 'color');
+    BuiltValueNullFieldError.checkNotNull(
+        clientId, 'ProjectEntity', 'clientId');
+    BuiltValueNullFieldError.checkNotNull(
+        taskRate, 'ProjectEntity', 'taskRate');
+    BuiltValueNullFieldError.checkNotNull(dueDate, 'ProjectEntity', 'dueDate');
+    BuiltValueNullFieldError.checkNotNull(
+        privateNotes, 'ProjectEntity', 'privateNotes');
+    BuiltValueNullFieldError.checkNotNull(
+        publicNotes, 'ProjectEntity', 'publicNotes');
+    BuiltValueNullFieldError.checkNotNull(
+        budgetedHours, 'ProjectEntity', 'budgetedHours');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'ProjectEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'ProjectEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'ProjectEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'ProjectEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(number, 'ProjectEntity', 'number');
+    BuiltValueNullFieldError.checkNotNull(
+        documents, 'ProjectEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'ProjectEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'ProjectEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'ProjectEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'ProjectEntity', 'id');
   }
 
   @override
@@ -837,29 +813,30 @@ class ProjectEntityBuilder
   }
 
   ProjectEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _color = _$v.color;
-      _clientId = _$v.clientId;
-      _taskRate = _$v.taskRate;
-      _dueDate = _$v.dueDate;
-      _privateNotes = _$v.privateNotes;
-      _publicNotes = _$v.publicNotes;
-      _budgetedHours = _$v.budgetedHours;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _number = _$v.number;
-      _documents = _$v.documents?.toBuilder();
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _color = $v.color;
+      _clientId = $v.clientId;
+      _taskRate = $v.taskRate;
+      _dueDate = $v.dueDate;
+      _privateNotes = $v.privateNotes;
+      _publicNotes = $v.publicNotes;
+      _budgetedHours = $v.budgetedHours;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _number = $v.number;
+      _documents = $v.documents.toBuilder();
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -867,9 +844,7 @@ class ProjectEntityBuilder
 
   @override
   void replace(ProjectEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProjectEntity;
   }
 
@@ -884,28 +859,37 @@ class ProjectEntityBuilder
     try {
       _$result = _$v ??
           new _$ProjectEntity._(
-              name: name,
-              color: color,
-              clientId: clientId,
-              taskRate: taskRate,
-              dueDate: dueDate,
-              privateNotes: privateNotes,
-              publicNotes: publicNotes,
-              budgetedHours: budgetedHours,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
-              number: number,
+              name: BuiltValueNullFieldError.checkNotNull(
+                  name, 'ProjectEntity', 'name'),
+              color: BuiltValueNullFieldError.checkNotNull(
+                  color, 'ProjectEntity', 'color'),
+              clientId: BuiltValueNullFieldError.checkNotNull(
+                  clientId, 'ProjectEntity', 'clientId'),
+              taskRate: BuiltValueNullFieldError.checkNotNull(
+                  taskRate, 'ProjectEntity', 'taskRate'),
+              dueDate: BuiltValueNullFieldError.checkNotNull(
+                  dueDate, 'ProjectEntity', 'dueDate'),
+              privateNotes: BuiltValueNullFieldError.checkNotNull(
+                  privateNotes, 'ProjectEntity', 'privateNotes'),
+              publicNotes: BuiltValueNullFieldError.checkNotNull(
+                  publicNotes, 'ProjectEntity', 'publicNotes'),
+              budgetedHours: BuiltValueNullFieldError.checkNotNull(
+                  budgetedHours, 'ProjectEntity', 'budgetedHours'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(
+                  customValue1, 'ProjectEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ProjectEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ProjectEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ProjectEntity', 'customValue4'),
+              number: BuiltValueNullFieldError.checkNotNull(number, 'ProjectEntity', 'number'),
               documents: documents.build(),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ProjectEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ProjectEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ProjectEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'ProjectEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -922,4 +906,4 @@ class ProjectEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

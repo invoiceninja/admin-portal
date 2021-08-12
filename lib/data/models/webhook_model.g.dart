@@ -47,7 +47,7 @@ class _$WebhookListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$WebhookItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -146,28 +146,33 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -183,7 +188,7 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'event_id':
           result.eventId = serializers.deserialize(value,
@@ -254,9 +259,7 @@ class _$WebhookListResponse extends WebhookListResponse {
       (new WebhookListResponseBuilder()..update(updates)).build();
 
   _$WebhookListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('WebhookListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'WebhookListResponse', 'data');
   }
 
   @override
@@ -300,8 +303,9 @@ class WebhookListResponseBuilder
   WebhookListResponseBuilder();
 
   WebhookListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -309,9 +313,7 @@ class WebhookListResponseBuilder
 
   @override
   void replace(WebhookListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookListResponse;
   }
 
@@ -350,9 +352,7 @@ class _$WebhookItemResponse extends WebhookItemResponse {
       (new WebhookItemResponseBuilder()..update(updates)).build();
 
   _$WebhookItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('WebhookItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'WebhookItemResponse', 'data');
   }
 
   @override
@@ -395,8 +395,9 @@ class WebhookItemResponseBuilder
   WebhookItemResponseBuilder();
 
   WebhookItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -404,9 +405,7 @@ class WebhookItemResponseBuilder
 
   @override
   void replace(WebhookItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookItemResponse;
   }
 
@@ -482,33 +481,20 @@ class _$WebhookEntity extends WebhookEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (eventId == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'eventId');
-    }
-    if (targetUrl == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'targetUrl');
-    }
-    if (format == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'format');
-    }
-    if (restMethod == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'restMethod');
-    }
-    if (headers == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'headers');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(eventId, 'WebhookEntity', 'eventId');
+    BuiltValueNullFieldError.checkNotNull(
+        targetUrl, 'WebhookEntity', 'targetUrl');
+    BuiltValueNullFieldError.checkNotNull(format, 'WebhookEntity', 'format');
+    BuiltValueNullFieldError.checkNotNull(
+        restMethod, 'WebhookEntity', 'restMethod');
+    BuiltValueNullFieldError.checkNotNull(headers, 'WebhookEntity', 'headers');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'WebhookEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'WebhookEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'WebhookEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'WebhookEntity', 'id');
   }
 
   @override
@@ -650,20 +636,21 @@ class WebhookEntityBuilder
   }
 
   WebhookEntityBuilder get _$this {
-    if (_$v != null) {
-      _eventId = _$v.eventId;
-      _targetUrl = _$v.targetUrl;
-      _format = _$v.format;
-      _restMethod = _$v.restMethod;
-      _headers = _$v.headers?.toBuilder();
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _eventId = $v.eventId;
+      _targetUrl = $v.targetUrl;
+      _format = $v.format;
+      _restMethod = $v.restMethod;
+      _headers = $v.headers.toBuilder();
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -671,9 +658,7 @@ class WebhookEntityBuilder
 
   @override
   void replace(WebhookEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookEntity;
   }
 
@@ -688,19 +673,27 @@ class WebhookEntityBuilder
     try {
       _$result = _$v ??
           new _$WebhookEntity._(
-              eventId: eventId,
-              targetUrl: targetUrl,
-              format: format,
-              restMethod: restMethod,
+              eventId: BuiltValueNullFieldError.checkNotNull(
+                  eventId, 'WebhookEntity', 'eventId'),
+              targetUrl: BuiltValueNullFieldError.checkNotNull(
+                  targetUrl, 'WebhookEntity', 'targetUrl'),
+              format: BuiltValueNullFieldError.checkNotNull(
+                  format, 'WebhookEntity', 'format'),
+              restMethod: BuiltValueNullFieldError.checkNotNull(
+                  restMethod, 'WebhookEntity', 'restMethod'),
               headers: headers.build(),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(
+                  createdAt, 'WebhookEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(
+                  updatedAt, 'WebhookEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(
+                  archivedAt, 'WebhookEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(
+                  id, 'WebhookEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -717,4 +710,4 @@ class WebhookEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -49,7 +49,7 @@ class _$ExpenseListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -97,7 +97,7 @@ class _$ExpenseItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -223,64 +223,75 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.date != null) {
+    Object value;
+    value = object.date;
+    if (value != null) {
       result
         ..add('date')
-        ..add(serializers.serialize(object.date,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientId != null) {
+    value = object.clientId;
+    if (value != null) {
       result
         ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.invoiceId != null) {
+    value = object.invoiceId;
+    if (value != null) {
       result
         ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.vendorId != null) {
+    value = object.vendorId;
+    if (value != null) {
       result
         ..add('vendor_id')
-        ..add(serializers.serialize(object.vendorId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.projectId != null) {
+    value = object.projectId;
+    if (value != null) {
       result
         ..add('project_id')
-        ..add(serializers.serialize(object.projectId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.calculateTaxByAmount != null) {
+    value = object.calculateTaxByAmount;
+    if (value != null) {
       result
         ..add('calculate_tax_by_amount')
-        ..add(serializers.serialize(object.calculateTaxByAmount,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isChanged != null) {
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -296,7 +307,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
@@ -517,7 +528,7 @@ class _$ExpenseStatusEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -543,9 +554,7 @@ class _$ExpenseListResponse extends ExpenseListResponse {
       (new ExpenseListResponseBuilder()..update(updates)).build();
 
   _$ExpenseListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ExpenseListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'ExpenseListResponse', 'data');
   }
 
   @override
@@ -589,8 +598,9 @@ class ExpenseListResponseBuilder
   ExpenseListResponseBuilder();
 
   ExpenseListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -598,9 +608,7 @@ class ExpenseListResponseBuilder
 
   @override
   void replace(ExpenseListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseListResponse;
   }
 
@@ -639,9 +647,7 @@ class _$ExpenseItemResponse extends ExpenseItemResponse {
       (new ExpenseItemResponseBuilder()..update(updates)).build();
 
   _$ExpenseItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ExpenseItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'ExpenseItemResponse', 'data');
   }
 
   @override
@@ -684,8 +690,9 @@ class ExpenseItemResponseBuilder
   ExpenseItemResponseBuilder();
 
   ExpenseItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -693,9 +700,7 @@ class ExpenseItemResponseBuilder
 
   @override
   void replace(ExpenseItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseItemResponse;
   }
 
@@ -864,109 +869,70 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (privateNotes == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'privateNotes');
-    }
-    if (publicNotes == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'publicNotes');
-    }
-    if (shouldBeInvoiced == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'shouldBeInvoiced');
-    }
-    if (invoiceDocuments == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceDocuments');
-    }
-    if (transactionId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'transactionId');
-    }
-    if (transactionReference == null) {
-      throw new BuiltValueNullFieldError(
-          'ExpenseEntity', 'transactionReference');
-    }
-    if (bankId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'bankId');
-    }
-    if (currencyId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'currencyId');
-    }
-    if (categoryId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'categoryId');
-    }
-    if (amount == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'amount');
-    }
-    if (paymentDate == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'paymentDate');
-    }
-    if (exchangeRate == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'exchangeRate');
-    }
-    if (invoiceCurrencyId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceCurrencyId');
-    }
-    if (paymentTypeId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'paymentTypeId');
-    }
-    if (taxName1 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxName1');
-    }
-    if (taxName2 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxName2');
-    }
-    if (taxRate1 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate1');
-    }
-    if (taxRate2 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate2');
-    }
-    if (taxName3 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxName3');
-    }
-    if (taxRate3 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate3');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue4');
-    }
-    if (taxAmount1 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxAmount1');
-    }
-    if (taxAmount2 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxAmount2');
-    }
-    if (taxAmount3 == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxAmount3');
-    }
-    if (usesInclusiveTaxes == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'usesInclusiveTaxes');
-    }
-    if (documents == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'documents');
-    }
-    if (number == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'number');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        privateNotes, 'ExpenseEntity', 'privateNotes');
+    BuiltValueNullFieldError.checkNotNull(
+        publicNotes, 'ExpenseEntity', 'publicNotes');
+    BuiltValueNullFieldError.checkNotNull(
+        shouldBeInvoiced, 'ExpenseEntity', 'shouldBeInvoiced');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceDocuments, 'ExpenseEntity', 'invoiceDocuments');
+    BuiltValueNullFieldError.checkNotNull(
+        transactionId, 'ExpenseEntity', 'transactionId');
+    BuiltValueNullFieldError.checkNotNull(
+        transactionReference, 'ExpenseEntity', 'transactionReference');
+    BuiltValueNullFieldError.checkNotNull(bankId, 'ExpenseEntity', 'bankId');
+    BuiltValueNullFieldError.checkNotNull(
+        currencyId, 'ExpenseEntity', 'currencyId');
+    BuiltValueNullFieldError.checkNotNull(
+        categoryId, 'ExpenseEntity', 'categoryId');
+    BuiltValueNullFieldError.checkNotNull(amount, 'ExpenseEntity', 'amount');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentDate, 'ExpenseEntity', 'paymentDate');
+    BuiltValueNullFieldError.checkNotNull(
+        exchangeRate, 'ExpenseEntity', 'exchangeRate');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceCurrencyId, 'ExpenseEntity', 'invoiceCurrencyId');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentTypeId, 'ExpenseEntity', 'paymentTypeId');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName1, 'ExpenseEntity', 'taxName1');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName2, 'ExpenseEntity', 'taxName2');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate1, 'ExpenseEntity', 'taxRate1');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate2, 'ExpenseEntity', 'taxRate2');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName3, 'ExpenseEntity', 'taxName3');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate3, 'ExpenseEntity', 'taxRate3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'ExpenseEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'ExpenseEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'ExpenseEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'ExpenseEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(
+        taxAmount1, 'ExpenseEntity', 'taxAmount1');
+    BuiltValueNullFieldError.checkNotNull(
+        taxAmount2, 'ExpenseEntity', 'taxAmount2');
+    BuiltValueNullFieldError.checkNotNull(
+        taxAmount3, 'ExpenseEntity', 'taxAmount3');
+    BuiltValueNullFieldError.checkNotNull(
+        usesInclusiveTaxes, 'ExpenseEntity', 'usesInclusiveTaxes');
+    BuiltValueNullFieldError.checkNotNull(
+        documents, 'ExpenseEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(number, 'ExpenseEntity', 'number');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'ExpenseEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'ExpenseEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'ExpenseEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'ExpenseEntity', 'id');
   }
 
   @override
@@ -1315,51 +1281,52 @@ class ExpenseEntityBuilder
   ExpenseEntityBuilder();
 
   ExpenseEntityBuilder get _$this {
-    if (_$v != null) {
-      _privateNotes = _$v.privateNotes;
-      _publicNotes = _$v.publicNotes;
-      _shouldBeInvoiced = _$v.shouldBeInvoiced;
-      _invoiceDocuments = _$v.invoiceDocuments;
-      _transactionId = _$v.transactionId;
-      _transactionReference = _$v.transactionReference;
-      _bankId = _$v.bankId;
-      _currencyId = _$v.currencyId;
-      _categoryId = _$v.categoryId;
-      _amount = _$v.amount;
-      _date = _$v.date;
-      _paymentDate = _$v.paymentDate;
-      _exchangeRate = _$v.exchangeRate;
-      _invoiceCurrencyId = _$v.invoiceCurrencyId;
-      _paymentTypeId = _$v.paymentTypeId;
-      _taxName1 = _$v.taxName1;
-      _taxName2 = _$v.taxName2;
-      _taxRate1 = _$v.taxRate1;
-      _taxRate2 = _$v.taxRate2;
-      _taxName3 = _$v.taxName3;
-      _taxRate3 = _$v.taxRate3;
-      _clientId = _$v.clientId;
-      _invoiceId = _$v.invoiceId;
-      _vendorId = _$v.vendorId;
-      _projectId = _$v.projectId;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _taxAmount1 = _$v.taxAmount1;
-      _taxAmount2 = _$v.taxAmount2;
-      _taxAmount3 = _$v.taxAmount3;
-      _usesInclusiveTaxes = _$v.usesInclusiveTaxes;
-      _calculateTaxByAmount = _$v.calculateTaxByAmount;
-      _documents = _$v.documents?.toBuilder();
-      _number = _$v.number;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _privateNotes = $v.privateNotes;
+      _publicNotes = $v.publicNotes;
+      _shouldBeInvoiced = $v.shouldBeInvoiced;
+      _invoiceDocuments = $v.invoiceDocuments;
+      _transactionId = $v.transactionId;
+      _transactionReference = $v.transactionReference;
+      _bankId = $v.bankId;
+      _currencyId = $v.currencyId;
+      _categoryId = $v.categoryId;
+      _amount = $v.amount;
+      _date = $v.date;
+      _paymentDate = $v.paymentDate;
+      _exchangeRate = $v.exchangeRate;
+      _invoiceCurrencyId = $v.invoiceCurrencyId;
+      _paymentTypeId = $v.paymentTypeId;
+      _taxName1 = $v.taxName1;
+      _taxName2 = $v.taxName2;
+      _taxRate1 = $v.taxRate1;
+      _taxRate2 = $v.taxRate2;
+      _taxName3 = $v.taxName3;
+      _taxRate3 = $v.taxRate3;
+      _clientId = $v.clientId;
+      _invoiceId = $v.invoiceId;
+      _vendorId = $v.vendorId;
+      _projectId = $v.projectId;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _taxAmount1 = $v.taxAmount1;
+      _taxAmount2 = $v.taxAmount2;
+      _taxAmount3 = $v.taxAmount3;
+      _usesInclusiveTaxes = $v.usesInclusiveTaxes;
+      _calculateTaxByAmount = $v.calculateTaxByAmount;
+      _documents = $v.documents.toBuilder();
+      _number = $v.number;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1367,9 +1334,7 @@ class ExpenseEntityBuilder
 
   @override
   void replace(ExpenseEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseEntity;
   }
 
@@ -1384,50 +1349,57 @@ class ExpenseEntityBuilder
     try {
       _$result = _$v ??
           new _$ExpenseEntity._(
-              privateNotes: privateNotes,
-              publicNotes: publicNotes,
-              shouldBeInvoiced: shouldBeInvoiced,
-              invoiceDocuments: invoiceDocuments,
-              transactionId: transactionId,
-              transactionReference: transactionReference,
-              bankId: bankId,
-              currencyId: currencyId,
-              categoryId: categoryId,
-              amount: amount,
+              privateNotes: BuiltValueNullFieldError.checkNotNull(
+                  privateNotes, 'ExpenseEntity', 'privateNotes'),
+              publicNotes: BuiltValueNullFieldError.checkNotNull(
+                  publicNotes, 'ExpenseEntity', 'publicNotes'),
+              shouldBeInvoiced: BuiltValueNullFieldError.checkNotNull(
+                  shouldBeInvoiced, 'ExpenseEntity', 'shouldBeInvoiced'),
+              invoiceDocuments: BuiltValueNullFieldError.checkNotNull(
+                  invoiceDocuments, 'ExpenseEntity', 'invoiceDocuments'),
+              transactionId: BuiltValueNullFieldError.checkNotNull(
+                  transactionId, 'ExpenseEntity', 'transactionId'),
+              transactionReference: BuiltValueNullFieldError.checkNotNull(
+                  transactionReference, 'ExpenseEntity', 'transactionReference'),
+              bankId: BuiltValueNullFieldError.checkNotNull(
+                  bankId, 'ExpenseEntity', 'bankId'),
+              currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'ExpenseEntity', 'currencyId'),
+              categoryId: BuiltValueNullFieldError.checkNotNull(categoryId, 'ExpenseEntity', 'categoryId'),
+              amount: BuiltValueNullFieldError.checkNotNull(amount, 'ExpenseEntity', 'amount'),
               date: date,
-              paymentDate: paymentDate,
-              exchangeRate: exchangeRate,
-              invoiceCurrencyId: invoiceCurrencyId,
-              paymentTypeId: paymentTypeId,
-              taxName1: taxName1,
-              taxName2: taxName2,
-              taxRate1: taxRate1,
-              taxRate2: taxRate2,
-              taxName3: taxName3,
-              taxRate3: taxRate3,
+              paymentDate: BuiltValueNullFieldError.checkNotNull(paymentDate, 'ExpenseEntity', 'paymentDate'),
+              exchangeRate: BuiltValueNullFieldError.checkNotNull(exchangeRate, 'ExpenseEntity', 'exchangeRate'),
+              invoiceCurrencyId: BuiltValueNullFieldError.checkNotNull(invoiceCurrencyId, 'ExpenseEntity', 'invoiceCurrencyId'),
+              paymentTypeId: BuiltValueNullFieldError.checkNotNull(paymentTypeId, 'ExpenseEntity', 'paymentTypeId'),
+              taxName1: BuiltValueNullFieldError.checkNotNull(taxName1, 'ExpenseEntity', 'taxName1'),
+              taxName2: BuiltValueNullFieldError.checkNotNull(taxName2, 'ExpenseEntity', 'taxName2'),
+              taxRate1: BuiltValueNullFieldError.checkNotNull(taxRate1, 'ExpenseEntity', 'taxRate1'),
+              taxRate2: BuiltValueNullFieldError.checkNotNull(taxRate2, 'ExpenseEntity', 'taxRate2'),
+              taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, 'ExpenseEntity', 'taxName3'),
+              taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, 'ExpenseEntity', 'taxRate3'),
               clientId: clientId,
               invoiceId: invoiceId,
               vendorId: vendorId,
               projectId: projectId,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
-              taxAmount1: taxAmount1,
-              taxAmount2: taxAmount2,
-              taxAmount3: taxAmount3,
-              usesInclusiveTaxes: usesInclusiveTaxes,
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'ExpenseEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ExpenseEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ExpenseEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ExpenseEntity', 'customValue4'),
+              taxAmount1: BuiltValueNullFieldError.checkNotNull(taxAmount1, 'ExpenseEntity', 'taxAmount1'),
+              taxAmount2: BuiltValueNullFieldError.checkNotNull(taxAmount2, 'ExpenseEntity', 'taxAmount2'),
+              taxAmount3: BuiltValueNullFieldError.checkNotNull(taxAmount3, 'ExpenseEntity', 'taxAmount3'),
+              usesInclusiveTaxes: BuiltValueNullFieldError.checkNotNull(usesInclusiveTaxes, 'ExpenseEntity', 'usesInclusiveTaxes'),
               calculateTaxByAmount: calculateTaxByAmount,
               documents: documents.build(),
-              number: number,
+              number: BuiltValueNullFieldError.checkNotNull(number, 'ExpenseEntity', 'number'),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ExpenseEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ExpenseEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ExpenseEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'ExpenseEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1455,12 +1427,8 @@ class _$ExpenseStatusEntity extends ExpenseStatusEntity {
       (new ExpenseStatusEntityBuilder()..update(updates)).build();
 
   _$ExpenseStatusEntity._({this.id, this.name}) : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ExpenseStatusEntity', 'id');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('ExpenseStatusEntity', 'name');
-    }
+    BuiltValueNullFieldError.checkNotNull(id, 'ExpenseStatusEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(name, 'ExpenseStatusEntity', 'name');
   }
 
   @override
@@ -1508,9 +1476,10 @@ class ExpenseStatusEntityBuilder
   ExpenseStatusEntityBuilder();
 
   ExpenseStatusEntityBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _name = _$v.name;
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _name = $v.name;
       _$v = null;
     }
     return this;
@@ -1518,9 +1487,7 @@ class ExpenseStatusEntityBuilder
 
   @override
   void replace(ExpenseStatusEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseStatusEntity;
   }
 
@@ -1531,10 +1498,15 @@ class ExpenseStatusEntityBuilder
 
   @override
   _$ExpenseStatusEntity build() {
-    final _$result = _$v ?? new _$ExpenseStatusEntity._(id: id, name: name);
+    final _$result = _$v ??
+        new _$ExpenseStatusEntity._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'ExpenseStatusEntity', 'id'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'ExpenseStatusEntity', 'name'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -55,7 +55,7 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'email':
           result.email = serializers.deserialize(value,
@@ -127,30 +127,18 @@ class _$AuthState extends AuthState {
       this.lastEnteredPasswordAt,
       this.referralCode})
       : super._() {
-    if (email == null) {
-      throw new BuiltValueNullFieldError('AuthState', 'email');
-    }
-    if (password == null) {
-      throw new BuiltValueNullFieldError('AuthState', 'password');
-    }
-    if (url == null) {
-      throw new BuiltValueNullFieldError('AuthState', 'url');
-    }
-    if (secret == null) {
-      throw new BuiltValueNullFieldError('AuthState', 'secret');
-    }
-    if (isInitialized == null) {
-      throw new BuiltValueNullFieldError('AuthState', 'isInitialized');
-    }
-    if (isAuthenticated == null) {
-      throw new BuiltValueNullFieldError('AuthState', 'isAuthenticated');
-    }
-    if (lastEnteredPasswordAt == null) {
-      throw new BuiltValueNullFieldError('AuthState', 'lastEnteredPasswordAt');
-    }
-    if (referralCode == null) {
-      throw new BuiltValueNullFieldError('AuthState', 'referralCode');
-    }
+    BuiltValueNullFieldError.checkNotNull(email, 'AuthState', 'email');
+    BuiltValueNullFieldError.checkNotNull(password, 'AuthState', 'password');
+    BuiltValueNullFieldError.checkNotNull(url, 'AuthState', 'url');
+    BuiltValueNullFieldError.checkNotNull(secret, 'AuthState', 'secret');
+    BuiltValueNullFieldError.checkNotNull(
+        isInitialized, 'AuthState', 'isInitialized');
+    BuiltValueNullFieldError.checkNotNull(
+        isAuthenticated, 'AuthState', 'isAuthenticated');
+    BuiltValueNullFieldError.checkNotNull(
+        lastEnteredPasswordAt, 'AuthState', 'lastEnteredPasswordAt');
+    BuiltValueNullFieldError.checkNotNull(
+        referralCode, 'AuthState', 'referralCode');
   }
 
   @override
@@ -249,15 +237,16 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   }
 
   AuthStateBuilder get _$this {
-    if (_$v != null) {
-      _email = _$v.email;
-      _password = _$v.password;
-      _url = _$v.url;
-      _secret = _$v.secret;
-      _isInitialized = _$v.isInitialized;
-      _isAuthenticated = _$v.isAuthenticated;
-      _lastEnteredPasswordAt = _$v.lastEnteredPasswordAt;
-      _referralCode = _$v.referralCode;
+    final $v = _$v;
+    if ($v != null) {
+      _email = $v.email;
+      _password = $v.password;
+      _url = $v.url;
+      _secret = $v.secret;
+      _isInitialized = $v.isInitialized;
+      _isAuthenticated = $v.isAuthenticated;
+      _lastEnteredPasswordAt = $v.lastEnteredPasswordAt;
+      _referralCode = $v.referralCode;
       _$v = null;
     }
     return this;
@@ -265,9 +254,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
 
   @override
   void replace(AuthState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AuthState;
   }
 
@@ -280,17 +267,24 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   _$AuthState build() {
     final _$result = _$v ??
         new _$AuthState._(
-            email: email,
-            password: password,
-            url: url,
-            secret: secret,
-            isInitialized: isInitialized,
-            isAuthenticated: isAuthenticated,
-            lastEnteredPasswordAt: lastEnteredPasswordAt,
-            referralCode: referralCode);
+            email: BuiltValueNullFieldError.checkNotNull(
+                email, 'AuthState', 'email'),
+            password: BuiltValueNullFieldError.checkNotNull(
+                password, 'AuthState', 'password'),
+            url: BuiltValueNullFieldError.checkNotNull(url, 'AuthState', 'url'),
+            secret: BuiltValueNullFieldError.checkNotNull(
+                secret, 'AuthState', 'secret'),
+            isInitialized: BuiltValueNullFieldError.checkNotNull(
+                isInitialized, 'AuthState', 'isInitialized'),
+            isAuthenticated: BuiltValueNullFieldError.checkNotNull(
+                isAuthenticated, 'AuthState', 'isAuthenticated'),
+            lastEnteredPasswordAt: BuiltValueNullFieldError.checkNotNull(
+                lastEnteredPasswordAt, 'AuthState', 'lastEnteredPasswordAt'),
+            referralCode: BuiltValueNullFieldError.checkNotNull(
+                referralCode, 'AuthState', 'referralCode'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

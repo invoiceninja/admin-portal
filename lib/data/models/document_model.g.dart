@@ -47,7 +47,7 @@ class _$DocumentListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$DocumentItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -151,28 +151,33 @@ class _$DocumentEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -188,7 +193,7 @@ class _$DocumentEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -274,9 +279,7 @@ class _$DocumentListResponse extends DocumentListResponse {
       (new DocumentListResponseBuilder()..update(updates)).build();
 
   _$DocumentListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('DocumentListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'DocumentListResponse', 'data');
   }
 
   @override
@@ -320,8 +323,9 @@ class DocumentListResponseBuilder
   DocumentListResponseBuilder();
 
   DocumentListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -329,9 +333,7 @@ class DocumentListResponseBuilder
 
   @override
   void replace(DocumentListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentListResponse;
   }
 
@@ -370,9 +372,7 @@ class _$DocumentItemResponse extends DocumentItemResponse {
       (new DocumentItemResponseBuilder()..update(updates)).build();
 
   _$DocumentItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('DocumentItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'DocumentItemResponse', 'data');
   }
 
   @override
@@ -416,8 +416,9 @@ class DocumentItemResponseBuilder
   DocumentItemResponseBuilder();
 
   DocumentItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -425,9 +426,7 @@ class DocumentItemResponseBuilder
 
   @override
   void replace(DocumentItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentItemResponse;
   }
 
@@ -515,45 +514,23 @@ class _$DocumentEntity extends DocumentEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'name');
-    }
-    if (hash == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'hash');
-    }
-    if (type == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'type');
-    }
-    if (url == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'url');
-    }
-    if (width == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'width');
-    }
-    if (height == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'height');
-    }
-    if (size == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'size');
-    }
-    if (preview == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'preview');
-    }
-    if (isDefault == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'isDefault');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'DocumentEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(hash, 'DocumentEntity', 'hash');
+    BuiltValueNullFieldError.checkNotNull(type, 'DocumentEntity', 'type');
+    BuiltValueNullFieldError.checkNotNull(url, 'DocumentEntity', 'url');
+    BuiltValueNullFieldError.checkNotNull(width, 'DocumentEntity', 'width');
+    BuiltValueNullFieldError.checkNotNull(height, 'DocumentEntity', 'height');
+    BuiltValueNullFieldError.checkNotNull(size, 'DocumentEntity', 'size');
+    BuiltValueNullFieldError.checkNotNull(preview, 'DocumentEntity', 'preview');
+    BuiltValueNullFieldError.checkNotNull(
+        isDefault, 'DocumentEntity', 'isDefault');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'DocumentEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'DocumentEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'DocumentEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'DocumentEntity', 'id');
   }
 
   @override
@@ -727,24 +704,25 @@ class DocumentEntityBuilder
   DocumentEntityBuilder();
 
   DocumentEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _hash = _$v.hash;
-      _type = _$v.type;
-      _url = _$v.url;
-      _width = _$v.width;
-      _height = _$v.height;
-      _size = _$v.size;
-      _preview = _$v.preview;
-      _isDefault = _$v.isDefault;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _hash = $v.hash;
+      _type = $v.type;
+      _url = $v.url;
+      _width = $v.width;
+      _height = $v.height;
+      _size = $v.size;
+      _preview = $v.preview;
+      _isDefault = $v.isDefault;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -752,9 +730,7 @@ class DocumentEntityBuilder
 
   @override
   void replace(DocumentEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentEntity;
   }
 
@@ -767,26 +743,38 @@ class DocumentEntityBuilder
   _$DocumentEntity build() {
     final _$result = _$v ??
         new _$DocumentEntity._(
-            name: name,
-            hash: hash,
-            type: type,
-            url: url,
-            width: width,
-            height: height,
-            size: size,
-            preview: preview,
-            isDefault: isDefault,
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'DocumentEntity', 'name'),
+            hash: BuiltValueNullFieldError.checkNotNull(
+                hash, 'DocumentEntity', 'hash'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, 'DocumentEntity', 'type'),
+            url: BuiltValueNullFieldError.checkNotNull(
+                url, 'DocumentEntity', 'url'),
+            width: BuiltValueNullFieldError.checkNotNull(
+                width, 'DocumentEntity', 'width'),
+            height: BuiltValueNullFieldError.checkNotNull(
+                height, 'DocumentEntity', 'height'),
+            size: BuiltValueNullFieldError.checkNotNull(
+                size, 'DocumentEntity', 'size'),
+            preview: BuiltValueNullFieldError.checkNotNull(
+                preview, 'DocumentEntity', 'preview'),
+            isDefault: BuiltValueNullFieldError.checkNotNull(
+                isDefault, 'DocumentEntity', 'isDefault'),
             isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'DocumentEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, 'DocumentEntity', 'updatedAt'),
+            archivedAt:
+                BuiltValueNullFieldError.checkNotNull(archivedAt, 'DocumentEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: id);
+            id: BuiltValueNullFieldError.checkNotNull(id, 'DocumentEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

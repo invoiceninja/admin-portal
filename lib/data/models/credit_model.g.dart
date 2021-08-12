@@ -41,7 +41,7 @@ class _$CreditListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -85,7 +85,7 @@ class _$CreditItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -107,9 +107,7 @@ class _$CreditListResponse extends CreditListResponse {
       (new CreditListResponseBuilder()..update(updates)).build();
 
   _$CreditListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('CreditListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'CreditListResponse', 'data');
   }
 
   @override
@@ -153,8 +151,9 @@ class CreditListResponseBuilder
   CreditListResponseBuilder();
 
   CreditListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -162,9 +161,7 @@ class CreditListResponseBuilder
 
   @override
   void replace(CreditListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreditListResponse;
   }
 
@@ -203,9 +200,7 @@ class _$CreditItemResponse extends CreditItemResponse {
       (new CreditItemResponseBuilder()..update(updates)).build();
 
   _$CreditItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('CreditItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'CreditItemResponse', 'data');
   }
 
   @override
@@ -248,8 +243,9 @@ class CreditItemResponseBuilder
   CreditItemResponseBuilder();
 
   CreditItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -257,9 +253,7 @@ class CreditItemResponseBuilder
 
   @override
   void replace(CreditItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreditItemResponse;
   }
 
@@ -289,4 +283,4 @@ class CreditItemResponseBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

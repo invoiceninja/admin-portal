@@ -20,1088 +20,1252 @@ class _$SettingsEntitySerializer
   Iterable<Object> serialize(Serializers serializers, SettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
-    if (object.timezoneId != null) {
+    Object value;
+    value = object.timezoneId;
+    if (value != null) {
       result
         ..add('timezone_id')
-        ..add(serializers.serialize(object.timezoneId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.dateFormatId != null) {
+    value = object.dateFormatId;
+    if (value != null) {
       result
         ..add('date_format_id')
-        ..add(serializers.serialize(object.dateFormatId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.enableMilitaryTime != null) {
+    value = object.enableMilitaryTime;
+    if (value != null) {
       result
         ..add('military_time')
-        ..add(serializers.serialize(object.enableMilitaryTime,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.languageId != null) {
+    value = object.languageId;
+    if (value != null) {
       result
         ..add('language_id')
-        ..add(serializers.serialize(object.languageId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.showCurrencyCode != null) {
+    value = object.showCurrencyCode;
+    if (value != null) {
       result
         ..add('show_currency_code')
-        ..add(serializers.serialize(object.showCurrencyCode,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.currencyId != null) {
+    value = object.currencyId;
+    if (value != null) {
       result
         ..add('currency_id')
-        ..add(serializers.serialize(object.currencyId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.customValue1 != null) {
+    value = object.customValue1;
+    if (value != null) {
       result
         ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.customValue2 != null) {
+    value = object.customValue2;
+    if (value != null) {
       result
         ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.customValue3 != null) {
+    value = object.customValue3;
+    if (value != null) {
       result
         ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.customValue4 != null) {
+    value = object.customValue4;
+    if (value != null) {
       result
         ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultPaymentTerms != null) {
+    value = object.defaultPaymentTerms;
+    if (value != null) {
       result
         ..add('payment_terms')
-        ..add(serializers.serialize(object.defaultPaymentTerms,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultValidUntil != null) {
+    value = object.defaultValidUntil;
+    if (value != null) {
       result
         ..add('valid_until')
-        ..add(serializers.serialize(object.defaultValidUntil,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.companyGatewayIds != null) {
+    value = object.companyGatewayIds;
+    if (value != null) {
       result
         ..add('company_gateway_ids')
-        ..add(serializers.serialize(object.companyGatewayIds,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultTaskRate != null) {
+    value = object.defaultTaskRate;
+    if (value != null) {
       result
         ..add('default_task_rate')
-        ..add(serializers.serialize(object.defaultTaskRate,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.sendReminders != null) {
+    value = object.sendReminders;
+    if (value != null) {
       result
         ..add('send_reminders')
-        ..add(serializers.serialize(object.sendReminders,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enablePortal != null) {
+    value = object.enablePortal;
+    if (value != null) {
       result
         ..add('enable_client_portal')
-        ..add(serializers.serialize(object.enablePortal,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enablePortalDashboard != null) {
+    value = object.enablePortalDashboard;
+    if (value != null) {
       result
         ..add('enable_client_portal_dashboard')
-        ..add(serializers.serialize(object.enablePortalDashboard,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enablePortalTasks != null) {
+    value = object.enablePortalTasks;
+    if (value != null) {
       result
         ..add('enable_client_portal_tasks')
-        ..add(serializers.serialize(object.enablePortalTasks,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enablePortalUploads != null) {
+    value = object.enablePortalUploads;
+    if (value != null) {
       result
         ..add('client_portal_enable_uploads')
-        ..add(serializers.serialize(object.enablePortalUploads,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.emailStyle != null) {
+    value = object.emailStyle;
+    if (value != null) {
       result
         ..add('email_style')
-        ..add(serializers.serialize(object.emailStyle,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.replyToEmail != null) {
+    value = object.replyToEmail;
+    if (value != null) {
       result
         ..add('reply_to_email')
-        ..add(serializers.serialize(object.replyToEmail,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.replyToName != null) {
+    value = object.replyToName;
+    if (value != null) {
       result
         ..add('reply_to_name')
-        ..add(serializers.serialize(object.replyToName,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.bccEmail != null) {
+    value = object.bccEmail;
+    if (value != null) {
       result
         ..add('bcc_email')
-        ..add(serializers.serialize(object.bccEmail,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.pdfEmailAttachment != null) {
+    value = object.pdfEmailAttachment;
+    if (value != null) {
       result
         ..add('pdf_email_attachment')
-        ..add(serializers.serialize(object.pdfEmailAttachment,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.ublEmailAttachment != null) {
+    value = object.ublEmailAttachment;
+    if (value != null) {
       result
         ..add('ubl_email_attachment')
-        ..add(serializers.serialize(object.ublEmailAttachment,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.documentEmailAttachment != null) {
+    value = object.documentEmailAttachment;
+    if (value != null) {
       result
         ..add('document_email_attachment')
-        ..add(serializers.serialize(object.documentEmailAttachment,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.emailStyleCustom != null) {
+    value = object.emailStyleCustom;
+    if (value != null) {
       result
         ..add('email_style_custom')
-        ..add(serializers.serialize(object.emailStyleCustom,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.customMessageDashboard != null) {
+    value = object.customMessageDashboard;
+    if (value != null) {
       result
         ..add('custom_message_dashboard')
-        ..add(serializers.serialize(object.customMessageDashboard,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.customMessageUnpaidInvoice != null) {
+    value = object.customMessageUnpaidInvoice;
+    if (value != null) {
       result
         ..add('custom_message_unpaid_invoice')
-        ..add(serializers.serialize(object.customMessageUnpaidInvoice,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.customMessagePaidInvoice != null) {
+    value = object.customMessagePaidInvoice;
+    if (value != null) {
       result
         ..add('custom_message_paid_invoice')
-        ..add(serializers.serialize(object.customMessagePaidInvoice,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.customMessageUnapprovedQuote != null) {
+    value = object.customMessageUnapprovedQuote;
+    if (value != null) {
       result
         ..add('custom_message_unapproved_quote')
-        ..add(serializers.serialize(object.customMessageUnapprovedQuote,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.autoArchiveInvoice != null) {
+    value = object.autoArchiveInvoice;
+    if (value != null) {
       result
         ..add('auto_archive_invoice')
-        ..add(serializers.serialize(object.autoArchiveInvoice,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.autoArchiveQuote != null) {
+    value = object.autoArchiveQuote;
+    if (value != null) {
       result
         ..add('auto_archive_quote')
-        ..add(serializers.serialize(object.autoArchiveQuote,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.autoEmailInvoice != null) {
+    value = object.autoEmailInvoice;
+    if (value != null) {
       result
         ..add('auto_email_invoice')
-        ..add(serializers.serialize(object.autoEmailInvoice,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.autoConvertQuote != null) {
+    value = object.autoConvertQuote;
+    if (value != null) {
       result
         ..add('auto_convert_quote')
-        ..add(serializers.serialize(object.autoConvertQuote,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enableInclusiveTaxes != null) {
+    value = object.enableInclusiveTaxes;
+    if (value != null) {
       result
         ..add('inclusive_taxes')
-        ..add(serializers.serialize(object.enableInclusiveTaxes,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.translations != null) {
+    value = object.translations;
+    if (value != null) {
       result
         ..add('translations')
-        ..add(serializers.serialize(object.translations,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(BuiltMap,
                 const [const FullType(String), const FullType(String)])));
     }
-    if (object.taskNumberPattern != null) {
+    value = object.taskNumberPattern;
+    if (value != null) {
       result
         ..add('task_number_pattern')
-        ..add(serializers.serialize(object.taskNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.taskNumberCounter != null) {
+    value = object.taskNumberCounter;
+    if (value != null) {
       result
         ..add('task_number_counter')
-        ..add(serializers.serialize(object.taskNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.expenseNumberPattern != null) {
+    value = object.expenseNumberPattern;
+    if (value != null) {
       result
         ..add('expense_number_pattern')
-        ..add(serializers.serialize(object.expenseNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.expenseNumberCounter != null) {
+    value = object.expenseNumberCounter;
+    if (value != null) {
       result
         ..add('expense_number_counter')
-        ..add(serializers.serialize(object.expenseNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.vendorNumberPattern != null) {
+    value = object.vendorNumberPattern;
+    if (value != null) {
       result
         ..add('vendor_number_pattern')
-        ..add(serializers.serialize(object.vendorNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.vendorNumberCounter != null) {
+    value = object.vendorNumberCounter;
+    if (value != null) {
       result
         ..add('vendor_number_counter')
-        ..add(serializers.serialize(object.vendorNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.ticketNumberPattern != null) {
+    value = object.ticketNumberPattern;
+    if (value != null) {
       result
         ..add('ticket_number_pattern')
-        ..add(serializers.serialize(object.ticketNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.ticketNumberCounter != null) {
+    value = object.ticketNumberCounter;
+    if (value != null) {
       result
         ..add('ticket_number_counter')
-        ..add(serializers.serialize(object.ticketNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.paymentNumberPattern != null) {
+    value = object.paymentNumberPattern;
+    if (value != null) {
       result
         ..add('payment_number_pattern')
-        ..add(serializers.serialize(object.paymentNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.paymentNumberCounter != null) {
+    value = object.paymentNumberCounter;
+    if (value != null) {
       result
         ..add('payment_number_counter')
-        ..add(serializers.serialize(object.paymentNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.projectNumberPattern != null) {
+    value = object.projectNumberPattern;
+    if (value != null) {
       result
         ..add('project_number_pattern')
-        ..add(serializers.serialize(object.projectNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.projectNumberCounter != null) {
+    value = object.projectNumberCounter;
+    if (value != null) {
       result
         ..add('project_number_counter')
-        ..add(serializers.serialize(object.projectNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.invoiceNumberPattern != null) {
+    value = object.invoiceNumberPattern;
+    if (value != null) {
       result
         ..add('invoice_number_pattern')
-        ..add(serializers.serialize(object.invoiceNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.invoiceNumberCounter != null) {
+    value = object.invoiceNumberCounter;
+    if (value != null) {
       result
         ..add('invoice_number_counter')
-        ..add(serializers.serialize(object.invoiceNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.recurringInvoiceNumberPattern != null) {
+    value = object.recurringInvoiceNumberPattern;
+    if (value != null) {
       result
         ..add('recurring_invoice_number_pattern')
-        ..add(serializers.serialize(object.recurringInvoiceNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.recurringInvoiceNumberCounter != null) {
+    value = object.recurringInvoiceNumberCounter;
+    if (value != null) {
       result
         ..add('recurring_invoice_number_counter')
-        ..add(serializers.serialize(object.recurringInvoiceNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.quoteNumberPattern != null) {
+    value = object.quoteNumberPattern;
+    if (value != null) {
       result
         ..add('quote_number_pattern')
-        ..add(serializers.serialize(object.quoteNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.quoteNumberCounter != null) {
+    value = object.quoteNumberCounter;
+    if (value != null) {
       result
         ..add('quote_number_counter')
-        ..add(serializers.serialize(object.quoteNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.clientNumberPattern != null) {
+    value = object.clientNumberPattern;
+    if (value != null) {
       result
         ..add('client_number_pattern')
-        ..add(serializers.serialize(object.clientNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientNumberCounter != null) {
+    value = object.clientNumberCounter;
+    if (value != null) {
       result
         ..add('client_number_counter')
-        ..add(serializers.serialize(object.clientNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.creditNumberPattern != null) {
+    value = object.creditNumberPattern;
+    if (value != null) {
       result
         ..add('credit_number_pattern')
-        ..add(serializers.serialize(object.creditNumberPattern,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.creditNumberCounter != null) {
+    value = object.creditNumberCounter;
+    if (value != null) {
       result
         ..add('credit_number_counter')
-        ..add(serializers.serialize(object.creditNumberCounter,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.recurringNumberPrefix != null) {
+    value = object.recurringNumberPrefix;
+    if (value != null) {
       result
         ..add('recurring_number_prefix')
-        ..add(serializers.serialize(object.recurringNumberPrefix,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.resetCounterFrequencyId != null) {
+    value = object.resetCounterFrequencyId;
+    if (value != null) {
       result
         ..add('reset_counter_frequency_id')
-        ..add(serializers.serialize(object.resetCounterFrequencyId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.resetCounterDate != null) {
+    value = object.resetCounterDate;
+    if (value != null) {
       result
         ..add('reset_counter_date')
-        ..add(serializers.serialize(object.resetCounterDate,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.counterPadding != null) {
+    value = object.counterPadding;
+    if (value != null) {
       result
         ..add('counter_padding')
-        ..add(serializers.serialize(object.counterPadding,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.sharedInvoiceQuoteCounter != null) {
+    value = object.sharedInvoiceQuoteCounter;
+    if (value != null) {
       result
         ..add('shared_invoice_quote_counter')
-        ..add(serializers.serialize(object.sharedInvoiceQuoteCounter,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.sharedInvoiceCreditCounter != null) {
+    value = object.sharedInvoiceCreditCounter;
+    if (value != null) {
       result
         ..add('shared_invoice_credit_counter')
-        ..add(serializers.serialize(object.sharedInvoiceCreditCounter,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.defaultInvoiceTerms != null) {
+    value = object.defaultInvoiceTerms;
+    if (value != null) {
       result
         ..add('invoice_terms')
-        ..add(serializers.serialize(object.defaultInvoiceTerms,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultQuoteTerms != null) {
+    value = object.defaultQuoteTerms;
+    if (value != null) {
       result
         ..add('quote_terms')
-        ..add(serializers.serialize(object.defaultQuoteTerms,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultQuoteFooter != null) {
+    value = object.defaultQuoteFooter;
+    if (value != null) {
       result
         ..add('quote_footer')
-        ..add(serializers.serialize(object.defaultQuoteFooter,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultCreditTerms != null) {
+    value = object.defaultCreditTerms;
+    if (value != null) {
       result
         ..add('credit_terms')
-        ..add(serializers.serialize(object.defaultCreditTerms,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultCreditFooter != null) {
+    value = object.defaultCreditFooter;
+    if (value != null) {
       result
         ..add('credit_footer')
-        ..add(serializers.serialize(object.defaultCreditFooter,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultInvoiceDesignId != null) {
+    value = object.defaultInvoiceDesignId;
+    if (value != null) {
       result
         ..add('invoice_design_id')
-        ..add(serializers.serialize(object.defaultInvoiceDesignId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultQuoteDesignId != null) {
+    value = object.defaultQuoteDesignId;
+    if (value != null) {
       result
         ..add('quote_design_id')
-        ..add(serializers.serialize(object.defaultQuoteDesignId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultCreditDesignId != null) {
+    value = object.defaultCreditDesignId;
+    if (value != null) {
       result
         ..add('credit_design_id')
-        ..add(serializers.serialize(object.defaultCreditDesignId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultInvoiceFooter != null) {
+    value = object.defaultInvoiceFooter;
+    if (value != null) {
       result
         ..add('invoice_footer')
-        ..add(serializers.serialize(object.defaultInvoiceFooter,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultTaxName1 != null) {
+    value = object.defaultTaxName1;
+    if (value != null) {
       result
         ..add('tax_name1')
-        ..add(serializers.serialize(object.defaultTaxName1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultTaxRate1 != null) {
+    value = object.defaultTaxRate1;
+    if (value != null) {
       result
         ..add('tax_rate1')
-        ..add(serializers.serialize(object.defaultTaxRate1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.defaultTaxName2 != null) {
+    value = object.defaultTaxName2;
+    if (value != null) {
       result
         ..add('tax_name2')
-        ..add(serializers.serialize(object.defaultTaxName2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultTaxRate2 != null) {
+    value = object.defaultTaxRate2;
+    if (value != null) {
       result
         ..add('tax_rate2')
-        ..add(serializers.serialize(object.defaultTaxRate2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.defaultTaxName3 != null) {
+    value = object.defaultTaxName3;
+    if (value != null) {
       result
         ..add('tax_name3')
-        ..add(serializers.serialize(object.defaultTaxName3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultTaxRate3 != null) {
+    value = object.defaultTaxRate3;
+    if (value != null) {
       result
         ..add('tax_rate3')
-        ..add(serializers.serialize(object.defaultTaxRate3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.defaultPaymentTypeId != null) {
+    value = object.defaultPaymentTypeId;
+    if (value != null) {
       result
         ..add('payment_type_id')
-        ..add(serializers.serialize(object.defaultPaymentTypeId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.pdfVariables != null) {
+    value = object.pdfVariables;
+    if (value != null) {
       result
         ..add('pdf_variables')
-        ..add(serializers.serialize(object.pdfVariables,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(BuiltList, const [const FullType(String)])
             ])));
     }
-    if (object.emailSignature != null) {
+    value = object.emailSignature;
+    if (value != null) {
       result
         ..add('email_signature')
-        ..add(serializers.serialize(object.emailSignature,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectInvoice != null) {
+    value = object.emailSubjectInvoice;
+    if (value != null) {
       result
         ..add('email_subject_invoice')
-        ..add(serializers.serialize(object.emailSubjectInvoice,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectQuote != null) {
+    value = object.emailSubjectQuote;
+    if (value != null) {
       result
         ..add('email_subject_quote')
-        ..add(serializers.serialize(object.emailSubjectQuote,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectCredit != null) {
+    value = object.emailSubjectCredit;
+    if (value != null) {
       result
         ..add('email_subject_credit')
-        ..add(serializers.serialize(object.emailSubjectCredit,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectPayment != null) {
+    value = object.emailSubjectPayment;
+    if (value != null) {
       result
         ..add('email_subject_payment')
-        ..add(serializers.serialize(object.emailSubjectPayment,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectPaymentPartial != null) {
+    value = object.emailSubjectPaymentPartial;
+    if (value != null) {
       result
         ..add('email_subject_payment_partial')
-        ..add(serializers.serialize(object.emailSubjectPaymentPartial,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyInvoice != null) {
+    value = object.emailBodyInvoice;
+    if (value != null) {
       result
         ..add('email_template_invoice')
-        ..add(serializers.serialize(object.emailBodyInvoice,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyQuote != null) {
+    value = object.emailBodyQuote;
+    if (value != null) {
       result
         ..add('email_template_quote')
-        ..add(serializers.serialize(object.emailBodyQuote,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyCredit != null) {
+    value = object.emailBodyCredit;
+    if (value != null) {
       result
         ..add('email_template_credit')
-        ..add(serializers.serialize(object.emailBodyCredit,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyPayment != null) {
+    value = object.emailBodyPayment;
+    if (value != null) {
       result
         ..add('email_template_payment')
-        ..add(serializers.serialize(object.emailBodyPayment,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyPaymentPartial != null) {
+    value = object.emailBodyPaymentPartial;
+    if (value != null) {
       result
         ..add('email_template_payment_partial')
-        ..add(serializers.serialize(object.emailBodyPaymentPartial,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectReminder1 != null) {
+    value = object.emailSubjectReminder1;
+    if (value != null) {
       result
         ..add('email_subject_reminder1')
-        ..add(serializers.serialize(object.emailSubjectReminder1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectReminder2 != null) {
+    value = object.emailSubjectReminder2;
+    if (value != null) {
       result
         ..add('email_subject_reminder2')
-        ..add(serializers.serialize(object.emailSubjectReminder2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectReminder3 != null) {
+    value = object.emailSubjectReminder3;
+    if (value != null) {
       result
         ..add('email_subject_reminder3')
-        ..add(serializers.serialize(object.emailSubjectReminder3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyReminder1 != null) {
+    value = object.emailBodyReminder1;
+    if (value != null) {
       result
         ..add('email_template_reminder1')
-        ..add(serializers.serialize(object.emailBodyReminder1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyReminder2 != null) {
+    value = object.emailBodyReminder2;
+    if (value != null) {
       result
         ..add('email_template_reminder2')
-        ..add(serializers.serialize(object.emailBodyReminder2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyReminder3 != null) {
+    value = object.emailBodyReminder3;
+    if (value != null) {
       result
         ..add('email_template_reminder3')
-        ..add(serializers.serialize(object.emailBodyReminder3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectCustom1 != null) {
+    value = object.emailSubjectCustom1;
+    if (value != null) {
       result
         ..add('email_subject_custom1')
-        ..add(serializers.serialize(object.emailSubjectCustom1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyCustom1 != null) {
+    value = object.emailBodyCustom1;
+    if (value != null) {
       result
         ..add('email_template_custom1')
-        ..add(serializers.serialize(object.emailBodyCustom1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectCustom2 != null) {
+    value = object.emailSubjectCustom2;
+    if (value != null) {
       result
         ..add('email_subject_custom2')
-        ..add(serializers.serialize(object.emailSubjectCustom2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyCustom2 != null) {
+    value = object.emailBodyCustom2;
+    if (value != null) {
       result
         ..add('email_template_custom2')
-        ..add(serializers.serialize(object.emailBodyCustom2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectCustom3 != null) {
+    value = object.emailSubjectCustom3;
+    if (value != null) {
       result
         ..add('email_subject_custom3')
-        ..add(serializers.serialize(object.emailSubjectCustom3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyCustom3 != null) {
+    value = object.emailBodyCustom3;
+    if (value != null) {
       result
         ..add('email_template_custom3')
-        ..add(serializers.serialize(object.emailBodyCustom3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSubjectStatement != null) {
+    value = object.emailSubjectStatement;
+    if (value != null) {
       result
         ..add('email_subject_statement')
-        ..add(serializers.serialize(object.emailSubjectStatement,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyStatement != null) {
+    value = object.emailBodyStatement;
+    if (value != null) {
       result
         ..add('email_template_statement')
-        ..add(serializers.serialize(object.emailBodyStatement,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.enablePortalPassword != null) {
+    value = object.enablePortalPassword;
+    if (value != null) {
       result
         ..add('enable_client_portal_password')
-        ..add(serializers.serialize(object.enablePortalPassword,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.signatureOnPdf != null) {
+    value = object.signatureOnPdf;
+    if (value != null) {
       result
         ..add('signature_on_pdf')
-        ..add(serializers.serialize(object.signatureOnPdf,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enableEmailMarkup != null) {
+    value = object.enableEmailMarkup;
+    if (value != null) {
       result
         ..add('enable_email_markup')
-        ..add(serializers.serialize(object.enableEmailMarkup,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.showAcceptInvoiceTerms != null) {
+    value = object.showAcceptInvoiceTerms;
+    if (value != null) {
       result
         ..add('show_accept_invoice_terms')
-        ..add(serializers.serialize(object.showAcceptInvoiceTerms,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.showAcceptQuoteTerms != null) {
+    value = object.showAcceptQuoteTerms;
+    if (value != null) {
       result
         ..add('show_accept_quote_terms')
-        ..add(serializers.serialize(object.showAcceptQuoteTerms,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.requireInvoiceSignature != null) {
+    value = object.requireInvoiceSignature;
+    if (value != null) {
       result
         ..add('require_invoice_signature')
-        ..add(serializers.serialize(object.requireInvoiceSignature,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.requireQuoteSignature != null) {
+    value = object.requireQuoteSignature;
+    if (value != null) {
       result
         ..add('require_quote_signature')
-        ..add(serializers.serialize(object.requireQuoteSignature,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.name != null) {
+    value = object.name;
+    if (value != null) {
       result
         ..add('name')
-        ..add(serializers.serialize(object.name,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.companyLogo != null) {
+    value = object.companyLogo;
+    if (value != null) {
       result
         ..add('company_logo')
-        ..add(serializers.serialize(object.companyLogo,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.website != null) {
+    value = object.website;
+    if (value != null) {
       result
         ..add('website')
-        ..add(serializers.serialize(object.website,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.address1 != null) {
+    value = object.address1;
+    if (value != null) {
       result
         ..add('address1')
-        ..add(serializers.serialize(object.address1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.address2 != null) {
+    value = object.address2;
+    if (value != null) {
       result
         ..add('address2')
-        ..add(serializers.serialize(object.address2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.city != null) {
+    value = object.city;
+    if (value != null) {
       result
         ..add('city')
-        ..add(serializers.serialize(object.city,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.state != null) {
+    value = object.state;
+    if (value != null) {
       result
         ..add('state')
-        ..add(serializers.serialize(object.state,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.postalCode != null) {
+    value = object.postalCode;
+    if (value != null) {
       result
         ..add('postal_code')
-        ..add(serializers.serialize(object.postalCode,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.phone != null) {
+    value = object.phone;
+    if (value != null) {
       result
         ..add('phone')
-        ..add(serializers.serialize(object.phone,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.email != null) {
+    value = object.email;
+    if (value != null) {
       result
         ..add('email')
-        ..add(serializers.serialize(object.email,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.countryId != null) {
+    value = object.countryId;
+    if (value != null) {
       result
         ..add('country_id')
-        ..add(serializers.serialize(object.countryId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.vatNumber != null) {
+    value = object.vatNumber;
+    if (value != null) {
       result
         ..add('vat_number')
-        ..add(serializers.serialize(object.vatNumber,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.idNumber != null) {
+    value = object.idNumber;
+    if (value != null) {
       result
         ..add('id_number')
-        ..add(serializers.serialize(object.idNumber,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.pageSize != null) {
+    value = object.pageSize;
+    if (value != null) {
       result
         ..add('page_size')
-        ..add(serializers.serialize(object.pageSize,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.pageLayout != null) {
+    value = object.pageLayout;
+    if (value != null) {
       result
         ..add('page_layout')
-        ..add(serializers.serialize(object.pageLayout,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.fontSize != null) {
+    value = object.fontSize;
+    if (value != null) {
       result
         ..add('font_size')
-        ..add(serializers.serialize(object.fontSize,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.primaryColor != null) {
+    value = object.primaryColor;
+    if (value != null) {
       result
         ..add('primary_color')
-        ..add(serializers.serialize(object.primaryColor,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.secondaryColor != null) {
+    value = object.secondaryColor;
+    if (value != null) {
       result
         ..add('secondary_color')
-        ..add(serializers.serialize(object.secondaryColor,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.primaryFont != null) {
+    value = object.primaryFont;
+    if (value != null) {
       result
         ..add('primary_font')
-        ..add(serializers.serialize(object.primaryFont,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.secondaryFont != null) {
+    value = object.secondaryFont;
+    if (value != null) {
       result
         ..add('secondary_font')
-        ..add(serializers.serialize(object.secondaryFont,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.hidePaidToDate != null) {
+    value = object.hidePaidToDate;
+    if (value != null) {
       result
         ..add('hide_paid_to_date')
-        ..add(serializers.serialize(object.hidePaidToDate,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.embedDocuments != null) {
+    value = object.embedDocuments;
+    if (value != null) {
       result
         ..add('embed_documents')
-        ..add(serializers.serialize(object.embedDocuments,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.allPagesHeader != null) {
+    value = object.allPagesHeader;
+    if (value != null) {
       result
         ..add('all_pages_header')
-        ..add(serializers.serialize(object.allPagesHeader,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.allPagesFooter != null) {
+    value = object.allPagesFooter;
+    if (value != null) {
       result
         ..add('all_pages_footer')
-        ..add(serializers.serialize(object.allPagesFooter,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enableReminder1 != null) {
+    value = object.enableReminder1;
+    if (value != null) {
       result
         ..add('enable_reminder1')
-        ..add(serializers.serialize(object.enableReminder1,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enableReminder2 != null) {
+    value = object.enableReminder2;
+    if (value != null) {
       result
         ..add('enable_reminder2')
-        ..add(serializers.serialize(object.enableReminder2,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enableReminder3 != null) {
+    value = object.enableReminder3;
+    if (value != null) {
       result
         ..add('enable_reminder3')
-        ..add(serializers.serialize(object.enableReminder3,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.enableReminderEndless != null) {
+    value = object.enableReminderEndless;
+    if (value != null) {
       result
         ..add('enable_reminder_endless')
-        ..add(serializers.serialize(object.enableReminderEndless,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.numDaysReminder1 != null) {
+    value = object.numDaysReminder1;
+    if (value != null) {
       result
         ..add('num_days_reminder1')
-        ..add(serializers.serialize(object.numDaysReminder1,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.numDaysReminder2 != null) {
+    value = object.numDaysReminder2;
+    if (value != null) {
       result
         ..add('num_days_reminder2')
-        ..add(serializers.serialize(object.numDaysReminder2,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.numDaysReminder3 != null) {
+    value = object.numDaysReminder3;
+    if (value != null) {
       result
         ..add('num_days_reminder3')
-        ..add(serializers.serialize(object.numDaysReminder3,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.scheduleReminder1 != null) {
+    value = object.scheduleReminder1;
+    if (value != null) {
       result
         ..add('schedule_reminder1')
-        ..add(serializers.serialize(object.scheduleReminder1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.scheduleReminder2 != null) {
+    value = object.scheduleReminder2;
+    if (value != null) {
       result
         ..add('schedule_reminder2')
-        ..add(serializers.serialize(object.scheduleReminder2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.scheduleReminder3 != null) {
+    value = object.scheduleReminder3;
+    if (value != null) {
       result
         ..add('schedule_reminder3')
-        ..add(serializers.serialize(object.scheduleReminder3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.endlessReminderFrequencyId != null) {
+    value = object.endlessReminderFrequencyId;
+    if (value != null) {
       result
         ..add('endless_reminder_frequency_id')
-        ..add(serializers.serialize(object.endlessReminderFrequencyId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.lateFeeAmount1 != null) {
+    value = object.lateFeeAmount1;
+    if (value != null) {
       result
         ..add('late_fee_amount1')
-        ..add(serializers.serialize(object.lateFeeAmount1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.lateFeeAmount2 != null) {
+    value = object.lateFeeAmount2;
+    if (value != null) {
       result
         ..add('late_fee_amount2')
-        ..add(serializers.serialize(object.lateFeeAmount2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.lateFeeAmount3 != null) {
+    value = object.lateFeeAmount3;
+    if (value != null) {
       result
         ..add('late_fee_amount3')
-        ..add(serializers.serialize(object.lateFeeAmount3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.lateFeeAmountEndless != null) {
+    value = object.lateFeeAmountEndless;
+    if (value != null) {
       result
         ..add('late_fee_endless_amount')
-        ..add(serializers.serialize(object.lateFeeAmountEndless,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.lateFeePercent1 != null) {
+    value = object.lateFeePercent1;
+    if (value != null) {
       result
         ..add('late_fee_percent1')
-        ..add(serializers.serialize(object.lateFeePercent1,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.lateFeePercent2 != null) {
+    value = object.lateFeePercent2;
+    if (value != null) {
       result
         ..add('late_fee_percent2')
-        ..add(serializers.serialize(object.lateFeePercent2,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.lateFeePercent3 != null) {
+    value = object.lateFeePercent3;
+    if (value != null) {
       result
         ..add('late_fee_percent3')
-        ..add(serializers.serialize(object.lateFeePercent3,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.lateFeePercentEndless != null) {
+    value = object.lateFeePercentEndless;
+    if (value != null) {
       result
         ..add('late_fee_endless_percent')
-        ..add(serializers.serialize(object.lateFeePercentEndless,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.emailSubjectReminderEndless != null) {
+    value = object.emailSubjectReminderEndless;
+    if (value != null) {
       result
         ..add('email_subject_reminder_endless')
-        ..add(serializers.serialize(object.emailSubjectReminderEndless,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailBodyReminderEndless != null) {
+    value = object.emailBodyReminderEndless;
+    if (value != null) {
       result
         ..add('email_template_reminder_endless')
-        ..add(serializers.serialize(object.emailBodyReminderEndless,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientOnlinePaymentNotification != null) {
+    value = object.clientOnlinePaymentNotification;
+    if (value != null) {
       result
         ..add('client_online_payment_notification')
-        ..add(serializers.serialize(object.clientOnlinePaymentNotification,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.clientManualPaymentNotification != null) {
+    value = object.clientManualPaymentNotification;
+    if (value != null) {
       result
         ..add('client_manual_payment_notification')
-        ..add(serializers.serialize(object.clientManualPaymentNotification,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.counterNumberApplied != null) {
+    value = object.counterNumberApplied;
+    if (value != null) {
       result
         ..add('counter_number_applied')
-        ..add(serializers.serialize(object.counterNumberApplied,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.emailSendingMethod != null) {
+    value = object.emailSendingMethod;
+    if (value != null) {
       result
         ..add('email_sending_method')
-        ..add(serializers.serialize(object.emailSendingMethod,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.gmailSendingUserId != null) {
+    value = object.gmailSendingUserId;
+    if (value != null) {
       result
         ..add('gmail_sending_user_id')
-        ..add(serializers.serialize(object.gmailSendingUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientPortalTerms != null) {
+    value = object.clientPortalTerms;
+    if (value != null) {
       result
         ..add('client_portal_terms')
-        ..add(serializers.serialize(object.clientPortalTerms,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientPortalPrivacy != null) {
+    value = object.clientPortalPrivacy;
+    if (value != null) {
       result
         ..add('client_portal_privacy_policy')
-        ..add(serializers.serialize(object.clientPortalPrivacy,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.lockInvoices != null) {
+    value = object.lockInvoices;
+    if (value != null) {
       result
         ..add('lock_invoices')
-        ..add(serializers.serialize(object.lockInvoices,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.autoBill != null) {
+    value = object.autoBill;
+    if (value != null) {
       result
         ..add('auto_bill')
-        ..add(serializers.serialize(object.autoBill,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientPortalAllowUnderPayment != null) {
+    value = object.clientPortalAllowUnderPayment;
+    if (value != null) {
       result
         ..add('client_portal_allow_under_payment')
-        ..add(serializers.serialize(object.clientPortalAllowUnderPayment,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.clientPortalAllowOverPayment != null) {
+    value = object.clientPortalAllowOverPayment;
+    if (value != null) {
       result
         ..add('client_portal_allow_over_payment')
-        ..add(serializers.serialize(object.clientPortalAllowOverPayment,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.autoBillDate != null) {
+    value = object.autoBillDate;
+    if (value != null) {
       result
         ..add('auto_bill_date')
-        ..add(serializers.serialize(object.autoBillDate,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientPortalUnderPaymentMinimum != null) {
+    value = object.clientPortalUnderPaymentMinimum;
+    if (value != null) {
       result
         ..add('client_portal_under_payment_minimum')
-        ..add(serializers.serialize(object.clientPortalUnderPaymentMinimum,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    if (object.useCreditsPayment != null) {
+    value = object.useCreditsPayment;
+    if (value != null) {
       result
         ..add('use_credits_payment')
-        ..add(serializers.serialize(object.useCreditsPayment,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientPortalCustomHeader != null) {
+    value = object.clientPortalCustomHeader;
+    if (value != null) {
       result
         ..add('portal_custom_head')
-        ..add(serializers.serialize(object.clientPortalCustomHeader,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientPortalCustomCss != null) {
+    value = object.clientPortalCustomCss;
+    if (value != null) {
       result
         ..add('portal_custom_css')
-        ..add(serializers.serialize(object.clientPortalCustomCss,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientPortalCustomFooter != null) {
+    value = object.clientPortalCustomFooter;
+    if (value != null) {
       result
         ..add('portal_custom_footer')
-        ..add(serializers.serialize(object.clientPortalCustomFooter,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.clientPortalCustomJs != null) {
+    value = object.clientPortalCustomJs;
+    if (value != null) {
       result
         ..add('portal_custom_js')
-        ..add(serializers.serialize(object.clientPortalCustomJs,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.hideEmptyColumnsOnPdf != null) {
+    value = object.hideEmptyColumnsOnPdf;
+    if (value != null) {
       result
         ..add('hide_empty_columns_on_pdf')
-        ..add(serializers.serialize(object.hideEmptyColumnsOnPdf,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.entitySendTime != null) {
+    value = object.entitySendTime;
+    if (value != null) {
       result
         ..add('entity_send_time')
-        ..add(serializers.serialize(object.entitySendTime,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.clientPortalTasks != null) {
+    value = object.clientPortalTasks;
+    if (value != null) {
       result
         ..add('show_all_tasks_client_portal')
-        ..add(serializers.serialize(object.clientPortalTasks,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -1117,7 +1281,7 @@ class _$SettingsEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'timezone_id':
           result.timezoneId = serializers.deserialize(value,
@@ -3711,187 +3875,188 @@ class SettingsEntityBuilder
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
-    if (_$v != null) {
-      _timezoneId = _$v.timezoneId;
-      _dateFormatId = _$v.dateFormatId;
-      _enableMilitaryTime = _$v.enableMilitaryTime;
-      _languageId = _$v.languageId;
-      _showCurrencyCode = _$v.showCurrencyCode;
-      _currencyId = _$v.currencyId;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _defaultPaymentTerms = _$v.defaultPaymentTerms;
-      _defaultValidUntil = _$v.defaultValidUntil;
-      _companyGatewayIds = _$v.companyGatewayIds;
-      _defaultTaskRate = _$v.defaultTaskRate;
-      _sendReminders = _$v.sendReminders;
-      _enablePortal = _$v.enablePortal;
-      _enablePortalDashboard = _$v.enablePortalDashboard;
-      _enablePortalTasks = _$v.enablePortalTasks;
-      _enablePortalUploads = _$v.enablePortalUploads;
-      _emailStyle = _$v.emailStyle;
-      _replyToEmail = _$v.replyToEmail;
-      _replyToName = _$v.replyToName;
-      _bccEmail = _$v.bccEmail;
-      _pdfEmailAttachment = _$v.pdfEmailAttachment;
-      _ublEmailAttachment = _$v.ublEmailAttachment;
-      _documentEmailAttachment = _$v.documentEmailAttachment;
-      _emailStyleCustom = _$v.emailStyleCustom;
-      _customMessageDashboard = _$v.customMessageDashboard;
-      _customMessageUnpaidInvoice = _$v.customMessageUnpaidInvoice;
-      _customMessagePaidInvoice = _$v.customMessagePaidInvoice;
-      _customMessageUnapprovedQuote = _$v.customMessageUnapprovedQuote;
-      _autoArchiveInvoice = _$v.autoArchiveInvoice;
-      _autoArchiveQuote = _$v.autoArchiveQuote;
-      _autoEmailInvoice = _$v.autoEmailInvoice;
-      _autoConvertQuote = _$v.autoConvertQuote;
-      _enableInclusiveTaxes = _$v.enableInclusiveTaxes;
-      _translations = _$v.translations?.toBuilder();
-      _taskNumberPattern = _$v.taskNumberPattern;
-      _taskNumberCounter = _$v.taskNumberCounter;
-      _expenseNumberPattern = _$v.expenseNumberPattern;
-      _expenseNumberCounter = _$v.expenseNumberCounter;
-      _vendorNumberPattern = _$v.vendorNumberPattern;
-      _vendorNumberCounter = _$v.vendorNumberCounter;
-      _ticketNumberPattern = _$v.ticketNumberPattern;
-      _ticketNumberCounter = _$v.ticketNumberCounter;
-      _paymentNumberPattern = _$v.paymentNumberPattern;
-      _paymentNumberCounter = _$v.paymentNumberCounter;
-      _projectNumberPattern = _$v.projectNumberPattern;
-      _projectNumberCounter = _$v.projectNumberCounter;
-      _invoiceNumberPattern = _$v.invoiceNumberPattern;
-      _invoiceNumberCounter = _$v.invoiceNumberCounter;
-      _recurringInvoiceNumberPattern = _$v.recurringInvoiceNumberPattern;
-      _recurringInvoiceNumberCounter = _$v.recurringInvoiceNumberCounter;
-      _quoteNumberPattern = _$v.quoteNumberPattern;
-      _quoteNumberCounter = _$v.quoteNumberCounter;
-      _clientNumberPattern = _$v.clientNumberPattern;
-      _clientNumberCounter = _$v.clientNumberCounter;
-      _creditNumberPattern = _$v.creditNumberPattern;
-      _creditNumberCounter = _$v.creditNumberCounter;
-      _recurringNumberPrefix = _$v.recurringNumberPrefix;
-      _resetCounterFrequencyId = _$v.resetCounterFrequencyId;
-      _resetCounterDate = _$v.resetCounterDate;
-      _counterPadding = _$v.counterPadding;
-      _sharedInvoiceQuoteCounter = _$v.sharedInvoiceQuoteCounter;
-      _sharedInvoiceCreditCounter = _$v.sharedInvoiceCreditCounter;
-      _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
-      _defaultQuoteTerms = _$v.defaultQuoteTerms;
-      _defaultQuoteFooter = _$v.defaultQuoteFooter;
-      _defaultCreditTerms = _$v.defaultCreditTerms;
-      _defaultCreditFooter = _$v.defaultCreditFooter;
-      _defaultInvoiceDesignId = _$v.defaultInvoiceDesignId;
-      _defaultQuoteDesignId = _$v.defaultQuoteDesignId;
-      _defaultCreditDesignId = _$v.defaultCreditDesignId;
-      _defaultInvoiceFooter = _$v.defaultInvoiceFooter;
-      _defaultTaxName1 = _$v.defaultTaxName1;
-      _defaultTaxRate1 = _$v.defaultTaxRate1;
-      _defaultTaxName2 = _$v.defaultTaxName2;
-      _defaultTaxRate2 = _$v.defaultTaxRate2;
-      _defaultTaxName3 = _$v.defaultTaxName3;
-      _defaultTaxRate3 = _$v.defaultTaxRate3;
-      _defaultPaymentTypeId = _$v.defaultPaymentTypeId;
-      _pdfVariables = _$v.pdfVariables?.toBuilder();
-      _emailSignature = _$v.emailSignature;
-      _emailSubjectInvoice = _$v.emailSubjectInvoice;
-      _emailSubjectQuote = _$v.emailSubjectQuote;
-      _emailSubjectCredit = _$v.emailSubjectCredit;
-      _emailSubjectPayment = _$v.emailSubjectPayment;
-      _emailSubjectPaymentPartial = _$v.emailSubjectPaymentPartial;
-      _emailBodyInvoice = _$v.emailBodyInvoice;
-      _emailBodyQuote = _$v.emailBodyQuote;
-      _emailBodyCredit = _$v.emailBodyCredit;
-      _emailBodyPayment = _$v.emailBodyPayment;
-      _emailBodyPaymentPartial = _$v.emailBodyPaymentPartial;
-      _emailSubjectReminder1 = _$v.emailSubjectReminder1;
-      _emailSubjectReminder2 = _$v.emailSubjectReminder2;
-      _emailSubjectReminder3 = _$v.emailSubjectReminder3;
-      _emailBodyReminder1 = _$v.emailBodyReminder1;
-      _emailBodyReminder2 = _$v.emailBodyReminder2;
-      _emailBodyReminder3 = _$v.emailBodyReminder3;
-      _emailSubjectCustom1 = _$v.emailSubjectCustom1;
-      _emailBodyCustom1 = _$v.emailBodyCustom1;
-      _emailSubjectCustom2 = _$v.emailSubjectCustom2;
-      _emailBodyCustom2 = _$v.emailBodyCustom2;
-      _emailSubjectCustom3 = _$v.emailSubjectCustom3;
-      _emailBodyCustom3 = _$v.emailBodyCustom3;
-      _emailSubjectStatement = _$v.emailSubjectStatement;
-      _emailBodyStatement = _$v.emailBodyStatement;
-      _enablePortalPassword = _$v.enablePortalPassword;
-      _signatureOnPdf = _$v.signatureOnPdf;
-      _enableEmailMarkup = _$v.enableEmailMarkup;
-      _showAcceptInvoiceTerms = _$v.showAcceptInvoiceTerms;
-      _showAcceptQuoteTerms = _$v.showAcceptQuoteTerms;
-      _requireInvoiceSignature = _$v.requireInvoiceSignature;
-      _requireQuoteSignature = _$v.requireQuoteSignature;
-      _name = _$v.name;
-      _companyLogo = _$v.companyLogo;
-      _website = _$v.website;
-      _address1 = _$v.address1;
-      _address2 = _$v.address2;
-      _city = _$v.city;
-      _state = _$v.state;
-      _postalCode = _$v.postalCode;
-      _phone = _$v.phone;
-      _email = _$v.email;
-      _countryId = _$v.countryId;
-      _vatNumber = _$v.vatNumber;
-      _idNumber = _$v.idNumber;
-      _pageSize = _$v.pageSize;
-      _pageLayout = _$v.pageLayout;
-      _fontSize = _$v.fontSize;
-      _primaryColor = _$v.primaryColor;
-      _secondaryColor = _$v.secondaryColor;
-      _primaryFont = _$v.primaryFont;
-      _secondaryFont = _$v.secondaryFont;
-      _hidePaidToDate = _$v.hidePaidToDate;
-      _embedDocuments = _$v.embedDocuments;
-      _allPagesHeader = _$v.allPagesHeader;
-      _allPagesFooter = _$v.allPagesFooter;
-      _enableReminder1 = _$v.enableReminder1;
-      _enableReminder2 = _$v.enableReminder2;
-      _enableReminder3 = _$v.enableReminder3;
-      _enableReminderEndless = _$v.enableReminderEndless;
-      _numDaysReminder1 = _$v.numDaysReminder1;
-      _numDaysReminder2 = _$v.numDaysReminder2;
-      _numDaysReminder3 = _$v.numDaysReminder3;
-      _scheduleReminder1 = _$v.scheduleReminder1;
-      _scheduleReminder2 = _$v.scheduleReminder2;
-      _scheduleReminder3 = _$v.scheduleReminder3;
-      _endlessReminderFrequencyId = _$v.endlessReminderFrequencyId;
-      _lateFeeAmount1 = _$v.lateFeeAmount1;
-      _lateFeeAmount2 = _$v.lateFeeAmount2;
-      _lateFeeAmount3 = _$v.lateFeeAmount3;
-      _lateFeeAmountEndless = _$v.lateFeeAmountEndless;
-      _lateFeePercent1 = _$v.lateFeePercent1;
-      _lateFeePercent2 = _$v.lateFeePercent2;
-      _lateFeePercent3 = _$v.lateFeePercent3;
-      _lateFeePercentEndless = _$v.lateFeePercentEndless;
-      _emailSubjectReminderEndless = _$v.emailSubjectReminderEndless;
-      _emailBodyReminderEndless = _$v.emailBodyReminderEndless;
-      _clientOnlinePaymentNotification = _$v.clientOnlinePaymentNotification;
-      _clientManualPaymentNotification = _$v.clientManualPaymentNotification;
-      _counterNumberApplied = _$v.counterNumberApplied;
-      _emailSendingMethod = _$v.emailSendingMethod;
-      _gmailSendingUserId = _$v.gmailSendingUserId;
-      _clientPortalTerms = _$v.clientPortalTerms;
-      _clientPortalPrivacy = _$v.clientPortalPrivacy;
-      _lockInvoices = _$v.lockInvoices;
-      _autoBill = _$v.autoBill;
-      _clientPortalAllowUnderPayment = _$v.clientPortalAllowUnderPayment;
-      _clientPortalAllowOverPayment = _$v.clientPortalAllowOverPayment;
-      _autoBillDate = _$v.autoBillDate;
-      _clientPortalUnderPaymentMinimum = _$v.clientPortalUnderPaymentMinimum;
-      _useCreditsPayment = _$v.useCreditsPayment;
-      _clientPortalCustomHeader = _$v.clientPortalCustomHeader;
-      _clientPortalCustomCss = _$v.clientPortalCustomCss;
-      _clientPortalCustomFooter = _$v.clientPortalCustomFooter;
-      _clientPortalCustomJs = _$v.clientPortalCustomJs;
-      _hideEmptyColumnsOnPdf = _$v.hideEmptyColumnsOnPdf;
-      _entitySendTime = _$v.entitySendTime;
-      _clientPortalTasks = _$v.clientPortalTasks;
+    final $v = _$v;
+    if ($v != null) {
+      _timezoneId = $v.timezoneId;
+      _dateFormatId = $v.dateFormatId;
+      _enableMilitaryTime = $v.enableMilitaryTime;
+      _languageId = $v.languageId;
+      _showCurrencyCode = $v.showCurrencyCode;
+      _currencyId = $v.currencyId;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _defaultPaymentTerms = $v.defaultPaymentTerms;
+      _defaultValidUntil = $v.defaultValidUntil;
+      _companyGatewayIds = $v.companyGatewayIds;
+      _defaultTaskRate = $v.defaultTaskRate;
+      _sendReminders = $v.sendReminders;
+      _enablePortal = $v.enablePortal;
+      _enablePortalDashboard = $v.enablePortalDashboard;
+      _enablePortalTasks = $v.enablePortalTasks;
+      _enablePortalUploads = $v.enablePortalUploads;
+      _emailStyle = $v.emailStyle;
+      _replyToEmail = $v.replyToEmail;
+      _replyToName = $v.replyToName;
+      _bccEmail = $v.bccEmail;
+      _pdfEmailAttachment = $v.pdfEmailAttachment;
+      _ublEmailAttachment = $v.ublEmailAttachment;
+      _documentEmailAttachment = $v.documentEmailAttachment;
+      _emailStyleCustom = $v.emailStyleCustom;
+      _customMessageDashboard = $v.customMessageDashboard;
+      _customMessageUnpaidInvoice = $v.customMessageUnpaidInvoice;
+      _customMessagePaidInvoice = $v.customMessagePaidInvoice;
+      _customMessageUnapprovedQuote = $v.customMessageUnapprovedQuote;
+      _autoArchiveInvoice = $v.autoArchiveInvoice;
+      _autoArchiveQuote = $v.autoArchiveQuote;
+      _autoEmailInvoice = $v.autoEmailInvoice;
+      _autoConvertQuote = $v.autoConvertQuote;
+      _enableInclusiveTaxes = $v.enableInclusiveTaxes;
+      _translations = $v.translations?.toBuilder();
+      _taskNumberPattern = $v.taskNumberPattern;
+      _taskNumberCounter = $v.taskNumberCounter;
+      _expenseNumberPattern = $v.expenseNumberPattern;
+      _expenseNumberCounter = $v.expenseNumberCounter;
+      _vendorNumberPattern = $v.vendorNumberPattern;
+      _vendorNumberCounter = $v.vendorNumberCounter;
+      _ticketNumberPattern = $v.ticketNumberPattern;
+      _ticketNumberCounter = $v.ticketNumberCounter;
+      _paymentNumberPattern = $v.paymentNumberPattern;
+      _paymentNumberCounter = $v.paymentNumberCounter;
+      _projectNumberPattern = $v.projectNumberPattern;
+      _projectNumberCounter = $v.projectNumberCounter;
+      _invoiceNumberPattern = $v.invoiceNumberPattern;
+      _invoiceNumberCounter = $v.invoiceNumberCounter;
+      _recurringInvoiceNumberPattern = $v.recurringInvoiceNumberPattern;
+      _recurringInvoiceNumberCounter = $v.recurringInvoiceNumberCounter;
+      _quoteNumberPattern = $v.quoteNumberPattern;
+      _quoteNumberCounter = $v.quoteNumberCounter;
+      _clientNumberPattern = $v.clientNumberPattern;
+      _clientNumberCounter = $v.clientNumberCounter;
+      _creditNumberPattern = $v.creditNumberPattern;
+      _creditNumberCounter = $v.creditNumberCounter;
+      _recurringNumberPrefix = $v.recurringNumberPrefix;
+      _resetCounterFrequencyId = $v.resetCounterFrequencyId;
+      _resetCounterDate = $v.resetCounterDate;
+      _counterPadding = $v.counterPadding;
+      _sharedInvoiceQuoteCounter = $v.sharedInvoiceQuoteCounter;
+      _sharedInvoiceCreditCounter = $v.sharedInvoiceCreditCounter;
+      _defaultInvoiceTerms = $v.defaultInvoiceTerms;
+      _defaultQuoteTerms = $v.defaultQuoteTerms;
+      _defaultQuoteFooter = $v.defaultQuoteFooter;
+      _defaultCreditTerms = $v.defaultCreditTerms;
+      _defaultCreditFooter = $v.defaultCreditFooter;
+      _defaultInvoiceDesignId = $v.defaultInvoiceDesignId;
+      _defaultQuoteDesignId = $v.defaultQuoteDesignId;
+      _defaultCreditDesignId = $v.defaultCreditDesignId;
+      _defaultInvoiceFooter = $v.defaultInvoiceFooter;
+      _defaultTaxName1 = $v.defaultTaxName1;
+      _defaultTaxRate1 = $v.defaultTaxRate1;
+      _defaultTaxName2 = $v.defaultTaxName2;
+      _defaultTaxRate2 = $v.defaultTaxRate2;
+      _defaultTaxName3 = $v.defaultTaxName3;
+      _defaultTaxRate3 = $v.defaultTaxRate3;
+      _defaultPaymentTypeId = $v.defaultPaymentTypeId;
+      _pdfVariables = $v.pdfVariables?.toBuilder();
+      _emailSignature = $v.emailSignature;
+      _emailSubjectInvoice = $v.emailSubjectInvoice;
+      _emailSubjectQuote = $v.emailSubjectQuote;
+      _emailSubjectCredit = $v.emailSubjectCredit;
+      _emailSubjectPayment = $v.emailSubjectPayment;
+      _emailSubjectPaymentPartial = $v.emailSubjectPaymentPartial;
+      _emailBodyInvoice = $v.emailBodyInvoice;
+      _emailBodyQuote = $v.emailBodyQuote;
+      _emailBodyCredit = $v.emailBodyCredit;
+      _emailBodyPayment = $v.emailBodyPayment;
+      _emailBodyPaymentPartial = $v.emailBodyPaymentPartial;
+      _emailSubjectReminder1 = $v.emailSubjectReminder1;
+      _emailSubjectReminder2 = $v.emailSubjectReminder2;
+      _emailSubjectReminder3 = $v.emailSubjectReminder3;
+      _emailBodyReminder1 = $v.emailBodyReminder1;
+      _emailBodyReminder2 = $v.emailBodyReminder2;
+      _emailBodyReminder3 = $v.emailBodyReminder3;
+      _emailSubjectCustom1 = $v.emailSubjectCustom1;
+      _emailBodyCustom1 = $v.emailBodyCustom1;
+      _emailSubjectCustom2 = $v.emailSubjectCustom2;
+      _emailBodyCustom2 = $v.emailBodyCustom2;
+      _emailSubjectCustom3 = $v.emailSubjectCustom3;
+      _emailBodyCustom3 = $v.emailBodyCustom3;
+      _emailSubjectStatement = $v.emailSubjectStatement;
+      _emailBodyStatement = $v.emailBodyStatement;
+      _enablePortalPassword = $v.enablePortalPassword;
+      _signatureOnPdf = $v.signatureOnPdf;
+      _enableEmailMarkup = $v.enableEmailMarkup;
+      _showAcceptInvoiceTerms = $v.showAcceptInvoiceTerms;
+      _showAcceptQuoteTerms = $v.showAcceptQuoteTerms;
+      _requireInvoiceSignature = $v.requireInvoiceSignature;
+      _requireQuoteSignature = $v.requireQuoteSignature;
+      _name = $v.name;
+      _companyLogo = $v.companyLogo;
+      _website = $v.website;
+      _address1 = $v.address1;
+      _address2 = $v.address2;
+      _city = $v.city;
+      _state = $v.state;
+      _postalCode = $v.postalCode;
+      _phone = $v.phone;
+      _email = $v.email;
+      _countryId = $v.countryId;
+      _vatNumber = $v.vatNumber;
+      _idNumber = $v.idNumber;
+      _pageSize = $v.pageSize;
+      _pageLayout = $v.pageLayout;
+      _fontSize = $v.fontSize;
+      _primaryColor = $v.primaryColor;
+      _secondaryColor = $v.secondaryColor;
+      _primaryFont = $v.primaryFont;
+      _secondaryFont = $v.secondaryFont;
+      _hidePaidToDate = $v.hidePaidToDate;
+      _embedDocuments = $v.embedDocuments;
+      _allPagesHeader = $v.allPagesHeader;
+      _allPagesFooter = $v.allPagesFooter;
+      _enableReminder1 = $v.enableReminder1;
+      _enableReminder2 = $v.enableReminder2;
+      _enableReminder3 = $v.enableReminder3;
+      _enableReminderEndless = $v.enableReminderEndless;
+      _numDaysReminder1 = $v.numDaysReminder1;
+      _numDaysReminder2 = $v.numDaysReminder2;
+      _numDaysReminder3 = $v.numDaysReminder3;
+      _scheduleReminder1 = $v.scheduleReminder1;
+      _scheduleReminder2 = $v.scheduleReminder2;
+      _scheduleReminder3 = $v.scheduleReminder3;
+      _endlessReminderFrequencyId = $v.endlessReminderFrequencyId;
+      _lateFeeAmount1 = $v.lateFeeAmount1;
+      _lateFeeAmount2 = $v.lateFeeAmount2;
+      _lateFeeAmount3 = $v.lateFeeAmount3;
+      _lateFeeAmountEndless = $v.lateFeeAmountEndless;
+      _lateFeePercent1 = $v.lateFeePercent1;
+      _lateFeePercent2 = $v.lateFeePercent2;
+      _lateFeePercent3 = $v.lateFeePercent3;
+      _lateFeePercentEndless = $v.lateFeePercentEndless;
+      _emailSubjectReminderEndless = $v.emailSubjectReminderEndless;
+      _emailBodyReminderEndless = $v.emailBodyReminderEndless;
+      _clientOnlinePaymentNotification = $v.clientOnlinePaymentNotification;
+      _clientManualPaymentNotification = $v.clientManualPaymentNotification;
+      _counterNumberApplied = $v.counterNumberApplied;
+      _emailSendingMethod = $v.emailSendingMethod;
+      _gmailSendingUserId = $v.gmailSendingUserId;
+      _clientPortalTerms = $v.clientPortalTerms;
+      _clientPortalPrivacy = $v.clientPortalPrivacy;
+      _lockInvoices = $v.lockInvoices;
+      _autoBill = $v.autoBill;
+      _clientPortalAllowUnderPayment = $v.clientPortalAllowUnderPayment;
+      _clientPortalAllowOverPayment = $v.clientPortalAllowOverPayment;
+      _autoBillDate = $v.autoBillDate;
+      _clientPortalUnderPaymentMinimum = $v.clientPortalUnderPaymentMinimum;
+      _useCreditsPayment = $v.useCreditsPayment;
+      _clientPortalCustomHeader = $v.clientPortalCustomHeader;
+      _clientPortalCustomCss = $v.clientPortalCustomCss;
+      _clientPortalCustomFooter = $v.clientPortalCustomFooter;
+      _clientPortalCustomJs = $v.clientPortalCustomJs;
+      _hideEmptyColumnsOnPdf = $v.hideEmptyColumnsOnPdf;
+      _entitySendTime = $v.entitySendTime;
+      _clientPortalTasks = $v.clientPortalTasks;
       _$v = null;
     }
     return this;
@@ -3899,9 +4064,7 @@ class SettingsEntityBuilder
 
   @override
   void replace(SettingsEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SettingsEntity;
   }
 
@@ -4115,4 +4278,4 @@ class SettingsEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

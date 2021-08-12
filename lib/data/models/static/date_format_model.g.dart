@@ -47,7 +47,7 @@ class _$DateFormatListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$DateFormatItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -140,7 +140,7 @@ class _$DateFormatEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'format_dart':
           result.format = serializers.deserialize(value,
@@ -166,9 +166,8 @@ class _$DateFormatListResponse extends DateFormatListResponse {
       (new DateFormatListResponseBuilder()..update(updates)).build();
 
   _$DateFormatListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('DateFormatListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'DateFormatListResponse', 'data');
   }
 
   @override
@@ -212,8 +211,9 @@ class DateFormatListResponseBuilder
   DateFormatListResponseBuilder();
 
   DateFormatListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -221,9 +221,7 @@ class DateFormatListResponseBuilder
 
   @override
   void replace(DateFormatListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DateFormatListResponse;
   }
 
@@ -262,9 +260,8 @@ class _$DateFormatItemResponse extends DateFormatItemResponse {
       (new DateFormatItemResponseBuilder()..update(updates)).build();
 
   _$DateFormatItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('DateFormatItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'DateFormatItemResponse', 'data');
   }
 
   @override
@@ -308,8 +305,9 @@ class DateFormatItemResponseBuilder
   DateFormatItemResponseBuilder();
 
   DateFormatItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -317,9 +315,7 @@ class DateFormatItemResponseBuilder
 
   @override
   void replace(DateFormatItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DateFormatItemResponse;
   }
 
@@ -360,12 +356,8 @@ class _$DateFormatEntity extends DateFormatEntity {
       (new DateFormatEntityBuilder()..update(updates)).build();
 
   _$DateFormatEntity._({this.format, this.id}) : super._() {
-    if (format == null) {
-      throw new BuiltValueNullFieldError('DateFormatEntity', 'format');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('DateFormatEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(format, 'DateFormatEntity', 'format');
+    BuiltValueNullFieldError.checkNotNull(id, 'DateFormatEntity', 'id');
   }
 
   @override
@@ -414,9 +406,10 @@ class DateFormatEntityBuilder
   DateFormatEntityBuilder();
 
   DateFormatEntityBuilder get _$this {
-    if (_$v != null) {
-      _format = _$v.format;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _format = $v.format;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -424,9 +417,7 @@ class DateFormatEntityBuilder
 
   @override
   void replace(DateFormatEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DateFormatEntity;
   }
 
@@ -437,10 +428,15 @@ class DateFormatEntityBuilder
 
   @override
   _$DateFormatEntity build() {
-    final _$result = _$v ?? new _$DateFormatEntity._(format: format, id: id);
+    final _$result = _$v ??
+        new _$DateFormatEntity._(
+            format: BuiltValueNullFieldError.checkNotNull(
+                format, 'DateFormatEntity', 'format'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'DateFormatEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

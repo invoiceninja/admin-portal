@@ -47,7 +47,7 @@ class _$InvoiceStatusListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$InvoiceStatusItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -143,7 +143,7 @@ class _$InvoiceStatusEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -169,9 +169,8 @@ class _$InvoiceStatusListResponse extends InvoiceStatusListResponse {
       (new InvoiceStatusListResponseBuilder()..update(updates)).build();
 
   _$InvoiceStatusListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('InvoiceStatusListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'InvoiceStatusListResponse', 'data');
   }
 
   @override
@@ -216,8 +215,9 @@ class InvoiceStatusListResponseBuilder
   InvoiceStatusListResponseBuilder();
 
   InvoiceStatusListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -225,9 +225,7 @@ class InvoiceStatusListResponseBuilder
 
   @override
   void replace(InvoiceStatusListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InvoiceStatusListResponse;
   }
 
@@ -266,9 +264,8 @@ class _$InvoiceStatusItemResponse extends InvoiceStatusItemResponse {
       (new InvoiceStatusItemResponseBuilder()..update(updates)).build();
 
   _$InvoiceStatusItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('InvoiceStatusItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'InvoiceStatusItemResponse', 'data');
   }
 
   @override
@@ -313,8 +310,9 @@ class InvoiceStatusItemResponseBuilder
   InvoiceStatusItemResponseBuilder();
 
   InvoiceStatusItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -322,9 +320,7 @@ class InvoiceStatusItemResponseBuilder
 
   @override
   void replace(InvoiceStatusItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InvoiceStatusItemResponse;
   }
 
@@ -365,12 +361,8 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
       (new InvoiceStatusEntityBuilder()..update(updates)).build();
 
   _$InvoiceStatusEntity._({this.id, this.name}) : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('InvoiceStatusEntity', 'id');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('InvoiceStatusEntity', 'name');
-    }
+    BuiltValueNullFieldError.checkNotNull(id, 'InvoiceStatusEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(name, 'InvoiceStatusEntity', 'name');
   }
 
   @override
@@ -418,9 +410,10 @@ class InvoiceStatusEntityBuilder
   InvoiceStatusEntityBuilder();
 
   InvoiceStatusEntityBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _name = _$v.name;
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _name = $v.name;
       _$v = null;
     }
     return this;
@@ -428,9 +421,7 @@ class InvoiceStatusEntityBuilder
 
   @override
   void replace(InvoiceStatusEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InvoiceStatusEntity;
   }
 
@@ -441,10 +432,15 @@ class InvoiceStatusEntityBuilder
 
   @override
   _$InvoiceStatusEntity build() {
-    final _$result = _$v ?? new _$InvoiceStatusEntity._(id: id, name: name);
+    final _$result = _$v ??
+        new _$InvoiceStatusEntity._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'InvoiceStatusEntity', 'id'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'InvoiceStatusEntity', 'name'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

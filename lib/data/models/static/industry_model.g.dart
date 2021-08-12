@@ -47,7 +47,7 @@ class _$IndustryListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$IndustryItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -138,7 +138,7 @@ class _$IndustryEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -164,9 +164,7 @@ class _$IndustryListResponse extends IndustryListResponse {
       (new IndustryListResponseBuilder()..update(updates)).build();
 
   _$IndustryListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('IndustryListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'IndustryListResponse', 'data');
   }
 
   @override
@@ -210,8 +208,9 @@ class IndustryListResponseBuilder
   IndustryListResponseBuilder();
 
   IndustryListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -219,9 +218,7 @@ class IndustryListResponseBuilder
 
   @override
   void replace(IndustryListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$IndustryListResponse;
   }
 
@@ -260,9 +257,7 @@ class _$IndustryItemResponse extends IndustryItemResponse {
       (new IndustryItemResponseBuilder()..update(updates)).build();
 
   _$IndustryItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('IndustryItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'IndustryItemResponse', 'data');
   }
 
   @override
@@ -306,8 +301,9 @@ class IndustryItemResponseBuilder
   IndustryItemResponseBuilder();
 
   IndustryItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -315,9 +311,7 @@ class IndustryItemResponseBuilder
 
   @override
   void replace(IndustryItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$IndustryItemResponse;
   }
 
@@ -357,12 +351,8 @@ class _$IndustryEntity extends IndustryEntity {
       (new IndustryEntityBuilder()..update(updates)).build();
 
   _$IndustryEntity._({this.name, this.id}) : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('IndustryEntity', 'name');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('IndustryEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'IndustryEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(id, 'IndustryEntity', 'id');
   }
 
   @override
@@ -409,9 +399,10 @@ class IndustryEntityBuilder
   IndustryEntityBuilder();
 
   IndustryEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -419,9 +410,7 @@ class IndustryEntityBuilder
 
   @override
   void replace(IndustryEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$IndustryEntity;
   }
 
@@ -432,10 +421,15 @@ class IndustryEntityBuilder
 
   @override
   _$IndustryEntity build() {
-    final _$result = _$v ?? new _$IndustryEntity._(name: name, id: id);
+    final _$result = _$v ??
+        new _$IndustryEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'IndustryEntity', 'name'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'IndustryEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

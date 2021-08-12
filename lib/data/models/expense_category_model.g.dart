@@ -49,7 +49,7 @@ class _$ExpenseCategoryListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -97,7 +97,7 @@ class _$ExpenseCategoryItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -143,28 +143,33 @@ class _$ExpenseCategoryEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -180,7 +185,7 @@ class _$ExpenseCategoryEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -238,9 +243,8 @@ class _$ExpenseCategoryListResponse extends ExpenseCategoryListResponse {
       (new ExpenseCategoryListResponseBuilder()..update(updates)).build();
 
   _$ExpenseCategoryListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'ExpenseCategoryListResponse', 'data');
   }
 
   @override
@@ -286,8 +290,9 @@ class ExpenseCategoryListResponseBuilder
   ExpenseCategoryListResponseBuilder();
 
   ExpenseCategoryListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -295,9 +300,7 @@ class ExpenseCategoryListResponseBuilder
 
   @override
   void replace(ExpenseCategoryListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryListResponse;
   }
 
@@ -336,9 +339,8 @@ class _$ExpenseCategoryItemResponse extends ExpenseCategoryItemResponse {
       (new ExpenseCategoryItemResponseBuilder()..update(updates)).build();
 
   _$ExpenseCategoryItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'ExpenseCategoryItemResponse', 'data');
   }
 
   @override
@@ -384,8 +386,9 @@ class ExpenseCategoryItemResponseBuilder
   ExpenseCategoryItemResponseBuilder();
 
   ExpenseCategoryItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -393,9 +396,7 @@ class ExpenseCategoryItemResponseBuilder
 
   @override
   void replace(ExpenseCategoryItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryItemResponse;
   }
 
@@ -463,24 +464,17 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'name');
-    }
-    if (color == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'color');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        name, 'ExpenseCategoryEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        color, 'ExpenseCategoryEntity', 'color');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'ExpenseCategoryEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'ExpenseCategoryEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'ExpenseCategoryEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'ExpenseCategoryEntity', 'id');
   }
 
   @override
@@ -597,17 +591,18 @@ class ExpenseCategoryEntityBuilder
   }
 
   ExpenseCategoryEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _color = _$v.color;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _color = $v.color;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -615,9 +610,7 @@ class ExpenseCategoryEntityBuilder
 
   @override
   void replace(ExpenseCategoryEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryEntity;
   }
 
@@ -630,19 +623,25 @@ class ExpenseCategoryEntityBuilder
   _$ExpenseCategoryEntity build() {
     final _$result = _$v ??
         new _$ExpenseCategoryEntity._(
-            name: name,
-            color: color,
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'ExpenseCategoryEntity', 'name'),
+            color: BuiltValueNullFieldError.checkNotNull(
+                color, 'ExpenseCategoryEntity', 'color'),
             isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'ExpenseCategoryEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, 'ExpenseCategoryEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, 'ExpenseCategoryEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: id);
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'ExpenseCategoryEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -45,7 +45,7 @@ class _$VendorListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -89,7 +89,7 @@ class _$VendorItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -187,28 +187,33 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -223,7 +228,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -394,28 +399,33 @@ class _$VendorContactEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -431,7 +441,7 @@ class _$VendorContactEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'first_name':
           result.firstName = serializers.deserialize(value,
@@ -501,9 +511,7 @@ class _$VendorListResponse extends VendorListResponse {
       (new VendorListResponseBuilder()..update(updates)).build();
 
   _$VendorListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('VendorListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'VendorListResponse', 'data');
   }
 
   @override
@@ -547,8 +555,9 @@ class VendorListResponseBuilder
   VendorListResponseBuilder();
 
   VendorListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -556,9 +565,7 @@ class VendorListResponseBuilder
 
   @override
   void replace(VendorListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorListResponse;
   }
 
@@ -597,9 +604,7 @@ class _$VendorItemResponse extends VendorItemResponse {
       (new VendorItemResponseBuilder()..update(updates)).build();
 
   _$VendorItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('VendorItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'VendorItemResponse', 'data');
   }
 
   @override
@@ -642,8 +647,9 @@ class VendorItemResponseBuilder
   VendorItemResponseBuilder();
 
   VendorItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -651,9 +657,7 @@ class VendorItemResponseBuilder
 
   @override
   void replace(VendorItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorItemResponse;
   }
 
@@ -777,81 +781,45 @@ class _$VendorEntity extends VendorEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'name');
-    }
-    if (address1 == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'address1');
-    }
-    if (address2 == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'address2');
-    }
-    if (city == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'city');
-    }
-    if (state == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'state');
-    }
-    if (postalCode == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'postalCode');
-    }
-    if (countryId == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'countryId');
-    }
-    if (phone == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'phone');
-    }
-    if (privateNotes == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'privateNotes');
-    }
-    if (publicNotes == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'publicNotes');
-    }
-    if (website == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'website');
-    }
-    if (number == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'number');
-    }
-    if (vatNumber == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'vatNumber');
-    }
-    if (idNumber == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'idNumber');
-    }
-    if (currencyId == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'currencyId');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'customValue4');
-    }
-    if (contacts == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
-    }
-    if (documents == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'documents');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'VendorEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(address1, 'VendorEntity', 'address1');
+    BuiltValueNullFieldError.checkNotNull(address2, 'VendorEntity', 'address2');
+    BuiltValueNullFieldError.checkNotNull(city, 'VendorEntity', 'city');
+    BuiltValueNullFieldError.checkNotNull(state, 'VendorEntity', 'state');
+    BuiltValueNullFieldError.checkNotNull(
+        postalCode, 'VendorEntity', 'postalCode');
+    BuiltValueNullFieldError.checkNotNull(
+        countryId, 'VendorEntity', 'countryId');
+    BuiltValueNullFieldError.checkNotNull(phone, 'VendorEntity', 'phone');
+    BuiltValueNullFieldError.checkNotNull(
+        privateNotes, 'VendorEntity', 'privateNotes');
+    BuiltValueNullFieldError.checkNotNull(
+        publicNotes, 'VendorEntity', 'publicNotes');
+    BuiltValueNullFieldError.checkNotNull(website, 'VendorEntity', 'website');
+    BuiltValueNullFieldError.checkNotNull(number, 'VendorEntity', 'number');
+    BuiltValueNullFieldError.checkNotNull(
+        vatNumber, 'VendorEntity', 'vatNumber');
+    BuiltValueNullFieldError.checkNotNull(idNumber, 'VendorEntity', 'idNumber');
+    BuiltValueNullFieldError.checkNotNull(
+        currencyId, 'VendorEntity', 'currencyId');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'VendorEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'VendorEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'VendorEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'VendorEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(contacts, 'VendorEntity', 'contacts');
+    BuiltValueNullFieldError.checkNotNull(
+        documents, 'VendorEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'VendorEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'VendorEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'VendorEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'VendorEntity', 'id');
   }
 
   @override
@@ -1104,36 +1072,37 @@ class VendorEntityBuilder
   VendorEntityBuilder();
 
   VendorEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _address1 = _$v.address1;
-      _address2 = _$v.address2;
-      _city = _$v.city;
-      _state = _$v.state;
-      _postalCode = _$v.postalCode;
-      _countryId = _$v.countryId;
-      _phone = _$v.phone;
-      _privateNotes = _$v.privateNotes;
-      _publicNotes = _$v.publicNotes;
-      _website = _$v.website;
-      _number = _$v.number;
-      _vatNumber = _$v.vatNumber;
-      _idNumber = _$v.idNumber;
-      _currencyId = _$v.currencyId;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _contacts = _$v.contacts?.toBuilder();
-      _documents = _$v.documents?.toBuilder();
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _address1 = $v.address1;
+      _address2 = $v.address2;
+      _city = $v.city;
+      _state = $v.state;
+      _postalCode = $v.postalCode;
+      _countryId = $v.countryId;
+      _phone = $v.phone;
+      _privateNotes = $v.privateNotes;
+      _publicNotes = $v.publicNotes;
+      _website = $v.website;
+      _number = $v.number;
+      _vatNumber = $v.vatNumber;
+      _idNumber = $v.idNumber;
+      _currencyId = $v.currencyId;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _contacts = $v.contacts.toBuilder();
+      _documents = $v.documents.toBuilder();
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1141,9 +1110,7 @@ class VendorEntityBuilder
 
   @override
   void replace(VendorEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorEntity;
   }
 
@@ -1158,35 +1125,45 @@ class VendorEntityBuilder
     try {
       _$result = _$v ??
           new _$VendorEntity._(
-              name: name,
-              address1: address1,
-              address2: address2,
-              city: city,
-              state: state,
-              postalCode: postalCode,
-              countryId: countryId,
-              phone: phone,
-              privateNotes: privateNotes,
-              publicNotes: publicNotes,
-              website: website,
-              number: number,
-              vatNumber: vatNumber,
-              idNumber: idNumber,
-              currencyId: currencyId,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
+              name: BuiltValueNullFieldError.checkNotNull(
+                  name, 'VendorEntity', 'name'),
+              address1: BuiltValueNullFieldError.checkNotNull(
+                  address1, 'VendorEntity', 'address1'),
+              address2: BuiltValueNullFieldError.checkNotNull(
+                  address2, 'VendorEntity', 'address2'),
+              city: BuiltValueNullFieldError.checkNotNull(
+                  city, 'VendorEntity', 'city'),
+              state: BuiltValueNullFieldError.checkNotNull(
+                  state, 'VendorEntity', 'state'),
+              postalCode: BuiltValueNullFieldError.checkNotNull(
+                  postalCode, 'VendorEntity', 'postalCode'),
+              countryId: BuiltValueNullFieldError.checkNotNull(
+                  countryId, 'VendorEntity', 'countryId'),
+              phone: BuiltValueNullFieldError.checkNotNull(
+                  phone, 'VendorEntity', 'phone'),
+              privateNotes: BuiltValueNullFieldError.checkNotNull(
+                  privateNotes, 'VendorEntity', 'privateNotes'),
+              publicNotes:
+                  BuiltValueNullFieldError.checkNotNull(publicNotes, 'VendorEntity', 'publicNotes'),
+              website: BuiltValueNullFieldError.checkNotNull(website, 'VendorEntity', 'website'),
+              number: BuiltValueNullFieldError.checkNotNull(number, 'VendorEntity', 'number'),
+              vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, 'VendorEntity', 'vatNumber'),
+              idNumber: BuiltValueNullFieldError.checkNotNull(idNumber, 'VendorEntity', 'idNumber'),
+              currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'VendorEntity', 'currencyId'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'VendorEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'VendorEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'VendorEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'VendorEntity', 'customValue4'),
               contacts: contacts.build(),
               documents: documents.build(),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'VendorEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'VendorEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'VendorEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'VendorEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1252,33 +1229,23 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (firstName == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'firstName');
-    }
-    if (lastName == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'lastName');
-    }
-    if (email == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'email');
-    }
-    if (isPrimary == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'isPrimary');
-    }
-    if (phone == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'phone');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        firstName, 'VendorContactEntity', 'firstName');
+    BuiltValueNullFieldError.checkNotNull(
+        lastName, 'VendorContactEntity', 'lastName');
+    BuiltValueNullFieldError.checkNotNull(
+        email, 'VendorContactEntity', 'email');
+    BuiltValueNullFieldError.checkNotNull(
+        isPrimary, 'VendorContactEntity', 'isPrimary');
+    BuiltValueNullFieldError.checkNotNull(
+        phone, 'VendorContactEntity', 'phone');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'VendorContactEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'VendorContactEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'VendorContactEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'VendorContactEntity', 'id');
   }
 
   @override
@@ -1419,20 +1386,21 @@ class VendorContactEntityBuilder
   VendorContactEntityBuilder();
 
   VendorContactEntityBuilder get _$this {
-    if (_$v != null) {
-      _firstName = _$v.firstName;
-      _lastName = _$v.lastName;
-      _email = _$v.email;
-      _isPrimary = _$v.isPrimary;
-      _phone = _$v.phone;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _firstName = $v.firstName;
+      _lastName = $v.lastName;
+      _email = $v.email;
+      _isPrimary = $v.isPrimary;
+      _phone = $v.phone;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1440,9 +1408,7 @@ class VendorContactEntityBuilder
 
   @override
   void replace(VendorContactEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorContactEntity;
   }
 
@@ -1455,22 +1421,31 @@ class VendorContactEntityBuilder
   _$VendorContactEntity build() {
     final _$result = _$v ??
         new _$VendorContactEntity._(
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            isPrimary: isPrimary,
-            phone: phone,
+            firstName: BuiltValueNullFieldError.checkNotNull(
+                firstName, 'VendorContactEntity', 'firstName'),
+            lastName: BuiltValueNullFieldError.checkNotNull(
+                lastName, 'VendorContactEntity', 'lastName'),
+            email: BuiltValueNullFieldError.checkNotNull(
+                email, 'VendorContactEntity', 'email'),
+            isPrimary: BuiltValueNullFieldError.checkNotNull(
+                isPrimary, 'VendorContactEntity', 'isPrimary'),
+            phone: BuiltValueNullFieldError.checkNotNull(
+                phone, 'VendorContactEntity', 'phone'),
             isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'VendorContactEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, 'VendorContactEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, 'VendorContactEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: id);
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'VendorContactEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

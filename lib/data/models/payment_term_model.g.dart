@@ -47,7 +47,7 @@ class _$PaymentTermListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$PaymentTermItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -136,28 +136,33 @@ class _$PaymentTermEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -173,7 +178,7 @@ class _$PaymentTermEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -231,9 +236,8 @@ class _$PaymentTermListResponse extends PaymentTermListResponse {
       (new PaymentTermListResponseBuilder()..update(updates)).build();
 
   _$PaymentTermListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('PaymentTermListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'PaymentTermListResponse', 'data');
   }
 
   @override
@@ -278,8 +282,9 @@ class PaymentTermListResponseBuilder
   PaymentTermListResponseBuilder();
 
   PaymentTermListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -287,9 +292,7 @@ class PaymentTermListResponseBuilder
 
   @override
   void replace(PaymentTermListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTermListResponse;
   }
 
@@ -328,9 +331,8 @@ class _$PaymentTermItemResponse extends PaymentTermItemResponse {
       (new PaymentTermItemResponseBuilder()..update(updates)).build();
 
   _$PaymentTermItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('PaymentTermItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'PaymentTermItemResponse', 'data');
   }
 
   @override
@@ -375,8 +377,9 @@ class PaymentTermItemResponseBuilder
   PaymentTermItemResponseBuilder();
 
   PaymentTermItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -384,9 +387,7 @@ class PaymentTermItemResponseBuilder
 
   @override
   void replace(PaymentTermItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTermItemResponse;
   }
 
@@ -454,24 +455,16 @@ class _$PaymentTermEntity extends PaymentTermEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('PaymentTermEntity', 'name');
-    }
-    if (numDays == null) {
-      throw new BuiltValueNullFieldError('PaymentTermEntity', 'numDays');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('PaymentTermEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('PaymentTermEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('PaymentTermEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('PaymentTermEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'PaymentTermEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        numDays, 'PaymentTermEntity', 'numDays');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'PaymentTermEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'PaymentTermEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'PaymentTermEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'PaymentTermEntity', 'id');
   }
 
   @override
@@ -587,17 +580,18 @@ class PaymentTermEntityBuilder
   PaymentTermEntityBuilder();
 
   PaymentTermEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _numDays = _$v.numDays;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _numDays = $v.numDays;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -605,9 +599,7 @@ class PaymentTermEntityBuilder
 
   @override
   void replace(PaymentTermEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTermEntity;
   }
 
@@ -620,19 +612,25 @@ class PaymentTermEntityBuilder
   _$PaymentTermEntity build() {
     final _$result = _$v ??
         new _$PaymentTermEntity._(
-            name: name,
-            numDays: numDays,
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'PaymentTermEntity', 'name'),
+            numDays: BuiltValueNullFieldError.checkNotNull(
+                numDays, 'PaymentTermEntity', 'numDays'),
             isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'PaymentTermEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, 'PaymentTermEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, 'PaymentTermEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: id);
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'PaymentTermEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
