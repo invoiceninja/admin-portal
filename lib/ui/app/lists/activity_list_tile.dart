@@ -113,15 +113,15 @@ class ActivityListTile extends StatelessWidget {
       trailing: enableNavigation ? Icon(Icons.navigate_next) : null,
       subtitle: Row(
         children: <Widget>[
-          Text(formatDate(
-              convertTimestampToDateString(activity.updatedAt), context,
-              showTime: true)),
-          (activity.ip ?? '').isNotEmpty
-              ? Text(' • ' + activity.ip)
-              : SizedBox(),
-          (activity.notes ?? '').isNotEmpty
-              ? Text(' • ' + localization.lookup(activity.notes).trim())
-              : SizedBox(),
+          Flexible(
+            child: Text(((activity.notes ?? '').isNotEmpty
+                    ? localization.lookup(activity.notes).trim() + '\n'
+                    : '') +
+                formatDate(
+                    convertTimestampToDateString(activity.updatedAt), context,
+                    showTime: true) +
+                ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip : '')),
+          ),
         ],
       ),
     );

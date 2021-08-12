@@ -482,7 +482,6 @@ Middleware<AppState> _createDataRefreshed() {
       if (response.userCompanies.length == 1) {
         final userCompany = response.userCompanies.first;
         store.dispatch(LoadCompanySuccess(userCompany));
-        store.dispatch(PersistData());
       } else {
         for (int i = 0;
             i < min(response.userCompanies.length, kMaxNumberOfCompanies);
@@ -498,13 +497,14 @@ Middleware<AppState> _createDataRefreshed() {
           store.dispatch(
               SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
           store.dispatch(LoadCompanySuccess(userCompany));
-          store.dispatch(PersistData());
         }
       }
     } catch (error) {
       action.completer?.completeError(error);
       rethrow;
     }
+
+    store.dispatch(UserLoginSuccess());
 
     if (action.completer != null) {
       action.completer.complete(null);

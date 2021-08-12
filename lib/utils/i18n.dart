@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'use_web_app_to_connect_gmail': 'Please use the web app to connect to Gmail',
       'expense_tax_help': 'Item tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
@@ -62475,6 +62476,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get expenseTaxHelp =>
       _localizedValues[localeCode]['expense_tax_help'] ??
       _localizedValues['en']['expense_tax_help'];
+
+  String get useWebAppToConnectGmail =>
+      _localizedValues[localeCode]['use_web_app_to_connect_gmail'] ??
+      _localizedValues['en']['use_web_app_to_connect_gmail'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
