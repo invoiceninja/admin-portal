@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class FormColorPicker extends StatefulWidget {
   const FormColorPicker({
@@ -182,7 +183,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
                     color: Colors.black38,
                   ),
                 ),
-                width: 100,
+                width: isMobile(context) ? 25 : 100,
                 height: 25,
               ),
             ),
@@ -197,7 +198,9 @@ class _FormColorPickerState extends State<FormColorPicker> {
               )
             else
               IconButton(
-                icon: Icon(Icons.color_lens),
+                icon: Icon(
+                  Icons.color_lens,
+                ),
                 onPressed: _showPicker,
               )
           ],

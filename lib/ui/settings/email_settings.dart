@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EmailSettings extends StatefulWidget {
@@ -140,60 +141,64 @@ class _EmailSettingsState extends State<EmailSettings> {
         focusNode: _focusNode,
         children: <Widget>[
           if (viewModel.state.authState.isHosted) ...[
-            FormCard(children: <Widget>[
-              BoolDropdownButton(
-                showBlank: state.uiState.settingsUIState.isFiltered,
-                label: localization.sendFromGmail,
-                value: settings.emailSendingMethod == null
-                    ? null
-                    : settings.emailSendingMethod ==
-                        SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
-                iconData: MdiIcons.gmail,
-                onChanged: (value) =>
-                    viewModel.onSettingsChanged(settings.rebuild((b) => b
-                      ..emailSendingMethod = (value == null
-                          ? null
-                          : value == true
-                              ? SettingsEntity.EMAIL_SENDING_METHOD_GMAIL
-                              : SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT))),
-              ),
-              if (settings.emailSendingMethod ==
-                  SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
-                if (gmailUserIds.isEmpty) ...[
-                  SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          child: Text(localization.connectGmail.toUpperCase()),
-                          onPressed: () {
-                            final store = StoreProvider.of<AppState>(context);
-                            store.dispatch(ViewSettings(
-                              section: kSettingsUserDetails,
-                              force: true,
-                            ));
-                          },
-                        ),
+            FormCard(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                BoolDropdownButton(
+                  showBlank: state.uiState.settingsUIState.isFiltered,
+                  label: localization.sendFromGmail,
+                  value: settings.emailSendingMethod == null
+                      ? null
+                      : settings.emailSendingMethod ==
+                          SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
+                  iconData: MdiIcons.gmail,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b
+                        ..emailSendingMethod = (value == null
+                            ? null
+                            : value == true
+                                ? SettingsEntity.EMAIL_SENDING_METHOD_GMAIL
+                                : SettingsEntity
+                                    .EMAIL_SENDING_METHOD_DEFAULT))),
+                ),
+                if (settings.emailSendingMethod ==
+                    SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
+                  if (gmailUserIds.isEmpty) ...[
+                    SizedBox(height: 16),
+                    if (isApple())
+                      Text(
+                        localization.useWebAppToConnectGmail,
+                        textAlign: TextAlign.center,
+                      )
+                    else
+                      OutlinedButton(
+                        child: Text(localization.connectGmail.toUpperCase()),
+                        onPressed: () {
+                          final store = StoreProvider.of<AppState>(context);
+                          store.dispatch(ViewSettings(
+                            section: kSettingsUserDetails,
+                            force: true,
+                          ));
+                        },
+                      )
+                  ] else
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: DynamicSelector(
+                        onChanged: (userId) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..gmailSendingUserId = userId)),
+                        entityType: EntityType.user,
+                        entityId: settings.gmailSendingUserId,
+                        entityIds: gmailUserIds,
+                        overrideSuggestedLabel: (entity) {
+                          final user = entity as UserEntity;
+                          return '${user.fullName} • ${user.email}';
+                        },
                       ),
-                    ],
-                  )
-                ] else
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: DynamicSelector(
-                      onChanged: (userId) => viewModel.onSettingsChanged(
-                          settings
-                              .rebuild((b) => b..gmailSendingUserId = userId)),
-                      entityType: EntityType.user,
-                      entityId: settings.gmailSendingUserId,
-                      entityIds: gmailUserIds,
-                      overrideSuggestedLabel: (entity) {
-                        final user = entity as UserEntity;
-                        return '${user.fullName} • ${user.email}';
-                      },
                     ),
-                  ),
-            ]),
+              ],
+            ),
           ],
           FormCard(
             children: <Widget>[
