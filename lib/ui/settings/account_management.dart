@@ -313,7 +313,7 @@ class _AccountOverview extends StatelessWidget {
                 Expanded(
                   child: AppButton(
                     label: localization.purchaseLicense.toUpperCase(),
-                    iconData: Icons.cloud_download,
+                    iconData: isMobile(context) ? null : Icons.cloud_download,
                     onPressed: () async {
                       if (await canLaunch(kWhiteLabelUrl)) {
                         launch(kWhiteLabelUrl);
@@ -325,7 +325,7 @@ class _AccountOverview extends StatelessWidget {
                 Expanded(
                   child: AppButton(
                     label: localization.applyLicense.toUpperCase(),
-                    iconData: Icons.cloud_done,
+                    iconData: isMobile(context) ? null : Icons.cloud_done,
                     onPressed: state.isWhiteLabeled
                         ? null
                         : () {
@@ -384,7 +384,9 @@ class _AccountOverview extends StatelessWidget {
                 Expanded(
                   child: AppButton(
                     label: localization.apiTokens.toUpperCase(),
-                    iconData: getEntityIcon(EntityType.token),
+                    iconData: isMobile(context)
+                        ? null
+                        : getEntityIcon(EntityType.token),
                     onPressed: () {
                       store.dispatch(ViewSettings(
                         section: kSettingsTokens,
@@ -396,7 +398,9 @@ class _AccountOverview extends StatelessWidget {
                 Expanded(
                   child: AppButton(
                     label: localization.apiWebhooks.toUpperCase(),
-                    iconData: getEntityIcon(EntityType.webhook),
+                    iconData: isMobile(context)
+                        ? null
+                        : getEntityIcon(EntityType.webhook),
                     onPressed: () {
                       store.dispatch(ViewSettings(
                         section: kSettingsWebhooks,
@@ -411,7 +415,7 @@ class _AccountOverview extends StatelessWidget {
               Expanded(
                 child: AppButton(
                   label: localization.apiDocs.toUpperCase(),
-                  iconData: MdiIcons.bookshelf,
+                  iconData: isMobile(context) ? null : MdiIcons.bookshelf,
                   onPressed: () => launch(kApiDocsURL),
                 ),
               ),
@@ -419,7 +423,7 @@ class _AccountOverview extends StatelessWidget {
               Expanded(
                 child: AppButton(
                   label: 'Zapier',
-                  iconData: MdiIcons.cloud,
+                  iconData: isMobile(context) ? null : MdiIcons.cloud,
                   onPressed: () => launch(kZapierURL),
                 ),
               ),
@@ -436,7 +440,7 @@ class _AccountOverview extends StatelessWidget {
                 child: AppButton(
                   label: localization.purgeData.toUpperCase(),
                   color: Colors.red,
-                  iconData: Icons.delete,
+                  iconData: isMobile(context) ? null : Icons.delete,
                   onPressed: () {
                     confirmCallback(
                         context: context,
@@ -462,7 +466,7 @@ class _AccountOverview extends StatelessWidget {
                       ? localization.cancelAccount.toUpperCase()
                       : localization.deleteCompany.toUpperCase(),
                   color: Colors.red,
-                  iconData: Icons.delete,
+                  iconData: isMobile(context) ? null : Icons.delete,
                   onPressed: () {
                     String message = companies.length == 1
                         ? localization.cancelAccountMessage
