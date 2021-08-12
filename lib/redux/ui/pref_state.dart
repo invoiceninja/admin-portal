@@ -158,10 +158,12 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
-    ..customColors.replace(BuiltMap<String, String>(PrefState.CONTRAST_COLORS))
+    ..customColors.replace(builder.enableDarkMode
+        ? BuiltMap<String, String>()
+        : BuiltMap<String, String>(PrefState.CONTRAST_COLORS))
     ..showKanban = false
     ..isPreviewEnabled = true
-    ..colorTheme = kColorThemeLight;
+    ..colorTheme = builder.enableDarkMode ? kColorThemeLight : kColorThemeLight;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }
