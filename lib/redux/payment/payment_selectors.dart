@@ -123,7 +123,9 @@ List<String> filteredPaymentsSelector(
     }
 
     if (!payment.matchesFilter(paymentListState.filter) &&
-        !client.matchesFilter(paymentListState.filter)) {
+        !client.displayName
+            .toLowerCase()
+            .contains(paymentListState.filter.toLowerCase())) {
       return false;
     }
 

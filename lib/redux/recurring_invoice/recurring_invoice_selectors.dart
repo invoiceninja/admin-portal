@@ -70,7 +70,9 @@ List<String> filteredRecurringInvoicesSelector(
       return false;
     }
     if (!invoice.matchesFilter(invoiceListState.filter) &&
-        !client.matchesFilter(invoiceListState.filter)) {
+        !client.displayName
+            .toLowerCase()
+            .contains(invoiceListState.filter.toLowerCase())) {
       return false;
     }
     if (invoiceListState.custom1Filters.isNotEmpty &&

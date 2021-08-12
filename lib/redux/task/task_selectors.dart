@@ -257,8 +257,12 @@ List<String> filteredTasksSelector(
     }
 
     if (!task.matchesFilter(taskListState.filter) &&
-        !client.matchesFilter(taskListState.filter) &&
-        !project.matchesFilter(taskListState.filter)) {
+        !client.displayName
+            .toLowerCase()
+            .contains(taskListState.filter.toLowerCase()) &&
+        !project.name
+            .toLowerCase()
+            .contains(taskListState.filter.toLowerCase())) {
       return false;
     }
 
