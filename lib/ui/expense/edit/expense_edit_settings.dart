@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
@@ -293,7 +296,21 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 )
               : null,
           children: company.numberOfItemTaxRates == 0
-              ? [Text(localization.expenseTaxHelp)]
+              ? [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(child: Text(localization.expenseTaxHelp)),
+                      OutlinedButton(
+                          onPressed: () {
+                            final store = StoreProvider.of<AppState>(context);
+                            store.dispatch(
+                                ViewSettings(section: kSettingsTaxSettings));
+                          },
+                          child: Text(localization.settings))
+                    ],
+                  )
+                ]
               : [
                   BoolDropdownButton(
                     label: localization.enterTaxes,
