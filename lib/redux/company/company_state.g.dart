@@ -95,10 +95,12 @@ class _$UserCompanyStateSerializer
       serializers.serialize(object.groupState,
           specifiedType: const FullType(GroupState)),
     ];
-    if (object.userCompany != null) {
+    Object value;
+    value = object.userCompany;
+    if (value != null) {
       result
         ..add('userCompany')
-        ..add(serializers.serialize(object.userCompany,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(UserCompanyEntity)));
     }
     return result;
@@ -114,7 +116,7 @@ class _$UserCompanyStateSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'lastUpdated':
           result.lastUpdated = serializers.deserialize(value,
@@ -287,10 +289,12 @@ class _$SettingsUIStateSerializer
       serializers.serialize(object.filterClearedAt,
           specifiedType: const FullType(int)),
     ];
-    if (object.filter != null) {
+    Object value;
+    value = object.filter;
+    if (value != null) {
       result
         ..add('filter')
-        ..add(serializers.serialize(object.filter,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -306,7 +310,7 @@ class _$SettingsUIStateSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'company':
           result.company.replace(serializers.deserialize(value,
@@ -462,83 +466,54 @@ class _$UserCompanyState extends UserCompanyState {
       this.companyGatewayState,
       this.groupState})
       : super._() {
-    if (lastUpdated == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'lastUpdated');
-    }
-    if (documentState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'documentState');
-    }
-    if (productState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'productState');
-    }
-    if (clientState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'clientState');
-    }
-    if (invoiceState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'invoiceState');
-    }
-    if (expenseState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'expenseState');
-    }
-    if (vendorState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'vendorState');
-    }
-    if (taskState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'taskState');
-    }
-    if (projectState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'projectState');
-    }
-    if (paymentState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'paymentState');
-    }
-    if (quoteState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
-    }
-    if (subscriptionState == null) {
-      throw new BuiltValueNullFieldError(
-          'UserCompanyState', 'subscriptionState');
-    }
-    if (taskStatusState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'taskStatusState');
-    }
-    if (expenseCategoryState == null) {
-      throw new BuiltValueNullFieldError(
-          'UserCompanyState', 'expenseCategoryState');
-    }
-    if (recurringInvoiceState == null) {
-      throw new BuiltValueNullFieldError(
-          'UserCompanyState', 'recurringInvoiceState');
-    }
-    if (webhookState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'webhookState');
-    }
-    if (tokenState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'tokenState');
-    }
-    if (paymentTermState == null) {
-      throw new BuiltValueNullFieldError(
-          'UserCompanyState', 'paymentTermState');
-    }
-    if (designState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'designState');
-    }
-    if (creditState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'creditState');
-    }
-    if (userState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'userState');
-    }
-    if (taxRateState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'taxRateState');
-    }
-    if (companyGatewayState == null) {
-      throw new BuiltValueNullFieldError(
-          'UserCompanyState', 'companyGatewayState');
-    }
-    if (groupState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'groupState');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        lastUpdated, 'UserCompanyState', 'lastUpdated');
+    BuiltValueNullFieldError.checkNotNull(
+        documentState, 'UserCompanyState', 'documentState');
+    BuiltValueNullFieldError.checkNotNull(
+        productState, 'UserCompanyState', 'productState');
+    BuiltValueNullFieldError.checkNotNull(
+        clientState, 'UserCompanyState', 'clientState');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceState, 'UserCompanyState', 'invoiceState');
+    BuiltValueNullFieldError.checkNotNull(
+        expenseState, 'UserCompanyState', 'expenseState');
+    BuiltValueNullFieldError.checkNotNull(
+        vendorState, 'UserCompanyState', 'vendorState');
+    BuiltValueNullFieldError.checkNotNull(
+        taskState, 'UserCompanyState', 'taskState');
+    BuiltValueNullFieldError.checkNotNull(
+        projectState, 'UserCompanyState', 'projectState');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentState, 'UserCompanyState', 'paymentState');
+    BuiltValueNullFieldError.checkNotNull(
+        quoteState, 'UserCompanyState', 'quoteState');
+    BuiltValueNullFieldError.checkNotNull(
+        subscriptionState, 'UserCompanyState', 'subscriptionState');
+    BuiltValueNullFieldError.checkNotNull(
+        taskStatusState, 'UserCompanyState', 'taskStatusState');
+    BuiltValueNullFieldError.checkNotNull(
+        expenseCategoryState, 'UserCompanyState', 'expenseCategoryState');
+    BuiltValueNullFieldError.checkNotNull(
+        recurringInvoiceState, 'UserCompanyState', 'recurringInvoiceState');
+    BuiltValueNullFieldError.checkNotNull(
+        webhookState, 'UserCompanyState', 'webhookState');
+    BuiltValueNullFieldError.checkNotNull(
+        tokenState, 'UserCompanyState', 'tokenState');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentTermState, 'UserCompanyState', 'paymentTermState');
+    BuiltValueNullFieldError.checkNotNull(
+        designState, 'UserCompanyState', 'designState');
+    BuiltValueNullFieldError.checkNotNull(
+        creditState, 'UserCompanyState', 'creditState');
+    BuiltValueNullFieldError.checkNotNull(
+        userState, 'UserCompanyState', 'userState');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRateState, 'UserCompanyState', 'taxRateState');
+    BuiltValueNullFieldError.checkNotNull(
+        companyGatewayState, 'UserCompanyState', 'companyGatewayState');
+    BuiltValueNullFieldError.checkNotNull(
+        groupState, 'UserCompanyState', 'groupState');
   }
 
   @override
@@ -809,32 +784,33 @@ class UserCompanyStateBuilder
   UserCompanyStateBuilder();
 
   UserCompanyStateBuilder get _$this {
-    if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
-      _userCompany = _$v.userCompany?.toBuilder();
-      _documentState = _$v.documentState?.toBuilder();
-      _productState = _$v.productState?.toBuilder();
-      _clientState = _$v.clientState?.toBuilder();
-      _invoiceState = _$v.invoiceState?.toBuilder();
-      _expenseState = _$v.expenseState?.toBuilder();
-      _vendorState = _$v.vendorState?.toBuilder();
-      _taskState = _$v.taskState?.toBuilder();
-      _projectState = _$v.projectState?.toBuilder();
-      _paymentState = _$v.paymentState?.toBuilder();
-      _quoteState = _$v.quoteState?.toBuilder();
-      _subscriptionState = _$v.subscriptionState?.toBuilder();
-      _taskStatusState = _$v.taskStatusState?.toBuilder();
-      _expenseCategoryState = _$v.expenseCategoryState?.toBuilder();
-      _recurringInvoiceState = _$v.recurringInvoiceState?.toBuilder();
-      _webhookState = _$v.webhookState?.toBuilder();
-      _tokenState = _$v.tokenState?.toBuilder();
-      _paymentTermState = _$v.paymentTermState?.toBuilder();
-      _designState = _$v.designState?.toBuilder();
-      _creditState = _$v.creditState?.toBuilder();
-      _userState = _$v.userState?.toBuilder();
-      _taxRateState = _$v.taxRateState?.toBuilder();
-      _companyGatewayState = _$v.companyGatewayState?.toBuilder();
-      _groupState = _$v.groupState?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _lastUpdated = $v.lastUpdated;
+      _userCompany = $v.userCompany?.toBuilder();
+      _documentState = $v.documentState.toBuilder();
+      _productState = $v.productState.toBuilder();
+      _clientState = $v.clientState.toBuilder();
+      _invoiceState = $v.invoiceState.toBuilder();
+      _expenseState = $v.expenseState.toBuilder();
+      _vendorState = $v.vendorState.toBuilder();
+      _taskState = $v.taskState.toBuilder();
+      _projectState = $v.projectState.toBuilder();
+      _paymentState = $v.paymentState.toBuilder();
+      _quoteState = $v.quoteState.toBuilder();
+      _subscriptionState = $v.subscriptionState.toBuilder();
+      _taskStatusState = $v.taskStatusState.toBuilder();
+      _expenseCategoryState = $v.expenseCategoryState.toBuilder();
+      _recurringInvoiceState = $v.recurringInvoiceState.toBuilder();
+      _webhookState = $v.webhookState.toBuilder();
+      _tokenState = $v.tokenState.toBuilder();
+      _paymentTermState = $v.paymentTermState.toBuilder();
+      _designState = $v.designState.toBuilder();
+      _creditState = $v.creditState.toBuilder();
+      _userState = $v.userState.toBuilder();
+      _taxRateState = $v.taxRateState.toBuilder();
+      _companyGatewayState = $v.companyGatewayState.toBuilder();
+      _groupState = $v.groupState.toBuilder();
       _$v = null;
     }
     return this;
@@ -842,9 +818,7 @@ class UserCompanyStateBuilder
 
   @override
   void replace(UserCompanyState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserCompanyState;
   }
 
@@ -859,7 +833,8 @@ class UserCompanyStateBuilder
     try {
       _$result = _$v ??
           new _$UserCompanyState._(
-              lastUpdated: lastUpdated,
+              lastUpdated: BuiltValueNullFieldError.checkNotNull(
+                  lastUpdated, 'UserCompanyState', 'lastUpdated'),
               userCompany: _userCompany?.build(),
               documentState: documentState.build(),
               productState: productState.build(),
@@ -1001,51 +976,33 @@ class _$SettingsUIState extends SettingsUIState {
       this.filter,
       this.filterClearedAt})
       : super._() {
-    if (company == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'company');
-    }
-    if (origCompany == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'origCompany');
-    }
-    if (client == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'client');
-    }
-    if (origClient == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'origClient');
-    }
-    if (group == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'group');
-    }
-    if (origGroup == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'origGroup');
-    }
-    if (user == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'user');
-    }
-    if (origUser == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'origUser');
-    }
-    if (entityType == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'entityType');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'isChanged');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'updatedAt');
-    }
-    if (section == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'section');
-    }
-    if (tabIndex == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'tabIndex');
-    }
-    if (selectedTemplate == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'selectedTemplate');
-    }
-    if (filterClearedAt == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'filterClearedAt');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        company, 'SettingsUIState', 'company');
+    BuiltValueNullFieldError.checkNotNull(
+        origCompany, 'SettingsUIState', 'origCompany');
+    BuiltValueNullFieldError.checkNotNull(client, 'SettingsUIState', 'client');
+    BuiltValueNullFieldError.checkNotNull(
+        origClient, 'SettingsUIState', 'origClient');
+    BuiltValueNullFieldError.checkNotNull(group, 'SettingsUIState', 'group');
+    BuiltValueNullFieldError.checkNotNull(
+        origGroup, 'SettingsUIState', 'origGroup');
+    BuiltValueNullFieldError.checkNotNull(user, 'SettingsUIState', 'user');
+    BuiltValueNullFieldError.checkNotNull(
+        origUser, 'SettingsUIState', 'origUser');
+    BuiltValueNullFieldError.checkNotNull(
+        entityType, 'SettingsUIState', 'entityType');
+    BuiltValueNullFieldError.checkNotNull(
+        isChanged, 'SettingsUIState', 'isChanged');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'SettingsUIState', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        section, 'SettingsUIState', 'section');
+    BuiltValueNullFieldError.checkNotNull(
+        tabIndex, 'SettingsUIState', 'tabIndex');
+    BuiltValueNullFieldError.checkNotNull(
+        selectedTemplate, 'SettingsUIState', 'selectedTemplate');
+    BuiltValueNullFieldError.checkNotNull(
+        filterClearedAt, 'SettingsUIState', 'filterClearedAt');
   }
 
   @override
@@ -1224,23 +1181,24 @@ class SettingsUIStateBuilder
   }
 
   SettingsUIStateBuilder get _$this {
-    if (_$v != null) {
-      _company = _$v.company?.toBuilder();
-      _origCompany = _$v.origCompany?.toBuilder();
-      _client = _$v.client?.toBuilder();
-      _origClient = _$v.origClient?.toBuilder();
-      _group = _$v.group?.toBuilder();
-      _origGroup = _$v.origGroup?.toBuilder();
-      _user = _$v.user?.toBuilder();
-      _origUser = _$v.origUser?.toBuilder();
-      _entityType = _$v.entityType;
-      _isChanged = _$v.isChanged;
-      _updatedAt = _$v.updatedAt;
-      _section = _$v.section;
-      _tabIndex = _$v.tabIndex;
-      _selectedTemplate = _$v.selectedTemplate;
-      _filter = _$v.filter;
-      _filterClearedAt = _$v.filterClearedAt;
+    final $v = _$v;
+    if ($v != null) {
+      _company = $v.company.toBuilder();
+      _origCompany = $v.origCompany.toBuilder();
+      _client = $v.client.toBuilder();
+      _origClient = $v.origClient.toBuilder();
+      _group = $v.group.toBuilder();
+      _origGroup = $v.origGroup.toBuilder();
+      _user = $v.user.toBuilder();
+      _origUser = $v.origUser.toBuilder();
+      _entityType = $v.entityType;
+      _isChanged = $v.isChanged;
+      _updatedAt = $v.updatedAt;
+      _section = $v.section;
+      _tabIndex = $v.tabIndex;
+      _selectedTemplate = $v.selectedTemplate;
+      _filter = $v.filter;
+      _filterClearedAt = $v.filterClearedAt;
       _$v = null;
     }
     return this;
@@ -1248,9 +1206,7 @@ class SettingsUIStateBuilder
 
   @override
   void replace(SettingsUIState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SettingsUIState;
   }
 
@@ -1273,14 +1229,21 @@ class SettingsUIStateBuilder
               origGroup: origGroup.build(),
               user: user.build(),
               origUser: origUser.build(),
-              entityType: entityType,
-              isChanged: isChanged,
-              updatedAt: updatedAt,
-              section: section,
-              tabIndex: tabIndex,
-              selectedTemplate: selectedTemplate,
+              entityType: BuiltValueNullFieldError.checkNotNull(
+                  entityType, 'SettingsUIState', 'entityType'),
+              isChanged: BuiltValueNullFieldError.checkNotNull(
+                  isChanged, 'SettingsUIState', 'isChanged'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(
+                  updatedAt, 'SettingsUIState', 'updatedAt'),
+              section: BuiltValueNullFieldError.checkNotNull(
+                  section, 'SettingsUIState', 'section'),
+              tabIndex: BuiltValueNullFieldError.checkNotNull(
+                  tabIndex, 'SettingsUIState', 'tabIndex'),
+              selectedTemplate: BuiltValueNullFieldError.checkNotNull(
+                  selectedTemplate, 'SettingsUIState', 'selectedTemplate'),
               filter: filter,
-              filterClearedAt: filterClearedAt);
+              filterClearedAt: BuiltValueNullFieldError.checkNotNull(
+                  filterClearedAt, 'SettingsUIState', 'filterClearedAt'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1311,4 +1274,4 @@ class SettingsUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -47,7 +47,7 @@ class _$LanguageListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$LanguageItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -141,7 +141,7 @@ class _$LanguageEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -171,9 +171,7 @@ class _$LanguageListResponse extends LanguageListResponse {
       (new LanguageListResponseBuilder()..update(updates)).build();
 
   _$LanguageListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('LanguageListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'LanguageListResponse', 'data');
   }
 
   @override
@@ -217,8 +215,9 @@ class LanguageListResponseBuilder
   LanguageListResponseBuilder();
 
   LanguageListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -226,9 +225,7 @@ class LanguageListResponseBuilder
 
   @override
   void replace(LanguageListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LanguageListResponse;
   }
 
@@ -267,9 +264,7 @@ class _$LanguageItemResponse extends LanguageItemResponse {
       (new LanguageItemResponseBuilder()..update(updates)).build();
 
   _$LanguageItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('LanguageItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'LanguageItemResponse', 'data');
   }
 
   @override
@@ -313,8 +308,9 @@ class LanguageItemResponseBuilder
   LanguageItemResponseBuilder();
 
   LanguageItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -322,9 +318,7 @@ class LanguageItemResponseBuilder
 
   @override
   void replace(LanguageItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LanguageItemResponse;
   }
 
@@ -366,15 +360,9 @@ class _$LanguageEntity extends LanguageEntity {
       (new LanguageEntityBuilder()..update(updates)).build();
 
   _$LanguageEntity._({this.name, this.locale, this.id}) : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('LanguageEntity', 'name');
-    }
-    if (locale == null) {
-      throw new BuiltValueNullFieldError('LanguageEntity', 'locale');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('LanguageEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'LanguageEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(locale, 'LanguageEntity', 'locale');
+    BuiltValueNullFieldError.checkNotNull(id, 'LanguageEntity', 'id');
   }
 
   @override
@@ -430,10 +418,11 @@ class LanguageEntityBuilder
   LanguageEntityBuilder();
 
   LanguageEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _locale = _$v.locale;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _locale = $v.locale;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -441,9 +430,7 @@ class LanguageEntityBuilder
 
   @override
   void replace(LanguageEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LanguageEntity;
   }
 
@@ -454,11 +441,17 @@ class LanguageEntityBuilder
 
   @override
   _$LanguageEntity build() {
-    final _$result =
-        _$v ?? new _$LanguageEntity._(name: name, locale: locale, id: id);
+    final _$result = _$v ??
+        new _$LanguageEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'LanguageEntity', 'name'),
+            locale: BuiltValueNullFieldError.checkNotNull(
+                locale, 'LanguageEntity', 'locale'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'LanguageEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

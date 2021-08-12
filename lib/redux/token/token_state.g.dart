@@ -42,7 +42,7 @@ class _$TokenStateSerializer implements StructuredSerializer<TokenState> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'map':
           result.map.replace(serializers.deserialize(value,
@@ -81,23 +81,27 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
       serializers.serialize(object.tabIndex,
           specifiedType: const FullType(int)),
     ];
-    if (object.editing != null) {
+    Object value;
+    value = object.editing;
+    if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(object.editing,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(TokenEntity)));
     }
-    if (object.selectedId != null) {
+    value = object.selectedId;
+    if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(object.selectedId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.forceSelected != null) {
+    value = object.forceSelected;
+    if (value != null) {
       result
         ..add('forceSelected')
-        ..add(serializers.serialize(object.forceSelected,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
     return result;
   }
@@ -111,7 +115,7 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
@@ -150,12 +154,8 @@ class _$TokenState extends TokenState {
       (new TokenStateBuilder()..update(updates)).build();
 
   _$TokenState._({this.map, this.list}) : super._() {
-    if (map == null) {
-      throw new BuiltValueNullFieldError('TokenState', 'map');
-    }
-    if (list == null) {
-      throw new BuiltValueNullFieldError('TokenState', 'list');
-    }
+    BuiltValueNullFieldError.checkNotNull(map, 'TokenState', 'map');
+    BuiltValueNullFieldError.checkNotNull(list, 'TokenState', 'list');
   }
 
   @override
@@ -201,9 +201,10 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
   TokenStateBuilder();
 
   TokenStateBuilder get _$this {
-    if (_$v != null) {
-      _map = _$v.map?.toBuilder();
-      _list = _$v.list?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _map = $v.map.toBuilder();
+      _list = $v.list.toBuilder();
       _$v = null;
     }
     return this;
@@ -211,9 +212,7 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
 
   @override
   void replace(TokenState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenState;
   }
 
@@ -274,12 +273,9 @@ class _$TokenUIState extends TokenUIState {
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
-    if (listUIState == null) {
-      throw new BuiltValueNullFieldError('TokenUIState', 'listUIState');
-    }
-    if (tabIndex == null) {
-      throw new BuiltValueNullFieldError('TokenUIState', 'tabIndex');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        listUIState, 'TokenUIState', 'listUIState');
+    BuiltValueNullFieldError.checkNotNull(tabIndex, 'TokenUIState', 'tabIndex');
   }
 
   @override
@@ -372,14 +368,15 @@ class TokenUIStateBuilder
   TokenUIStateBuilder();
 
   TokenUIStateBuilder get _$this {
-    if (_$v != null) {
-      _editing = _$v.editing?.toBuilder();
-      _listUIState = _$v.listUIState?.toBuilder();
-      _selectedId = _$v.selectedId;
-      _forceSelected = _$v.forceSelected;
-      _tabIndex = _$v.tabIndex;
-      _saveCompleter = _$v.saveCompleter;
-      _cancelCompleter = _$v.cancelCompleter;
+    final $v = _$v;
+    if ($v != null) {
+      _editing = $v.editing?.toBuilder();
+      _listUIState = $v.listUIState.toBuilder();
+      _selectedId = $v.selectedId;
+      _forceSelected = $v.forceSelected;
+      _tabIndex = $v.tabIndex;
+      _saveCompleter = $v.saveCompleter;
+      _cancelCompleter = $v.cancelCompleter;
       _$v = null;
     }
     return this;
@@ -387,9 +384,7 @@ class TokenUIStateBuilder
 
   @override
   void replace(TokenUIState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenUIState;
   }
 
@@ -408,7 +403,8 @@ class TokenUIStateBuilder
               listUIState: listUIState.build(),
               selectedId: selectedId,
               forceSelected: forceSelected,
-              tabIndex: tabIndex,
+              tabIndex: BuiltValueNullFieldError.checkNotNull(
+                  tabIndex, 'TokenUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -429,4 +425,4 @@ class TokenUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

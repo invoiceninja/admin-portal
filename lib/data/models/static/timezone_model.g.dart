@@ -47,7 +47,7 @@ class _$TimezoneListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$TimezoneItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -141,7 +141,7 @@ class _$TimezoneEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -171,9 +171,7 @@ class _$TimezoneListResponse extends TimezoneListResponse {
       (new TimezoneListResponseBuilder()..update(updates)).build();
 
   _$TimezoneListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('TimezoneListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'TimezoneListResponse', 'data');
   }
 
   @override
@@ -217,8 +215,9 @@ class TimezoneListResponseBuilder
   TimezoneListResponseBuilder();
 
   TimezoneListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -226,9 +225,7 @@ class TimezoneListResponseBuilder
 
   @override
   void replace(TimezoneListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TimezoneListResponse;
   }
 
@@ -267,9 +264,7 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
       (new TimezoneItemResponseBuilder()..update(updates)).build();
 
   _$TimezoneItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('TimezoneItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'TimezoneItemResponse', 'data');
   }
 
   @override
@@ -313,8 +308,9 @@ class TimezoneItemResponseBuilder
   TimezoneItemResponseBuilder();
 
   TimezoneItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -322,9 +318,7 @@ class TimezoneItemResponseBuilder
 
   @override
   void replace(TimezoneItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TimezoneItemResponse;
   }
 
@@ -366,15 +360,10 @@ class _$TimezoneEntity extends TimezoneEntity {
       (new TimezoneEntityBuilder()..update(updates)).build();
 
   _$TimezoneEntity._({this.name, this.location, this.id}) : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('TimezoneEntity', 'name');
-    }
-    if (location == null) {
-      throw new BuiltValueNullFieldError('TimezoneEntity', 'location');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('TimezoneEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'TimezoneEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        location, 'TimezoneEntity', 'location');
+    BuiltValueNullFieldError.checkNotNull(id, 'TimezoneEntity', 'id');
   }
 
   @override
@@ -430,10 +419,11 @@ class TimezoneEntityBuilder
   TimezoneEntityBuilder();
 
   TimezoneEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _location = _$v.location;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _location = $v.location;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -441,9 +431,7 @@ class TimezoneEntityBuilder
 
   @override
   void replace(TimezoneEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TimezoneEntity;
   }
 
@@ -454,11 +442,17 @@ class TimezoneEntityBuilder
 
   @override
   _$TimezoneEntity build() {
-    final _$result =
-        _$v ?? new _$TimezoneEntity._(name: name, location: location, id: id);
+    final _$result = _$v ??
+        new _$TimezoneEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'TimezoneEntity', 'name'),
+            location: BuiltValueNullFieldError.checkNotNull(
+                location, 'TimezoneEntity', 'location'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'TimezoneEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

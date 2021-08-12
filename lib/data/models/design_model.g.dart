@@ -45,7 +45,7 @@ class _$DesignListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -89,7 +89,7 @@ class _$DesignItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -141,7 +141,7 @@ class _$DesignPreviewRequestSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'entity_type':
           result.entityType = serializers.deserialize(value,
@@ -195,28 +195,33 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -231,7 +236,7 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -298,9 +303,7 @@ class _$DesignListResponse extends DesignListResponse {
       (new DesignListResponseBuilder()..update(updates)).build();
 
   _$DesignListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('DesignListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'DesignListResponse', 'data');
   }
 
   @override
@@ -344,8 +347,9 @@ class DesignListResponseBuilder
   DesignListResponseBuilder();
 
   DesignListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -353,9 +357,7 @@ class DesignListResponseBuilder
 
   @override
   void replace(DesignListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DesignListResponse;
   }
 
@@ -394,9 +396,7 @@ class _$DesignItemResponse extends DesignItemResponse {
       (new DesignItemResponseBuilder()..update(updates)).build();
 
   _$DesignItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('DesignItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'DesignItemResponse', 'data');
   }
 
   @override
@@ -439,8 +439,9 @@ class DesignItemResponseBuilder
   DesignItemResponseBuilder();
 
   DesignItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -448,9 +449,7 @@ class DesignItemResponseBuilder
 
   @override
   void replace(DesignItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DesignItemResponse;
   }
 
@@ -494,15 +493,12 @@ class _$DesignPreviewRequest extends DesignPreviewRequest {
 
   _$DesignPreviewRequest._({this.entityType, this.entityId, this.design})
       : super._() {
-    if (entityType == null) {
-      throw new BuiltValueNullFieldError('DesignPreviewRequest', 'entityType');
-    }
-    if (entityId == null) {
-      throw new BuiltValueNullFieldError('DesignPreviewRequest', 'entityId');
-    }
-    if (design == null) {
-      throw new BuiltValueNullFieldError('DesignPreviewRequest', 'design');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        entityType, 'DesignPreviewRequest', 'entityType');
+    BuiltValueNullFieldError.checkNotNull(
+        entityId, 'DesignPreviewRequest', 'entityId');
+    BuiltValueNullFieldError.checkNotNull(
+        design, 'DesignPreviewRequest', 'design');
   }
 
   @override
@@ -560,10 +556,11 @@ class DesignPreviewRequestBuilder
   DesignPreviewRequestBuilder();
 
   DesignPreviewRequestBuilder get _$this {
-    if (_$v != null) {
-      _entityType = _$v.entityType;
-      _entityId = _$v.entityId;
-      _design = _$v.design?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _entityType = $v.entityType;
+      _entityId = $v.entityId;
+      _design = $v.design.toBuilder();
       _$v = null;
     }
     return this;
@@ -571,9 +568,7 @@ class DesignPreviewRequestBuilder
 
   @override
   void replace(DesignPreviewRequest other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DesignPreviewRequest;
   }
 
@@ -588,8 +583,10 @@ class DesignPreviewRequestBuilder
     try {
       _$result = _$v ??
           new _$DesignPreviewRequest._(
-              entityType: entityType,
-              entityId: entityId,
+              entityType: BuiltValueNullFieldError.checkNotNull(
+                  entityType, 'DesignPreviewRequest', 'entityType'),
+              entityId: BuiltValueNullFieldError.checkNotNull(
+                  entityId, 'DesignPreviewRequest', 'entityId'),
               design: design.build());
     } catch (_) {
       String _$failedField;
@@ -650,30 +647,17 @@ class _$DesignEntity extends DesignEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('DesignEntity', 'name');
-    }
-    if (design == null) {
-      throw new BuiltValueNullFieldError('DesignEntity', 'design');
-    }
-    if (isCustom == null) {
-      throw new BuiltValueNullFieldError('DesignEntity', 'isCustom');
-    }
-    if (isFree == null) {
-      throw new BuiltValueNullFieldError('DesignEntity', 'isFree');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('DesignEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('DesignEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('DesignEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('DesignEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'DesignEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(design, 'DesignEntity', 'design');
+    BuiltValueNullFieldError.checkNotNull(isCustom, 'DesignEntity', 'isCustom');
+    BuiltValueNullFieldError.checkNotNull(isFree, 'DesignEntity', 'isFree');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'DesignEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'DesignEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'DesignEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'DesignEntity', 'id');
   }
 
   @override
@@ -807,19 +791,20 @@ class DesignEntityBuilder
   }
 
   DesignEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _design = _$v.design?.toBuilder();
-      _isCustom = _$v.isCustom;
-      _isFree = _$v.isFree;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _design = $v.design.toBuilder();
+      _isCustom = $v.isCustom;
+      _isFree = $v.isFree;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -827,9 +812,7 @@ class DesignEntityBuilder
 
   @override
   void replace(DesignEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DesignEntity;
   }
 
@@ -844,18 +827,25 @@ class DesignEntityBuilder
     try {
       _$result = _$v ??
           new _$DesignEntity._(
-              name: name,
+              name: BuiltValueNullFieldError.checkNotNull(
+                  name, 'DesignEntity', 'name'),
               design: design.build(),
-              isCustom: isCustom,
-              isFree: isFree,
+              isCustom: BuiltValueNullFieldError.checkNotNull(
+                  isCustom, 'DesignEntity', 'isCustom'),
+              isFree: BuiltValueNullFieldError.checkNotNull(
+                  isFree, 'DesignEntity', 'isFree'),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(
+                  createdAt, 'DesignEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(
+                  updatedAt, 'DesignEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(
+                  archivedAt, 'DesignEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(
+                  id, 'DesignEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -872,4 +862,4 @@ class DesignEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

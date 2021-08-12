@@ -47,7 +47,7 @@ class _$CurrencyListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$CurrencyItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -158,7 +158,7 @@ class _$CurrencyEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -212,9 +212,7 @@ class _$CurrencyListResponse extends CurrencyListResponse {
       (new CurrencyListResponseBuilder()..update(updates)).build();
 
   _$CurrencyListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('CurrencyListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'CurrencyListResponse', 'data');
   }
 
   @override
@@ -258,8 +256,9 @@ class CurrencyListResponseBuilder
   CurrencyListResponseBuilder();
 
   CurrencyListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -267,9 +266,7 @@ class CurrencyListResponseBuilder
 
   @override
   void replace(CurrencyListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CurrencyListResponse;
   }
 
@@ -308,9 +305,7 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
       (new CurrencyItemResponseBuilder()..update(updates)).build();
 
   _$CurrencyItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('CurrencyItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'CurrencyItemResponse', 'data');
   }
 
   @override
@@ -354,8 +349,9 @@ class CurrencyItemResponseBuilder
   CurrencyItemResponseBuilder();
 
   CurrencyItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -363,9 +359,7 @@ class CurrencyItemResponseBuilder
 
   @override
   void replace(CurrencyItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CurrencyItemResponse;
   }
 
@@ -429,34 +423,20 @@ class _$CurrencyEntity extends CurrencyEntity {
       this.exchangeRate,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'name');
-    }
-    if (symbol == null) {
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'symbol');
-    }
-    if (precision == null) {
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'precision');
-    }
-    if (thousandSeparator == null) {
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'thousandSeparator');
-    }
-    if (decimalSeparator == null) {
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'decimalSeparator');
-    }
-    if (code == null) {
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'code');
-    }
-    if (swapCurrencySymbol == null) {
-      throw new BuiltValueNullFieldError(
-          'CurrencyEntity', 'swapCurrencySymbol');
-    }
-    if (exchangeRate == null) {
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'exchangeRate');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('CurrencyEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'CurrencyEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(symbol, 'CurrencyEntity', 'symbol');
+    BuiltValueNullFieldError.checkNotNull(
+        precision, 'CurrencyEntity', 'precision');
+    BuiltValueNullFieldError.checkNotNull(
+        thousandSeparator, 'CurrencyEntity', 'thousandSeparator');
+    BuiltValueNullFieldError.checkNotNull(
+        decimalSeparator, 'CurrencyEntity', 'decimalSeparator');
+    BuiltValueNullFieldError.checkNotNull(code, 'CurrencyEntity', 'code');
+    BuiltValueNullFieldError.checkNotNull(
+        swapCurrencySymbol, 'CurrencyEntity', 'swapCurrencySymbol');
+    BuiltValueNullFieldError.checkNotNull(
+        exchangeRate, 'CurrencyEntity', 'exchangeRate');
+    BuiltValueNullFieldError.checkNotNull(id, 'CurrencyEntity', 'id');
   }
 
   @override
@@ -563,16 +543,17 @@ class CurrencyEntityBuilder
   CurrencyEntityBuilder();
 
   CurrencyEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _symbol = _$v.symbol;
-      _precision = _$v.precision;
-      _thousandSeparator = _$v.thousandSeparator;
-      _decimalSeparator = _$v.decimalSeparator;
-      _code = _$v.code;
-      _swapCurrencySymbol = _$v.swapCurrencySymbol;
-      _exchangeRate = _$v.exchangeRate;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _symbol = $v.symbol;
+      _precision = $v.precision;
+      _thousandSeparator = $v.thousandSeparator;
+      _decimalSeparator = $v.decimalSeparator;
+      _code = $v.code;
+      _swapCurrencySymbol = $v.swapCurrencySymbol;
+      _exchangeRate = $v.exchangeRate;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -580,9 +561,7 @@ class CurrencyEntityBuilder
 
   @override
   void replace(CurrencyEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CurrencyEntity;
   }
 
@@ -595,18 +574,26 @@ class CurrencyEntityBuilder
   _$CurrencyEntity build() {
     final _$result = _$v ??
         new _$CurrencyEntity._(
-            name: name,
-            symbol: symbol,
-            precision: precision,
-            thousandSeparator: thousandSeparator,
-            decimalSeparator: decimalSeparator,
-            code: code,
-            swapCurrencySymbol: swapCurrencySymbol,
-            exchangeRate: exchangeRate,
-            id: id);
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'CurrencyEntity', 'name'),
+            symbol: BuiltValueNullFieldError.checkNotNull(
+                symbol, 'CurrencyEntity', 'symbol'),
+            precision: BuiltValueNullFieldError.checkNotNull(
+                precision, 'CurrencyEntity', 'precision'),
+            thousandSeparator: BuiltValueNullFieldError.checkNotNull(
+                thousandSeparator, 'CurrencyEntity', 'thousandSeparator'),
+            decimalSeparator: BuiltValueNullFieldError.checkNotNull(
+                decimalSeparator, 'CurrencyEntity', 'decimalSeparator'),
+            code: BuiltValueNullFieldError.checkNotNull(
+                code, 'CurrencyEntity', 'code'),
+            swapCurrencySymbol: BuiltValueNullFieldError.checkNotNull(
+                swapCurrencySymbol, 'CurrencyEntity', 'swapCurrencySymbol'),
+            exchangeRate: BuiltValueNullFieldError.checkNotNull(
+                exchangeRate, 'CurrencyEntity', 'exchangeRate'),
+            id: BuiltValueNullFieldError.checkNotNull(id, 'CurrencyEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

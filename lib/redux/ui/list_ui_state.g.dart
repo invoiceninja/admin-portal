@@ -52,16 +52,19 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.filter != null) {
+    Object value;
+    value = object.filter;
+    if (value != null) {
       result
         ..add('filter')
-        ..add(serializers.serialize(object.filter,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.selectedIds != null) {
+    value = object.selectedIds;
+    if (value != null) {
       result
         ..add('selectedIds')
-        ..add(serializers.serialize(object.selectedIds,
+        ..add(serializers.serialize(value,
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
@@ -77,7 +80,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'filter':
           result.filter = serializers.deserialize(value,
@@ -184,33 +187,24 @@ class _$ListUIState extends ListUIState {
       this.custom4Filters,
       this.selectedIds})
       : super._() {
-    if (filterClearedAt == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'filterClearedAt');
-    }
-    if (sortField == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'sortField');
-    }
-    if (sortAscending == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'sortAscending');
-    }
-    if (stateFilters == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'stateFilters');
-    }
-    if (statusFilters == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'statusFilters');
-    }
-    if (custom1Filters == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'custom1Filters');
-    }
-    if (custom2Filters == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'custom2Filters');
-    }
-    if (custom3Filters == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'custom3Filters');
-    }
-    if (custom4Filters == null) {
-      throw new BuiltValueNullFieldError('ListUIState', 'custom4Filters');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        filterClearedAt, 'ListUIState', 'filterClearedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        sortField, 'ListUIState', 'sortField');
+    BuiltValueNullFieldError.checkNotNull(
+        sortAscending, 'ListUIState', 'sortAscending');
+    BuiltValueNullFieldError.checkNotNull(
+        stateFilters, 'ListUIState', 'stateFilters');
+    BuiltValueNullFieldError.checkNotNull(
+        statusFilters, 'ListUIState', 'statusFilters');
+    BuiltValueNullFieldError.checkNotNull(
+        custom1Filters, 'ListUIState', 'custom1Filters');
+    BuiltValueNullFieldError.checkNotNull(
+        custom2Filters, 'ListUIState', 'custom2Filters');
+    BuiltValueNullFieldError.checkNotNull(
+        custom3Filters, 'ListUIState', 'custom3Filters');
+    BuiltValueNullFieldError.checkNotNull(
+        custom4Filters, 'ListUIState', 'custom4Filters');
   }
 
   @override
@@ -346,18 +340,19 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   ListUIStateBuilder();
 
   ListUIStateBuilder get _$this {
-    if (_$v != null) {
-      _filter = _$v.filter;
-      _filterClearedAt = _$v.filterClearedAt;
-      _sortField = _$v.sortField;
-      _sortAscending = _$v.sortAscending;
-      _stateFilters = _$v.stateFilters?.toBuilder();
-      _statusFilters = _$v.statusFilters?.toBuilder();
-      _custom1Filters = _$v.custom1Filters?.toBuilder();
-      _custom2Filters = _$v.custom2Filters?.toBuilder();
-      _custom3Filters = _$v.custom3Filters?.toBuilder();
-      _custom4Filters = _$v.custom4Filters?.toBuilder();
-      _selectedIds = _$v.selectedIds?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _filter = $v.filter;
+      _filterClearedAt = $v.filterClearedAt;
+      _sortField = $v.sortField;
+      _sortAscending = $v.sortAscending;
+      _stateFilters = $v.stateFilters.toBuilder();
+      _statusFilters = $v.statusFilters.toBuilder();
+      _custom1Filters = $v.custom1Filters.toBuilder();
+      _custom2Filters = $v.custom2Filters.toBuilder();
+      _custom3Filters = $v.custom3Filters.toBuilder();
+      _custom4Filters = $v.custom4Filters.toBuilder();
+      _selectedIds = $v.selectedIds?.toBuilder();
       _$v = null;
     }
     return this;
@@ -365,9 +360,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
 
   @override
   void replace(ListUIState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ListUIState;
   }
 
@@ -383,9 +376,12 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
       _$result = _$v ??
           new _$ListUIState._(
               filter: filter,
-              filterClearedAt: filterClearedAt,
-              sortField: sortField,
-              sortAscending: sortAscending,
+              filterClearedAt: BuiltValueNullFieldError.checkNotNull(
+                  filterClearedAt, 'ListUIState', 'filterClearedAt'),
+              sortField: BuiltValueNullFieldError.checkNotNull(
+                  sortField, 'ListUIState', 'sortField'),
+              sortAscending: BuiltValueNullFieldError.checkNotNull(
+                  sortAscending, 'ListUIState', 'sortAscending'),
               stateFilters: stateFilters.build(),
               statusFilters: statusFilters.build(),
               custom1Filters: custom1Filters.build(),
@@ -421,4 +417,4 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

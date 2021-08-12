@@ -77,7 +77,7 @@ class _$HealthCheckResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'system_health':
           result.systemHealth = serializers.deserialize(value,
@@ -176,7 +176,7 @@ class _$HealthCheckPHPResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'minimum_php_version':
           result.minimumPHPVersion = serializers.deserialize(value,
@@ -245,43 +245,30 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.pdfEngine,
       this.queue})
       : super._() {
-    if (systemHealth == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'systemHealth');
-    }
-    if (phpVersion == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'phpVersion');
-    }
-    if (envWritable == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'envWritable');
-    }
-    if (dbCheck == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'dbCheck');
-    }
-    if (cacheEnabled == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'cacheEnabled');
-    }
-    if (phantomEnabled == null) {
-      throw new BuiltValueNullFieldError(
-          'HealthCheckResponse', 'phantomEnabled');
-    }
-    if (openBasedir == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'openBasedir');
-    }
-    if (execEnabled == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'execEnabled');
-    }
-    if (emailDriver == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'emailDriver');
-    }
-    if (pendingJobs == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'pendingJobs');
-    }
-    if (pdfEngine == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'pdfEngine');
-    }
-    if (queue == null) {
-      throw new BuiltValueNullFieldError('HealthCheckResponse', 'queue');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        systemHealth, 'HealthCheckResponse', 'systemHealth');
+    BuiltValueNullFieldError.checkNotNull(
+        phpVersion, 'HealthCheckResponse', 'phpVersion');
+    BuiltValueNullFieldError.checkNotNull(
+        envWritable, 'HealthCheckResponse', 'envWritable');
+    BuiltValueNullFieldError.checkNotNull(
+        dbCheck, 'HealthCheckResponse', 'dbCheck');
+    BuiltValueNullFieldError.checkNotNull(
+        cacheEnabled, 'HealthCheckResponse', 'cacheEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        phantomEnabled, 'HealthCheckResponse', 'phantomEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        openBasedir, 'HealthCheckResponse', 'openBasedir');
+    BuiltValueNullFieldError.checkNotNull(
+        execEnabled, 'HealthCheckResponse', 'execEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        emailDriver, 'HealthCheckResponse', 'emailDriver');
+    BuiltValueNullFieldError.checkNotNull(
+        pendingJobs, 'HealthCheckResponse', 'pendingJobs');
+    BuiltValueNullFieldError.checkNotNull(
+        pdfEngine, 'HealthCheckResponse', 'pdfEngine');
+    BuiltValueNullFieldError.checkNotNull(
+        queue, 'HealthCheckResponse', 'queue');
   }
 
   @override
@@ -415,19 +402,20 @@ class HealthCheckResponseBuilder
   HealthCheckResponseBuilder();
 
   HealthCheckResponseBuilder get _$this {
-    if (_$v != null) {
-      _systemHealth = _$v.systemHealth;
-      _phpVersion = _$v.phpVersion?.toBuilder();
-      _envWritable = _$v.envWritable;
-      _dbCheck = _$v.dbCheck;
-      _cacheEnabled = _$v.cacheEnabled;
-      _phantomEnabled = _$v.phantomEnabled;
-      _openBasedir = _$v.openBasedir;
-      _execEnabled = _$v.execEnabled;
-      _emailDriver = _$v.emailDriver;
-      _pendingJobs = _$v.pendingJobs;
-      _pdfEngine = _$v.pdfEngine;
-      _queue = _$v.queue;
+    final $v = _$v;
+    if ($v != null) {
+      _systemHealth = $v.systemHealth;
+      _phpVersion = $v.phpVersion.toBuilder();
+      _envWritable = $v.envWritable;
+      _dbCheck = $v.dbCheck;
+      _cacheEnabled = $v.cacheEnabled;
+      _phantomEnabled = $v.phantomEnabled;
+      _openBasedir = $v.openBasedir;
+      _execEnabled = $v.execEnabled;
+      _emailDriver = $v.emailDriver;
+      _pendingJobs = $v.pendingJobs;
+      _pdfEngine = $v.pdfEngine;
+      _queue = $v.queue;
       _$v = null;
     }
     return this;
@@ -435,9 +423,7 @@ class HealthCheckResponseBuilder
 
   @override
   void replace(HealthCheckResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HealthCheckResponse;
   }
 
@@ -452,18 +438,26 @@ class HealthCheckResponseBuilder
     try {
       _$result = _$v ??
           new _$HealthCheckResponse._(
-              systemHealth: systemHealth,
+              systemHealth: BuiltValueNullFieldError.checkNotNull(
+                  systemHealth, 'HealthCheckResponse', 'systemHealth'),
               phpVersion: phpVersion.build(),
-              envWritable: envWritable,
-              dbCheck: dbCheck,
-              cacheEnabled: cacheEnabled,
-              phantomEnabled: phantomEnabled,
-              openBasedir: openBasedir,
-              execEnabled: execEnabled,
-              emailDriver: emailDriver,
-              pendingJobs: pendingJobs,
-              pdfEngine: pdfEngine,
-              queue: queue);
+              envWritable: BuiltValueNullFieldError.checkNotNull(
+                  envWritable, 'HealthCheckResponse', 'envWritable'),
+              dbCheck: BuiltValueNullFieldError.checkNotNull(
+                  dbCheck, 'HealthCheckResponse', 'dbCheck'),
+              cacheEnabled: BuiltValueNullFieldError.checkNotNull(
+                  cacheEnabled, 'HealthCheckResponse', 'cacheEnabled'),
+              phantomEnabled: BuiltValueNullFieldError.checkNotNull(
+                  phantomEnabled, 'HealthCheckResponse', 'phantomEnabled'),
+              openBasedir: BuiltValueNullFieldError.checkNotNull(
+                  openBasedir, 'HealthCheckResponse', 'openBasedir'),
+              execEnabled: BuiltValueNullFieldError.checkNotNull(
+                  execEnabled, 'HealthCheckResponse', 'execEnabled'),
+              emailDriver: BuiltValueNullFieldError.checkNotNull(
+                  emailDriver, 'HealthCheckResponse', 'emailDriver'),
+              pendingJobs: BuiltValueNullFieldError.checkNotNull(pendingJobs, 'HealthCheckResponse', 'pendingJobs'),
+              pdfEngine: BuiltValueNullFieldError.checkNotNull(pdfEngine, 'HealthCheckResponse', 'pdfEngine'),
+              queue: BuiltValueNullFieldError.checkNotNull(queue, 'HealthCheckResponse', 'queue'));
     } catch (_) {
       String _$failedField;
       try {
@@ -500,21 +494,14 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
       this.currentPHPCLIVersion,
       this.isOkay})
       : super._() {
-    if (minimumPHPVersion == null) {
-      throw new BuiltValueNullFieldError(
-          'HealthCheckPHPResponse', 'minimumPHPVersion');
-    }
-    if (currentPHPVersion == null) {
-      throw new BuiltValueNullFieldError(
-          'HealthCheckPHPResponse', 'currentPHPVersion');
-    }
-    if (currentPHPCLIVersion == null) {
-      throw new BuiltValueNullFieldError(
-          'HealthCheckPHPResponse', 'currentPHPCLIVersion');
-    }
-    if (isOkay == null) {
-      throw new BuiltValueNullFieldError('HealthCheckPHPResponse', 'isOkay');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        minimumPHPVersion, 'HealthCheckPHPResponse', 'minimumPHPVersion');
+    BuiltValueNullFieldError.checkNotNull(
+        currentPHPVersion, 'HealthCheckPHPResponse', 'currentPHPVersion');
+    BuiltValueNullFieldError.checkNotNull(
+        currentPHPCLIVersion, 'HealthCheckPHPResponse', 'currentPHPCLIVersion');
+    BuiltValueNullFieldError.checkNotNull(
+        isOkay, 'HealthCheckPHPResponse', 'isOkay');
   }
 
   @override
@@ -582,11 +569,12 @@ class HealthCheckPHPResponseBuilder
   HealthCheckPHPResponseBuilder();
 
   HealthCheckPHPResponseBuilder get _$this {
-    if (_$v != null) {
-      _minimumPHPVersion = _$v.minimumPHPVersion;
-      _currentPHPVersion = _$v.currentPHPVersion;
-      _currentPHPCLIVersion = _$v.currentPHPCLIVersion;
-      _isOkay = _$v.isOkay;
+    final $v = _$v;
+    if ($v != null) {
+      _minimumPHPVersion = $v.minimumPHPVersion;
+      _currentPHPVersion = $v.currentPHPVersion;
+      _currentPHPCLIVersion = $v.currentPHPCLIVersion;
+      _isOkay = $v.isOkay;
       _$v = null;
     }
     return this;
@@ -594,9 +582,7 @@ class HealthCheckPHPResponseBuilder
 
   @override
   void replace(HealthCheckPHPResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HealthCheckPHPResponse;
   }
 
@@ -609,13 +595,23 @@ class HealthCheckPHPResponseBuilder
   _$HealthCheckPHPResponse build() {
     final _$result = _$v ??
         new _$HealthCheckPHPResponse._(
-            minimumPHPVersion: minimumPHPVersion,
-            currentPHPVersion: currentPHPVersion,
-            currentPHPCLIVersion: currentPHPCLIVersion,
-            isOkay: isOkay);
+            minimumPHPVersion: BuiltValueNullFieldError.checkNotNull(
+                minimumPHPVersion,
+                'HealthCheckPHPResponse',
+                'minimumPHPVersion'),
+            currentPHPVersion: BuiltValueNullFieldError.checkNotNull(
+                currentPHPVersion,
+                'HealthCheckPHPResponse',
+                'currentPHPVersion'),
+            currentPHPCLIVersion: BuiltValueNullFieldError.checkNotNull(
+                currentPHPCLIVersion,
+                'HealthCheckPHPResponse',
+                'currentPHPCLIVersion'),
+            isOkay: BuiltValueNullFieldError.checkNotNull(
+                isOkay, 'HealthCheckPHPResponse', 'isOkay'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

@@ -63,11 +63,12 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(TemplateEntity)])),
     ];
-    if (object.updatedAt != null) {
+    Object value;
+    value = object.updatedAt;
+    if (value != null) {
       result
         ..add('updatedAt')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     return result;
   }
@@ -81,7 +82,7 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'updatedAt':
           result.updatedAt = serializers.deserialize(value,
@@ -202,36 +203,25 @@ class _$StaticState extends StaticState {
       this.countryMap,
       this.templateMap})
       : super._() {
-    if (currencyMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'currencyMap');
-    }
-    if (sizeMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'sizeMap');
-    }
-    if (gatewayMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'gatewayMap');
-    }
-    if (industryMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'industryMap');
-    }
-    if (timezoneMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'timezoneMap');
-    }
-    if (dateFormatMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'dateFormatMap');
-    }
-    if (languageMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'languageMap');
-    }
-    if (paymentTypeMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'paymentTypeMap');
-    }
-    if (countryMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'countryMap');
-    }
-    if (templateMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'templateMap');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        currencyMap, 'StaticState', 'currencyMap');
+    BuiltValueNullFieldError.checkNotNull(sizeMap, 'StaticState', 'sizeMap');
+    BuiltValueNullFieldError.checkNotNull(
+        gatewayMap, 'StaticState', 'gatewayMap');
+    BuiltValueNullFieldError.checkNotNull(
+        industryMap, 'StaticState', 'industryMap');
+    BuiltValueNullFieldError.checkNotNull(
+        timezoneMap, 'StaticState', 'timezoneMap');
+    BuiltValueNullFieldError.checkNotNull(
+        dateFormatMap, 'StaticState', 'dateFormatMap');
+    BuiltValueNullFieldError.checkNotNull(
+        languageMap, 'StaticState', 'languageMap');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentTypeMap, 'StaticState', 'paymentTypeMap');
+    BuiltValueNullFieldError.checkNotNull(
+        countryMap, 'StaticState', 'countryMap');
+    BuiltValueNullFieldError.checkNotNull(
+        templateMap, 'StaticState', 'templateMap');
   }
 
   @override
@@ -371,18 +361,19 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   StaticStateBuilder();
 
   StaticStateBuilder get _$this {
-    if (_$v != null) {
-      _updatedAt = _$v.updatedAt;
-      _currencyMap = _$v.currencyMap?.toBuilder();
-      _sizeMap = _$v.sizeMap?.toBuilder();
-      _gatewayMap = _$v.gatewayMap?.toBuilder();
-      _industryMap = _$v.industryMap?.toBuilder();
-      _timezoneMap = _$v.timezoneMap?.toBuilder();
-      _dateFormatMap = _$v.dateFormatMap?.toBuilder();
-      _languageMap = _$v.languageMap?.toBuilder();
-      _paymentTypeMap = _$v.paymentTypeMap?.toBuilder();
-      _countryMap = _$v.countryMap?.toBuilder();
-      _templateMap = _$v.templateMap?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _updatedAt = $v.updatedAt;
+      _currencyMap = $v.currencyMap.toBuilder();
+      _sizeMap = $v.sizeMap.toBuilder();
+      _gatewayMap = $v.gatewayMap.toBuilder();
+      _industryMap = $v.industryMap.toBuilder();
+      _timezoneMap = $v.timezoneMap.toBuilder();
+      _dateFormatMap = $v.dateFormatMap.toBuilder();
+      _languageMap = $v.languageMap.toBuilder();
+      _paymentTypeMap = $v.paymentTypeMap.toBuilder();
+      _countryMap = $v.countryMap.toBuilder();
+      _templateMap = $v.templateMap.toBuilder();
       _$v = null;
     }
     return this;
@@ -390,9 +381,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
 
   @override
   void replace(StaticState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StaticState;
   }
 
@@ -452,4 +441,4 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

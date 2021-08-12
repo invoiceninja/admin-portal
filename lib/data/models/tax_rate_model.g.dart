@@ -47,7 +47,7 @@ class _$TaxRateListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$TaxRateItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -134,28 +134,33 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -171,7 +176,7 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -229,9 +234,7 @@ class _$TaxRateListResponse extends TaxRateListResponse {
       (new TaxRateListResponseBuilder()..update(updates)).build();
 
   _$TaxRateListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('TaxRateListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'TaxRateListResponse', 'data');
   }
 
   @override
@@ -275,8 +278,9 @@ class TaxRateListResponseBuilder
   TaxRateListResponseBuilder();
 
   TaxRateListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -284,9 +288,7 @@ class TaxRateListResponseBuilder
 
   @override
   void replace(TaxRateListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxRateListResponse;
   }
 
@@ -325,9 +327,7 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
       (new TaxRateItemResponseBuilder()..update(updates)).build();
 
   _$TaxRateItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('TaxRateItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'TaxRateItemResponse', 'data');
   }
 
   @override
@@ -370,8 +370,9 @@ class TaxRateItemResponseBuilder
   TaxRateItemResponseBuilder();
 
   TaxRateItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -379,9 +380,7 @@ class TaxRateItemResponseBuilder
 
   @override
   void replace(TaxRateItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxRateItemResponse;
   }
 
@@ -448,24 +447,15 @@ class _$TaxRateEntity extends TaxRateEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('TaxRateEntity', 'name');
-    }
-    if (rate == null) {
-      throw new BuiltValueNullFieldError('TaxRateEntity', 'rate');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('TaxRateEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('TaxRateEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('TaxRateEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('TaxRateEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'TaxRateEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(rate, 'TaxRateEntity', 'rate');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'TaxRateEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'TaxRateEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'TaxRateEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'TaxRateEntity', 'id');
   }
 
   @override
@@ -578,17 +568,18 @@ class TaxRateEntityBuilder
   TaxRateEntityBuilder();
 
   TaxRateEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _rate = _$v.rate;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _rate = $v.rate;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -596,9 +587,7 @@ class TaxRateEntityBuilder
 
   @override
   void replace(TaxRateEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxRateEntity;
   }
 
@@ -611,19 +600,25 @@ class TaxRateEntityBuilder
   _$TaxRateEntity build() {
     final _$result = _$v ??
         new _$TaxRateEntity._(
-            name: name,
-            rate: rate,
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'TaxRateEntity', 'name'),
+            rate: BuiltValueNullFieldError.checkNotNull(
+                rate, 'TaxRateEntity', 'rate'),
             isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'TaxRateEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, 'TaxRateEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, 'TaxRateEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: id);
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'TaxRateEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

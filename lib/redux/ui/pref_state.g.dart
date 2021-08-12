@@ -192,7 +192,7 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'appLayout':
           result.appLayout = serializers.deserialize(value,
@@ -317,7 +317,7 @@ class _$PrefStateSortFieldSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'field':
           result.field = serializers.deserialize(value,
@@ -364,7 +364,7 @@ class _$CompanyPrefStateSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'historyList':
           result.historyList.replace(serializers.deserialize(value,
@@ -465,10 +465,12 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
       serializers.serialize(object.timestamp,
           specifiedType: const FullType(int)),
     ];
-    if (object.id != null) {
+    Object value;
+    value = object.id;
+    if (value != null) {
       result
         ..add('id')
-        ..add(serializers.serialize(object.id,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -484,7 +486,7 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -569,64 +571,43 @@ class _$PrefState extends PrefState {
       this.sortFields,
       this.companyPrefs})
       : super._() {
-    if (appLayout == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'appLayout');
-    }
-    if (moduleLayout == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'moduleLayout');
-    }
-    if (menuSidebarMode == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'menuSidebarMode');
-    }
-    if (historySidebarMode == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'historySidebarMode');
-    }
-    if (useSidebarEditor == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'useSidebarEditor');
-    }
-    if (customColors == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'customColors');
-    }
-    if (isPreviewVisible == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'isPreviewVisible');
-    }
-    if (isPreviewEnabled == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'isPreviewEnabled');
-    }
-    if (isMenuVisible == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'isMenuVisible');
-    }
-    if (showKanban == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'showKanban');
-    }
-    if (isHistoryVisible == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'isHistoryVisible');
-    }
-    if (enableDarkMode == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'enableDarkMode');
-    }
-    if (showFilterSidebar == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'showFilterSidebar');
-    }
-    if (longPressSelectionIsDefault == null) {
-      throw new BuiltValueNullFieldError(
-          'PrefState', 'longPressSelectionIsDefault');
-    }
-    if (requireAuthentication == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'requireAuthentication');
-    }
-    if (rowsPerPage == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'rowsPerPage');
-    }
-    if (colorTheme == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'colorTheme');
-    }
-    if (sortFields == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'sortFields');
-    }
-    if (companyPrefs == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'companyPrefs');
-    }
+    BuiltValueNullFieldError.checkNotNull(appLayout, 'PrefState', 'appLayout');
+    BuiltValueNullFieldError.checkNotNull(
+        moduleLayout, 'PrefState', 'moduleLayout');
+    BuiltValueNullFieldError.checkNotNull(
+        menuSidebarMode, 'PrefState', 'menuSidebarMode');
+    BuiltValueNullFieldError.checkNotNull(
+        historySidebarMode, 'PrefState', 'historySidebarMode');
+    BuiltValueNullFieldError.checkNotNull(
+        useSidebarEditor, 'PrefState', 'useSidebarEditor');
+    BuiltValueNullFieldError.checkNotNull(
+        customColors, 'PrefState', 'customColors');
+    BuiltValueNullFieldError.checkNotNull(
+        isPreviewVisible, 'PrefState', 'isPreviewVisible');
+    BuiltValueNullFieldError.checkNotNull(
+        isPreviewEnabled, 'PrefState', 'isPreviewEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        isMenuVisible, 'PrefState', 'isMenuVisible');
+    BuiltValueNullFieldError.checkNotNull(
+        showKanban, 'PrefState', 'showKanban');
+    BuiltValueNullFieldError.checkNotNull(
+        isHistoryVisible, 'PrefState', 'isHistoryVisible');
+    BuiltValueNullFieldError.checkNotNull(
+        enableDarkMode, 'PrefState', 'enableDarkMode');
+    BuiltValueNullFieldError.checkNotNull(
+        showFilterSidebar, 'PrefState', 'showFilterSidebar');
+    BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault,
+        'PrefState', 'longPressSelectionIsDefault');
+    BuiltValueNullFieldError.checkNotNull(
+        requireAuthentication, 'PrefState', 'requireAuthentication');
+    BuiltValueNullFieldError.checkNotNull(
+        rowsPerPage, 'PrefState', 'rowsPerPage');
+    BuiltValueNullFieldError.checkNotNull(
+        colorTheme, 'PrefState', 'colorTheme');
+    BuiltValueNullFieldError.checkNotNull(
+        sortFields, 'PrefState', 'sortFields');
+    BuiltValueNullFieldError.checkNotNull(
+        companyPrefs, 'PrefState', 'companyPrefs');
   }
 
   @override
@@ -841,26 +822,27 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   }
 
   PrefStateBuilder get _$this {
-    if (_$v != null) {
-      _appLayout = _$v.appLayout;
-      _moduleLayout = _$v.moduleLayout;
-      _menuSidebarMode = _$v.menuSidebarMode;
-      _historySidebarMode = _$v.historySidebarMode;
-      _useSidebarEditor = _$v.useSidebarEditor?.toBuilder();
-      _customColors = _$v.customColors?.toBuilder();
-      _isPreviewVisible = _$v.isPreviewVisible;
-      _isPreviewEnabled = _$v.isPreviewEnabled;
-      _isMenuVisible = _$v.isMenuVisible;
-      _showKanban = _$v.showKanban;
-      _isHistoryVisible = _$v.isHistoryVisible;
-      _enableDarkMode = _$v.enableDarkMode;
-      _showFilterSidebar = _$v.showFilterSidebar;
-      _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
-      _requireAuthentication = _$v.requireAuthentication;
-      _rowsPerPage = _$v.rowsPerPage;
-      _colorTheme = _$v.colorTheme;
-      _sortFields = _$v.sortFields?.toBuilder();
-      _companyPrefs = _$v.companyPrefs?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _appLayout = $v.appLayout;
+      _moduleLayout = $v.moduleLayout;
+      _menuSidebarMode = $v.menuSidebarMode;
+      _historySidebarMode = $v.historySidebarMode;
+      _useSidebarEditor = $v.useSidebarEditor.toBuilder();
+      _customColors = $v.customColors.toBuilder();
+      _isPreviewVisible = $v.isPreviewVisible;
+      _isPreviewEnabled = $v.isPreviewEnabled;
+      _isMenuVisible = $v.isMenuVisible;
+      _showKanban = $v.showKanban;
+      _isHistoryVisible = $v.isHistoryVisible;
+      _enableDarkMode = $v.enableDarkMode;
+      _showFilterSidebar = $v.showFilterSidebar;
+      _longPressSelectionIsDefault = $v.longPressSelectionIsDefault;
+      _requireAuthentication = $v.requireAuthentication;
+      _rowsPerPage = $v.rowsPerPage;
+      _colorTheme = $v.colorTheme;
+      _sortFields = $v.sortFields.toBuilder();
+      _companyPrefs = $v.companyPrefs.toBuilder();
       _$v = null;
     }
     return this;
@@ -868,9 +850,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
 
   @override
   void replace(PrefState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PrefState;
   }
 
@@ -885,23 +865,31 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
     try {
       _$result = _$v ??
           new _$PrefState._(
-              appLayout: appLayout,
-              moduleLayout: moduleLayout,
-              menuSidebarMode: menuSidebarMode,
-              historySidebarMode: historySidebarMode,
+              appLayout: BuiltValueNullFieldError.checkNotNull(
+                  appLayout, 'PrefState', 'appLayout'),
+              moduleLayout: BuiltValueNullFieldError.checkNotNull(
+                  moduleLayout, 'PrefState', 'moduleLayout'),
+              menuSidebarMode: BuiltValueNullFieldError.checkNotNull(
+                  menuSidebarMode, 'PrefState', 'menuSidebarMode'),
+              historySidebarMode: BuiltValueNullFieldError.checkNotNull(
+                  historySidebarMode, 'PrefState', 'historySidebarMode'),
               useSidebarEditor: useSidebarEditor.build(),
               customColors: customColors.build(),
-              isPreviewVisible: isPreviewVisible,
-              isPreviewEnabled: isPreviewEnabled,
-              isMenuVisible: isMenuVisible,
-              showKanban: showKanban,
-              isHistoryVisible: isHistoryVisible,
-              enableDarkMode: enableDarkMode,
-              showFilterSidebar: showFilterSidebar,
-              longPressSelectionIsDefault: longPressSelectionIsDefault,
-              requireAuthentication: requireAuthentication,
-              rowsPerPage: rowsPerPage,
-              colorTheme: colorTheme,
+              isPreviewVisible: BuiltValueNullFieldError.checkNotNull(
+                  isPreviewVisible, 'PrefState', 'isPreviewVisible'),
+              isPreviewEnabled: BuiltValueNullFieldError.checkNotNull(
+                  isPreviewEnabled, 'PrefState', 'isPreviewEnabled'),
+              isMenuVisible: BuiltValueNullFieldError.checkNotNull(
+                  isMenuVisible, 'PrefState', 'isMenuVisible'),
+              showKanban: BuiltValueNullFieldError.checkNotNull(
+                  showKanban, 'PrefState', 'showKanban'),
+              isHistoryVisible: BuiltValueNullFieldError.checkNotNull(isHistoryVisible, 'PrefState', 'isHistoryVisible'),
+              enableDarkMode: BuiltValueNullFieldError.checkNotNull(enableDarkMode, 'PrefState', 'enableDarkMode'),
+              showFilterSidebar: BuiltValueNullFieldError.checkNotNull(showFilterSidebar, 'PrefState', 'showFilterSidebar'),
+              longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault, 'PrefState', 'longPressSelectionIsDefault'),
+              requireAuthentication: BuiltValueNullFieldError.checkNotNull(requireAuthentication, 'PrefState', 'requireAuthentication'),
+              rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),
+              colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
               sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
     } catch (_) {
@@ -938,12 +926,9 @@ class _$PrefStateSortField extends PrefStateSortField {
       (new PrefStateSortFieldBuilder()..update(updates)).build();
 
   _$PrefStateSortField._({this.field, this.ascending}) : super._() {
-    if (field == null) {
-      throw new BuiltValueNullFieldError('PrefStateSortField', 'field');
-    }
-    if (ascending == null) {
-      throw new BuiltValueNullFieldError('PrefStateSortField', 'ascending');
-    }
+    BuiltValueNullFieldError.checkNotNull(field, 'PrefStateSortField', 'field');
+    BuiltValueNullFieldError.checkNotNull(
+        ascending, 'PrefStateSortField', 'ascending');
   }
 
   @override
@@ -993,9 +978,10 @@ class PrefStateSortFieldBuilder
   PrefStateSortFieldBuilder();
 
   PrefStateSortFieldBuilder get _$this {
-    if (_$v != null) {
-      _field = _$v.field;
-      _ascending = _$v.ascending;
+    final $v = _$v;
+    if ($v != null) {
+      _field = $v.field;
+      _ascending = $v.ascending;
       _$v = null;
     }
     return this;
@@ -1003,9 +989,7 @@ class PrefStateSortFieldBuilder
 
   @override
   void replace(PrefStateSortField other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PrefStateSortField;
   }
 
@@ -1016,8 +1000,12 @@ class PrefStateSortFieldBuilder
 
   @override
   _$PrefStateSortField build() {
-    final _$result =
-        _$v ?? new _$PrefStateSortField._(field: field, ascending: ascending);
+    final _$result = _$v ??
+        new _$PrefStateSortField._(
+            field: BuiltValueNullFieldError.checkNotNull(
+                field, 'PrefStateSortField', 'field'),
+            ascending: BuiltValueNullFieldError.checkNotNull(
+                ascending, 'PrefStateSortField', 'ascending'));
     replace(_$result);
     return _$result;
   }
@@ -1032,9 +1020,8 @@ class _$CompanyPrefState extends CompanyPrefState {
       (new CompanyPrefStateBuilder()..update(updates)).build();
 
   _$CompanyPrefState._({this.historyList}) : super._() {
-    if (historyList == null) {
-      throw new BuiltValueNullFieldError('CompanyPrefState', 'historyList');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        historyList, 'CompanyPrefState', 'historyList');
   }
 
   @override
@@ -1078,8 +1065,9 @@ class CompanyPrefStateBuilder
   CompanyPrefStateBuilder();
 
   CompanyPrefStateBuilder get _$this {
-    if (_$v != null) {
-      _historyList = _$v.historyList?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _historyList = $v.historyList.toBuilder();
       _$v = null;
     }
     return this;
@@ -1087,9 +1075,7 @@ class CompanyPrefStateBuilder
 
   @override
   void replace(CompanyPrefState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyPrefState;
   }
 
@@ -1132,12 +1118,10 @@ class _$HistoryRecord extends HistoryRecord {
       (new HistoryRecordBuilder()..update(updates)).build();
 
   _$HistoryRecord._({this.id, this.entityType, this.timestamp}) : super._() {
-    if (entityType == null) {
-      throw new BuiltValueNullFieldError('HistoryRecord', 'entityType');
-    }
-    if (timestamp == null) {
-      throw new BuiltValueNullFieldError('HistoryRecord', 'timestamp');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        entityType, 'HistoryRecord', 'entityType');
+    BuiltValueNullFieldError.checkNotNull(
+        timestamp, 'HistoryRecord', 'timestamp');
   }
 
   @override
@@ -1192,10 +1176,11 @@ class HistoryRecordBuilder
   HistoryRecordBuilder();
 
   HistoryRecordBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _entityType = _$v.entityType;
-      _timestamp = _$v.timestamp;
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _entityType = $v.entityType;
+      _timestamp = $v.timestamp;
       _$v = null;
     }
     return this;
@@ -1203,9 +1188,7 @@ class HistoryRecordBuilder
 
   @override
   void replace(HistoryRecord other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HistoryRecord;
   }
 
@@ -1218,10 +1201,14 @@ class HistoryRecordBuilder
   _$HistoryRecord build() {
     final _$result = _$v ??
         new _$HistoryRecord._(
-            id: id, entityType: entityType, timestamp: timestamp);
+            id: id,
+            entityType: BuiltValueNullFieldError.checkNotNull(
+                entityType, 'HistoryRecord', 'entityType'),
+            timestamp: BuiltValueNullFieldError.checkNotNull(
+                timestamp, 'HistoryRecord', 'timestamp'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

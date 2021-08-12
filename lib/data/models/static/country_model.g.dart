@@ -47,7 +47,7 @@ class _$CountryListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$CountryItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -153,7 +153,7 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -203,9 +203,7 @@ class _$CountryListResponse extends CountryListResponse {
       (new CountryListResponseBuilder()..update(updates)).build();
 
   _$CountryListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('CountryListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'CountryListResponse', 'data');
   }
 
   @override
@@ -249,8 +247,9 @@ class CountryListResponseBuilder
   CountryListResponseBuilder();
 
   CountryListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -258,9 +257,7 @@ class CountryListResponseBuilder
 
   @override
   void replace(CountryListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryListResponse;
   }
 
@@ -299,9 +296,7 @@ class _$CountryItemResponse extends CountryItemResponse {
       (new CountryItemResponseBuilder()..update(updates)).build();
 
   _$CountryItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('CountryItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'CountryItemResponse', 'data');
   }
 
   @override
@@ -344,8 +339,9 @@ class CountryItemResponseBuilder
   CountryItemResponseBuilder();
 
   CountryItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -353,9 +349,7 @@ class CountryItemResponseBuilder
 
   @override
   void replace(CountryItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryItemResponse;
   }
 
@@ -416,30 +410,18 @@ class _$CountryEntity extends CountryEntity {
       this.iso3,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'name');
-    }
-    if (swapPostalCode == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'swapPostalCode');
-    }
-    if (swapCurrencySymbol == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'swapCurrencySymbol');
-    }
-    if (thousandSeparator == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'thousandSeparator');
-    }
-    if (decimalSeparator == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'decimalSeparator');
-    }
-    if (iso2 == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'iso2');
-    }
-    if (iso3 == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'iso3');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'CountryEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        swapPostalCode, 'CountryEntity', 'swapPostalCode');
+    BuiltValueNullFieldError.checkNotNull(
+        swapCurrencySymbol, 'CountryEntity', 'swapCurrencySymbol');
+    BuiltValueNullFieldError.checkNotNull(
+        thousandSeparator, 'CountryEntity', 'thousandSeparator');
+    BuiltValueNullFieldError.checkNotNull(
+        decimalSeparator, 'CountryEntity', 'decimalSeparator');
+    BuiltValueNullFieldError.checkNotNull(iso2, 'CountryEntity', 'iso2');
+    BuiltValueNullFieldError.checkNotNull(iso3, 'CountryEntity', 'iso3');
+    BuiltValueNullFieldError.checkNotNull(id, 'CountryEntity', 'id');
   }
 
   @override
@@ -538,15 +520,16 @@ class CountryEntityBuilder
   CountryEntityBuilder();
 
   CountryEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _swapPostalCode = _$v.swapPostalCode;
-      _swapCurrencySymbol = _$v.swapCurrencySymbol;
-      _thousandSeparator = _$v.thousandSeparator;
-      _decimalSeparator = _$v.decimalSeparator;
-      _iso2 = _$v.iso2;
-      _iso3 = _$v.iso3;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _swapPostalCode = $v.swapPostalCode;
+      _swapCurrencySymbol = $v.swapCurrencySymbol;
+      _thousandSeparator = $v.thousandSeparator;
+      _decimalSeparator = $v.decimalSeparator;
+      _iso2 = $v.iso2;
+      _iso3 = $v.iso3;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -554,9 +537,7 @@ class CountryEntityBuilder
 
   @override
   void replace(CountryEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryEntity;
   }
 
@@ -569,17 +550,25 @@ class CountryEntityBuilder
   _$CountryEntity build() {
     final _$result = _$v ??
         new _$CountryEntity._(
-            name: name,
-            swapPostalCode: swapPostalCode,
-            swapCurrencySymbol: swapCurrencySymbol,
-            thousandSeparator: thousandSeparator,
-            decimalSeparator: decimalSeparator,
-            iso2: iso2,
-            iso3: iso3,
-            id: id);
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'CountryEntity', 'name'),
+            swapPostalCode: BuiltValueNullFieldError.checkNotNull(
+                swapPostalCode, 'CountryEntity', 'swapPostalCode'),
+            swapCurrencySymbol: BuiltValueNullFieldError.checkNotNull(
+                swapCurrencySymbol, 'CountryEntity', 'swapCurrencySymbol'),
+            thousandSeparator: BuiltValueNullFieldError.checkNotNull(
+                thousandSeparator, 'CountryEntity', 'thousandSeparator'),
+            decimalSeparator: BuiltValueNullFieldError.checkNotNull(
+                decimalSeparator, 'CountryEntity', 'decimalSeparator'),
+            iso2: BuiltValueNullFieldError.checkNotNull(
+                iso2, 'CountryEntity', 'iso2'),
+            iso3: BuiltValueNullFieldError.checkNotNull(
+                iso3, 'CountryEntity', 'iso3'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'CountryEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

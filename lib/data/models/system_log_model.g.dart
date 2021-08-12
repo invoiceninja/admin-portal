@@ -58,7 +58,7 @@ class _$SystemLogEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -137,33 +137,20 @@ class _$SystemLogEntity extends SystemLogEntity {
       this.log,
       this.createdAt})
       : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'id');
-    }
-    if (companyId == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'companyId');
-    }
-    if (userId == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'userId');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'clientId');
-    }
-    if (eventId == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'eventId');
-    }
-    if (categoryId == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'categoryId');
-    }
-    if (typeId == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'typeId');
-    }
-    if (log == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'log');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('SystemLogEntity', 'createdAt');
-    }
+    BuiltValueNullFieldError.checkNotNull(id, 'SystemLogEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        companyId, 'SystemLogEntity', 'companyId');
+    BuiltValueNullFieldError.checkNotNull(userId, 'SystemLogEntity', 'userId');
+    BuiltValueNullFieldError.checkNotNull(
+        clientId, 'SystemLogEntity', 'clientId');
+    BuiltValueNullFieldError.checkNotNull(
+        eventId, 'SystemLogEntity', 'eventId');
+    BuiltValueNullFieldError.checkNotNull(
+        categoryId, 'SystemLogEntity', 'categoryId');
+    BuiltValueNullFieldError.checkNotNull(typeId, 'SystemLogEntity', 'typeId');
+    BuiltValueNullFieldError.checkNotNull(log, 'SystemLogEntity', 'log');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'SystemLogEntity', 'createdAt');
   }
 
   @override
@@ -267,16 +254,17 @@ class SystemLogEntityBuilder
   SystemLogEntityBuilder();
 
   SystemLogEntityBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _companyId = _$v.companyId;
-      _userId = _$v.userId;
-      _clientId = _$v.clientId;
-      _eventId = _$v.eventId;
-      _categoryId = _$v.categoryId;
-      _typeId = _$v.typeId;
-      _log = _$v.log;
-      _createdAt = _$v.createdAt;
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _companyId = $v.companyId;
+      _userId = $v.userId;
+      _clientId = $v.clientId;
+      _eventId = $v.eventId;
+      _categoryId = $v.categoryId;
+      _typeId = $v.typeId;
+      _log = $v.log;
+      _createdAt = $v.createdAt;
       _$v = null;
     }
     return this;
@@ -284,9 +272,7 @@ class SystemLogEntityBuilder
 
   @override
   void replace(SystemLogEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SystemLogEntity;
   }
 
@@ -299,18 +285,27 @@ class SystemLogEntityBuilder
   _$SystemLogEntity build() {
     final _$result = _$v ??
         new _$SystemLogEntity._(
-            id: id,
-            companyId: companyId,
-            userId: userId,
-            clientId: clientId,
-            eventId: eventId,
-            categoryId: categoryId,
-            typeId: typeId,
-            log: log,
-            createdAt: createdAt);
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'SystemLogEntity', 'id'),
+            companyId: BuiltValueNullFieldError.checkNotNull(
+                companyId, 'SystemLogEntity', 'companyId'),
+            userId: BuiltValueNullFieldError.checkNotNull(
+                userId, 'SystemLogEntity', 'userId'),
+            clientId: BuiltValueNullFieldError.checkNotNull(
+                clientId, 'SystemLogEntity', 'clientId'),
+            eventId: BuiltValueNullFieldError.checkNotNull(
+                eventId, 'SystemLogEntity', 'eventId'),
+            categoryId: BuiltValueNullFieldError.checkNotNull(
+                categoryId, 'SystemLogEntity', 'categoryId'),
+            typeId: BuiltValueNullFieldError.checkNotNull(
+                typeId, 'SystemLogEntity', 'typeId'),
+            log: BuiltValueNullFieldError.checkNotNull(
+                log, 'SystemLogEntity', 'log'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'SystemLogEntity', 'createdAt'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

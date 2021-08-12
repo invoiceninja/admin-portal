@@ -49,7 +49,7 @@ class _$CompanyGatewayListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -97,7 +97,7 @@ class _$CompanyGatewayItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -202,40 +202,46 @@ class _$CompanyGatewayEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.loadedAt != null) {
+    Object value;
+    value = object.loadedAt;
+    if (value != null) {
       result
         ..add('loadedAt')
-        ..add(serializers.serialize(object.loadedAt,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.requirePostalCode != null) {
+    value = object.requirePostalCode;
+    if (value != null) {
       result
         ..add('require_postal_code')
-        ..add(serializers.serialize(object.requirePostalCode,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isChanged != null) {
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -251,7 +257,7 @@ class _$CompanyGatewayEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'loadedAt':
           result.loadedAt = serializers.deserialize(value,
@@ -454,7 +460,7 @@ class _$FeesAndLimitsSettingsSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'min_limit':
           result.minLimit = serializers.deserialize(value,
@@ -524,9 +530,8 @@ class _$CompanyGatewayListResponse extends CompanyGatewayListResponse {
       (new CompanyGatewayListResponseBuilder()..update(updates)).build();
 
   _$CompanyGatewayListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'CompanyGatewayListResponse', 'data');
   }
 
   @override
@@ -571,8 +576,9 @@ class CompanyGatewayListResponseBuilder
   CompanyGatewayListResponseBuilder();
 
   CompanyGatewayListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -580,9 +586,7 @@ class CompanyGatewayListResponseBuilder
 
   @override
   void replace(CompanyGatewayListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyGatewayListResponse;
   }
 
@@ -621,9 +625,8 @@ class _$CompanyGatewayItemResponse extends CompanyGatewayItemResponse {
       (new CompanyGatewayItemResponseBuilder()..update(updates)).build();
 
   _$CompanyGatewayItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'CompanyGatewayItemResponse', 'data');
   }
 
   @override
@@ -668,8 +671,9 @@ class CompanyGatewayItemResponseBuilder
   CompanyGatewayItemResponseBuilder();
 
   CompanyGatewayItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -677,9 +681,7 @@ class CompanyGatewayItemResponseBuilder
 
   @override
   void replace(CompanyGatewayItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyGatewayItemResponse;
   }
 
@@ -807,92 +809,53 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (gatewayId == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gatewayId');
-    }
-    if (acceptedCreditCards == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'acceptedCreditCards');
-    }
-    if (requireShippingAddress == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'requireShippingAddress');
-    }
-    if (requireBillingAddress == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'requireBillingAddress');
-    }
-    if (requireClientName == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'requireClientName');
-    }
-    if (requireClientPhone == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'requireClientPhone');
-    }
-    if (requireContactName == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'requireContactName');
-    }
-    if (requireContactEmail == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'requireContactEmail');
-    }
-    if (requireCvv == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'requireCvv');
-    }
-    if (updateDetails == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'updateDetails');
-    }
-    if (feesAndLimitsMap == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'feesAndLimitsMap');
-    }
-    if (systemLogs == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'systemLogs');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'customValue4');
-    }
-    if (config == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'config');
-    }
-    if (tokenBilling == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'tokenBilling');
-    }
-    if (isTestMode == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'isTestMode');
-    }
-    if (label == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'label');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        gatewayId, 'CompanyGatewayEntity', 'gatewayId');
+    BuiltValueNullFieldError.checkNotNull(
+        acceptedCreditCards, 'CompanyGatewayEntity', 'acceptedCreditCards');
+    BuiltValueNullFieldError.checkNotNull(requireShippingAddress,
+        'CompanyGatewayEntity', 'requireShippingAddress');
+    BuiltValueNullFieldError.checkNotNull(
+        requireBillingAddress, 'CompanyGatewayEntity', 'requireBillingAddress');
+    BuiltValueNullFieldError.checkNotNull(
+        requireClientName, 'CompanyGatewayEntity', 'requireClientName');
+    BuiltValueNullFieldError.checkNotNull(
+        requireClientPhone, 'CompanyGatewayEntity', 'requireClientPhone');
+    BuiltValueNullFieldError.checkNotNull(
+        requireContactName, 'CompanyGatewayEntity', 'requireContactName');
+    BuiltValueNullFieldError.checkNotNull(
+        requireContactEmail, 'CompanyGatewayEntity', 'requireContactEmail');
+    BuiltValueNullFieldError.checkNotNull(
+        requireCvv, 'CompanyGatewayEntity', 'requireCvv');
+    BuiltValueNullFieldError.checkNotNull(
+        updateDetails, 'CompanyGatewayEntity', 'updateDetails');
+    BuiltValueNullFieldError.checkNotNull(
+        feesAndLimitsMap, 'CompanyGatewayEntity', 'feesAndLimitsMap');
+    BuiltValueNullFieldError.checkNotNull(
+        systemLogs, 'CompanyGatewayEntity', 'systemLogs');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'CompanyGatewayEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'CompanyGatewayEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'CompanyGatewayEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'CompanyGatewayEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(
+        config, 'CompanyGatewayEntity', 'config');
+    BuiltValueNullFieldError.checkNotNull(
+        tokenBilling, 'CompanyGatewayEntity', 'tokenBilling');
+    BuiltValueNullFieldError.checkNotNull(
+        isTestMode, 'CompanyGatewayEntity', 'isTestMode');
+    BuiltValueNullFieldError.checkNotNull(
+        label, 'CompanyGatewayEntity', 'label');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'CompanyGatewayEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'CompanyGatewayEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'CompanyGatewayEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'CompanyGatewayEntity', 'id');
   }
 
   @override
@@ -1164,37 +1127,38 @@ class CompanyGatewayEntityBuilder
   CompanyGatewayEntityBuilder();
 
   CompanyGatewayEntityBuilder get _$this {
-    if (_$v != null) {
-      _loadedAt = _$v.loadedAt;
-      _gatewayId = _$v.gatewayId;
-      _acceptedCreditCards = _$v.acceptedCreditCards;
-      _requireShippingAddress = _$v.requireShippingAddress;
-      _requireBillingAddress = _$v.requireBillingAddress;
-      _requireClientName = _$v.requireClientName;
-      _requirePostalCode = _$v.requirePostalCode;
-      _requireClientPhone = _$v.requireClientPhone;
-      _requireContactName = _$v.requireContactName;
-      _requireContactEmail = _$v.requireContactEmail;
-      _requireCvv = _$v.requireCvv;
-      _updateDetails = _$v.updateDetails;
-      _feesAndLimitsMap = _$v.feesAndLimitsMap?.toBuilder();
-      _systemLogs = _$v.systemLogs?.toBuilder();
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _config = _$v.config;
-      _tokenBilling = _$v.tokenBilling;
-      _isTestMode = _$v.isTestMode;
-      _label = _$v.label;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _loadedAt = $v.loadedAt;
+      _gatewayId = $v.gatewayId;
+      _acceptedCreditCards = $v.acceptedCreditCards;
+      _requireShippingAddress = $v.requireShippingAddress;
+      _requireBillingAddress = $v.requireBillingAddress;
+      _requireClientName = $v.requireClientName;
+      _requirePostalCode = $v.requirePostalCode;
+      _requireClientPhone = $v.requireClientPhone;
+      _requireContactName = $v.requireContactName;
+      _requireContactEmail = $v.requireContactEmail;
+      _requireCvv = $v.requireCvv;
+      _updateDetails = $v.updateDetails;
+      _feesAndLimitsMap = $v.feesAndLimitsMap.toBuilder();
+      _systemLogs = $v.systemLogs.toBuilder();
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _config = $v.config;
+      _tokenBilling = $v.tokenBilling;
+      _isTestMode = $v.isTestMode;
+      _label = $v.label;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1202,9 +1166,7 @@ class CompanyGatewayEntityBuilder
 
   @override
   void replace(CompanyGatewayEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyGatewayEntity;
   }
 
@@ -1220,35 +1182,42 @@ class CompanyGatewayEntityBuilder
       _$result = _$v ??
           new _$CompanyGatewayEntity._(
               loadedAt: loadedAt,
-              gatewayId: gatewayId,
-              acceptedCreditCards: acceptedCreditCards,
-              requireShippingAddress: requireShippingAddress,
-              requireBillingAddress: requireBillingAddress,
-              requireClientName: requireClientName,
+              gatewayId: BuiltValueNullFieldError.checkNotNull(
+                  gatewayId, 'CompanyGatewayEntity', 'gatewayId'),
+              acceptedCreditCards: BuiltValueNullFieldError.checkNotNull(
+                  acceptedCreditCards, 'CompanyGatewayEntity', 'acceptedCreditCards'),
+              requireShippingAddress: BuiltValueNullFieldError.checkNotNull(
+                  requireShippingAddress, 'CompanyGatewayEntity', 'requireShippingAddress'),
+              requireBillingAddress: BuiltValueNullFieldError.checkNotNull(
+                  requireBillingAddress, 'CompanyGatewayEntity', 'requireBillingAddress'),
+              requireClientName: BuiltValueNullFieldError.checkNotNull(
+                  requireClientName, 'CompanyGatewayEntity', 'requireClientName'),
               requirePostalCode: requirePostalCode,
-              requireClientPhone: requireClientPhone,
-              requireContactName: requireContactName,
-              requireContactEmail: requireContactEmail,
-              requireCvv: requireCvv,
-              updateDetails: updateDetails,
+              requireClientPhone: BuiltValueNullFieldError.checkNotNull(
+                  requireClientPhone, 'CompanyGatewayEntity', 'requireClientPhone'),
+              requireContactName: BuiltValueNullFieldError.checkNotNull(
+                  requireContactName, 'CompanyGatewayEntity', 'requireContactName'),
+              requireContactEmail: BuiltValueNullFieldError.checkNotNull(requireContactEmail, 'CompanyGatewayEntity', 'requireContactEmail'),
+              requireCvv: BuiltValueNullFieldError.checkNotNull(requireCvv, 'CompanyGatewayEntity', 'requireCvv'),
+              updateDetails: BuiltValueNullFieldError.checkNotNull(updateDetails, 'CompanyGatewayEntity', 'updateDetails'),
               feesAndLimitsMap: feesAndLimitsMap.build(),
               systemLogs: systemLogs.build(),
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
-              config: config,
-              tokenBilling: tokenBilling,
-              isTestMode: isTestMode,
-              label: label,
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'CompanyGatewayEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'CompanyGatewayEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'CompanyGatewayEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'CompanyGatewayEntity', 'customValue4'),
+              config: BuiltValueNullFieldError.checkNotNull(config, 'CompanyGatewayEntity', 'config'),
+              tokenBilling: BuiltValueNullFieldError.checkNotNull(tokenBilling, 'CompanyGatewayEntity', 'tokenBilling'),
+              isTestMode: BuiltValueNullFieldError.checkNotNull(isTestMode, 'CompanyGatewayEntity', 'isTestMode'),
+              label: BuiltValueNullFieldError.checkNotNull(label, 'CompanyGatewayEntity', 'label'),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'CompanyGatewayEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'CompanyGatewayEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'CompanyGatewayEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'CompanyGatewayEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1314,46 +1283,32 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       this.adjustFeePercent,
       this.isEnabled})
       : super._() {
-    if (minLimit == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'minLimit');
-    }
-    if (maxLimit == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'maxLimit');
-    }
-    if (feeAmount == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'feeAmount');
-    }
-    if (feePercent == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'feePercent');
-    }
-    if (feeCap == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'feeCap');
-    }
-    if (taxRate1 == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate1');
-    }
-    if (taxName1 == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxName1');
-    }
-    if (taxRate2 == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate2');
-    }
-    if (taxName2 == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxName2');
-    }
-    if (taxRate3 == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate3');
-    }
-    if (taxName3 == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxName3');
-    }
-    if (adjustFeePercent == null) {
-      throw new BuiltValueNullFieldError(
-          'FeesAndLimitsSettings', 'adjustFeePercent');
-    }
-    if (isEnabled == null) {
-      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'isEnabled');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        minLimit, 'FeesAndLimitsSettings', 'minLimit');
+    BuiltValueNullFieldError.checkNotNull(
+        maxLimit, 'FeesAndLimitsSettings', 'maxLimit');
+    BuiltValueNullFieldError.checkNotNull(
+        feeAmount, 'FeesAndLimitsSettings', 'feeAmount');
+    BuiltValueNullFieldError.checkNotNull(
+        feePercent, 'FeesAndLimitsSettings', 'feePercent');
+    BuiltValueNullFieldError.checkNotNull(
+        feeCap, 'FeesAndLimitsSettings', 'feeCap');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate1, 'FeesAndLimitsSettings', 'taxRate1');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName1, 'FeesAndLimitsSettings', 'taxName1');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate2, 'FeesAndLimitsSettings', 'taxRate2');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName2, 'FeesAndLimitsSettings', 'taxName2');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate3, 'FeesAndLimitsSettings', 'taxRate3');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName3, 'FeesAndLimitsSettings', 'taxName3');
+    BuiltValueNullFieldError.checkNotNull(
+        adjustFeePercent, 'FeesAndLimitsSettings', 'adjustFeePercent');
+    BuiltValueNullFieldError.checkNotNull(
+        isEnabled, 'FeesAndLimitsSettings', 'isEnabled');
   }
 
   @override
@@ -1495,20 +1450,21 @@ class FeesAndLimitsSettingsBuilder
   }
 
   FeesAndLimitsSettingsBuilder get _$this {
-    if (_$v != null) {
-      _minLimit = _$v.minLimit;
-      _maxLimit = _$v.maxLimit;
-      _feeAmount = _$v.feeAmount;
-      _feePercent = _$v.feePercent;
-      _feeCap = _$v.feeCap;
-      _taxRate1 = _$v.taxRate1;
-      _taxName1 = _$v.taxName1;
-      _taxRate2 = _$v.taxRate2;
-      _taxName2 = _$v.taxName2;
-      _taxRate3 = _$v.taxRate3;
-      _taxName3 = _$v.taxName3;
-      _adjustFeePercent = _$v.adjustFeePercent;
-      _isEnabled = _$v.isEnabled;
+    final $v = _$v;
+    if ($v != null) {
+      _minLimit = $v.minLimit;
+      _maxLimit = $v.maxLimit;
+      _feeAmount = $v.feeAmount;
+      _feePercent = $v.feePercent;
+      _feeCap = $v.feeCap;
+      _taxRate1 = $v.taxRate1;
+      _taxName1 = $v.taxName1;
+      _taxRate2 = $v.taxRate2;
+      _taxName2 = $v.taxName2;
+      _taxRate3 = $v.taxRate3;
+      _taxName3 = $v.taxName3;
+      _adjustFeePercent = $v.adjustFeePercent;
+      _isEnabled = $v.isEnabled;
       _$v = null;
     }
     return this;
@@ -1516,9 +1472,7 @@ class FeesAndLimitsSettingsBuilder
 
   @override
   void replace(FeesAndLimitsSettings other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$FeesAndLimitsSettings;
   }
 
@@ -1531,22 +1485,31 @@ class FeesAndLimitsSettingsBuilder
   _$FeesAndLimitsSettings build() {
     final _$result = _$v ??
         new _$FeesAndLimitsSettings._(
-            minLimit: minLimit,
-            maxLimit: maxLimit,
-            feeAmount: feeAmount,
-            feePercent: feePercent,
-            feeCap: feeCap,
-            taxRate1: taxRate1,
-            taxName1: taxName1,
-            taxRate2: taxRate2,
-            taxName2: taxName2,
-            taxRate3: taxRate3,
-            taxName3: taxName3,
-            adjustFeePercent: adjustFeePercent,
-            isEnabled: isEnabled);
+            minLimit: BuiltValueNullFieldError.checkNotNull(
+                minLimit, 'FeesAndLimitsSettings', 'minLimit'),
+            maxLimit: BuiltValueNullFieldError.checkNotNull(
+                maxLimit, 'FeesAndLimitsSettings', 'maxLimit'),
+            feeAmount: BuiltValueNullFieldError.checkNotNull(
+                feeAmount, 'FeesAndLimitsSettings', 'feeAmount'),
+            feePercent: BuiltValueNullFieldError.checkNotNull(
+                feePercent, 'FeesAndLimitsSettings', 'feePercent'),
+            feeCap: BuiltValueNullFieldError.checkNotNull(
+                feeCap, 'FeesAndLimitsSettings', 'feeCap'),
+            taxRate1: BuiltValueNullFieldError.checkNotNull(
+                taxRate1, 'FeesAndLimitsSettings', 'taxRate1'),
+            taxName1: BuiltValueNullFieldError.checkNotNull(
+                taxName1, 'FeesAndLimitsSettings', 'taxName1'),
+            taxRate2: BuiltValueNullFieldError.checkNotNull(
+                taxRate2, 'FeesAndLimitsSettings', 'taxRate2'),
+            taxName2:
+                BuiltValueNullFieldError.checkNotNull(taxName2, 'FeesAndLimitsSettings', 'taxName2'),
+            taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, 'FeesAndLimitsSettings', 'taxRate3'),
+            taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, 'FeesAndLimitsSettings', 'taxName3'),
+            adjustFeePercent: BuiltValueNullFieldError.checkNotNull(adjustFeePercent, 'FeesAndLimitsSettings', 'adjustFeePercent'),
+            isEnabled: BuiltValueNullFieldError.checkNotNull(isEnabled, 'FeesAndLimitsSettings', 'isEnabled'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

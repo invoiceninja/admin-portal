@@ -91,7 +91,7 @@ class _$PreImportResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'hash':
           result.hash = serializers.deserialize(value,
@@ -150,7 +150,7 @@ class _$PreImportResponseEntityDetailsSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'available':
           result.available.replace(serializers.deserialize(value,
@@ -210,7 +210,7 @@ class _$ImportRequestSerializer implements StructuredSerializer<ImportRequest> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'hash':
           result.hash = serializers.deserialize(value,
@@ -272,7 +272,7 @@ class _$ImportRequestMappingSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'mapping':
           result.mapping.replace(serializers.deserialize(value,
@@ -314,12 +314,9 @@ class _$PreImportResponse extends PreImportResponse {
       (new PreImportResponseBuilder()..update(updates)).build();
 
   _$PreImportResponse._({this.hash, this.mappings}) : super._() {
-    if (hash == null) {
-      throw new BuiltValueNullFieldError('PreImportResponse', 'hash');
-    }
-    if (mappings == null) {
-      throw new BuiltValueNullFieldError('PreImportResponse', 'mappings');
-    }
+    BuiltValueNullFieldError.checkNotNull(hash, 'PreImportResponse', 'hash');
+    BuiltValueNullFieldError.checkNotNull(
+        mappings, 'PreImportResponse', 'mappings');
   }
 
   @override
@@ -371,9 +368,10 @@ class PreImportResponseBuilder
   PreImportResponseBuilder();
 
   PreImportResponseBuilder get _$this {
-    if (_$v != null) {
-      _hash = _$v.hash;
-      _mappings = _$v.mappings?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _hash = $v.hash;
+      _mappings = $v.mappings.toBuilder();
       _$v = null;
     }
     return this;
@@ -381,9 +379,7 @@ class PreImportResponseBuilder
 
   @override
   void replace(PreImportResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PreImportResponse;
   }
 
@@ -397,7 +393,10 @@ class PreImportResponseBuilder
     _$PreImportResponse _$result;
     try {
       _$result = _$v ??
-          new _$PreImportResponse._(hash: hash, mappings: mappings.build());
+          new _$PreImportResponse._(
+              hash: BuiltValueNullFieldError.checkNotNull(
+                  hash, 'PreImportResponse', 'hash'),
+              mappings: mappings.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -426,14 +425,10 @@ class _$PreImportResponseEntityDetails extends PreImportResponseEntityDetails {
 
   _$PreImportResponseEntityDetails._({this.available, this.headers})
       : super._() {
-    if (available == null) {
-      throw new BuiltValueNullFieldError(
-          'PreImportResponseEntityDetails', 'available');
-    }
-    if (headers == null) {
-      throw new BuiltValueNullFieldError(
-          'PreImportResponseEntityDetails', 'headers');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        available, 'PreImportResponseEntityDetails', 'available');
+    BuiltValueNullFieldError.checkNotNull(
+        headers, 'PreImportResponseEntityDetails', 'headers');
   }
 
   @override
@@ -489,9 +484,10 @@ class PreImportResponseEntityDetailsBuilder
   PreImportResponseEntityDetailsBuilder();
 
   PreImportResponseEntityDetailsBuilder get _$this {
-    if (_$v != null) {
-      _available = _$v.available?.toBuilder();
-      _headers = _$v.headers?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _available = $v.available.toBuilder();
+      _headers = $v.headers.toBuilder();
       _$v = null;
     }
     return this;
@@ -499,9 +495,7 @@ class PreImportResponseEntityDetailsBuilder
 
   @override
   void replace(PreImportResponseEntityDetails other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PreImportResponseEntityDetails;
   }
 
@@ -551,18 +545,13 @@ class _$ImportRequest extends ImportRequest {
   _$ImportRequest._(
       {this.hash, this.importType, this.skipHeader, this.columnMap})
       : super._() {
-    if (hash == null) {
-      throw new BuiltValueNullFieldError('ImportRequest', 'hash');
-    }
-    if (importType == null) {
-      throw new BuiltValueNullFieldError('ImportRequest', 'importType');
-    }
-    if (skipHeader == null) {
-      throw new BuiltValueNullFieldError('ImportRequest', 'skipHeader');
-    }
-    if (columnMap == null) {
-      throw new BuiltValueNullFieldError('ImportRequest', 'columnMap');
-    }
+    BuiltValueNullFieldError.checkNotNull(hash, 'ImportRequest', 'hash');
+    BuiltValueNullFieldError.checkNotNull(
+        importType, 'ImportRequest', 'importType');
+    BuiltValueNullFieldError.checkNotNull(
+        skipHeader, 'ImportRequest', 'skipHeader');
+    BuiltValueNullFieldError.checkNotNull(
+        columnMap, 'ImportRequest', 'columnMap');
   }
 
   @override
@@ -627,11 +616,12 @@ class ImportRequestBuilder
   ImportRequestBuilder();
 
   ImportRequestBuilder get _$this {
-    if (_$v != null) {
-      _hash = _$v.hash;
-      _importType = _$v.importType;
-      _skipHeader = _$v.skipHeader;
-      _columnMap = _$v.columnMap?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _hash = $v.hash;
+      _importType = $v.importType;
+      _skipHeader = $v.skipHeader;
+      _columnMap = $v.columnMap.toBuilder();
       _$v = null;
     }
     return this;
@@ -639,9 +629,7 @@ class ImportRequestBuilder
 
   @override
   void replace(ImportRequest other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ImportRequest;
   }
 
@@ -656,9 +644,12 @@ class ImportRequestBuilder
     try {
       _$result = _$v ??
           new _$ImportRequest._(
-              hash: hash,
-              importType: importType,
-              skipHeader: skipHeader,
+              hash: BuiltValueNullFieldError.checkNotNull(
+                  hash, 'ImportRequest', 'hash'),
+              importType: BuiltValueNullFieldError.checkNotNull(
+                  importType, 'ImportRequest', 'importType'),
+              skipHeader: BuiltValueNullFieldError.checkNotNull(
+                  skipHeader, 'ImportRequest', 'skipHeader'),
               columnMap: columnMap.build());
     } catch (_) {
       String _$failedField;
@@ -685,9 +676,8 @@ class _$ImportRequestMapping extends ImportRequestMapping {
       (new ImportRequestMappingBuilder()..update(updates)).build();
 
   _$ImportRequestMapping._({this.mapping}) : super._() {
-    if (mapping == null) {
-      throw new BuiltValueNullFieldError('ImportRequestMapping', 'mapping');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        mapping, 'ImportRequestMapping', 'mapping');
   }
 
   @override
@@ -731,8 +721,9 @@ class ImportRequestMappingBuilder
   ImportRequestMappingBuilder();
 
   ImportRequestMappingBuilder get _$this {
-    if (_$v != null) {
-      _mapping = _$v.mapping?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _mapping = $v.mapping.toBuilder();
       _$v = null;
     }
     return this;
@@ -740,9 +731,7 @@ class ImportRequestMappingBuilder
 
   @override
   void replace(ImportRequestMapping other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ImportRequestMapping;
   }
 
@@ -772,4 +761,4 @@ class ImportRequestMappingBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

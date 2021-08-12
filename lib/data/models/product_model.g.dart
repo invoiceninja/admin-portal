@@ -47,7 +47,7 @@ class _$ProductListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$ProductItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -178,28 +178,33 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -215,7 +220,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'product_key':
           result.productKey = serializers.deserialize(value,
@@ -331,9 +336,7 @@ class _$ProductListResponse extends ProductListResponse {
       (new ProductListResponseBuilder()..update(updates)).build();
 
   _$ProductListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ProductListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'ProductListResponse', 'data');
   }
 
   @override
@@ -377,8 +380,9 @@ class ProductListResponseBuilder
   ProductListResponseBuilder();
 
   ProductListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -386,9 +390,7 @@ class ProductListResponseBuilder
 
   @override
   void replace(ProductListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProductListResponse;
   }
 
@@ -427,9 +429,7 @@ class _$ProductItemResponse extends ProductItemResponse {
       (new ProductItemResponseBuilder()..update(updates)).build();
 
   _$ProductItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('ProductItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'ProductItemResponse', 'data');
   }
 
   @override
@@ -472,8 +472,9 @@ class ProductItemResponseBuilder
   ProductItemResponseBuilder();
 
   ProductItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -481,9 +482,7 @@ class ProductItemResponseBuilder
 
   @override
   void replace(ProductItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProductItemResponse;
   }
 
@@ -592,66 +591,42 @@ class _$ProductEntity extends ProductEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (productKey == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'productKey');
-    }
-    if (notes == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'notes');
-    }
-    if (cost == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'cost');
-    }
-    if (price == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'price');
-    }
-    if (quantity == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'quantity');
-    }
-    if (taxName1 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'taxName1');
-    }
-    if (taxRate1 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'taxRate1');
-    }
-    if (taxName2 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'taxName2');
-    }
-    if (taxRate2 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'taxRate2');
-    }
-    if (taxName3 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'taxName3');
-    }
-    if (taxRate3 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'taxRate3');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'customValue4');
-    }
-    if (documents == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'documents');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('ProductEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        productKey, 'ProductEntity', 'productKey');
+    BuiltValueNullFieldError.checkNotNull(notes, 'ProductEntity', 'notes');
+    BuiltValueNullFieldError.checkNotNull(cost, 'ProductEntity', 'cost');
+    BuiltValueNullFieldError.checkNotNull(price, 'ProductEntity', 'price');
+    BuiltValueNullFieldError.checkNotNull(
+        quantity, 'ProductEntity', 'quantity');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName1, 'ProductEntity', 'taxName1');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate1, 'ProductEntity', 'taxRate1');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName2, 'ProductEntity', 'taxName2');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate2, 'ProductEntity', 'taxRate2');
+    BuiltValueNullFieldError.checkNotNull(
+        taxName3, 'ProductEntity', 'taxName3');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRate3, 'ProductEntity', 'taxRate3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'ProductEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'ProductEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'ProductEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'ProductEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(
+        documents, 'ProductEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'ProductEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'ProductEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'ProductEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'ProductEntity', 'id');
   }
 
   @override
@@ -872,31 +847,32 @@ class ProductEntityBuilder
   ProductEntityBuilder();
 
   ProductEntityBuilder get _$this {
-    if (_$v != null) {
-      _productKey = _$v.productKey;
-      _notes = _$v.notes;
-      _cost = _$v.cost;
-      _price = _$v.price;
-      _quantity = _$v.quantity;
-      _taxName1 = _$v.taxName1;
-      _taxRate1 = _$v.taxRate1;
-      _taxName2 = _$v.taxName2;
-      _taxRate2 = _$v.taxRate2;
-      _taxName3 = _$v.taxName3;
-      _taxRate3 = _$v.taxRate3;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _documents = _$v.documents?.toBuilder();
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _productKey = $v.productKey;
+      _notes = $v.notes;
+      _cost = $v.cost;
+      _price = $v.price;
+      _quantity = $v.quantity;
+      _taxName1 = $v.taxName1;
+      _taxRate1 = $v.taxRate1;
+      _taxName2 = $v.taxName2;
+      _taxRate2 = $v.taxRate2;
+      _taxName3 = $v.taxName3;
+      _taxRate3 = $v.taxRate3;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _documents = $v.documents.toBuilder();
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -904,9 +880,7 @@ class ProductEntityBuilder
 
   @override
   void replace(ProductEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProductEntity;
   }
 
@@ -921,30 +895,40 @@ class ProductEntityBuilder
     try {
       _$result = _$v ??
           new _$ProductEntity._(
-              productKey: productKey,
-              notes: notes,
-              cost: cost,
-              price: price,
-              quantity: quantity,
-              taxName1: taxName1,
-              taxRate1: taxRate1,
-              taxName2: taxName2,
-              taxRate2: taxRate2,
-              taxName3: taxName3,
-              taxRate3: taxRate3,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
+              productKey: BuiltValueNullFieldError.checkNotNull(
+                  productKey, 'ProductEntity', 'productKey'),
+              notes: BuiltValueNullFieldError.checkNotNull(
+                  notes, 'ProductEntity', 'notes'),
+              cost: BuiltValueNullFieldError.checkNotNull(
+                  cost, 'ProductEntity', 'cost'),
+              price: BuiltValueNullFieldError.checkNotNull(
+                  price, 'ProductEntity', 'price'),
+              quantity: BuiltValueNullFieldError.checkNotNull(
+                  quantity, 'ProductEntity', 'quantity'),
+              taxName1: BuiltValueNullFieldError.checkNotNull(
+                  taxName1, 'ProductEntity', 'taxName1'),
+              taxRate1: BuiltValueNullFieldError.checkNotNull(
+                  taxRate1, 'ProductEntity', 'taxRate1'),
+              taxName2: BuiltValueNullFieldError.checkNotNull(
+                  taxName2, 'ProductEntity', 'taxName2'),
+              taxRate2: BuiltValueNullFieldError.checkNotNull(
+                  taxRate2, 'ProductEntity', 'taxRate2'),
+              taxName3:
+                  BuiltValueNullFieldError.checkNotNull(taxName3, 'ProductEntity', 'taxName3'),
+              taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, 'ProductEntity', 'taxRate3'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'ProductEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ProductEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ProductEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ProductEntity', 'customValue4'),
               documents: documents.build(),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ProductEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ProductEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ProductEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'ProductEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -961,4 +945,4 @@ class ProductEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

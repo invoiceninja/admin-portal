@@ -48,7 +48,7 @@ class _$UserListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -92,7 +92,7 @@ class _$UserItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -138,7 +138,7 @@ class _$UserTwoFactorResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -184,7 +184,7 @@ class _$UserTwoFactorDataSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'secret':
           result.secret = serializers.deserialize(value,
@@ -234,7 +234,7 @@ class _$UserCompanyItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -312,40 +312,46 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.emailVerifiedAt != null) {
+    Object value;
+    value = object.emailVerifiedAt;
+    if (value != null) {
       result
         ..add('email_verified_at')
-        ..add(serializers.serialize(object.emailVerifiedAt,
-            specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    if (object.userCompany != null) {
+    value = object.userCompany;
+    if (value != null) {
       result
         ..add('company_user')
-        ..add(serializers.serialize(object.userCompany,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(UserCompanyEntity)));
     }
-    if (object.isChanged != null) {
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -360,7 +366,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'first_name':
           result.firstName = serializers.deserialize(value,
@@ -475,9 +481,7 @@ class _$UserListResponse extends UserListResponse {
       (new UserListResponseBuilder()..update(updates)).build();
 
   _$UserListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('UserListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'UserListResponse', 'data');
   }
 
   @override
@@ -519,8 +523,9 @@ class UserListResponseBuilder
   UserListResponseBuilder();
 
   UserListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -528,9 +533,7 @@ class UserListResponseBuilder
 
   @override
   void replace(UserListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserListResponse;
   }
 
@@ -569,9 +572,7 @@ class _$UserItemResponse extends UserItemResponse {
       (new UserItemResponseBuilder()..update(updates)).build();
 
   _$UserItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('UserItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'UserItemResponse', 'data');
   }
 
   @override
@@ -612,8 +613,9 @@ class UserItemResponseBuilder
   UserItemResponseBuilder();
 
   UserItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -621,9 +623,7 @@ class UserItemResponseBuilder
 
   @override
   void replace(UserItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserItemResponse;
   }
 
@@ -662,9 +662,8 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
       (new UserTwoFactorResponseBuilder()..update(updates)).build();
 
   _$UserTwoFactorResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('UserTwoFactorResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'UserTwoFactorResponse', 'data');
   }
 
   @override
@@ -708,8 +707,9 @@ class UserTwoFactorResponseBuilder
   UserTwoFactorResponseBuilder();
 
   UserTwoFactorResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -717,9 +717,7 @@ class UserTwoFactorResponseBuilder
 
   @override
   void replace(UserTwoFactorResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserTwoFactorResponse;
   }
 
@@ -760,12 +758,10 @@ class _$UserTwoFactorData extends UserTwoFactorData {
       (new UserTwoFactorDataBuilder()..update(updates)).build();
 
   _$UserTwoFactorData._({this.secret, this.qrCode}) : super._() {
-    if (secret == null) {
-      throw new BuiltValueNullFieldError('UserTwoFactorData', 'secret');
-    }
-    if (qrCode == null) {
-      throw new BuiltValueNullFieldError('UserTwoFactorData', 'qrCode');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        secret, 'UserTwoFactorData', 'secret');
+    BuiltValueNullFieldError.checkNotNull(
+        qrCode, 'UserTwoFactorData', 'qrCode');
   }
 
   @override
@@ -814,9 +810,10 @@ class UserTwoFactorDataBuilder
   UserTwoFactorDataBuilder();
 
   UserTwoFactorDataBuilder get _$this {
-    if (_$v != null) {
-      _secret = _$v.secret;
-      _qrCode = _$v.qrCode;
+    final $v = _$v;
+    if ($v != null) {
+      _secret = $v.secret;
+      _qrCode = $v.qrCode;
       _$v = null;
     }
     return this;
@@ -824,9 +821,7 @@ class UserTwoFactorDataBuilder
 
   @override
   void replace(UserTwoFactorData other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserTwoFactorData;
   }
 
@@ -837,8 +832,12 @@ class UserTwoFactorDataBuilder
 
   @override
   _$UserTwoFactorData build() {
-    final _$result =
-        _$v ?? new _$UserTwoFactorData._(secret: secret, qrCode: qrCode);
+    final _$result = _$v ??
+        new _$UserTwoFactorData._(
+            secret: BuiltValueNullFieldError.checkNotNull(
+                secret, 'UserTwoFactorData', 'secret'),
+            qrCode: BuiltValueNullFieldError.checkNotNull(
+                qrCode, 'UserTwoFactorData', 'qrCode'));
     replace(_$result);
     return _$result;
   }
@@ -853,9 +852,8 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
       (new UserCompanyItemResponseBuilder()..update(updates)).build();
 
   _$UserCompanyItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('UserCompanyItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'UserCompanyItemResponse', 'data');
   }
 
   @override
@@ -900,8 +898,9 @@ class UserCompanyItemResponseBuilder
   UserCompanyItemResponseBuilder();
 
   UserCompanyItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -909,9 +908,7 @@ class UserCompanyItemResponseBuilder
 
   @override
   void replace(UserCompanyItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserCompanyItemResponse;
   }
 
@@ -1020,60 +1017,34 @@ class _$UserEntity extends UserEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (firstName == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'firstName');
-    }
-    if (lastName == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'lastName');
-    }
-    if (email == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'email');
-    }
-    if (phone == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'phone');
-    }
-    if (password == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'password');
-    }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'customValue2');
-    }
-    if (customValue3 == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'customValue3');
-    }
-    if (customValue4 == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'customValue4');
-    }
-    if (isTwoFactorEnabled == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'isTwoFactorEnabled');
-    }
-    if (hasPassword == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'hasPassword');
-    }
-    if (lastEmailAddress == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'lastEmailAddress');
-    }
-    if (oauthUserToken == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'oauthUserToken');
-    }
-    if (oauthProvider == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'oauthProvider');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(firstName, 'UserEntity', 'firstName');
+    BuiltValueNullFieldError.checkNotNull(lastName, 'UserEntity', 'lastName');
+    BuiltValueNullFieldError.checkNotNull(email, 'UserEntity', 'email');
+    BuiltValueNullFieldError.checkNotNull(phone, 'UserEntity', 'phone');
+    BuiltValueNullFieldError.checkNotNull(password, 'UserEntity', 'password');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'UserEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'UserEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'UserEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'UserEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(
+        isTwoFactorEnabled, 'UserEntity', 'isTwoFactorEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        hasPassword, 'UserEntity', 'hasPassword');
+    BuiltValueNullFieldError.checkNotNull(
+        lastEmailAddress, 'UserEntity', 'lastEmailAddress');
+    BuiltValueNullFieldError.checkNotNull(
+        oauthUserToken, 'UserEntity', 'oauthUserToken');
+    BuiltValueNullFieldError.checkNotNull(
+        oauthProvider, 'UserEntity', 'oauthProvider');
+    BuiltValueNullFieldError.checkNotNull(createdAt, 'UserEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(updatedAt, 'UserEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'UserEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'UserEntity', 'id');
   }
 
   @override
@@ -1300,31 +1271,32 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   }
 
   UserEntityBuilder get _$this {
-    if (_$v != null) {
-      _firstName = _$v.firstName;
-      _lastName = _$v.lastName;
-      _email = _$v.email;
-      _phone = _$v.phone;
-      _password = _$v.password;
-      _emailVerifiedAt = _$v.emailVerifiedAt;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _isTwoFactorEnabled = _$v.isTwoFactorEnabled;
-      _hasPassword = _$v.hasPassword;
-      _lastEmailAddress = _$v.lastEmailAddress;
-      _oauthUserToken = _$v.oauthUserToken;
-      _userCompany = _$v.userCompany?.toBuilder();
-      _oauthProvider = _$v.oauthProvider;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _firstName = $v.firstName;
+      _lastName = $v.lastName;
+      _email = $v.email;
+      _phone = $v.phone;
+      _password = $v.password;
+      _emailVerifiedAt = $v.emailVerifiedAt;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _isTwoFactorEnabled = $v.isTwoFactorEnabled;
+      _hasPassword = $v.hasPassword;
+      _lastEmailAddress = $v.lastEmailAddress;
+      _oauthUserToken = $v.oauthUserToken;
+      _userCompany = $v.userCompany?.toBuilder();
+      _oauthProvider = $v.oauthProvider;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -1332,9 +1304,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   @override
   void replace(UserEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserEntity;
   }
 
@@ -1349,30 +1319,40 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
     try {
       _$result = _$v ??
           new _$UserEntity._(
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-              phone: phone,
-              password: password,
+              firstName: BuiltValueNullFieldError.checkNotNull(
+                  firstName, 'UserEntity', 'firstName'),
+              lastName: BuiltValueNullFieldError.checkNotNull(
+                  lastName, 'UserEntity', 'lastName'),
+              email: BuiltValueNullFieldError.checkNotNull(
+                  email, 'UserEntity', 'email'),
+              phone: BuiltValueNullFieldError.checkNotNull(
+                  phone, 'UserEntity', 'phone'),
+              password: BuiltValueNullFieldError.checkNotNull(
+                  password, 'UserEntity', 'password'),
               emailVerifiedAt: emailVerifiedAt,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
-              isTwoFactorEnabled: isTwoFactorEnabled,
-              hasPassword: hasPassword,
-              lastEmailAddress: lastEmailAddress,
-              oauthUserToken: oauthUserToken,
+              customValue1: BuiltValueNullFieldError.checkNotNull(
+                  customValue1, 'UserEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(
+                  customValue2, 'UserEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(
+                  customValue3, 'UserEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(
+                  customValue4, 'UserEntity', 'customValue4'),
+              isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(
+                  isTwoFactorEnabled, 'UserEntity', 'isTwoFactorEnabled'),
+              hasPassword: BuiltValueNullFieldError.checkNotNull(hasPassword, 'UserEntity', 'hasPassword'),
+              lastEmailAddress: BuiltValueNullFieldError.checkNotNull(lastEmailAddress, 'UserEntity', 'lastEmailAddress'),
+              oauthUserToken: BuiltValueNullFieldError.checkNotNull(oauthUserToken, 'UserEntity', 'oauthUserToken'),
               userCompany: _userCompany?.build(),
-              oauthProvider: oauthProvider,
+              oauthProvider: BuiltValueNullFieldError.checkNotNull(oauthProvider, 'UserEntity', 'oauthProvider'),
               isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'UserEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'UserEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'UserEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: id);
+              id: BuiltValueNullFieldError.checkNotNull(id, 'UserEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1389,4 +1369,4 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

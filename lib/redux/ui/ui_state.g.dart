@@ -116,22 +116,26 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       serializers.serialize(object.reportsUIState,
           specifiedType: const FullType(ReportsUIState)),
     ];
-    if (object.filterEntityId != null) {
+    Object value;
+    value = object.filterEntityId;
+    if (value != null) {
       result
         ..add('filterEntityId')
-        ..add(serializers.serialize(object.filterEntityId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.filterEntityType != null) {
+    value = object.filterEntityType;
+    if (value != null) {
       result
         ..add('filterEntityType')
-        ..add(serializers.serialize(object.filterEntityType,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(EntityType)));
     }
-    if (object.filter != null) {
+    value = object.filter;
+    if (value != null) {
       result
         ..add('filter')
-        ..add(serializers.serialize(object.filter,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -146,7 +150,7 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'selectedCompanyIndex':
           result.selectedCompanyIndex = serializers.deserialize(value,
@@ -418,102 +422,70 @@ class _$UIState extends UIState {
       this.settingsUIState,
       this.reportsUIState})
       : super._() {
-    if (selectedCompanyIndex == null) {
-      throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
-    }
-    if (currentRoute == null) {
-      throw new BuiltValueNullFieldError('UIState', 'currentRoute');
-    }
-    if (previousRoute == null) {
-      throw new BuiltValueNullFieldError('UIState', 'previousRoute');
-    }
-    if (previewStack == null) {
-      throw new BuiltValueNullFieldError('UIState', 'previewStack');
-    }
-    if (filterClearedAt == null) {
-      throw new BuiltValueNullFieldError('UIState', 'filterClearedAt');
-    }
-    if (lastActivityAt == null) {
-      throw new BuiltValueNullFieldError('UIState', 'lastActivityAt');
-    }
-    if (dashboardUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
-    }
-    if (productUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'productUIState');
-    }
-    if (clientUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'clientUIState');
-    }
-    if (invoiceUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
-    }
-    if (subscriptionUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'subscriptionUIState');
-    }
-    if (taskStatusUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'taskStatusUIState');
-    }
-    if (expenseCategoryUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'expenseCategoryUIState');
-    }
-    if (recurringInvoiceUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'recurringInvoiceUIState');
-    }
-    if (webhookUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'webhookUIState');
-    }
-    if (tokenUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'tokenUIState');
-    }
-    if (paymentTermUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'paymentTermUIState');
-    }
-    if (designUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'designUIState');
-    }
-    if (creditUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'creditUIState');
-    }
-    if (userUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'userUIState');
-    }
-    if (taxRateUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'taxRateUIState');
-    }
-    if (companyGatewayUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'companyGatewayUIState');
-    }
-    if (groupUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'groupUIState');
-    }
-    if (documentUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'documentUIState');
-    }
-    if (expenseUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'expenseUIState');
-    }
-    if (vendorUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'vendorUIState');
-    }
-    if (taskUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'taskUIState');
-    }
-    if (projectUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'projectUIState');
-    }
-    if (paymentUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'paymentUIState');
-    }
-    if (quoteUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'quoteUIState');
-    }
-    if (settingsUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'settingsUIState');
-    }
-    if (reportsUIState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'reportsUIState');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        selectedCompanyIndex, 'UIState', 'selectedCompanyIndex');
+    BuiltValueNullFieldError.checkNotNull(
+        currentRoute, 'UIState', 'currentRoute');
+    BuiltValueNullFieldError.checkNotNull(
+        previousRoute, 'UIState', 'previousRoute');
+    BuiltValueNullFieldError.checkNotNull(
+        previewStack, 'UIState', 'previewStack');
+    BuiltValueNullFieldError.checkNotNull(
+        filterClearedAt, 'UIState', 'filterClearedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        lastActivityAt, 'UIState', 'lastActivityAt');
+    BuiltValueNullFieldError.checkNotNull(
+        dashboardUIState, 'UIState', 'dashboardUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        productUIState, 'UIState', 'productUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        clientUIState, 'UIState', 'clientUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceUIState, 'UIState', 'invoiceUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        subscriptionUIState, 'UIState', 'subscriptionUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        taskStatusUIState, 'UIState', 'taskStatusUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        expenseCategoryUIState, 'UIState', 'expenseCategoryUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        recurringInvoiceUIState, 'UIState', 'recurringInvoiceUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        webhookUIState, 'UIState', 'webhookUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        tokenUIState, 'UIState', 'tokenUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentTermUIState, 'UIState', 'paymentTermUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        designUIState, 'UIState', 'designUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        creditUIState, 'UIState', 'creditUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        userUIState, 'UIState', 'userUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        taxRateUIState, 'UIState', 'taxRateUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        companyGatewayUIState, 'UIState', 'companyGatewayUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        groupUIState, 'UIState', 'groupUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        documentUIState, 'UIState', 'documentUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        expenseUIState, 'UIState', 'expenseUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        vendorUIState, 'UIState', 'vendorUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        taskUIState, 'UIState', 'taskUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        projectUIState, 'UIState', 'projectUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentUIState, 'UIState', 'paymentUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        quoteUIState, 'UIState', 'quoteUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        settingsUIState, 'UIState', 'settingsUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        reportsUIState, 'UIState', 'reportsUIState');
   }
 
   @override
@@ -860,42 +832,43 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   }
 
   UIStateBuilder get _$this {
-    if (_$v != null) {
-      _selectedCompanyIndex = _$v.selectedCompanyIndex;
-      _currentRoute = _$v.currentRoute;
-      _previousRoute = _$v.previousRoute;
-      _previewStack = _$v.previewStack?.toBuilder();
-      _filterEntityId = _$v.filterEntityId;
-      _filterEntityType = _$v.filterEntityType;
-      _filter = _$v.filter;
-      _filterClearedAt = _$v.filterClearedAt;
-      _lastActivityAt = _$v.lastActivityAt;
-      _dashboardUIState = _$v.dashboardUIState?.toBuilder();
-      _productUIState = _$v.productUIState?.toBuilder();
-      _clientUIState = _$v.clientUIState?.toBuilder();
-      _invoiceUIState = _$v.invoiceUIState?.toBuilder();
-      _subscriptionUIState = _$v.subscriptionUIState?.toBuilder();
-      _taskStatusUIState = _$v.taskStatusUIState?.toBuilder();
-      _expenseCategoryUIState = _$v.expenseCategoryUIState?.toBuilder();
-      _recurringInvoiceUIState = _$v.recurringInvoiceUIState?.toBuilder();
-      _webhookUIState = _$v.webhookUIState?.toBuilder();
-      _tokenUIState = _$v.tokenUIState?.toBuilder();
-      _paymentTermUIState = _$v.paymentTermUIState?.toBuilder();
-      _designUIState = _$v.designUIState?.toBuilder();
-      _creditUIState = _$v.creditUIState?.toBuilder();
-      _userUIState = _$v.userUIState?.toBuilder();
-      _taxRateUIState = _$v.taxRateUIState?.toBuilder();
-      _companyGatewayUIState = _$v.companyGatewayUIState?.toBuilder();
-      _groupUIState = _$v.groupUIState?.toBuilder();
-      _documentUIState = _$v.documentUIState?.toBuilder();
-      _expenseUIState = _$v.expenseUIState?.toBuilder();
-      _vendorUIState = _$v.vendorUIState?.toBuilder();
-      _taskUIState = _$v.taskUIState?.toBuilder();
-      _projectUIState = _$v.projectUIState?.toBuilder();
-      _paymentUIState = _$v.paymentUIState?.toBuilder();
-      _quoteUIState = _$v.quoteUIState?.toBuilder();
-      _settingsUIState = _$v.settingsUIState?.toBuilder();
-      _reportsUIState = _$v.reportsUIState?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _selectedCompanyIndex = $v.selectedCompanyIndex;
+      _currentRoute = $v.currentRoute;
+      _previousRoute = $v.previousRoute;
+      _previewStack = $v.previewStack.toBuilder();
+      _filterEntityId = $v.filterEntityId;
+      _filterEntityType = $v.filterEntityType;
+      _filter = $v.filter;
+      _filterClearedAt = $v.filterClearedAt;
+      _lastActivityAt = $v.lastActivityAt;
+      _dashboardUIState = $v.dashboardUIState.toBuilder();
+      _productUIState = $v.productUIState.toBuilder();
+      _clientUIState = $v.clientUIState.toBuilder();
+      _invoiceUIState = $v.invoiceUIState.toBuilder();
+      _subscriptionUIState = $v.subscriptionUIState.toBuilder();
+      _taskStatusUIState = $v.taskStatusUIState.toBuilder();
+      _expenseCategoryUIState = $v.expenseCategoryUIState.toBuilder();
+      _recurringInvoiceUIState = $v.recurringInvoiceUIState.toBuilder();
+      _webhookUIState = $v.webhookUIState.toBuilder();
+      _tokenUIState = $v.tokenUIState.toBuilder();
+      _paymentTermUIState = $v.paymentTermUIState.toBuilder();
+      _designUIState = $v.designUIState.toBuilder();
+      _creditUIState = $v.creditUIState.toBuilder();
+      _userUIState = $v.userUIState.toBuilder();
+      _taxRateUIState = $v.taxRateUIState.toBuilder();
+      _companyGatewayUIState = $v.companyGatewayUIState.toBuilder();
+      _groupUIState = $v.groupUIState.toBuilder();
+      _documentUIState = $v.documentUIState.toBuilder();
+      _expenseUIState = $v.expenseUIState.toBuilder();
+      _vendorUIState = $v.vendorUIState.toBuilder();
+      _taskUIState = $v.taskUIState.toBuilder();
+      _projectUIState = $v.projectUIState.toBuilder();
+      _paymentUIState = $v.paymentUIState.toBuilder();
+      _quoteUIState = $v.quoteUIState.toBuilder();
+      _settingsUIState = $v.settingsUIState.toBuilder();
+      _reportsUIState = $v.reportsUIState.toBuilder();
       _$v = null;
     }
     return this;
@@ -903,9 +876,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   @override
   void replace(UIState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UIState;
   }
 
@@ -920,15 +891,20 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     try {
       _$result = _$v ??
           new _$UIState._(
-              selectedCompanyIndex: selectedCompanyIndex,
-              currentRoute: currentRoute,
-              previousRoute: previousRoute,
+              selectedCompanyIndex: BuiltValueNullFieldError.checkNotNull(
+                  selectedCompanyIndex, 'UIState', 'selectedCompanyIndex'),
+              currentRoute: BuiltValueNullFieldError.checkNotNull(
+                  currentRoute, 'UIState', 'currentRoute'),
+              previousRoute: BuiltValueNullFieldError.checkNotNull(
+                  previousRoute, 'UIState', 'previousRoute'),
               previewStack: previewStack.build(),
               filterEntityId: filterEntityId,
               filterEntityType: filterEntityType,
               filter: filter,
-              filterClearedAt: filterClearedAt,
-              lastActivityAt: lastActivityAt,
+              filterClearedAt: BuiltValueNullFieldError.checkNotNull(
+                  filterClearedAt, 'UIState', 'filterClearedAt'),
+              lastActivityAt: BuiltValueNullFieldError.checkNotNull(
+                  lastActivityAt, 'UIState', 'lastActivityAt'),
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
@@ -1024,4 +1000,4 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

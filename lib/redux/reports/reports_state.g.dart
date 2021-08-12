@@ -60,7 +60,7 @@ class _$ReportsUIStateSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'report':
           result.report = serializers.deserialize(value,
@@ -133,30 +133,18 @@ class _$ReportsUIState extends ReportsUIState {
       this.customEndDate,
       this.filters})
       : super._() {
-    if (report == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'report');
-    }
-    if (group == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'group');
-    }
-    if (selectedGroup == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'selectedGroup');
-    }
-    if (chart == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'chart');
-    }
-    if (subgroup == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'subgroup');
-    }
-    if (customStartDate == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'customStartDate');
-    }
-    if (customEndDate == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'customEndDate');
-    }
-    if (filters == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'filters');
-    }
+    BuiltValueNullFieldError.checkNotNull(report, 'ReportsUIState', 'report');
+    BuiltValueNullFieldError.checkNotNull(group, 'ReportsUIState', 'group');
+    BuiltValueNullFieldError.checkNotNull(
+        selectedGroup, 'ReportsUIState', 'selectedGroup');
+    BuiltValueNullFieldError.checkNotNull(chart, 'ReportsUIState', 'chart');
+    BuiltValueNullFieldError.checkNotNull(
+        subgroup, 'ReportsUIState', 'subgroup');
+    BuiltValueNullFieldError.checkNotNull(
+        customStartDate, 'ReportsUIState', 'customStartDate');
+    BuiltValueNullFieldError.checkNotNull(
+        customEndDate, 'ReportsUIState', 'customEndDate');
+    BuiltValueNullFieldError.checkNotNull(filters, 'ReportsUIState', 'filters');
   }
 
   @override
@@ -256,15 +244,16 @@ class ReportsUIStateBuilder
   ReportsUIStateBuilder();
 
   ReportsUIStateBuilder get _$this {
-    if (_$v != null) {
-      _report = _$v.report;
-      _group = _$v.group;
-      _selectedGroup = _$v.selectedGroup;
-      _chart = _$v.chart;
-      _subgroup = _$v.subgroup;
-      _customStartDate = _$v.customStartDate;
-      _customEndDate = _$v.customEndDate;
-      _filters = _$v.filters?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _report = $v.report;
+      _group = $v.group;
+      _selectedGroup = $v.selectedGroup;
+      _chart = $v.chart;
+      _subgroup = $v.subgroup;
+      _customStartDate = $v.customStartDate;
+      _customEndDate = $v.customEndDate;
+      _filters = $v.filters.toBuilder();
       _$v = null;
     }
     return this;
@@ -272,9 +261,7 @@ class ReportsUIStateBuilder
 
   @override
   void replace(ReportsUIState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ReportsUIState;
   }
 
@@ -289,13 +276,20 @@ class ReportsUIStateBuilder
     try {
       _$result = _$v ??
           new _$ReportsUIState._(
-              report: report,
-              group: group,
-              selectedGroup: selectedGroup,
-              chart: chart,
-              subgroup: subgroup,
-              customStartDate: customStartDate,
-              customEndDate: customEndDate,
+              report: BuiltValueNullFieldError.checkNotNull(
+                  report, 'ReportsUIState', 'report'),
+              group: BuiltValueNullFieldError.checkNotNull(
+                  group, 'ReportsUIState', 'group'),
+              selectedGroup: BuiltValueNullFieldError.checkNotNull(
+                  selectedGroup, 'ReportsUIState', 'selectedGroup'),
+              chart: BuiltValueNullFieldError.checkNotNull(
+                  chart, 'ReportsUIState', 'chart'),
+              subgroup: BuiltValueNullFieldError.checkNotNull(
+                  subgroup, 'ReportsUIState', 'subgroup'),
+              customStartDate: BuiltValueNullFieldError.checkNotNull(
+                  customStartDate, 'ReportsUIState', 'customStartDate'),
+              customEndDate: BuiltValueNullFieldError.checkNotNull(
+                  customEndDate, 'ReportsUIState', 'customEndDate'),
               filters: filters.build());
     } catch (_) {
       String _$failedField;
@@ -313,4 +307,4 @@ class ReportsUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

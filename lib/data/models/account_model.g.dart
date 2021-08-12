@@ -74,7 +74,7 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -188,48 +188,32 @@ class _$AccountEntity extends AccountEntity {
       this.disableAutoUpdate,
       this.defaultCompanyId})
       : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'id');
-    }
-    if (trialPlan == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'trialPlan');
-    }
-    if (trialStarted == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'trialStarted');
-    }
-    if (defaultUrl == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'defaultUrl');
-    }
-    if (reportErrors == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'reportErrors');
-    }
-    if (plan == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'plan');
-    }
-    if (planExpires == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'planExpires');
-    }
-    if (latestVersion == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'latestVersion');
-    }
-    if (currentVersion == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'currentVersion');
-    }
-    if (debugEnabled == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'debugEnabled');
-    }
-    if (isDocker == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'isDocker');
-    }
-    if (isSchedulerRunning == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'isSchedulerRunning');
-    }
-    if (disableAutoUpdate == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'disableAutoUpdate');
-    }
-    if (defaultCompanyId == null) {
-      throw new BuiltValueNullFieldError('AccountEntity', 'defaultCompanyId');
-    }
+    BuiltValueNullFieldError.checkNotNull(id, 'AccountEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        trialPlan, 'AccountEntity', 'trialPlan');
+    BuiltValueNullFieldError.checkNotNull(
+        trialStarted, 'AccountEntity', 'trialStarted');
+    BuiltValueNullFieldError.checkNotNull(
+        defaultUrl, 'AccountEntity', 'defaultUrl');
+    BuiltValueNullFieldError.checkNotNull(
+        reportErrors, 'AccountEntity', 'reportErrors');
+    BuiltValueNullFieldError.checkNotNull(plan, 'AccountEntity', 'plan');
+    BuiltValueNullFieldError.checkNotNull(
+        planExpires, 'AccountEntity', 'planExpires');
+    BuiltValueNullFieldError.checkNotNull(
+        latestVersion, 'AccountEntity', 'latestVersion');
+    BuiltValueNullFieldError.checkNotNull(
+        currentVersion, 'AccountEntity', 'currentVersion');
+    BuiltValueNullFieldError.checkNotNull(
+        debugEnabled, 'AccountEntity', 'debugEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        isDocker, 'AccountEntity', 'isDocker');
+    BuiltValueNullFieldError.checkNotNull(
+        isSchedulerRunning, 'AccountEntity', 'isSchedulerRunning');
+    BuiltValueNullFieldError.checkNotNull(
+        disableAutoUpdate, 'AccountEntity', 'disableAutoUpdate');
+    BuiltValueNullFieldError.checkNotNull(
+        defaultCompanyId, 'AccountEntity', 'defaultCompanyId');
   }
 
   @override
@@ -381,21 +365,22 @@ class AccountEntityBuilder
   }
 
   AccountEntityBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _trialPlan = _$v.trialPlan;
-      _trialStarted = _$v.trialStarted;
-      _defaultUrl = _$v.defaultUrl;
-      _reportErrors = _$v.reportErrors;
-      _plan = _$v.plan;
-      _planExpires = _$v.planExpires;
-      _latestVersion = _$v.latestVersion;
-      _currentVersion = _$v.currentVersion;
-      _debugEnabled = _$v.debugEnabled;
-      _isDocker = _$v.isDocker;
-      _isSchedulerRunning = _$v.isSchedulerRunning;
-      _disableAutoUpdate = _$v.disableAutoUpdate;
-      _defaultCompanyId = _$v.defaultCompanyId;
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _trialPlan = $v.trialPlan;
+      _trialStarted = $v.trialStarted;
+      _defaultUrl = $v.defaultUrl;
+      _reportErrors = $v.reportErrors;
+      _plan = $v.plan;
+      _planExpires = $v.planExpires;
+      _latestVersion = $v.latestVersion;
+      _currentVersion = $v.currentVersion;
+      _debugEnabled = $v.debugEnabled;
+      _isDocker = $v.isDocker;
+      _isSchedulerRunning = $v.isSchedulerRunning;
+      _disableAutoUpdate = $v.disableAutoUpdate;
+      _defaultCompanyId = $v.defaultCompanyId;
       _$v = null;
     }
     return this;
@@ -403,9 +388,7 @@ class AccountEntityBuilder
 
   @override
   void replace(AccountEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AccountEntity;
   }
 
@@ -418,23 +401,32 @@ class AccountEntityBuilder
   _$AccountEntity build() {
     final _$result = _$v ??
         new _$AccountEntity._(
-            id: id,
-            trialPlan: trialPlan,
-            trialStarted: trialStarted,
-            defaultUrl: defaultUrl,
-            reportErrors: reportErrors,
-            plan: plan,
-            planExpires: planExpires,
-            latestVersion: latestVersion,
-            currentVersion: currentVersion,
-            debugEnabled: debugEnabled,
-            isDocker: isDocker,
-            isSchedulerRunning: isSchedulerRunning,
-            disableAutoUpdate: disableAutoUpdate,
-            defaultCompanyId: defaultCompanyId);
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'AccountEntity', 'id'),
+            trialPlan: BuiltValueNullFieldError.checkNotNull(
+                trialPlan, 'AccountEntity', 'trialPlan'),
+            trialStarted: BuiltValueNullFieldError.checkNotNull(
+                trialStarted, 'AccountEntity', 'trialStarted'),
+            defaultUrl: BuiltValueNullFieldError.checkNotNull(
+                defaultUrl, 'AccountEntity', 'defaultUrl'),
+            reportErrors: BuiltValueNullFieldError.checkNotNull(
+                reportErrors, 'AccountEntity', 'reportErrors'),
+            plan: BuiltValueNullFieldError.checkNotNull(
+                plan, 'AccountEntity', 'plan'),
+            planExpires: BuiltValueNullFieldError.checkNotNull(
+                planExpires, 'AccountEntity', 'planExpires'),
+            latestVersion: BuiltValueNullFieldError.checkNotNull(
+                latestVersion, 'AccountEntity', 'latestVersion'),
+            currentVersion: BuiltValueNullFieldError.checkNotNull(
+                currentVersion, 'AccountEntity', 'currentVersion'),
+            debugEnabled: BuiltValueNullFieldError.checkNotNull(debugEnabled, 'AccountEntity', 'debugEnabled'),
+            isDocker: BuiltValueNullFieldError.checkNotNull(isDocker, 'AccountEntity', 'isDocker'),
+            isSchedulerRunning: BuiltValueNullFieldError.checkNotNull(isSchedulerRunning, 'AccountEntity', 'isSchedulerRunning'),
+            disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(disableAutoUpdate, 'AccountEntity', 'disableAutoUpdate'),
+            defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, 'AccountEntity', 'defaultCompanyId'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

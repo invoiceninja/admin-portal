@@ -60,7 +60,7 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'isLoading':
           result.isLoading = serializers.deserialize(value,
@@ -141,33 +141,17 @@ class _$AppState extends AppState {
       this.uiState,
       this.userCompanyStates})
       : super._() {
-    if (isLoading == null) {
-      throw new BuiltValueNullFieldError('AppState', 'isLoading');
-    }
-    if (isSaving == null) {
-      throw new BuiltValueNullFieldError('AppState', 'isSaving');
-    }
-    if (isTesting == null) {
-      throw new BuiltValueNullFieldError('AppState', 'isTesting');
-    }
-    if (lastError == null) {
-      throw new BuiltValueNullFieldError('AppState', 'lastError');
-    }
-    if (authState == null) {
-      throw new BuiltValueNullFieldError('AppState', 'authState');
-    }
-    if (staticState == null) {
-      throw new BuiltValueNullFieldError('AppState', 'staticState');
-    }
-    if (prefState == null) {
-      throw new BuiltValueNullFieldError('AppState', 'prefState');
-    }
-    if (uiState == null) {
-      throw new BuiltValueNullFieldError('AppState', 'uiState');
-    }
-    if (userCompanyStates == null) {
-      throw new BuiltValueNullFieldError('AppState', 'userCompanyStates');
-    }
+    BuiltValueNullFieldError.checkNotNull(isLoading, 'AppState', 'isLoading');
+    BuiltValueNullFieldError.checkNotNull(isSaving, 'AppState', 'isSaving');
+    BuiltValueNullFieldError.checkNotNull(isTesting, 'AppState', 'isTesting');
+    BuiltValueNullFieldError.checkNotNull(lastError, 'AppState', 'lastError');
+    BuiltValueNullFieldError.checkNotNull(authState, 'AppState', 'authState');
+    BuiltValueNullFieldError.checkNotNull(
+        staticState, 'AppState', 'staticState');
+    BuiltValueNullFieldError.checkNotNull(prefState, 'AppState', 'prefState');
+    BuiltValueNullFieldError.checkNotNull(uiState, 'AppState', 'uiState');
+    BuiltValueNullFieldError.checkNotNull(
+        userCompanyStates, 'AppState', 'userCompanyStates');
   }
 
   @override
@@ -262,16 +246,17 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   AppStateBuilder();
 
   AppStateBuilder get _$this {
-    if (_$v != null) {
-      _isLoading = _$v.isLoading;
-      _isSaving = _$v.isSaving;
-      _isTesting = _$v.isTesting;
-      _lastError = _$v.lastError;
-      _authState = _$v.authState?.toBuilder();
-      _staticState = _$v.staticState?.toBuilder();
-      _prefState = _$v.prefState?.toBuilder();
-      _uiState = _$v.uiState?.toBuilder();
-      _userCompanyStates = _$v.userCompanyStates?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _isLoading = $v.isLoading;
+      _isSaving = $v.isSaving;
+      _isTesting = $v.isTesting;
+      _lastError = $v.lastError;
+      _authState = $v.authState.toBuilder();
+      _staticState = $v.staticState.toBuilder();
+      _prefState = $v.prefState.toBuilder();
+      _uiState = $v.uiState.toBuilder();
+      _userCompanyStates = $v.userCompanyStates.toBuilder();
       _$v = null;
     }
     return this;
@@ -279,9 +264,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
   @override
   void replace(AppState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AppState;
   }
 
@@ -296,10 +279,14 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     try {
       _$result = _$v ??
           new _$AppState._(
-              isLoading: isLoading,
-              isSaving: isSaving,
-              isTesting: isTesting,
-              lastError: lastError,
+              isLoading: BuiltValueNullFieldError.checkNotNull(
+                  isLoading, 'AppState', 'isLoading'),
+              isSaving: BuiltValueNullFieldError.checkNotNull(
+                  isSaving, 'AppState', 'isSaving'),
+              isTesting: BuiltValueNullFieldError.checkNotNull(
+                  isTesting, 'AppState', 'isTesting'),
+              lastError: BuiltValueNullFieldError.checkNotNull(
+                  lastError, 'AppState', 'lastError'),
               authState: authState.build(),
               staticState: staticState.build(),
               prefState: prefState.build(),
@@ -329,4 +316,4 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

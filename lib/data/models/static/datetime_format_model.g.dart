@@ -47,7 +47,7 @@ class _$DatetimeFormatListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -95,7 +95,7 @@ class _$DatetimeFormatItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -144,7 +144,7 @@ class _$DatetimeFormatEntitySerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -170,9 +170,8 @@ class _$DatetimeFormatListResponse extends DatetimeFormatListResponse {
       (new DatetimeFormatListResponseBuilder()..update(updates)).build();
 
   _$DatetimeFormatListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('DatetimeFormatListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'DatetimeFormatListResponse', 'data');
   }
 
   @override
@@ -217,8 +216,9 @@ class DatetimeFormatListResponseBuilder
   DatetimeFormatListResponseBuilder();
 
   DatetimeFormatListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -226,9 +226,7 @@ class DatetimeFormatListResponseBuilder
 
   @override
   void replace(DatetimeFormatListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DatetimeFormatListResponse;
   }
 
@@ -267,9 +265,8 @@ class _$DatetimeFormatItemResponse extends DatetimeFormatItemResponse {
       (new DatetimeFormatItemResponseBuilder()..update(updates)).build();
 
   _$DatetimeFormatItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('DatetimeFormatItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        data, 'DatetimeFormatItemResponse', 'data');
   }
 
   @override
@@ -314,8 +311,9 @@ class DatetimeFormatItemResponseBuilder
   DatetimeFormatItemResponseBuilder();
 
   DatetimeFormatItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -323,9 +321,7 @@ class DatetimeFormatItemResponseBuilder
 
   @override
   void replace(DatetimeFormatItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DatetimeFormatItemResponse;
   }
 
@@ -366,12 +362,9 @@ class _$DatetimeFormatEntity extends DatetimeFormatEntity {
       (new DatetimeFormatEntityBuilder()..update(updates)).build();
 
   _$DatetimeFormatEntity._({this.id, this.format}) : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('DatetimeFormatEntity', 'id');
-    }
-    if (format == null) {
-      throw new BuiltValueNullFieldError('DatetimeFormatEntity', 'format');
-    }
+    BuiltValueNullFieldError.checkNotNull(id, 'DatetimeFormatEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        format, 'DatetimeFormatEntity', 'format');
   }
 
   @override
@@ -421,9 +414,10 @@ class DatetimeFormatEntityBuilder
   DatetimeFormatEntityBuilder();
 
   DatetimeFormatEntityBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _format = _$v.format;
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _format = $v.format;
       _$v = null;
     }
     return this;
@@ -431,9 +425,7 @@ class DatetimeFormatEntityBuilder
 
   @override
   void replace(DatetimeFormatEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DatetimeFormatEntity;
   }
 
@@ -444,11 +436,15 @@ class DatetimeFormatEntityBuilder
 
   @override
   _$DatetimeFormatEntity build() {
-    final _$result =
-        _$v ?? new _$DatetimeFormatEntity._(id: id, format: format);
+    final _$result = _$v ??
+        new _$DatetimeFormatEntity._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'DatetimeFormatEntity', 'id'),
+            format: BuiltValueNullFieldError.checkNotNull(
+                format, 'DatetimeFormatEntity', 'format'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

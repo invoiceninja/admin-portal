@@ -42,7 +42,7 @@ class _$TokenListResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -86,7 +86,7 @@ class _$TokenItemResponseSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -129,28 +129,33 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.isChanged != null) {
+    Object value;
+    value = object.isChanged;
+    if (value != null) {
       result
         ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.isDeleted != null) {
+    value = object.isDeleted;
+    if (value != null) {
       result
         ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.createdUserId != null) {
+    value = object.createdUserId;
+    if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    if (object.assignedUserId != null) {
+    value = object.assignedUserId;
+    if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -165,7 +170,7 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'is_system':
           result.isSystem = serializers.deserialize(value,
@@ -227,9 +232,7 @@ class _$TokenListResponse extends TokenListResponse {
       (new TokenListResponseBuilder()..update(updates)).build();
 
   _$TokenListResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('TokenListResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'TokenListResponse', 'data');
   }
 
   @override
@@ -271,8 +274,9 @@ class TokenListResponseBuilder
   TokenListResponseBuilder();
 
   TokenListResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -280,9 +284,7 @@ class TokenListResponseBuilder
 
   @override
   void replace(TokenListResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenListResponse;
   }
 
@@ -321,9 +323,7 @@ class _$TokenItemResponse extends TokenItemResponse {
       (new TokenItemResponseBuilder()..update(updates)).build();
 
   _$TokenItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('TokenItemResponse', 'data');
-    }
+    BuiltValueNullFieldError.checkNotNull(data, 'TokenItemResponse', 'data');
   }
 
   @override
@@ -364,8 +364,9 @@ class TokenItemResponseBuilder
   TokenItemResponseBuilder();
 
   TokenItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _data = $v.data.toBuilder();
       _$v = null;
     }
     return this;
@@ -373,9 +374,7 @@ class TokenItemResponseBuilder
 
   @override
   void replace(TokenItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenItemResponse;
   }
 
@@ -445,27 +444,16 @@ class _$TokenEntity extends TokenEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (isSystem == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'isSystem');
-    }
-    if (token == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'token');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'name');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'createdAt');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'archivedAt');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'id');
-    }
+    BuiltValueNullFieldError.checkNotNull(isSystem, 'TokenEntity', 'isSystem');
+    BuiltValueNullFieldError.checkNotNull(token, 'TokenEntity', 'token');
+    BuiltValueNullFieldError.checkNotNull(name, 'TokenEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, 'TokenEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'TokenEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'TokenEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'TokenEntity', 'id');
   }
 
   @override
@@ -587,18 +575,19 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   TokenEntityBuilder();
 
   TokenEntityBuilder get _$this {
-    if (_$v != null) {
-      _isSystem = _$v.isSystem;
-      _token = _$v.token;
-      _name = _$v.name;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
+    final $v = _$v;
+    if ($v != null) {
+      _isSystem = $v.isSystem;
+      _token = $v.token;
+      _name = $v.name;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
       _$v = null;
     }
     return this;
@@ -606,9 +595,7 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
 
   @override
   void replace(TokenEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenEntity;
   }
 
@@ -621,20 +608,26 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   _$TokenEntity build() {
     final _$result = _$v ??
         new _$TokenEntity._(
-            isSystem: isSystem,
-            token: token,
-            name: name,
+            isSystem: BuiltValueNullFieldError.checkNotNull(
+                isSystem, 'TokenEntity', 'isSystem'),
+            token: BuiltValueNullFieldError.checkNotNull(
+                token, 'TokenEntity', 'token'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'TokenEntity', 'name'),
             isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'TokenEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, 'TokenEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, 'TokenEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: id);
+            id: BuiltValueNullFieldError.checkNotNull(id, 'TokenEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
