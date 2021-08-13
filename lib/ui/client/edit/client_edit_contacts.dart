@@ -307,26 +307,27 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               ? AppLocalization.of(context).pleaseEnterAClientOrContactName
               : null,
           onSavePressed: (_) => _onDoneContactPressed(),
-          decoration: InputDecoration(
-            labelText: localization.firstName,
-            suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
-                ? IconButton(
-                    alignment: Alignment.bottomCenter,
-                    color: Theme.of(context).cardColor,
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () async {
-                      final contact = await getDeviceContact();
-                      if (contact != null) {
-                        setState(() {
-                          _setContactControllers(contact);
-                        });
-                      }
-                    })
-                : null,
-          ),
+          label: localization.firstName,
+          decoration: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+              ? InputDecoration(
+                  labelText: localization.firstName,
+                  suffixIcon: IconButton(
+                      alignment: Alignment.bottomCenter,
+                      color: Theme.of(context).cardColor,
+                      icon: Icon(
+                        Icons.person,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () async {
+                        final contact = await getDeviceContact();
+                        if (contact != null) {
+                          setState(() {
+                            _setContactControllers(contact);
+                          });
+                        }
+                      }),
+                )
+              : null,
         ),
         DecoratedFormField(
           controller: _lastNameController,
