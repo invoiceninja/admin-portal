@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class DecoratedFormField extends StatelessWidget {
+class DecoratedFormField extends StatefulWidget {
   const DecoratedFormField({
     Key key,
     this.controller,
@@ -68,42 +68,61 @@ class DecoratedFormField extends StatelessWidget {
   final List<TextInputFormatter> inputFormatters;
 
   @override
+  _DecoratedFormFieldState createState() => _DecoratedFormFieldState();
+}
+
+class _DecoratedFormFieldState extends State<DecoratedFormField> {
+  bool _showClear = true;
+
+  @override
   Widget build(BuildContext context) {
-    Widget iconButton = suffixIconButton;
+    Widget iconButton = widget.suffixIconButton;
 
-    final hasValue =
-        (initialValue ?? '').isNotEmpty || (controller?.text ?? '').isNotEmpty;
-    final calcKeyboardType = isMoney || isPercent
+    final hasValue = (widget.initialValue ?? '').isNotEmpty ||
+        (widget.controller?.text ?? '').isNotEmpty;
+    final calcKeyboardType = widget.isMoney || widget.isPercent
         ? TextInputType.numberWithOptions(decimal: true, signed: true)
-        : (maxLines ?? 0) > 1
+        : (widget.maxLines ?? 0) > 1
             ? TextInputType.multiline
-            : keyboardType ?? TextInputType.text;
-    final enterShouldSubmit =
-        isDesktop(context) && onSavePressed != null && (maxLines ?? 1) <= 1;
+            : widget.keyboardType ?? TextInputType.text;
+    final enterShouldSubmit = isDesktop(context) &&
+        widget.onSavePressed != null &&
+        (widget.maxLines ?? 1) <= 1;
 
-    if (showClear && hasValue && key == null && controller != null) {
-      if (suffixIconButton == null && suffixIcon == null && enabled) {
+    if (_showClear &&
+        widget.showClear &&
+        hasValue &&
+        widget.key == null &&
+        widget.controller != null) {
+      if (widget.suffixIconButton == null &&
+          widget.suffixIcon == null &&
+          widget.enabled) {
         iconButton = IconButton(
           icon: Icon(Icons.clear),
-          onPressed: () => controller.text = '',
+          onPressed: () {
+            widget.controller.text = '';
+            setState(() {
+              _showClear = false;
+            });
+          },
         );
       }
     }
 
     InputDecoration inputDecoration;
-    if (decoration != null) {
-      inputDecoration = decoration;
-    } else if (label == null) {
+    if (widget.decoration != null) {
+      inputDecoration = widget.decoration;
+    } else if (widget.label == null) {
       inputDecoration = null;
     } else {
-      var icon = suffixIcon ?? iconButton;
+      var icon = widget.suffixIcon ?? iconButton;
       if (icon == null) {
-        if (isMoney) {
+        if (widget.isMoney) {
           final state = StoreProvider.of<AppState>(context).state;
           icon = Icon(state.company.currencyId == kCurrencyEuro
               ? Icons.euro
               : Icons.attach_money);
-        } else if (isPercent) {
+        } else if (widget.isPercent) {
           icon = Icon(
             MdiIcons.percent,
             size: 16,
@@ -112,8 +131,8 @@ class DecoratedFormField extends StatelessWidget {
       }
 
       inputDecoration = InputDecoration(
-          labelText: label,
-          hintText: hint,
+          labelText: widget.label,
+          hintText: widget.hint,
           suffixIcon: icon == null
               ? null
               : Focus(
@@ -122,48 +141,54 @@ class DecoratedFormField extends StatelessWidget {
                   descendantsAreFocusable: false,
                 ),
           floatingLabelBehavior:
-              (hint ?? '').isNotEmpty && (label ?? '').isEmpty
+              (widget.hint ?? '').isNotEmpty && (widget.label ?? '').isEmpty
                   ? FloatingLabelBehavior.always
                   : FloatingLabelBehavior.auto);
     }
 
     return TextFormField(
-      key: ValueKey(label),
+      key: ValueKey(widget.label),
       // Enables tests to find fields
-      focusNode: focusNode,
-      controller: controller,
-      autofocus: autofocus,
+      focusNode: widget.focusNode,
+      controller: widget.controller,
+      autofocus: widget.autofocus,
       decoration: inputDecoration,
-      validator: validator,
+      validator: widget.validator,
       keyboardType: calcKeyboardType,
-      maxLines: expands ? null : maxLines ?? 1,
-      minLines: expands ? null : minLines,
-      expands: expands,
-      autovalidateMode: autovalidate
+      maxLines: widget.expands ? null : widget.maxLines ?? 1,
+      minLines: widget.expands ? null : widget.minLines,
+      expands: widget.expands,
+      autovalidateMode: widget.autovalidate
           ? AutovalidateMode.onUserInteraction
           : AutovalidateMode.disabled,
-      autocorrect: isMoney || isPercent ? false : autocorrect,
-      obscureText: obscureText,
-      initialValue: initialValue,
+      autocorrect:
+          widget.isMoney || widget.isPercent ? false : widget.autocorrect,
+      obscureText: widget.obscureText,
+      initialValue: widget.initialValue,
       textInputAction: calcKeyboardType == TextInputType.multiline
           ? TextInputAction.newline
           : enterShouldSubmit
               ? TextInputAction.done
               : TextInputAction.next,
-      onChanged: onChanged,
-      inputFormatters: inputFormatters,
+      onChanged: (value) {
+        _showClear = true;
+        if (widget.onChanged != null) {
+          widget.onChanged(value);
+        }
+      },
+      inputFormatters: widget.inputFormatters,
       onFieldSubmitted: (value) {
-        if (onFieldSubmitted != null) {
-          return onFieldSubmitted(value);
+        if (widget.onFieldSubmitted != null) {
+          return widget.onFieldSubmitted(value);
         } else if (calcKeyboardType == TextInputType.multiline) {
           return null;
         } else if (enterShouldSubmit) {
-          onSavePressed(context);
+          widget.onSavePressed(context);
         }
       },
-      enabled: enabled,
-      autofillHints: autofillHints,
-      textAlign: textAlign,
+      enabled: widget.enabled,
+      autofillHints: widget.autofillHints,
+      textAlign: widget.textAlign,
     );
   }
 }
