@@ -326,47 +326,44 @@ class _AccountOverview extends StatelessWidget {
                   child: AppButton(
                     label: localization.applyLicense.toUpperCase(),
                     iconData: isMobile(context) ? null : Icons.cloud_done,
-                    onPressed: state.isWhiteLabeled
-                        ? null
-                        : () {
-                            fieldCallback(
+                    onPressed: () {
+                      fieldCallback(
+                          context: context,
+                          title: localization.applyLicense,
+                          field: localization.license,
+                          maxLength: 24,
+                          callback: (value) {
+                            final state = viewModel.state;
+                            final credentials = state.credentials;
+                            final url =
+                                '${credentials.url}/claim_license?license_key=$value';
+
+                            showDialog<AlertDialog>(
                                 context: context,
-                                title: localization.applyLicense,
-                                field: localization.license,
-                                maxLength: 24,
-                                callback: (value) {
-                                  final state = viewModel.state;
-                                  final credentials = state.credentials;
-                                  final url =
-                                      '${credentials.url}/claim_license?license_key=$value';
+                                barrierDismissible: false,
+                                builder: (BuildContext context) => SimpleDialog(
+                                      children: <Widget>[LoadingDialog()],
+                                    ));
 
-                                  showDialog<AlertDialog>(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (BuildContext context) =>
-                                          SimpleDialog(
-                                            children: <Widget>[LoadingDialog()],
-                                          ));
-
-                                  WebClient()
-                                      .post(
-                                    url,
-                                    credentials.token,
-                                  )
-                                      .then((dynamic response) {
-                                    if (Navigator.of(context).canPop()) {
-                                      Navigator.of(context).pop();
-                                    }
-                                    viewModel.onAppliedLicense();
-                                  }).catchError((dynamic error) {
-                                    if (Navigator.of(context).canPop()) {
-                                      Navigator.of(context).pop();
-                                    }
-                                    showErrorDialog(
-                                        context: context, message: '$error');
-                                  });
-                                });
-                          },
+                            WebClient()
+                                .post(
+                              url,
+                              credentials.token,
+                            )
+                                .then((dynamic response) {
+                              if (Navigator.of(context).canPop()) {
+                                Navigator.of(context).pop();
+                              }
+                              viewModel.onAppliedLicense();
+                            }).catchError((dynamic error) {
+                              if (Navigator.of(context).canPop()) {
+                                Navigator.of(context).pop();
+                              }
+                              showErrorDialog(
+                                  context: context, message: '$error');
+                            });
+                          });
+                    },
                   ),
                 ),
               ],
