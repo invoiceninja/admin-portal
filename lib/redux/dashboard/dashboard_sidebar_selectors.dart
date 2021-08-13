@@ -83,8 +83,8 @@ List<PaymentEntity> _recentPayments({
   BuiltMap<String, ClientEntity> clientMap,
 }) {
   final payments = <PaymentEntity>[];
-  final oneMonthAgo =
-      (DateTime.now().subtract(Duration(days: 30)).millisecondsSinceEpoch /
+  final threeMonthsAgo =
+      (DateTime.now().subtract(Duration(days: 60)).millisecondsSinceEpoch /
               1000)
           .round();
   paymentMap.forEach((index, payment) {
@@ -92,13 +92,18 @@ List<PaymentEntity> _recentPayments({
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
     if (payment.isNotActive || client.isNotActive) {
       // do noting
-    } else if (payment.isActive && payment.createdAt > oneMonthAgo) {
+    } else if (payment.isActive && payment.createdAt > threeMonthsAgo) {
       payments.add(payment);
     }
   });
 
-  payments.sort(
-      (paymentA, paymentB) => paymentB.createdAt.compareTo(paymentA.createdAt));
+  payments.sort((paymentA, paymentB) {
+    if (paymentA.date == paymentB.date) {
+      return paymentB.createdAt.compareTo(paymentA.createdAt);
+    } else {
+      return paymentB.date.compareTo(paymentA.date);
+    }
+  });
 
   return payments;
 }

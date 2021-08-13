@@ -136,33 +136,33 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
           : null,
       children: <Widget>[
         DecoratedFormField(
-          key: ValueKey(localization.name),
           autofocus: true,
           controller: _nameController,
           validator: (String val) => val == null || val.isEmpty
               ? AppLocalization.of(context).pleaseEnterAName
               : null,
           onSavePressed: viewModel.onSavePressed,
-          decoration: InputDecoration(
-            labelText: localization.name,
-            suffixIcon: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
-                ? IconButton(
-                    alignment: Alignment.bottomCenter,
-                    color: Theme.of(context).cardColor,
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () async {
-                      final contact = await getDeviceContact();
-                      if (contact != null) {
-                        setState(() {
-                          _setContactControllers(contact);
-                        });
-                      }
-                    })
-                : null,
-          ),
+          label: localization.name,
+          decoration: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+              ? InputDecoration(
+                  labelText: localization.name,
+                  suffixIcon: IconButton(
+                      alignment: Alignment.bottomCenter,
+                      color: Theme.of(context).cardColor,
+                      icon: Icon(
+                        Icons.person,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () async {
+                        final contact = await getDeviceContact();
+                        if (contact != null) {
+                          setState(() {
+                            _setContactControllers(contact);
+                          });
+                        }
+                      }),
+                )
+              : null,
         ),
         if (vendor.isOld)
           DecoratedFormField(
