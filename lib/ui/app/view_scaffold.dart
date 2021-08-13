@@ -47,7 +47,8 @@ class ViewScaffold extends StatelessWidget {
           ? localization.pending
           : entity.listDisplayName;
       if (!(isFilter ?? false)) {
-        title = EntityPresenter().initialize(entity, context).title;
+        final presenter = EntityPresenter().initialize(entity, context);
+        title = presenter.title(isShort: true);
       }
     }
 

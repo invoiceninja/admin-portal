@@ -98,6 +98,11 @@ class QuoteScreen extends StatelessWidget {
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
+              ..id = kQuoteStatusViewed
+              ..name = localization.viewed,
+          ),
+          InvoiceStatusEntity().rebuild(
+            (b) => b
               ..id = kQuoteStatusApproved
               ..name = localization.approved,
           ),

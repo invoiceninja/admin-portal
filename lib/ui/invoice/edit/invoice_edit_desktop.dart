@@ -260,7 +260,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8),
                           child: Text(
-                            EntityPresenter().initialize(client, context).title,
+                            EntityPresenter()
+                                .initialize(client, context)
+                                .title(),
                             style: Theme.of(context).textTheme.headline6,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
