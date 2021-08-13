@@ -169,6 +169,7 @@ const kInvoiceStatuses = {
   kInvoiceStatusPaid: 'paid',
   kInvoiceStatusCancelled: 'cancelled',
   kInvoiceStatusReversed: 'reversed',
+  kInvoiceStatusViewed: 'viewed',
 };
 
 const String kRecurringInvoiceStatusDraft = '1';
@@ -185,6 +186,7 @@ const kRecurringInvoiceStatuses = {
   kRecurringInvoiceStatusPending: 'pending',
 };
 
+const String kQuoteStatusViewed = '-2';
 const String kQuoteStatusExpired = '-1';
 const String kQuoteStatusDraft = '1';
 const String kQuoteStatusSent = '2';
@@ -197,6 +199,7 @@ const kQuoteStatuses = {
   kQuoteStatusSent: 'sent',
   kQuoteStatusApproved: 'approved',
   kQuoteStatusConverted: 'converted',
+  kQuoteStatusViewed: 'viewed',
 };
 
 const String kCreditStatusDraft = '1';

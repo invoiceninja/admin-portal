@@ -16,6 +16,7 @@ class InvoiceStatusColors {
       kInvoiceStatusPastDue: _colorTheme.colorDanger,
       kInvoiceStatusCancelled: _colorTheme.colorLightGray,
       kInvoiceStatusReversed: _colorTheme.colorLightGray,
+      kInvoiceStatusViewed: _colorTheme.colorWarning,
     };
   }
 }
@@ -63,6 +64,7 @@ class QuoteStatusColors {
       kQuoteStatusApproved: _colorTheme.colorPrimary,
       kQuoteStatusConverted: _colorTheme.colorSuccess,
       kQuoteStatusExpired: _colorTheme.colorDanger,
+      kQuoteStatusViewed: _colorTheme.colorWarning,
     };
   }
 }

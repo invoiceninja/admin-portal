@@ -686,17 +686,9 @@ abstract class InvoiceEntity extends Object
     }
 
     for (final status in statuses) {
-      if (status.id == statusId) {
-        return true;
-      }
-
-      if (status.id == kInvoiceStatusPastDue && isPastDue) {
+      if (status.id == statusId || status.id == calculatedStatusId) {
         return true;
       } else if (status.id == kInvoiceStatusUnpaid && isUnpaid && isSent) {
-        return true;
-      } else if (status.id == kInvoiceStatusViewed && isViewed) {
-        return true;
-      } else if (status.id == kRecurringInvoiceStatusPending && isPending) {
         return true;
       }
     }
@@ -967,6 +959,10 @@ abstract class InvoiceEntity extends Object
 
     if (isPending) {
       return kRecurringInvoiceStatusPending;
+    }
+
+    if (isViewed) {
+      return isInvoice ? kInvoiceStatusViewed : kQuoteStatusViewed;
     }
 
     /*

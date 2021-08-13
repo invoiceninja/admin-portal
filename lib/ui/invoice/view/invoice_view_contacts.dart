@@ -76,13 +76,11 @@ class _InvitationListTile extends StatelessWidget {
 
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      title: Text(contact.fullNameWithEmail.isEmpty
-          ? client.displayName
-          : contact.fullNameWithEmail),
+      title: Text(contact.fullNameOrEmail),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 8),
+          SizedBox(height: 4),
           if (invitation.sentDate.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
@@ -107,7 +105,7 @@ class _InvitationListTile extends StatelessWidget {
                     formatDate(invitation.viewedDate, context, showTime: true),
               ),
             ),
-          SizedBox(height: 4),
+          SizedBox(height: 8),
           Row(
             children: [
               Expanded(
