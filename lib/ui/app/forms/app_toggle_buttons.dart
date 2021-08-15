@@ -26,12 +26,12 @@ class AppToggleButtons extends StatelessWidget {
           Container(
             width: toggleWidth,
             height: 40,
-            child: Center(child: Text(tabLabels[0].toUpperCase())),
+            child: Center(child: Text(tabLabels[0])),
           ),
           Container(
             width: toggleWidth,
             height: 40,
-            child: Center(child: Text(tabLabels[1].toUpperCase())),
+            child: Center(child: Text(tabLabels[1])),
           ),
         ],
         isSelected: selectedIndex == 0 ? [true, false] : [false, true],
