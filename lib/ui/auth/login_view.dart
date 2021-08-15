@@ -348,9 +348,10 @@ class _LoginState extends State<LoginView> {
                                       localization.signUp,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .subtitle1
+                                          .headline6
                                           .copyWith(
                                               fontWeight: FontWeight.w600,
+                                              fontSize: 18,
                                               color: _createAccount
                                                   ? Colors.white
                                                   : null),
@@ -378,9 +379,10 @@ class _LoginState extends State<LoginView> {
                                       localization.login,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .subtitle1
+                                          .headline6
                                           .copyWith(
                                               fontWeight: FontWeight.w600,
+                                              fontSize: 18,
                                               color: _createAccount
                                                   ? null
                                                   : Colors.white),
@@ -573,7 +575,7 @@ class _LoginState extends State<LoginView> {
                     ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: 30, bottom: 10, left: 16, right: 16),
+                        top: 20, bottom: 10, left: 16, right: 16),
                     child: RoundedLoadingButton(
                       height: 50,
                       borderRadius: 4,
