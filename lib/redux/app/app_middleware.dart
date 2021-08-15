@@ -425,7 +425,7 @@ Middleware<AppState> _createAccountLoaded() {
     }
 
     try {
-      print('## Account Loadded: ${response.userCompanies.length}');
+      print('## Account Loaded: ${response.userCompanies.length}');
       for (int i = 0;
           i < min(response.userCompanies.length, kMaxNumberOfCompanies);
           i++) {

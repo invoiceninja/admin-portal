@@ -9,8 +9,10 @@ class FormCard extends StatelessWidget {
     this.child,
     this.crossAxisAlignment,
     this.padding,
+    this.internalPadding,
     this.isLast = false,
     this.forceNarrow = false,
+    this.elevation = 4,
   }) : super(key: key);
 
   final Widget child;
@@ -18,7 +20,9 @@ class FormCard extends StatelessWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final bool forceNarrow;
   final EdgeInsets padding;
+  final EdgeInsets internalPadding;
   final bool isLast;
+  final double elevation;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class FormCard extends StatelessWidget {
           (forceNarrow
               ? EdgeInsets.symmetric(
                   vertical: kMobileDialogPadding,
-                  horizontal: (MediaQuery.of(context).size.width - 400) / 2,
+                  horizontal: (MediaQuery.of(context).size.width - 500) / 2,
                 )
               : EdgeInsets.only(
                   left: kMobileDialogPadding,
@@ -40,10 +44,10 @@ class FormCard extends StatelessWidget {
                   bottom: isLast ? kMobileDialogPadding : 0,
                 )),
       child: Card(
-        elevation: 4.0,
+        elevation: elevation,
         child: AppBorder(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: internalPadding ?? const EdgeInsets.all(16),
             child: child != null
                 ? child
                 : Container(

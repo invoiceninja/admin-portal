@@ -17,7 +17,7 @@ class AppToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
     final width = MediaQuery.of(context).size.width;
-    final double toggleWidth = isDesktop ? 176 : (width - 70) / 2;
+    final double toggleWidth = isDesktop ? 203 : (width - 70) / 2;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
@@ -26,12 +26,12 @@ class AppToggleButtons extends StatelessWidget {
           Container(
             width: toggleWidth,
             height: 40,
-            child: Center(child: Text(tabLabels[0].toUpperCase())),
+            child: Center(child: Text(tabLabels[0])),
           ),
           Container(
             width: toggleWidth,
             height: 40,
-            child: Center(child: Text(tabLabels[1].toUpperCase())),
+            child: Center(child: Text(tabLabels[1])),
           ),
         ],
         isSelected: selectedIndex == 0 ? [true, false] : [false, true],

@@ -21,14 +21,8 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
-      'password',
-      serializers.serialize(object.password,
-          specifiedType: const FullType(String)),
       'url',
       serializers.serialize(object.url, specifiedType: const FullType(String)),
-      'secret',
-      serializers.serialize(object.secret,
-          specifiedType: const FullType(String)),
       'isInitialized',
       serializers.serialize(object.isInitialized,
           specifiedType: const FullType(bool)),
@@ -61,16 +55,8 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'password':
-          result.password = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'url':
           result.url = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'secret':
-          result.secret = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isInitialized':
@@ -100,11 +86,7 @@ class _$AuthState extends AuthState {
   @override
   final String email;
   @override
-  final String password;
-  @override
   final String url;
-  @override
-  final String secret;
   @override
   final bool isInitialized;
   @override
@@ -119,18 +101,14 @@ class _$AuthState extends AuthState {
 
   _$AuthState._(
       {this.email,
-      this.password,
       this.url,
-      this.secret,
       this.isInitialized,
       this.isAuthenticated,
       this.lastEnteredPasswordAt,
       this.referralCode})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(email, 'AuthState', 'email');
-    BuiltValueNullFieldError.checkNotNull(password, 'AuthState', 'password');
     BuiltValueNullFieldError.checkNotNull(url, 'AuthState', 'url');
-    BuiltValueNullFieldError.checkNotNull(secret, 'AuthState', 'secret');
     BuiltValueNullFieldError.checkNotNull(
         isInitialized, 'AuthState', 'isInitialized');
     BuiltValueNullFieldError.checkNotNull(
@@ -153,9 +131,7 @@ class _$AuthState extends AuthState {
     if (identical(other, this)) return true;
     return other is AuthState &&
         email == other.email &&
-        password == other.password &&
         url == other.url &&
-        secret == other.secret &&
         isInitialized == other.isInitialized &&
         isAuthenticated == other.isAuthenticated &&
         lastEnteredPasswordAt == other.lastEnteredPasswordAt &&
@@ -168,11 +144,7 @@ class _$AuthState extends AuthState {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc(
-                    $jc(
-                        $jc($jc($jc(0, email.hashCode), password.hashCode),
-                            url.hashCode),
-                        secret.hashCode),
+                $jc($jc($jc(0, email.hashCode), url.hashCode),
                     isInitialized.hashCode),
                 isAuthenticated.hashCode),
             lastEnteredPasswordAt.hashCode),
@@ -183,9 +155,7 @@ class _$AuthState extends AuthState {
   String toString() {
     return (newBuiltValueToStringHelper('AuthState')
           ..add('email', email)
-          ..add('password', password)
           ..add('url', url)
-          ..add('secret', secret)
           ..add('isInitialized', isInitialized)
           ..add('isAuthenticated', isAuthenticated)
           ..add('lastEnteredPasswordAt', lastEnteredPasswordAt)
@@ -201,17 +171,9 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
 
-  String _password;
-  String get password => _$this._password;
-  set password(String password) => _$this._password = password;
-
   String _url;
   String get url => _$this._url;
   set url(String url) => _$this._url = url;
-
-  String _secret;
-  String get secret => _$this._secret;
-  set secret(String secret) => _$this._secret = secret;
 
   bool _isInitialized;
   bool get isInitialized => _$this._isInitialized;
@@ -240,9 +202,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
     final $v = _$v;
     if ($v != null) {
       _email = $v.email;
-      _password = $v.password;
       _url = $v.url;
-      _secret = $v.secret;
       _isInitialized = $v.isInitialized;
       _isAuthenticated = $v.isAuthenticated;
       _lastEnteredPasswordAt = $v.lastEnteredPasswordAt;
@@ -269,11 +229,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
         new _$AuthState._(
             email: BuiltValueNullFieldError.checkNotNull(
                 email, 'AuthState', 'email'),
-            password: BuiltValueNullFieldError.checkNotNull(
-                password, 'AuthState', 'password'),
             url: BuiltValueNullFieldError.checkNotNull(url, 'AuthState', 'url'),
-            secret: BuiltValueNullFieldError.checkNotNull(
-                secret, 'AuthState', 'secret'),
             isInitialized: BuiltValueNullFieldError.checkNotNull(
                 isInitialized, 'AuthState', 'isInitialized'),
             isAuthenticated: BuiltValueNullFieldError.checkNotNull(

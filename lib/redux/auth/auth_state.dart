@@ -9,9 +9,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   factory AuthState({String url, String referralCode}) {
     return _$AuthState._(
       email: '',
-      password: '',
       url: url ?? '',
-      secret: '',
       isAuthenticated: false,
       isInitialized: false,
       lastEnteredPasswordAt: 0,
@@ -27,11 +25,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   String get email;
 
-  String get password;
-
   String get url;
-
-  String get secret;
 
   bool get isInitialized;
 
