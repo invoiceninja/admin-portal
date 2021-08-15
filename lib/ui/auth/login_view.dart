@@ -328,11 +328,25 @@ class _LoginState extends State<LoginView> {
               child: FormCard(
                 elevation: 20,
                 forceNarrow: calculateLayout(context) != AppLayout.mobile,
-                internalPadding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+                internalPadding: const EdgeInsets.all(0),
                 children: <Widget>[
                   Column(
                     children: <Widget>[
+                      if (!_isSelfHosted && !isApple())
+                        Row(
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                child: Center(child: Text(localization.signUp)),
+                              ),
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                child: Center(child: Text(localization.login)),
+                              ),
+                            ),
+                          ],
+                        ),
                       SizedBox(height: 10),
                       if (!_recoverPassword) ...[
                         if (!kIsWeb || !kReleaseMode)
@@ -345,20 +359,6 @@ class _LoginState extends State<LoginView> {
                             onTabChanged: (index) {
                               setState(() {
                                 _isSelfHosted = index == 1;
-                                _loginError = '';
-                              });
-                            },
-                          ),
-                        if (!_isSelfHosted && !isApple())
-                          AppToggleButtons(
-                            tabLabels: [
-                              localization.signUp,
-                              localization.login,
-                            ],
-                            selectedIndex: _createAccount ? 0 : 1,
-                            onTabChanged: (index) {
-                              setState(() {
-                                _createAccount = index == 0;
                                 _loginError = '';
                               });
                             },
@@ -378,108 +378,119 @@ class _LoginState extends State<LoginView> {
                             },
                           ),
                       ],
-                      if (_emailLogin)
-                        DecoratedFormField(
-                          controller: _emailController,
-                          label: localization.email,
-                          keyboardType: TextInputType.emailAddress,
-                          autovalidate: _autoValidate,
-                          validator: (val) => val.isEmpty || val.trim().isEmpty
-                              ? localization.pleaseEnterYourEmail
-                              : null,
-                          autofillHints: [AutofillHints.email],
-                          autofocus: true,
-                          onSavePressed: (_) => _submitForm(),
-                        ),
-                      if (_emailLogin && !_recoverPassword)
-                        PasswordFormField(
-                          controller: _passwordController,
-                          autoValidate: false,
-                          newPassword: _createAccount,
-                          onSavePressed: (_) => _submitForm(),
-                        ),
-                      if (_isSelfHosted && !kIsWeb)
-                        DecoratedFormField(
-                          controller: _urlController,
-                          label: localization.url,
-                          validator: (val) => val.isEmpty || val.trim().isEmpty
-                              ? localization.pleaseEnterYourUrl
-                              : null,
-                          keyboardType: TextInputType.url,
-                          onSavePressed: (_) => _submitForm(),
-                        ),
-                      if (!_createAccount && !_recoverPassword)
-                        DecoratedFormField(
-                          controller: _oneTimePasswordController,
-                          label:
-                              '${localization.oneTimePassword} (${localization.optional})',
-                          onSavePressed: (_) => _submitForm(),
-                          autofillHints: [AutofillHints.oneTimeCode],
-                        ),
-                      if (_isSelfHosted && !_recoverPassword)
-                        PasswordFormField(
-                          labelText:
-                              '${localization.secret} (${localization.optional})',
-                          controller: _secretController,
-                          autoValidate: _autoValidate,
-                          onSavePressed: (_) => _submitForm(),
-                        ),
-                      if (_createAccount)
-                        Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Column(
-                            children: <Widget>[
-                              CheckboxListTile(
-                                onChanged: (value) =>
-                                    setState(() => _termsChecked = value),
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                activeColor: convertHexStringToColor(
-                                    kDefaultAccentColor),
-                                value: _termsChecked,
-                                title: RichText(
-                                  text: TextSpan(
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        style: aboutTextStyle,
-                                        text: localization.iAgreeToThe + ' ',
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Column(
+                          children: [
+                            if (_emailLogin)
+                              DecoratedFormField(
+                                controller: _emailController,
+                                label: localization.email,
+                                keyboardType: TextInputType.emailAddress,
+                                autovalidate: _autoValidate,
+                                validator: (val) =>
+                                    val.isEmpty || val.trim().isEmpty
+                                        ? localization.pleaseEnterYourEmail
+                                        : null,
+                                autofillHints: [AutofillHints.email],
+                                autofocus: true,
+                                onSavePressed: (_) => _submitForm(),
+                              ),
+                            if (_emailLogin && !_recoverPassword)
+                              PasswordFormField(
+                                controller: _passwordController,
+                                autoValidate: false,
+                                newPassword: _createAccount,
+                                onSavePressed: (_) => _submitForm(),
+                              ),
+                            if (_isSelfHosted && !kIsWeb)
+                              DecoratedFormField(
+                                controller: _urlController,
+                                label: localization.url,
+                                validator: (val) =>
+                                    val.isEmpty || val.trim().isEmpty
+                                        ? localization.pleaseEnterYourUrl
+                                        : null,
+                                keyboardType: TextInputType.url,
+                                onSavePressed: (_) => _submitForm(),
+                              ),
+                            if (!_createAccount && !_recoverPassword)
+                              DecoratedFormField(
+                                controller: _oneTimePasswordController,
+                                label:
+                                    '${localization.oneTimePassword} (${localization.optional})',
+                                onSavePressed: (_) => _submitForm(),
+                                autofillHints: [AutofillHints.oneTimeCode],
+                              ),
+                            if (_isSelfHosted && !_recoverPassword)
+                              PasswordFormField(
+                                labelText:
+                                    '${localization.secret} (${localization.optional})',
+                                controller: _secretController,
+                                autoValidate: _autoValidate,
+                                onSavePressed: (_) => _submitForm(),
+                              ),
+                            if (_createAccount)
+                              Padding(
+                                padding: EdgeInsets.only(top: 10),
+                                child: Column(
+                                  children: <Widget>[
+                                    CheckboxListTile(
+                                      onChanged: (value) =>
+                                          setState(() => _termsChecked = value),
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      activeColor: convertHexStringToColor(
+                                          kDefaultAccentColor),
+                                      value: _termsChecked,
+                                      title: RichText(
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              style: aboutTextStyle,
+                                              text: localization.iAgreeToThe +
+                                                  ' ',
+                                            ),
+                                            LinkTextSpan(
+                                              style: linkStyle,
+                                              url: kTermsOfServiceURL,
+                                              text: localization.termsOfService,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      LinkTextSpan(
-                                        style: linkStyle,
-                                        url: kTermsOfServiceURL,
-                                        text: localization.termsOfService,
+                                    ),
+                                    CheckboxListTile(
+                                      onChanged: (value) => setState(
+                                          () => _privacyChecked = value),
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      activeColor: convertHexStringToColor(
+                                          kDefaultAccentColor),
+                                      value: _privacyChecked,
+                                      title: RichText(
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              style: aboutTextStyle,
+                                              text: localization.iAgreeToThe +
+                                                  ' ',
+                                            ),
+                                            LinkTextSpan(
+                                              style: linkStyle,
+                                              url: kPrivacyPolicyURL,
+                                              text: localization.privacyPolicy,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              CheckboxListTile(
-                                onChanged: (value) =>
-                                    setState(() => _privacyChecked = value),
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                activeColor: convertHexStringToColor(
-                                    kDefaultAccentColor),
-                                value: _privacyChecked,
-                                title: RichText(
-                                  text: TextSpan(
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        style: aboutTextStyle,
-                                        text: localization.iAgreeToThe + ' ',
-                                      ),
-                                      LinkTextSpan(
-                                        style: linkStyle,
-                                        url: kPrivacyPolicyURL,
-                                        text: localization.privacyPolicy,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
+                      ),
                     ],
                   ),
                   if (_loginError.isNotEmpty &&
@@ -560,7 +571,7 @@ class _LoginState extends State<LoginView> {
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                left: 20, top: 12, right: 20, bottom: 12),
+                                left: 25, top: 12, right: 20, bottom: 25),
                             child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -579,7 +590,7 @@ class _LoginState extends State<LoginView> {
                           onTap: () => launch(kStatusCheckUrl),
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                left: 20, top: 12, right: 20, bottom: 12),
+                                left: 25, top: 12, right: 20, bottom: 25),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
