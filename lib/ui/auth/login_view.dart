@@ -520,10 +520,14 @@ class _LoginState extends State<LoginView> {
                   Padding(
                     padding: EdgeInsets.only(top: 30, bottom: 10),
                     child: RoundedLoadingButton(
-                      height: 44,
-                      width: 220,
+                      height: 50,
+                      borderRadius: 4,
+                      width: calculateLayout(context) == AppLayout.desktop
+                          ? 416
+                          : 80,
                       controller: _buttonController,
-                      color: convertHexStringToColor('#4285F4'),
+                      //color: convertHexStringToColor('#4285F4'),
+                      color: state.accentColor,
                       onPressed: () => _submitForm(),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
