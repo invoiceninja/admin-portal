@@ -265,385 +265,338 @@ class _LoginState extends State<LoginView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
     final TextStyle linkStyle = themeData.textTheme.bodyText2
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
 
-    return Stack(
+    return ScrollableListView(
       children: <Widget>[
-        SizedBox(
-          height: 250.0,
-          child: ClipPath(
-            clipper: ArcClipper(),
-            child: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).buttonColor,
-                  Theme.of(context).buttonColor.withOpacity(.7),
-                ],
-              )),
+        Container(
+          width: double.infinity,
+          height: 20,
+          color: state.accentColor,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 30),
+          child: Center(
+            child: InkWell(
+              child: Image.asset('assets/images/logo.png', height: 50),
+              onTap: isApple()
+                  ? null
+                  : () {
+                      launch(kSiteUrl,
+                          forceSafariVC: false, forceWebView: false);
+                    },
+              onLongPress: () {
+                if (kReleaseMode) {
+                  return;
+                }
+
+                setState(() => _tokenLogin = !_tokenLogin);
+              },
             ),
           ),
         ),
-        ScrollableListView(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 25, bottom: 15),
-              child: Center(
-                child: InkWell(
-                  child: Image.asset('assets/images/logo.png', height: 66),
-                  onTap: isApple()
-                      ? null
-                      : () {
-                          launch(kSiteUrl,
-                              forceSafariVC: false, forceWebView: false);
-                        },
-                  onLongPress: () {
-                    if (kReleaseMode) {
-                      return;
-                    }
-
-                    setState(() => _tokenLogin = !_tokenLogin);
-                  },
-                ),
+        if (_tokenLogin)
+          FormCard(
+            forceNarrow: calculateLayout(context) != AppLayout.mobile,
+            children: [
+              DecoratedFormField(
+                autofocus: true,
+                label: localization.token,
+                controller: _tokenController,
               ),
-            ),
-            if (_tokenLogin)
-              FormCard(
+              AppButton(
+                label: localization.submit.toUpperCase(),
+                onPressed: () {
+                  final Completer<Null> completer = Completer<Null>();
+                  viewModel.onTokenLoginPressed(context, completer,
+                      token: _tokenController.text);
+                },
+              )
+            ],
+          ),
+        AnimatedOpacity(
+          duration: Duration(milliseconds: 500),
+          opacity: viewModel.authState.isAuthenticated ? 0 : 1,
+          child: Form(
+            key: _formKey,
+            child: AutofillGroup(
+              child: FormCard(
+                elevation: 20,
                 forceNarrow: calculateLayout(context) != AppLayout.mobile,
-                children: [
-                  DecoratedFormField(
-                    autofocus: true,
-                    label: localization.token,
-                    controller: _tokenController,
-                  ),
-                  AppButton(
-                    label: localization.submit.toUpperCase(),
-                    onPressed: () {
-                      final Completer<Null> completer = Completer<Null>();
-                      viewModel.onTokenLoginPressed(context, completer,
-                          token: _tokenController.text);
-                    },
-                  )
-                ],
-              ),
-            AnimatedOpacity(
-              duration: Duration(milliseconds: 500),
-              opacity: viewModel.authState.isAuthenticated ? 0 : 1,
-              child: Form(
-                key: _formKey,
-                child: AutofillGroup(
-                  child: FormCard(
-                    forceNarrow: calculateLayout(context) != AppLayout.mobile,
+                children: <Widget>[
+                  Column(
                     children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          SizedBox(height: 10),
-                          if (!_recoverPassword) ...[
-                            if (!kIsWeb || !kReleaseMode)
-                              AppToggleButtons(
-                                tabLabels: [
-                                  localization.hosted,
-                                  localization.selfhosted,
-                                ],
-                                selectedIndex: _isSelfHosted ? 1 : 0,
-                                onTabChanged: (index) {
-                                  setState(() {
-                                    _isSelfHosted = index == 1;
-                                    _loginError = '';
-                                  });
-                                },
-                              ),
-                            if (!_isSelfHosted && !isApple())
-                              AppToggleButtons(
-                                tabLabels: [
-                                  localization.signUp,
-                                  localization.login,
-                                ],
-                                selectedIndex: _createAccount ? 0 : 1,
-                                onTabChanged: (index) {
-                                  setState(() {
-                                    _createAccount = index == 0;
-                                    _loginError = '';
-                                  });
-                                },
-                              ),
-                            if (!_isSelfHosted && !_hideGoogle)
-                              AppToggleButtons(
-                                tabLabels: [
-                                  'Google',
-                                  localization.email,
-                                ],
-                                selectedIndex: _emailLogin ? 1 : 0,
-                                onTabChanged: (index) {
-                                  setState(() {
-                                    _emailLogin = index == 1;
-                                    _loginError = '';
-                                  });
-                                },
-                              ),
-                          ],
-                          if (_emailLogin)
-                            DecoratedFormField(
-                              controller: _emailController,
-                              label: localization.email,
-                              keyboardType: TextInputType.emailAddress,
-                              autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourEmail
-                                      : null,
-                              autofillHints: [AutofillHints.email],
-                              autofocus: true,
-                              onSavePressed: (_) => _submitForm(),
-                            ),
-                          if (_emailLogin && !_recoverPassword)
-                            PasswordFormField(
-                              controller: _passwordController,
-                              autoValidate: false,
-                              newPassword: _createAccount,
-                              onSavePressed: (_) => _submitForm(),
-                            ),
-                          if (_isSelfHosted && !kIsWeb)
-                            DecoratedFormField(
-                              controller: _urlController,
-                              label: localization.url,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourUrl
-                                      : null,
-                              keyboardType: TextInputType.url,
-                              onSavePressed: (_) => _submitForm(),
-                            ),
-                          if (!_createAccount && !_recoverPassword)
-                            DecoratedFormField(
-                              controller: _oneTimePasswordController,
-                              label:
-                                  '${localization.oneTimePassword} (${localization.optional})',
-                              onSavePressed: (_) => _submitForm(),
-                              autofillHints: [AutofillHints.oneTimeCode],
-                            ),
-                          if (_isSelfHosted && !_recoverPassword)
-                            PasswordFormField(
-                              labelText:
-                                  '${localization.secret} (${localization.optional})',
-                              controller: _secretController,
-                              autoValidate: _autoValidate,
-                              onSavePressed: (_) => _submitForm(),
-                            ),
-                          if (_createAccount)
-                            Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Column(
-                                children: <Widget>[
-                                  CheckboxListTile(
-                                    onChanged: (value) =>
-                                        setState(() => _termsChecked = value),
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    activeColor: convertHexStringToColor(
-                                        kDefaultAccentColor),
-                                    value: _termsChecked,
-                                    title: RichText(
-                                      text: TextSpan(
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            style: aboutTextStyle,
-                                            text:
-                                                localization.iAgreeToThe + ' ',
-                                          ),
-                                          LinkTextSpan(
-                                            style: linkStyle,
-                                            url: kTermsOfServiceURL,
-                                            text:
-                                                localization.termsOfServiceLink,
-                                          ),
-                                        ],
+                      SizedBox(height: 10),
+                      if (!_recoverPassword) ...[
+                        if (!kIsWeb || !kReleaseMode)
+                          AppToggleButtons(
+                            tabLabels: [
+                              localization.hosted,
+                              localization.selfhosted,
+                            ],
+                            selectedIndex: _isSelfHosted ? 1 : 0,
+                            onTabChanged: (index) {
+                              setState(() {
+                                _isSelfHosted = index == 1;
+                                _loginError = '';
+                              });
+                            },
+                          ),
+                        if (!_isSelfHosted && !isApple())
+                          AppToggleButtons(
+                            tabLabels: [
+                              localization.signUp,
+                              localization.login,
+                            ],
+                            selectedIndex: _createAccount ? 0 : 1,
+                            onTabChanged: (index) {
+                              setState(() {
+                                _createAccount = index == 0;
+                                _loginError = '';
+                              });
+                            },
+                          ),
+                        if (!_isSelfHosted && !_hideGoogle)
+                          AppToggleButtons(
+                            tabLabels: [
+                              'Google',
+                              localization.email,
+                            ],
+                            selectedIndex: _emailLogin ? 1 : 0,
+                            onTabChanged: (index) {
+                              setState(() {
+                                _emailLogin = index == 1;
+                                _loginError = '';
+                              });
+                            },
+                          ),
+                      ],
+                      if (_emailLogin)
+                        DecoratedFormField(
+                          controller: _emailController,
+                          label: localization.email,
+                          keyboardType: TextInputType.emailAddress,
+                          autovalidate: _autoValidate,
+                          validator: (val) => val.isEmpty || val.trim().isEmpty
+                              ? localization.pleaseEnterYourEmail
+                              : null,
+                          autofillHints: [AutofillHints.email],
+                          autofocus: true,
+                          onSavePressed: (_) => _submitForm(),
+                        ),
+                      if (_emailLogin && !_recoverPassword)
+                        PasswordFormField(
+                          controller: _passwordController,
+                          autoValidate: false,
+                          newPassword: _createAccount,
+                          onSavePressed: (_) => _submitForm(),
+                        ),
+                      if (_isSelfHosted && !kIsWeb)
+                        DecoratedFormField(
+                          controller: _urlController,
+                          label: localization.url,
+                          validator: (val) => val.isEmpty || val.trim().isEmpty
+                              ? localization.pleaseEnterYourUrl
+                              : null,
+                          keyboardType: TextInputType.url,
+                          onSavePressed: (_) => _submitForm(),
+                        ),
+                      if (!_createAccount && !_recoverPassword)
+                        DecoratedFormField(
+                          controller: _oneTimePasswordController,
+                          label:
+                              '${localization.oneTimePassword} (${localization.optional})',
+                          onSavePressed: (_) => _submitForm(),
+                          autofillHints: [AutofillHints.oneTimeCode],
+                        ),
+                      if (_isSelfHosted && !_recoverPassword)
+                        PasswordFormField(
+                          labelText:
+                              '${localization.secret} (${localization.optional})',
+                          controller: _secretController,
+                          autoValidate: _autoValidate,
+                          onSavePressed: (_) => _submitForm(),
+                        ),
+                      if (_createAccount)
+                        Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Column(
+                            children: <Widget>[
+                              CheckboxListTile(
+                                onChanged: (value) =>
+                                    setState(() => _termsChecked = value),
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                activeColor: convertHexStringToColor(
+                                    kDefaultAccentColor),
+                                value: _termsChecked,
+                                title: RichText(
+                                  text: TextSpan(
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        style: aboutTextStyle,
+                                        text: localization.iAgreeToThe + ' ',
                                       ),
-                                    ),
-                                  ),
-                                  CheckboxListTile(
-                                    onChanged: (value) =>
-                                        setState(() => _privacyChecked = value),
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    activeColor: convertHexStringToColor(
-                                        kDefaultAccentColor),
-                                    value: _privacyChecked,
-                                    title: RichText(
-                                      text: TextSpan(
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            style: aboutTextStyle,
-                                            text:
-                                                localization.iAgreeToThe + ' ',
-                                          ),
-                                          LinkTextSpan(
-                                            style: linkStyle,
-                                            url: kPrivacyPolicyURL,
-                                            text:
-                                                localization.privacyPolicyLink,
-                                          ),
-                                        ],
+                                      LinkTextSpan(
+                                        style: linkStyle,
+                                        url: kTermsOfServiceURL,
+                                        text: localization.termsOfService,
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                      if (_loginError.isNotEmpty &&
-                          !_loginError.contains(OTP_ERROR))
-                        Container(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: SelectableText(
-                                  _loginError,
-                                  style: TextStyle(
-                                    color: Colors.red,
+                                    ],
                                   ),
                                 ),
                               ),
-                              IconButton(
-                                  icon: Icon(Icons.content_copy),
-                                  tooltip: localization.copyError,
-                                  onPressed: () {
-                                    Clipboard.setData(
-                                        ClipboardData(text: _loginError));
-                                  }),
+                              CheckboxListTile(
+                                onChanged: (value) =>
+                                    setState(() => _privacyChecked = value),
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                activeColor: convertHexStringToColor(
+                                    kDefaultAccentColor),
+                                value: _privacyChecked,
+                                title: RichText(
+                                  text: TextSpan(
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        style: aboutTextStyle,
+                                        text: localization.iAgreeToThe + ' ',
+                                      ),
+                                      LinkTextSpan(
+                                        style: linkStyle,
+                                        url: kPrivacyPolicyURL,
+                                        text: localization.privacyPolicy,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 30, bottom: 10),
-                        child: RoundedLoadingButton(
-                          height: 44,
-                          width: 220,
-                          controller: _buttonController,
-                          color: convertHexStringToColor('#4285F4'),
-                          onPressed: () => _submitForm(),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (_emailLogin)
-                                Icon(Icons.mail, color: Colors.white)
-                              else
-                                ClipOval(
-                                  child: Image.asset(
-                                      'assets/images/google-icon.png',
-                                      width: 30,
-                                      height: 30),
-                                ),
-                              SizedBox(width: 10),
-                              Text(
-                                _recoverPassword
-                                    ? localization.recoverPassword
-                                    : _createAccount
-                                        ? (_emailLogin
-                                            ? localization.emailSignUp
-                                            : localization.googleSignUp)
-                                        : (_emailLogin
-                                            ? localization.emailSignIn
-                                            : localization.googleSignIn),
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Flex(
-                        direction: calculateLayout(context) == AppLayout.desktop
-                            ? Axis.horizontal
-                            : Axis.vertical,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          if (!_createAccount && _emailLogin)
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _recoverPassword = !_recoverPassword;
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20, top: 12, right: 20, bottom: 12),
-                                child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      if (!_recoverPassword)
-                                        Icon(MdiIcons.lock, size: 16),
-                                      SizedBox(width: 8),
-                                      Text(_recoverPassword
-                                          ? localization.cancel
-                                          : localization.recoverPassword),
-                                    ]),
-                              ),
-                            ),
-                          if (!_recoverPassword && !_isSelfHosted)
-                            InkWell(
-                              onTap: () => launch(kStatusCheckUrl),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20, top: 12, right: 20, bottom: 12),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.security, size: 16),
-                                    SizedBox(width: 8),
-                                    Text(localization.checkStatus)
-                                  ],
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
                     ],
                   ),
-                ),
+                  if (_loginError.isNotEmpty &&
+                      !_loginError.contains(OTP_ERROR))
+                    Container(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SelectableText(
+                              _loginError,
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                              icon: Icon(Icons.content_copy),
+                              tooltip: localization.copyError,
+                              onPressed: () {
+                                Clipboard.setData(
+                                    ClipboardData(text: _loginError));
+                              }),
+                        ],
+                      ),
+                    ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 30, bottom: 10),
+                    child: RoundedLoadingButton(
+                      height: 44,
+                      width: 220,
+                      controller: _buttonController,
+                      color: convertHexStringToColor('#4285F4'),
+                      onPressed: () => _submitForm(),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (_emailLogin)
+                            Icon(Icons.mail, color: Colors.white)
+                          else
+                            ClipOval(
+                              child: Image.asset(
+                                  'assets/images/google-icon.png',
+                                  width: 30,
+                                  height: 30),
+                            ),
+                          SizedBox(width: 10),
+                          Text(
+                            _recoverPassword
+                                ? localization.recoverPassword
+                                : _createAccount
+                                    ? (_emailLogin
+                                        ? localization.emailSignUp
+                                        : localization.googleSignUp)
+                                    : (_emailLogin
+                                        ? localization.emailSignIn
+                                        : localization.googleSignIn),
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Flex(
+                    direction: calculateLayout(context) == AppLayout.desktop
+                        ? Axis.horizontal
+                        : Axis.vertical,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      if (!_createAccount && _emailLogin)
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _recoverPassword = !_recoverPassword;
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, top: 12, right: 20, bottom: 12),
+                            child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  if (!_recoverPassword)
+                                    Icon(MdiIcons.lock, size: 16),
+                                  SizedBox(width: 8),
+                                  Text(_recoverPassword
+                                      ? localization.cancel
+                                      : localization.recoverPassword),
+                                ]),
+                          ),
+                        ),
+                      if (!_recoverPassword && !_isSelfHosted)
+                        InkWell(
+                          onTap: () => launch(kStatusCheckUrl),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, top: 12, right: 20, bottom: 12),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.security, size: 16),
+                                SizedBox(width: 8),
+                                Text(localization.checkStatus)
+                              ],
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ],
     );
   }
-}
-
-// https://github.com/iampawan/Flutter-UI-Kit
-class ArcClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0.0, size.height - 30);
-
-    final firstControlPoint = Offset(size.width / 4, size.height);
-    final firstPoint = Offset(size.width / 2, size.height);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
-        firstPoint.dx, firstPoint.dy);
-
-    final secondControlPoint =
-        Offset(size.width - (size.width / 4), size.height);
-    final secondPoint = Offset(size.width, size.height - 30);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondPoint.dx, secondPoint.dy);
-
-    path.lineTo(size.width, 0.0);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

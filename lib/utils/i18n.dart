@@ -1275,8 +1275,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_agree_to_terms_and_privacy':
           'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
-      'terms_of_service_link': 'terms of service',
-      'privacy_policy_link': 'privacy policy',
       'terms_of_service': 'Terms of Service',
       'privacy_policy': 'Privacy Policy',
       'sign_up': 'Sign Up',
@@ -59080,12 +59078,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get iAgreeToThe =>
       _localizedValues[localeCode]['i_agree_to_the'] ?? '';
-
-  String get termsOfServiceLink =>
-      _localizedValues[localeCode]['terms_of_service_link'] ?? '';
-
-  String get privacyPolicyLink =>
-      _localizedValues[localeCode]['privacy_policy_link'] ?? '';
 
   String get termsOfService =>
       _localizedValues[localeCode]['terms_of_service'] ?? '';
