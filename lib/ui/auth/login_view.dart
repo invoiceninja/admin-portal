@@ -280,7 +280,7 @@ class _LoginState extends State<LoginView> {
           color: state.accentColor,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 30),
+          padding: EdgeInsets.symmetric(vertical: 25),
           child: Center(
             child: InkWell(
               child: Image.asset('assets/images/logo.png', height: 50),
@@ -400,7 +400,7 @@ class _LoginState extends State<LoginView> {
                             ),
                           ],
                         ),
-                      SizedBox(height: 25),
+                      SizedBox(height: 20),
                       if (!_recoverPassword) ...[
                         if (!_createAccount && (!kIsWeb || !kReleaseMode)) ...[
                           RuledText(localization.selectPlatform),
@@ -700,7 +700,7 @@ class RuledText extends StatelessWidget {
         left: horizontalPadding,
         right: horizontalPadding,
         top: 4,
-        bottom: 16,
+        bottom: 14,
       ),
       child: Row(
         children: [
