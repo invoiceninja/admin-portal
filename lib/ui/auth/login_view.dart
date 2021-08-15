@@ -283,7 +283,12 @@ class _LoginState extends State<LoginView> {
           padding: EdgeInsets.symmetric(vertical: 25),
           child: Center(
             child: InkWell(
-              child: Image.asset('assets/images/logo.png', height: 50),
+              // TODO correct this
+              child: Image.asset(
+                  state.prefState.enableDarkMode
+                      ? 'assets/images/icon.png'
+                      : 'assets/images/logo.png',
+                  height: 50),
               onTap: isApple()
                   ? null
                   : () {
