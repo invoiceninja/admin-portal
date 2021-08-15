@@ -692,9 +692,16 @@ class RuledText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double horizontalPadding =
+        calculateLayout(context) == AppLayout.desktop ? 40 : 16;
+
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: calculateLayout(context) == AppLayout.desktop ? 40 : 16),
+      padding: EdgeInsets.only(
+        left: horizontalPadding,
+        right: horizontalPadding,
+        top: 4,
+        bottom: 16,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -705,7 +712,13 @@ class RuledText extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(text),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 15,
+              ),
+            ),
           ),
           Expanded(
             child: Container(
