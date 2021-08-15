@@ -22,39 +22,29 @@ AuthState userLoadUrlReducer(AuthState authState, UserLoadUrl action) {
 
 AuthState userSignUpRequestReducer(
     AuthState authState, UserSignUpRequest action) {
-  return authState.rebuild((b) => b
-    ..url = formatApiUrl(kAppProductionUrl)
-    ..secret = '');
+  return authState.rebuild((b) => b..url = formatApiUrl(kAppProductionUrl));
 }
 
 AuthState userLoginRequestReducer(
     AuthState authState, UserLoginRequest action) {
   return authState.rebuild((b) => b
     ..url = formatApiUrl(action.url)
-    ..secret = action.secret
-    ..email = action.email
-    ..password = action.password);
+    ..email = action.email);
 }
 
 AuthState oauthLoginRequestReducer(
     AuthState authState, OAuthLoginRequest action) {
-  return authState.rebuild((b) => b
-    ..url = formatApiUrl(action.url)
-    ..secret = action.secret);
+  return authState.rebuild((b) => b..url = formatApiUrl(action.url));
 }
 
 AuthState oauthSignUpRequestReducer(
     AuthState authState, OAuthSignUpRequest action) {
-  return authState.rebuild((b) => b
-    ..url = formatApiUrl(kAppProductionUrl)
-    ..secret = '');
+  return authState.rebuild((b) => b..url = formatApiUrl(kAppProductionUrl));
 }
 
 AuthState userLoginSuccessReducer(
     AuthState authState, UserLoginSuccess action) {
-  return authState.rebuild((b) => b
-    ..isAuthenticated = true
-    ..password = '');
+  return authState.rebuild((b) => b..isAuthenticated = true);
 }
 
 AuthState userVerifiedPasswordReducer(
