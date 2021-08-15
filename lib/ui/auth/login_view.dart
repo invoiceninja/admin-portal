@@ -414,6 +414,9 @@ class _LoginState extends State<LoginView> {
                               setState(() {
                                 _isSelfHosted = index == 1;
                                 _loginError = '';
+                                if (index == 1) {
+                                  _emailLogin = true;
+                                }
                               });
                             },
                           ),
