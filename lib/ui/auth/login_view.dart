@@ -402,7 +402,8 @@ class _LoginState extends State<LoginView> {
                         ),
                       SizedBox(height: 25),
                       if (!_recoverPassword) ...[
-                        if (!_createAccount && (!kIsWeb || !kReleaseMode))
+                        if (!_createAccount && (!kIsWeb || !kReleaseMode)) ...[
+                          RuledText(localization.selectPlatform),
                           AppToggleButtons(
                             tabLabels: [
                               localization.hosted,
@@ -416,7 +417,9 @@ class _LoginState extends State<LoginView> {
                               });
                             },
                           ),
-                        if (!_isSelfHosted && !_hideGoogle)
+                        ],
+                        if (!_isSelfHosted && !_hideGoogle) ...[
+                          RuledText(localization.selectMethod),
                           AppToggleButtons(
                             tabLabels: [
                               _createAccount
@@ -434,6 +437,7 @@ class _LoginState extends State<LoginView> {
                               });
                             },
                           ),
+                        ],
                       ],
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -671,6 +675,36 @@ class _LoginState extends State<LoginView> {
                 ],
               ),
             ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class RuledText extends StatelessWidget {
+  const RuledText(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 1,
+            color: Colors.grey.withOpacity(.5),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(text),
+        ),
+        Expanded(
+          child: Container(
+            height: 1,
+            color: Colors.grey.withOpacity(.5),
           ),
         ),
       ],
