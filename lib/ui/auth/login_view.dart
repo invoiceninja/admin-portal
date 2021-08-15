@@ -418,8 +418,12 @@ class _LoginState extends State<LoginView> {
                         if (!_isSelfHosted && !_hideGoogle)
                           AppToggleButtons(
                             tabLabels: [
-                              'Google',
-                              localization.email,
+                              _createAccount
+                                  ? localization.googleSignUp
+                                  : localization.googleSignIn,
+                              _createAccount
+                                  ? localization.emailSignUp
+                                  : localization.emailSignIn,
                             ],
                             selectedIndex: _emailLogin ? 1 : 0,
                             onTabChanged: (index) {
