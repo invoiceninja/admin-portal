@@ -692,25 +692,29 @@ class RuledText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            height: 1,
-            color: Colors.grey.withOpacity(.5),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: calculateLayout(context) == AppLayout.desktop ? 40 : 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 1,
+              color: Colors.grey.withOpacity(.5),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(text),
-        ),
-        Expanded(
-          child: Container(
-            height: 1,
-            color: Colors.grey.withOpacity(.5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(text),
           ),
-        ),
-      ],
+          Expanded(
+            child: Container(
+              height: 1,
+              color: Colors.grey.withOpacity(.5),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
