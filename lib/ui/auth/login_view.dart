@@ -336,18 +336,48 @@ class _LoginState extends State<LoginView> {
                         Row(
                           children: [
                             Expanded(
-                              child: InkWell(
-                                child: Center(child: Text(localization.signUp)),
+                              child: Material(
+                                color: _createAccount
+                                    ? state.accentColor
+                                    : Colors.transparent,
+                                child: InkWell(
+                                  child: Center(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Text(localization.signUp),
+                                  )),
+                                  onTap: () {
+                                    setState(() {
+                                      _createAccount = true;
+                                      _loginError = '';
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                             Expanded(
-                              child: InkWell(
-                                child: Center(child: Text(localization.login)),
+                              child: Material(
+                                color: _createAccount
+                                    ? Colors.transparent
+                                    : state.accentColor,
+                                child: InkWell(
+                                  child: Center(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Text(localization.login),
+                                  )),
+                                  onTap: () {
+                                    setState(() {
+                                      _createAccount = false;
+                                      _loginError = '';
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ],
                         ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 25),
                       if (!_recoverPassword) ...[
                         if (!kIsWeb || !kReleaseMode)
                           AppToggleButtons(
