@@ -328,6 +328,8 @@ class _LoginState extends State<LoginView> {
               child: FormCard(
                 elevation: 20,
                 forceNarrow: calculateLayout(context) != AppLayout.mobile,
+                internalPadding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
                 children: <Widget>[
                   Column(
                     children: <Widget>[

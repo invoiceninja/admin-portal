@@ -9,6 +9,7 @@ class FormCard extends StatelessWidget {
     this.child,
     this.crossAxisAlignment,
     this.padding,
+    this.internalPadding,
     this.isLast = false,
     this.forceNarrow = false,
     this.elevation = 4,
@@ -19,6 +20,7 @@ class FormCard extends StatelessWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final bool forceNarrow;
   final EdgeInsets padding;
+  final EdgeInsets internalPadding;
   final bool isLast;
   final double elevation;
 
@@ -45,7 +47,7 @@ class FormCard extends StatelessWidget {
         elevation: elevation,
         child: AppBorder(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: internalPadding ?? const EdgeInsets.all(16),
             child: child != null
                 ? child
                 : Container(
