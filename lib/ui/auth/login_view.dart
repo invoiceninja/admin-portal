@@ -332,7 +332,7 @@ class _LoginState extends State<LoginView> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      if (!_isSelfHosted && !isApple())
+                      if (!isApple())
                         Row(
                           children: [
                             Expanded(
@@ -360,6 +360,7 @@ class _LoginState extends State<LoginView> {
                                   onTap: () {
                                     setState(() {
                                       _createAccount = true;
+                                      _isSelfHosted = false;
                                       _loginError = '';
                                     });
                                   },
@@ -401,7 +402,7 @@ class _LoginState extends State<LoginView> {
                         ),
                       SizedBox(height: 25),
                       if (!_recoverPassword) ...[
-                        if (!kIsWeb || !kReleaseMode)
+                        if (!_createAccount && (!kIsWeb || !kReleaseMode))
                           AppToggleButtons(
                             tabLabels: [
                               localization.hosted,
