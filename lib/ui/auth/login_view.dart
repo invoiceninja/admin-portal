@@ -429,7 +429,11 @@ class _LoginState extends State<LoginView> {
                           ),
                       ],
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        padding: EdgeInsets.symmetric(
+                            horizontal:
+                                calculateLayout(context) == AppLayout.desktop
+                                    ? 40
+                                    : 16),
                         child: Column(
                           children: [
                             if (_emailLogin)
@@ -568,7 +572,8 @@ class _LoginState extends State<LoginView> {
                       ),
                     ),
                   Padding(
-                    padding: EdgeInsets.only(top: 30, bottom: 10),
+                    padding: EdgeInsets.only(
+                        top: 30, bottom: 10, left: 16, right: 16),
                     child: RoundedLoadingButton(
                       height: 50,
                       borderRadius: 4,
