@@ -460,10 +460,6 @@ class SettingsSearch extends StatelessWidget {
           'secondary_font',
           'primary_color',
           'secondary_color',
-        ],
-        [
-          'all_pages_header',
-          'all_pages_footer',
           'empty_columns',
         ],
       ],
