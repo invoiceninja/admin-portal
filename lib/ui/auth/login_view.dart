@@ -522,9 +522,7 @@ class _LoginState extends State<LoginView> {
                     child: RoundedLoadingButton(
                       height: 50,
                       borderRadius: 4,
-                      width: calculateLayout(context) == AppLayout.desktop
-                          ? 416
-                          : 80,
+                      width: 416,
                       controller: _buttonController,
                       //color: convertHexStringToColor('#4285F4'),
                       color: state.accentColor,
