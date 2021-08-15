@@ -344,7 +344,17 @@ class _LoginState extends State<LoginView> {
                                   child: Center(
                                       child: Padding(
                                     padding: const EdgeInsets.all(16),
-                                    child: Text(localization.signUp),
+                                    child: Text(
+                                      localization.signUp,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1
+                                          .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              color: _createAccount
+                                                  ? Colors.white
+                                                  : null),
+                                    ),
                                   )),
                                   onTap: () {
                                     setState(() {
@@ -364,7 +374,17 @@ class _LoginState extends State<LoginView> {
                                   child: Center(
                                       child: Padding(
                                     padding: const EdgeInsets.all(16),
-                                    child: Text(localization.login),
+                                    child: Text(
+                                      localization.login,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1
+                                          .copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              color: _createAccount
+                                                  ? null
+                                                  : Colors.white),
+                                    ),
                                   )),
                                   onTap: () {
                                     setState(() {
