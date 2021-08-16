@@ -272,6 +272,9 @@ class _LoginState extends State<LoginView> {
     final TextStyle linkStyle = themeData.textTheme.bodyText2
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
 
+    final double horizontalPadding =
+        calculateLayout(context) == AppLayout.desktop ? 40 : 16;
+
     return ScrollableListView(
       children: <Widget>[
         Container(
@@ -449,11 +452,8 @@ class _LoginState extends State<LoginView> {
                         ],
                       ],
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                calculateLayout(context) == AppLayout.desktop
-                                    ? 40
-                                    : 16),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: horizontalPadding),
                         child: Column(
                           children: [
                             if (_emailLogin)
@@ -570,7 +570,10 @@ class _LoginState extends State<LoginView> {
                   if (_loginError.isNotEmpty &&
                       !_loginError.contains(OTP_ERROR))
                     Container(
-                      padding: EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.only(
+                          top: 20,
+                          left: horizontalPadding,
+                          right: horizontalPadding),
                       child: Row(
                         children: [
                           Expanded(
