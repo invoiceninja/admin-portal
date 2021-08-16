@@ -49,8 +49,8 @@ Future<void> login(FlutterDriver driver,
   }
 
   if (selfHosted) {
-    print('Tap ' + localization.selfhosted.toUpperCase());
-    await driver.tap(find.text(localization.selfhosted.toUpperCase()));
+    print('Tap ' + localization.selfhosted);
+    await driver.tap(find.text(localization.selfhosted));
   }
 
   print('Fill in email/password');
@@ -96,7 +96,7 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
   await driver.tap(find.text(localization.ok.toUpperCase()));
 
   // Should be in the login screen now
-  await driver.waitFor(find.text(localization.selfhosted.toUpperCase()));
+  await driver.waitFor(find.text(localization.selfhosted));
 }
 
 Future<void> viewSection(

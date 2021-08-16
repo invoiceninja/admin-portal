@@ -276,7 +276,7 @@ class _LoginState extends State<LoginView> {
       children: <Widget>[
         Container(
           width: double.infinity,
-          height: 20,
+          height: 24,
           color: state.accentColor,
         ),
         Padding(
@@ -630,7 +630,7 @@ class _LoginState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 4),
                   Flex(
                     direction: calculateLayout(context) == AppLayout.desktop
                         ? Axis.horizontal
@@ -647,7 +647,7 @@ class _LoginState extends State<LoginView> {
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                left: 25, top: 12, right: 20, bottom: 25),
+                                left: 25, top: 12, right: 20, bottom: 12),
                             child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -666,7 +666,7 @@ class _LoginState extends State<LoginView> {
                           onTap: () => launch(kStatusCheckUrl),
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                left: 25, top: 12, right: 20, bottom: 25),
+                                left: 25, top: 12, right: 20, bottom: 12),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -677,9 +677,10 @@ class _LoginState extends State<LoginView> {
                               ],
                             ),
                           ),
-                        )
+                        ),
                     ],
                   ),
+                  SizedBox(height: 16),
                 ],
               ),
             ),
