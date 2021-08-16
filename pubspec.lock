@@ -119,21 +119,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
-  cached_network_image_platform_interface:
-    dependency: transitive
-    description:
-      name: cached_network_image_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  cached_network_image_web:
-    dependency: transitive
-    description:
-      name: cached_network_image_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
+    version: "3.0.0"
   characters:
     dependency: transitive
     description:
