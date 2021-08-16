@@ -337,7 +337,8 @@ class _LoginState extends State<LoginView> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      if (!isApple())
+                      if (!isApple() &&
+                          (!kIsWeb || !state.authState.isSelfHost))
                         Row(
                           children: [
                             Expanded(
