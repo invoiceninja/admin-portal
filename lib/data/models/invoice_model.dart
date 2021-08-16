@@ -961,7 +961,7 @@ abstract class InvoiceEntity extends Object
       return kRecurringInvoiceStatusPending;
     }
 
-    if (isViewed) {
+    if (isViewed && isUnpaid) {
       return isInvoice ? kInvoiceStatusViewed : kQuoteStatusViewed;
     }
 
