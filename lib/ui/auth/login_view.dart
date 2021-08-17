@@ -289,8 +289,8 @@ class _LoginState extends State<LoginView> {
               // TODO correct this
               child: Image.asset(
                   state.prefState.enableDarkMode
-                      ? 'assets/images/icon.png'
-                      : 'assets/images/logo.png',
+                      ? 'assets/images/logo_dark.png'
+                      : 'assets/images/logo_light.png',
                   height: 50),
               onTap: isApple()
                   ? null
@@ -613,7 +613,7 @@ class _LoginState extends State<LoginView> {
                           else
                             ClipOval(
                               child: Image.asset(
-                                  'assets/images/google-icon.png',
+                                  'assets/images/google_logo.png',
                                   width: 30,
                                   height: 30),
                             ),

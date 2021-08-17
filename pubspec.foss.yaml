@@ -82,6 +82,7 @@ flutter:
 
   assets:
     - assets/images/icon.png
-    - assets/images/logo.png
-    - assets/images/google-icon.png
+    - assets/images/logo_light.png
+    - assets/images/logo_dark.png
+    - assets/images/google_logo.png
     - assets/images/payment_types/
