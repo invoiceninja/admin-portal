@@ -40,6 +40,8 @@ const String kDocsCustomDomainUrl =
     'https://invoiceninja.github.io/docs/hosted-custom-domain/';
 const String kDocsCustomFieldsUrl =
     'https://invoiceninja.github.io/docs/custom-fields/';
+const String kDocsStripeConnectUrl =
+    'https://invoiceninja.github.io/docs/hosted-stripe/';
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
