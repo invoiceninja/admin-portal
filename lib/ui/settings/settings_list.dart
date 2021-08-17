@@ -446,6 +446,9 @@ class SettingsSearch extends StatelessWidget {
           'enabled_modules',
         ],
         [
+          'google_analytics',
+        ],
+        [
           'password_timeout',
           'web_session_timeout',
         ],
