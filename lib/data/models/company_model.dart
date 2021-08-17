@@ -422,6 +422,8 @@ abstract class CompanyEntity extends Object
 
   bool get isMigrated => companyKey.length == 32;
 
+  bool get isSmall => !isLarge;
+
   bool get hasCustomSurcharge =>
       hasCustomField(CustomFieldType.surcharge1) ||
       hasCustomField(CustomFieldType.surcharge2) ||

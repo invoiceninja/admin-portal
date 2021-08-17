@@ -14,10 +14,12 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -45,6 +47,11 @@ class _AccountManagementState extends State<AccountManagement>
   FocusScopeNode _focusNode;
   TabController _controller;
 
+  final _debouncer = Debouncer();
+  final _trackingIdController = TextEditingController();
+
+  List<TextEditingController> _controllers = [];
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +59,7 @@ class _AccountManagementState extends State<AccountManagement>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 3, initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: 4, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -62,7 +69,40 @@ class _AccountManagementState extends State<AccountManagement>
   }
 
   @override
+  void didChangeDependencies() {
+    _controllers = [
+      _trackingIdController,
+    ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    final viewModel = widget.viewModel;
+
+    _trackingIdController.text = viewModel.company.googleAnalyticsKey;
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  void _onChanged() {
+    final company = widget.viewModel.company.rebuild(
+        (b) => b..googleAnalyticsKey = _trackingIdController.text.trim());
+    if (company != widget.viewModel.company) {
+      _debouncer.run(() {
+        widget.viewModel.onCompanyChanged(company);
+      });
+    }
+  }
+
+  @override
   void dispose() {
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
     _focusNode.dispose();
     _controller.removeListener(_onTabChanged);
     _controller.dispose();
@@ -118,13 +158,16 @@ class _AccountManagementState extends State<AccountManagement>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
-        isScrollable: isMobile(context),
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.overview,
           ),
           Tab(
             text: localization.enabledModules,
+          ),
+          Tab(
+            text: localization.integrations,
           ),
           Tab(
             text: localization.securitySettings,
@@ -161,6 +204,16 @@ class _AccountManagementState extends State<AccountManagement>
               }).toList()),
             ],
           ),
+          ScrollableListView(children: [
+            FormCard(
+              children: [
+                DecoratedFormField(
+                  label: localization.googleAnalyticsTrackingId,
+                  controller: _trackingIdController,
+                ),
+              ],
+            )
+          ]),
           ScrollableListView(
             children: [
               FormCard(

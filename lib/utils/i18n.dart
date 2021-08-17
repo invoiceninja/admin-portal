@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'google_analytics_tracking_id': 'Google Analytics Tracking ID',
       'select_method': 'Select Method',
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
@@ -62483,6 +62484,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get selectPlatform =>
       _localizedValues[localeCode]['select_platform'] ??
       _localizedValues['en']['select_platform'];
+
+  String get googleAnalyticsTrackingId =>
+      _localizedValues[localeCode]['google_analytics_tracking_id'] ??
+      _localizedValues['en']['google_analytics_tracking_id'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
