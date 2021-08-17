@@ -165,8 +165,6 @@ IconData getSettingIcon(String section) {
     case kSettingsTaxSettings:
     case kSettingsTaxRates:
       return MdiIcons.percent;
-    case kSettingsIntegrations:
-      return MdiIcons.link;
     case kSettingsImportExport:
       return Icons.import_export;
     case kSettingsDeviceSettings:

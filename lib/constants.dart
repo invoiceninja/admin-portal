@@ -40,6 +40,8 @@ const String kDocsCustomDomainUrl =
     'https://invoiceninja.github.io/docs/hosted-custom-domain/';
 const String kDocsCustomFieldsUrl =
     'https://invoiceninja.github.io/docs/custom-fields/';
+const String kDocsStripeConnectUrl =
+    'https://invoiceninja.github.io/docs/hosted-stripe/';
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
@@ -356,7 +358,6 @@ const String kSettingsTaxSettings = 'tax_settings';
 const String kSettingsTaxRates = 'tax_settings_rates';
 const String kSettingsTaxRatesView = 'tax_settings_rates_view';
 const String kSettingsTaxRatesEdit = 'tax_settings_rates_edit';
-const String kSettingsIntegrations = 'integrations';
 const String kSettingsProducts = 'product_settings';
 const String kSettingsTasks = 'task_settings';
 const String kSettingsExpenses = 'expense_settings';

@@ -1163,7 +1163,7 @@ abstract class InvoiceItemEntity
       taxRate2: 0,
       taxName3: '',
       taxRate3: 0,
-      typeId: '',
+      typeId: TYPE_STANDARD,
       customValue1: '',
       customValue2: '',
       customValue3: '',

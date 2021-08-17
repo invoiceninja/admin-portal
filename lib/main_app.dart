@@ -508,8 +508,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             ExpenseSettingsScreen(),
                         TaskSettingsScreen.route: (context) =>
                             TaskSettingsScreen(),
-                        IntegrationSettingsScreen.route: (context) =>
-                            IntegrationSettingsScreen(),
                         ImportExportScreen.route: (context) =>
                             ImportExportScreen(),
                         DeviceSettingsScreen.route: (context) =>
