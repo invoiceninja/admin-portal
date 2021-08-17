@@ -744,9 +744,6 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsExpenses:
         screen = ExpenseSettingsScreen();
         break;
-      case kSettingsIntegrations:
-        screen = IntegrationSettingsScreen();
-        break;
       case kSettingsImportExport:
         screen = ImportExportScreen();
         break;
