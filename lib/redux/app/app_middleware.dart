@@ -384,7 +384,11 @@ Middleware<AppState> _createPersistData(
 
     final state = store.state;
     final index = state.uiState.selectedCompanyIndex;
-    companyRepositories[index].saveCompanyState(state.userCompanyStates[index]);
+    final companyState = state.userCompanyStates[index];
+
+    if (companyState.company.isSmall || !kIsWeb) {
+      companyRepositories[index].saveCompanyState(companyState);
+    }
   };
 }
 
