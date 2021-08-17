@@ -143,10 +143,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       final store = widget.store;
       final state = store.state;
 
-      if (!state.isSelfHosted) {
-        return;
-      }
-
       if (!state.authState.isAuthenticated) {
         return;
       }
