@@ -235,11 +235,19 @@ Middleware<AppState> _createLoadState(
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
 
-      store.dispatch(RefreshData(
-          completer: Completer<Null>()
-            ..future.catchError((Object error) {
-              store.dispatch(UserLogout());
-            })));
+      if (store.state.company.isLarge) {
+        store.dispatch(LoadClients(
+            completer: Completer<Null>()
+              ..future.catchError((Object error) {
+                store.dispatch(UserLogout());
+              })));
+      } else {
+        store.dispatch(RefreshData(
+            completer: Completer<Null>()
+              ..future.catchError((Object error) {
+                store.dispatch(UserLogout());
+              })));
+      }
 
       if (uiState.currentRoute != LoginScreen.route &&
           uiState.currentRoute.isNotEmpty) {
@@ -307,7 +315,11 @@ Middleware<AppState> _createLoadState(
           print('## ERROR (app_middleware - refresh): $error');
           store.dispatch(UserLogout());
         });
-        store.dispatch(RefreshData(completer: completer, clearData: true));
+        if (store.state.company.isLarge) {
+          store.dispatch(LoadClients(completer: completer));
+        } else {
+          store.dispatch(RefreshData(completer: completer, clearData: true));
+        }
       } else {
         store.dispatch(UserLogout());
       }
