@@ -7,8 +7,19 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 
 class WebUtils {
-  static String get browserUrl =>
-      formatApiUrl(window.location.href.split('#')[0]);
+  static String get browserUrl {
+    var url = window.location.href;
+
+    if (url.contains('?')) {
+      url = url.split('?')[0];
+    }
+
+    if (url.contains('#')) {
+      url = url.split('#')[0];
+    }
+
+    return formatApiUrl(url);
+  }
 
   static String get browserRoute => window.location.hash.replaceFirst('#', '');
 
