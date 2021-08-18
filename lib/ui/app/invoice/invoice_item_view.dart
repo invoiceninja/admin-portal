@@ -1,4 +1,6 @@
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,12 @@ class InvoiceItemListTile extends StatelessWidget {
     final String qty = formatNumber(invoiceItem.quantity, context,
         clientId: invoice.clientId, formatNumberType: FormatNumberType.double);
     final localization = AppLocalization.of(context);
+
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final client = state.clientState.get(invoice.clientId);
+    final precision =
+        state.staticState.currencyMap[client.currencyId].precision;
 
     String subtitle = '$qty x $cost';
 
@@ -99,7 +107,8 @@ class InvoiceItemListTile extends StatelessWidget {
               title: Row(
                 children: <Widget>[
                   Expanded(child: Text(invoiceItem.productKey)),
-                  Text(formatNumber(invoiceItem.total(invoice), context,
+                  Text(formatNumber(
+                      invoiceItem.total(invoice, precision), context,
                       clientId: invoice.clientId)),
                 ],
               ),

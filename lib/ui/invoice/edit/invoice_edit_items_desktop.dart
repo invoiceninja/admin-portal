@@ -82,7 +82,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = state.company;
+
     final invoice = viewModel.invoice;
+    final client = state.clientState.get(invoice.clientId);
+    final precision =
+        state.staticState.currencyMap[client.currencyId]?.precision ?? 2;
     final lineItems = invoice.lineItems.toList();
     final includedLineItems = lineItems.where((lineItem) {
       return (lineItem.typeId == InvoiceItemEntity.TYPE_TASK &&
@@ -687,11 +691,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TextFormField(
                         key: ValueKey(
-                            '__total_${index}_${lineItems[index].total(invoice)}_${invoice.clientId}__'),
+                            '__total_${index}_${lineItems[index].total(invoice, precision)}_${invoice.clientId}__'),
                         readOnly: true,
                         enabled: false,
                         initialValue: formatNumber(
-                            lineItems[index].total(invoice), context,
+                            lineItems[index].total(invoice, precision), context,
                             clientId: invoice.clientId),
                         textAlign: TextAlign.right,
                       ),
