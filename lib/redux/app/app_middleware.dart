@@ -315,11 +315,7 @@ Middleware<AppState> _createLoadState(
           print('## ERROR (app_middleware - refresh): $error');
           store.dispatch(UserLogout());
         });
-        if (store.state.company.isLarge) {
-          store.dispatch(LoadClients(completer: completer));
-        } else {
-          store.dispatch(RefreshData(completer: completer, clearData: true));
-        }
+        store.dispatch(RefreshData(completer: completer, clearData: true));
       } else {
         store.dispatch(UserLogout());
       }
