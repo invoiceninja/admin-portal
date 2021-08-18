@@ -14,6 +14,17 @@ import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 double round(double value, int precision) {
+  var rounded = value;
+
+  // Workaround for floating point issues
+  if ('$value'.contains('9999999')) {
+    rounded = _round(value, precision + 1);
+  }
+
+  return _round(rounded, precision);
+}
+
+double _round(double value, int precision) {
   if (value == null || value.isNaN) {
     return 0;
   }

@@ -1251,7 +1251,7 @@ abstract class InvoiceItemEntity
       if (rate == 0) {
         return 0;
       }
-      final lineTotal = total(invoice);
+      final lineTotal = total(invoice, precision);
       if (invoice.usesInclusiveTaxes) {
         taxAmount = lineTotal - (lineTotal / (1 + (rate / 100)));
       } else {
@@ -1266,9 +1266,9 @@ abstract class InvoiceItemEntity
   }
 
   double netTotal(InvoiceEntity invoice, int precision) =>
-      total(invoice) - taxAmount(invoice, precision);
+      total(invoice, precision) - taxAmount(invoice, precision);
 
-  double total(InvoiceEntity invoice) {
+  double total(InvoiceEntity invoice, int precision) {
     var total = quantity * cost;
 
     if (discount != 0) {
@@ -1279,7 +1279,7 @@ abstract class InvoiceItemEntity
       }
     }
 
-    return round(total, 2);
+    return round(total, precision);
   }
 
   bool get isTask => typeId == TYPE_TASK;
