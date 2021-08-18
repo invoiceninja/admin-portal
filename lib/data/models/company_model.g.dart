@@ -127,6 +127,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'markdown_enabled',
       serializers.serialize(object.markdownEnabled,
           specifiedType: const FullType(bool)),
+      'use_comma_as_decimal_place',
+      serializers.serialize(object.useCommaAsDecimalPlace,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -468,6 +471,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'markdown_enabled':
           result.markdownEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'use_comma_as_decimal_place':
+          result.useCommaAsDecimalPlace = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
@@ -1310,6 +1317,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool markdownEnabled;
   @override
+  final bool useCommaAsDecimalPlace;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1446,6 +1455,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.passwordTimeout,
       this.oauthPasswordRequired,
       this.markdownEnabled,
+      this.useCommaAsDecimalPlace,
       this.groups,
       this.activities,
       this.taxRates,
@@ -1559,6 +1569,8 @@ class _$CompanyEntity extends CompanyEntity {
         oauthPasswordRequired, 'CompanyEntity', 'oauthPasswordRequired');
     BuiltValueNullFieldError.checkNotNull(
         markdownEnabled, 'CompanyEntity', 'markdownEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        useCommaAsDecimalPlace, 'CompanyEntity', 'useCommaAsDecimalPlace');
     BuiltValueNullFieldError.checkNotNull(groups, 'CompanyEntity', 'groups');
     BuiltValueNullFieldError.checkNotNull(
         activities, 'CompanyEntity', 'activities');
@@ -1684,6 +1696,7 @@ class _$CompanyEntity extends CompanyEntity {
         passwordTimeout == other.passwordTimeout &&
         oauthPasswordRequired == other.oauthPasswordRequired &&
         markdownEnabled == other.markdownEnabled &&
+        useCommaAsDecimalPlace == other.useCommaAsDecimalPlace &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -1757,7 +1770,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), useCommaAsDecimalPlace.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
                                                                                 invoiceExpenseDocuments.hashCode),
                                                                             invoiceTaskDocuments.hashCode),
                                                                         invoiceTaskTimelog.hashCode),
@@ -1814,6 +1827,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('passwordTimeout', passwordTimeout)
           ..add('oauthPasswordRequired', oauthPasswordRequired)
           ..add('markdownEnabled', markdownEnabled)
+          ..add('useCommaAsDecimalPlace', useCommaAsDecimalPlace)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2022,6 +2036,11 @@ class CompanyEntityBuilder
   bool get markdownEnabled => _$this._markdownEnabled;
   set markdownEnabled(bool markdownEnabled) =>
       _$this._markdownEnabled = markdownEnabled;
+
+  bool _useCommaAsDecimalPlace;
+  bool get useCommaAsDecimalPlace => _$this._useCommaAsDecimalPlace;
+  set useCommaAsDecimalPlace(bool useCommaAsDecimalPlace) =>
+      _$this._useCommaAsDecimalPlace = useCommaAsDecimalPlace;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -2323,6 +2342,7 @@ class CompanyEntityBuilder
       _passwordTimeout = $v.passwordTimeout;
       _oauthPasswordRequired = $v.oauthPasswordRequired;
       _markdownEnabled = $v.markdownEnabled;
+      _useCommaAsDecimalPlace = $v.useCommaAsDecimalPlace;
       _groups = $v.groups.toBuilder();
       _activities = $v.activities.toBuilder();
       _taxRates = $v.taxRates.toBuilder();
@@ -2441,6 +2461,7 @@ class CompanyEntityBuilder
               passwordTimeout: BuiltValueNullFieldError.checkNotNull(passwordTimeout, 'CompanyEntity', 'passwordTimeout'),
               oauthPasswordRequired: BuiltValueNullFieldError.checkNotNull(oauthPasswordRequired, 'CompanyEntity', 'oauthPasswordRequired'),
               markdownEnabled: BuiltValueNullFieldError.checkNotNull(markdownEnabled, 'CompanyEntity', 'markdownEnabled'),
+              useCommaAsDecimalPlace: BuiltValueNullFieldError.checkNotNull(useCommaAsDecimalPlace, 'CompanyEntity', 'useCommaAsDecimalPlace'),
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),

@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'google_analytics_tracking_id': 'Google Analytics Tracking ID',
+      'decimal_comma': 'Decimal Comma',
+      'use_comma_as_decimal_place': 'Use comma as decimal place in forms',
       'select_method': 'Select Method',
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
@@ -62488,6 +62490,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get googleAnalyticsTrackingId =>
       _localizedValues[localeCode]['google_analytics_tracking_id'] ??
       _localizedValues['en']['google_analytics_tracking_id'];
+
+  String get useCommaAsDecimalPlace =>
+      _localizedValues[localeCode]['use_comma_as_decimal_place'] ??
+      _localizedValues['en']['use_comma_as_decimal_place'];
+
+  String get decimalComma =>
+      _localizedValues[localeCode]['decimal_comma'] ??
+      _localizedValues['en']['decimal_comma'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
