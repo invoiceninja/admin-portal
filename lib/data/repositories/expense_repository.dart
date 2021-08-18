@@ -31,11 +31,13 @@ class ExpenseRepository {
 
   Future<BuiltList<ExpenseEntity>> loadList(
       Credentials credentials, int createdAt, bool filterDeleted) async {
-    String url = credentials.url + '/expenses?created_at=$createdAt';
+    final url = credentials.url + '/expenses?created_at=$createdAt';
 
+    /* Server is incorrect if client isn't set
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';
     }
+    */
 
     final dynamic response = await webClient.get(url, credentials.token);
 

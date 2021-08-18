@@ -61,6 +61,8 @@ const String kGitHubDiffUrl =
 const String kGitHubLangUrl =
     'https://github.com/invoiceninja/invoiceninja/blob/master/resources/lang/en/texts.php';
 const String kStatusCheckUrl = 'https://status.invoiceninja.com';
+const String kGoogleAnalyticsUrl =
+    'https://support.google.com/analytics/answer/1037249?hl=en';
 
 enum AppEnvironment {
   hosted,
