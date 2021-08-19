@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'verify_customers': 'Verify Customers',
       'google_analytics_tracking_id': 'Google Analytics Tracking ID',
       'decimal_comma': 'Decimal Comma',
       'use_comma_as_decimal_place': 'Use comma as decimal place in forms',
@@ -62498,6 +62499,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get decimalComma =>
       _localizedValues[localeCode]['decimal_comma'] ??
       _localizedValues['en']['decimal_comma'];
+
+  String get verifyCustomers =>
+      _localizedValues[localeCode]['verify_customers'] ??
+      _localizedValues['en']['verify_customers'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CompanyGatewayView extends StatefulWidget {
@@ -150,10 +151,25 @@ class _CompanyGatewayOverview extends StatelessWidget {
       if ([kGatewayStripe, kGatewayStripeConnect].contains(gateway.id)) ...[
         Padding(
           padding: const EdgeInsets.only(left: 16, bottom: 20, right: 16),
-          child: AppButton(
-            iconData: MdiIcons.import,
-            label: localization.importCustomers.toUpperCase(),
-            onPressed: () => viewModel.onStripeImportPressed(context),
+          child: Row(
+            children: [
+              Expanded(
+                child: AppButton(
+                  iconData: isDesktop(context) ? MdiIcons.import : null,
+                  label: localization.importCustomers.toUpperCase(),
+                  onPressed: () => viewModel.onStripeImportPressed(context),
+                ),
+              ),
+              SizedBox(width: kTableColumnGap),
+              Expanded(
+                child: AppButton(
+                  iconData:
+                      isDesktop(context) ? MdiIcons.checkCircleOutline : null,
+                  label: localization.verifyCustomers.toUpperCase(),
+                  onPressed: () => viewModel.onStripeVerifyPressed(context),
+                ),
+              ),
+            ],
           ),
         ),
         ListDivider(),

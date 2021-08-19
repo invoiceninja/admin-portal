@@ -54,6 +54,7 @@ class CompanyGatewayViewVM {
     @required this.isLoading,
     @required this.isDirty,
     @required this.onStripeImportPressed,
+    @required this.onStripeVerifyPressed,
   });
 
   factory CompanyGatewayViewVM.fromStore(Store<AppState> store) {
@@ -83,6 +84,28 @@ class CompanyGatewayViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([companyGateway], action, autoPop: true),
+      onStripeVerifyPressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
+        final webClient = WebClient();
+        final credentials = state.credentials;
+        final url = '${credentials.url}/stripe/verify';
+
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              store.dispatch(StartSaving());
+              webClient
+                  .post(url, credentials.token,
+                      password: password, idToken: idToken)
+                  .then((dynamic response) {
+                store.dispatch(StopSaving());
+                showMessageDialog(context: context, message: '$response');
+              }).catchError((dynamic error) {
+                store.dispatch(StopSaving());
+                showErrorDialog(context: context, message: error);
+              });
+            });
+      },
       onStripeImportPressed: (BuildContext context) {
         final localization = AppLocalization.of(context);
         final webClient = WebClient();
@@ -119,4 +142,5 @@ class CompanyGatewayViewVM {
   final bool isLoading;
   final bool isDirty;
   final Function(BuildContext) onStripeImportPressed;
+  final Function(BuildContext) onStripeVerifyPressed;
 }
