@@ -71,9 +71,10 @@ class _DashboardScreenState extends State<DashboardScreen>
     _sideTabController =
         TabController(vsync: this, length: _tabs.length, initialIndex: index)
           ..addListener(onTabListener);
-    _scrollController =
-        ScrollController(initialScrollOffset: index * kDashboardPanelHeight)
-          ..addListener(onScrollListener);
+    _scrollController = ScrollController(
+        initialScrollOffset:
+            index * (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
+      ..addListener(onScrollListener);
 
     if (!state.isDemo && (state.company.settings.name ?? '').isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
@@ -95,7 +96,9 @@ class _DashboardScreenState extends State<DashboardScreen>
     }
 
     final offset = _scrollController.position.pixels;
-    final offsetIndex = ((offset + 120) / kDashboardPanelHeight).floor();
+    final offsetIndex = ((offset + 120) /
+            (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
+        .floor();
 
     if (_sideTabController.index != offsetIndex && offsetIndex < _tabs.length) {
       _sideTabController.removeListener(onTabListener);
@@ -113,10 +116,14 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final index = _sideTabController.index;
     final offset = _scrollController.position.pixels;
-    final offsetIndex = ((offset + 120) / kDashboardPanelHeight).floor();
+    final offsetIndex = ((offset + 120) /
+            (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
+        .floor();
 
     if (index != offsetIndex) {
-      _scrollController.jumpTo((index.toDouble() * kDashboardPanelHeight) + 1);
+      _scrollController.jumpTo((index.toDouble() *
+              (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight)) +
+          1);
       widget.viewModel.onEntityTypeChanged(_tabs[index]);
     }
   }
