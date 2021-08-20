@@ -1,4 +1,4 @@
-name: Build Web - Main
+name: Build Web - MAIN
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build:
-    name: Build Web - Main
+    name: Build Web - MAIN
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}

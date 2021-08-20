@@ -1,4 +1,4 @@
-name: Build Web - Beta
+name: Build Web - BETA
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build-current:
-    name: Build Web - Beta
+    name: Build Web - BETA
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}

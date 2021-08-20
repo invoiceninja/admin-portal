@@ -1,4 +1,4 @@
-name: Build Web - Last
+name: Build Web - LAST
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build-current:
-    name: Build Web - Last
+    name: Build Web - LAST
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
