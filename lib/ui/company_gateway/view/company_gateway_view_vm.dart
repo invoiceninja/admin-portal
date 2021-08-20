@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -99,7 +100,47 @@ class CompanyGatewayViewVM {
                       password: password, idToken: idToken)
                   .then((dynamic response) {
                 store.dispatch(StopSaving());
-                showMessageDialog(context: context, message: '$response');
+
+                showDialog<void>(
+                    context: navigatorKey.currentContext,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(localization.customerCount),
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text(localization.close.toUpperCase()))
+                        ],
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(width: 120, child: Text('Stripe')),
+                                SizedBox(
+                                    width: 100,
+                                    child: Text(
+                                      '${response['stripe_customer_count']}',
+                                      textAlign: TextAlign.end,
+                                    )),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                SizedBox(width: 120, child: Text(kAppName)),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text(
+                                      '${(response['stripe_customers'] as Iterable).length}',
+                                      textAlign: TextAlign.end),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    });
               }).catchError((dynamic error) {
                 store.dispatch(StopSaving());
                 showErrorDialog(context: context, message: error);

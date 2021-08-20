@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'customer_count': 'Customer Count',
       'verify_customers': 'Verify Customers',
       'google_analytics_tracking_id': 'Google Analytics Tracking ID',
       'decimal_comma': 'Decimal Comma',
@@ -62503,6 +62504,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get verifyCustomers =>
       _localizedValues[localeCode]['verify_customers'] ??
       _localizedValues['en']['verify_customers'];
+
+String get customerCount =>
+      _localizedValues[localeCode]['customer_count'] ??
+      _localizedValues['en']['customer_count'];
 
 
   String lookup(String key) {
