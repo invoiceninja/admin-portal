@@ -21,7 +21,7 @@ jobs:
       - name: Setup Flutter
         run: |
           flutter doctor -v
-          cp pubspec.any.yaml pubspec.yaml 
+          cp pubspec.last.yaml pubspec.yaml 
           rm pubspec.lock
           flutter pub get
           flutter config --enable-web
@@ -51,20 +51,3 @@ jobs:
           git commit -m 'New admin portal - Last [hosted]'
           git push
           cd ..
-      - name: Build Selfhosted App
-        run: |
-          cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
-          cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
-          cp pubspec.foss.yaml pubspec.yaml 
-          rm pubspec.lock
-
-          flutter build web --web-renderer html --release
-
-          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
-          cd invoiceninja_foss
-          git checkout v5-develop
-          cp ../build/web/main.dart.js ./public/main.foss.last.dart.js
-          #cp ../build/web/main.dart.js.map ./public/main.foss.last.dart.js.map
-          git add .
-          git commit -m 'New admin portal - Last [selfhosted]'
-          git push
