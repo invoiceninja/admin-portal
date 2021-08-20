@@ -46,7 +46,6 @@ jobs:
 
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.next.dart.js
-          #cp ../build/web/main.dart.js.map ./public/main.next.dart.js.map
           git add .
           git commit -m 'New admin portal - Next [hosted]'
           git push
