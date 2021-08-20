@@ -19,7 +19,7 @@ const String kAppPlansURL =
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 const String kTransifexURL =
-    'https://www.transifex.com/invoice-ninja/invoice-ninja/';
+    'https://www.transifex.com/invoice-ninja/invoice-ninja';
 const String kSourceCodeBackend =
     'https://github.com/invoiceninja/invoiceninja/tree/v5-stable';
 const String kSourceCodeFrontend =

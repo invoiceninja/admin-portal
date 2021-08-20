@@ -1,4 +1,4 @@
-name: Build Web
+name: Build Web - Beta
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build-current:
-    name: Build Web
+    name: Build Web - Beta
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
@@ -21,8 +21,8 @@ jobs:
       - name: Setup Flutter
         run: |
           flutter doctor -v
+          rm pubspec.lock
           flutter pub get
-          #flutter upgrade
           flutter config --enable-web
       - name: Prepare App
         run: |

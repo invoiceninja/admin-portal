@@ -1,4 +1,4 @@
-name: Build Web
+name: Build Web - WASM
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build-current:
-    name: Build Web
+    name: Build Web - WASM
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
@@ -22,7 +22,6 @@ jobs:
         run: |
           flutter doctor -v
           flutter pub get
-          #flutter upgrade
           flutter config --enable-web
       - name: Prepare App
         run: |
