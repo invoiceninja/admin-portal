@@ -204,21 +204,13 @@ class _EntityListState extends State<EntityList> {
             widget.entityList.indexOf(entityUIState.selectedId);
         final rowsPerPage = state.prefState.rowsPerPage;
 
-        /*
-        final listStateHash = 
-            listUIState.filterClearedAt.hashCode ^
-            listUIState.filter.hashCode ^
-            listUIState.custom1Filters.hashCode ^
+        final listStateHash = listUIState.custom1Filters.hashCode ^
             listUIState.custom2Filters.hashCode ^
             listUIState.custom3Filters.hashCode ^
             listUIState.custom4Filters.hashCode ^
-            listUIState.sortAscending.hashCode ^
-            listUIState.sortField.hashCode ^
             listUIState.stateFilters.hashCode ^
-            listUIState.statusFilters.hashCode;
-        */
-
-        final listStateHash = listUIState.filterClearedAt.hashCode ^
+            listUIState.statusFilters.hashCode ^
+            listUIState.filterClearedAt.hashCode ^
             listUIState.filter.hashCode ^
             listUIState.sortAscending.hashCode ^
             listUIState.sortField.hashCode;
