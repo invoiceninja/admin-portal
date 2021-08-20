@@ -5,7 +5,7 @@ on:
     branches:
       - master
 jobs:
-  build-current:
+  build-next:
     name: Build Web - NEXT
     env:
       commit_secret: ${{secrets.commit_secret}}
