@@ -1,0 +1,89 @@
+name: invoiceninja_flutter
+description: Client for Invoice Ninja
+version: 5.0.58+58
+author: Hillel Coren
+homepage: https://invoiceninja.com
+documentation: https://invoiceninja.github.io
+publish_to: none
+
+environment:
+  sdk: ">=2.9.0 <3.0.0"
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/mobile_icon.png"
+  adaptive_icon_foreground: "assets/images/mobile_icon.png"
+  adaptive_icon_background: "#0091EA"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  google_sign_in: any
+  flutter_redux: any
+  redux_logging: any
+  http: any
+  path_provider: any
+  shared_preferences: any
+  material_design_icons_flutter: any
+  built_value: any
+  built_collection: any
+  memoize: any
+  cached_network_image: 3.0.0 # imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+  url_launcher: any
+  share: any
+  intl: any
+  flutter_slidable: any
+  charts_flutter: any
+  qr_flutter: any
+  local_auth: any
+  sentry_flutter: any
+  image_picker: any
+  flutter_colorpicker: 0.4.0
+  flutter_json_viewer: any
+  webview_flutter: any
+  timeago: any
+  native_pdf_view: any
+  # flutter_typeahead: 1.8.0
+  flutter_typeahead:
+    git:
+      url: git://github.com/hillelcoren/flutter_typeahead.git
+  flutter_share: any
+  package_info: any
+  rounded_loading_button: any
+  version: any
+  flutter_launcher_icons: any
+  overflow_view: any
+  flutter_styled_toast: any
+  permission_handler: any
+  file_picker: any
+  draggable_scrollbar: any
+  boardview: any
+  pointer_interceptor: any
+  contacts_service: any
+  super_editor: any
+  # quick_actions: ^0.2.1
+  # idb_shim: ^1.11.1+1
+
+dev_dependencies:
+  flutter_driver:
+    sdk: flutter
+  test: any
+  flutter_test:
+    sdk: flutter
+  build_runner: any
+  built_value_generator: any
+  faker: any
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/icon.png
+    - assets/images/logo_light.png
+    - assets/images/logo_dark.png
+    - assets/images/google_logo.png
+    - assets/images/payment_types/

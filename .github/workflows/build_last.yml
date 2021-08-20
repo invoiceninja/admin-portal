@@ -21,6 +21,7 @@ jobs:
       - name: Setup Flutter
         run: |
           flutter doctor -v
+          cp pubspec.any.yaml pubspec.yaml 
           rm pubspec.lock
           flutter pub get
           flutter config --enable-web

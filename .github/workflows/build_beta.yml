@@ -21,7 +21,7 @@ jobs:
       - name: Setup Flutter
         run: |
           flutter doctor -v
-          rm pubspec.lock
+          #rm pubspec.lock
           flutter pub get
           flutter config --enable-web
       - name: Prepare App
