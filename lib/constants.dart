@@ -37,11 +37,11 @@ const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
 
 const String kDocsUrl = 'https://invoiceninja.github.io/docs';
 const String kDocsCustomDomainUrl =
-    'https://invoiceninja.github.io/docs/hosted-custom-domain';
+    'https://invoiceninja.github.io/docs/hosted-custom-domain/';
 const String kDocsCustomFieldsUrl =
-    'https://invoiceninja.github.io/docs/custom-fields';
+    'https://invoiceninja.github.io/docs/custom-fields/';
 const String kDocsStripeConnectUrl =
-    'https://invoiceninja.github.io/docs/hosted-stripe';
+    'https://invoiceninja.github.io/docs/hosted-stripe/';
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
