@@ -83,7 +83,10 @@ class DocumentGrid extends StatelessWidget {
                       final multipartFile = await pickFile(
                           fileIndex: 'documents[]',
                           allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS);
-                      onUploadDocument(multipartFile);
+
+                      if (multipartFile != null) {
+                        onUploadDocument(multipartFile);
+                      }
                     },
                   ),
                 ),

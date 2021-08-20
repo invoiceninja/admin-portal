@@ -207,19 +207,21 @@ class _EntityListState extends State<EntityList> {
         /*
         final listStateHash = 
             listUIState.filterClearedAt.hashCode ^
+            listUIState.filter.hashCode ^
             listUIState.custom1Filters.hashCode ^
             listUIState.custom2Filters.hashCode ^
             listUIState.custom3Filters.hashCode ^
             listUIState.custom4Filters.hashCode ^
-            listUIState.filter.hashCode ^
             listUIState.sortAscending.hashCode ^
             listUIState.sortField.hashCode ^
             listUIState.stateFilters.hashCode ^
             listUIState.statusFilters.hashCode;
         */
 
-        final listStateHash =
-            listUIState.sortAscending.hashCode ^ listUIState.sortField.hashCode;
+        final listStateHash = listUIState.filterClearedAt.hashCode ^
+            listUIState.filter.hashCode ^
+            listUIState.sortAscending.hashCode ^
+            listUIState.sortField.hashCode;
 
         int initialFirstRowIndex = 0;
         if (selectedIndex >= 0) {
