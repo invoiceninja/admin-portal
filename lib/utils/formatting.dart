@@ -44,21 +44,8 @@ int parseInt(String value, {bool zeroIsNull = false}) {
 double parseDouble(String value, {bool zeroIsNull = false}) {
   // check for comma as decimal separator
   final state = StoreProvider.of<AppState>(navigatorKey.currentContext).state;
-  final currency =
-      state.staticState.currencyMap[state.company.settings.currencyId] ??
-          CurrencyEntity();
-  final country =
-      state.staticState.countryMap[state.company.settings.countryId] ??
-          CountryEntity();
 
-  var decimalSeparator = currency.decimalSeparator;
-  if (currency.id == kCurrencyEuro) {
-    if ((country.decimalSeparator ?? '').isNotEmpty) {
-      decimalSeparator = country.decimalSeparator;
-    }
-  }
-
-  if (decimalSeparator == ',' && value.contains(',')) {
+  if (state.company.useCommaAsDecimalPlace && value.contains(',')) {
     value = value.replaceAll('.', '');
     value = value.replaceAll(',', '.');
   }
@@ -165,6 +152,14 @@ String formatNumber(
     if (country.decimalSeparator != null &&
         country.decimalSeparator.isNotEmpty) {
       decimalSeparator = country.decimalSeparator;
+    }
+  }
+
+  if (state.company.useCommaAsDecimalPlace &&
+      formatNumberType == FormatNumberType.inputMoney) {
+    decimalSeparator = ',';
+    if (thousandSeparator == ',') {
+      thousandSeparator = '.';
     }
   }
 

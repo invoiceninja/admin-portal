@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -54,6 +55,7 @@ class CompanyGatewayViewVM {
     @required this.isLoading,
     @required this.isDirty,
     @required this.onStripeImportPressed,
+    @required this.onStripeVerifyPressed,
   });
 
   factory CompanyGatewayViewVM.fromStore(Store<AppState> store) {
@@ -83,6 +85,68 @@ class CompanyGatewayViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([companyGateway], action, autoPop: true),
+      onStripeVerifyPressed: (BuildContext context) {
+        final localization = AppLocalization.of(context);
+        final webClient = WebClient();
+        final credentials = state.credentials;
+        final url = '${credentials.url}/stripe/verify';
+
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              store.dispatch(StartSaving());
+              webClient
+                  .post(url, credentials.token,
+                      password: password, idToken: idToken)
+                  .then((dynamic response) {
+                store.dispatch(StopSaving());
+
+                showDialog<void>(
+                    context: navigatorKey.currentContext,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(localization.customerCount),
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text(localization.close.toUpperCase()))
+                        ],
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(width: 120, child: Text('Stripe')),
+                                SizedBox(
+                                    width: 100,
+                                    child: Text(
+                                      '${response['stripe_customer_count']}',
+                                      textAlign: TextAlign.end,
+                                    )),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                SizedBox(width: 120, child: Text(kAppName)),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text(
+                                      '${(response['stripe_customers'] as Iterable).length}',
+                                      textAlign: TextAlign.end),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              }).catchError((dynamic error) {
+                store.dispatch(StopSaving());
+                showErrorDialog(context: context, message: error);
+              });
+            });
+      },
       onStripeImportPressed: (BuildContext context) {
         final localization = AppLocalization.of(context);
         final webClient = WebClient();
@@ -119,4 +183,5 @@ class CompanyGatewayViewVM {
   final bool isLoading;
   final bool isDirty;
   final Function(BuildContext) onStripeImportPressed;
+  final Function(BuildContext) onStripeVerifyPressed;
 }

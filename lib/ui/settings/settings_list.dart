@@ -437,6 +437,9 @@ class SettingsSearch extends StatelessWidget {
       ],
       kSettingsAccountManagement: [
         [
+          'activate_company',
+          'enable_markdown',
+          'decimal_comma',
           'api_tokens',
           'api_webhooks',
           'purge_data',

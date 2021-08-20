@@ -360,6 +360,16 @@ class _AccountOverview extends StatelessWidget {
               subtitle: Text(localization.enableMarkdownHelp),
               activeColor: Theme.of(context).accentColor,
             ),
+            SwitchListTile(
+              value: company.useCommaAsDecimalPlace,
+              onChanged: (value) {
+                viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..useCommaAsDecimalPlace = value));
+              },
+              title: Text(localization.decimalComma),
+              subtitle: Text(localization.useCommaAsDecimalPlace),
+              activeColor: Theme.of(context).accentColor,
+            ),
           ],
         ),
         if (state.isSelfHosted) ...[

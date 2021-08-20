@@ -240,15 +240,12 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
         onSubmitted: (value) => _submit(),
       ),
       actions: <Widget>[
-        SaveCancelButtons(
-          isHeader: false,
-          saveLabel: localization.submit.toUpperCase(),
-          onSavePressed: (context) => _submit(),
-          cancelLabel: localization.cancel.toUpperCase(),
-          onCancelPressed: (context) {
-            Navigator.pop(context);
-          },
-        ),
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(localization.cancel.toUpperCase())),
+        TextButton(
+            onPressed: () => _submit(),
+            child: Text(localization.submit.toUpperCase())),
       ],
     );
   }
@@ -329,15 +326,12 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
       actions: <Widget>[
         ...widget.secondaryActions ?? [],
         SizedBox(width: 6),
-        SaveCancelButtons(
-          isHeader: false,
-          saveLabel: localization.save.toUpperCase(),
-          onSavePressed: (context) => _submit(),
-          cancelLabel: localization.cancel.toUpperCase(),
-          onCancelPressed: (context) {
-            Navigator.pop(context);
-          },
-        ),
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(localization.cancel.toUpperCase())),
+        TextButton(
+            onPressed: () => _submit(),
+            child: Text(localization.submit.toUpperCase())),
       ],
     );
   }
