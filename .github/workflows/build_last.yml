@@ -27,7 +27,6 @@ jobs:
       - name: Prepare App
         run: |
           cp lib/.env.dart.example lib/.env.dart
-          cp android/app/build.gradle.prod android/app/build.gradle
           sed -i 's/secret/${{secrets.api_secret}}/g' lib/.env.dart
           echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
           flutter --version --machine >> lib/flutter_version.dart
@@ -46,7 +45,7 @@ jobs:
 
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.last.dart.js
-          cp ../build/web/main.dart.js.map ./public/main.last.dart.js.map
+          #cp ../build/web/main.dart.js.map ./public/main.last.dart.js.map
           git add .
           git commit -m 'New admin portal - Last [hosted]'
           git push
@@ -64,7 +63,7 @@ jobs:
           cd invoiceninja_foss
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.foss.last.dart.js
-          cp ../build/web/main.dart.js.map ./public/main.foss.last.dart.js.map
+          #cp ../build/web/main.dart.js.map ./public/main.foss.last.dart.js.map
           git add .
           git commit -m 'New admin portal - Last [selfhosted]'
           git push
