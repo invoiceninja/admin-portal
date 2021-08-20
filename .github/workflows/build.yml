@@ -5,7 +5,7 @@ on:
     branches:
       - master
 jobs:
-  build:
+  build-main:
     name: Build Web - MAIN
     env:
       commit_secret: ${{secrets.commit_secret}}
@@ -89,6 +89,7 @@ jobs:
 
   build-next:
     name: Build Web - NEXT
+    needs: build-main
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
@@ -135,6 +136,7 @@ jobs:
 
   build-last:
     name: Build Web - LAST
+    needs: build-next
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
@@ -181,6 +183,7 @@ jobs:
 
   build-wasm:
     name: Build Web - WASM
+    needs: build-last
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
