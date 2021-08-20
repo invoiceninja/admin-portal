@@ -1,4 +1,4 @@
-name: Build Web
+name: Build Web - Main
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build:
-    name: Build Web
+    name: Build Web - Main
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
@@ -30,7 +30,6 @@ jobs:
         run: |
           flutter doctor -v
           flutter pub get
-          #flutter upgrade
           flutter config --enable-web
       - name: Prepare App
         run: |
@@ -42,9 +41,9 @@ jobs:
           echo ";" >> lib/flutter_version.dart
       - name: Build Hosted App
         run: |
-          #export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
+          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
+          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
+          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
 
           flutter build web --web-renderer html --release --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
 
