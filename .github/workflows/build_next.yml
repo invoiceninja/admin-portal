@@ -1,4 +1,4 @@
-name: Build Web - BETA
+name: Build Web - NEXT
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build-current:
-    name: Build Web - BETA
+    name: Build Web - NEXT
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
@@ -21,7 +21,7 @@ jobs:
       - name: Setup Flutter
         run: |
           flutter doctor -v
-          cp pubspec.beta.yaml pubspec.yaml
+          cp pubspec.next.yaml pubspec.yaml
           rm pubspec.lock
           flutter pub get
           flutter config --enable-web
@@ -45,9 +45,9 @@ jobs:
           cd invoiceninja
 
           git checkout v5-develop
-          cp ../build/web/main.dart.js ./public/main.beta.dart.js
-          #cp ../build/web/main.dart.js.map ./public/main.beta.dart.js.map
+          cp ../build/web/main.dart.js ./public/main.next.dart.js
+          #cp ../build/web/main.dart.js.map ./public/main.next.dart.js.map
           git add .
-          git commit -m 'New admin portal - Beta [hosted]'
+          git commit -m 'New admin portal - Next [hosted]'
           git push
           cd ..
