@@ -60,7 +60,11 @@ dependencies:
   permission_handler: ^8.1.4+2
   file_picker: ^3.0.4
   draggable_scrollbar: ^0.1.0
-  boardview: ^0.2.2
+  #boardview: ^0.2.2
+  boardview:
+    git:
+      url: https://github.com/MinSomai/FlutterBoardView.git
+      ref: master
   pointer_interceptor: ^0.9.0
   contacts_service: ^0.6.1
   super_editor: ^0.1.0
