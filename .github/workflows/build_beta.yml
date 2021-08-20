@@ -1,4 +1,4 @@
-name: Build Web - Beta
+name: Build Web - BETA
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build-current:
-    name: Build Web - Beta
+    name: Build Web - BETA
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
@@ -21,13 +21,12 @@ jobs:
       - name: Setup Flutter
         run: |
           flutter doctor -v
-          rm pubspec.lock
+          #rm pubspec.lock
           flutter pub get
           flutter config --enable-web
       - name: Prepare App
         run: |
           cp lib/.env.dart.example lib/.env.dart
-          cp android/app/build.gradle.prod android/app/build.gradle
           sed -i 's/secret/${{secrets.api_secret}}/g' lib/.env.dart
           echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
           flutter --version --machine >> lib/flutter_version.dart
@@ -46,7 +45,7 @@ jobs:
 
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.beta.dart.js
-          cp ../build/web/main.dart.js.map ./public/main.beta.dart.js.map
+          #cp ../build/web/main.dart.js.map ./public/main.beta.dart.js.map
           git add .
           git commit -m 'New admin portal - Beta [hosted]'
           git push
@@ -64,7 +63,7 @@ jobs:
           cd invoiceninja_foss
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.foss.beta.dart.js
-          cp ../build/web/main.dart.js.map ./public/main.foss.beta.dart.js.map
+          #cp ../build/web/main.dart.js.map ./public/main.foss.beta.dart.js.map
           git add .
           git commit -m 'New admin portal - Beta [selfhosted]'
           git push
