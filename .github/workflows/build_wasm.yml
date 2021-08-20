@@ -5,7 +5,7 @@ on:
     branches:
       - master
 jobs:
-  build-current:
+  build-wasm:
     name: Build Web - WASM
     env:
       commit_secret: ${{secrets.commit_secret}}

@@ -5,7 +5,7 @@ on:
     branches:
       - master
 jobs:
-  build-current:
+  build-last:
     name: Build Web - LAST
     env:
       commit_secret: ${{secrets.commit_secret}}
