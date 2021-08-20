@@ -36,7 +36,11 @@ dependencies:
   share: ^2.0.4
   intl: ^0.17.0
   flutter_slidable: ^0.6.0
-  charts_flutter: ^0.11.0
+  #charts_flutter: ^0.11.0
+  charts_flutter:
+    git:
+      url: https://github.com/google/charts.git
+      path: charts_flutter
   qr_flutter: ^4.0.0
   local_auth: ^1.1.6
   sentry_flutter: ^5.1.0
@@ -45,7 +49,11 @@ dependencies:
   flutter_json_viewer: ^1.0.1
   webview_flutter: ^2.0.10
   timeago: ^3.1.0
-  native_pdf_view: ^4.1.0
+  #native_pdf_view: ^4.1.0
+  native_pdf_view:
+    git:
+      url: https://github.com/rbcprolabs/packages.flutter.git
+      path: packages/native_pdf_view
   # flutter_typeahead: 1.8.0
   flutter_typeahead:
     git:
@@ -68,8 +76,8 @@ dependencies:
   # idb_shim: ^1.11.1+1
 
 dev_dependencies:
-  #flutter_driver:
-  #  sdk: flutter
+  flutter_driver:
+    sdk: flutter
   test: ^1.6.3
   flutter_test:
     sdk: flutter

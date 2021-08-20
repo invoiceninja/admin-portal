@@ -68,8 +68,8 @@ dependencies:
   # idb_shim: ^1.11.1+1
 
 dev_dependencies:
-  flutter_driver:
-    sdk: flutter
+  #flutter_driver:
+  #  sdk: flutter
   test: ^1.6.3
   flutter_test:
     sdk: flutter
