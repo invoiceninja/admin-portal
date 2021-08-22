@@ -402,7 +402,7 @@ class ConvertQuotes implements StartSaving {
   final Completer completer;
 }
 
-class ConvertQuoteSuccess implements StopSaving, PersistData {
+class ConvertQuoteSuccess implements StopSaving {
   ConvertQuoteSuccess({this.quotes});
 
   final List<InvoiceEntity> quotes;

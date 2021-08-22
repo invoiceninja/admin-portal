@@ -128,13 +128,13 @@ class SavePaymentRequest implements StartSaving {
   final PaymentEntity payment;
 }
 
-class SavePaymentSuccess implements StopSaving, PersistData, PersistUI {
+class SavePaymentSuccess implements StopSaving, PersistUI {
   SavePaymentSuccess(this.payment);
 
   final PaymentEntity payment;
 }
 
-class AddPaymentSuccess implements StopSaving, PersistData, PersistUI {
+class AddPaymentSuccess implements StopSaving, PersistUI {
   AddPaymentSuccess(this.payment);
 
   final PaymentEntity payment;
@@ -156,7 +156,7 @@ class RefundPaymentRequest implements StartSaving {
   final PaymentEntity payment;
 }
 
-class RefundPaymentSuccess implements StopSaving, PersistData, PersistUI {
+class RefundPaymentSuccess implements StopSaving, PersistUI {
   RefundPaymentSuccess(this.payment);
 
   final PaymentEntity payment;
@@ -194,7 +194,7 @@ class DeletePaymentsRequest implements StartSaving {
   final List<String> paymentIds;
 }
 
-class DeletePaymentsSuccess implements StopSaving, PersistData {
+class DeletePaymentsSuccess implements StopSaving {
   DeletePaymentsSuccess(this.payments);
 
   final List<PaymentEntity> payments;
@@ -213,7 +213,7 @@ class RestorePaymentsRequest implements StartSaving {
   final List<String> paymentIds;
 }
 
-class RestorePaymentsSuccess implements StopSaving, PersistData {
+class RestorePaymentsSuccess implements StopSaving {
   RestorePaymentsSuccess(this.payments);
 
   final List<PaymentEntity> payments;

@@ -151,7 +151,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         return;
       }
 
-      store.dispatch(RefreshData());
+      final millisecondsSinceLastUpdate =
+          DateTime.now().millisecondsSinceEpoch -
+              state.userCompanyState.lastUpdated;
+
+      if (millisecondsSinceLastUpdate > kMillisecondsToTimerRefreshData) {
+        store.dispatch(RefreshData());
+      }
     });
   }
 

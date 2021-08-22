@@ -188,21 +188,19 @@ class SaveInvoiceRequest implements StartSaving {
   SaveInvoiceRequest({
     this.completer,
     this.invoice,
-    this.refreshData = true,
   });
 
   final Completer completer;
   final InvoiceEntity invoice;
-  final bool refreshData;
 }
 
-class SaveInvoiceSuccess implements StopSaving, PersistData, PersistUI {
+class SaveInvoiceSuccess implements StopSaving, PersistUI {
   SaveInvoiceSuccess(this.invoice);
 
   final InvoiceEntity invoice;
 }
 
-class AddInvoiceSuccess implements StopSaving, PersistData, PersistUI {
+class AddInvoiceSuccess implements StopSaving, PersistUI {
   AddInvoiceSuccess(this.invoice);
 
   final InvoiceEntity invoice;
@@ -282,7 +280,7 @@ class MarkInvoicesPaidRequest implements StartSaving {
   final List<String> invoiceIds;
 }
 
-class MarkInvoicesPaidSuccess implements StopSaving, PersistData {
+class MarkInvoicesPaidSuccess implements StopSaving {
   MarkInvoicesPaidSuccess(this.invoices);
 
   final List<InvoiceEntity> invoices;
@@ -301,7 +299,7 @@ class ReverseInvoicesRequest implements StartSaving {
   final List<String> invoiceIds;
 }
 
-class ReverseInvoicesSuccess implements StopSaving, PersistData {
+class ReverseInvoicesSuccess implements StopSaving {
   ReverseInvoicesSuccess(this.invoices);
 
   final List<InvoiceEntity> invoices;
@@ -320,7 +318,7 @@ class CancelInvoicesRequest implements StartSaving {
   final List<String> invoiceIds;
 }
 
-class CancelInvoicesSuccess implements StopSaving, PersistData {
+class CancelInvoicesSuccess implements StopSaving {
   CancelInvoicesSuccess(this.invoices);
 
   final List<InvoiceEntity> invoices;

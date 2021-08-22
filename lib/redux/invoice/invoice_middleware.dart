@@ -410,9 +410,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       } else {
         store.dispatch(SaveInvoiceSuccess(invoice));
       }
-      if (action.refreshData) {
-        store.dispatch(RefreshData());
-      }
+      store.dispatch(RefreshData());
       action.completer.complete(invoice);
     }).catchError((Object error) {
       print(error);
