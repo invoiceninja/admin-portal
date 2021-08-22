@@ -108,12 +108,10 @@ class InvoiceEditVM extends EntityEditVM {
             return null;
           }
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-          final refreshData =
-              ![EntityAction.markSent, EntityAction.markPaid].contains(action);
           store.dispatch(SaveInvoiceRequest(
-              completer: completer,
-              invoice: invoice,
-              refreshData: refreshData));
+            completer: completer,
+            invoice: invoice,
+          ));
           return completer.future.then((savedInvoice) {
             showToast(invoice.isNew
                 ? localization.createdInvoice
