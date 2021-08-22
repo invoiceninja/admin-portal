@@ -131,6 +131,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.rowsPerPage,
     this.colorTheme,
     this.customColors,
+    this.persistData,
   });
 
   final AppLayout appLayout;
@@ -149,6 +150,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final String accentColor;
   final int rowsPerPage;
   final String colorTheme;
+  final bool persistData;
   final BuiltMap<String, String> customColors;
 }
 

@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'persist_data': 'Persist Data',
+      'persist_data_help':
+          'Disabling may improve performance for large accounts',
       'customer_count': 'Customer Count',
       'verify_customers': 'Verify Customers',
       'google_analytics_tracking_id': 'Google Analytics Tracking ID',
@@ -62505,10 +62508,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['verify_customers'] ??
       _localizedValues['en']['verify_customers'];
 
-String get customerCount =>
+  String get customerCount =>
       _localizedValues[localeCode]['customer_count'] ??
       _localizedValues['en']['customer_count'];
 
+  String get persistData =>
+      _localizedValues[localeCode]['persist_data'] ??
+      _localizedValues['en']['persist_data'];
+
+  String get persistDataHelp =>
+      _localizedValues[localeCode]['persist_data_help'] ??
+      _localizedValues['en']['persist_data_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -154,6 +154,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'showFilterSidebar',
       serializers.serialize(object.showFilterSidebar,
           specifiedType: const FullType(bool)),
+      'persistData',
+      serializers.serialize(object.persistData,
+          specifiedType: const FullType(bool)),
       'longPressSelectionIsDefault',
       serializers.serialize(object.longPressSelectionIsDefault,
           specifiedType: const FullType(bool)),
@@ -246,6 +249,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'showFilterSidebar':
           result.showFilterSidebar = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'persistData':
+          result.persistData = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'longPressSelectionIsDefault':
@@ -535,6 +542,8 @@ class _$PrefState extends PrefState {
   @override
   final bool showFilterSidebar;
   @override
+  final bool persistData;
+  @override
   final bool longPressSelectionIsDefault;
   @override
   final bool requireAuthentication;
@@ -564,6 +573,7 @@ class _$PrefState extends PrefState {
       this.isHistoryVisible,
       this.enableDarkMode,
       this.showFilterSidebar,
+      this.persistData,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
       this.rowsPerPage,
@@ -596,6 +606,8 @@ class _$PrefState extends PrefState {
         enableDarkMode, 'PrefState', 'enableDarkMode');
     BuiltValueNullFieldError.checkNotNull(
         showFilterSidebar, 'PrefState', 'showFilterSidebar');
+    BuiltValueNullFieldError.checkNotNull(
+        persistData, 'PrefState', 'persistData');
     BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault,
         'PrefState', 'longPressSelectionIsDefault');
     BuiltValueNullFieldError.checkNotNull(
@@ -634,6 +646,7 @@ class _$PrefState extends PrefState {
         isHistoryVisible == other.isHistoryVisible &&
         enableDarkMode == other.enableDarkMode &&
         showFilterSidebar == other.showFilterSidebar &&
+        persistData == other.persistData &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
         rowsPerPage == other.rowsPerPage &&
@@ -664,27 +677,30 @@ class _$PrefState extends PrefState {
                                                                     $jc(
                                                                         $jc(
                                                                             $jc(
-                                                                                0,
-                                                                                appLayout
+                                                                                $jc(
+                                                                                    0,
+                                                                                    appLayout
+                                                                                        .hashCode),
+                                                                                moduleLayout
                                                                                     .hashCode),
-                                                                            moduleLayout
+                                                                            menuSidebarMode
                                                                                 .hashCode),
-                                                                        menuSidebarMode
+                                                                        historySidebarMode
                                                                             .hashCode),
-                                                                    historySidebarMode
+                                                                    useSidebarEditor
                                                                         .hashCode),
-                                                                useSidebarEditor
+                                                                customColors
                                                                     .hashCode),
-                                                            customColors
+                                                            isPreviewVisible
                                                                 .hashCode),
-                                                        isPreviewVisible
+                                                        isPreviewEnabled
                                                             .hashCode),
-                                                    isPreviewEnabled.hashCode),
-                                                isMenuVisible.hashCode),
-                                            showKanban.hashCode),
-                                        isHistoryVisible.hashCode),
-                                    enableDarkMode.hashCode),
-                                showFilterSidebar.hashCode),
+                                                    isMenuVisible.hashCode),
+                                                showKanban.hashCode),
+                                            isHistoryVisible.hashCode),
+                                        enableDarkMode.hashCode),
+                                    showFilterSidebar.hashCode),
+                                persistData.hashCode),
                             longPressSelectionIsDefault.hashCode),
                         requireAuthentication.hashCode),
                     rowsPerPage.hashCode),
@@ -709,6 +725,7 @@ class _$PrefState extends PrefState {
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('enableDarkMode', enableDarkMode)
           ..add('showFilterSidebar', showFilterSidebar)
+          ..add('persistData', persistData)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
           ..add('rowsPerPage', rowsPerPage)
@@ -787,6 +804,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set showFilterSidebar(bool showFilterSidebar) =>
       _$this._showFilterSidebar = showFilterSidebar;
 
+  bool _persistData;
+  bool get persistData => _$this._persistData;
+  set persistData(bool persistData) => _$this._persistData = persistData;
+
   bool _longPressSelectionIsDefault;
   bool get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
   set longPressSelectionIsDefault(bool longPressSelectionIsDefault) =>
@@ -837,6 +858,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _isHistoryVisible = $v.isHistoryVisible;
       _enableDarkMode = $v.enableDarkMode;
       _showFilterSidebar = $v.showFilterSidebar;
+      _persistData = $v.persistData;
       _longPressSelectionIsDefault = $v.longPressSelectionIsDefault;
       _requireAuthentication = $v.requireAuthentication;
       _rowsPerPage = $v.rowsPerPage;
@@ -886,6 +908,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               isHistoryVisible: BuiltValueNullFieldError.checkNotNull(isHistoryVisible, 'PrefState', 'isHistoryVisible'),
               enableDarkMode: BuiltValueNullFieldError.checkNotNull(enableDarkMode, 'PrefState', 'enableDarkMode'),
               showFilterSidebar: BuiltValueNullFieldError.checkNotNull(showFilterSidebar, 'PrefState', 'showFilterSidebar'),
+              persistData: BuiltValueNullFieldError.checkNotNull(persistData, 'PrefState', 'persistData'),
               longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault, 'PrefState', 'longPressSelectionIsDefault'),
               requireAuthentication: BuiltValueNullFieldError.checkNotNull(requireAuthentication, 'PrefState', 'requireAuthentication'),
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),
