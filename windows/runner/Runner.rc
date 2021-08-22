@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.invoiceninja" "\0"
-            VALUE "FileDescription", "A new Flutter project." "\0"
+            VALUE "CompanyName", "Invoice Ninja" "\0"
+            VALUE "FileDescription", "Invoice Clients, Track Work-Time, Get Paid Online." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "invoiceninja_client" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2021 com.invoiceninja. All rights reserved." "\0"
-            VALUE "OriginalFilename", "invoiceninja_client.exe" "\0"
-            VALUE "ProductName", "invoiceninja_client" "\0"
+            VALUE "InternalName", "invoiceninja" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2021 Invoice Ninja. All rights reserved." "\0"
+            VALUE "OriginalFilename", "invoiceninja.exe" "\0"
+            VALUE "ProductName", "invoiceninja" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
