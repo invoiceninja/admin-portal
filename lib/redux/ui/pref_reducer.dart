@@ -55,6 +55,7 @@ PrefState prefReducer(
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+      ..persistData = persistDataReducer(state.persistData, action)
       ..showKanban = showKanbanReducer(state.showKanban, action)
       ..showFilterSidebar =
           showFilterSidebarReducer(state.showFilterSidebar, action)
@@ -240,6 +241,12 @@ Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
 Reducer<bool> darkModeReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((enableDarkMode, action) {
     return action.enableDarkMode ?? enableDarkMode;
+  }),
+]);
+
+Reducer<bool> persistDataReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((persistData, action) {
+    return action.persistData ?? persistData;
   }),
 ]);
 

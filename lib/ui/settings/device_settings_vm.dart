@@ -50,6 +50,7 @@ class DeviceSettingsVM {
     @required this.onRowsPerPageChanged,
     @required this.onPreviewSidebarChanged,
     @required this.onCustomColorsChanged,
+    @required this.onPersistDataChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -153,6 +154,12 @@ class DeviceSettingsVM {
         onCustomColorsChanged: (context, customColors) {
           store.dispatch(UpdateUserPreferences(customColors: customColors));
           store.dispatch(UpdatedSetting());
+        },
+        onPersistDataChanged: (context, value) {
+          store.dispatch(UpdateUserPreferences(persistData: value));
+          if (value) {
+            store.dispatch(UserLoginSuccess());
+          }
         });
   }
 
@@ -169,6 +176,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onAlwaysShowSidebarChanged;
+  final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, int) onRowsPerPageChanged;
   final Future<bool> authenticationSupported;
 }

@@ -214,7 +214,13 @@ Middleware<AppState> _createLoadState(
       uiState = await uiRepository.loadUIState();
       staticState = await staticRepository.loadStaticState();
       for (var i = 0; i < companyRepositories.length; i++) {
-        companyStates.add(await companyRepositories[i].loadCompanyState(i));
+        var companyState = UserCompanyState(state.reportErrors);
+        try {
+          companyState = await companyRepositories[i].loadCompanyState(i);
+        } catch (e) {
+          // do nothing
+        }
+        companyStates.add(companyState);
       }
 
       // Carry over a deeplink URL on the web
@@ -376,8 +382,11 @@ Middleware<AppState> _createUserLoggedIn(
     authRepository.saveAuthState(state.authState);
     uiRepository.saveUIState(state.uiState);
     staticRepository.saveStaticState(state.staticState);
-    for (var i = 0; i < state.userCompanyStates.length; i++) {
-      companyRepositories[i].saveCompanyState(state.userCompanyStates[i]);
+
+    if (state.prefState.persistData) {
+      for (var i = 0; i < state.userCompanyStates.length; i++) {
+        companyRepositories[i].saveCompanyState(state.userCompanyStates[i]);
+      }
     }
   };
 }
@@ -394,9 +403,9 @@ Middleware<AppState> _createPersistData(
     final index = state.uiState.selectedCompanyIndex;
     final companyState = state.userCompanyStates[index];
 
-    //if (companyState.company.isSmall || !kIsWeb) {
-    companyRepositories[index].saveCompanyState(companyState);
-    //}
+    if (state.prefState.persistData) {
+      companyRepositories[index].saveCompanyState(companyState);
+    }
   };
 }
 
@@ -482,6 +491,8 @@ Middleware<AppState> _createDataRefreshed() {
     final action = dynamicAction as RefreshDataSuccess;
     final response = action.data;
     final loadedStaticData = response.static.currencies.isNotEmpty;
+    final state = store.state;
+    final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
 
     if (loadedStaticData) {
       store.dispatch(LoadStaticSuccess(data: response.static));
@@ -506,6 +517,10 @@ Middleware<AppState> _createDataRefreshed() {
           store.dispatch(
               SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
           store.dispatch(LoadCompanySuccess(userCompany));
+        }
+
+        if (store.state.uiState.selectedCompanyIndex != selectedCompanyIndex) {
+          store.dispatch(SelectCompany(companyIndex: selectedCompanyIndex));
         }
       }
     } catch (error) {
