@@ -16,6 +16,22 @@ bool isApple() {
   return Platform.isIOS || Platform.isMacOS;
 }
 
+bool isWindows() {
+  if (kIsWeb) {
+    return false;
+  }
+
+  return Platform.isWindows;
+}
+
+bool isLinux() {
+  if (kIsWeb) {
+    return false;
+  }
+
+  return Platform.isLinux;
+}
+
 bool isAndroid(BuildContext context) =>
     Theme.of(context).platform == TargetPlatform.android;
 

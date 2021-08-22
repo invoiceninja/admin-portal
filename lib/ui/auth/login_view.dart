@@ -78,7 +78,10 @@ class _LoginState extends State<LoginView> {
       }
     } else if (isApple() || !GoogleOAuth.isEnabled) {
       _emailLogin = true;
+      _hideGoogle = true;
       _createAccount = false;
+    } else if (isWindows() || isLinux()) {
+      _emailLogin = true;
       _hideGoogle = true;
     }
   }
@@ -477,6 +480,14 @@ class _LoginState extends State<LoginView> {
                                 newPassword: _createAccount,
                                 onSavePressed: (_) => _submitForm(),
                               ),
+                            if (!_createAccount && !_recoverPassword)
+                              DecoratedFormField(
+                                controller: _oneTimePasswordController,
+                                label:
+                                    '${localization.oneTimePassword} (${localization.optional})',
+                                onSavePressed: (_) => _submitForm(),
+                                autofillHints: [AutofillHints.oneTimeCode],
+                              ),
                             if (_isSelfHosted && !kIsWeb)
                               DecoratedFormField(
                                 controller: _urlController,
@@ -487,14 +498,6 @@ class _LoginState extends State<LoginView> {
                                         : null,
                                 keyboardType: TextInputType.url,
                                 onSavePressed: (_) => _submitForm(),
-                              ),
-                            if (!_createAccount && !_recoverPassword)
-                              DecoratedFormField(
-                                controller: _oneTimePasswordController,
-                                label:
-                                    '${localization.oneTimePassword} (${localization.optional})',
-                                onSavePressed: (_) => _submitForm(),
-                                autofillHints: [AutofillHints.oneTimeCode],
                               ),
                             if (_isSelfHosted && !_recoverPassword)
                               PasswordFormField(
