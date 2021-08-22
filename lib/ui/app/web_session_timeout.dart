@@ -37,7 +37,7 @@ class _WebSessionTimeoutState extends State<WebSessionTimeout> {
         final state = store.state;
         final sessionTimeout = state.company.sessionTimeout;
 
-        if (sessionTimeout == 0 || isDesktop(context)) {
+        if (sessionTimeout == 0) {
           return;
         }
 
