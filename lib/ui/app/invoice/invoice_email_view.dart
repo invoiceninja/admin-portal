@@ -223,6 +223,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   }
 
   Widget _buildPreview(BuildContext context) {
+    if (isDesktopOS()) {
+      return SizedBox();
+    }
+
     if (widget.viewModel.isLoading) {
       return LoadingIndicator(
         height: 210,
