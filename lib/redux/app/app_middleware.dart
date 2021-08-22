@@ -394,9 +394,9 @@ Middleware<AppState> _createPersistData(
     final index = state.uiState.selectedCompanyIndex;
     final companyState = state.userCompanyStates[index];
 
-    if (companyState.company.isSmall || !kIsWeb) {
-      companyRepositories[index].saveCompanyState(companyState);
-    }
+    //if (companyState.company.isSmall || !kIsWeb) {
+    companyRepositories[index].saveCompanyState(companyState);
+    //}
   };
 }
 
@@ -451,9 +451,6 @@ Middleware<AppState> _createAccountLoaded() {
         store.dispatch(
             SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
         store.dispatch(LoadCompanySuccess(userCompany));
-        if (!userCompany.company.isLarge) {
-          store.dispatch(PersistData());
-        }
       }
     } catch (error) {
       action.completer?.completeError(error);
@@ -516,7 +513,7 @@ Middleware<AppState> _createDataRefreshed() {
       rethrow;
     }
 
-    store.dispatch(UserLoginSuccess());
+    store.dispatch(PersistData());
 
     if (action.completer != null) {
       action.completer.complete(null);
