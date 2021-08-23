@@ -327,15 +327,35 @@ class _AccountOverview extends StatelessWidget {
             state.isPaidAccount)
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-            child: OutlinedButton(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconText(
-                  icon: MdiIcons.openInNew,
-                  text: localization.viewPortal.toUpperCase(),
+            child: Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconText(
+                        icon: MdiIcons.openInNew,
+                        text: localization.changePlan.toUpperCase(),
+                      ),
+                    ),
+                    onPressed: () => launch(
+                        '$kAppPlansURL?email=${Uri.encodeQueryComponent(state.user.email)}'),
+                  ),
                 ),
-              ),
-              onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                SizedBox(width: kTableColumnGap),
+                Expanded(
+                  child: OutlinedButton(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconText(
+                        icon: MdiIcons.openInNew,
+                        text: localization.viewPortal.toUpperCase(),
+                      ),
+                    ),
+                    onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                  ),
+                ),
+              ],
             ),
           ),
         FormCard(
@@ -441,7 +461,7 @@ class _AccountOverview extends StatelessWidget {
             child: ListDivider(),
           ),
         ],
-        if (state.isProPlan)
+        if (state.isProPlan || state.isTrial)
           Padding(
               padding: const EdgeInsets.all(16),
               child: Row(children: [

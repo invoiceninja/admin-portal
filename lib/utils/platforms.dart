@@ -8,12 +8,38 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+bool isDesktopOS() => isMacOS() || isWindows() || isLinux();
+
 bool isApple() {
   if (kIsWeb) {
     return false;
   }
 
   return Platform.isIOS || Platform.isMacOS;
+}
+
+bool isMacOS() {
+  if (kIsWeb) {
+    return false;
+  }
+
+  return Platform.isMacOS;
+}
+
+bool isWindows() {
+  if (kIsWeb) {
+    return false;
+  }
+
+  return Platform.isWindows;
+}
+
+bool isLinux() {
+  if (kIsWeb) {
+    return false;
+  }
+
+  return Platform.isLinux;
 }
 
 bool isAndroid(BuildContext context) =>
