@@ -461,7 +461,7 @@ class _AccountOverview extends StatelessWidget {
             child: ListDivider(),
           ),
         ],
-        if (state.isProPlan)
+        if (state.isProPlan || state.isTrial)
           Padding(
               padding: const EdgeInsets.all(16),
               child: Row(children: [
