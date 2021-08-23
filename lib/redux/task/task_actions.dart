@@ -339,6 +339,12 @@ void handleTaskAction(
 
       break;
     case EntityAction.invoiceTask:
+      tasks.sort((taskA, taskB) {
+        final taskADate = (taskA as TaskEntity).getTaskTimes().first.startDate;
+        final taskBDate = (taskB as TaskEntity).getTaskTimes().first.startDate;
+        return taskADate.compareTo(taskBDate);
+      });
+
       final items = tasks
           .where((entity) {
             final task = entity as TaskEntity;
