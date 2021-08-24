@@ -93,6 +93,10 @@ ReportResult lineItemReport(
       continue;
     }
 
+    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
+      continue;
+    }
+
     for (var lineItem in invoice.lineItems) {
       bool skip = false;
       final List<ReportElement> row = [];
