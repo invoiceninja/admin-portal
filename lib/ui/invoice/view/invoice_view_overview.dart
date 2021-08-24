@@ -147,6 +147,8 @@ class InvoiceOverview extends StatelessWidget {
       if (invoice.isRecurringInvoice) ...{
         RecurringInvoiceFields.frequency:
             localization.lookup(kFrequencies[invoice.frequencyId]),
+        RecurringInvoiceFields.lastSentDate:
+            formatDate(invoice.lastSentDate, context),
         RecurringInvoiceFields.nextSendDate:
             formatDate(invoice.nextSendDate, context),
         RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
