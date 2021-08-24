@@ -30,5 +30,6 @@ class RecurringInvoiceFields {
   static const String remainingCycles = 'remaining_cycles';
   static const String frequency = 'frequency';
   static const String nextSendDate = 'next_send_date';
+  static const String lastSentDate = 'last_sent_date';
   static const String autoBill = 'auto_bill';
 }

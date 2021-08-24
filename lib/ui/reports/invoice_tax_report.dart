@@ -75,7 +75,12 @@ ReportResult taxReport(
 
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
-    if (invoice.isActive && invoice.isSent) {
+
+    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
+      continue;
+    }
+
+    if (!invoice.isDeleted && invoice.isSent) {
       final client = clientMap[invoice.clientId] ?? ClientEntity();
       final precision = staticState.currencyMap[client.currencyId].precision;
       final taxes = invoice.getTaxes(precision);
@@ -153,7 +158,7 @@ ReportResult taxReport(
 
   for (var creditId in creditMap.keys) {
     final credit = creditMap[creditId];
-    if (credit.isActive && credit.isSent) {
+    if (!credit.isDeleted && credit.isSent) {
       final client = clientMap[credit.clientId];
       final precision = staticState.currencyMap[client.currencyId].precision;
       final taxes = credit.getTaxes(precision);

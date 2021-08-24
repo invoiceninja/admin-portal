@@ -79,7 +79,7 @@ ReportResult paymentTaxReport(
   for (var paymentId in paymentMap.keys) {
     final payment = paymentMap[paymentId] ?? PaymentEntity();
 
-    if (payment.isActive) {
+    if (!payment.isDeleted) {
       final client = clientMap[payment.clientId];
       final precision = staticState.currencyMap[client.currencyId].precision;
 
@@ -93,7 +93,7 @@ ReportResult paymentTaxReport(
           multiplier = -1;
         }
 
-        if (invoice.isSent && invoice.isActive) {
+        if (invoice.isSent && !invoice.isDeleted) {
           final taxes = invoice.getTaxes(precision);
 
           for (final key in taxes.keys) {

@@ -378,6 +378,8 @@ class DesignSection extends StatelessWidget {
             style: TextStyle(
               fontFeatures: [FontFeature.tabularFigures()],
             ),
+            autocorrect: false,
+            autofocus: true,
           ),
         ),
       ),
