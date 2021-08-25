@@ -70,12 +70,8 @@ jobs:
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production          
       - name: Build WASM App
+        run: |
           flutter build web --web-renderer canvaskit --release
-
-          #sed -i '/index.html/d' build/web/flutter_service_worker.js
-
-          #git config --global user.email ${{secrets.commit_email}}
-          #git config --global user.name ${{secrets.commit_name}}
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_wasm
           cd invoiceninja_wasm
@@ -87,12 +83,8 @@ jobs:
           git push
           cd ..      
       - name: Build Profile App
+        run: |
           flutter build web --web-renderer html --profile
-
-          sed -i '/index.html/d' build/web/flutter_service_worker.js
-
-          #git config --global user.email ${{secrets.commit_email}}
-          #git config --global user.name ${{secrets.commit_name}}
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_profile
           cd invoiceninja invoiceninja_profile
