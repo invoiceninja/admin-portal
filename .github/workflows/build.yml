@@ -87,7 +87,7 @@ jobs:
           flutter build web --web-renderer html --profile
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_profile
-          cd invoiceninja invoiceninja_profile
+          cd invoiceninja_profile
 
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.profile.dart.js
