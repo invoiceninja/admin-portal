@@ -50,6 +50,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.newQuote:
     case EntityAction.newCredit:
     case EntityAction.newRecurringInvoice:
+    case EntityAction.newRecurringQuote:
+    case EntityAction.newRecurringExpense:
     case EntityAction.invoiceTask:
     case EntityAction.invoiceExpense:
     case EntityAction.invoiceProject:
@@ -92,6 +94,8 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.invoice:
       return MdiIcons.fileAccount;
     case EntityType.recurringInvoice:
+    case EntityType.recurringExpense:
+    case EntityType.recurringQuote:
       return MdiIcons.fileRestore;
     case EntityType.payment:
       return MdiIcons.creditCard;

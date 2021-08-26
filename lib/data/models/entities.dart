@@ -40,7 +40,7 @@ class EntityType extends EnumClass {
   static const EntityType design = _$design;
   // STARTER: entity type - do not remove comment
   static const EntityType recurringExpense = _$recurringExpense;
-
+  static const EntityType recurringQuote = _$recurringQuote;
   static const EntityType subscription = _$subscription;
   static const EntityType webhook = _$webhook;
   static const EntityType token = _$token;

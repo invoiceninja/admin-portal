@@ -31,6 +31,7 @@ const EntityType _$gatewayToken = const EntityType._('gatewayToken');
 const EntityType _$invoiceItem = const EntityType._('invoiceItem');
 const EntityType _$design = const EntityType._('design');
 const EntityType _$recurringExpense = const EntityType._('recurringExpense');
+const EntityType _$recurringQuote = const EntityType._('recurringQuote');
 const EntityType _$subscription = const EntityType._('subscription');
 const EntityType _$webhook = const EntityType._('webhook');
 const EntityType _$token = const EntityType._('token');
@@ -102,6 +103,8 @@ EntityType _$typeValueOf(String name) {
       return _$design;
     case 'recurringExpense':
       return _$recurringExpense;
+    case 'recurringQuote':
+      return _$recurringQuote;
     case 'subscription':
       return _$subscription;
     case 'webhook':
@@ -170,6 +173,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$invoiceItem,
   _$design,
   _$recurringExpense,
+  _$recurringQuote,
   _$subscription,
   _$webhook,
   _$token,
