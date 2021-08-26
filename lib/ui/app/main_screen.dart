@@ -36,6 +36,8 @@ import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.d
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
@@ -182,6 +184,12 @@ class MainScreen extends StatelessWidget {
             editingFilterEntity: editingFilterEntity,
           );
           break;
+        case RecurringExpenseScreen.route:
+          screen = EntityScreens(
+            entityType: EntityType.recurringExpense,
+            editingFilterEntity: editingFilterEntity,
+          );
+          break;
         case SettingsScreen.route:
           screen = SettingsScreens();
           break;
@@ -200,6 +208,8 @@ class MainScreen extends StatelessWidget {
             ],
           );
           break;
+        default:
+          print('## Error: main screen route $mainRoute not defined');
       }
 
       return WillPopScope(
@@ -619,6 +629,9 @@ class EntityScreens extends StatelessWidget {
           break;
         case EntityType.expense:
           listWidget = ExpenseScreenBuilder();
+          break;
+        case EntityType.recurringExpense:
+          listWidget = RecurringExpenseScreenBuilder();
           break;
         default:
           print('## ERROR: list widget not implemented for $entityType');
