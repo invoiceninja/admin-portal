@@ -113,6 +113,7 @@ abstract class CompanyEntity extends Object
       products: BuiltList<ProductEntity>(),
       invoices: BuiltList<InvoiceEntity>(),
       recurringInvoices: BuiltList<InvoiceEntity>(),
+      recurringExpenses: BuiltList<ExpenseEntity>(),
       payments: BuiltList<PaymentEntity>(),
       quotes: BuiltList<InvoiceEntity>(),
       credits: BuiltList<InvoiceEntity>(),
@@ -270,6 +271,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'recurring_invoices')
   BuiltList<InvoiceEntity> get recurringInvoices;
+
+  @BuiltValueField(wireName: 'recurring_expenses')
+  BuiltList<ExpenseEntity> get recurringExpenses;
 
   BuiltList<PaymentEntity> get payments;
 
@@ -533,6 +537,9 @@ abstract class CompanyEntity extends Object
     } else if (entityType == EntityType.recurringInvoice &&
         enabledModules & kModuleRecurringInvoices == 0) {
       return false;
+    } else if (entityType == EntityType.recurringExpense &&
+        enabledModules & kModuleRecurringExpenses == 0) {
+      return false;
     }
 
     return true;
@@ -554,7 +561,8 @@ abstract class CompanyEntity extends Object
     ..useCommaAsDecimalPlace = false
     ..reportIncludeDrafts = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
-    ..subscriptions.replace(BuiltList<SubscriptionEntity>());
+    ..subscriptions.replace(BuiltList<SubscriptionEntity>())
+    ..recurringExpenses.replace(BuiltList<ExpenseEntity>());
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

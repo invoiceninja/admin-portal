@@ -20,6 +20,8 @@ import 'package:invoiceninja_flutter/redux/company/company_reducer.dart';
 import 'package:invoiceninja_flutter/redux/static/static_reducer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
@@ -95,6 +97,10 @@ final lastErrorReducer = combineReducers<String>([
     return '${action.error}';
   }),
   // STARTER: errors - do not remove comment
+  TypedReducer<String, LoadRecurringExpensesFailure>((state, action) {
+    return '${action.error}';
+  }),
+
   TypedReducer<String, LoadSubscriptionsFailure>((state, action) {
     return '${action.error}';
   }),

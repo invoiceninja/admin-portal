@@ -183,6 +183,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.recurringInvoices,
           specifiedType:
               const FullType(BuiltList, const [const FullType(InvoiceEntity)])),
+      'recurring_expenses',
+      serializers.serialize(object.recurringExpenses,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(ExpenseEntity)])),
       'payments',
       serializers.serialize(object.payments,
           specifiedType:
@@ -555,6 +559,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.recurringInvoices.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'recurring_expenses':
+          result.recurringExpenses.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ExpenseEntity)]))
               as BuiltList<Object>);
           break;
         case 'payments':
@@ -1352,6 +1362,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<InvoiceEntity> recurringInvoices;
   @override
+  final BuiltList<ExpenseEntity> recurringExpenses;
+  @override
   final BuiltList<PaymentEntity> payments;
   @override
   final BuiltList<InvoiceEntity> quotes;
@@ -1478,6 +1490,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.products,
       this.invoices,
       this.recurringInvoices,
+      this.recurringExpenses,
       this.payments,
       this.quotes,
       this.credits,
@@ -1605,6 +1618,8 @@ class _$CompanyEntity extends CompanyEntity {
     BuiltValueNullFieldError.checkNotNull(
         recurringInvoices, 'CompanyEntity', 'recurringInvoices');
     BuiltValueNullFieldError.checkNotNull(
+        recurringExpenses, 'CompanyEntity', 'recurringExpenses');
+    BuiltValueNullFieldError.checkNotNull(
         payments, 'CompanyEntity', 'payments');
     BuiltValueNullFieldError.checkNotNull(quotes, 'CompanyEntity', 'quotes');
     BuiltValueNullFieldError.checkNotNull(credits, 'CompanyEntity', 'credits');
@@ -1722,6 +1737,7 @@ class _$CompanyEntity extends CompanyEntity {
         products == other.products &&
         invoices == other.invoices &&
         recurringInvoices == other.recurringInvoices &&
+        recurringExpenses == other.recurringExpenses &&
         payments == other.payments &&
         quotes == other.quotes &&
         credits == other.credits &&
@@ -1783,7 +1799,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
                                                                                 invoiceExpenseDocuments.hashCode),
                                                                             invoiceTaskDocuments.hashCode),
                                                                         invoiceTaskTimelog.hashCode),
@@ -1854,6 +1870,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('products', products)
           ..add('invoices', invoices)
           ..add('recurringInvoices', recurringInvoices)
+          ..add('recurringExpenses', recurringExpenses)
           ..add('payments', payments)
           ..add('quotes', quotes)
           ..add('credits', credits)
@@ -2130,6 +2147,12 @@ class CompanyEntityBuilder
   set recurringInvoices(ListBuilder<InvoiceEntity> recurringInvoices) =>
       _$this._recurringInvoices = recurringInvoices;
 
+  ListBuilder<ExpenseEntity> _recurringExpenses;
+  ListBuilder<ExpenseEntity> get recurringExpenses =>
+      _$this._recurringExpenses ??= new ListBuilder<ExpenseEntity>();
+  set recurringExpenses(ListBuilder<ExpenseEntity> recurringExpenses) =>
+      _$this._recurringExpenses = recurringExpenses;
+
   ListBuilder<PaymentEntity> _payments;
   ListBuilder<PaymentEntity> get payments =>
       _$this._payments ??= new ListBuilder<PaymentEntity>();
@@ -2375,6 +2398,7 @@ class CompanyEntityBuilder
       _products = $v.products.toBuilder();
       _invoices = $v.invoices.toBuilder();
       _recurringInvoices = $v.recurringInvoices.toBuilder();
+      _recurringExpenses = $v.recurringExpenses.toBuilder();
       _payments = $v.payments.toBuilder();
       _quotes = $v.quotes.toBuilder();
       _credits = $v.credits.toBuilder();
@@ -2495,6 +2519,7 @@ class CompanyEntityBuilder
               products: products.build(),
               invoices: invoices.build(),
               recurringInvoices: recurringInvoices.build(),
+              recurringExpenses: recurringExpenses.build(),
               payments: payments.build(),
               quotes: quotes.build(),
               credits: credits.build(),
@@ -2560,6 +2585,8 @@ class CompanyEntityBuilder
         invoices.build();
         _$failedField = 'recurringInvoices';
         recurringInvoices.build();
+        _$failedField = 'recurringExpenses';
+        recurringExpenses.build();
         _$failedField = 'payments';
         payments.build();
         _$failedField = 'quotes';

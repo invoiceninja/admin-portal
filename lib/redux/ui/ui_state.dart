@@ -20,6 +20,8 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
+
 import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
@@ -81,6 +83,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       paymentUIState: PaymentUIState(sortFields[EntityType.payment]),
       quoteUIState: QuoteUIState(sortFields[EntityType.quote]),
       // STARTER: constructor - do not remove comment
+      recurringExpenseUIState:
+          RecurringExpenseUIState(sortFields[EntityType.recurringExpense]),
     );
   }
 
@@ -120,6 +124,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   InvoiceUIState get invoiceUIState;
 
   // STARTER: properties - do not remove comment
+  RecurringExpenseUIState get recurringExpenseUIState;
+
   SubscriptionUIState get subscriptionUIState;
 
   TaskStatusUIState get taskStatusUIState;

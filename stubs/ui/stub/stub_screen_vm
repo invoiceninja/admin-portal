@@ -47,8 +47,12 @@ class StubScreenVM {
 
     return StubScreenVM(
       stubMap: state.stubState.map,
-      stubList: memoizedFilteredStubList(state.stubState.map,
-          state.stubState.list, state.stubListState),
+      stubList: memoizedFilteredStubList(
+          state.getUISelection(EntityType.stub),
+          state.stubState.map,
+          state.stubState.list, 
+          state.stubListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.stubListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> stubs,

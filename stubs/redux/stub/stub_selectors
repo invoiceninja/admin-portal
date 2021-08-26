@@ -44,7 +44,7 @@ var memoizedFilteredStubList = memo6((
         StaticState staticState,
         BuiltMap<String, UserEntity> userMap, 
         ListUIState stubListState) =>
-    filteredStubsSelector(filterEntityId, filterEntityType, stubMap, stubList, staticState, userMap, stubListState));
+    filteredStubsSelector(selectionState, stubMap, stubList, staticState, userMap, stubListState));
 
 List<String> filteredStubsSelector(
     SelectionState selectionState,

@@ -6,25 +6,27 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
-import 'package:invoiceninja_flutter/data/models/stub_model.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/stub/view/stub_view.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class StubViewScreen extends StatelessWidget {
-  const StubViewScreen({Key key, this.isFilter = false,}) : super(key: key);
-  static const String route = '/stub/view';
+class RecurringExpenseViewScreen extends StatelessWidget {
+  const RecurringExpenseViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  static const String route = '/recurring_expense/view';
   final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, StubViewVM>(
+    return StoreConnector<AppState, RecurringExpenseViewVM>(
       converter: (Store<AppState> store) {
-        return StubViewVM.fromStore(store);
+        return RecurringExpenseViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return StubView(
+        return RecurringExpenseView(
           viewModel: vm,
           isFilter: isFilter,
         );
@@ -33,11 +35,10 @@ class StubViewScreen extends StatelessWidget {
   }
 }
 
-class StubViewVM {
-
-  StubViewVM({
+class RecurringExpenseViewVM {
+  RecurringExpenseViewVM({
     @required this.state,
-    @required this.stub,
+    @required this.recurringExpense,
     @required this.company,
     @required this.onEntityAction,
     @required this.onRefreshed,
@@ -46,33 +47,35 @@ class StubViewVM {
     @required this.isDirty,
   });
 
-  factory StubViewVM.fromStore(Store<AppState> store) {
+  factory RecurringExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final stub = state.stubState.map[state.stubUIState.selectedId] ??
-        StubEntity(id: state.stubUIState.selectedId);
+    final recurringExpense = state.recurringExpenseState
+            .map[state.recurringExpenseUIState.selectedId] ??
+        ExpenseEntity(id: state.recurringExpenseUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadStub(completer: completer, stubId: stub.id));
+      store.dispatch(LoadRecurringExpense(
+          completer: completer, recurringExpenseId: recurringExpense.id));
       return completer.future;
     }
 
-    return StubViewVM(
-        state: state,
-        company: state.company,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: stub.isNew,
-        stub: stub,
-        onRefreshed: (context) => _handleRefresh(context),
+    return RecurringExpenseViewVM(
+      state: state,
+      company: state.company,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: recurringExpense.isNew,
+      recurringExpense: recurringExpense,
+      onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions([stub], action, autoPop: true),
-        );
+          handleEntitiesActions([recurringExpense], action, autoPop: true),
+    );
   }
 
   final AppState state;
-  final StubEntity stub;
+  final ExpenseEntity recurringExpense;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
