@@ -36,6 +36,7 @@ import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.d
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
@@ -389,6 +390,9 @@ class EntityScreens extends StatelessWidget {
         case ExpenseScreen.route:
           child = ExpenseEditScreen();
           break;
+        case RecurringExpenseScreen.route:
+          child = RecurringExpenseEditScreen();
+          break;
         default:
           switch (uiState.currentRoute) {
             case DesignEditScreen.route:
@@ -433,6 +437,9 @@ class EntityScreens extends StatelessWidget {
           break;
         case EntityType.expense:
           child = ExpenseEditScreen();
+          break;
+        case EntityType.recurringExpense:
+          child = RecurringExpenseEditScreen();
           break;
       }
     } else {

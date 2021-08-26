@@ -57,6 +57,7 @@ import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 
 import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.dart';
 
@@ -846,6 +847,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       QuoteScreen.route,
       CreditScreen.route,
       RecurringInvoiceScreen.route,
+      RecurringExpenseScreen.route,
       TaskScreen.route,
     ].contains(mainRoute)) {
       if (isEmail || isPdf) {
@@ -857,7 +859,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
           isFullScreen = prefState.isEditorFullScreen(EntityType.client);
         } else if (mainRoute == VendorScreen.route) {
           isFullScreen = prefState.isEditorFullScreen(EntityType.vendor);
-        } else if (mainRoute == ExpenseScreen.route) {
+        } else if (mainRoute == ExpenseScreen.route ||
+            mainRoute == RecurringExpenseScreen.route) {
           isFullScreen = prefState.isEditorFullScreen(EntityType.expense);
         } else {
           isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);
