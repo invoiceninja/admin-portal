@@ -26,6 +26,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'removed_recurring_expense': 'Successfully removed recurring expense',
       'restored_recurring_expense': 'Successfully restored recurring expense',
       'search_recurring_expense': 'Search Recurring Expense',
+      'search_recurring_expenses': 'Search Recurring Expenses',
       'last_sent_date': 'Last Sent Date',
       'include_drafts': 'Include Drafts',
       'include_drafts_help': 'Include draft records in reports',
@@ -62583,6 +62584,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchRecurringExpense =>
       _localizedValues[localeCode]['search_recurring_expense'] ??
       _localizedValues['en']['search_recurring_expense'];
+
+  String get searchRecurringExpenses =>
+      _localizedValues[localeCode]['search_recurring_expenses'] ??
+      _localizedValues['en']['search_recurring_expenses'];
 
   // STARTER: lang field - do not remove comment
 
