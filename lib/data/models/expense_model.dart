@@ -150,6 +150,10 @@ abstract class ExpenseEntity extends Object
       createdUserId: '',
       archivedAt: 0,
       updatedAt: 0,
+      frequencyId: '',
+      lastSentDate: '',
+      nextSendDate: '',
+      remainingCycles: 0,
     );
   }
 
@@ -282,6 +286,18 @@ abstract class ExpenseEntity extends Object
   BuiltList<DocumentEntity> get documents;
 
   String get number;
+
+  @BuiltValueField(wireName: 'frequency_id')
+  String get frequencyId;
+
+  @BuiltValueField(wireName: 'last_sent_date')
+  String get lastSentDate;
+
+  @BuiltValueField(wireName: 'next_send_date')
+  String get nextSendDate;
+
+  @BuiltValueField(wireName: 'remaining_cycles')
+  int get remainingCycles;
 
   @override
   List<EntityAction> getActions(
@@ -642,8 +658,12 @@ abstract class ExpenseEntity extends Object
   bool get hasExchangeRate => exchangeRate != 1 && exchangeRate != 0;
 
   // ignore: unused_element
-  static void _initializeBuilder(ExpenseEntityBuilder builder) =>
-      builder..entityType = EntityType.expense;
+  static void _initializeBuilder(ExpenseEntityBuilder builder) => builder
+    ..entityType = EntityType.expense
+    ..frequencyId = ''
+    ..lastSentDate = ''
+    ..nextSendDate = ''
+    ..remainingCycles = 0;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }

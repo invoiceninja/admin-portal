@@ -211,6 +211,18 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'number',
       serializers.serialize(object.number,
           specifiedType: const FullType(String)),
+      'frequency_id',
+      serializers.serialize(object.frequencyId,
+          specifiedType: const FullType(String)),
+      'last_sent_date',
+      serializers.serialize(object.lastSentDate,
+          specifiedType: const FullType(String)),
+      'next_send_date',
+      serializers.serialize(object.nextSendDate,
+          specifiedType: const FullType(String)),
+      'remaining_cycles',
+      serializers.serialize(object.remainingCycles,
+          specifiedType: const FullType(int)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -461,6 +473,22 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         case 'number':
           result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'frequency_id':
+          result.frequencyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'last_sent_date':
+          result.lastSentDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'next_send_date':
+          result.nextSendDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'remaining_cycles':
+          result.remainingCycles = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -815,6 +843,14 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String number;
   @override
+  final String frequencyId;
+  @override
+  final String lastSentDate;
+  @override
+  final String nextSendDate;
+  @override
+  final int remainingCycles;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -873,6 +909,10 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.calculateTaxByAmount,
       this.documents,
       this.number,
+      this.frequencyId,
+      this.lastSentDate,
+      this.nextSendDate,
+      this.remainingCycles,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -941,6 +981,14 @@ class _$ExpenseEntity extends ExpenseEntity {
         documents, 'ExpenseEntity', 'documents');
     BuiltValueNullFieldError.checkNotNull(number, 'ExpenseEntity', 'number');
     BuiltValueNullFieldError.checkNotNull(
+        frequencyId, 'ExpenseEntity', 'frequencyId');
+    BuiltValueNullFieldError.checkNotNull(
+        lastSentDate, 'ExpenseEntity', 'lastSentDate');
+    BuiltValueNullFieldError.checkNotNull(
+        nextSendDate, 'ExpenseEntity', 'nextSendDate');
+    BuiltValueNullFieldError.checkNotNull(
+        remainingCycles, 'ExpenseEntity', 'remainingCycles');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, 'ExpenseEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, 'ExpenseEntity', 'updatedAt');
@@ -996,6 +1044,10 @@ class _$ExpenseEntity extends ExpenseEntity {
         calculateTaxByAmount == other.calculateTaxByAmount &&
         documents == other.documents &&
         number == other.number &&
+        frequencyId == other.frequencyId &&
+        lastSentDate == other.lastSentDate &&
+        nextSendDate == other.nextSendDate &&
+        remainingCycles == other.remainingCycles &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1028,17 +1080,17 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode), customValue1.hashCode),
-                                                                                customValue2.hashCode),
-                                                                            customValue3.hashCode),
-                                                                        customValue4.hashCode),
-                                                                    taxAmount1.hashCode),
-                                                                taxAmount2.hashCode),
-                                                            taxAmount3.hashCode),
-                                                        usesInclusiveTaxes.hashCode),
-                                                    calculateTaxByAmount.hashCode),
-                                                documents.hashCode),
-                                            number.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), taxAmount1.hashCode),
+                                                                                taxAmount2.hashCode),
+                                                                            taxAmount3.hashCode),
+                                                                        usesInclusiveTaxes.hashCode),
+                                                                    calculateTaxByAmount.hashCode),
+                                                                documents.hashCode),
+                                                            number.hashCode),
+                                                        frequencyId.hashCode),
+                                                    lastSentDate.hashCode),
+                                                nextSendDate.hashCode),
+                                            remainingCycles.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -1089,6 +1141,10 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('calculateTaxByAmount', calculateTaxByAmount)
           ..add('documents', documents)
           ..add('number', number)
+          ..add('frequencyId', frequencyId)
+          ..add('lastSentDate', lastSentDate)
+          ..add('nextSendDate', nextSendDate)
+          ..add('remainingCycles', remainingCycles)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1260,6 +1316,23 @@ class ExpenseEntityBuilder
   String get number => _$this._number;
   set number(String number) => _$this._number = number;
 
+  String _frequencyId;
+  String get frequencyId => _$this._frequencyId;
+  set frequencyId(String frequencyId) => _$this._frequencyId = frequencyId;
+
+  String _lastSentDate;
+  String get lastSentDate => _$this._lastSentDate;
+  set lastSentDate(String lastSentDate) => _$this._lastSentDate = lastSentDate;
+
+  String _nextSendDate;
+  String get nextSendDate => _$this._nextSendDate;
+  set nextSendDate(String nextSendDate) => _$this._nextSendDate = nextSendDate;
+
+  int _remainingCycles;
+  int get remainingCycles => _$this._remainingCycles;
+  set remainingCycles(int remainingCycles) =>
+      _$this._remainingCycles = remainingCycles;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1341,6 +1414,10 @@ class ExpenseEntityBuilder
       _calculateTaxByAmount = $v.calculateTaxByAmount;
       _documents = $v.documents.toBuilder();
       _number = $v.number;
+      _frequencyId = $v.frequencyId;
+      _lastSentDate = $v.lastSentDate;
+      _nextSendDate = $v.nextSendDate;
+      _remainingCycles = $v.remainingCycles;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1415,6 +1492,10 @@ class ExpenseEntityBuilder
               calculateTaxByAmount: calculateTaxByAmount,
               documents: documents.build(),
               number: BuiltValueNullFieldError.checkNotNull(number, 'ExpenseEntity', 'number'),
+              frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, 'ExpenseEntity', 'frequencyId'),
+              lastSentDate: BuiltValueNullFieldError.checkNotNull(lastSentDate, 'ExpenseEntity', 'lastSentDate'),
+              nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, 'ExpenseEntity', 'nextSendDate'),
+              remainingCycles: BuiltValueNullFieldError.checkNotNull(remainingCycles, 'ExpenseEntity', 'remainingCycles'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ExpenseEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ExpenseEntity', 'updatedAt'),
