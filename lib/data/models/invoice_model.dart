@@ -72,7 +72,6 @@ class InvoiceFields {
   static const String privateNotes = 'private_notes';
   static const String isRecurring = 'is_recurring';
   static const String frequencyId = 'frequency_id';
-  static const String endDate = 'end_date';
   static const String documents = 'documents';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
@@ -311,14 +310,6 @@ abstract class InvoiceEntity extends Object
   @override
   @BuiltValueField(wireName: 'uses_inclusive_taxes')
   bool get usesInclusiveTaxes;
-
-  /*
-  @BuiltValueField(wireName: 'end_date')
-  String get endDate;
-
-  @BuiltValueField(wireName: 'recurring_invoice_id')
-  String get recurringInvoiceId;
-  */
 
   @override
   @BuiltValueField(wireName: 'tax_name1')
