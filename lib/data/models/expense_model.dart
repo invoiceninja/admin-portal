@@ -161,7 +161,6 @@ abstract class ExpenseEntity extends Object
 
   ExpenseEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
-    ..entityType = EntityType.expense
     ..number = ''
     ..isChanged = false
     ..isDeleted = false
@@ -641,6 +640,10 @@ abstract class ExpenseEntity extends Object
   bool get isConverted => exchangeRate != 1 && exchangeRate != 0;
 
   bool get hasExchangeRate => exchangeRate != 1 && exchangeRate != 0;
+
+  // ignore: unused_element
+  static void _initializeBuilder(ExpenseEntityBuilder builder) =>
+      builder..entityType = EntityType.expense;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }

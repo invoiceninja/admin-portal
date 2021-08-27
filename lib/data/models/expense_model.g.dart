@@ -1298,7 +1298,9 @@ class ExpenseEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  ExpenseEntityBuilder();
+  ExpenseEntityBuilder() {
+    ExpenseEntity._initializeBuilder(this);
+  }
 
   ExpenseEntityBuilder get _$this {
     final $v = _$v;

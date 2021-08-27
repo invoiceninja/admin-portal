@@ -453,10 +453,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.recurringExpense:
         return recurringExpenseUIState;
-
       case EntityType.subscription:
         return subscriptionUIState;
-
       case EntityType.taskStatus:
         return taskStatusUIState;
       case EntityType.expenseCategory:
