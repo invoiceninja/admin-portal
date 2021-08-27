@@ -15,7 +15,7 @@ class ExpenseEditNotes extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final ExpenseEditVM viewModel;
+  final AbstractExpenseEditVM viewModel;
 
   @override
   ExpenseEditNotesState createState() => new ExpenseEditNotesState();

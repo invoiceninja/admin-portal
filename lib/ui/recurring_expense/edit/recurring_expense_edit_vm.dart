@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit.dart';
+import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -25,27 +26,39 @@ class RecurringExpenseEditScreen extends StatelessWidget {
         return RecurringExpenseEditVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return RecurringExpenseEdit(
+        return ExpenseEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.recurringExpense.id),
+          key: ValueKey(viewModel.expense.id),
         );
       },
     );
   }
 }
 
-class RecurringExpenseEditVM {
+class RecurringExpenseEditVM extends AbstractExpenseEditVM {
   RecurringExpenseEditVM({
-    @required this.state,
-    @required this.recurringExpense,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origRecurringExpense,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
-  });
+    AppState state,
+    ExpenseEntity expense,
+    Function(ExpenseEntity) onChanged,
+    Function(BuildContext) onSavePressed,
+    Function(BuildContext) onCancelPressed,
+    bool isLoading,
+    bool isSaving,
+    ExpenseEntity origExpense,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddClientPressed,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddVendorPressed,
+  }) : super(
+          state: state,
+          expense: expense,
+          onChanged: onChanged,
+          onSavePressed: onSavePressed,
+          onCancelPressed: onCancelPressed,
+          origExpense: origExpense,
+          onAddClientPressed: onAddClientPressed,
+          onAddVendorPressed: onAddVendorPressed,
+        );
 
   factory RecurringExpenseEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -55,10 +68,8 @@ class RecurringExpenseEditVM {
       state: state,
       isLoading: state.isLoading,
       isSaving: state.isSaving,
-      origRecurringExpense:
-          state.recurringExpenseState.map[recurringExpense.id],
-      recurringExpense: recurringExpense,
-      company: state.company,
+      origExpense: state.recurringExpenseState.map[recurringExpense.id],
+      expense: recurringExpense,
       onChanged: (ExpenseEntity recurringExpense) {
         store.dispatch(UpdateRecurringExpense(recurringExpense));
       },
@@ -102,14 +113,4 @@ class RecurringExpenseEditVM {
       },
     );
   }
-
-  final ExpenseEntity recurringExpense;
-  final CompanyEntity company;
-  final Function(ExpenseEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
-  final bool isLoading;
-  final bool isSaving;
-  final ExpenseEntity origRecurringExpense;
-  final AppState state;
 }
