@@ -17,7 +17,7 @@ class QuoteEdit extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final EntityEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
 
   @override
   _QuoteEditState createState() => _QuoteEditState();

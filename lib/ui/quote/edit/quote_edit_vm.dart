@@ -37,7 +37,7 @@ class QuoteEditScreen extends StatelessWidget {
   }
 }
 
-class QuoteEditVM extends EntityEditVM {
+class QuoteEditVM extends AbstractInvoiceEditVM {
   QuoteEditVM({
     AppState state,
     CompanyEntity company,

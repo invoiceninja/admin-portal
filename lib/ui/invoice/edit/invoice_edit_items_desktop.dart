@@ -30,7 +30,7 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
   });
 
   final EntityEditItemsVM viewModel;
-  final EntityEditVM entityViewModel;
+  final AbstractInvoiceEditVM entityViewModel;
   final bool isTasks;
 
   @override

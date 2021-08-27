@@ -36,8 +36,8 @@ class ExpenseEditScreen extends StatelessWidget {
   }
 }
 
-class ExpenseEditVM {
-  ExpenseEditVM({
+abstract class AbstractExpenseEditVM {
+  AbstractExpenseEditVM({
     @required this.state,
     @required this.expense,
     @required this.company,
@@ -50,6 +50,50 @@ class ExpenseEditVM {
     @required this.onAddClientPressed,
     @required this.onAddVendorPressed,
   });
+
+  final ExpenseEntity expense;
+  final CompanyEntity company;
+  final Function(ExpenseEntity) onChanged;
+  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
+  final bool isLoading;
+  final bool isSaving;
+  final ExpenseEntity origExpense;
+  final AppState state;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddClientPressed;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddVendorPressed;
+}
+
+class ExpenseEditVM extends AbstractExpenseEditVM {
+  ExpenseEditVM({
+    AppState state,
+    ExpenseEntity expense,
+    CompanyEntity company,
+    Function(ExpenseEntity) onChanged,
+    Function(BuildContext) onSavePressed,
+    Function(BuildContext) onCancelPressed,
+    bool isLoading,
+    bool isSaving,
+    ExpenseEntity origExpense,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddClientPressed,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddVendorPressed,
+  }) : super(
+          state: state,
+          expense: expense,
+          company: company,
+          onChanged: onChanged,
+          onSavePressed: onSavePressed,
+          onCancelPressed: onCancelPressed,
+          isLoading: isLoading,
+          isSaving: isSaving,
+          origExpense: origExpense,
+          onAddClientPressed: onAddClientPressed,
+          onAddVendorPressed: onAddVendorPressed,
+        );
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
     final expense = store.state.expenseUIState.editing;
@@ -135,18 +179,4 @@ class ExpenseEditVM {
       },
     );
   }
-
-  final ExpenseEntity expense;
-  final CompanyEntity company;
-  final Function(ExpenseEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
-  final bool isLoading;
-  final bool isSaving;
-  final ExpenseEntity origExpense;
-  final AppState state;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddClientPressed;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddVendorPressed;
 }

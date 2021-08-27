@@ -17,7 +17,7 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
     this.isTasks = false,
   }) : super(key: key);
 
-  final EntityEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
   final bool isTasks;
 
   @override

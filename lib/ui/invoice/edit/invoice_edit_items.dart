@@ -21,7 +21,7 @@ class InvoiceEditItems extends StatefulWidget {
   }) : super(key: key);
 
   final EntityEditItemsVM viewModel;
-  final EntityEditVM entityViewModel;
+  final AbstractInvoiceEditVM entityViewModel;
 
   @override
   _InvoiceEditItemsState createState() => _InvoiceEditItemsState();
@@ -95,7 +95,7 @@ class ItemEditDetails extends StatefulWidget {
   final int index;
   final InvoiceItemEntity invoiceItem;
   final EntityEditItemsVM viewModel;
-  final EntityEditVM entityViewModel;
+  final AbstractInvoiceEditVM entityViewModel;
 
   @override
   ItemEditDetailsState createState() => ItemEditDetailsState();

@@ -18,7 +18,7 @@ class CreditEdit extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final EntityEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
 
   @override
   _CreditEditState createState() => _CreditEditState();

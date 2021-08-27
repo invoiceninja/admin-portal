@@ -48,7 +48,7 @@ class InvoiceEditDesktop extends StatefulWidget {
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
-  final EntityEditVM entityViewModel;
+  final AbstractInvoiceEditVM entityViewModel;
 
   @override
   InvoiceEditDesktopState createState() => InvoiceEditDesktopState();

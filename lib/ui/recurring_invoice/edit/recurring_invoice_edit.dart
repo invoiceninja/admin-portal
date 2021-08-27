@@ -18,7 +18,7 @@ class RecurringInvoiceEdit extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final EntityEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
 
   @override
   _RecurringInvoiceEditState createState() => _RecurringInvoiceEditState();

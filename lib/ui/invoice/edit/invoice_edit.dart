@@ -19,7 +19,7 @@ class InvoiceEdit extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final EntityEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
 
   @override
   _InvoiceEditState createState() => _InvoiceEditState();
