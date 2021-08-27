@@ -111,7 +111,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final staticState = viewModel.state.staticState;
-    final company = viewModel.company;
+    final company = viewModel.state.company;
     final expense = viewModel.expense;
     final state = widget.viewModel.state;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
