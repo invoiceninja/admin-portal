@@ -59,7 +59,13 @@ class _ExpenseEditState extends State<ExpenseEdit>
     return EditScaffold(
       isFullscreen: isFullscreen,
       entity: expense,
-      title: expense.isNew ? localization.newExpense : localization.editExpense,
+      title: expense.isRecurring
+          ? (expense.isNew
+              ? localization.newRecurringExpense
+              : localization.editRecurringExpense)
+          : (expense.isNew
+              ? localization.newExpense
+              : localization.editExpense),
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();

@@ -95,10 +95,12 @@ abstract class ExpenseEntity extends Object
     ClientEntity client,
     UserEntity user,
     ProjectEntity project,
+    EntityType entityType,
   }) {
     final company = state?.company;
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
+      entityType: entityType ?? EntityType.expense,
       number: '',
       isChanged: false,
       privateNotes: '',
@@ -159,6 +161,7 @@ abstract class ExpenseEntity extends Object
 
   ExpenseEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..entityType = EntityType.expense
     ..number = ''
     ..isChanged = false
     ..isDeleted = false
@@ -168,11 +171,6 @@ abstract class ExpenseEntity extends Object
     ..transactionReference = ''
     ..paymentTypeId = ''
     ..paymentDate = '');
-
-  @override
-  EntityType get entityType {
-    return EntityType.expense;
-  }
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
@@ -552,6 +550,8 @@ abstract class ExpenseEntity extends Object
   }
 
   bool get isUpcoming => convertSqlDateToDateTime(date).isAfter(DateTime.now());
+
+  bool get isRecurring => [EntityType.recurringExpense].contains(entityType);
 
   @override
   double get listDisplayAmount => null;

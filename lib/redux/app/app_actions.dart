@@ -765,17 +765,21 @@ void createEntityByType({
           case EntityType.recurringExpense:
             store.dispatch(EditRecurringExpense(
               force: force,
-              recurringExpense: ExpenseEntity(state: state),
+              recurringExpense: ExpenseEntity(
+                  state: state,
+                  client: client,
+                  project: project,
+                  user: user,
+                  vendor: vendor,
+                  entityType: EntityType.recurringExpense),
             ));
             break;
-
           case EntityType.subscription:
             store.dispatch(EditSubscription(
               force: force,
               subscription: SubscriptionEntity(state: state),
             ));
             break;
-
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               force: force,
