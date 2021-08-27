@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -319,6 +320,55 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
           ],
         ),
+        if (expense.isRecurring)
+          FormCard(
+            children: [
+              AppDropdownButton<String>(
+                  labelText: localization.frequency,
+                  value: expense.frequencyId,
+                  onChanged: (dynamic value) {
+                    viewModel.onChanged(
+                        expense.rebuild((b) => b..frequencyId = value));
+                  },
+                  items: kFrequencies.entries
+                      .map((entry) => DropdownMenuItem(
+                            value: entry.key,
+                            child: Text(localization.lookup(entry.value)),
+                          ))
+                      .toList()),
+              DatePicker(
+                labelText: (expense.lastSentDate ?? '').isNotEmpty
+                    ? localization.nextSendDate
+                    : localization.startDate,
+                onSelected: (date) {
+                  viewModel.onChanged(
+                      expense.rebuild((b) => b..nextSendDate = date));
+                },
+                selectedDate: expense.nextSendDate,
+                firstDate: DateTime.now(),
+              ),
+              AppDropdownButton<int>(
+                showUseDefault: true,
+                labelText: localization.remainingCycles,
+                value: expense.remainingCycles,
+                blankValue: null,
+                onChanged: (dynamic value) => viewModel.onChanged(
+                    expense.rebuild((b) => b..remainingCycles = value)),
+                items: [
+                  DropdownMenuItem(
+                    child: Text(localization.endless),
+                    value: -1,
+                  ),
+                  ...List<int>.generate(37, (i) => i)
+                      .map((value) => DropdownMenuItem(
+                            child: Text('$value'),
+                            value: value,
+                          ))
+                      .toList()
+                ],
+              ),
+            ],
+          )
       ],
     );
   }

@@ -153,7 +153,7 @@ abstract class ExpenseEntity extends Object
       frequencyId: '',
       lastSentDate: '',
       nextSendDate: '',
-      remainingCycles: 0,
+      remainingCycles: -1,
     );
   }
 
@@ -663,7 +663,7 @@ abstract class ExpenseEntity extends Object
     ..frequencyId = ''
     ..lastSentDate = ''
     ..nextSendDate = ''
-    ..remainingCycles = 0;
+    ..remainingCycles = -1;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }
