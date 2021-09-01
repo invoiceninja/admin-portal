@@ -98,3 +98,6 @@ msix_config:
   architecture: x64
   capabilities: 'internetClient'
   store: true
+  logo_path: assets/images/logo_light.png
+  start_menu_icon_path: assets/images/icon.png
+  tile_icon_path: assets/images/icon.png

@@ -14,8 +14,6 @@ const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kAppDemoUrl = 'https://demo.invoiceninja.com';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
-const String kAppPlansURL =
-    'https://invoiceninja.invoicing.co/client/subscriptions/WJxbojagwO/purchase';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 const String kTransifexURL =

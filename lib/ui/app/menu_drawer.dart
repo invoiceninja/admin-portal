@@ -750,13 +750,9 @@ class SidebarFooter extends StatelessWidget {
                   }
 
                   if (isHosted(context)) {
-                    if (await canLaunch(kAppPlansURL)) {
-                      launch(kAppPlansURL);
-                    }
+                    launch(state.userCompany.ninjaPortalUrl);
                   } else {
-                    if (await canLaunch(kWhiteLabelUrl)) {
-                      launch(kWhiteLabelUrl);
-                    }
+                    launch(kWhiteLabelUrl);
                   }
                 },
               ),

@@ -323,39 +323,20 @@ class _AccountOverview extends StatelessWidget {
         ),
         if (state.userCompany.ninjaPortalUrl.isNotEmpty &&
             !isApple() &&
-            state.isHosted &&
-            state.isPaidAccount)
+            state.isHosted)
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconText(
-                        icon: MdiIcons.openInNew,
-                        text: localization.changePlan.toUpperCase(),
-                      ),
-                    ),
-                    onPressed: () => launch(
-                        '$kAppPlansURL?email=${Uri.encodeQueryComponent(state.user.email)}'),
+            child: Expanded(
+              child: OutlinedButton(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconText(
+                    icon: MdiIcons.openInNew,
+                    text: localization.changePlan.toUpperCase(),
                   ),
                 ),
-                SizedBox(width: kTableColumnGap),
-                Expanded(
-                  child: OutlinedButton(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconText(
-                        icon: MdiIcons.openInNew,
-                        text: localization.viewPortal.toUpperCase(),
-                      ),
-                    ),
-                    onPressed: () => launch(state.userCompany.ninjaPortalUrl),
-                  ),
-                ),
-              ],
+                onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+              ),
             ),
           ),
         FormCard(
