@@ -410,7 +410,6 @@ const List<String> kAdvancedSettings = [
   kSettingsGeneratedNumbers,
   kSettingsInvoiceDesign,
   kSettingsTemplatesAndReminders,
-  kSettingsWorkflowSettings,
   kSettingsSubscriptions,
   kSettingsUserManagement,
 ];
