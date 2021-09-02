@@ -289,10 +289,15 @@ class MenuDrawer extends StatelessWidget {
                                   contentPadding:
                                       const EdgeInsets.only(left: 20),
                                   onTap: () {
+                                    // TODO once v4 is sunset change to ViewSettings
+                                    launch(
+                                        'https://invoiceninja.github.io/docs/hosted-activate/');
+                                    /*
                                     store.dispatch(ViewSettings(
                                       section: kSettingsAccountManagement,
                                       company: company,
                                     ));
+                                    */
                                   },
                                   leading:
                                       Icon(Icons.warning, color: Colors.orange),
