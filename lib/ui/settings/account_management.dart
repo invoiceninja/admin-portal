@@ -326,17 +326,15 @@ class _AccountOverview extends StatelessWidget {
             state.isHosted)
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-            child: Expanded(
-              child: OutlinedButton(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconText(
-                    icon: MdiIcons.openInNew,
-                    text: localization.changePlan.toUpperCase(),
-                  ),
+            child: OutlinedButton(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconText(
+                  icon: MdiIcons.openInNew,
+                  text: localization.changePlan.toUpperCase(),
                 ),
-                onPressed: () => launch(state.userCompany.ninjaPortalUrl),
               ),
+              onPressed: () => launch(state.userCompany.ninjaPortalUrl),
             ),
           ),
         FormCard(
