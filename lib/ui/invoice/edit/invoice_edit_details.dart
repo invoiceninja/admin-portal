@@ -421,6 +421,20 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   invoice.rebuild((b) => b..exchangeRate = parseDouble(value))),
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
+            if (company.hasTaxes)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.inclusiveTaxes),
+                  dense: true,
+                  value: invoice.usesInclusiveTaxes,
+                  onChanged: (value) {
+                    viewModel.onChanged(
+                        invoice.rebuild((b) => b..usesInclusiveTaxes = value));
+                  },
+                ),
+              ),
             if (invoice.isInvoice)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
