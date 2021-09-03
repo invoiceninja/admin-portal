@@ -8,7 +8,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/flutter_version.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
@@ -1107,6 +1106,11 @@ void _showAbout(BuildContext context) async {
                                   children: [
                                     Text(localization.desktop + ' • Beta'),
                                     AppButton(
+                                      label: 'Windows',
+                                      iconData: MdiIcons.microsoftWindows,
+                                      onPressed: () => launch(kWindowsUrl),
+                                    ),
+                                    AppButton(
                                       label: 'macOS',
                                       iconData: MdiIcons.apple,
                                       onPressed: () => launch(kMacOSUrl),
@@ -1115,10 +1119,6 @@ void _showAbout(BuildContext context) async {
                                       label: 'Linux',
                                       iconData: MdiIcons.linux,
                                       onPressed: () => launch(kLinuxUrl),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20),
-                                      child: Text('Windows coming soon...'),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 30),
