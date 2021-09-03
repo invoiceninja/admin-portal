@@ -324,7 +324,9 @@ Future<Response> _loadPDF(
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
-    response = await http.Client().get(Uri.parse(url));
+    final client = http.Client();
+    response = await client.get(Uri.parse(url));
+    client.close();
   }
 
   if (response.statusCode >= 400) {
