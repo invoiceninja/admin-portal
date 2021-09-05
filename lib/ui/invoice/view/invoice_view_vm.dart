@@ -41,8 +41,8 @@ class InvoiceViewScreen extends StatelessWidget {
   }
 }
 
-class EntityViewVM {
-  EntityViewVM({
+class AbstractInvoiceViewVM {
+  AbstractInvoiceViewVM({
     @required this.state,
     @required this.company,
     @required this.invoice,
@@ -75,7 +75,7 @@ class EntityViewVM {
   final Function(BuildContext, InvoiceEntity, [String]) onViewPdf;
 }
 
-class InvoiceViewVM extends EntityViewVM {
+class InvoiceViewVM extends AbstractInvoiceViewVM {
   InvoiceViewVM(
       {AppState state,
       CompanyEntity company,

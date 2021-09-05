@@ -38,15 +38,15 @@ class ExpenseViewScreen extends StatelessWidget {
         return ExpenseView(
           viewModel: vm,
           isFilter: isFilter,
-          tabIndex: vm.state.expenseCategoryUIState.tabIndex,
+          tabIndex: vm.state.expenseUIState.tabIndex,
         );
       },
     );
   }
 }
 
-class ExpenseViewVM {
-  ExpenseViewVM({
+class AbstractExpenseViewVM {
+  AbstractExpenseViewVM({
     @required this.state,
     @required this.expense,
     @required this.company,
@@ -59,6 +59,46 @@ class ExpenseViewVM {
     @required this.isLoading,
     @required this.isDirty,
   });
+
+  final AppState state;
+  final ExpenseEntity expense;
+  final CompanyEntity company;
+  final Function(BuildContext, EntityAction) onEntityAction;
+  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
+  final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
+  final bool isSaving;
+  final bool isLoading;
+  final bool isDirty;
+}
+
+class ExpenseViewVM extends AbstractExpenseViewVM {
+  ExpenseViewVM({
+    AppState state,
+    ExpenseEntity expense,
+    CompanyEntity company,
+    Function(BuildContext, EntityAction) onEntityAction,
+    Function(BuildContext, EntityType, [bool]) onEntityPressed,
+    Function(BuildContext) onRefreshed,
+    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    bool isSaving,
+    bool isLoading,
+    bool isDirty,
+  }) : super(
+          state: state,
+          expense: expense,
+          company: company,
+          onEntityAction: onEntityAction,
+          onEntityPressed: onEntityPressed,
+          onRefreshed: onRefreshed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
+          isSaving: isSaving,
+          isLoading: isLoading,
+          isDirty: isDirty,
+        );
 
   factory ExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -144,16 +184,4 @@ class ExpenseViewVM {
           ));
         });
   }
-
-  final AppState state;
-  final ExpenseEntity expense;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
-  final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
 }

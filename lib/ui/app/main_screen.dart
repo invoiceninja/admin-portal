@@ -39,6 +39,7 @@ import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
@@ -506,6 +507,11 @@ class EntityScreens extends StatelessWidget {
           case EntityType.taskStatus:
             child = TaskStatusViewScreen();
             break;
+          case EntityType.recurringExpense:
+            child = RecurringExpenseViewScreen();
+            break;
+          default:
+            print('## View screen not defined for $previewEntityType');
         }
       }
     }

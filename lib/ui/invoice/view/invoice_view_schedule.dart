@@ -8,7 +8,7 @@ class InvoiceViewSchedule extends StatelessWidget {
   const InvoiceViewSchedule({Key key, @required this.viewModel})
       : super(key: key);
 
-  final EntityViewVM viewModel;
+  final AbstractInvoiceViewVM viewModel;
 
   @override
   Widget build(BuildContext context) {

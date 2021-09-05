@@ -29,7 +29,7 @@ class InvoiceOverview extends StatelessWidget {
     @required this.isFilter,
   }) : super(key: key);
 
-  final EntityViewVM viewModel;
+  final AbstractInvoiceViewVM viewModel;
   final bool isFilter;
 
   @override

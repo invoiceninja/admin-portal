@@ -43,7 +43,7 @@ class QuoteViewScreen extends StatelessWidget {
   }
 }
 
-class QuoteViewVM extends EntityViewVM {
+class QuoteViewVM extends AbstractInvoiceViewVM {
   QuoteViewVM({
     AppState state,
     CompanyEntity company,

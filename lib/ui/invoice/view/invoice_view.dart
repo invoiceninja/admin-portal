@@ -26,7 +26,7 @@ class InvoiceView extends StatefulWidget {
     @required this.tabIndex,
   }) : super(key: key);
 
-  final EntityViewVM viewModel;
+  final AbstractInvoiceViewVM viewModel;
   final bool isFilter;
   final int tabIndex;
 

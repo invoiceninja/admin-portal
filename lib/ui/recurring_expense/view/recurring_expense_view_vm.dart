@@ -1,14 +1,16 @@
 import 'dart:async';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class RecurringExpenseViewScreen extends StatelessWidget {
@@ -26,26 +28,42 @@ class RecurringExpenseViewScreen extends StatelessWidget {
         return RecurringExpenseViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return RecurringExpenseView(
+        return ExpenseView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.recurringExpenseUIState.tabIndex,
         );
       },
     );
   }
 }
 
-class RecurringExpenseViewVM {
+class RecurringExpenseViewVM extends AbstractExpenseViewVM {
   RecurringExpenseViewVM({
-    @required this.state,
-    @required this.recurringExpense,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-  });
+    AppState state,
+    ExpenseEntity expense,
+    CompanyEntity company,
+    Function(BuildContext, EntityAction) onEntityAction,
+    Function(BuildContext, EntityType, [bool]) onEntityPressed,
+    Function(BuildContext) onRefreshed,
+    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    bool isSaving,
+    bool isLoading,
+    bool isDirty,
+  }) : super(
+          state: state,
+          expense: expense,
+          company: company,
+          onEntityAction: onEntityAction,
+          onEntityPressed: onEntityPressed,
+          onRefreshed: onRefreshed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
+          isSaving: isSaving,
+          isLoading: isLoading,
+          isDirty: isDirty,
+        );
 
   factory RecurringExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -67,19 +85,10 @@ class RecurringExpenseViewVM {
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: recurringExpense.isNew,
-      recurringExpense: recurringExpense,
+      expense: recurringExpense,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([recurringExpense], action, autoPop: true),
     );
   }
-
-  final AppState state;
-  final ExpenseEntity recurringExpense;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onRefreshed;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
 }

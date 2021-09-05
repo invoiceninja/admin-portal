@@ -42,7 +42,7 @@ class RecurringInvoiceViewScreen extends StatelessWidget {
   }
 }
 
-class RecurringInvoiceViewVM extends EntityViewVM {
+class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
   RecurringInvoiceViewVM({
     AppState state,
     CompanyEntity company,
