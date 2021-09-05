@@ -32,13 +32,8 @@ class RecurringExpensePresenter extends EntityPresenter {
       RecurringExpenseFields.taxAmount,
       RecurringExpenseFields.privateNotes,
       RecurringExpenseFields.shouldBeInvoiced,
-      RecurringExpenseFields.transactionId,
-      RecurringExpenseFields.transactionReference,
-      RecurringExpenseFields.bankId,
       RecurringExpenseFields.currencyId,
-      RecurringExpenseFields.categoryId,
       RecurringExpenseFields.category,
-      RecurringExpenseFields.paymentDate,
       RecurringExpenseFields.exchangeRate,
       RecurringExpenseFields.invoiceCurrencyId,
       RecurringExpenseFields.taxName1,
@@ -95,18 +90,11 @@ class RecurringExpensePresenter extends EntityPresenter {
         return Text(expense.privateNotes);
       case RecurringExpenseFields.shouldBeInvoiced:
         return Text(expense.shouldBeInvoiced.toString());
-      case RecurringExpenseFields.transactionId:
-        return Text(expense.transactionId);
-      case RecurringExpenseFields.transactionReference:
-        return Text(expense.transactionReference);
-      case RecurringExpenseFields.bankId:
-        return Text(expense.bankId);
       case RecurringExpenseFields.currencyId:
         return Text(state
                 .staticState.currencyMap[expense.currencyId]?.listDisplayName ??
             '');
       case RecurringExpenseFields.category:
-      case RecurringExpenseFields.categoryId:
         return Text(state.expenseCategoryState.map[expense.categoryId]
                 ?.listDisplayName ??
             '');
