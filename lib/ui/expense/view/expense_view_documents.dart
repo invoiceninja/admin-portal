@@ -7,7 +7,7 @@ class ExpenseViewDocuments extends StatelessWidget {
   const ExpenseViewDocuments(
       {@required this.expense, @required this.viewModel});
 
-  final ExpenseViewVM viewModel;
+  final AbstractExpenseViewVM viewModel;
   final ExpenseEntity expense;
 
   @override
