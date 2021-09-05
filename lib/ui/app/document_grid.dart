@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -48,7 +49,7 @@ class DocumentGrid extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
             child: Row(
               children: <Widget>[
-                if (!kIsWeb)
+                if (isMobileOS()) ...[
                   Expanded(
                     child: AppButton(
                       iconData: Icons.camera_alt,
@@ -71,10 +72,10 @@ class DocumentGrid extends StatelessWidget {
                       },
                     ),
                   ),
-                if (!kIsWeb)
                   SizedBox(
                     width: 14,
                   ),
+                ],
                 Expanded(
                   child: AppButton(
                     iconData: Icons.insert_drive_file,

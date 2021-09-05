@@ -10,6 +10,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();
 
+bool isMobileOS() => isAndroid() || isIOS();
+
 bool isApple() {
   if (kIsWeb) {
     return false;
@@ -42,21 +44,34 @@ bool isLinux() {
   return Platform.isLinux;
 }
 
-bool isAndroid(BuildContext context) =>
-    Theme.of(context).platform == TargetPlatform.android;
+bool isAndroid() {
+  if (kIsWeb) {
+    return false;
+  }
 
-String getMapURL(BuildContext context) => isAndroid(context)
+  return Platform.isAndroid;
+}
+
+bool isIOS() {
+  if (kIsWeb) {
+    return false;
+  }
+
+  return Platform.isIOS;
+}
+
+String getMapURL(BuildContext context) => isAndroid()
     ? 'https://maps.google.com/?q='
     : 'http://maps.apple.com/?address=';
 
-String getLegacyAppURL(BuildContext context) => isAndroid(context)
+String getLegacyAppURL(BuildContext context) => isAndroid()
     ? 'https://play.google.com/store/apps/details?id=com.invoiceninja.invoiceninja'
     : 'https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1220337560&mt=8';
 
 String getPdfRequirements(BuildContext context) {
   final localization = AppLocalization.of(context);
   if (isMobile(context)) {
-    final version = isAndroid(context) ? 'Android 5.0+' : 'iOS 11.0+';
+    final version = isAndroid() ? 'Android 5.0+' : 'iOS 11.0+';
     return localization.pdfMinRequirements.replaceFirst(':version', version);
   } else {
     return '';
