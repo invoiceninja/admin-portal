@@ -36,4 +36,6 @@ class RecurringExpenseFields {
   static const String isDeleted = 'is_deleted';
   static const String documents = 'documents';
   static const String nextSendDate = 'next_send_date';
+  static const String remainingCycles = 'remaining_cycles';
+  static const String frequency = 'frequency';
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_expense_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringExpensePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -13,6 +15,7 @@ class RecurringExpensePresenter extends EntityPresenter {
       RecurringExpenseFields.status,
       RecurringExpenseFields.vendor,
       RecurringExpenseFields.client,
+      RecurringExpenseFields.frequency,
       RecurringExpenseFields.nextSendDate,
       RecurringExpenseFields.amount,
       RecurringExpenseFields.publicNotes,
@@ -52,11 +55,13 @@ class RecurringExpensePresenter extends EntityPresenter {
       RecurringExpenseFields.customValue3,
       RecurringExpenseFields.customValue4,
       RecurringExpenseFields.documents,
+      RecurringExpenseFields.remainingCycles,
     ];
   }
 
   @override
   Widget getField({String field, BuildContext context}) {
+    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final expense = entity as ExpenseEntity;
 
@@ -72,7 +77,7 @@ class RecurringExpensePresenter extends EntityPresenter {
         return Text((state.clientState.map[expense.clientId] ?? ClientEntity())
             .listDisplayName);
       case RecurringExpenseFields.nextSendDate:
-        return Text(formatDate(expense.date, context));
+        return Text(formatDate(expense.nextSendDate, context));
       case RecurringExpenseFields.netAmount:
         return Text(formatNumber(expense.netAmount, context,
             currencyId: expense.currencyId));
@@ -142,6 +147,10 @@ class RecurringExpensePresenter extends EntityPresenter {
         return Text(presentCustomField(expense.customValue4));
       case RecurringExpenseFields.documents:
         return Text('${expense.documents.length}');
+      case RecurringExpenseFields.remainingCycles:
+        return Text('${expense.remainingCycles}');
+      case RecurringExpenseFields.frequency:
+        return Text(localization.lookup(kFrequencies[expense.frequencyId]));
     }
 
     return super.getField(field: field, context: context);
