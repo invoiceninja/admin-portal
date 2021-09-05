@@ -43,9 +43,8 @@ class RecurringExpenseListBuilder extends StatelessWidget {
               final isInMultiselect = listState.isInMultiselect();
 
               return RecurringExpenseListItem(
-                user: viewModel.state.user,
                 filter: viewModel.filter,
-                recurringExpense: recurringExpense,
+                expense: recurringExpense,
                 isChecked: isInMultiselect &&
                     listState.isSelected(recurringExpense.id),
               );
