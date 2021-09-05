@@ -52,7 +52,7 @@ List<String> dropdownRecurringExpensesSelector(
     final recurringExpenseB = recurringExpenseMap[recurringExpenseBId];
     return recurringExpenseA.compareTo(
         recurringExpenseB,
-        RecurringExpenseFields.expenseDate,
+        RecurringExpenseFields.number,
         true,
         clientMap,
         userMap,

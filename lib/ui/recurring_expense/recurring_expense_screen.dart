@@ -64,7 +64,7 @@ class RecurringExpenseScreen extends StatelessWidget {
         },
         sortFields: [
           RecurringExpenseFields.number,
-          RecurringExpenseFields.expenseDate,
+          RecurringExpenseFields.nextSendDate,
           RecurringExpenseFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {

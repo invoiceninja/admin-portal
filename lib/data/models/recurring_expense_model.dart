@@ -12,7 +12,6 @@ class RecurringExpenseFields {
   static const String netAmount = 'net_amount';
   static const String amount = 'amount';
   static const String taxAmount = 'tax_amount';
-  static const String expenseDate = 'date';
   static const String paymentDate = 'payment_date';
   static const String exchangeRate = 'exchange_rate';
   static const String invoiceCurrencyId = 'invoice_currency_id';
@@ -36,4 +35,5 @@ class RecurringExpenseFields {
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
   static const String documents = 'documents';
+  static const String nextSendDate = 'next_send_date';
 }
