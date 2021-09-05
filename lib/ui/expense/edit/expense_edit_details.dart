@@ -322,6 +322,13 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
         ),
         if (expense.isRecurring)
           FormCard(
+            padding: isFullscreen
+                ? const EdgeInsets.only(
+                    left: kMobileDialogPadding,
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                  )
+                : null,
             children: [
               AppDropdownButton<String>(
                   labelText: localization.frequency,
