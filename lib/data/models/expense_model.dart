@@ -315,13 +315,26 @@ abstract class ExpenseEntity extends Object
         actions.add(EntityAction.edit);
       }
 
-      if (!isInvoiced && userCompany.canCreate(EntityType.invoice)) {
+      if (!isInvoiced &&
+          !isRecurring &&
+          userCompany.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.invoiceExpense);
       }
     }
 
-    if (userCompany.canCreate(EntityType.task) && !multiselect) {
-      actions.add(EntityAction.clone);
+    if (userCompany.canCreate(EntityType.expense) &&
+        !multiselect &&
+        !isRecurring) {
+      actions.add(EntityAction.cloneToExpense);
+    }
+
+    if (userCompany.canCreate(EntityType.recurringExpense) && !multiselect) {
+      actions.add(EntityAction.cloneToRecurring);
+    }
+    if (userCompany.canCreate(EntityType.expense) &&
+        !multiselect &&
+        isRecurring) {
+      actions.add(EntityAction.cloneToExpense);
     }
 
     if (actions.isNotEmpty && actions.last != null) {

@@ -299,6 +299,20 @@ void handleRecurringExpenseAction(BuildContext context,
               context, localization.deletedRecurringExpense),
           recurringExpenseIds));
       break;
+    case EntityAction.cloneToExpense:
+      createEntity(
+        context: context,
+        entity: recurringExpense.clone
+            .rebuild((b) => b..entityType = EntityType.expense),
+      );
+      break;
+    case EntityAction.cloneToRecurring:
+      createEntity(
+        context: context,
+        entity: recurringExpense.clone
+            .rebuild((b) => b..entityType = EntityType.recurringExpense),
+      );
+      break;
     case EntityAction.toggleMultiselect:
       if (!store.state.recurringExpenseListState.isInMultiselect()) {
         store.dispatch(StartRecurringExpenseMultiselect());

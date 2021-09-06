@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'clone_to_expense': 'Clone to Expense',
       'recurring_expense': 'Recurring Expense',
       'recurring_expenses': 'Recurring Expenses',
       'new_recurring_expense': 'New Recurring Expense',
@@ -62588,6 +62589,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchRecurringExpenses =>
       _localizedValues[localeCode]['search_recurring_expenses'] ??
       _localizedValues['en']['search_recurring_expenses'];
+
+  String get cloneToExpense =>
+      _localizedValues[localeCode]['clone_to_expense'] ??
+      _localizedValues['en']['clone_to_expense'];
 
   // STARTER: lang field - do not remove comment
 

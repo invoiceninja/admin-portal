@@ -16,6 +16,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.clone:
     case EntityAction.cloneToOther:
     case EntityAction.cloneToInvoice:
+    case EntityAction.cloneToExpense:
     case EntityAction.cloneToQuote:
     case EntityAction.cloneToCredit:
     case EntityAction.cloneToRecurring:
