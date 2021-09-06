@@ -34,8 +34,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'is_invoiced': 'Is Invoiced',
       'change_plan': 'Change Plan',
       'persist_data': 'Persist Data',
-      'persist_data_help':
-          'Disabling may improve performance for large accounts',
+      'persist_data_help': 'Enabling may degrade performance in large accounts',
       'customer_count': 'Customer Count',
       'verify_customers': 'Verify Customers',
       'google_analytics_tracking_id': 'Google Analytics Tracking ID',
