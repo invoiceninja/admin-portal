@@ -33,10 +33,12 @@ class WebClient {
       url += '&per_page=999999';
     }
 
-    final http.Response response = await http.Client().get(
+    final client = http.Client();
+    final http.Response response = await client.get(
       Uri.parse(url),
       headers: _getHeaders(url, token),
     );
+    client.close();
 
     if (rawResponse) {
       return response;
@@ -78,7 +80,8 @@ class WebClient {
     if (multipartFiles != null) {
       response = await _uploadFiles(url, token, multipartFiles, data: data);
     } else {
-      response = await http.Client()
+      final client = http.Client();
+      response = await client
           .post(
             Uri.parse(url),
             body: data,
@@ -95,6 +98,7 @@ class WebClient {
               seconds: rawResponse ? kMaxRawPostSeconds : kMaxPostSeconds,
             ),
           );
+      client.close();
     }
 
     if (rawResponse) {
@@ -133,7 +137,8 @@ class WebClient {
       response = await _uploadFiles(url, token, [multipartFile],
           fileIndex: fileIndex, data: data, method: 'PUT');
     } else {
-      response = await http.Client().put(
+      final client = http.Client();
+      response = await client.put(
         Uri.parse(url),
         body: data,
         headers: _getHeaders(
@@ -143,6 +148,7 @@ class WebClient {
           idToken: idToken,
         ),
       );
+      client.close();
     }
 
     _checkResponse(response);
@@ -166,7 +172,8 @@ class WebClient {
 
     print('Delete: $url');
 
-    final http.Response response = await http.Client().delete(
+    final client = http.Client();
+    final http.Response response = await client.delete(
       Uri.parse(url),
       headers: _getHeaders(
         url,
@@ -175,6 +182,7 @@ class WebClient {
         idToken: idToken,
       ),
     );
+    client.close();
 
     _checkResponse(response);
 

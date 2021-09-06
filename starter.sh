@@ -378,7 +378,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_state.dart
 
     comment="STARTER: constructor - do not remove comment"
-    code="${module_camel}UIState: ${Module}UIState(),${lineBreak}"
+    code="${module_camel}UIState: ${Module}UIState(sortFields[EntityType.${module_camel}]),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_state.dart
 
     comment="STARTER: import - do not remove comment"
@@ -410,23 +410,23 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: view list - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(View${Module}List(navigator: navigator)); break;${lineBreak}"
+    code="case EntityType.${module_camel}: action = View${Module}List(); break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: view - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(View${Module}(${module_camel}Id: entityId, navigator: navigator, force: force,)); break;${lineBreak}"
+    code="case EntityType.${module_camel}: store.dispatch(View${Module}(${module_camel}Id: entityId, force: force,)); break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: create type - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(navigator: navigator, force: force, ${module_camel}: ${Module}Entity(state: state), )); break;${lineBreak}"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(force: force, ${module_camel}: ${Module}Entity(state: state), )); break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: create - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(navigator: navigator, ${module_camel}: entity, force: force, completer: completer, )); break;${lineBreak}"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: entity, force: force, completer: completer, )); break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: edit - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: entity, navigator: navigator, completer: completer));break;${lineBreak}"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: entity, completer: completer));break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: actions - do not remove comment"
@@ -438,7 +438,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
 
     comment="STARTER: lang field - do not remove comment"
-    code="String get ${module_camel} => _localizedValues[localeCode]['${module_snake}']; String get ${modules_camel} => _localizedValues[localeCode]['${modules_snake}']; String get new${Module} => _localizedValues[localeCode]['new_${module_snake}']; String get created${Module} => _localizedValues[localeCode]['created_${module_snake}']; String get updated${Module} => _localizedValues[localeCode]['updated_${module_snake}']; String get archived${Module} => _localizedValues[localeCode]['archived_${module_snake}']; String get deleted${Module} => _localizedValues[localeCode]['deleted_${module_snake}']; String get restored${Module} => _localizedValues[localeCode]['restored_${module_snake}']; String get edit${Module} => _localizedValues[localeCode]['edit_${module_snake}'];${lineBreak} String get search${Module} => _localizedValues[localeCode]['search_${module_snake}'];${lineBreak}"
+    code="String get ${module_camel} => _localizedValues[localeCode]['${module_snake}'] ?? _localizedValues['en']['${module_snake}']; String get ${modules_camel} => _localizedValues[localeCode]['${modules_snake}'] ?? _localizedValues['en']['${modules_snake}']; String get new${Module} => _localizedValues[localeCode]['new_${module_snake}'] ?? _localizedValues['en']['new_${module_snake}']; String get created${Module} => _localizedValues[localeCode]['created_${module_snake}'] ?? _localizedValues['en']['created_${module_snake}']; String get updated${Module} => _localizedValues[localeCode]['updated_${module_snake}'] ?? _localizedValues['en']['updated_${module_snake}']; String get archived${Module} => _localizedValues[localeCode]['archived_${module_snake}'] ?? _localizedValues['en']['archived_${module_snake}']; String get deleted${Module} => _localizedValues[localeCode]['deleted_${module_snake}'] ?? _localizedValues['en']['deleted_${module_snake}']; String get restored${Module} => _localizedValues[localeCode]['restored_${module_snake}'] ?? _localizedValues['en']['restored_${module_snake}']; String get edit${Module} => _localizedValues[localeCode]['edit_${module_snake}'] ?? _localizedValues['en']['edit_${module_snake}'];${lineBreak} String get search${Module} => _localizedValues[localeCode]['search_${module_snake}'] ?? _localizedValues['en']['search_${module_snake}'];${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
 
     comment="STARTER: entity type - do not remove comment"

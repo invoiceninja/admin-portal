@@ -8,7 +8,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/flutter_version.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
@@ -289,10 +288,15 @@ class MenuDrawer extends StatelessWidget {
                                   contentPadding:
                                       const EdgeInsets.only(left: 20),
                                   onTap: () {
+                                    // TODO once v4 is sunset change to ViewSettings
+                                    launch(
+                                        'https://invoiceninja.github.io/docs/hosted-activate/');
+                                    /*
                                     store.dispatch(ViewSettings(
                                       section: kSettingsAccountManagement,
                                       company: company,
                                     ));
+                                    */
                                   },
                                   leading:
                                       Icon(Icons.warning, color: Colors.orange),
@@ -315,10 +319,16 @@ class MenuDrawer extends StatelessWidget {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   onTap: () {
+                                    // TODO once v4 is sunset change to ViewSettings
+                                    launch(
+                                        'https://invoiceninja.github.io/docs/hosted-activate/');
+
+                                    /*
                                     store.dispatch(ViewSettings(
                                       section: kSettingsAccountManagement,
                                       company: company,
                                     ));
+                                    */
                                   },
                                 ),
                               ),
@@ -354,17 +364,17 @@ class MenuDrawer extends StatelessWidget {
                           ),
                           DrawerTile(
                             company: company,
-                            entityType: EntityType.payment,
-                            icon: getEntityIcon(EntityType.payment),
-                            title: localization.payments,
-                            iconTooltip: localization.newPayment,
-                          ),
-                          DrawerTile(
-                            company: company,
                             entityType: EntityType.recurringInvoice,
                             icon: getEntityIcon(EntityType.recurringInvoice),
                             title: localization.recurringInvoices,
                             iconTooltip: localization.newRecurringInvoice,
+                          ),
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.payment,
+                            icon: getEntityIcon(EntityType.payment),
+                            title: localization.payments,
+                            iconTooltip: localization.newPayment,
                           ),
                           DrawerTile(
                             company: company,
@@ -409,6 +419,14 @@ class MenuDrawer extends StatelessWidget {
                             iconTooltip: localization.newExpense,
                           ),
                           // STARTER: menu - do not remove comment
+                          /*
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.recurringExpense,
+                            icon: getEntityIcon(EntityType.recurringExpense),
+                            title: localization.recurringExpenses,
+                          ),
+                          */
                           DrawerTile(
                             company: company,
                             icon: getEntityIcon(EntityType.reports),
@@ -743,13 +761,9 @@ class SidebarFooter extends StatelessWidget {
                   }
 
                   if (isHosted(context)) {
-                    if (await canLaunch(kAppPlansURL)) {
-                      launch(kAppPlansURL);
-                    }
+                    launch(state.userCompany.ninjaPortalUrl);
                   } else {
-                    if (await canLaunch(kWhiteLabelUrl)) {
-                      launch(kWhiteLabelUrl);
-                    }
+                    launch(kWhiteLabelUrl);
                   }
                 },
               ),
@@ -1093,6 +1107,11 @@ void _showAbout(BuildContext context) async {
                                   children: [
                                     Text(localization.desktop + ' • Beta'),
                                     AppButton(
+                                      label: 'Windows',
+                                      iconData: MdiIcons.microsoftWindows,
+                                      onPressed: () => launch(kWindowsUrl),
+                                    ),
+                                    AppButton(
                                       label: 'macOS',
                                       iconData: MdiIcons.apple,
                                       onPressed: () => launch(kMacOSUrl),
@@ -1101,10 +1120,6 @@ void _showAbout(BuildContext context) async {
                                       label: 'Linux',
                                       iconData: MdiIcons.linux,
                                       onPressed: () => launch(kLinuxUrl),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20),
-                                      child: Text('Windows coming soon...'),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 30),

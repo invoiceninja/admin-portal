@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
@@ -48,8 +49,8 @@ Middleware<AppState> _editStub() {
 
     store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
 
-    if (isMobile(action.context)) {
-        action.navigator.pushNamed(StubEditScreen.route);
+    if (store.state.prefState.isMobile) {
+        navigatorKey.currentState.pushNamed(StubEditScreen.route);
     }
   };
 }
@@ -63,8 +64,8 @@ Middleware<AppState> _viewStub() {
 
     store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
 
-    if (isMobile(action.context)) {
-        Navigator.of(action.context).pushNamed(StubViewScreen.route);
+    if (store.state.prefState.isMobile) {
+        navigatorKey.currentState.pushNamed(StubViewScreen.route);
     }
   };
 }
@@ -81,8 +82,8 @@ Middleware<AppState> _viewStubList() {
 
     store.dispatch(UpdateCurrentRoute(StubScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
           StubScreen.route, (Route<dynamic> route) => false);
     }
   };

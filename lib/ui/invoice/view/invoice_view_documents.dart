@@ -8,7 +8,7 @@ class InvoiceViewDocuments extends StatelessWidget {
       {Key key, @required this.invoice, @required this.viewModel})
       : super(key: key);
 
-  final EntityViewVM viewModel;
+  final AbstractInvoiceViewVM viewModel;
   final InvoiceEntity invoice;
 
   @override

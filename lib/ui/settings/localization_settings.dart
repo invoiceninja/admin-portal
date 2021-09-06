@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -204,6 +205,20 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enableMilitaryTime = value)),
                   ),
+                  if (!state.settingsUIState.isFiltered)
+                    SwitchListTile(
+                      value: company.useCommaAsDecimalPlace,
+                      onChanged: (value) {
+                        viewModel.onCompanyChanged(company
+                            .rebuild((b) => b..useCommaAsDecimalPlace = value));
+                      },
+                      title: Text(localization.decimalComma),
+                      subtitle: Text(localization.useCommaAsDecimalPlace),
+                      activeColor: Theme.of(context).accentColor,
+                      secondary: isDesktop(context)
+                          ? Icon(MdiIcons.commaCircle)
+                          : null,
+                    ),
                 ],
               ),
               if (!state.settingsUIState.isFiltered)

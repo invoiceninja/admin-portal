@@ -36,8 +36,8 @@ class InvoiceEditScreen extends StatelessWidget {
   }
 }
 
-class EntityEditVM {
-  EntityEditVM({
+abstract class AbstractInvoiceEditVM {
+  AbstractInvoiceEditVM({
     @required this.state,
     @required this.company,
     @required this.invoice,
@@ -60,7 +60,7 @@ class EntityEditVM {
   final Function(BuildContext) onCancelPressed;
 }
 
-class InvoiceEditVM extends EntityEditVM {
+class InvoiceEditVM extends AbstractInvoiceEditVM {
   InvoiceEditVM({
     AppState state,
     CompanyEntity company,

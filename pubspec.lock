@@ -295,6 +295,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.4"
+  filepicker_windows:
+    dependency: "direct main"
+    description:
+      name: filepicker_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   fixnum:
     dependency: transitive
     description:

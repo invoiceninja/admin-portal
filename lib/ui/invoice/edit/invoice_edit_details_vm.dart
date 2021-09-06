@@ -19,7 +19,7 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
   const InvoiceEditDetailsScreen({Key key, @required this.viewModel})
       : super(key: key);
 
-  final EntityEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {

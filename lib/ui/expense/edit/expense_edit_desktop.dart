@@ -11,7 +11,7 @@ class ExpenseEditDesktop extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final ExpenseEditVM viewModel;
+  final AbstractExpenseEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {

@@ -33,6 +33,10 @@ const EntityAction _$newClient = const EntityAction._('newClient');
 const EntityAction _$newInvoice = const EntityAction._('newInvoice');
 const EntityAction _$newRecurringInvoice =
     const EntityAction._('newRecurringInvoice');
+const EntityAction _$newRecurringExpense =
+    const EntityAction._('newRecurringExpense');
+const EntityAction _$newRecurringQuote =
+    const EntityAction._('newRecurringQuote');
 const EntityAction _$newQuote = const EntityAction._('newQuote');
 const EntityAction _$newCredit = const EntityAction._('newCredit');
 const EntityAction _$newExpense = const EntityAction._('newExpense');
@@ -108,6 +112,10 @@ EntityAction _$valueOf(String name) {
       return _$newInvoice;
     case 'newRecurringInvoice':
       return _$newRecurringInvoice;
+    case 'newRecurringExpense':
+      return _$newRecurringExpense;
+    case 'newRecurringQuote':
+      return _$newRecurringQuote;
     case 'newQuote':
       return _$newQuote;
     case 'newCredit':
@@ -185,6 +193,8 @@ final BuiltSet<EntityAction> _$values =
   _$newClient,
   _$newInvoice,
   _$newRecurringInvoice,
+  _$newRecurringExpense,
+  _$newRecurringQuote,
   _$newQuote,
   _$newCredit,
   _$newExpense,

@@ -14,7 +14,7 @@ class InvoiceViewContacts extends StatelessWidget {
   const InvoiceViewContacts({Key key, @required this.viewModel})
       : super(key: key);
 
-  final EntityViewVM viewModel;
+  final AbstractInvoiceViewVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _InvitationListTile extends StatelessWidget {
       {@required this.invitation, @required this.viewModel});
 
   final InvitationEntity invitation;
-  final EntityViewVM viewModel;
+  final AbstractInvoiceViewVM viewModel;
 
   @override
   Widget build(BuildContext context) {

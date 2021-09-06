@@ -18,8 +18,8 @@ void runTestSuite({bool batchMode = false}) {
     final poNumber =
         faker.randomGenerator.integer(999999, min: 100000).toString();
     final productKey = makeUnique(faker.food.cuisine());
-    final clientKey = faker.randomGenerator.integer(999999, min: 100000)
-        .toString();
+    final clientKey =
+        faker.randomGenerator.integer(999999, min: 100000).toString();
     final description = faker.lorem.sentences(5).toString();
     final cost =
         faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
@@ -91,7 +91,7 @@ void runTestSuite({bool batchMode = false}) {
       await driver.waitFor(find.text(localization.newQuote));
 
       print('Fill the quote form');
-      if(await isMobile(driver)) {
+      if (await isMobile(driver)) {
         await driver.tap(find.byTooltip(localization.addItem));
         await driver.tap(find.byTooltip(localization.createNew));
 
@@ -106,7 +106,6 @@ void runTestSuite({bool batchMode = false}) {
         await Future<dynamic>.delayed(Duration(milliseconds: 500));
         await driver.tap(find.text(localization.done.toUpperCase()));
         await driver.tap(find.text(localization.details));
-
       } else {
         await fillTextFields(driver, <String, String>{
           getLineItemKey('name', 0): productKey,

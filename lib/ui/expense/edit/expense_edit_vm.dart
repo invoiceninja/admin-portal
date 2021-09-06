@@ -36,20 +36,54 @@ class ExpenseEditScreen extends StatelessWidget {
   }
 }
 
-class ExpenseEditVM {
-  ExpenseEditVM({
+abstract class AbstractExpenseEditVM {
+  AbstractExpenseEditVM({
     @required this.state,
     @required this.expense,
-    @required this.company,
     @required this.onChanged,
-    @required this.isSaving,
     @required this.origExpense,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.isLoading,
     @required this.onAddClientPressed,
     @required this.onAddVendorPressed,
   });
+
+  final ExpenseEntity expense;
+  final Function(ExpenseEntity) onChanged;
+  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
+  final ExpenseEntity origExpense;
+  final AppState state;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddClientPressed;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddVendorPressed;
+}
+
+class ExpenseEditVM extends AbstractExpenseEditVM {
+  ExpenseEditVM({
+    AppState state,
+    ExpenseEntity expense,
+    Function(ExpenseEntity) onChanged,
+    Function(BuildContext) onSavePressed,
+    Function(BuildContext) onCancelPressed,
+    bool isLoading,
+    bool isSaving,
+    ExpenseEntity origExpense,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddClientPressed,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddVendorPressed,
+  }) : super(
+          state: state,
+          expense: expense,
+          onChanged: onChanged,
+          onSavePressed: onSavePressed,
+          onCancelPressed: onCancelPressed,
+          origExpense: origExpense,
+          onAddClientPressed: onAddClientPressed,
+          onAddVendorPressed: onAddVendorPressed,
+        );
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
     final expense = store.state.expenseUIState.editing;
@@ -61,7 +95,6 @@ class ExpenseEditVM {
       isSaving: state.isSaving,
       origExpense: state.expenseState.map[expense.id],
       expense: expense,
-      company: state.company,
       onChanged: (ExpenseEntity expense) {
         store.dispatch(UpdateExpense(expense));
       },
@@ -135,18 +168,4 @@ class ExpenseEditVM {
       },
     );
   }
-
-  final ExpenseEntity expense;
-  final CompanyEntity company;
-  final Function(ExpenseEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
-  final bool isLoading;
-  final bool isSaving;
-  final ExpenseEntity origExpense;
-  final AppState state;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddClientPressed;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddVendorPressed;
 }

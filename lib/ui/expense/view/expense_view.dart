@@ -23,7 +23,7 @@ class ExpenseView extends StatefulWidget {
     @required this.tabIndex,
   }) : super(key: key);
 
-  final ExpenseViewVM viewModel;
+  final AbstractExpenseViewVM viewModel;
   final bool isFilter;
   final int tabIndex;
 

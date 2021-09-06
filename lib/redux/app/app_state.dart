@@ -52,7 +52,12 @@ import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
+
 import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.dart';
 
@@ -297,6 +302,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.recurringExpense:
+        return recurringExpenseState.map;
+
       case EntityType.subscription:
         return subscriptionState.map;
       case EntityType.taskStatus:
@@ -374,6 +382,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.recurringExpense:
+        return recurringExpenseState.list;
+
       case EntityType.subscription:
         return subscriptionState.list;
 
@@ -440,9 +451,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.recurringExpense:
+        return recurringExpenseUIState;
       case EntityType.subscription:
         return subscriptionUIState;
-
       case EntityType.taskStatus:
         return taskStatusUIState;
       case EntityType.expenseCategory:
@@ -509,6 +521,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  RecurringExpenseState get recurringExpenseState =>
+      userCompanyState.recurringExpenseState;
+  ListUIState get recurringExpenseListState =>
+      uiState.recurringExpenseUIState.listUIState;
+  RecurringExpenseUIState get recurringExpenseUIState =>
+      uiState.recurringExpenseUIState;
+
   SubscriptionState get subscriptionState => userCompanyState.subscriptionState;
 
   ListUIState get subscriptionListState =>
@@ -672,6 +691,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CreditEditScreen.route:
         return hasCreditChanges(creditUIState.editing, creditState.map);
       // STARTER: has changes - do not remove comment
+      case RecurringExpenseEditScreen.route:
+        return hasRecurringExpenseChanges(
+            recurringExpenseUIState.editing, recurringExpenseState.map);
+
       case SubscriptionEditScreen.route:
         return hasSubscriptionChanges(
             subscriptionUIState.editing, subscriptionState.map);
@@ -822,6 +845,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       QuoteScreen.route,
       CreditScreen.route,
       RecurringInvoiceScreen.route,
+      RecurringExpenseScreen.route,
       TaskScreen.route,
     ].contains(mainRoute)) {
       if (isEmail || isPdf) {
@@ -833,7 +857,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
           isFullScreen = prefState.isEditorFullScreen(EntityType.client);
         } else if (mainRoute == VendorScreen.route) {
           isFullScreen = prefState.isEditorFullScreen(EntityType.vendor);
-        } else if (mainRoute == ExpenseScreen.route) {
+        } else if (mainRoute == ExpenseScreen.route ||
+            mainRoute == RecurringExpenseScreen.route) {
           isFullScreen = prefState.isEditorFullScreen(EntityType.expense);
         } else {
           isFullScreen = prefState.isEditorFullScreen(EntityType.invoice);

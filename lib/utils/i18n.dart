@@ -15,6 +15,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'recurring_expense': 'Recurring Expense',
+      'recurring_expenses': 'Recurring Expenses',
+      'new_recurring_expense': 'New Recurring Expense',
+      'edit_recurring_expense': 'Edit Recurring Expense',
+      'created_recurring_expense': 'Successfully created recurring expense',
+      'updated_recurring_expense': 'Successfully updated recurring expense',
+      'archived_recurring_expense': 'Successfully archived recurring expense',
+      'deleted_recurring_expense': 'Successfully deleted recurring expense',
+      'removed_recurring_expense': 'Successfully removed recurring expense',
+      'restored_recurring_expense': 'Successfully restored recurring expense',
+      'search_recurring_expense': 'Search Recurring Expense',
+      'search_recurring_expenses': 'Search Recurring Expenses',
       'last_sent_date': 'Last Sent Date',
       'include_drafts': 'Include Drafts',
       'include_drafts_help': 'Include draft records in reports',
@@ -772,7 +784,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tickets': 'Tickets',
       'recurring_quotes': 'Recurring Quotes',
       'recurring_tasks': 'Recurring Tasks',
-      'recurring_expenses': 'Recurring Expenses',
       'account_management': 'Account Management',
       'credit_date': 'Credit Date',
       'credit': 'Credit',
@@ -1443,7 +1454,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Edit Vendor',
       'edit_project': 'Edit Project',
-      'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
       'billing_address': 'Billing Address',
       'shipping_address': 'Shipping Address',
@@ -60430,8 +60440,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
-// STARTER: lang field - do not remove comment
-
   String get taskStatus => _localizedValues[localeCode]['task_status'] ?? '';
 
   String get taskStatuses =>
@@ -62544,6 +62552,44 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get lastSentDate =>
       _localizedValues[localeCode]['last_sent_date'] ??
       _localizedValues['en']['last_sent_date'];
+
+  String get recurringExpense =>
+      _localizedValues[localeCode]['recurring_expense'] ??
+      _localizedValues['en']['recurring_expense'];
+
+  String get newRecurringExpense =>
+      _localizedValues[localeCode]['new_recurring_expense'] ??
+      _localizedValues['en']['new_recurring_expense'];
+
+  String get createdRecurringExpense =>
+      _localizedValues[localeCode]['created_recurring_expense'] ??
+      _localizedValues['en']['created_recurring_expense'];
+
+  String get updatedRecurringExpense =>
+      _localizedValues[localeCode]['updated_recurring_expense'] ??
+      _localizedValues['en']['updated_recurring_expense'];
+
+  String get archivedRecurringExpense =>
+      _localizedValues[localeCode]['archived_recurring_expense'] ??
+      _localizedValues['en']['archived_recurring_expense'];
+
+  String get deletedRecurringExpense =>
+      _localizedValues[localeCode]['deleted_recurring_expense'] ??
+      _localizedValues['en']['deleted_recurring_expense'];
+
+  String get restoredRecurringExpense =>
+      _localizedValues[localeCode]['restored_recurring_expense'] ??
+      _localizedValues['en']['restored_recurring_expense'];
+
+  String get searchRecurringExpense =>
+      _localizedValues[localeCode]['search_recurring_expense'] ??
+      _localizedValues['en']['search_recurring_expense'];
+
+  String get searchRecurringExpenses =>
+      _localizedValues[localeCode]['search_recurring_expenses'] ??
+      _localizedValues['en']['search_recurring_expenses'];
+
+  // STARTER: lang field - do not remove comment
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

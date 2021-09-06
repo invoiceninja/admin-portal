@@ -67,7 +67,7 @@ class StubViewVM {
         stub: stub,
         onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [stub], action, autoPop: true),
+          handleEntitiesActions([stub], action, autoPop: true),
         );
   }
 

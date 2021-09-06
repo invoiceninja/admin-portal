@@ -63,6 +63,11 @@ import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen_vm.dart';
+
 import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
@@ -420,6 +425,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                         QuotePdfScreen.route: (context) => QuotePdfScreen(),
                         // STARTER: routes - do not remove comment
+                        RecurringExpenseScreen.route: (context) =>
+                            RecurringExpenseScreenBuilder(),
+                        RecurringExpenseViewScreen.route: (context) =>
+                            RecurringExpenseViewScreen(),
+                        RecurringExpenseEditScreen.route: (context) =>
+                            RecurringExpenseEditScreen(),
+
                         SubscriptionScreen.route: (context) =>
                             SubscriptionScreenBuilder(),
                         SubscriptionViewScreen.route: (context) =>

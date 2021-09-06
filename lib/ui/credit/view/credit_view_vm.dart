@@ -43,7 +43,7 @@ class CreditViewScreen extends StatelessWidget {
   }
 }
 
-class CreditViewVM extends EntityViewVM {
+class CreditViewVM extends AbstractInvoiceViewVM {
   CreditViewVM({
     AppState state,
     CompanyEntity company,

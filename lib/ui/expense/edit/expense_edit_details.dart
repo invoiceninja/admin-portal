@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -30,7 +31,7 @@ class ExpenseEditDetails extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final ExpenseEditVM viewModel;
+  final AbstractExpenseEditVM viewModel;
 
   @override
   ExpenseEditDetailsState createState() => ExpenseEditDetailsState();
@@ -109,7 +110,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
     final state = store.state;
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
-    final company = viewModel.company;
+    final company = state.company;
     final staticState = viewModel.state.staticState;
     final vendorState = viewModel.state.vendorState;
     final clientState = viewModel.state.clientState;
@@ -319,6 +320,62 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
           ],
         ),
+        if (expense.isRecurring)
+          FormCard(
+            padding: isFullscreen
+                ? const EdgeInsets.only(
+                    left: kMobileDialogPadding,
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                  )
+                : null,
+            children: [
+              AppDropdownButton<String>(
+                  labelText: localization.frequency,
+                  value: expense.frequencyId,
+                  onChanged: (dynamic value) {
+                    viewModel.onChanged(
+                        expense.rebuild((b) => b..frequencyId = value));
+                  },
+                  items: kFrequencies.entries
+                      .map((entry) => DropdownMenuItem(
+                            value: entry.key,
+                            child: Text(localization.lookup(entry.value)),
+                          ))
+                      .toList()),
+              DatePicker(
+                labelText: (expense.lastSentDate ?? '').isNotEmpty
+                    ? localization.nextSendDate
+                    : localization.startDate,
+                onSelected: (date) {
+                  viewModel.onChanged(
+                      expense.rebuild((b) => b..nextSendDate = date));
+                },
+                selectedDate: expense.nextSendDate,
+                firstDate: DateTime.now(),
+              ),
+              AppDropdownButton<int>(
+                showUseDefault: true,
+                labelText: localization.remainingCycles,
+                value: expense.remainingCycles,
+                blankValue: null,
+                onChanged: (dynamic value) => viewModel.onChanged(
+                    expense.rebuild((b) => b..remainingCycles = value)),
+                items: [
+                  DropdownMenuItem(
+                    child: Text(localization.endless),
+                    value: -1,
+                  ),
+                  ...List<int>.generate(37, (i) => i)
+                      .map((value) => DropdownMenuItem(
+                            child: Text('$value'),
+                            value: value,
+                          ))
+                      .toList()
+                ],
+              ),
+            ],
+          )
       ],
     );
   }

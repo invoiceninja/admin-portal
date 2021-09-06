@@ -50,6 +50,8 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
@@ -344,26 +346,29 @@ void viewEntitiesByType({
             action = ViewGroupList();
             break;
           // STARTER: view list - do not remove comment
+          case EntityType.recurringExpense:
+            action = ViewRecurringExpenseList();
+            break;
           case EntityType.subscription:
-            store.dispatch(ViewSubscriptionList());
+            action = ViewSubscriptionList();
             break;
           case EntityType.taskStatus:
-            store.dispatch(ViewTaskStatusList());
+            action = ViewTaskStatusList();
             break;
           case EntityType.expenseCategory:
-            store.dispatch(ViewExpenseCategoryList());
+            action = ViewExpenseCategoryList();
             break;
           case EntityType.recurringInvoice:
-            store.dispatch(ViewRecurringInvoiceList());
+            action = ViewRecurringInvoiceList();
             break;
           case EntityType.webhook:
-            store.dispatch(ViewWebhookList());
+            action = ViewWebhookList();
             break;
           case EntityType.token:
-            store.dispatch(ViewTokenList());
+            action = ViewTokenList();
             break;
           case EntityType.paymentTerm:
-            store.dispatch(ViewPaymentTermList());
+            action = ViewPaymentTermList();
             break;
           case EntityType.design:
             action = ViewDesignList();
@@ -541,48 +546,48 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+          case EntityType.recurringExpense:
+            store.dispatch(ViewRecurringExpense(
+              recurringExpenseId: entityId,
+              force: force,
+            ));
+            break;
           case EntityType.subscription:
             store.dispatch(ViewSubscription(
               subscriptionId: entityId,
               force: force,
             ));
             break;
-
           case EntityType.taskStatus:
             store.dispatch(ViewTaskStatus(
               taskStatusId: entityId,
               force: force,
             ));
             break;
-
           case EntityType.expenseCategory:
             store.dispatch(ViewExpenseCategory(
               expenseCategoryId: entityId,
               force: force,
             ));
             break;
-
           case EntityType.recurringInvoice:
             store.dispatch(ViewRecurringInvoice(
               recurringInvoiceId: entityId,
               force: force,
             ));
             break;
-
           case EntityType.webhook:
             store.dispatch(ViewWebhook(
               webhookId: entityId,
               force: force,
             ));
             break;
-
           case EntityType.token:
             store.dispatch(ViewToken(
               tokenId: entityId,
               force: force,
             ));
             break;
-
           case EntityType.paymentTerm:
             store.dispatch(ViewPaymentTerm(
               paymentTermId: entityId,
@@ -595,7 +600,6 @@ void viewEntityById({
               force: force,
             ));
             break;
-
           case EntityType.credit:
             store.dispatch(ViewCredit(
               creditId: entityId,
@@ -758,13 +762,24 @@ void createEntityByType({
             ));
             break;
           // STARTER: create type - do not remove comment
+          case EntityType.recurringExpense:
+            store.dispatch(EditRecurringExpense(
+              force: force,
+              recurringExpense: ExpenseEntity(
+                  state: state,
+                  client: client,
+                  project: project,
+                  user: user,
+                  vendor: vendor,
+                  entityType: EntityType.recurringExpense),
+            ));
+            break;
           case EntityType.subscription:
             store.dispatch(EditSubscription(
               force: force,
               subscription: SubscriptionEntity(state: state),
             ));
             break;
-
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               force: force,
@@ -957,6 +972,13 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
+          case EntityType.recurringExpense:
+            store.dispatch(EditRecurringExpense(
+              recurringExpense: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
           case EntityType.subscription:
             store.dispatch(EditSubscription(
               subscription: entity,
@@ -964,7 +986,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               taskStatus: entity,
@@ -972,7 +993,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
               expenseCategory: entity,
@@ -980,7 +1000,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
               recurringInvoice: entity,
@@ -988,7 +1007,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.webhook:
             store.dispatch(EditWebhook(
               webhook: entity,
@@ -996,7 +1014,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.token:
             store.dispatch(EditToken(
               token: entity,
@@ -1004,7 +1021,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
               paymentTerm: entity,
@@ -1012,7 +1028,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.design:
             store.dispatch(EditDesign(
               design: entity,
@@ -1020,7 +1035,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.credit:
             store.dispatch(EditCredit(
               credit: entity,
@@ -1143,6 +1157,11 @@ void editEntity(
             ));
             break;
           // STARTER: edit - do not remove comment
+          case EntityType.recurringExpense:
+            store.dispatch(EditRecurringExpense(
+                recurringExpense: entity, completer: completer));
+            break;
+
           case EntityType.subscription:
             store.dispatch(
                 EditSubscription(subscription: entity, completer: completer));
@@ -1309,6 +1328,10 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.recurringExpense:
+      handleRecurringExpenseAction(context, entities, action);
+      break;
+
     case EntityType.subscription:
       handleSubscriptionAction(context, entities, action);
       break;

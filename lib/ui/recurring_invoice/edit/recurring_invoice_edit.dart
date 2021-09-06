@@ -18,7 +18,7 @@ class RecurringInvoiceEdit extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final EntityEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
 
   @override
   _RecurringInvoiceEditState createState() => _RecurringInvoiceEditState();
@@ -98,24 +98,24 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
         EntityAction.viewPdf,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
-      appBarBottom:TabBar(
-              controller: _controller,
-              //isScrollable: true,
-              tabs: [
-                Tab(
-                  text: localization.details,
-                ),
-                Tab(
-                  text: localization.contacts,
-                ),
-                Tab(
-                  text: localization.items,
-                ),
-                Tab(
-                  text: localization.notes,
-                ),
-              ],
-            ),
+      appBarBottom: TabBar(
+        controller: _controller,
+        //isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.contacts,
+          ),
+          Tab(
+            text: localization.items,
+          ),
+          Tab(
+            text: localization.notes,
+          ),
+        ],
+      ),
       body: Form(
         key: _formKey,
         child: isFullscreen

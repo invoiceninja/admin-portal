@@ -140,6 +140,10 @@ class _SettingsListState extends State<SettingsList> {
                 section: kSettingsExpenses,
                 viewModel: widget.viewModel,
               ),
+            SettingsListTile(
+              section: kSettingsWorkflowSettings,
+              viewModel: widget.viewModel,
+            ),
             // TODO Re-entable
             /*
               if (showAll)
@@ -203,10 +207,6 @@ class _SettingsListState extends State<SettingsList> {
             ),
             SettingsListTile(
               section: kSettingsSubscriptions,
-              viewModel: widget.viewModel,
-            ),
-            SettingsListTile(
-              section: kSettingsWorkflowSettings,
               viewModel: widget.viewModel,
             ),
             /*
@@ -417,6 +417,16 @@ class SettingsSearch extends StatelessWidget {
           'expense_categories',
         ],
       ],
+      kSettingsWorkflowSettings: [
+        [
+          'auto_email_invoice',
+          'auto_archive_invoice',
+          'lock_invoices',
+        ],
+        [
+          'auto_convert',
+        ],
+      ],
       kSettingsImportExport: [
         [
           'import',
@@ -544,16 +554,6 @@ class SettingsSearch extends StatelessWidget {
       kSettingsSubscriptions: [
         [
           'subscriptions',
-        ],
-      ],
-      kSettingsWorkflowSettings: [
-        [
-          'auto_email_invoice',
-          'auto_archive_invoice',
-          'lock_invoices',
-        ],
-        [
-          'auto_convert',
         ],
       ],
       kSettingsUserManagement: [

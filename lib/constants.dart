@@ -14,8 +14,6 @@ const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kAppDemoUrl = 'https://demo.invoiceninja.com';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
-const String kAppPlansURL =
-    'https://invoiceninja.invoicing.co/client/subscriptions/WJxbojagwO/purchase';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 const String kTransifexURL =
@@ -32,8 +30,10 @@ const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.app';
 const String kGoogleFDroidUrl =
     'https://f-droid.org/packages/com.invoiceninja.app/';
-const String kMacOSUrl = 'http://download.invoiceninja.com/macos';
-const String kLinuxUrl = 'http://download.invoiceninja.com/linux';
+const String kMacOSUrl = 'https://download.invoiceninja.com/macos';
+const String kLinuxUrl = 'https://download.invoiceninja.com/linux';
+const String kWindowsUrl =
+    'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
 
 const String kDocsUrl = 'https://invoiceninja.github.io/docs';
 const String kDocsCustomDomainUrl =
@@ -412,7 +412,6 @@ const List<String> kAdvancedSettings = [
   kSettingsGeneratedNumbers,
   kSettingsInvoiceDesign,
   kSettingsTemplatesAndReminders,
-  kSettingsWorkflowSettings,
   kSettingsSubscriptions,
   kSettingsUserManagement,
 ];
@@ -516,10 +515,9 @@ const Map<int, String> kModules = {
   kModuleTasks: 'tasks',
   kModuleVendors: 'vendors',
   kModuleExpenses: 'expenses',
-  //kModuleProposals: 'proposals',
+  //kModuleRecurringExpenses: 'recurring_expenses',
   //kModuleTickets: 'tickets',
   //kModuleRecurringTasks: 'recurring_tasks',
-  //kModuleRecurringExpenses: 'recurring_expenses',
   //kModuleRecurringQuotes: 'recurring_quotes',
 };
 

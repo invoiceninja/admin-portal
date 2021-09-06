@@ -95,10 +95,12 @@ abstract class ExpenseEntity extends Object
     ClientEntity client,
     UserEntity user,
     ProjectEntity project,
+    EntityType entityType,
   }) {
     final company = state?.company;
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
+      entityType: entityType ?? EntityType.expense,
       number: '',
       isChanged: false,
       privateNotes: '',
@@ -148,6 +150,10 @@ abstract class ExpenseEntity extends Object
       createdUserId: '',
       archivedAt: 0,
       updatedAt: 0,
+      frequencyId: '',
+      lastSentDate: '',
+      nextSendDate: '',
+      remainingCycles: -1,
     );
   }
 
@@ -168,11 +174,6 @@ abstract class ExpenseEntity extends Object
     ..transactionReference = ''
     ..paymentTypeId = ''
     ..paymentDate = '');
-
-  @override
-  EntityType get entityType {
-    return EntityType.expense;
-  }
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
@@ -285,6 +286,18 @@ abstract class ExpenseEntity extends Object
   BuiltList<DocumentEntity> get documents;
 
   String get number;
+
+  @BuiltValueField(wireName: 'frequency_id')
+  String get frequencyId;
+
+  @BuiltValueField(wireName: 'last_sent_date')
+  String get lastSentDate;
+
+  @BuiltValueField(wireName: 'next_send_date')
+  String get nextSendDate;
+
+  @BuiltValueField(wireName: 'remaining_cycles')
+  int get remainingCycles;
 
   @override
   List<EntityAction> getActions(
@@ -553,6 +566,8 @@ abstract class ExpenseEntity extends Object
 
   bool get isUpcoming => convertSqlDateToDateTime(date).isAfter(DateTime.now());
 
+  bool get isRecurring => [EntityType.recurringExpense].contains(entityType);
+
   @override
   double get listDisplayAmount => null;
 
@@ -641,6 +656,14 @@ abstract class ExpenseEntity extends Object
   bool get isConverted => exchangeRate != 1 && exchangeRate != 0;
 
   bool get hasExchangeRate => exchangeRate != 1 && exchangeRate != 0;
+
+  // ignore: unused_element
+  static void _initializeBuilder(ExpenseEntityBuilder builder) => builder
+    ..entityType = EntityType.expense
+    ..frequencyId = ''
+    ..lastSentDate = ''
+    ..nextSendDate = ''
+    ..remainingCycles = -1;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
 }

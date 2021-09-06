@@ -48,7 +48,7 @@ class InvoiceEditDesktop extends StatefulWidget {
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
-  final EntityEditVM entityViewModel;
+  final AbstractInvoiceEditVM entityViewModel;
 
   @override
   InvoiceEditDesktopState createState() => InvoiceEditDesktopState();
@@ -641,9 +641,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         },
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 38,
-                                    ),
+                                    SizedBox(width: kTableColumnGap),
                                     Expanded(
                                       child: UserPicker(
                                         userId: invoice.assignedUserId,
@@ -676,31 +674,54 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                             .entityViewModel.onSavePressed,
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 38,
-                                    ),
-                                    Expanded(
-                                      child: invoice.isInvoice
-                                          ? Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 8),
-                                              child: SwitchListTile(
-                                                activeColor: Theme.of(context)
-                                                    .accentColor,
-                                                title: Text(localization
-                                                    .autoBillEnabled),
-                                                dense: true,
-                                                value: invoice.autoBillEnabled,
-                                                onChanged: (value) {
-                                                  viewModel.onChanged(
-                                                      invoice.rebuild((b) => b
-                                                        ..autoBillEnabled =
-                                                            value));
-                                                },
-                                              ),
-                                            )
-                                          : SizedBox(),
-                                    ),
+                                    if (company.hasTaxes) ...[
+                                      SizedBox(width: kTableColumnGap),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8),
+                                          child: SwitchListTile(
+                                            activeColor:
+                                                Theme.of(context).accentColor,
+                                            title: Text(
+                                                localization.inclusiveTaxes),
+                                            dense: true,
+                                            value: invoice.usesInclusiveTaxes,
+                                            onChanged: (value) {
+                                              viewModel.onChanged(
+                                                  invoice.rebuild((b) => b
+                                                    ..usesInclusiveTaxes =
+                                                        value));
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ] else if (!invoice.isInvoice) ...[
+                                      SizedBox(width: kTableColumnGap),
+                                      Expanded(child: SizedBox()),
+                                    ],
+                                    if (invoice.isInvoice) ...[
+                                      SizedBox(width: kTableColumnGap),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8),
+                                          child: SwitchListTile(
+                                            activeColor:
+                                                Theme.of(context).accentColor,
+                                            title: Text(
+                                                localization.autoBillEnabled),
+                                            dense: true,
+                                            value: invoice.autoBillEnabled,
+                                            onChanged: (value) {
+                                              viewModel.onChanged(
+                                                  invoice.rebuild((b) => b
+                                                    ..autoBillEnabled = value));
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ],
                                 )
                               ],

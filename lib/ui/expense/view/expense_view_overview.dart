@@ -18,7 +18,7 @@ class ExpenseOverview extends StatelessWidget {
     @required this.isFilter,
   }) : super(key: key);
 
-  final ExpenseViewVM viewModel;
+  final AbstractExpenseViewVM viewModel;
   final bool isFilter;
 
   @override

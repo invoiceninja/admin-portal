@@ -166,7 +166,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
         : BuiltMap<String, String>(PrefState.CONTRAST_COLORS))
     ..showKanban = false
     ..isPreviewEnabled = true
-    ..persistData = !kIsWeb
+    ..persistData = false
     ..colorTheme =
         builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;
 

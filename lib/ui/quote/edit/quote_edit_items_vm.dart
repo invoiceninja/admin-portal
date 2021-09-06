@@ -16,7 +16,7 @@ class QuoteEditItemsScreen extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final EntityEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {

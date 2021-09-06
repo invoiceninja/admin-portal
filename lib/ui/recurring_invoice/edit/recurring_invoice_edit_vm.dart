@@ -37,7 +37,7 @@ class RecurringInvoiceEditScreen extends StatelessWidget {
   }
 }
 
-class RecurringInvoiceEditVM extends EntityEditVM {
+class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
   RecurringInvoiceEditVM({
     AppState state,
     CompanyEntity company,

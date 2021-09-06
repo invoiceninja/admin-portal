@@ -250,7 +250,9 @@ Middleware<AppState> _createLoadState(
       } else {
         store.dispatch(RefreshData(
             completer: Completer<Null>()
-              ..future.catchError((Object error) {
+              ..future.then((value) {
+                AppBuilder.of(navigatorKey.currentContext).rebuild();
+              }).catchError((Object error) {
                 store.dispatch(UserLogout());
               })));
       }

@@ -139,6 +139,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ProjectUIState.serializer)
       ..add(QuoteState.serializer)
       ..add(QuoteUIState.serializer)
+      ..add(RecurringExpenseState.serializer)
+      ..add(RecurringExpenseUIState.serializer)
       ..add(RecurringInvoiceState.serializer)
       ..add(RecurringInvoiceUIState.serializer)
       ..add(ReportSettingsEntity.serializer)
@@ -379,6 +381,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(InvoiceEntity)]),
           () => new ListBuilder<InvoiceEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ExpenseEntity)]),
+          () => new ListBuilder<ExpenseEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(PaymentEntity)]),
           () => new ListBuilder<PaymentEntity>())
@@ -661,6 +666,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(ExpenseCategoryEntity)
           ]),
           () => new MapBuilder<String, ExpenseCategoryEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ExpenseEntity)]),
+          () => new MapBuilder<String, ExpenseEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
