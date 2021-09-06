@@ -70,6 +70,13 @@ class EntityStatusChip extends StatelessWidget {
             : ExpenseStatusColors(state.prefState.colorThemeModel)
                 .colors[expense.statusId];
         break;
+      case EntityType.recurringExpense:
+        final expense = entity as ExpenseEntity;
+        final statusId = expense.calculatedStatusId;
+        label = kRecurringExpenseStatuses[statusId];
+        color = RecurringInvoiceStatusColors(state.prefState.colorThemeModel)
+            .colors[statusId];
+        break;
       case EntityType.task:
         final task = entity as TaskEntity;
         final status = state.taskStatusState.get(task.statusId);

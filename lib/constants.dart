@@ -191,6 +191,20 @@ const kRecurringInvoiceStatuses = {
   kRecurringInvoiceStatusPending: 'pending',
 };
 
+const String kRecurringExpenseStatusDraft = '1';
+const String kRecurringExpenseStatusActive = '2';
+const String kRecurringExpenseStatusPaused = '3';
+const String kRecurringExpenseStatusCompleted = '4';
+const String kRecurringExpenseStatusPending = '-1';
+
+const kRecurringExpenseStatuses = {
+  kRecurringExpenseStatusDraft: 'draft',
+  kRecurringExpenseStatusActive: 'active',
+  kRecurringExpenseStatusPaused: 'paused',
+  kRecurringExpenseStatusCompleted: 'completed',
+  kRecurringExpenseStatusPending: 'pending',
+};
+
 const String kQuoteStatusViewed = '-2';
 const String kQuoteStatusExpired = '-1';
 const String kQuoteStatusDraft = '1';

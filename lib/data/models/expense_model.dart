@@ -315,6 +315,18 @@ abstract class ExpenseEntity extends Object
         actions.add(EntityAction.edit);
       }
 
+      if (isRecurring) {
+        if ([kRecurringExpenseStatusDraft, kRecurringExpenseStatusPaused]
+            .contains(statusId)) {
+          actions.add(EntityAction.start);
+        } else if ([
+          kRecurringExpenseStatusPending,
+          kRecurringExpenseStatusActive,
+        ].contains(statusId)) {
+          actions.add(EntityAction.stop);
+        }
+      }
+
       if (!isInvoiced &&
           !isRecurring &&
           userCompany.canCreate(EntityType.invoice)) {
@@ -580,6 +592,14 @@ abstract class ExpenseEntity extends Object
   bool get isUpcoming => convertSqlDateToDateTime(date).isAfter(DateTime.now());
 
   bool get isRecurring => [EntityType.recurringExpense].contains(entityType);
+
+  String get calculatedStatusId {
+    if (isPending) {
+      return kRecurringExpenseStatusPending;
+    }
+
+    return statusId;
+  }
 
   @override
   double get listDisplayAmount => null;
