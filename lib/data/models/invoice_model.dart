@@ -918,7 +918,13 @@ abstract class InvoiceEntity extends Object
 
   bool get isSent => statusId != kInvoiceStatusDraft;
 
-  bool get isUnpaid => statusId != kInvoiceStatusPaid;
+  bool get isUnpaid {
+    if (isQuote) {
+      return !isApproved;
+    } else {
+      return !isPaid;
+    }
+  }
 
   bool get isPayable =>
       !isPaid && !isQuote && !isRecurringInvoice && !isCancelledOrReversed;
