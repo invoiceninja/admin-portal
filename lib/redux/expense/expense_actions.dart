@@ -255,8 +255,19 @@ void handleExpenseAction(
     case EntityAction.edit:
       editEntity(context: context, entity: expense);
       break;
-    case EntityAction.clone:
-      createEntity(context: context, entity: expense.clone);
+    case EntityAction.cloneToExpense:
+      createEntity(
+        context: context,
+        entity:
+            expense.clone.rebuild((b) => b..entityType = EntityType.expense),
+      );
+      break;
+    case EntityAction.cloneToRecurring:
+      createEntity(
+        context: context,
+        entity: expense.clone
+            .rebuild((b) => b..entityType = EntityType.recurringExpense),
+      );
       break;
     case EntityAction.invoiceExpense:
       final items = expenses

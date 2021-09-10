@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'clone_to_expense': 'Clone to Expense',
       'recurring_expense': 'Recurring Expense',
       'recurring_expenses': 'Recurring Expenses',
       'new_recurring_expense': 'New Recurring Expense',
@@ -33,8 +34,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'is_invoiced': 'Is Invoiced',
       'change_plan': 'Change Plan',
       'persist_data': 'Persist Data',
-      'persist_data_help':
-          'Disabling may improve performance for large accounts',
+      'persist_data_help': 'Enabling may degrade performance in large accounts',
       'customer_count': 'Customer Count',
       'verify_customers': 'Verify Customers',
       'google_analytics_tracking_id': 'Google Analytics Tracking ID',
@@ -62588,6 +62588,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchRecurringExpenses =>
       _localizedValues[localeCode]['search_recurring_expenses'] ??
       _localizedValues['en']['search_recurring_expenses'];
+
+  String get cloneToExpense =>
+      _localizedValues[localeCode]['clone_to_expense'] ??
+      _localizedValues['en']['clone_to_expense'];
 
   // STARTER: lang field - do not remove comment
 

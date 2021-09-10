@@ -315,13 +315,38 @@ abstract class ExpenseEntity extends Object
         actions.add(EntityAction.edit);
       }
 
-      if (!isInvoiced && userCompany.canCreate(EntityType.invoice)) {
+      if (isRecurring) {
+        if ([kRecurringExpenseStatusDraft, kRecurringExpenseStatusPaused]
+            .contains(statusId)) {
+          actions.add(EntityAction.start);
+        } else if ([
+          kRecurringExpenseStatusPending,
+          kRecurringExpenseStatusActive,
+        ].contains(statusId)) {
+          actions.add(EntityAction.stop);
+        }
+      }
+
+      if (!isInvoiced &&
+          !isRecurring &&
+          userCompany.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.invoiceExpense);
       }
     }
 
-    if (userCompany.canCreate(EntityType.task) && !multiselect) {
-      actions.add(EntityAction.clone);
+    if (userCompany.canCreate(EntityType.expense) &&
+        !multiselect &&
+        !isRecurring) {
+      actions.add(EntityAction.cloneToExpense);
+    }
+
+    if (userCompany.canCreate(EntityType.recurringExpense) && !multiselect) {
+      actions.add(EntityAction.cloneToRecurring);
+    }
+    if (userCompany.canCreate(EntityType.expense) &&
+        !multiselect &&
+        isRecurring) {
+      actions.add(EntityAction.cloneToExpense);
     }
 
     if (actions.isNotEmpty && actions.last != null) {
@@ -567,6 +592,14 @@ abstract class ExpenseEntity extends Object
   bool get isUpcoming => convertSqlDateToDateTime(date).isAfter(DateTime.now());
 
   bool get isRecurring => [EntityType.recurringExpense].contains(entityType);
+
+  String get calculatedStatusId {
+    if (isPending) {
+      return kRecurringExpenseStatusPending;
+    }
+
+    return statusId;
+  }
 
   @override
   double get listDisplayAmount => null;

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -265,6 +266,71 @@ class UpdateRecurringExpenseTab implements PersistUI {
   final int tabIndex;
 }
 
+class StartRecurringExpensesRequest implements StartSaving {
+  StartRecurringExpensesRequest({this.completer, this.expenseIds});
+
+  final Completer completer;
+  final List<String> expenseIds;
+}
+
+class StartRecurringExpensesSuccess
+    implements StopSaving, PersistData, PersistUI {
+  StartRecurringExpensesSuccess(this.expenses);
+
+  final List<ExpenseEntity> expenses;
+}
+
+class StartRecurringExpensesFailure implements StopSaving {
+  StartRecurringExpensesFailure(this.error);
+
+  final Object error;
+}
+
+class StopRecurringExpensesRequest implements StartSaving {
+  StopRecurringExpensesRequest({this.completer, this.expenseIds});
+
+  final Completer completer;
+  final List<String> expenseIds;
+}
+
+class StopRecurringExpensesSuccess
+    implements StopSaving, PersistData, PersistUI {
+  StopRecurringExpensesSuccess(this.expenses);
+
+  final List<ExpenseEntity> expenses;
+}
+
+class StopRecurringExpensesFailure implements StopSaving {
+  StopRecurringExpensesFailure(this.error);
+
+  final Object error;
+}
+
+class SaveRecurringExpenseDocumentRequest implements StartSaving {
+  SaveRecurringExpenseDocumentRequest({
+    @required this.completer,
+    @required this.multipartFile,
+    @required this.expense,
+  });
+
+  final Completer completer;
+  final MultipartFile multipartFile;
+  final ExpenseEntity expense;
+}
+
+class SaveRecurringExpenseDocumentSuccess
+    implements StopSaving, PersistData, PersistUI {
+  SaveRecurringExpenseDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveRecurringExpenseDocumentFailure implements StopSaving {
+  SaveRecurringExpenseDocumentFailure(this.error);
+
+  final Object error;
+}
+
 void handleRecurringExpenseAction(BuildContext context,
     List<BaseEntity> recurringExpenses, EntityAction action) {
   if (recurringExpenses.isEmpty) {
@@ -298,6 +364,37 @@ void handleRecurringExpenseAction(BuildContext context,
           snackBarCompleter<Null>(
               context, localization.deletedRecurringExpense),
           recurringExpenseIds));
+      break;
+    case EntityAction.start:
+      store.dispatch(StartRecurringExpensesRequest(
+        completer: snackBarCompleter<Null>(
+            context,
+            (recurringExpense.lastSentDate ?? '').isEmpty
+                ? localization.startedRecurringInvoice
+                : localization.resumedRecurringInvoice),
+        expenseIds: recurringExpenseIds,
+      ));
+      break;
+    case EntityAction.stop:
+      store.dispatch(StopRecurringExpensesRequest(
+        completer: snackBarCompleter<Null>(
+            context, localization.stoppedRecurringInvoice),
+        expenseIds: recurringExpenseIds,
+      ));
+      break;
+    case EntityAction.cloneToExpense:
+      createEntity(
+        context: context,
+        entity: recurringExpense.clone
+            .rebuild((b) => b..entityType = EntityType.expense),
+      );
+      break;
+    case EntityAction.cloneToRecurring:
+      createEntity(
+        context: context,
+        entity: recurringExpense.clone
+            .rebuild((b) => b..entityType = EntityType.recurringExpense),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.recurringExpenseListState.isInMultiselect()) {

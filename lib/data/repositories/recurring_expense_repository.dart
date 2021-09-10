@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -68,5 +69,23 @@ class RecurringExpenseRepository {
         serializers.deserializeWith(ExpenseItemResponse.serializer, response);
 
     return recurringExpenseResponse.data;
+  }
+
+  Future<ExpenseEntity> uploadDocument(Credentials credentials,
+      BaseEntity entity, MultipartFile multipartFile) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/recurring_expenses/${entity.id}/upload',
+        credentials.token,
+        data: fields,
+        multipartFiles: [multipartFile]);
+
+    final ExpenseItemResponse expenseResponse =
+        serializers.deserializeWith(ExpenseItemResponse.serializer, response);
+
+    return expenseResponse.data;
   }
 }

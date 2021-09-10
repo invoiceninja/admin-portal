@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/colors.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -108,7 +109,17 @@ class ExpenseOverview extends StatelessWidget {
       }
 
       final fields = <String, String>{
-        localization.date: formatDate(expense.date, context),
+        if (expense.isRecurring)
+          localization.frequency:
+              localization.lookup(kFrequencies[expense.frequencyId]),
+        if (expense.isRecurring)
+          localization.sendDate: formatDate(expense.nextSendDate, context),
+        if (expense.isRecurring)
+          localization.remainingCycles: expense.remainingCycles == -1
+              ? localization.endless
+              : '${expense.remainingCycles}',
+        if (!expense.isRecurring)
+          localization.date: formatDate(expense.date, context),
         localization.transactionReference: expense.transactionReference,
         localization.tax: tax,
         localization.paymentDate: formatDate(expense.paymentDate, context),

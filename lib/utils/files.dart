@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-//import 'package:filepicker_windows/filepicker_windows.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:permission_handler/permission_handler.dart';
+// ignore: unused_import
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 Future<MultipartFile> pickFile(
     {String fileIndex,
@@ -18,19 +20,10 @@ Future<MultipartFile> pickFile(
       allowedExtensions: allowedExtensions,
     );
   } else if (isWindows()) {
-    /*
-    final filePicker = OpenFilePicker();
-    final file = filePicker.getFile();
-
-    if (file == null) {
-      return null;
-    }
-
-    return MultipartFile.fromBytes(
-        fileIndex ?? 'file', await file.readAsBytes(),
-        filename: file.path.split('\\').last.split('/').last);
-        */
-    return null;
+    return WebUtils.pickFile(
+        fileIndex: fileIndex,
+        allowedExtensions: allowedExtensions,
+        fileType: fileType);
   } else {
     final permission = await (fileType == FileType.image && Platform.isIOS
         ? Permission.photos.status

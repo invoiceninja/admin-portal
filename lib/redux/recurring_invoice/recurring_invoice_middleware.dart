@@ -310,7 +310,6 @@ Middleware<AppState> _loadRecurringInvoices(
     repository
         .loadList(
       state.credentials,
-      state.createdAtLimit,
       state.filterDeletedClients,
     )
         .then((data) {
