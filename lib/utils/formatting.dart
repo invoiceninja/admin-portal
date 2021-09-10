@@ -155,11 +155,15 @@ String formatNumber(
     }
   }
 
-  if (state.company.useCommaAsDecimalPlace &&
-      formatNumberType == FormatNumberType.inputMoney) {
-    decimalSeparator = ',';
-    if (thousandSeparator == ',') {
-      thousandSeparator = '.';
+  if ([
+    FormatNumberType.inputMoney,
+    FormatNumberType.inputAmount,
+  ].contains(formatNumberType)) {
+    thousandSeparator = '';
+    if (state.company.useCommaAsDecimalPlace) {
+      decimalSeparator = ',';
+    } else {
+      decimalSeparator = '.';
     }
   }
 
