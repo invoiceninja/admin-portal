@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.58';
+const String kClientVersion = '5.0.59';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -529,7 +529,7 @@ const Map<int, String> kModules = {
   kModuleTasks: 'tasks',
   kModuleVendors: 'vendors',
   kModuleExpenses: 'expenses',
-  kModuleRecurringExpenses: 'recurring_expenses',
+  //kModuleRecurringExpenses: 'recurring_expenses',
   //kModuleTickets: 'tickets',
   //kModuleRecurringTasks: 'recurring_tasks',
   //kModuleRecurringQuotes: 'recurring_quotes',
