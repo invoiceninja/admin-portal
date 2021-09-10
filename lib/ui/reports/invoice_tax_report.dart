@@ -82,7 +82,8 @@ ReportResult taxReport(
 
     if (!invoice.isDeleted && invoice.isSent) {
       final client = clientMap[invoice.clientId] ?? ClientEntity();
-      final precision = staticState.currencyMap[client.currencyId].precision;
+      final precision =
+          staticState.currencyMap[client.currencyId]?.precision ?? 2;
       final taxes = invoice.getTaxes(precision);
 
       for (final key in taxes.keys) {
@@ -160,7 +161,8 @@ ReportResult taxReport(
     final credit = creditMap[creditId];
     if (!credit.isDeleted && credit.isSent) {
       final client = clientMap[credit.clientId];
-      final precision = staticState.currencyMap[client.currencyId].precision;
+      final precision =
+          staticState.currencyMap[client.currencyId]?.precision ?? 2;
       final taxes = credit.getTaxes(precision);
 
       for (final key in taxes.keys) {

@@ -30,7 +30,7 @@ class InvoiceItemListTile extends StatelessWidget {
     final state = store.state;
     final client = state.clientState.get(invoice.clientId);
     final precision =
-        state.staticState.currencyMap[client.currencyId].precision;
+        state.staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
     String subtitle = '$qty x $cost';
 

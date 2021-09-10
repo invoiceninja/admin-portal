@@ -81,7 +81,8 @@ ReportResult paymentTaxReport(
 
     if (!payment.isDeleted) {
       final client = clientMap[payment.clientId];
-      final precision = staticState.currencyMap[client.currencyId].precision;
+      final precision =
+          staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
       for (final paymentable in payment.paymentables) {
         InvoiceEntity invoice;
