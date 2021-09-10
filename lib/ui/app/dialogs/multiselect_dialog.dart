@@ -190,7 +190,7 @@ class MultiSelectListState extends State<MultiSelectList> {
 
                 setState(() {
                   final field = selected[oldIndex];
-                  selected.remove(field);
+                  selected.removeAt(oldIndex);
                   selected.insert(newIndex, field);
                 });
 
