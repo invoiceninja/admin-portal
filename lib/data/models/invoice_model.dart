@@ -63,7 +63,7 @@ class InvoiceFields {
   static const String date = 'date';
   static const String dueDate = 'due_date';
   static const String nextSendDate = 'next_send_date';
-  static const String lastSendDate = 'last_send_date';
+  static const String lastSentDate = 'last_sent_date';
   static const String terms = 'terms';
   static const String footer = 'footer';
   static const String partial = 'partial_due';
