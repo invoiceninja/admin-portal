@@ -982,7 +982,7 @@ void _showAbout(BuildContext context) async {
                 child: Text(localization.viewLicenses.toUpperCase()),
                 onPressed: () => showLicensePage(
                   context: context,
-                  applicationName: 'Invoice Ninja V5',
+                  applicationName: 'Invoice Ninja v5',
                   applicationIcon: apppIcon,
                   applicationLegalese: appLegalese,
                   applicationVersion: state.appVersion,
