@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/stub/view/stub_view_vm.dart';
@@ -72,29 +73,32 @@ class StubEditVM {
       }
     },
       onSavePressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final Completer<StubEntity> completer = new Completer<StubEntity>();
-        store.dispatch(SaveStubRequest(completer: completer, stub: stub));
-        return completer.future.then((savedStub) {
-          showToast(stub.isNew
-                ? localization.createdStub
-                : localization.updatedStub);
-          if (state.prefState.isMobile) {
-                store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
-              if (stub.isNew) {
-                Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedStub);
-              }
-          } else {
-              viewEntity( entity: savedStub, force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
+        Debouncer.runOnComplete(() {
+          final stub = store.state.stubUIState.editing;
+          final localization = AppLocalization.of(context);
+          final Completer<StubEntity> completer = new Completer<StubEntity>();
+          store.dispatch(SaveStubRequest(completer: completer, stub: stub));
+          return completer.future.then((savedStub) {
+            showToast(stub.isNew
+                  ? localization.createdStub
+                  : localization.updatedStub);
+            if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
+                if (stub.isNew) {
+                  Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
+                } else {
+                  Navigator.of(context).pop(savedStub);
+                }
+            } else {
+                viewEntity( entity: savedStub, force: true);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                });
+          });
         });
       },
     );
