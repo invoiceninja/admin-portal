@@ -419,12 +419,14 @@ class MenuDrawer extends StatelessWidget {
                             iconTooltip: localization.newExpense,
                           ),
                           // STARTER: menu - do not remove comment
+                          /*
                           DrawerTile(
                             company: company,
                             entityType: EntityType.recurringExpense,
                             icon: getEntityIcon(EntityType.recurringExpense),
                             title: localization.recurringExpenses,
                           ),
+                          */
                           DrawerTile(
                             company: company,
                             icon: getEntityIcon(EntityType.reports),
@@ -980,7 +982,7 @@ void _showAbout(BuildContext context) async {
                 child: Text(localization.viewLicenses.toUpperCase()),
                 onPressed: () => showLicensePage(
                   context: context,
-                  applicationName: 'Invoice Ninja v5',
+                  applicationName: 'Invoice Ninja V5',
                   applicationIcon: apppIcon,
                   applicationLegalese: appLegalese,
                   applicationVersion: state.appVersion,
