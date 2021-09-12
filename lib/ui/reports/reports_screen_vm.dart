@@ -247,7 +247,7 @@ class ReportsScreenVM {
           state.userCompany,
           state.uiState.reportsUIState,
           state.productState.map,
-          state.invoiceState.map,
+          state.quoteState.map,
           state.clientState.map,
           state.staticState,
         );
