@@ -61,7 +61,10 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final taxState = state.taxRateState;
-    final taxRates = taxState.list.map((id) => taxState.map[id]).toList();
+    final taxRates = taxState.list
+        .where((id) => taxState.map[id].isActive)
+        .map((id) => taxState.map[id])
+        .toList();
 
     if (taxRates.isEmpty) {
       return SizedBox();

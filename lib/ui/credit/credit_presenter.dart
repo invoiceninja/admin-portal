@@ -59,6 +59,8 @@ class CreditPresenter extends EntityPresenter {
             .listDisplayName);
       case CreditFields.date:
         return Text(formatDate(credit.date, context));
+      case CreditFields.lastSentDate:
+        return Text(formatDate(credit.lastSentDate, context));
       case CreditFields.validUntil:
         return Text(formatDate(credit.dueDate, context));
       case CreditFields.amount:

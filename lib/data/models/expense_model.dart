@@ -150,7 +150,7 @@ abstract class ExpenseEntity extends Object
       createdUserId: '',
       archivedAt: 0,
       updatedAt: 0,
-      frequencyId: '',
+      frequencyId: kFrequencyMonthly,
       lastSentDate: '',
       nextSendDate: '',
       remainingCycles: -1,

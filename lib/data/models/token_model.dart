@@ -152,7 +152,7 @@ abstract class TokenEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isMasked) {
+    if (!isMasked && !multiselect) {
       actions.add(EntityAction.copy);
     }
 

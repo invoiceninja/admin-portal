@@ -63,6 +63,8 @@ class InvoicePresenter extends EntityPresenter {
             .listDisplayName);
       case InvoiceFields.date:
         return Text(formatDate(invoice.date, context));
+      case InvoiceFields.lastSentDate:
+        return Text(formatDate(invoice.lastSentDate, context));
       case InvoiceFields.reminder1Sent:
         return Text(formatDate(invoice.reminder1Sent, context));
       case InvoiceFields.reminder2Sent:

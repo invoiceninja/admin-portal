@@ -57,6 +57,8 @@ class QuotePresenter extends EntityPresenter {
             .listDisplayName);
       case QuoteFields.date:
         return Text(formatDate(quote.date, context));
+      case QuoteFields.lastSentDate:
+        return Text(formatDate(quote.lastSentDate, context));
       case QuoteFields.amount:
         return Align(
           alignment: Alignment.centerRight,
