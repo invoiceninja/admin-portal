@@ -83,7 +83,10 @@ List<ChartDataGroup> _chartInvoices({
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
-    if (!invoice.isSent || invoice.isDeleted || client.isDeleted) {
+    if (!invoice.isSent ||
+        invoice.isDeleted ||
+        invoice.isCancelledOrReversed ||
+        client.isDeleted) {
       // skip it
     } else if (!invoice.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -380,7 +383,9 @@ List<ChartDataGroup> chartPayments(
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
     final date = payment.date;
 
-    if (payment.isDeleted || client.isDeleted) {
+    if (payment.isDeleted ||
+        !payment.isCompletedOrPartiallyRefunded ||
+        client.isDeleted) {
       // skip it
     } else if (!payment.isBetween(
         settings.startDate(company), settings.endDate(company))) {
