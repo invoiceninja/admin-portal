@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'from_name': 'From Name',
       'enabling_may_degrade_performance': 'Enabling may degrade performance',
       'disabling_may_improve_performance': 'Disabling may improve performance',
       'clone_to_expense': 'Clone to Expense',
@@ -62597,7 +62598,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get disablingMayImprovePerformance =>
       _localizedValues[localeCode]['disabling_may_improve_performance'] ??
       _localizedValues['en']['disabling_may_improve_performance'];
-      
+
+  String get fromName =>
+      _localizedValues[localeCode]['from_name'] ??
+      _localizedValues['en']['from_name'];
+
   // STARTER: lang field - do not remove comment
 
   String lookup(String key) {

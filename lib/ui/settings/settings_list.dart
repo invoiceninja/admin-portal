@@ -530,6 +530,7 @@ class SettingsSearch extends StatelessWidget {
         [
           'send_from_gmail',
           'email_design',
+          'from_name',
           'reply_to_email',
           'reply_to_name',
           'bcc_email',
