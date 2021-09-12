@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-//import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -232,8 +232,7 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      //store.dispatch(LoadRecurringExpenses());
-      store.dispatch(PersistData());
+      store.dispatch(LoadRecurringExpenses());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadExpensesFailure(error));
