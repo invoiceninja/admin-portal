@@ -102,63 +102,66 @@ class ListScaffold extends StatelessWidget {
           store.dispatch(ViewDashboard());
           return false;
         },
-        child: Scaffold(
-          drawer: isMobile(context) || state.prefState.isMenuFloated
-              ? MenuDrawerBuilder()
-              : null,
-          endDrawer: isMobile(context) ||
-                  (state.prefState.isHistoryFloated && !isSettings)
-              ? HistoryDrawerBuilder()
-              : null,
-          appBar: AppBar(
-            centerTitle: false,
-            automaticallyImplyLeading: false,
-            leading: leading,
-            leadingWidth: kMinInteractiveDimension *
-                (appBarLeadingActions.length +
-                    (onCheckboxPressed == null || isMobile(context) ? 1 : 2)),
-            title: appBarTitle,
-            actions: [
-              ...appBarActions ?? <Widget>[],
-              if (isDesktop(context) && onCancelSettingsSection != null)
-                TextButton(
-                    onPressed: () {
-                      store.dispatch(ViewSettings(
-                        company: state.company,
-                        section: onCancelSettingsSection,
-                        tabIndex: onCancelSettingsIndex,
-                      ));
-                    },
-                    child: Text(
-                      localization.back,
-                      style: TextStyle(color: state.headerTextColor),
-                    )),
-              if (!isSettings &&
-                  (isMobile(context) || !state.prefState.isHistoryVisible))
-                Builder(
-                  builder: (context) => IconButton(
-                    padding: const EdgeInsets.only(left: 4, right: 20),
-                    tooltip: localization.history,
-                    icon: Icon(Icons.history),
-                    onPressed: () {
-                      if (isMobile(context) ||
-                          state.prefState.isHistoryFloated) {
-                        Scaffold.of(context).openEndDrawer();
-                      } else {
-                        store.dispatch(
-                            UpdateUserPreferences(sidebar: AppSidebar.history));
-                      }
-                    },
+        child: FocusTraversalGroup(
+          child: Scaffold(
+            drawer: isMobile(context) || state.prefState.isMenuFloated
+                ? MenuDrawerBuilder()
+                : null,
+            endDrawer: isMobile(context) ||
+                    (state.prefState.isHistoryFloated && !isSettings)
+                ? HistoryDrawerBuilder()
+                : null,
+            appBar: AppBar(
+              centerTitle: false,
+              automaticallyImplyLeading: false,
+              leading: leading,
+              leadingWidth: kMinInteractiveDimension *
+                  (appBarLeadingActions.length +
+                      (onCheckboxPressed == null || isMobile(context) ? 1 : 2)),
+              title: appBarTitle,
+              actions: [
+                ...appBarActions ?? <Widget>[],
+                if (isDesktop(context) && onCancelSettingsSection != null)
+                  TextButton(
+                      onPressed: () {
+                        store.dispatch(ViewSettings(
+                          company: state.company,
+                          section: onCancelSettingsSection,
+                          tabIndex: onCancelSettingsIndex,
+                        ));
+                      },
+                      child: Text(
+                        localization.back,
+                        style: TextStyle(color: state.headerTextColor),
+                      )),
+                if (!isSettings &&
+                    (isMobile(context) || !state.prefState.isHistoryVisible))
+                  Builder(
+                    builder: (context) => IconButton(
+                      padding: const EdgeInsets.only(left: 4, right: 20),
+                      tooltip: localization.history,
+                      icon: Icon(Icons.history),
+                      onPressed: () {
+                        if (isMobile(context) ||
+                            state.prefState.isHistoryFloated) {
+                          Scaffold.of(context).openEndDrawer();
+                        } else {
+                          store.dispatch(UpdateUserPreferences(
+                              sidebar: AppSidebar.history));
+                        }
+                      },
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
+            body: ClipRect(
+              child: body,
+            ),
+            bottomNavigationBar: bottomNavigationBar,
+            floatingActionButton: floatingActionButton,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endDocked,
           ),
-          body: ClipRect(
-            child: body,
-          ),
-          bottomNavigationBar: bottomNavigationBar,
-          floatingActionButton: floatingActionButton,
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         ));
   }
 }
