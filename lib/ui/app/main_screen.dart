@@ -286,7 +286,7 @@ class MainScreen extends StatelessWidget {
         child: DesktopSessionTimeout(
           child: SafeArea(
             child: FocusTraversalGroup(
-              policy: WidgetOrderTraversalPolicy(),
+              policy: ReadingOrderTraversalPolicy(),
               child: ChangeLayoutBanner(
                 appLayout: prefState.appLayout,
                 suggestedLayout: AppLayout.desktop,

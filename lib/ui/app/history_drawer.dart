@@ -70,10 +70,12 @@ class HistoryDrawer extends StatelessWidget {
                 )
             ],
           ),
-          body: ColoredBox(
-            color: Theme.of(context).cardColor,
-            child: ScrollableListView(
-              children: widgets,
+          body: FocusTraversalGroup(
+            child: ColoredBox(
+              color: Theme.of(context).cardColor,
+              child: ScrollableListView(
+                children: widgets,
+              ),
             ),
           ),
         ),

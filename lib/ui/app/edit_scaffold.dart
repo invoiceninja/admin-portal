@@ -92,87 +92,89 @@ class EditScaffold extends StatelessWidget {
       onWillPop: () async {
         return true;
       },
-      child: Scaffold(
-        body: showUpgradeBanner && !isApple()
-            ? Column(
-                children: [
-                  InkWell(
-                    child: IconMessage(
-                      upgradeMessage,
-                      color: Colors.orange,
+      child: FocusTraversalGroup(
+        child: Scaffold(
+          body: showUpgradeBanner && !isApple()
+              ? Column(
+                  children: [
+                    InkWell(
+                      child: IconMessage(
+                        upgradeMessage,
+                        color: Colors.orange,
+                      ),
+                      onTap: state.userCompany.isOwner
+                          ? () async {
+                              launch(state.userCompany.ninjaPortalUrl);
+                            }
+                          : null,
                     ),
-                    onTap: state.userCompany.isOwner
-                        ? () async {
-                            launch(state.userCompany.ninjaPortalUrl);
-                          }
-                        : null,
-                  ),
-                  Expanded(child: body),
-                ],
-              )
-            : body,
-        drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
-        appBar: AppBar(
-          centerTitle: false,
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(title),
-          actions: <Widget>[
-            SaveCancelButtons(
-              isEnabled: isEnabled && onSavePressed != null,
-              isHeader: true,
-              isCancelEnabled: isCancelEnabled,
-              saveLabel: saveLabel,
-              isSaving: state.isSaving,
-              onSavePressed: (context) {
-                // Clear focus now to prevent un-focus after save from
-                // marking the form as changed and to hide the keyboard
-                FocusScope.of(context).unfocus(
-                    disposition: UnfocusDisposition.previouslyFocusedChild);
+                    Expanded(child: body),
+                  ],
+                )
+              : body,
+          drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
+          appBar: AppBar(
+            centerTitle: false,
+            automaticallyImplyLeading: isMobile(context),
+            title: Text(title),
+            actions: <Widget>[
+              SaveCancelButtons(
+                isEnabled: isEnabled && onSavePressed != null,
+                isHeader: true,
+                isCancelEnabled: isCancelEnabled,
+                saveLabel: saveLabel,
+                isSaving: state.isSaving,
+                onSavePressed: (context) {
+                  // Clear focus now to prevent un-focus after save from
+                  // marking the form as changed and to hide the keyboard
+                  FocusScope.of(context).unfocus(
+                      disposition: UnfocusDisposition.previouslyFocusedChild);
 
-                onSavePressed(context);
-              },
-              onCancelPressed: isMobile(context)
-                  ? null
-                  : (context) {
-                      if (onCancelPressed != null) {
-                        onCancelPressed(context);
-                      } else {
-                        store.dispatch(ResetSettings());
-                      }
-                    },
-            ),
-            if (isDesktop(context) && actions != null && !state.isSaving)
-              PopupMenuButton<EntityAction>(
-                icon: Icon(
-                  Icons.more_vert,
-                  //size: iconSize,
-                  //color: color,
-                ),
-                itemBuilder: (BuildContext context) => actions
-                    .map((action) => PopupMenuItem<EntityAction>(
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                getEntityActionIcon(action),
-                                color: Theme.of(context).accentColor,
-                              ),
-                              SizedBox(width: 16.0),
-                              Text(AppLocalization.of(context)
-                                  .lookup(action.toString())),
-                            ],
-                          ),
-                          value: action,
-                        ))
-                    .toList(),
-                onSelected: (action) => onActionPressed(context, action),
-                enabled: isEnabled,
-              )
-          ],
-          bottom: isFullscreen ? null : appBarBottom,
+                  onSavePressed(context);
+                },
+                onCancelPressed: isMobile(context)
+                    ? null
+                    : (context) {
+                        if (onCancelPressed != null) {
+                          onCancelPressed(context);
+                        } else {
+                          store.dispatch(ResetSettings());
+                        }
+                      },
+              ),
+              if (isDesktop(context) && actions != null && !state.isSaving)
+                PopupMenuButton<EntityAction>(
+                  icon: Icon(
+                    Icons.more_vert,
+                    //size: iconSize,
+                    //color: color,
+                  ),
+                  itemBuilder: (BuildContext context) => actions
+                      .map((action) => PopupMenuItem<EntityAction>(
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  getEntityActionIcon(action),
+                                  color: Theme.of(context).accentColor,
+                                ),
+                                SizedBox(width: 16.0),
+                                Text(AppLocalization.of(context)
+                                    .lookup(action.toString())),
+                              ],
+                            ),
+                            value: action,
+                          ))
+                      .toList(),
+                  onSelected: (action) => onActionPressed(context, action),
+                  enabled: isEnabled,
+                )
+            ],
+            bottom: isFullscreen ? null : appBarBottom,
+          ),
+          bottomNavigationBar: bottomNavigationBar,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+          floatingActionButton: floatingActionButton,
         ),
-        bottomNavigationBar: bottomNavigationBar,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: floatingActionButton,
       ),
     );
   }

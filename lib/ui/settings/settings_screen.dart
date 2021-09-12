@@ -23,20 +23,22 @@ class SettingsScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    return ListScaffold(
-      entityType: EntityType.settings,
-      appBarTitle: ListFilter(
-        key:
-            ValueKey('__cleared_at_${state.settingsUIState.filterClearedAt}__'),
+    return FocusTraversalGroup(
+      child: ListScaffold(
         entityType: EntityType.settings,
-        entityIds: [],
-        filter: state.settingsUIState.filter,
-        onFilterChanged: (value) {
-          store.dispatch(FilterSettings(value));
-        },
+        appBarTitle: ListFilter(
+          key: ValueKey(
+              '__cleared_at_${state.settingsUIState.filterClearedAt}__'),
+          entityType: EntityType.settings,
+          entityIds: [],
+          filter: state.settingsUIState.filter,
+          onFilterChanged: (value) {
+            store.dispatch(FilterSettings(value));
+          },
+        ),
+        appBarActions: <Widget>[],
+        body: SettingsListBuilder(),
       ),
-      appBarActions: <Widget>[],
-      body: SettingsListBuilder(),
     );
   }
 }

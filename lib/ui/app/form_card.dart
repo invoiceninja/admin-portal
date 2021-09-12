@@ -43,22 +43,24 @@ class FormCard extends StatelessWidget {
                   right: kMobileDialogPadding,
                   bottom: isLast ? kMobileDialogPadding : 0,
                 )),
-      child: Card(
-        elevation: elevation,
-        child: AppBorder(
-          child: Padding(
-            padding: internalPadding ?? const EdgeInsets.all(16),
-            child: child != null
-                ? child
-                : Container(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment:
-                          crossAxisAlignment ?? CrossAxisAlignment.center,
-                      children: children,
+      child: FocusTraversalGroup(
+        child: Card(
+          elevation: elevation,
+          child: AppBorder(
+            child: Padding(
+              padding: internalPadding ?? const EdgeInsets.all(16),
+              child: child != null
+                  ? child
+                  : Container(
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment:
+                            crossAxisAlignment ?? CrossAxisAlignment.center,
+                        children: children,
+                      ),
                     ),
-                  ),
+            ),
           ),
         ),
       ),
