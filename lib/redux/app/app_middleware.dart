@@ -385,7 +385,7 @@ Middleware<AppState> _createUserLoggedIn(
     uiRepository.saveUIState(state.uiState);
     staticRepository.saveStaticState(state.staticState);
 
-    if (state.prefState.persistData || state.company.isSmall) {
+    if (state.prefState.persistData) {
       for (var i = 0; i < state.userCompanyStates.length; i++) {
         companyRepositories[i].saveCompanyState(state.userCompanyStates[i]);
       }
@@ -405,7 +405,7 @@ Middleware<AppState> _createPersistData(
     final index = state.uiState.selectedCompanyIndex;
     final companyState = state.userCompanyStates[index];
 
-    if (state.prefState.persistData || state.company.isSmall) {
+    if (state.prefState.persistData) {
       companyRepositories[index].saveCompanyState(companyState);
     }
   };
