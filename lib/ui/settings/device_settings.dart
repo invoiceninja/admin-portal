@@ -216,17 +216,18 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     activeColor: Theme.of(context).accentColor,
                   ),
                    */
-                  if (state.company.isLarge || !kReleaseMode)
-                    SwitchListTile(
-                      //leading: Icon(Icons.save_alt),
-                      title: Text(localization.persistData),
-                      subtitle: Text(localization.persistDataHelp),
-                      value: prefState.persistData,
-                      onChanged: (value) =>
-                          viewModel.onPersistDataChanged(context, value),
-                      activeColor: Theme.of(context).accentColor,
-                      secondary: Icon(Icons.save_alt),
-                    ),
+                  SwitchListTile(
+                    //leading: Icon(Icons.save_alt),
+                    title: Text(localization.persistData),
+                    subtitle: Text(prefState.persistData
+                        ? localization.disablingMayImprovePerformance
+                        : localization.enablingMayDegradePerformance),
+                    value: prefState.persistData,
+                    onChanged: (value) =>
+                        viewModel.onPersistDataChanged(context, value),
+                    activeColor: Theme.of(context).accentColor,
+                    secondary: Icon(Icons.save_alt),
+                  ),
                   Builder(builder: (BuildContext context) {
                     return ListTile(
                       leading: Icon(Icons.refresh),

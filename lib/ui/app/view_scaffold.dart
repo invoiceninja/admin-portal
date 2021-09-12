@@ -86,54 +86,57 @@ class ViewScaffold extends StatelessWidget {
       onWillPop: () async {
         return true;
       },
-      child: Scaffold(
-        backgroundColor: Theme.of(context).cardColor,
-        appBar: AppBar(
-          centerTitle: false,
-          leading: leading,
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(title),
-          bottom: appBarBottom,
-          actions: entity.isNew
-              ? []
-              : [
-                  if (isSettings && isDesktop(context) && !isFilter)
-                    TextButton(
-                        onPressed: () {
-                          onBackPressed != null
-                              ? onBackPressed()
-                              : store.dispatch(UpdateCurrentRoute(
-                                  state.uiState.previousRoute));
-                        },
-                        child: Text(
-                          localization.back,
-                          style: TextStyle(color: state.headerTextColor),
-                        )),
-                  userCompany.canEditEntity(entity)
-                      ? Builder(builder: (context) {
-                          return EditIconButton(
-                            isVisible: entity.isEditable,
-                            onPressed: () =>
-                                editEntity(context: context, entity: entity),
-                          );
-                        })
-                      : Container(),
-                  ViewActionMenuButton(
-                    isSaving: state.isSaving && !isFilter,
-                    entity: entity,
-                    onSelected: (context, action) =>
-                        handleEntityAction(entity, action, autoPop: true),
-                    entityActions: entity.getActions(
-                      userCompany: userCompany,
-                      client: entity is BelongsToClient
-                          ? state.clientState
-                              .map[(entity as BelongsToClient).clientId]
-                          : null,
+      child: FocusTraversalGroup(
+        child: Scaffold(
+          backgroundColor: Theme.of(context).cardColor,
+          appBar: AppBar(
+            centerTitle: false,
+            leading: leading,
+            automaticallyImplyLeading: isMobile(context),
+            title: Text(title),
+            bottom: appBarBottom,
+            actions: entity.isNew
+                ? []
+                : [
+                    if (isSettings && isDesktop(context) && !isFilter)
+                      TextButton(
+                          onPressed: () {
+                            onBackPressed != null
+                                ? onBackPressed()
+                                : store.dispatch(UpdateCurrentRoute(
+                                    state.uiState.previousRoute));
+                          },
+                          child: Text(
+                            localization.back,
+                            style: TextStyle(color: state.headerTextColor),
+                          )),
+                    userCompany.canEditEntity(entity)
+                        ? Builder(builder: (context) {
+                            return EditIconButton(
+                              isVisible: entity.isEditable,
+                              onPressed: () =>
+                                  editEntity(context: context, entity: entity),
+                            );
+                          })
+                        : Container(),
+                    ViewActionMenuButton(
+                      isSaving: state.isSaving && !isFilter,
+                      entity: entity,
+                      onSelected: (context, action) =>
+                          handleEntityAction(entity, action, autoPop: true),
+                      entityActions: entity.getActions(
+                        userCompany: userCompany,
+                        client: entity is BelongsToClient
+                            ? state.clientState
+                                .map[(entity as BelongsToClient).clientId]
+                            : null,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+          ),
+          body:
+              entity.isNew ? BlankScreen(localization.noRecordSelected) : body,
         ),
-        body: entity.isNew ? BlankScreen(localization.noRecordSelected) : body,
       ),
     );
   }

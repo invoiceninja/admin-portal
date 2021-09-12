@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'from_name': 'From Name',
+      'enabling_may_degrade_performance': 'Enabling may degrade performance',
+      'disabling_may_improve_performance': 'Disabling may improve performance',
       'clone_to_expense': 'Clone to Expense',
       'recurring_expense': 'Recurring Expense',
       'recurring_expenses': 'Recurring Expenses',
@@ -34,7 +37,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'is_invoiced': 'Is Invoiced',
       'change_plan': 'Change Plan',
       'persist_data': 'Persist Data',
-      'persist_data_help': 'Enabling may degrade performance in large accounts',
       'customer_count': 'Customer Count',
       'verify_customers': 'Verify Customers',
       'google_analytics_tracking_id': 'Google Analytics Tracking ID',
@@ -62529,10 +62531,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['persist_data'] ??
       _localizedValues['en']['persist_data'];
 
-  String get persistDataHelp =>
-      _localizedValues[localeCode]['persist_data_help'] ??
-      _localizedValues['en']['persist_data_help'];
-
   String get changePlan =>
       _localizedValues[localeCode]['change_plan'] ??
       _localizedValues['en']['change_plan'];
@@ -62592,6 +62590,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get cloneToExpense =>
       _localizedValues[localeCode]['clone_to_expense'] ??
       _localizedValues['en']['clone_to_expense'];
+
+  String get enablingMayDegradePerformance =>
+      _localizedValues[localeCode]['enabling_may_degrade_performance'] ??
+      _localizedValues['en']['enabling_may_degrade_performance'];
+
+  String get disablingMayImprovePerformance =>
+      _localizedValues[localeCode]['disabling_may_improve_performance'] ??
+      _localizedValues['en']['disabling_may_improve_performance'];
+
+  String get fromName =>
+      _localizedValues[localeCode]['from_name'] ??
+      _localizedValues['en']['from_name'];
 
   // STARTER: lang field - do not remove comment
 

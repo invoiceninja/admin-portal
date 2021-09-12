@@ -450,6 +450,11 @@ abstract class PaymentEntity extends Object
 
   bool get isOnline => (companyGatewayId ?? '').isNotEmpty;
 
+  bool get isCompletedOrPartiallyRefunded => [
+        kPaymentStatusCompleted,
+        kPaymentStatusPartiallyRefunded
+      ].contains(statusId);
+
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 

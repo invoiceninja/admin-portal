@@ -27,7 +27,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       showFilterSidebar: false,
       longPressSelectionIsDefault: true,
       showKanban: false,
-      persistData: !kIsWeb,
+      persistData: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
       customColors: BuiltMap<String, String>(),

@@ -218,245 +218,247 @@ class MenuDrawer extends StatelessWidget {
             },
           );
 
-    return Container(
-      width: state.isMenuCollapsed ? 65 : kDrawerWidth,
-      child: Drawer(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              // Hide options while refreshing data
-              state.credentials.token.isEmpty
-                  ? Expanded(child: SizedBox())
-                  : Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-                      color: enableDarkMode
-                          ? Colors.white10
-                          : Theme.of(context).cardColor,
-                      child: state.isMenuCollapsed
-                          ? _collapsedCompanySelector
-                          : _expandedCompanySelector),
-              state.credentials.token.isEmpty
-                  ? SizedBox()
-                  : Expanded(
-                      child: Container(
-                      color: inactiveColor.isNotEmpty
-                          ? convertHexStringToColor(inactiveColor)
-                          : Theme.of(context).cardColor,
-                      child: ScrollableListView(
-                        hideMobileThumb: true,
-                        children: <Widget>[
-                          if (state.account.debugEnabled && kReleaseMode)
-                            if (state.isMenuCollapsed)
-                              Tooltip(
-                                message: localization.debugModeIsEnabled,
-                                child: ListTile(
-                                  contentPadding:
-                                      const EdgeInsets.only(left: 20),
-                                  onTap: () => launch(kDebugModeUrl),
-                                  leading:
-                                      Icon(Icons.warning, color: Colors.red),
-                                ),
-                              )
-                            else
-                              Material(
-                                child: ListTile(
-                                  tileColor: Colors.red.shade800,
-                                  title: Padding(
-                                    padding: const EdgeInsets.only(bottom: 6),
-                                    child: IconText(
-                                      icon: Icons.warning,
-                                      text: localization.debugModeIsEnabled,
+    return FocusTraversalGroup(
+      child: Container(
+        width: state.isMenuCollapsed ? 65 : kDrawerWidth,
+        child: Drawer(
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                // Hide options while refreshing data
+                state.credentials.token.isEmpty
+                    ? Expanded(child: SizedBox())
+                    : Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+                        color: enableDarkMode
+                            ? Colors.white10
+                            : Theme.of(context).cardColor,
+                        child: state.isMenuCollapsed
+                            ? _collapsedCompanySelector
+                            : _expandedCompanySelector),
+                state.credentials.token.isEmpty
+                    ? SizedBox()
+                    : Expanded(
+                        child: Container(
+                        color: inactiveColor.isNotEmpty
+                            ? convertHexStringToColor(inactiveColor)
+                            : Theme.of(context).cardColor,
+                        child: ScrollableListView(
+                          hideMobileThumb: true,
+                          children: <Widget>[
+                            if (state.account.debugEnabled && kReleaseMode)
+                              if (state.isMenuCollapsed)
+                                Tooltip(
+                                  message: localization.debugModeIsEnabled,
+                                  child: ListTile(
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 20),
+                                    onTap: () => launch(kDebugModeUrl),
+                                    leading:
+                                        Icon(Icons.warning, color: Colors.red),
+                                  ),
+                                )
+                              else
+                                Material(
+                                  child: ListTile(
+                                    tileColor: Colors.red.shade800,
+                                    title: Padding(
+                                      padding: const EdgeInsets.only(bottom: 6),
+                                      child: IconText(
+                                        icon: Icons.warning,
+                                        text: localization.debugModeIsEnabled,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      localization.debugModeIsEnabledHelp,
                                       style: TextStyle(color: Colors.white),
                                     ),
+                                    onTap: () => launch(kDebugModeUrl),
                                   ),
-                                  subtitle: Text(
-                                    localization.debugModeIsEnabledHelp,
-                                    style: TextStyle(color: Colors.white),
+                                ),
+                            if (state.company.isDisabled &&
+                                state.userCompany.isAdmin)
+                              if (state.isMenuCollapsed)
+                                Tooltip(
+                                  message: localization.companyDisabledWarning,
+                                  child: ListTile(
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 20),
+                                    onTap: () {
+                                      // TODO once v4 is sunset change to ViewSettings
+                                      launch(
+                                          'https://invoiceninja.github.io/docs/hosted-activate/');
+                                      /*
+                                      store.dispatch(ViewSettings(
+                                        section: kSettingsAccountManagement,
+                                        company: company,
+                                      ));
+                                      */
+                                    },
+                                    leading: Icon(Icons.warning,
+                                        color: Colors.orange),
                                   ),
-                                  onTap: () => launch(kDebugModeUrl),
-                                ),
-                              ),
-                          if (state.company.isDisabled &&
-                              state.userCompany.isAdmin)
-                            if (state.isMenuCollapsed)
-                              Tooltip(
-                                message: localization.companyDisabledWarning,
-                                child: ListTile(
-                                  contentPadding:
-                                      const EdgeInsets.only(left: 20),
-                                  onTap: () {
-                                    // TODO once v4 is sunset change to ViewSettings
-                                    launch(
-                                        'https://invoiceninja.github.io/docs/hosted-activate/');
-                                    /*
-                                    store.dispatch(ViewSettings(
-                                      section: kSettingsAccountManagement,
-                                      company: company,
-                                    ));
-                                    */
-                                  },
-                                  leading:
-                                      Icon(Icons.warning, color: Colors.orange),
-                                ),
-                              )
-                            else
-                              Material(
-                                child: ListTile(
-                                  tileColor: Colors.orange.shade800,
-                                  title: Padding(
-                                    padding: const EdgeInsets.only(bottom: 6),
-                                    child: IconText(
-                                      icon: Icons.warning,
-                                      text: localization.warning,
+                                )
+                              else
+                                Material(
+                                  child: ListTile(
+                                    tileColor: Colors.orange.shade800,
+                                    title: Padding(
+                                      padding: const EdgeInsets.only(bottom: 6),
+                                      child: IconText(
+                                        icon: Icons.warning,
+                                        text: localization.warning,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      localization.companyDisabledWarning,
                                       style: TextStyle(color: Colors.white),
                                     ),
-                                  ),
-                                  subtitle: Text(
-                                    localization.companyDisabledWarning,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onTap: () {
-                                    // TODO once v4 is sunset change to ViewSettings
-                                    launch(
-                                        'https://invoiceninja.github.io/docs/hosted-activate/');
+                                    onTap: () {
+                                      // TODO once v4 is sunset change to ViewSettings
+                                      launch(
+                                          'https://invoiceninja.github.io/docs/hosted-activate/');
 
-                                    /*
-                                    store.dispatch(ViewSettings(
-                                      section: kSettingsAccountManagement,
-                                      company: company,
-                                    ));
-                                    */
-                                  },
+                                      /*
+                                      store.dispatch(ViewSettings(
+                                        section: kSettingsAccountManagement,
+                                        company: company,
+                                      ));
+                                      */
+                                    },
+                                  ),
                                 ),
-                              ),
-                          DrawerTile(
-                            company: company,
-                            icon: getEntityIcon(EntityType.dashboard),
-                            title: localization.dashboard,
-                            onTap: () => viewEntitiesByType(
-                                entityType: EntityType.dashboard),
-                            onLongPress: () =>
-                                store.dispatch(ViewDashboard(filter: '')),
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.client,
-                            icon: getEntityIcon(EntityType.client),
-                            title: localization.clients,
-                            iconTooltip: localization.newClient,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.product,
-                            icon: getEntityIcon(EntityType.product),
-                            title: localization.products,
-                            iconTooltip: localization.newProduct,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.invoice,
-                            icon: getEntityIcon(EntityType.invoice),
-                            title: localization.invoices,
-                            iconTooltip: localization.newInvoice,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.recurringInvoice,
-                            icon: getEntityIcon(EntityType.recurringInvoice),
-                            title: localization.recurringInvoices,
-                            iconTooltip: localization.newRecurringInvoice,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.payment,
-                            icon: getEntityIcon(EntityType.payment),
-                            title: localization.payments,
-                            iconTooltip: localization.newPayment,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.quote,
-                            icon: getEntityIcon(EntityType.quote),
-                            title: localization.quotes,
-                            iconTooltip: localization.newQuote,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.credit,
-                            icon: getEntityIcon(EntityType.credit),
-                            title: localization.credits,
-                            iconTooltip: localization.newCredit,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.project,
-                            icon: getEntityIcon(EntityType.project),
-                            title: localization.projects,
-                            iconTooltip: localization.newProject,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.task,
-                            icon: getEntityIcon(EntityType.task),
-                            title: localization.tasks,
-                            iconTooltip: localization.newTask,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.vendor,
-                            icon: getEntityIcon(EntityType.vendor),
-                            title: localization.vendors,
-                            iconTooltip: localization.newVendor,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.expense,
-                            icon: getEntityIcon(EntityType.expense),
-                            title: localization.expenses,
-                            iconTooltip: localization.newExpense,
-                          ),
-                          // STARTER: menu - do not remove comment
-                          /*
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.recurringExpense,
-                            icon: getEntityIcon(EntityType.recurringExpense),
-                            title: localization.recurringExpenses,
-                          ),
-                          */
-                          DrawerTile(
-                            company: company,
-                            icon: getEntityIcon(EntityType.reports),
-                            title: localization.reports,
-                            onTap: () => viewEntitiesByType(
-                                entityType: EntityType.reports),
-                          ),
-                          DrawerTile(
-                            company: company,
-                            icon: getEntityIcon(EntityType.settings),
-                            title: localization.settings,
-                            onTap: () => viewEntitiesByType(
-                                entityType: EntityType.settings),
-                          ),
-                        ],
-                      ),
-                    )),
-              SizedBox(
-                height: kTopBottomBarHeight,
-                child: AppBorder(
-                  isTop: true,
-                  child: Align(
-                    child: state.isMenuCollapsed
-                        ? SidebarFooterCollapsed()
-                        : SidebarFooter(),
-                    alignment: Alignment(0, 1),
+                            DrawerTile(
+                              company: company,
+                              icon: getEntityIcon(EntityType.dashboard),
+                              title: localization.dashboard,
+                              onTap: () => viewEntitiesByType(
+                                  entityType: EntityType.dashboard),
+                              onLongPress: () =>
+                                  store.dispatch(ViewDashboard(filter: '')),
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.client,
+                              icon: getEntityIcon(EntityType.client),
+                              title: localization.clients,
+                              iconTooltip: localization.newClient,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.product,
+                              icon: getEntityIcon(EntityType.product),
+                              title: localization.products,
+                              iconTooltip: localization.newProduct,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.invoice,
+                              icon: getEntityIcon(EntityType.invoice),
+                              title: localization.invoices,
+                              iconTooltip: localization.newInvoice,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.recurringInvoice,
+                              icon: getEntityIcon(EntityType.recurringInvoice),
+                              title: localization.recurringInvoices,
+                              iconTooltip: localization.newRecurringInvoice,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.payment,
+                              icon: getEntityIcon(EntityType.payment),
+                              title: localization.payments,
+                              iconTooltip: localization.newPayment,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.quote,
+                              icon: getEntityIcon(EntityType.quote),
+                              title: localization.quotes,
+                              iconTooltip: localization.newQuote,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.credit,
+                              icon: getEntityIcon(EntityType.credit),
+                              title: localization.credits,
+                              iconTooltip: localization.newCredit,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.project,
+                              icon: getEntityIcon(EntityType.project),
+                              title: localization.projects,
+                              iconTooltip: localization.newProject,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.task,
+                              icon: getEntityIcon(EntityType.task),
+                              title: localization.tasks,
+                              iconTooltip: localization.newTask,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.vendor,
+                              icon: getEntityIcon(EntityType.vendor),
+                              title: localization.vendors,
+                              iconTooltip: localization.newVendor,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.expense,
+                              icon: getEntityIcon(EntityType.expense),
+                              title: localization.expenses,
+                              iconTooltip: localization.newExpense,
+                            ),
+                            // STARTER: menu - do not remove comment
+                            /*
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.recurringExpense,
+                              icon: getEntityIcon(EntityType.recurringExpense),
+                              title: localization.recurringExpenses,
+                            ),
+                            */
+                            DrawerTile(
+                              company: company,
+                              icon: getEntityIcon(EntityType.reports),
+                              title: localization.reports,
+                              onTap: () => viewEntitiesByType(
+                                  entityType: EntityType.reports),
+                            ),
+                            DrawerTile(
+                              company: company,
+                              icon: getEntityIcon(EntityType.settings),
+                              title: localization.settings,
+                              onTap: () => viewEntitiesByType(
+                                  entityType: EntityType.settings),
+                            ),
+                          ],
+                        ),
+                      )),
+                SizedBox(
+                  height: kTopBottomBarHeight,
+                  child: AppBorder(
+                    isTop: true,
+                    child: Align(
+                      child: state.isMenuCollapsed
+                          ? SidebarFooterCollapsed()
+                          : SidebarFooter(),
+                      alignment: Alignment(0, 1),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

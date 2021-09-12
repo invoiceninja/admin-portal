@@ -247,7 +247,7 @@ class ReportsScreenVM {
           state.userCompany,
           state.uiState.reportsUIState,
           state.productState.map,
-          state.invoiceState.map,
+          state.quoteState.map,
           state.clientState.map,
           state.staticState,
         );
@@ -394,7 +394,7 @@ class ReportsScreenVM {
 
               columns.forEach((column) {
                 final value = row[column].toString();
-                csvData += value.contains(' ') ? '"$value",' : '$value,';
+                csvData += value.contains(' ') ? ',"$value"' : ',$value';
               });
 
               csvData += '\n';
@@ -405,7 +405,9 @@ class ReportsScreenVM {
           final filename =
               '${state.uiState.reportsUIState.report}_report_$date.csv';
 
-          if (kIsWeb) {
+          if (!kReleaseMode) {
+            print('## DATA: $csvData');
+          } else if (kIsWeb) {
             WebUtils.downloadTextFile(filename, csvData);
           } else {
             final directory = await getExternalStorageDirectory();
@@ -517,7 +519,8 @@ GroupTotals calculateReportTotals({
                 fromCurrencyId: cell.currencyId,
                 toCurrencyId: company.currencyId);
           }
-          cellValue = cellValue * 1 / rate;
+          final toCurrency = currencyMap[company.currencyId];
+          cellValue = round(cellValue * 1 / rate, toCurrency.precision);
           totals[group][column] += cellValue;
         } else {
           totals[group][column] += cell.doubleValue;

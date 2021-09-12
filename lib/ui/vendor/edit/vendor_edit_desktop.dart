@@ -23,33 +23,39 @@ class VendorEditDesktop extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Column(
-                children: [
-                  VendorEditDetails(
-                    viewModel: viewModel,
-                  ),
-                  VendorEditNotes(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    VendorEditDetails(
+                      viewModel: viewModel,
+                    ),
+                    VendorEditNotes(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  VendorEditContactsScreen(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    VendorEditContactsScreen(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  VendorEditAddress(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    VendorEditAddress(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

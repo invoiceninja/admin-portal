@@ -209,7 +209,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       entityMap: memoizedFontMap(kGoogleFonts),
                       onSelected: (font) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..primaryFont = font?.id)),
-                      allowClearing: state.settingsUIState.isFiltered,
                     ),
                   ),
                   EntityDropdown(
@@ -221,7 +220,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     entityMap: memoizedFontMap(kGoogleFonts),
                     onSelected: (font) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..secondaryFont = font?.id)),
-                    allowClearing: state.settingsUIState.isFiltered,
                   ),
                   FormColorPicker(
                     labelText: localization.primaryColor,

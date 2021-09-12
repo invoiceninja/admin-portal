@@ -112,22 +112,18 @@ class _TimePickerState extends State<TimePicker> {
       controller: _textController,
       decoration: InputDecoration(
         labelText: _pendingValue ?? widget.labelText ?? '',
-        suffixIcon: Focus(
-          skipTraversal: true,
-          descendantsAreFocusable: false,
-          child: widget.allowClearing && widget.selectedDateTime != null
-              ? IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    _textController.text = '';
-                    widget.onSelected(null);
-                  },
-                )
-              : IconButton(
-                  icon: Icon(Icons.access_time),
-                  onPressed: () => _showTimePicker(),
-                ),
-        ),
+        suffixIcon: widget.allowClearing && widget.selectedDateTime != null
+            ? IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  _textController.text = '';
+                  widget.onSelected(null);
+                },
+              )
+            : IconButton(
+                icon: Icon(Icons.access_time),
+                onPressed: () => _showTimePicker(),
+              ),
       ),
       onChanged: (value) {
         if (value.isEmpty) {

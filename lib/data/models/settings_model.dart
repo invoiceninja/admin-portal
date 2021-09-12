@@ -164,6 +164,10 @@ abstract class SettingsEntity
   String get replyToName;
 
   @nullable
+  @BuiltValueField(wireName: 'email_from_name')
+  String get emailFromName;
+
+  @nullable
   @BuiltValueField(wireName: 'bcc_email')
   String get bccEmail;
 

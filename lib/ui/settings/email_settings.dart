@@ -40,6 +40,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   FocusScopeNode _focusNode;
   bool autoValidate = false;
 
+  final _fromNameController = TextEditingController();
   final _replyToEmailController = TextEditingController();
   final _replyToNameController = TextEditingController();
   final _bccEmailController = TextEditingController();
@@ -68,6 +69,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   @override
   void didChangeDependencies() {
     _controllers = [
+      _fromNameController,
       _replyToEmailController,
       _replyToNameController,
       _bccEmailController,
@@ -79,6 +81,7 @@ class _EmailSettingsState extends State<EmailSettings> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final settings = widget.viewModel.settings;
+    _fromNameController.text = settings.emailFromName;
     _replyToEmailController.text = settings.replyToEmail;
     _replyToNameController.text = settings.replyToName;
     _bccEmailController.text = settings.bccEmail;
@@ -93,6 +96,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
   void _onChanged() {
     final settings = widget.viewModel.settings.rebuild((b) => b
+      ..emailFromName = _fromNameController.text.trim()
       ..replyToEmail = _replyToEmailController.text.trim()
       ..replyToName = _replyToNameController.text.trim()
       ..bccEmail = _bccEmailController.text.trim()
@@ -202,6 +206,11 @@ class _EmailSettingsState extends State<EmailSettings> {
           ],
           FormCard(
             children: <Widget>[
+              DecoratedFormField(
+                label: localization.fromName,
+                controller: _fromNameController,
+                onSavePressed: viewModel.onSavePressed,
+              ),
               DecoratedFormField(
                 label: localization.replyToName,
                 controller: _replyToNameController,

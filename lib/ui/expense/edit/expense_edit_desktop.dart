@@ -21,30 +21,36 @@ class ExpenseEditDesktop extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Column(
-                children: [
-                  ExpenseEditDetails(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    ExpenseEditDetails(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  ExpenseEditNotes(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    ExpenseEditNotes(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  ExpenseEditSettings(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    ExpenseEditSettings(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
