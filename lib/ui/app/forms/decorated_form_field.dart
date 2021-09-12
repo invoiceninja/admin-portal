@@ -133,13 +133,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       inputDecoration = InputDecoration(
           labelText: widget.label,
           hintText: widget.hint,
-          suffixIcon: icon == null
-              ? null
-              : Focus(
-                  child: icon,
-                  skipTraversal: true,
-                  descendantsAreFocusable: false,
-                ),
+          suffixIcon: icon == null ? null : icon,
           floatingLabelBehavior:
               (widget.hint ?? '').isNotEmpty && (widget.label ?? '').isEmpty
                   ? FloatingLabelBehavior.always
