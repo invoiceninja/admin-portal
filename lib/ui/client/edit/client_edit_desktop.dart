@@ -25,39 +25,45 @@ class ClientEditDesktop extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Column(
-                children: [
-                  ClientEditDetails(
-                    viewModel: viewModel,
-                  ),
-                  ClientEditNotes(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    ClientEditDetails(
+                      viewModel: viewModel,
+                    ),
+                    ClientEditNotes(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  ClientEditContactsScreen(
-                    viewModel: viewModel,
-                  ),
-                  ClientEditSettings(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    ClientEditContactsScreen(
+                      viewModel: viewModel,
+                    ),
+                    ClientEditSettings(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  ClientEditBillingAddress(
-                    viewModel: viewModel,
-                  ),
-                  ClientEditShippingAddress(
-                    viewModel: viewModel,
-                  ),
-                ],
+              child: FocusTraversalGroup(
+                child: Column(
+                  children: [
+                    ClientEditBillingAddress(
+                      viewModel: viewModel,
+                    ),
+                    ClientEditShippingAddress(
+                      viewModel: viewModel,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
