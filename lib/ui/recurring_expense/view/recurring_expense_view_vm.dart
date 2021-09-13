@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -44,7 +48,6 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
     ExpenseEntity expense,
     CompanyEntity company,
     Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, EntityType, [bool]) onEntityPressed,
     Function(BuildContext) onRefreshed,
     Function(BuildContext, MultipartFile) onUploadDocument,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
@@ -56,7 +59,6 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
           expense: expense,
           company: company,
           onEntityAction: onEntityAction,
-          onEntityPressed: onEntityPressed,
           onRefreshed: onRefreshed,
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
@@ -89,6 +91,35 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([recurringExpense], action, autoPop: true),
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SaveRecurringExpenseDocumentRequest(
+            multipartFile: multipartFile,
+            expense: recurringExpense,
+            completer: completer));
+        completer.future.then((client) {
+          showToast(AppLocalization.of(context).uploadedDocument);
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: navigatorKey.currentContext,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>((value) => store.dispatch(
+            LoadRecurringExpense(recurringExpenseId: recurringExpense.id)));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+          idToken: idToken,
+        ));
+      },
     );
   }
 }

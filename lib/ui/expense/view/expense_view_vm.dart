@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -51,7 +50,6 @@ class AbstractExpenseViewVM {
     @required this.expense,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEntityPressed,
     @required this.onRefreshed,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
@@ -64,7 +62,6 @@ class AbstractExpenseViewVM {
   final ExpenseEntity expense;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, MultipartFile) onUploadDocument;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
@@ -79,7 +76,6 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
     ExpenseEntity expense,
     CompanyEntity company,
     Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, EntityType, [bool]) onEntityPressed,
     Function(BuildContext) onRefreshed,
     Function(BuildContext, MultipartFile) onUploadDocument,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
@@ -91,7 +87,6 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
           expense: expense,
           company: company,
           onEntityAction: onEntityAction,
-          onEntityPressed: onEntityPressed,
           onRefreshed: onRefreshed,
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
@@ -104,9 +99,6 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
     final state = store.state;
     final expense = state.expenseState.map[state.expenseUIState.selectedId] ??
         ExpenseEntity(id: state.expenseUIState.selectedId);
-    final vendor = state.vendorState.map[expense.vendorId];
-    final client = state.clientState.map[expense.clientId];
-    final invoice = state.invoiceState.map[expense.invoiceId];
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
@@ -116,72 +108,44 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
     }
 
     return ExpenseViewVM(
-        state: state,
-        company: state.company,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: expense.isNew,
-        expense: expense,
-        onRefreshed: (context) => _handleRefresh(context),
-        onEntityPressed: (BuildContext context, EntityType entityType,
-            [longPress = false]) {
-          switch (entityType) {
-            case EntityType.vendor:
-              if (longPress) {
-                showEntityActionsDialog(
-                  entities: [vendor],
-                );
-              } else {
-                viewEntity(entity: vendor);
-              }
-              break;
-            case EntityType.client:
-              if (longPress) {
-                showEntityActionsDialog(entities: [client]);
-              } else {
-                viewEntity(entity: client);
-              }
-              break;
-            case EntityType.invoice:
-              if (longPress) {
-                showEntityActionsDialog(entities: [invoice]);
-              } else {
-                viewEntity(entity: invoice);
-              }
-              break;
-          }
-        },
-        onEntityAction: (BuildContext context, EntityAction action) =>
-            handleEntitiesActions([expense], action, autoPop: true),
-        onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
-          final Completer<DocumentEntity> completer =
-              Completer<DocumentEntity>();
-          store.dispatch(SaveExpenseDocumentRequest(
-              multipartFile: multipartFile,
-              expense: expense,
-              completer: completer));
-          completer.future.then((client) {
-            showToast(AppLocalization.of(context).uploadedDocument);
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
-        },
-        onDeleteDocument: (BuildContext context, DocumentEntity document,
-            String password, String idToken) {
-          final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).deletedDocument);
-          completer.future.then<Null>(
-              (value) => store.dispatch(LoadExpense(expenseId: expense.id)));
-          store.dispatch(DeleteDocumentRequest(
-            completer: completer,
-            documentIds: [document.id],
-            password: password,
-            idToken: idToken,
-          ));
+      state: state,
+      company: state.company,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: expense.isNew,
+      expense: expense,
+      onRefreshed: (context) => _handleRefresh(context),
+      onEntityAction: (BuildContext context, EntityAction action) =>
+          handleEntitiesActions([expense], action, autoPop: true),
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SaveExpenseDocumentRequest(
+            multipartFile: multipartFile,
+            expense: expense,
+            completer: completer));
+        completer.future.then((client) {
+          showToast(AppLocalization.of(context).uploadedDocument);
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: navigatorKey.currentContext,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
+      },
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>(
+            (value) => store.dispatch(LoadExpense(expenseId: expense.id)));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+          idToken: idToken,
+        ));
+      },
+    );
   }
 }
