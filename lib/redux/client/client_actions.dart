@@ -319,6 +319,15 @@ void handleClientAction(
               entityType: EntityType.recurringInvoice),
           filterEntity: client);
       break;
+    case EntityAction.newRecurringExpense:
+      createEntity(
+          context: context,
+          entity: ExpenseEntity(
+              state: state,
+              client: client,
+              entityType: EntityType.recurringExpense),
+          filterEntity: client);
+      break;
     case EntityAction.newQuote:
       createEntity(
         context: context,
@@ -410,6 +419,8 @@ void handleClientAction(
         entities: [client],
       );
       break;
+    default:
+      print('## Error: action $action not handled in client_actions');
   }
 }
 

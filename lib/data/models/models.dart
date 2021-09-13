@@ -138,6 +138,8 @@ class EntityAction extends EnumClass {
         return EntityAction.newPayment;
       case EntityType.expense:
         return EntityAction.newExpense;
+      case EntityType.recurringExpense:
+        return EntityAction.newRecurringExpense;
       case EntityType.project:
         return EntityAction.newProject;
       case EntityType.task:
