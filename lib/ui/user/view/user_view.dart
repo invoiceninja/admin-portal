@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
@@ -147,6 +148,17 @@ class UserView extends StatelessWidget {
               subtitle: memoizedExpenseStatsForUser(
                 user.id,
                 state.expenseState.map,
+              ).present(localization.active, localization.archived),
+            ),
+          if (userCompany.canViewOrCreate(EntityType.recurringExpense))
+            EntitiesListTile(
+              entity: user,
+              isFilter: isFilter,
+              entityType: EntityType.recurringExpense,
+              title: localization.recurringExpenses,
+              subtitle: memoizedRecurringExpenseStatsForUser(
+                user.id,
+                state.recurringExpenseState.map,
               ).present(localization.active, localization.archived),
             ),
         ],
