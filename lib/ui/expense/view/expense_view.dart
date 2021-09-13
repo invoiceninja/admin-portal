@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
@@ -118,9 +119,17 @@ class _ExpenseViewState extends State<ExpenseView>
             ),
             BottomButtons(
               entity: expense,
-              action1: EntityAction.invoiceExpense,
-              action1Enabled: !expense.isInvoiced,
-              action2: EntityAction.clone,
+              action1: expense.isRecurring
+                  ? (expense.canBeStopped
+                      ? EntityAction.stop
+                      : EntityAction.start)
+                  : EntityAction.invoiceExpense,
+              action1Enabled: !expense.isInvoiced ||
+                  (expense.isRecurring &&
+                      (expense.canBeStarted || expense.canBeStopped)),
+              action2: expense.isRecurring
+                  ? EntityAction.cloneToRecurring
+                  : EntityAction.cloneToExpense,
             )
           ],
         );
