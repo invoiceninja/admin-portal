@@ -298,6 +298,15 @@ void handleVendorAction(
         filterEntity: vendor,
       );
       break;
+    case EntityAction.newRecurringExpense:
+      createEntity(
+          context: context,
+          entity: ExpenseEntity(
+              state: state,
+              vendor: vendor,
+              entityType: EntityType.recurringExpense),
+          filterEntity: vendor);
+      break;
     case EntityAction.restore:
       final message = vendorIds.length > 1
           ? localization.restoredVendors

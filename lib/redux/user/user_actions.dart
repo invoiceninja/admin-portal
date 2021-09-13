@@ -474,6 +474,15 @@ void handleUserAction(
             dispatch(password, idToken);
           });
       break;
+    case EntityAction.newRecurringExpense:
+      createEntity(
+          context: context,
+          entity: ExpenseEntity(
+              state: state,
+              user: user,
+              entityType: EntityType.recurringExpense),
+          filterEntity: user);
+      break;
     case EntityAction.remove:
       final message = userIds.length > 1
           ? localization.removedUsers
