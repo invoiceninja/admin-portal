@@ -116,11 +116,11 @@ class ExpenseOverview extends StatelessWidget {
           localization.frequency:
               localization.lookup(kFrequencies[expense.frequencyId]),
         if (expense.isRecurring)
-          localization.sendDate: formatDate(expense.nextSendDate, context),
-        if (expense.isRecurring)
           localization.remainingCycles: expense.remainingCycles == -1
               ? localization.endless
               : '${expense.remainingCycles}',
+        if (expense.isRecurring)
+          localization.sendDate: formatDate(expense.nextSendDate, context),
         if (!expense.isRecurring)
           localization.date: formatDate(expense.date, context),
         localization.transactionReference: expense.transactionReference,
