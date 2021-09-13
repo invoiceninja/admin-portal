@@ -246,6 +246,27 @@ EntityStats recurringExpenseStatsForUser(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedRecurringExpenseStatsForExpense = memo2(
+    (String expenseId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        recurringExpenseStatsForExpense(expenseId, expenseMap));
+
+EntityStats recurringExpenseStatsForExpense(
+    String recurrigExpenseId, BuiltMap<String, ExpenseEntity> expenseMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.recurringId == recurrigExpenseId) {
+      if (expense.isActive) {
+        countActive++;
+      } else if (expense.isDeleted) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasRecurringExpenseChanges(ExpenseEntity recurringExpense,
         BuiltMap<String, ExpenseEntity> recurringExpenseMap) =>
     recurringExpense.isNew

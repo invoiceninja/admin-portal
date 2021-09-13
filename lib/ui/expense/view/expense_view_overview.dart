@@ -1,12 +1,14 @@
 import 'package:invoiceninja_flutter/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
@@ -34,6 +36,8 @@ class ExpenseOverview extends StatelessWidget {
     final project = state.projectState.get(expense.projectId);
     final category = state.expenseCategoryState.get(expense.categoryId);
     final user = state.userState.get(expense.assignedUserId);
+    final recurringExpense =
+        state.recurringExpenseState.get(expense.recurringId);
 
     final fields = <String, String>{};
     if (expense.customValue1.isNotEmpty) {
@@ -182,6 +186,19 @@ class ExpenseOverview extends StatelessWidget {
         EntityListTile(entity: category, isFilter: isFilter),
         EntityListTile(entity: user, isFilter: isFilter),
         EntityListTile(entity: invoice, isFilter: isFilter),
+        if ((expense.recurringId ?? '').isNotEmpty)
+          EntityListTile(entity: recurringExpense, isFilter: isFilter),
+        if (expense.isRecurring)
+          EntitiesListTile(
+            entity: expense,
+            isFilter: isFilter,
+            hideNew: true,
+            entityType: EntityType.expense,
+            title: localization.expenses,
+            subtitle: memoizedRecurringExpenseStatsForExpense(
+                    expense.id, state.expenseState.map)
+                .present(localization.active, localization.archived),
+          ),
         ..._buildDetailsList(),
         if ((expense.publicNotes ?? '').isNotEmpty) ...[
           IconMessage(expense.publicNotes),
