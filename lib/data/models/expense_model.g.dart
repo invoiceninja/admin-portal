@@ -278,6 +278,13 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.recurringId;
+    if (value != null) {
+      result
+        ..add('recurring_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -472,6 +479,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'number':
           result.number = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'recurring_id':
+          result.recurringId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'frequency_id':
@@ -843,6 +854,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String number;
   @override
+  final String recurringId;
+  @override
   final String frequencyId;
   @override
   final String lastSentDate;
@@ -909,6 +922,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.calculateTaxByAmount,
       this.documents,
       this.number,
+      this.recurringId,
       this.frequencyId,
       this.lastSentDate,
       this.nextSendDate,
@@ -1044,6 +1058,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         calculateTaxByAmount == other.calculateTaxByAmount &&
         documents == other.documents &&
         number == other.number &&
+        recurringId == other.recurringId &&
         frequencyId == other.frequencyId &&
         lastSentDate == other.lastSentDate &&
         nextSendDate == other.nextSendDate &&
@@ -1080,13 +1095,13 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), taxAmount1.hashCode),
-                                                                                taxAmount2.hashCode),
-                                                                            taxAmount3.hashCode),
-                                                                        usesInclusiveTaxes.hashCode),
-                                                                    calculateTaxByAmount.hashCode),
-                                                                documents.hashCode),
-                                                            number.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), taxAmount1.hashCode), taxAmount2.hashCode),
+                                                                                taxAmount3.hashCode),
+                                                                            usesInclusiveTaxes.hashCode),
+                                                                        calculateTaxByAmount.hashCode),
+                                                                    documents.hashCode),
+                                                                number.hashCode),
+                                                            recurringId.hashCode),
                                                         frequencyId.hashCode),
                                                     lastSentDate.hashCode),
                                                 nextSendDate.hashCode),
@@ -1141,6 +1156,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('calculateTaxByAmount', calculateTaxByAmount)
           ..add('documents', documents)
           ..add('number', number)
+          ..add('recurringId', recurringId)
           ..add('frequencyId', frequencyId)
           ..add('lastSentDate', lastSentDate)
           ..add('nextSendDate', nextSendDate)
@@ -1316,6 +1332,10 @@ class ExpenseEntityBuilder
   String get number => _$this._number;
   set number(String number) => _$this._number = number;
 
+  String _recurringId;
+  String get recurringId => _$this._recurringId;
+  set recurringId(String recurringId) => _$this._recurringId = recurringId;
+
   String _frequencyId;
   String get frequencyId => _$this._frequencyId;
   set frequencyId(String frequencyId) => _$this._frequencyId = frequencyId;
@@ -1414,6 +1434,7 @@ class ExpenseEntityBuilder
       _calculateTaxByAmount = $v.calculateTaxByAmount;
       _documents = $v.documents.toBuilder();
       _number = $v.number;
+      _recurringId = $v.recurringId;
       _frequencyId = $v.frequencyId;
       _lastSentDate = $v.lastSentDate;
       _nextSendDate = $v.nextSendDate;
@@ -1492,6 +1513,7 @@ class ExpenseEntityBuilder
               calculateTaxByAmount: calculateTaxByAmount,
               documents: documents.build(),
               number: BuiltValueNullFieldError.checkNotNull(number, 'ExpenseEntity', 'number'),
+              recurringId: recurringId,
               frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, 'ExpenseEntity', 'frequencyId'),
               lastSentDate: BuiltValueNullFieldError.checkNotNull(lastSentDate, 'ExpenseEntity', 'lastSentDate'),
               nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, 'ExpenseEntity', 'nextSendDate'),

@@ -287,6 +287,10 @@ abstract class ExpenseEntity extends Object
 
   String get number;
 
+  @nullable
+  @BuiltValueField(wireName: 'recurring_id')
+  String get recurringId;
+
   @BuiltValueField(wireName: 'frequency_id')
   String get frequencyId;
 
