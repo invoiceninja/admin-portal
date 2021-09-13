@@ -123,6 +123,8 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitForm() {
+    _buttonController.start();
+
     if (_createAccount) {
       _submitSignUpForm();
     } else {
