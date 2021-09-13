@@ -37,6 +37,7 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.taxAmount,
       CreditFields.exchangeRate,
       CreditFields.isViewed,
+      CreditFields.lastSentDate,
     ];
   }
 

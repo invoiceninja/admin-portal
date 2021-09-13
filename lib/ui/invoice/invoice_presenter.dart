@@ -41,6 +41,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.exchangeRate,
       InvoiceFields.isViewed,
       InvoiceFields.autoBillEnabled,
+      InvoiceFields.lastSentDate,
     ];
   }
 
