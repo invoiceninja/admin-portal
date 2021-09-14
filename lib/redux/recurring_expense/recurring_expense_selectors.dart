@@ -183,6 +183,90 @@ List<String> filteredRecurringExpensesSelector(
   return list;
 }
 
+var memoizedRecurringExpenseStatsForClient = memo2(
+    (String clientId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        recurringExpenseStatsForClient(clientId, expenseMap));
+
+EntityStats recurringExpenseStatsForClient(
+    String clientId, BuiltMap<String, ExpenseEntity> expenseMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.clientId == clientId) {
+      if (expense.isActive) {
+        countActive++;
+      } else if (expense.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedRecurringExpenseStatsForVendor = memo2(
+    (String vendorId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        recurringExpenseStatsForVendor(vendorId, expenseMap));
+
+EntityStats recurringExpenseStatsForVendor(
+    String vendorId, BuiltMap<String, ExpenseEntity> expenseMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.vendorId == vendorId) {
+      if (expense.isActive) {
+        countActive++;
+      } else if (expense.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedRecurringExpenseStatsForUser = memo2(
+    (String userId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        recurringExpenseStatsForUser(userId, expenseMap));
+
+EntityStats recurringExpenseStatsForUser(
+    String userId, BuiltMap<String, ExpenseEntity> expenseMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.assignedUserId == userId) {
+      if (expense.isActive) {
+        countActive++;
+      } else if (expense.isDeleted) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedRecurringExpenseStatsForExpense = memo2(
+    (String expenseId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        recurringExpenseStatsForExpense(expenseId, expenseMap));
+
+EntityStats recurringExpenseStatsForExpense(
+    String recurrigExpenseId, BuiltMap<String, ExpenseEntity> expenseMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  expenseMap.forEach((expenseId, expense) {
+    if (expense.recurringId == recurrigExpenseId) {
+      if (expense.isActive) {
+        countActive++;
+      } else if (expense.isDeleted) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasRecurringExpenseChanges(ExpenseEntity recurringExpense,
         BuiltMap<String, ExpenseEntity> recurringExpenseMap) =>
     recurringExpense.isNew

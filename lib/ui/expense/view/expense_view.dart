@@ -118,9 +118,17 @@ class _ExpenseViewState extends State<ExpenseView>
             ),
             BottomButtons(
               entity: expense,
-              action1: EntityAction.invoiceExpense,
-              action1Enabled: !expense.isInvoiced,
-              action2: EntityAction.clone,
+              action1: expense.isRecurring
+                  ? (expense.canBeStopped
+                      ? EntityAction.stop
+                      : EntityAction.start)
+                  : EntityAction.invoiceExpense,
+              action1Enabled: !expense.isInvoiced ||
+                  (expense.isRecurring &&
+                      (expense.canBeStarted || expense.canBeStopped)),
+              action2: expense.isRecurring
+                  ? EntityAction.cloneToRecurring
+                  : EntityAction.cloneToExpense,
             )
           ],
         );

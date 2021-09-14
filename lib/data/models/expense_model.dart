@@ -287,6 +287,10 @@ abstract class ExpenseEntity extends Object
 
   String get number;
 
+  @nullable
+  @BuiltValueField(wireName: 'recurring_id')
+  String get recurringId;
+
   @BuiltValueField(wireName: 'frequency_id')
   String get frequencyId;
 
@@ -316,13 +320,9 @@ abstract class ExpenseEntity extends Object
       }
 
       if (isRecurring) {
-        if ([kRecurringExpenseStatusDraft, kRecurringExpenseStatusPaused]
-            .contains(statusId)) {
+        if (canBeStarted) {
           actions.add(EntityAction.start);
-        } else if ([
-          kRecurringExpenseStatusPending,
-          kRecurringExpenseStatusActive,
-        ].contains(statusId)) {
+        } else if (canBeStopped) {
           actions.add(EntityAction.stop);
         }
       }
@@ -592,6 +592,19 @@ abstract class ExpenseEntity extends Object
   bool get isUpcoming => convertSqlDateToDateTime(date).isAfter(DateTime.now());
 
   bool get isRecurring => [EntityType.recurringExpense].contains(entityType);
+
+  bool get isRunning =>
+      isRecurring && statusId == kRecurringExpenseStatusActive;
+
+  bool get canBeStarted =>
+      isRecurring &&
+      [kRecurringExpenseStatusDraft, kRecurringExpenseStatusPaused]
+          .contains(statusId);
+
+  bool get canBeStopped =>
+      isRecurring &&
+      [kRecurringExpenseStatusPending, kRecurringExpenseStatusActive]
+          .contains(statusId);
 
   String get calculatedStatusId {
     if (isPending) {

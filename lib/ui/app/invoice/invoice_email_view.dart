@@ -63,14 +63,26 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       _bodyController,
     ];
 
-    final client = widget.viewModel.client;
+    final viewModel = widget.viewModel;
+    final client = viewModel.client;
+    final invoice = viewModel.invoice;
+
     if (client.isStale) {
-      widget.viewModel.loadClient();
+      viewModel.loadClient();
     }
 
-    switch (widget.viewModel.invoice.entityType) {
+    switch (invoice.entityType) {
       case EntityType.invoice:
-        selectedTemplate = EmailTemplate.invoice;
+        if ((invoice.reminder3Sent ?? '').isNotEmpty)
+          selectedTemplate = EmailTemplate.reminder_endless;
+        else if ((invoice.reminder2Sent ?? '').isNotEmpty)
+          selectedTemplate = EmailTemplate.reminder3;
+        else if ((invoice.reminder1Sent ?? '').isNotEmpty)
+          selectedTemplate = EmailTemplate.reminder2;
+        else if ((invoice.lastSentDate ?? '').isNotEmpty)
+          selectedTemplate = EmailTemplate.reminder1;
+        else
+          selectedTemplate = EmailTemplate.invoice;
         break;
       case EntityType.quote:
         selectedTemplate = EmailTemplate.quote;

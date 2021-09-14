@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -95,15 +96,26 @@ class VendorOverview extends StatelessWidget {
             isFilter: isFilter,
           ),
         FieldGrid(fields),
-        EntitiesListTile(
-          entity: vendor,
-          title: localization.expenses,
-          entityType: EntityType.expense,
-          isFilter: isFilter,
-          subtitle:
-              memoizedExpenseStatsForVendor(vendor.id, state.expenseState.map)
-                  .present(localization.active, localization.archived),
-        ),
+        if (company.isModuleEnabled(EntityType.expense))
+          EntitiesListTile(
+            entity: vendor,
+            title: localization.expenses,
+            entityType: EntityType.expense,
+            isFilter: isFilter,
+            subtitle:
+                memoizedExpenseStatsForVendor(vendor.id, state.expenseState.map)
+                    .present(localization.active, localization.archived),
+          ),
+        if (company.isModuleEnabled(EntityType.recurringExpense))
+          EntitiesListTile(
+            entity: vendor,
+            title: localization.recurringExpenses,
+            entityType: EntityType.recurringExpense,
+            isFilter: isFilter,
+            subtitle: memoizedRecurringExpenseStatsForVendor(
+                    vendor.id, state.recurringExpenseState.map)
+                .present(localization.active, localization.archived),
+          ),
         if ((vendor.publicNotes ?? '').isNotEmpty) ...[
           IconMessage(vendor.publicNotes),
           ListDivider()

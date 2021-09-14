@@ -36,6 +36,7 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.taxAmount,
       QuoteFields.exchangeRate,
       QuoteFields.isViewed,
+      QuoteFields.lastSentDate,
     ];
   }
 

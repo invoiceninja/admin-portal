@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -244,6 +245,16 @@ class ClientOverview extends StatelessWidget {
             title: localization.recurringInvoices,
             subtitle: memoizedRecurringInvoiceStatsForClient(
                     client.id, state.recurringInvoiceState.map)
+                .present(localization.active, localization.archived),
+          ),
+        if (company.isModuleEnabled(EntityType.recurringExpense))
+          EntitiesListTile(
+            entity: client,
+            isFilter: isFilter,
+            entityType: EntityType.recurringExpense,
+            title: localization.recurringExpenses,
+            subtitle: memoizedRecurringExpenseStatsForClient(
+                    client.id, state.recurringExpenseState.map)
                 .present(localization.active, localization.archived),
           ),
         if ((client.publicNotes ?? '').isNotEmpty) ...[
