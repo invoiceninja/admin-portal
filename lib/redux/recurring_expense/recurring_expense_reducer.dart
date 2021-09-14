@@ -223,6 +223,10 @@ final recurringExpensesReducer = combineReducers<RecurringExpenseState>([
       _setLoadedRecurringExpenses),
   TypedReducer<RecurringExpenseState, LoadRecurringExpenseSuccess>(
       _setLoadedRecurringExpense),
+  TypedReducer<RecurringExpenseState, StartRecurringExpensesSuccess>(
+      _startRecurringExpensesSuccess),
+  TypedReducer<RecurringExpenseState, StopRecurringExpensesSuccess>(
+      _stopRecurringExpensesSuccess),
   TypedReducer<RecurringExpenseState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<RecurringExpenseState, ArchiveRecurringExpensesSuccess>(
       _archiveRecurringExpenseSuccess),
@@ -275,6 +279,26 @@ RecurringExpenseState _updateRecurringExpense(
     SaveRecurringExpenseSuccess action) {
   return recurringExpenseState.rebuild(
       (b) => b..map[action.recurringExpense.id] = action.recurringExpense);
+}
+
+RecurringExpenseState _startRecurringExpensesSuccess(
+    RecurringExpenseState recurringExpenseState,
+    StartRecurringExpensesSuccess action) {
+  return recurringExpenseState.rebuild((b) {
+    for (final recurringExpense in action.expenses) {
+      b.map[recurringExpense.id] = recurringExpense;
+    }
+  });
+}
+
+RecurringExpenseState _stopRecurringExpensesSuccess(
+    RecurringExpenseState recurringExpenseState,
+    StopRecurringExpensesSuccess action) {
+  return recurringExpenseState.rebuild((b) {
+    for (final recurringExpense in action.expenses) {
+      b.map[recurringExpense.id] = recurringExpense;
+    }
+  });
 }
 
 RecurringExpenseState _setLoadedRecurringExpense(
