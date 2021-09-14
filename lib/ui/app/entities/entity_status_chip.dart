@@ -64,11 +64,11 @@ class EntityStatusChip extends StatelessWidget {
       case EntityType.expense:
         final expense = entity as ExpenseEntity;
         final category = state.expenseCategoryState.get(expense.categoryId);
-        label = kExpenseStatuses[expense.statusId];
+        label = kExpenseStatuses[expense.calculatedStatusId];
         color = category.color.isNotEmpty && category.color != '#fff'
             ? convertHexStringToColor(category.color)
             : ExpenseStatusColors(state.prefState.colorThemeModel)
-                .colors[expense.statusId];
+                .colors[expense.calculatedStatusId];
         break;
       case EntityType.recurringExpense:
         final expense = entity as ExpenseEntity;

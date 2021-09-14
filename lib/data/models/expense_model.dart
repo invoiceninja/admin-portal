@@ -255,6 +255,10 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
 
+  @nullable
+  @BuiltValueField(wireName: 'status_id')
+  String get statusId;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
@@ -594,25 +598,17 @@ abstract class ExpenseEntity extends Object
   bool get isRecurring => [EntityType.recurringExpense].contains(entityType);
 
   bool get isRunning =>
-      isRecurring && statusId == kRecurringExpenseStatusActive;
+      isRecurring && calculatedStatusId == kRecurringExpenseStatusActive;
 
   bool get canBeStarted =>
       isRecurring &&
       [kRecurringExpenseStatusDraft, kRecurringExpenseStatusPaused]
-          .contains(statusId);
+          .contains(calculatedStatusId);
 
   bool get canBeStopped =>
       isRecurring &&
       [kRecurringExpenseStatusPending, kRecurringExpenseStatusActive]
-          .contains(statusId);
-
-  String get calculatedStatusId {
-    if (isPending) {
-      return kRecurringExpenseStatusPending;
-    }
-
-    return statusId;
-  }
+          .contains(calculatedStatusId);
 
   @override
   double get listDisplayAmount => null;
@@ -676,13 +672,21 @@ abstract class ExpenseEntity extends Object
 
   double get grossAmount => usesInclusiveTaxes ? amount : amount + taxAmount;
 
-  String get statusId {
-    if (isInvoiced) {
-      return kExpenseStatusInvoiced;
-    } else if (shouldBeInvoiced) {
-      return kExpenseStatusPending;
+  String get calculatedStatusId {
+    if (isRecurring) {
+      if (isPending) {
+        return kRecurringExpenseStatusPending;
+      } else {
+        return statusId;
+      }
     } else {
-      return kExpenseStatusLogged;
+      if (isInvoiced) {
+        return kExpenseStatusInvoiced;
+      } else if (shouldBeInvoiced) {
+        return kExpenseStatusPending;
+      } else {
+        return kExpenseStatusLogged;
+      }
     }
   }
 

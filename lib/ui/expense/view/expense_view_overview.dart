@@ -151,9 +151,9 @@ class ExpenseOverview extends StatelessWidget {
                 entity: expense,
                 statusColor:
                     ExpenseStatusColors(state.prefState.colorThemeModel)
-                        .colors[expense.statusId],
-                statusLabel:
-                    localization.lookup('expense_status_${expense.statusId}'),
+                        .colors[expense.calculatedStatusId],
+                statusLabel: localization
+                    .lookup('expense_status_${expense.calculatedStatusId}'),
                 label: localization.amount,
                 value: formatNumber(expense.grossAmount, context,
                     currencyId: expense.currencyId),
@@ -166,9 +166,9 @@ class ExpenseOverview extends StatelessWidget {
                 entity: expense,
                 statusColor:
                     ExpenseStatusColors(state.prefState.colorThemeModel)
-                        .colors[expense.statusId],
-                statusLabel:
-                    localization.lookup('expense_status_${expense.statusId}'),
+                        .colors[expense.calculatedStatusId],
+                statusLabel: localization
+                    .lookup('expense_status_${expense.calculatedStatusId}'),
                 label: localization.amount,
                 value: formatNumber(expense.grossAmount, context,
                     currencyId: expense.currencyId),
