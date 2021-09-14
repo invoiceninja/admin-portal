@@ -988,11 +988,18 @@ abstract class InvoiceEntity extends Object
   /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
   Map<String, Map<String, dynamic>> getTaxes(int precision) {
     final taxes = <String, Map<String, dynamic>>{};
-    final taxable = calculateTaxes(
-        useInclusiveTaxes: usesInclusiveTaxes, precision: precision);
+    final taxable = getTaxable();
+
+    double calculateAmount(double taxable, double rate) {
+      if (usesInclusiveTaxes) {
+        return round(taxable - (taxable / (1 + (rate / 100))), 2);
+      } else {
+        return round(taxable * (rate / 100), 2);
+      }
+    }
 
     if (taxRate1 != 0) {
-      final invoiceTaxAmount = taxable[taxName1];
+      final invoiceTaxAmount = calculateAmount(taxable, taxRate1);
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
@@ -1001,7 +1008,7 @@ abstract class InvoiceEntity extends Object
     }
 
     if (taxRate2 != 0) {
-      final invoiceTaxAmount = taxable[taxName2];
+      final invoiceTaxAmount = calculateAmount(taxable, taxRate2);
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
@@ -1010,7 +1017,7 @@ abstract class InvoiceEntity extends Object
     }
 
     if (taxRate3 != 0) {
-      final invoiceTaxAmount = taxable[taxName3];
+      final invoiceTaxAmount = calculateAmount(taxable, taxRate3);
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
@@ -1019,19 +1026,22 @@ abstract class InvoiceEntity extends Object
     }
 
     for (final item in lineItems) {
+      final itemTaxable = getItemTaxable(item, amount, precision);
+
       if (item.taxRate1 != 0) {
-        final itemTaxAmount = taxable[item.taxName1];
+        final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate1);
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
                 amount * itemTaxAmount != 0
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
+
         _calculateTax(
             taxes, item.taxName1, item.taxRate1, itemTaxAmount, itemPaidAmount);
       }
 
       if (item.taxRate2 != 0) {
-        final itemTaxAmount = taxable[item.taxName2];
+        final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate2);
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
                 amount * itemTaxAmount != 0
@@ -1042,7 +1052,7 @@ abstract class InvoiceEntity extends Object
       }
 
       if (item.taxRate3 != 0) {
-        final itemTaxAmount = taxable[item.taxName3];
+        final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate3);
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
                 amount * itemTaxAmount != 0
