@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'bulk_email_invoice': 'Email Invoice',
+      'bulk_email_quote': 'Email Quote',
+      'bulk_email_credit': 'Email Credit',
       'from_name': 'From Name',
       'enabling_may_degrade_performance': 'Enabling may degrade performance',
       'disabling_may_improve_performance': 'Disabling may improve performance',
@@ -62602,6 +62605,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get fromName =>
       _localizedValues[localeCode]['from_name'] ??
       _localizedValues['en']['from_name'];
+
+  String get bulkEmailInvoice =>
+      _localizedValues[localeCode]['bulk_email_invoice'] ??
+      _localizedValues['en']['bulk_email_invoice'];
+
+  String get bulkEmailQuote =>
+      _localizedValues[localeCode]['bulk_email_quote'] ??
+      _localizedValues['en']['bulk_email_quote'];
+
+  String get bulkEmailCredit =>
+      _localizedValues[localeCode]['bulk_email_credit'] ??
+      _localizedValues['en']['bulk_email_credit'];
 
   // STARTER: lang field - do not remove comment
 

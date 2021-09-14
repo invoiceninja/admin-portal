@@ -757,12 +757,22 @@ abstract class InvoiceEntity extends Object
       }
 
       if (userCompany.canEditEntity(this)) {
-        if (entityType == EntityType.quote) {
-          actions.add(EntityAction.emailQuote);
-        } else if (entityType == EntityType.credit) {
-          actions.add(EntityAction.emailCredit);
-        } else if (entityType == EntityType.invoice) {
-          actions.add(EntityAction.emailInvoice);
+        if (multiselect) {
+          if (entityType == EntityType.quote) {
+            actions.add(EntityAction.bulkEmailQuote);
+          } else if (entityType == EntityType.credit) {
+            actions.add(EntityAction.bulkEmailCredit);
+          } else if (entityType == EntityType.invoice) {
+            actions.add(EntityAction.bulkEmailInvoice);
+          }
+        } else {
+          if (entityType == EntityType.quote) {
+            actions.add(EntityAction.emailQuote);
+          } else if (entityType == EntityType.credit) {
+            actions.add(EntityAction.emailCredit);
+          } else if (entityType == EntityType.invoice) {
+            actions.add(EntityAction.emailInvoice);
+          }
         }
 
         if (isPayable && userCompany.canCreate(EntityType.payment)) {

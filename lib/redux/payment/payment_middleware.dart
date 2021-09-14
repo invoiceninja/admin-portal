@@ -252,7 +252,7 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
     final action = dynamicAction as EmailPaymentRequest;
     repository
         .bulkAction(store.state.credentials, action.paymentIds,
-            EntityAction.emailPayment)
+            EntityAction.bulkEmailPayment)
         .then((List<PaymentEntity> payments) {
       store.dispatch(EmailPaymentSuccess());
       action.completer.complete(null);
