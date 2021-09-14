@@ -529,7 +529,7 @@ const Map<int, String> kModules = {
   kModuleTasks: 'tasks',
   kModuleVendors: 'vendors',
   kModuleExpenses: 'expenses',
-  //kModuleRecurringExpenses: 'recurring_expenses',
+  kModuleRecurringExpenses: 'recurring_expenses',
   //kModuleTickets: 'tickets',
   //kModuleRecurringTasks: 'recurring_tasks',
   //kModuleRecurringQuotes: 'recurring_quotes',
