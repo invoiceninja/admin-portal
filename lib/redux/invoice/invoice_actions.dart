@@ -564,6 +564,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           invoiceIds));
       break;
     case EntityAction.emailInvoice:
+    case EntityAction.bulkEmailInvoice:
       bool emailValid = true;
       invoiceIds.forEach((element) {
         final client = state.clientState.get(invoice.clientId);
@@ -587,7 +588,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
             ]);
         return;
       }
-      if (invoiceIds.length == 1) {
+      if (action == EntityAction.emailInvoice) {
         store.dispatch(ShowEmailInvoice(
             completer:
                 snackBarCompleter<Null>(context, localization.emailedInvoice),

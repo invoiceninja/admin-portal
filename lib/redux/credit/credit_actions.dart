@@ -446,6 +446,7 @@ Future handleCreditAction(
           creditIds));
       break;
     case EntityAction.emailCredit:
+    case EntityAction.bulkEmailCredit:
       bool emailValid = true;
       creditIds.forEach((element) {
         final client = state.clientState.get(credit.clientId);
@@ -469,7 +470,7 @@ Future handleCreditAction(
             ]);
         return;
       }
-      if (creditIds.length == 1) {
+      if (action == EntityAction.emailCredit) {
         store.dispatch(ShowEmailCredit(
             completer:
                 snackBarCompleter<Null>(context, localization.emailedCredit),

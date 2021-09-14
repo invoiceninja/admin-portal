@@ -27,7 +27,12 @@ const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$emailInvoice = const EntityAction._('emailInvoice');
 const EntityAction _$emailQuote = const EntityAction._('emailQuote');
 const EntityAction _$emailCredit = const EntityAction._('emailCredit');
-const EntityAction _$emailPayment = const EntityAction._('emailPayment');
+const EntityAction _$bulkEmailInvoice =
+    const EntityAction._('bulkEmailInvoice');
+const EntityAction _$bulkEmailQuote = const EntityAction._('bulkEmailQuote');
+const EntityAction _$bulkEmailCredit = const EntityAction._('bulkEmailCredit');
+const EntityAction _$bulkEmailPayment =
+    const EntityAction._('bulkEmailPayment');
 const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$markPaid = const EntityAction._('markPaid');
 const EntityAction _$newClient = const EntityAction._('newClient');
@@ -103,8 +108,14 @@ EntityAction _$valueOf(String name) {
       return _$emailQuote;
     case 'emailCredit':
       return _$emailCredit;
-    case 'emailPayment':
-      return _$emailPayment;
+    case 'bulkEmailInvoice':
+      return _$bulkEmailInvoice;
+    case 'bulkEmailQuote':
+      return _$bulkEmailQuote;
+    case 'bulkEmailCredit':
+      return _$bulkEmailCredit;
+    case 'bulkEmailPayment':
+      return _$bulkEmailPayment;
     case 'markSent':
       return _$markSent;
     case 'markPaid':
@@ -191,7 +202,10 @@ final BuiltSet<EntityAction> _$values =
   _$emailInvoice,
   _$emailQuote,
   _$emailCredit,
-  _$emailPayment,
+  _$bulkEmailInvoice,
+  _$bulkEmailQuote,
+  _$bulkEmailCredit,
+  _$bulkEmailPayment,
   _$markSent,
   _$markPaid,
   _$newClient,

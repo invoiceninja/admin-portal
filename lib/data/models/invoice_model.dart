@@ -573,6 +573,22 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.date:
         response = invoiceA.date.compareTo(invoiceB.date);
         break;
+      case InvoiceFields.lastSentDate:
+        response = invoiceA.lastSentDate.compareTo(invoiceB.lastSentDate);
+        break;
+      case InvoiceFields.reminder1Sent:
+        response = invoiceA.reminder1Sent.compareTo(invoiceB.reminder1Sent);
+        break;
+      case InvoiceFields.reminder2Sent:
+        response = invoiceA.reminder2Sent.compareTo(invoiceB.reminder2Sent);
+        break;
+      case InvoiceFields.reminder3Sent:
+        response = invoiceA.reminder3Sent.compareTo(invoiceB.reminder3Sent);
+        break;
+      case InvoiceFields.reminderLastSent:
+        response =
+            invoiceA.reminderLastSent.compareTo(invoiceB.reminderLastSent);
+        break;
       case InvoiceFields.balance:
         response = invoiceA.balanceOrAmount.compareTo(invoiceB.balanceOrAmount);
         break;
@@ -757,12 +773,22 @@ abstract class InvoiceEntity extends Object
       }
 
       if (userCompany.canEditEntity(this)) {
-        if (entityType == EntityType.quote) {
-          actions.add(EntityAction.emailQuote);
-        } else if (entityType == EntityType.credit) {
-          actions.add(EntityAction.emailCredit);
-        } else if (entityType == EntityType.invoice) {
-          actions.add(EntityAction.emailInvoice);
+        if (multiselect) {
+          if (entityType == EntityType.quote) {
+            actions.add(EntityAction.bulkEmailQuote);
+          } else if (entityType == EntityType.credit) {
+            actions.add(EntityAction.bulkEmailCredit);
+          } else if (entityType == EntityType.invoice) {
+            actions.add(EntityAction.bulkEmailInvoice);
+          }
+        } else {
+          if (entityType == EntityType.quote) {
+            actions.add(EntityAction.emailQuote);
+          } else if (entityType == EntityType.credit) {
+            actions.add(EntityAction.emailCredit);
+          } else if (entityType == EntityType.invoice) {
+            actions.add(EntityAction.emailInvoice);
+          }
         }
 
         if (isPayable && userCompany.canCreate(EntityType.payment)) {
