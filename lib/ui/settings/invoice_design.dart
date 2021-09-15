@@ -553,6 +553,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ProductItemFields.custom2,
                 ProductItemFields.custom3,
                 ProductItemFields.custom4,
+                ProductItemFields.grossLineTotal,
               ].map((field) => '\$product.$field').toList(),
               defaultSelected: [
                 ProductItemFields.item,
@@ -588,6 +589,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 TaskItemFields.custom2,
                 TaskItemFields.custom3,
                 TaskItemFields.custom4,
+                TaskItemFields.grossLineTotal,
               ].map((field) => '\$task.$field').toList(),
               defaultSelected: [
                 TaskItemFields.service,
