@@ -143,6 +143,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               ),
             EntityDropdown(
               key: ValueKey('__vendor_${expense.vendorId}__'),
+              autofocus: true,
               entityType: EntityType.vendor,
               labelText: localization.vendor,
               entityId: expense.vendorId,
