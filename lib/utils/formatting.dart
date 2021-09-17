@@ -269,8 +269,16 @@ String formatAddress(
     str += address2 + delimiter;
   }
 
-  if (city.isNotEmpty || state.isNotEmpty || postalCode.isNotEmpty) {
-    str += city + ',' + state + ' ' + postalCode;
+  if (city.isNotEmpty) {
+    str += city + ', ';
+  }
+
+  if (state.isNotEmpty) {
+    str += state + ' ';
+  }
+
+  if (postalCode.isNotEmpty) {
+    str += postalCode;
   }
 
   return str;
