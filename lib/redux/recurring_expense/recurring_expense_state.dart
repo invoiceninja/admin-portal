@@ -60,7 +60,7 @@ abstract class RecurringExpenseUIState extends Object
       listUIState: ListUIState(
           sortField?.field ?? RecurringExpenseFields.number,
           sortAscending: sortField?.ascending),
-      editing: ExpenseEntity(),
+      editing: ExpenseEntity(entityType: EntityType.recurringExpense),
       selectedId: '',
       tabIndex: 0,
     );
