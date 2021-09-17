@@ -105,7 +105,7 @@ final editingReducer = combineReducers<ExpenseEntity>([
 ]);
 
 ExpenseEntity _clearEditing(ExpenseEntity recurringExpense, dynamic action) {
-  return ExpenseEntity();
+  return ExpenseEntity(entityType: EntityType.recurringExpense);
 }
 
 ExpenseEntity _updateEditing(ExpenseEntity recurringExpense, dynamic action) {

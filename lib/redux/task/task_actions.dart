@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewTaskList implements PersistUI, StopLoading {
+class ViewTaskList implements StopLoading {
   ViewTaskList({this.force = false});
 
   final bool force;

@@ -30,7 +30,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       persistData: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
-      customColors: BuiltMap<String, String>(),
+      customColors: BuiltMap<String, String>(CONTRAST_COLORS),
     );
   }
 

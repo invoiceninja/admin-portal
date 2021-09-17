@@ -132,9 +132,6 @@ class ExpenseOverview extends StatelessWidget {
             ? formatNumber(expense.exchangeRate, context,
                 formatNumberType: FormatNumberType.double)
             : null,
-        localization.currency: expense.isConverted
-            ? state.staticState.currencyMap[expense.invoiceCurrencyId]?.name
-            : null,
       };
 
       final listTiles = <Widget>[

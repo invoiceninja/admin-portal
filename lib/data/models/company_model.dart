@@ -681,7 +681,11 @@ abstract class GatewayEntity extends Object
     switch (gatewayId) {
       case kGatewayStripe:
       case kGatewayStripeConnect:
-        return 'https://dashboard.stripe.com/payments/$transactionReference';
+        if (transactionReference.startsWith('src'))
+          return 'https://dashboard.stripe.com/sources/$transactionReference';
+        else
+          return 'https://dashboard.stripe.com/payments/$transactionReference';
+        break;
       default:
         return null;
     }

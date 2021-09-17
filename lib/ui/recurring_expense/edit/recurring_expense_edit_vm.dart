@@ -75,7 +75,10 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
         store.dispatch(UpdateRecurringExpense(recurringExpense));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: ExpenseEntity(), force: true);
+        createEntity(
+            context: context,
+            entity: ExpenseEntity(entityType: EntityType.recurringExpense),
+            force: true);
         if (state.recurringExpenseUIState.cancelCompleter != null) {
           state.recurringExpenseUIState.cancelCompleter.complete();
         } else {

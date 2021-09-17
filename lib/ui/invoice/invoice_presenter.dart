@@ -42,6 +42,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.isViewed,
       InvoiceFields.autoBillEnabled,
       InvoiceFields.lastSentDate,
+      InvoiceFields.nextSendDate,
     ];
   }
 
@@ -66,6 +67,8 @@ class InvoicePresenter extends EntityPresenter {
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.lastSentDate:
         return Text(formatDate(invoice.lastSentDate, context));
+      case InvoiceFields.nextSendDate:
+        return Text(formatDate(invoice.nextSendDate, context));
       case InvoiceFields.reminder1Sent:
         return Text(formatDate(invoice.reminder1Sent, context));
       case InvoiceFields.reminder2Sent:

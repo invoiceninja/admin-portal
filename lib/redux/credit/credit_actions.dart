@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewCreditList implements PersistUI, StopLoading {
+class ViewCreditList implements StopLoading {
   ViewCreditList({this.force = false});
 
   final bool force;

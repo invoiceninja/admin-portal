@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
-class ViewExpenseCategoryList implements PersistUI, StopLoading {
+class ViewExpenseCategoryList implements StopLoading {
   ViewExpenseCategoryList({
     this.force = false,
   });

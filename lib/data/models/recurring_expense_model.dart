@@ -10,6 +10,7 @@ class RecurringExpenseFields {
   static const String categoryId = 'category_id';
   static const String category = 'category';
   static const String netAmount = 'net_amount';
+  static const String convertedAmount = 'converted_amount';
   static const String amount = 'amount';
   static const String taxAmount = 'tax_amount';
   static const String paymentDate = 'payment_date';
