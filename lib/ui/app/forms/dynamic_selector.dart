@@ -38,6 +38,10 @@ class DynamicSelector extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final entityMap = state.getEntityMap(entityType);
 
+    if (!state.company.isModuleEnabled(entityType)) {
+      return SizedBox();
+    }
+
     if (entityIds.length < 10) {
       return AppDropdownButton(
         labelText: labelText ?? localization.lookup('$entityType'),
