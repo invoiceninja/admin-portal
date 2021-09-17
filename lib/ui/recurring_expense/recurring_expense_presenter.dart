@@ -79,6 +79,9 @@ class RecurringExpensePresenter extends EntityPresenter {
       case RecurringExpenseFields.amount:
         return Text(formatNumber(expense.grossAmount, context,
             currencyId: expense.currencyId));
+      case RecurringExpenseFields.convertedAmount:
+        return Text(formatNumber(expense.convertedAmount, context,
+            currencyId: expense.invoiceCurrencyId));
       case RecurringExpenseFields.taxAmount:
         return Text(formatNumber(expense.taxAmount, context,
             currencyId: expense.currencyId));
