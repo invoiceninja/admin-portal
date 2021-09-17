@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewGroupList implements PersistUI, StopLoading {
+class ViewGroupList implements StopLoading {
   ViewGroupList({this.force = false});
 
   final bool force;

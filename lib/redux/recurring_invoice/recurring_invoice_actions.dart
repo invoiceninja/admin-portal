@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewRecurringInvoiceList implements PersistUI, StopLoading {
+class ViewRecurringInvoiceList implements StopLoading {
   ViewRecurringInvoiceList({
     this.force = false,
   });

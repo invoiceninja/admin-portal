@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewInvoiceList implements PersistUI, StopLoading {
+class ViewInvoiceList implements StopLoading {
   ViewInvoiceList({this.force = false});
 
   final bool force;

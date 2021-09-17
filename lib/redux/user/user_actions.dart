@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewUserList implements PersistUI, StopLoading {
+class ViewUserList implements StopLoading {
   ViewUserList({this.force = false});
 
   final bool force;
