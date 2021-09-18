@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -15,7 +16,6 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter/material.dart';
 
 List<Middleware<AppState>> createStoreSettingsMiddleware([
   SettingsRepository repository = const SettingsRepository(),
@@ -63,13 +63,13 @@ Middleware<AppState> _viewSettings() {
             route += '/${uiState.settingsUIState.section}';
           }
 
-          next(action);
-
           if (store.state.isStale) {
             store.dispatch(RefreshData());
           }
 
           store.dispatch(UpdateCurrentRoute(route));
+
+          next(action);
 
           if (store.state.prefState.isMobile) {
             if (action.section == null) {

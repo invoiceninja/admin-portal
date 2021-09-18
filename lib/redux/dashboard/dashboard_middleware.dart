@@ -1,12 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-
-import 'package:invoiceninja_flutter/main_app.dart';
 
 List<Middleware<AppState>> createStoreDashboardMiddleware() {
   final viewDashboard = _createViewDashboard();
@@ -29,9 +28,9 @@ Middleware<AppState> _createViewDashboard() {
             store.dispatch(RefreshData());
           }
 
-          next(action);
-
           store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
+
+          next(action);
 
           if (store.state.prefState.isMobile) {
             navigatorKey.currentState.pushNamedAndRemoveUntil(
