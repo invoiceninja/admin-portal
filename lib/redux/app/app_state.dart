@@ -50,30 +50,24 @@ import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
 import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
-
 import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
 import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
 import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.dart';
-
 import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
-
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_selectors.dart';
-
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
-
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_selectors.dart';

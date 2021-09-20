@@ -269,6 +269,7 @@ class _LoginState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final platform = getNativePlatform();
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
@@ -676,9 +677,15 @@ class _LoginState extends State<LoginView> {
                                 ]),
                           ),
                         ),
-                      if (!_recoverPassword && !_isSelfHosted)
+                      if (!_recoverPassword && (!_isSelfHosted || kIsWeb))
                         InkWell(
-                          onTap: () => launch(kStatusCheckUrl),
+                          onTap: () {
+                            if (platform.isNotEmpty) {
+                              launch(getNativeAppUrl(platform));
+                            } else {
+                              launch(kStatusCheckUrl);
+                            }
+                          },
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 25, top: 12, right: 20, bottom: 12),
@@ -686,9 +693,15 @@ class _LoginState extends State<LoginView> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.security, size: 16),
+                                Icon(
+                                    platform.isEmpty
+                                        ? Icons.security
+                                        : getNativeAppIcon(platform),
+                                    size: 16),
                                 SizedBox(width: 8),
-                                Text(localization.checkStatus)
+                                Text(platform.isEmpty
+                                    ? localization.checkStatus
+                                    : '$platform ${localization.app}')
                               ],
                             ),
                           ),
