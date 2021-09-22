@@ -28,21 +28,28 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
 
+    var systemLogs = widget.systemLogs.where((log) {
+      return log.typeId != 800;
+    }).toList();
+    if (systemLogs.length > 25) {
+      systemLogs = systemLogs.sublist(0, 25);
+    }
+
     return ScrollableListView(
       children: [
         ExpansionPanelList(
           expansionCallback: (int index, bool isExpanded) {
             setState(() {
-              final systemLog = widget.systemLogs[index];
+              final systemLog = systemLogs[index];
               _isExpanded[systemLog.id] = !isExpanded;
             });
           },
-          children: widget.systemLogs
+          children: systemLogs
               .where((systemLog) => systemLog.isVisible)
               .map((systemLog) {
             final client = state.clientState.get(systemLog.clientId);
             Map<String, dynamic> logs;
-            if (systemLog.log.isNotEmpty) {
+            if (_isExpanded[systemLog.id] == true && systemLog.log.isNotEmpty) {
               try {
                 logs = json.decode(systemLog.log);
               } catch (e) {
@@ -76,13 +83,15 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                 );
               },
               isExpanded: _isExpanded[systemLog.id] == true,
-              body: Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: JsonViewer(logs ?? <String, dynamic>{}),
-                ),
-              ),
+              body: _isExpanded[systemLog.id] == true
+                  ? Container(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: JsonViewer(logs ?? <String, dynamic>{}),
+                      ),
+                    )
+                  : SizedBox(),
             );
           }).toList(),
         ),
