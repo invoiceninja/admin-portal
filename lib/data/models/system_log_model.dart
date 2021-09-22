@@ -100,6 +100,8 @@ abstract class SystemLogEntity
         return 'email_delivery';
       case 40:
         return 'webhook_response';
+      case 41:
+        return 'webhook_success';
       case 50:
         return 'pdf_response';
       case 60:
@@ -108,7 +110,7 @@ abstract class SystemLogEntity
         return 'user';
     }
 
-    return '';
+    return 'Unknown $eventId';
   }
 
   String get type {
@@ -127,6 +129,20 @@ abstract class SystemLogEntity
         return 'Authorize.net';
       case 306:
         return 'custom';
+      case 307:
+        return 'Braintree';
+      case 309:
+        return 'WePay';
+      case 310:
+        return 'PayFast';
+      case 311:
+        return 'PayTrace';
+      case 312:
+        return 'Mollie';
+      case 313:
+        return 'eWay';
+      case 320:
+        return 'Square';
       case 400:
         return 'quota_exceeded';
       case 401:
@@ -147,7 +163,7 @@ abstract class SystemLogEntity
         return 'login_failure';
     }
 
-    return '';
+    return 'Unknown $typeId';
   }
 
   static Serializer<SystemLogEntity> get serializer =>
