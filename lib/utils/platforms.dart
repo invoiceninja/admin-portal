@@ -103,10 +103,6 @@ String getNativePlatform() {
 }
 
 String getNativeAppUrl(String platform) {
-  if (!kIsWeb) {
-    return '';
-  }
-
   switch (platform) {
     case kPlatformAndroid:
       return kGoogleStoreUrl;
@@ -124,10 +120,6 @@ String getNativeAppUrl(String platform) {
 }
 
 IconData getNativeAppIcon(String platform) {
-  if (!kIsWeb) {
-    return null;
-  }
-
   switch (platform) {
     case kPlatformAndroid:
       return Icons.android;
