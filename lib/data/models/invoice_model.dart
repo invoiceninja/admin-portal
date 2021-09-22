@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
@@ -674,6 +675,15 @@ abstract class InvoiceEntity extends Object
         break;
       case InvoiceFields.isViewed:
         response = invoiceB.isViewed ? 1 : -1;
+        break;
+      case RecurringInvoiceFields.remainingCycles:
+        response = invoiceA.remainingCycles.compareTo(invoiceB.remainingCycles);
+        break;
+      case RecurringInvoiceFields.frequency:
+        response = invoiceA.frequencyId.compareTo(invoiceB.frequencyId);
+        break;
+      case RecurringInvoiceFields.autoBill:
+        response = invoiceA.autoBill.compareTo(invoiceB.autoBill);
         break;
       default:
         print('## ERROR: sort by invoice.$sortField is not implemented');
