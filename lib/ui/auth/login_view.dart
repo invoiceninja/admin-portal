@@ -269,8 +269,7 @@ class _LoginState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    var platform = getNativePlatform();
-    platform = kPlatformAndroid;
+    final platform = getNativePlatform();
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
@@ -694,7 +693,7 @@ class _LoginState extends State<LoginView> {
                             ),
                           ),
                         ),
-                      if (kIsWeb || !kReleaseMode)
+                      if (!_recoverPassword && kIsWeb)
                         InkWell(
                           onTap: () => launch(getNativeAppUrl(platform)),
                           child: Padding(
