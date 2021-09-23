@@ -399,6 +399,23 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       icon: Icon(Icons.check_box),
                       onPressed: () => widget.onCheckboxPressed(),
                     ),
+                  if (isDesktop(context))
+                    IconButton(
+                      tooltip: localization.preview,
+                      icon: Icon(
+                        Icons.chrome_reader_mode,
+                        /*
+                        color: state.prefState.isPreviewEnabled
+                            ? state.accentColor
+                            : null,
+                            */
+                      ),
+                      onPressed: () {
+                        store.dispatch(UpdateUserPreferences(
+                            isPreviewEnabled:
+                                !state.prefState.isPreviewEnabled));
+                      },
+                    ),
                   if (!widget.entityType.isSetting &&
                       prefState.isPreviewEnabled)
                     IconButton(
@@ -410,24 +427,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         store.dispatch(SwitchListTableLayout());
                       },
                     ),
-                  if (prefState.isPreviewEnabled) ...[
-                    if (isList && widget.sortFields.isNotEmpty)
-                      IconButton(
-                        tooltip: localization.sort,
-                        icon: Icon(Icons.sort_by_alpha),
-                        onPressed: _showSortSheet,
-                      ),
-                    if (!isList && isDesktop(context))
-                      IconButton(
-                        tooltip: localization.preview,
-                        icon: Icon(Icons.chrome_reader_mode),
-                        onPressed: () {
-                          store.dispatch(UpdateUserPreferences(
-                              isPreviewVisible:
-                                  !state.prefState.isPreviewVisible));
-                        },
-                      ),
-                  ],
+                  if (isList && widget.sortFields.isNotEmpty)
+                    IconButton(
+                      tooltip: localization.sort,
+                      icon: Icon(Icons.sort_by_alpha),
+                      onPressed: _showSortSheet,
+                    ),
                 ],
                 IconButton(
                   tooltip: localization.filter,

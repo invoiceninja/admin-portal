@@ -47,8 +47,6 @@ PrefState prefReducer(
       ..appLayout = layoutReducer(state.appLayout, action)
       ..rowsPerPage = rowsPerPageReducer(state.rowsPerPage, action)
       ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
-      ..isPreviewVisible =
-          isPreviewVisibleReducer(state.isPreviewVisible, action)
       ..isPreviewEnabled =
           isPreviewEnabledReducer(state.isPreviewEnabled, action)
       ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
@@ -268,12 +266,6 @@ Reducer<bool> longPressReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>(
       (longPressSelectionIsDefault, action) {
     return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
-  }),
-]);
-
-Reducer<bool> isPreviewVisibleReducer = combineReducers([
-  TypedReducer<bool, UpdateUserPreferences>((isPreviewVisible, action) {
-    return action.isPreviewVisible ?? isPreviewVisible;
   }),
 ]);
 

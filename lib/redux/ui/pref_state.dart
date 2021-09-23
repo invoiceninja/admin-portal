@@ -13,8 +13,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.table,
-      isPreviewEnabled: true,
-      isPreviewVisible: true,
+      isPreviewEnabled: false,
       useSidebarEditor: BuiltMap<EntityType, bool>(),
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,
@@ -84,8 +83,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   BuiltMap<EntityType, bool> get useSidebarEditor;
 
   BuiltMap<String, String> get customColors;
-
-  bool get isPreviewVisible;
 
   bool get isPreviewEnabled;
 

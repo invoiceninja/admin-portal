@@ -143,15 +143,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       enabledLabel: localization.float,
                       disabledLabel: localization.showOrHide,
                     ),
-                    BoolDropdownButton(
-                      label: localization.previewSidebar,
-                      value: prefState.isPreviewEnabled,
-                      onChanged: (value) {
-                        viewModel.onPreviewSidebarChanged(context, value);
-                      },
-                      enabledLabel: localization.enabled,
-                      disabledLabel: localization.disabled,
-                    ),
                   ],
                   BoolDropdownButton(
                     label: localization.listLongPress,

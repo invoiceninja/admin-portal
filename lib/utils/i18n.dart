@@ -1920,7 +1920,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'show_task_end_date': 'Show Task End Date',
       'show_task_end_date_help': 'Enable specifying the task end date',
       'gateway_setup': 'Gateway Setup',
-      'preview_sidebar': 'Preview Sidebar',
       'years_data_shown': 'Years Data Shown',
       'ended_all_sessions': 'Successfully ended all sessions',
       'end_all_sessions': 'End All Sessions',
@@ -62261,10 +62260,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get yearsDataShown =>
       _localizedValues[localeCode]['years_data_shown'] ??
       _localizedValues['en']['years_data_shown'];
-
-  String get previewSidebar =>
-      _localizedValues[localeCode]['preview_sidebar'] ??
-      _localizedValues['en']['preview_sidebar'];
 
   String get gatewaySetup =>
       _localizedValues[localeCode]['gateway_setup'] ??

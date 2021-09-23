@@ -122,7 +122,6 @@ class UpdateUserPreferences implements PersistPrefs {
     this.enableDarkMode,
     this.requireAuthentication,
     this.longPressSelectionIsDefault,
-    this.isPreviewVisible,
     this.isPreviewEnabled,
     this.accentColor,
     this.menuMode,
@@ -144,7 +143,6 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
-  final bool isPreviewVisible;
   final bool isPreviewEnabled;
   final bool showFilterSidebar;
   final bool alwaysShowFilterSidebar;
@@ -453,11 +451,6 @@ void viewEntityById({
               context: navigatorKey.currentContext,
               message: localization.failedToFindRecord);
           return;
-        }
-
-        if (!state.prefState.isPreviewVisible &&
-            state.prefState.moduleLayout == ModuleLayout.table) {
-          store.dispatch(UpdateUserPreferences(isPreviewVisible: true));
         }
 
         switch (entityType) {
@@ -1404,8 +1397,7 @@ void selectEntity({
       !forceView &&
       uiState.isViewing &&
       !entity.entityType.isSetting &&
-      entityUIState.selectedId == entity.id &&
-      (state.prefState.isPreviewVisible || state.prefState.isModuleList)) {
+      entityUIState.selectedId == entity.id) {
     if (entityUIState.tabIndex > 0) {
       store.dispatch(PreviewEntity());
     } else {

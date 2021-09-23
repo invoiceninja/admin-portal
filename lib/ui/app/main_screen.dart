@@ -329,9 +329,7 @@ class EntityScreens extends StatelessWidget {
     final isPdf = subRoute == 'pdf';
 
     final isFullScreen = state.isFullScreen;
-    final isPreviewVisible =
-        prefState.isPreviewVisible && prefState.isPreviewEnabled;
-    bool isPreviewShown = isPreviewVisible;
+    bool isPreviewShown = prefState.isPreviewEnabled;
 
     if (subRoute != 'view' && subRoute.isNotEmpty) {
       isPreviewShown = true;
