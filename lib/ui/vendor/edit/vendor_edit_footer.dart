@@ -21,6 +21,8 @@ class VendorEditFooter extends StatelessWidget {
     final state = store.state;
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.vendor] ?? false;
+    final showLayoutToggle =
+        isDesktop(context) && state.prefState.isPreviewEnabled;
 
     return BottomAppBar(
       elevation: 0,
@@ -33,7 +35,7 @@ class VendorEditFooter extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (isDesktop(context))
+              if (showLayoutToggle)
                 Tooltip(
                   message: useSidebarEditor
                       ? localization.fullscreenEditor
@@ -50,7 +52,7 @@ class VendorEditFooter extends StatelessWidget {
                   ),
                 ),
               AppBorder(
-                isLeft: isDesktop(context),
+                isLeft: showLayoutToggle,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, top: 8),
                   child: Text(

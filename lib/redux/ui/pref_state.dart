@@ -116,8 +116,17 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isDesktop => appLayout == AppLayout.desktop;
 
-  bool isEditorFullScreen(EntityType entityType) =>
-      isDesktop && !(useSidebarEditor[entityType] ?? false);
+  bool isEditorFullScreen(EntityType entityType) {
+    if (!isDesktop) {
+      return false;
+    }
+
+    if (!isPreviewEnabled) {
+      return true;
+    }
+
+    return !(useSidebarEditor[entityType] ?? false);
+  }
 
   bool get isNotDesktop => !isDesktop;
 

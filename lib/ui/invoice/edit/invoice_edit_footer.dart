@@ -27,6 +27,8 @@ class InvoiceEditFooter extends StatelessWidget {
         clientId: invoice.clientId);
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
+    final showLayoutToggle =
+        isDesktop(context) && state.prefState.isPreviewEnabled;
 
     return BottomAppBar(
       elevation: 0,
@@ -39,7 +41,7 @@ class InvoiceEditFooter extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (isDesktop(context))
+              if (showLayoutToggle)
                 Tooltip(
                   message: useSidebarEditor
                       ? localization.fullscreenEditor
@@ -56,7 +58,7 @@ class InvoiceEditFooter extends StatelessWidget {
                   ),
                 ),
               AppBorder(
-                isLeft: isDesktop(context),
+                isLeft: showLayoutToggle,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, top: 8),
                   child: Text(
