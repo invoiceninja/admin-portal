@@ -367,14 +367,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
             specifiedType: const FullType(
                 BuiltList, const [const FullType(InvoiceScheduleEntity)])));
     }
-    value = object.history;
-    if (value != null) {
-      result
-        ..add('history')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(InvoiceHistoryEntity)])));
-    }
     value = object.loadedAt;
     if (value != null) {
       result
@@ -675,12 +667,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList<Object>);
-          break;
-        case 'history':
-          result.history.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvoiceHistoryEntity)]))
               as BuiltList<Object>);
           break;
         case 'loadedAt':
@@ -1157,9 +1143,6 @@ class _$InvoiceHistoryEntitySerializer
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'activity',
-      serializers.serialize(object.activity,
-          specifiedType: const FullType(ActivityEntity)),
       'activity_id',
       serializers.serialize(object.activityId,
           specifiedType: const FullType(String)),
@@ -1192,10 +1175,6 @@ class _$InvoiceHistoryEntitySerializer
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'activity':
-          result.activity.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ActivityEntity)) as ActivityEntity);
           break;
         case 'activity_id':
           result.activityId = serializers.deserialize(value,
@@ -1525,8 +1504,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<ActivityEntity> activities;
   @override
-  final BuiltList<InvoiceHistoryEntity> history;
-  @override
   final int loadedAt;
   @override
   final bool isChanged;
@@ -1610,7 +1587,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.invitations,
       this.documents,
       this.activities,
-      this.history,
       this.loadedAt,
       this.isChanged,
       this.createdAt,
@@ -1787,7 +1763,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         invitations == other.invitations &&
         documents == other.documents &&
         activities == other.activities &&
-        history == other.history &&
         loadedAt == other.loadedAt &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -1821,16 +1796,16 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode), invoiceId.hashCode),
-                                                                                recurringId.hashCode),
-                                                                            autoBillEnabled.hashCode),
-                                                                        filename.hashCode),
-                                                                    recurringDates.hashCode),
-                                                                lineItems.hashCode),
-                                                            invitations.hashCode),
-                                                        documents.hashCode),
-                                                    activities.hashCode),
-                                                history.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode),
+                                                                                invoiceId.hashCode),
+                                                                            recurringId.hashCode),
+                                                                        autoBillEnabled.hashCode),
+                                                                    filename.hashCode),
+                                                                recurringDates.hashCode),
+                                                            lineItems.hashCode),
+                                                        invitations.hashCode),
+                                                    documents.hashCode),
+                                                activities.hashCode),
                                             loadedAt.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
@@ -1905,7 +1880,6 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('invitations', invitations)
           ..add('documents', documents)
           ..add('activities', activities)
-          ..add('history', history)
           ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -2184,12 +2158,6 @@ class InvoiceEntityBuilder
   set activities(ListBuilder<ActivityEntity> activities) =>
       _$this._activities = activities;
 
-  ListBuilder<InvoiceHistoryEntity> _history;
-  ListBuilder<InvoiceHistoryEntity> get history =>
-      _$this._history ??= new ListBuilder<InvoiceHistoryEntity>();
-  set history(ListBuilder<InvoiceHistoryEntity> history) =>
-      _$this._history = history;
-
   int _loadedAt;
   int get loadedAt => _$this._loadedAt;
   set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
@@ -2298,7 +2266,6 @@ class InvoiceEntityBuilder
       _invitations = $v.invitations.toBuilder();
       _documents = $v.documents.toBuilder();
       _activities = $v.activities.toBuilder();
-      _history = $v.history?.toBuilder();
       _loadedAt = $v.loadedAt;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -2398,7 +2365,6 @@ class InvoiceEntityBuilder
               invitations: invitations.build(),
               documents: documents.build(),
               activities: activities.build(),
-              history: _history?.build(),
               loadedAt: loadedAt,
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'InvoiceEntity', 'createdAt'),
@@ -2422,8 +2388,6 @@ class InvoiceEntityBuilder
         documents.build();
         _$failedField = 'activities';
         activities.build();
-        _$failedField = 'history';
-        _history?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'InvoiceEntity', _$failedField, e.toString());
@@ -3211,8 +3175,6 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   @override
   final String id;
   @override
-  final ActivityEntity activity;
-  @override
   final String activityId;
   @override
   final String htmlBackup;
@@ -3226,16 +3188,9 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
       (new InvoiceHistoryEntityBuilder()..update(updates)).build();
 
   _$InvoiceHistoryEntity._(
-      {this.id,
-      this.activity,
-      this.activityId,
-      this.htmlBackup,
-      this.createdAt,
-      this.amount})
+      {this.id, this.activityId, this.htmlBackup, this.createdAt, this.amount})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'InvoiceHistoryEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(
-        activity, 'InvoiceHistoryEntity', 'activity');
     BuiltValueNullFieldError.checkNotNull(
         activityId, 'InvoiceHistoryEntity', 'activityId');
     BuiltValueNullFieldError.checkNotNull(
@@ -3260,7 +3215,6 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
     if (identical(other, this)) return true;
     return other is InvoiceHistoryEntity &&
         id == other.id &&
-        activity == other.activity &&
         activityId == other.activityId &&
         htmlBackup == other.htmlBackup &&
         createdAt == other.createdAt &&
@@ -3272,9 +3226,7 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   int get hashCode {
     return __hashCode ??= $jf($jc(
         $jc(
-            $jc(
-                $jc($jc($jc(0, id.hashCode), activity.hashCode),
-                    activityId.hashCode),
+            $jc($jc($jc(0, id.hashCode), activityId.hashCode),
                 htmlBackup.hashCode),
             createdAt.hashCode),
         amount.hashCode));
@@ -3284,7 +3236,6 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceHistoryEntity')
           ..add('id', id)
-          ..add('activity', activity)
           ..add('activityId', activityId)
           ..add('htmlBackup', htmlBackup)
           ..add('createdAt', createdAt)
@@ -3300,11 +3251,6 @@ class InvoiceHistoryEntityBuilder
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
-
-  ActivityEntityBuilder _activity;
-  ActivityEntityBuilder get activity =>
-      _$this._activity ??= new ActivityEntityBuilder();
-  set activity(ActivityEntityBuilder activity) => _$this._activity = activity;
 
   String _activityId;
   String get activityId => _$this._activityId;
@@ -3328,7 +3274,6 @@ class InvoiceHistoryEntityBuilder
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
-      _activity = $v.activity.toBuilder();
       _activityId = $v.activityId;
       _htmlBackup = $v.htmlBackup;
       _createdAt = $v.createdAt;
@@ -3351,32 +3296,18 @@ class InvoiceHistoryEntityBuilder
 
   @override
   _$InvoiceHistoryEntity build() {
-    _$InvoiceHistoryEntity _$result;
-    try {
-      _$result = _$v ??
-          new _$InvoiceHistoryEntity._(
-              id: BuiltValueNullFieldError.checkNotNull(
-                  id, 'InvoiceHistoryEntity', 'id'),
-              activity: activity.build(),
-              activityId: BuiltValueNullFieldError.checkNotNull(
-                  activityId, 'InvoiceHistoryEntity', 'activityId'),
-              htmlBackup: BuiltValueNullFieldError.checkNotNull(
-                  htmlBackup, 'InvoiceHistoryEntity', 'htmlBackup'),
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, 'InvoiceHistoryEntity', 'createdAt'),
-              amount: BuiltValueNullFieldError.checkNotNull(
-                  amount, 'InvoiceHistoryEntity', 'amount'));
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'activity';
-        activity.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'InvoiceHistoryEntity', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$InvoiceHistoryEntity._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'InvoiceHistoryEntity', 'id'),
+            activityId: BuiltValueNullFieldError.checkNotNull(
+                activityId, 'InvoiceHistoryEntity', 'activityId'),
+            htmlBackup: BuiltValueNullFieldError.checkNotNull(
+                htmlBackup, 'InvoiceHistoryEntity', 'htmlBackup'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, 'InvoiceHistoryEntity', 'createdAt'),
+            amount: BuiltValueNullFieldError.checkNotNull(
+                amount, 'InvoiceHistoryEntity', 'amount'));
     replace(_$result);
     return _$result;
   }

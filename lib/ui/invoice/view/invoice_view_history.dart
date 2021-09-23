@@ -35,14 +35,17 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
       return LoadingIndicator();
     }
 
-    final historyList = invoice.history.toList();
-    historyList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    final activityList = invoice.activities
+        .where((activity) => activity.history != null)
+        .toList();
+    activityList.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
     return ScrollableListViewBuilder(
       padding: const EdgeInsets.symmetric(vertical: 16),
       itemBuilder: (BuildContext context, index) {
-        final history = historyList[index];
-        final user = viewModel.state.userState.get(history.activity.userId);
+        final activity = activityList[index];
+        final history = activity.history;
+        final user = viewModel.state.userState.get(activity.userId);
 
         return ListTile(
           title: Text(

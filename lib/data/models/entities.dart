@@ -632,6 +632,9 @@ abstract class ActivityEntity
   @BuiltValueField(wireName: 'token_id')
   String get tokenId;
 
+  @nullable
+  InvoiceHistoryEntity get history;
+
   EntityType get entityType {
     if ([
       kActivityCreateClient,

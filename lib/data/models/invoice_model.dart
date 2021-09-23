@@ -185,7 +185,6 @@ abstract class InvoiceEntity extends Object
       subscriptionId: '',
       recurringDates: BuiltList<InvoiceScheduleEntity>(),
       lineItems: BuiltList<InvoiceItemEntity>(),
-      history: BuiltList<InvoiceHistoryEntity>(),
       usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
       documents: BuiltList<DocumentEntity>(),
       activities: BuiltList<ActivityEntity>(),
@@ -461,9 +460,6 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<ActivityEntity> get activities;
 
-  @nullable
-  BuiltList<InvoiceHistoryEntity> get history;
-
   bool get isApproved => statusId == kQuoteStatusApproved;
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
@@ -479,6 +475,11 @@ abstract class InvoiceEntity extends Object
 
   @nullable
   int get loadedAt;
+
+  List<InvoiceHistoryEntity> get history => activities
+      .where((activity) => activity.history != null)
+      .map((activity) => activity.history)
+      .toList();
 
   bool get isLoaded => loadedAt != null && loadedAt > 0;
 
@@ -1517,7 +1518,6 @@ abstract class InvoiceHistoryEntity
       htmlBackup: '',
       createdAt: 0,
       activityId: '',
-      activity: ActivityEntity(),
       amount: 0,
     );
   }
@@ -1529,8 +1529,6 @@ abstract class InvoiceHistoryEntity
   int get hashCode;
 
   String get id;
-
-  ActivityEntity get activity;
 
   @BuiltValueField(wireName: 'activity_id')
   String get activityId;
