@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:collection/collection.dart';
 
 part 'invoice_model.g.dart';
 
@@ -556,9 +557,8 @@ abstract class InvoiceEntity extends Object
                 invoiceBNumber.startsWith(recurringPrefix)
             ? invoiceBNumber.replaceFirst(recurringPrefix, '')
             : invoiceBNumber;
-        response = invoiceANumber
-            .toLowerCase()
-            .compareTo(invoiceBNumber.toLowerCase());
+        response = compareNatural(
+            invoiceANumber.toLowerCase(), invoiceBNumber.toLowerCase());
         break;
       case InvoiceFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);

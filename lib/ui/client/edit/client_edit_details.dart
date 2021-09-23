@@ -170,6 +170,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
           DecoratedFormField(
             label: localization.number,
             controller: _numberController,
+            onSavePressed: viewModel.onSavePressed,
           ),
         if (memoizedGroupList(state.groupState.map).isNotEmpty)
           DynamicSelector(
