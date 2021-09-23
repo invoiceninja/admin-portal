@@ -1389,7 +1389,12 @@ void selectEntity({
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
-    editEntity(context: context, entity: entity);
+    if (entity.entityType == EntityType.client) {
+      viewEntitiesByType(entityType: EntityType.invoice);
+      filterByEntity(context: context, entity: entity);
+    } else {
+      editEntity(context: context, entity: entity);
+    }
   } else if (isDesktop(context) &&
       (uiState.isEditing || uiState.previewStack.isNotEmpty)) {
     viewEntity(entity: entity);

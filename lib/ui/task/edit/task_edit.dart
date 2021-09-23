@@ -139,7 +139,7 @@ class _TaskEditState extends State<TaskEdit>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (isDesktop(context))
+                if (isDesktop(context) && state.prefState.isPreviewEnabled)
                   Tooltip(
                     message: useSidebarEditor
                         ? localization.fullscreenEditor
@@ -156,7 +156,8 @@ class _TaskEditState extends State<TaskEdit>
                     ),
                   ),
                 AppBorder(
-                  isLeft: isDesktop(context),
+                  isLeft:
+                      isDesktop(context) && state.prefState.isPreviewEnabled,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: Align(
