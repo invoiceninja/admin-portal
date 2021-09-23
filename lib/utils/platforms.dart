@@ -7,6 +7,9 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();
 
@@ -76,6 +79,61 @@ String getPdfRequirements(BuildContext context) {
   } else {
     return '';
   }
+}
+
+String getNativePlatform() {
+  String userAgent = WebUtils.getHtmlValue('user-agent') ?? '';
+  userAgent = userAgent.toLowerCase();
+
+  if (userAgent.contains('ipad') ||
+      userAgent.contains('ipod') ||
+      userAgent.contains('iphone')) {
+    return kPlatformiPhone;
+  } else if (userAgent.contains('android')) {
+    return kPlatformAndroid;
+  } else if (userAgent.contains('win')) {
+    return kPlatformWindows;
+  } else if (userAgent.contains('mac')) {
+    return kPlatformMacOS;
+  } else if (userAgent.contains('linux')) {
+    return kPlatformLinux;
+  } else {
+    return '';
+  }
+}
+
+String getNativeAppUrl(String platform) {
+  switch (platform) {
+    case kPlatformAndroid:
+      return kGoogleStoreUrl;
+    case kPlatformiPhone:
+      return kAppleStoreUrl;
+    case kPlatformWindows:
+      return kWindowsUrl;
+    case kPlatformMacOS:
+      return kMacOSUrl;
+    case kPlatformLinux:
+      return kLinuxUrl;
+  }
+
+  return '';
+}
+
+IconData getNativeAppIcon(String platform) {
+  switch (platform) {
+    case kPlatformAndroid:
+      return Icons.android;
+    case kPlatformiPhone:
+      return MdiIcons.apple;
+    case kPlatformWindows:
+      return MdiIcons.microsoft;
+    case kPlatformMacOS:
+      return MdiIcons.apple;
+    case kPlatformLinux:
+      return MdiIcons.linux;
+  }
+
+  return null;
 }
 
 String getPlatform(BuildContext context) =>

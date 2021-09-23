@@ -4,10 +4,12 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/recurring_expense_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:collection/collection.dart';
 
 part 'expense_model.g.dart';
 
@@ -448,7 +450,8 @@ abstract class ExpenseEntity extends Object
             expenseA.documents.length.compareTo(expenseB.documents.length);
         break;
       case ExpenseFields.number:
-        response = expenseA.number.compareTo(expenseB.number);
+        response = compareNatural(
+            expenseA.number.toLowerCase(), expenseB.number.toLowerCase());
         break;
       case ExpenseFields.privateNotes:
         response = expenseA.privateNotes.compareTo(expenseB.privateNotes);
@@ -512,6 +515,12 @@ abstract class ExpenseEntity extends Object
         break;
       case ExpenseFields.customValue4:
         response = expenseA.customValue4.compareTo(expenseB.customValue4);
+        break;
+      case RecurringExpenseFields.frequency:
+        response = expenseA.frequencyId.compareTo(expenseB.frequencyId);
+        break;
+      case RecurringExpenseFields.nextSendDate:
+        response = expenseA.nextSendDate.compareTo(expenseB.nextSendDate);
         break;
       default:
         print('## ERROR: sort by expense.$sortField is not implemented');

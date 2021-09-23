@@ -383,7 +383,7 @@ abstract class PaymentEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted && !multiselect) {
+    if (!isDeleted) {
       if (userCompany.canEditEntity(this)) {
         if (!multiselect) {
           if (includeEdit) {
@@ -400,7 +400,7 @@ abstract class PaymentEntity extends Object
         }
 
         if (client != null && client.hasEmailAddress) {
-          actions.add(EntityAction.bulkEmailPayment);
+          actions.add(EntityAction.emailPayment);
         }
       }
     }

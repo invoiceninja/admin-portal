@@ -35,7 +35,7 @@ class FormCard extends StatelessWidget {
           (forceNarrow
               ? EdgeInsets.symmetric(
                   vertical: kMobileDialogPadding,
-                  horizontal: (MediaQuery.of(context).size.width - 500) / 2,
+                  horizontal: (MediaQuery.of(context).size.width - 510) / 2,
                 )
               : EdgeInsets.only(
                   left: kMobileDialogPadding,

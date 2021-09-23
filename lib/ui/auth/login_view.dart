@@ -269,6 +269,7 @@ class _LoginState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final platform = getNativePlatform();
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
@@ -611,9 +612,8 @@ class _LoginState extends State<LoginView> {
                     child: RoundedLoadingButton(
                       height: 50,
                       borderRadius: 4,
-                      width: 416,
+                      width: 430,
                       controller: _buttonController,
-                      //color: convertHexStringToColor('#4285F4'),
                       color: state.accentColor,
                       onPressed: () => _submitForm(),
                       child: Row(
@@ -661,8 +661,7 @@ class _LoginState extends State<LoginView> {
                             });
                           },
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 25, top: 12, right: 20, bottom: 12),
+                            padding: const EdgeInsets.all(14),
                             child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -678,10 +677,11 @@ class _LoginState extends State<LoginView> {
                         ),
                       if (!_recoverPassword && !_isSelfHosted)
                         InkWell(
-                          onTap: () => launch(kStatusCheckUrl),
+                          onTap: () {
+                            launch(kStatusCheckUrl);
+                          },
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 25, top: 12, right: 20, bottom: 12),
+                            padding: const EdgeInsets.all(14),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -689,6 +689,22 @@ class _LoginState extends State<LoginView> {
                                 Icon(Icons.security, size: 16),
                                 SizedBox(width: 8),
                                 Text(localization.checkStatus)
+                              ],
+                            ),
+                          ),
+                        ),
+                      if (!_recoverPassword && kIsWeb)
+                        InkWell(
+                          onTap: () => launch(getNativeAppUrl(platform)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(getNativeAppIcon(platform), size: 16),
+                                SizedBox(width: 8),
+                                Text('$platform ${localization.app}')
                               ],
                             ),
                           ),

@@ -258,6 +258,12 @@ const kGatewayTypes = {
 const String kNotificationChannelEmail = 'email';
 const String kNotificationChannelSlack = 'slack';
 
+const String kPlatformWindows = 'Windows';
+const String kPlatformLinux = 'Linux';
+const String kPlatformMacOS = 'macOS';
+const String kPlatformAndroid = 'Android';
+const String kPlatformiPhone = 'iPhone';
+
 const String kNotificationsAll = 'all_notifications';
 const String kNotificationsAllUser = 'all_user_notifications';
 const String kNotificationsPaymentSuccess = 'payment_success';

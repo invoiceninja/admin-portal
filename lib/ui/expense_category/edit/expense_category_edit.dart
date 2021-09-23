@@ -106,6 +106,7 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
                       controller: _nameController,
                       autovalidate: _autoValidate,
                       label: localization.name,
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                     FormColorPicker(
                       initialValue: expenseCategory.color,

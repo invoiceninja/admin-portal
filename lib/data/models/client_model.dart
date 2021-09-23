@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:collection/collection.dart';
 
 part 'client_model.g.dart';
 
@@ -396,7 +397,8 @@ abstract class ClientEntity extends Object
         response = clientA.idNumber.compareTo(clientB.idNumber);
         break;
       case ClientFields.number:
-        response = clientA.number.compareTo(clientB.number);
+        response = compareNatural(
+            clientA.number.toLowerCase(), clientB.number.toLowerCase());
         break;
       case ClientFields.website:
         response = clientA.website

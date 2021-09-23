@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:collection/collection.dart';
 
 part 'vendor_model.g.dart';
 
@@ -264,7 +265,8 @@ abstract class VendorEntity extends Object
         response = vendorA.documents.length.compareTo(vendorB.documents.length);
         break;
       case VendorFields.number:
-        response = vendorA.number.compareTo(vendorB.number);
+        response = compareNatural(
+            vendorA.number.toLowerCase(), vendorB.number.toLowerCase());
         break;
       case VendorFields.address1:
         response = vendorA.address1.compareTo(vendorB.address1);

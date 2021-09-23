@@ -107,6 +107,30 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
+          final state = store.state;
+          final clientId = invoice.clientId;
+          for (int i = 0; i < invoice.lineItems.length; i++) {
+            final lineItem = invoice.lineItems[i];
+            final task = state.taskState.get(lineItem.taskId);
+            if ((task.clientId ?? '').isNotEmpty && task.clientId != clientId) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(localization.errorCrossClientTasks);
+                  });
+              return null;
+            }
+            final expense = state.expenseState.get(lineItem.expenseId);
+            if ((expense.clientId ?? '').isNotEmpty &&
+                expense.clientId != clientId) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(localization.errorCrossClientExpenses);
+                  });
+              return null;
+            }
+          }
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
           store.dispatch(SaveInvoiceRequest(
             completer: completer,

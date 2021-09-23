@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -234,7 +235,8 @@ class ReportsScreen extends StatelessWidget {
                   isInHeader: true,
                   onPressed: () {
                     multiselectDialog(
-                      context: context,
+                      // Using the navigatorKey to prevent using the appBarTheme
+                      context: navigatorKey.currentContext,
                       onSelected: (selected) {
                         viewModel.onReportColumnsChanged(context, selected);
                       },

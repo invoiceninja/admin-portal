@@ -609,6 +609,13 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.history;
+    if (value != null) {
+      result
+        ..add('history')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(InvoiceHistoryEntity)));
+    }
     return result;
   }
 
@@ -699,6 +706,11 @@ class _$ActivityEntitySerializer
         case 'token_id':
           result.tokenId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'history':
+          result.history.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(InvoiceHistoryEntity))
+              as InvoiceHistoryEntity);
           break;
       }
     }
@@ -1028,6 +1040,8 @@ class _$ActivityEntity extends ActivityEntity {
   final String vendorId;
   @override
   final String tokenId;
+  @override
+  final InvoiceHistoryEntity history;
 
   factory _$ActivityEntity([void Function(ActivityEntityBuilder) updates]) =>
       (new ActivityEntityBuilder()..update(updates)).build();
@@ -1051,7 +1065,8 @@ class _$ActivityEntity extends ActivityEntity {
       this.taskId,
       this.projectId,
       this.vendorId,
-      this.tokenId})
+      this.tokenId,
+      this.history})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(notes, 'ActivityEntity', 'notes');
     BuiltValueNullFieldError.checkNotNull(key, 'ActivityEntity', 'key');
@@ -1092,7 +1107,8 @@ class _$ActivityEntity extends ActivityEntity {
         taskId == other.taskId &&
         projectId == other.projectId &&
         vendorId == other.vendorId &&
-        tokenId == other.tokenId;
+        tokenId == other.tokenId &&
+        history == other.history;
   }
 
   int __hashCode;
@@ -1116,33 +1132,26 @@ class _$ActivityEntity extends ActivityEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                notes
-                                                                                    .hashCode),
-                                                                            key
-                                                                                .hashCode),
-                                                                        activityTypeId
-                                                                            .hashCode),
-                                                                    clientId
-                                                                        .hashCode),
-                                                                userId
-                                                                    .hashCode),
-                                                            invoiceId.hashCode),
-                                                        recurringInvoiceId
-                                                            .hashCode),
-                                                    quoteId.hashCode),
-                                                paymentId.hashCode),
-                                            creditId.hashCode),
-                                        updatedAt.hashCode),
-                                    expenseId.hashCode),
-                                isSystem.hashCode),
-                            ip.hashCode),
-                        contactId.hashCode),
-                    taskId.hashCode),
-                projectId.hashCode),
-            vendorId.hashCode),
-        tokenId.hashCode));
+                                                                            $jc($jc(0, notes.hashCode),
+                                                                                key.hashCode),
+                                                                            activityTypeId.hashCode),
+                                                                        clientId.hashCode),
+                                                                    userId.hashCode),
+                                                                invoiceId.hashCode),
+                                                            recurringInvoiceId.hashCode),
+                                                        quoteId.hashCode),
+                                                    paymentId.hashCode),
+                                                creditId.hashCode),
+                                            updatedAt.hashCode),
+                                        expenseId.hashCode),
+                                    isSystem.hashCode),
+                                ip.hashCode),
+                            contactId.hashCode),
+                        taskId.hashCode),
+                    projectId.hashCode),
+                vendorId.hashCode),
+            tokenId.hashCode),
+        history.hashCode));
   }
 
   @override
@@ -1166,7 +1175,8 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('taskId', taskId)
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
-          ..add('tokenId', tokenId))
+          ..add('tokenId', tokenId)
+          ..add('history', history))
         .toString();
   }
 }
@@ -1253,6 +1263,11 @@ class ActivityEntityBuilder
   String get tokenId => _$this._tokenId;
   set tokenId(String tokenId) => _$this._tokenId = tokenId;
 
+  InvoiceHistoryEntityBuilder _history;
+  InvoiceHistoryEntityBuilder get history =>
+      _$this._history ??= new InvoiceHistoryEntityBuilder();
+  set history(InvoiceHistoryEntityBuilder history) => _$this._history = history;
+
   ActivityEntityBuilder();
 
   ActivityEntityBuilder get _$this {
@@ -1277,6 +1292,7 @@ class ActivityEntityBuilder
       _projectId = $v.projectId;
       _vendorId = $v.vendorId;
       _tokenId = $v.tokenId;
+      _history = $v.history?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1295,32 +1311,46 @@ class ActivityEntityBuilder
 
   @override
   _$ActivityEntity build() {
-    final _$result = _$v ??
-        new _$ActivityEntity._(
-            notes: BuiltValueNullFieldError.checkNotNull(
-                notes, 'ActivityEntity', 'notes'),
-            key: BuiltValueNullFieldError.checkNotNull(
-                key, 'ActivityEntity', 'key'),
-            activityTypeId: BuiltValueNullFieldError.checkNotNull(
-                activityTypeId, 'ActivityEntity', 'activityTypeId'),
-            clientId: clientId,
-            userId: BuiltValueNullFieldError.checkNotNull(
-                userId, 'ActivityEntity', 'userId'),
-            invoiceId: invoiceId,
-            recurringInvoiceId: recurringInvoiceId,
-            quoteId: quoteId,
-            paymentId: paymentId,
-            creditId: creditId,
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, 'ActivityEntity', 'updatedAt'),
-            expenseId: expenseId,
-            isSystem: isSystem,
-            ip: ip,
-            contactId: contactId,
-            taskId: taskId,
-            projectId: projectId,
-            vendorId: vendorId,
-            tokenId: tokenId);
+    _$ActivityEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$ActivityEntity._(
+              notes: BuiltValueNullFieldError.checkNotNull(
+                  notes, 'ActivityEntity', 'notes'),
+              key: BuiltValueNullFieldError.checkNotNull(
+                  key, 'ActivityEntity', 'key'),
+              activityTypeId: BuiltValueNullFieldError.checkNotNull(
+                  activityTypeId, 'ActivityEntity', 'activityTypeId'),
+              clientId: clientId,
+              userId: BuiltValueNullFieldError.checkNotNull(
+                  userId, 'ActivityEntity', 'userId'),
+              invoiceId: invoiceId,
+              recurringInvoiceId: recurringInvoiceId,
+              quoteId: quoteId,
+              paymentId: paymentId,
+              creditId: creditId,
+              updatedAt: BuiltValueNullFieldError.checkNotNull(
+                  updatedAt, 'ActivityEntity', 'updatedAt'),
+              expenseId: expenseId,
+              isSystem: isSystem,
+              ip: ip,
+              contactId: contactId,
+              taskId: taskId,
+              projectId: projectId,
+              vendorId: vendorId,
+              tokenId: tokenId,
+              history: _history?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'history';
+        _history?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ActivityEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

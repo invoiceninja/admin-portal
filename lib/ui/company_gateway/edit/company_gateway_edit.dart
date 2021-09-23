@@ -98,8 +98,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
       kGatewayWePay,
     ];
 
-    final disableSave = connectGateways.contains(companyGateway.gatewayId) &&
-        companyGateway.isNew;
+    final disableSave = (connectGateways.contains(companyGateway.gatewayId) &&
+            companyGateway.isNew) ||
+        state.isDemo;
     final enabledGatewayIds = (gateway?.options?.keys ?? []).where(
         (gatewayTypeId) => companyGateway
             .getSettingsForGatewayTypeId(gatewayTypeId)

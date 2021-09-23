@@ -169,7 +169,7 @@ class EditScaffold extends StatelessWidget {
                   enabled: isEnabled,
                 )
             ],
-            bottom: isFullscreen ? null : appBarBottom,
+            bottom: isFullscreen && isDesktop(context) ? null : appBarBottom,
           ),
           bottomNavigationBar: bottomNavigationBar,
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

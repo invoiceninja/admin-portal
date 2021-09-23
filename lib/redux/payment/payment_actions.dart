@@ -343,7 +343,7 @@ void handlePaymentAction(
         ));
       });
       break;
-    case EntityAction.bulkEmailPayment:
+    case EntityAction.emailPayment:
       store.dispatch(EmailPaymentRequest(
           snackBarCompleter<Null>(context, localization.emailedPayment),
           paymentIds));

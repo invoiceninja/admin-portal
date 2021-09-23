@@ -15,6 +15,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'webhook_success': 'Webhook Success',
+      'error_cross_client_tasks': 'Tasks must all belong to the same client',
+      'error_cross_client_expenses':
+          'Expenses must all belong to the same client',
+      'app': 'App',
+      'for_best_performance': 'For the best performance download the :app app',
       'gross_line_total': 'Gross Line Total',
       'bulk_email_invoice': 'Email Invoice',
       'bulk_email_quote': 'Email Quote',
@@ -62622,6 +62628,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get grossLineTotal =>
       _localizedValues[localeCode]['gross_line_total'] ??
       _localizedValues['en']['gross_line_total'];
+
+  String get forBestPerformance =>
+      _localizedValues[localeCode]['for_best_performance'] ??
+      _localizedValues['en']['for_best_performance'];
+
+  String get app =>
+      _localizedValues[localeCode]['app'] ?? _localizedValues['en']['app'];
+
+  String get errorCrossClientTasks =>
+      _localizedValues[localeCode]['error_cross_client_tasks'] ??
+      _localizedValues['en']['error_cross_client_tasks'];
+
+  String get errorCrossClientExpenses =>
+      _localizedValues[localeCode]['error_cross_client_expenses'] ??
+      _localizedValues['en']['error_cross_client_expenses'];
+
+  String get webhookSuccess =>
+      _localizedValues[localeCode]['webhook_success'] ??
+      _localizedValues['en']['webhook_success'];
+
 
   // STARTER: lang field - do not remove comment
 
