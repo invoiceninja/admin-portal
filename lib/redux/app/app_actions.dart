@@ -408,7 +408,7 @@ void viewEntityById({
   final state = store.state;
   final uiState = store.state.uiState;
 
-  if (!state.prefState.isPreviewEnabled) {
+  if (!state.prefState.isPreviewEnabled && !entityType.isSetting) {
     editEntity(
       context: navigatorKey.currentContext,
       entity: state.getEntityMap(entityType)[entityId],
