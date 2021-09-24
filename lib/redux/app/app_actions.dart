@@ -1398,6 +1398,13 @@ void selectEntity({
     } else if (entity.entityType.isSetting) {
       viewEntity(entity: entity);
     } else {
+      final String clientId = entity is BelongsToClient
+          ? (entity as BelongsToClient).clientId
+          : null;
+      if (clientId != null && clientId != state.uiState.filterEntityId) {
+        filterByEntity(
+            context: context, entity: state.clientState.get(clientId));
+      }
       editEntity(context: context, entity: entity);
     }
   } else if (isDesktop(context) &&
