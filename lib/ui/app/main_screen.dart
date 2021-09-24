@@ -600,11 +600,9 @@ class EntityScreens extends StatelessWidget {
       }
     }
 
-/*
     topFilterChild = EntityTopFilter(
-      show: uiState.filterEntityType != null,
+      show: uiState.filterEntityType != null && !prefState.showFilterSidebar,
     );
-*/
 
     Widget listWidget;
     if (!isFullScreen) {

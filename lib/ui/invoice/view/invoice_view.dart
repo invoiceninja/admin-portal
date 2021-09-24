@@ -196,6 +196,7 @@ class _InvoiceViewState extends State<InvoiceView>
                 ),
                 BottomButtons(
                   entity: invoice,
+                  isFilter: widget.isFilter,
                   action1: EntityAction.viewPdf,
                   action2: secondAction,
                 ),

@@ -13,6 +13,7 @@ class BottomButtons extends StatelessWidget {
     @required this.entity,
     @required this.action1,
     @required this.action2,
+    @required this.isFilter,
     this.action1Enabled = true,
     this.action2Enabled = true,
   });
@@ -22,6 +23,7 @@ class BottomButtons extends StatelessWidget {
   final EntityAction action2;
   final bool action1Enabled;
   final bool action2Enabled;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,8 @@ class BottomButtons extends StatelessWidget {
       child: AppBorder(
         isTop: true,
         child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
               child: InkWell(
@@ -78,6 +82,21 @@ class BottomButtons extends StatelessWidget {
                 ),
               ),
             ),
+            if (isFilter)
+              AppBorder(
+                child: Tooltip(
+                  message: localization.hideSidebar,
+                  child: InkWell(
+                    onTap: () => store.dispatch(
+                        UpdateUserPreferences(showFilterSidebar: false)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(Icons.chevron_left),
+                    ),
+                  ),
+                ),
+                isLeft: true,
+              ),
           ],
         ),
       ),

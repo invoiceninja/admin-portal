@@ -120,6 +120,7 @@ class _ProductViewState extends State<ProductView>
             ),
             BottomButtons(
               entity: product,
+              isFilter: widget.isFilter,
               action1: EntityAction.newInvoice,
               action2: EntityAction.clone,
             ),
