@@ -1039,11 +1039,13 @@ void createEntity({
       });
 }
 
-void editEntity(
-    {@required BuildContext context,
-    @required BaseEntity entity,
-    int subIndex,
-    Completer completer}) {
+void editEntity({
+  @required BuildContext context,
+  @required BaseEntity entity,
+  int subIndex,
+  bool force = false,
+  Completer completer,
+}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -1056,6 +1058,7 @@ void editEntity(
   checkForChanges(
       store: store,
       context: context,
+      force: force,
       callback: () {
         switch (entityType) {
           case EntityType.client:
@@ -1465,7 +1468,11 @@ void checkForChanges({
     return;
   }
 
-  if (!force && store.state.hasChanges() && !isMobile(context)) {
+  if (force) {
+    store.dispatch(DiscardChanges());
+    store.dispatch(ResetSettings());
+    callback();
+  } else if (store.state.hasChanges() && !isMobile(context)) {
     showDialog<MessageDialog>(
         context: context,
         builder: (BuildContext dialogContext) {

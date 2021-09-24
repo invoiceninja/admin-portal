@@ -149,7 +149,14 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedInvoice);
               }
             } else {
-              viewEntity(entity: savedInvoice, force: true);
+              if (state.prefState.isPreviewEnabled) {
+                viewEntity(entity: savedInvoice, force: true);
+              } else {
+                editEntity(
+                    context: navigatorKey.currentContext,
+                    entity: savedInvoice,
+                    force: true);
+              }
 
               if (action != null) {
                 handleEntityAction(savedInvoice, action);

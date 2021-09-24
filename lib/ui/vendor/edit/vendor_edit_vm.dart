@@ -102,7 +102,12 @@ class VendorEditVM {
                 navigator.pop(savedVendor);
               }
             } else {
-              viewEntity(entity: savedVendor, force: true);
+              if (state.prefState.isPreviewEnabled) {
+                viewEntity(entity: savedVendor, force: true);
+              } else {
+                editEntity(
+                    context: navigatorKey.currentContext, entity: savedVendor);
+              }
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

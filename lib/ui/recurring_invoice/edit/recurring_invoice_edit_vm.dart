@@ -103,10 +103,16 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedRecurringInvoice);
               }
             } else {
+              if (state.prefState.isPreviewEnabled) {
+                viewEntity(entity: savedRecurringInvoice, force: true);
+              } else {
+                editEntity(
+                    context: navigatorKey.currentContext,
+                    entity: savedRecurringInvoice);
+              }
+
               if (action != null) {
                 handleEntityAction(savedRecurringInvoice, action);
-              } else {
-                viewEntity(entity: savedRecurringInvoice, force: true);
               }
             }
           }).catchError((Object error) {
