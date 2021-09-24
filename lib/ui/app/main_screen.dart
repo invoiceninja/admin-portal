@@ -526,67 +526,67 @@ class EntityScreens extends StatelessWidget {
                 : ClientViewScreen(isFilter: true);
             break;
           case EntityType.invoice:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? InvoiceViewScreen()
                 : InvoiceViewScreen(isFilter: true);
             break;
           case EntityType.quote:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? QuoteViewScreen()
                 : QuoteViewScreen(isFilter: true);
             break;
           case EntityType.credit:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? CreditViewScreen()
                 : CreditViewScreen(isFilter: true);
             break;
           case EntityType.payment:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? PaymentEditScreen()
                 : PaymentViewScreen(isFilter: true);
             break;
           case EntityType.user:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? UserEditScreen()
                 : UserViewScreen(isFilter: true);
             break;
           case EntityType.group:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? GroupEditScreen()
                 : GroupViewScreen(isFilter: true);
             break;
           case EntityType.subscription:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? SubscriptionEditScreen()
                 : SubscriptionViewScreen(isFilter: true);
             break;
           case EntityType.companyGateway:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? CompanyGatewayEditScreen()
                 : CompanyGatewayViewScreen(isFilter: true);
             break;
           case EntityType.recurringInvoice:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? RecurringInvoiceEditScreen()
                 : RecurringInvoiceViewScreen(isFilter: true);
             break;
           case EntityType.expenseCategory:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? ExpenseCategoryEditScreen()
                 : ExpenseCategoryViewScreen(isFilter: true);
             break;
           case EntityType.taskStatus:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? TaskStatusEditScreen()
                 : TaskStatusViewScreen(isFilter: true);
             break;
           case EntityType.vendor:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? VendorEditScreen()
                 : VendorViewScreen(isFilter: true);
             break;
           case EntityType.project:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? ProjectEditScreen()
                 : ProjectViewScreen(isFilter: true);
             break;
