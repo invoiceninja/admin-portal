@@ -404,11 +404,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       tooltip: localization.preview,
                       icon: Icon(
                         Icons.chrome_reader_mode,
-                        /*
-                        color: state.prefState.isPreviewEnabled
+                        color: prefState.isPreviewEnabled &&
+                                !prefState.enableDarkMode
                             ? state.accentColor
                             : null,
-                            */
                       ),
                       onPressed: () {
                         store.dispatch(UpdateUserPreferences(

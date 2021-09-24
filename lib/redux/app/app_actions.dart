@@ -1394,6 +1394,7 @@ void selectEntity({
       EntityType.project,
       EntityType.vendor,
     ].contains(entity.entityType)) {
+      store.dispatch(UpdateUserPreferences(showFilterSidebar: true));
       viewEntitiesByType(entityType: entity.entityType.relatedTypes.first);
       filterByEntity(context: context, entity: entity);
     } else {
