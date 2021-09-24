@@ -54,13 +54,18 @@ class ViewScaffold extends StatelessWidget {
 
     Widget leading;
     if (isDesktop(context)) {
-      if ((isFilter ?? false) &&
+      if (isFilter == true &&
           entity.entityType == state.uiState.filterEntityType) {
         leading = IconButton(
-          tooltip: localization.hideSidebar,
           icon: Icon(Icons.clear),
           onPressed: () {
-            store.dispatch(UpdateUserPreferences(showFilterSidebar: false));
+            final uiState = state.uiState;
+            final entityType = uiState.filterEntityType;
+            store.dispatch(FilterByEntity(
+              entityId: uiState.filterEntityId,
+              entityType: uiState.filterEntityType,
+            ));
+            viewEntitiesByType(entityType: entityType);
           },
         );
       } else if (state.uiState.previewStack.isNotEmpty) {
