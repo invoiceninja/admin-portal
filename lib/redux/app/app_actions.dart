@@ -1060,10 +1060,6 @@ void editEntity({
   final localization = AppLocalization.of(context);
   final entityType = entity.entityType;
 
-  if (!entity.isEditable) {
-    return;
-  }
-
   checkForChanges(
       store: store,
       context: context,
