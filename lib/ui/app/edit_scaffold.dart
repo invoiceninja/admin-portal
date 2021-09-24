@@ -57,7 +57,7 @@ class EditScaffold extends StatelessWidget {
             state.uiState.isEditing ||
             state.settingsUIState.isChanged) &&
         (!state.isLoading && !state.isSaving) &&
-        entity.isEditable;
+        (entity?.isEditable ?? true);
     bool isCancelEnabled = false;
     String upgradeMessage = state.userCompany.isOwner
         ? localization.upgradeToPaidPlan
