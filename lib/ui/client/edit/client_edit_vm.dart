@@ -119,10 +119,14 @@ class ClientEditVM {
                   navigator.pop(savedClient);
                 }
               } else {
-                viewEntity(
-                  entity: savedClient,
-                  force: true,
-                );
+                if (state.prefState.isPreviewEnabled) {
+                  viewEntity(entity: savedClient, force: true);
+                } else {
+                  editEntity(
+                      context: navigatorKey.currentContext,
+                      entity: savedClient,
+                      force: true);
+                }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

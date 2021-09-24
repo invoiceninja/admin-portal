@@ -521,7 +521,7 @@ class EntityScreens extends StatelessWidget {
       if (prefState.showFilterSidebar) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? ClientEditScreen()
                 : ClientViewScreen(isFilter: true);
             break;
@@ -647,12 +647,6 @@ class EntityScreens extends StatelessWidget {
           print('## ERROR: list widget not implemented for $entityType');
           break;
       }
-    }
-
-    if (uiState.isEditing &&
-        uiState.filterEntityId ==
-            state.getUIState(uiState.filterEntityType).editingId) {
-      leftFilterChild = null;
     }
 
     return Row(
