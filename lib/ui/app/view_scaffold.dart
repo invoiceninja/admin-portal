@@ -121,8 +121,12 @@ class ViewScaffold extends StatelessWidget {
                         ? Builder(builder: (context) {
                             return EditIconButton(
                               isVisible: entity.isEditable,
-                              onPressed: () =>
-                                  editEntity(context: context, entity: entity),
+                              onPressed: () {
+                                if (state.uiState.isEditing) {
+                                  return;
+                                }
+                                editEntity(context: context, entity: entity);
+                              },
                             );
                           })
                         : Container(),
