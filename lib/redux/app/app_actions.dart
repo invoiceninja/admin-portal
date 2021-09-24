@@ -408,6 +408,15 @@ void viewEntityById({
   final state = store.state;
   final uiState = store.state.uiState;
 
+  if (!state.prefState.isPreviewEnabled) {
+    editEntity(
+      context: navigatorKey.currentContext,
+      entity: state.getEntityMap(entityType)[entityId],
+      force: force,
+    );
+    return;
+  }
+
   checkForChanges(
       store: store,
       context: navigatorKey.currentContext,
@@ -1380,11 +1389,7 @@ void selectEntity({
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
-    if ([
-      EntityType.client,
-      EntityType.project,
-      EntityType.vendor,
-    ].contains(entity.entityType)) {
+    if (entity.entityType.hasViewPage) {
       store.dispatch(UpdateUserPreferences(showFilterSidebar: true));
       viewEntitiesByType(entityType: entity.entityType.relatedTypes.first);
       filterByEntity(context: context, entity: entity);
