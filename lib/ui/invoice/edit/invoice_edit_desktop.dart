@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -256,16 +257,35 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           onAddPressed: (completer) =>
                               viewModel.onAddClientPressed(context, completer),
                         )
-                      else if (client.name.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: Text(
-                            EntityPresenter()
-                                .initialize(client, context)
-                                .title(),
-                            style: Theme.of(context).textTheme.headline6,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                      else
+                        InkWell(
+                          onTap: () {
+                            if (!state.prefState.showFilterSidebar) {
+                              final store = StoreProvider.of<AppState>(context);
+                              store.dispatch(UpdateUserPreferences(
+                                  showFilterSidebar: true));
+                              if (state.uiState.filterEntityId != client.id) {
+                                filterByEntity(
+                                    context: context, entity: client);
+                              }
+                            } else {
+                              filterByEntity(context: context, entity: client);
+                            }
+                          },
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 40,
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Text(
+                                EntityPresenter()
+                                    .initialize(client, context)
+                                    .title(),
+                                style: Theme.of(context).textTheme.headline6,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                           ),
                         ),
                       SizedBox(height: 8),
