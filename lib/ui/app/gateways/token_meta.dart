@@ -15,7 +15,12 @@ class TokenMeta extends StatelessWidget {
           height: 16,
         ),
         SizedBox(width: 8),
-        Text('•••• ${meta.last4} ${meta.expMonth}/${meta.expYear}'),
+        Flexible(
+          child: Text(
+            '•••• ${meta.last4} ${meta.expMonth}/${meta.expYear}',
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }
