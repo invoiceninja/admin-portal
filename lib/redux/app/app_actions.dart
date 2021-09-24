@@ -1157,61 +1157,52 @@ void editEntity({
             store.dispatch(EditRecurringExpense(
                 recurringExpense: entity, completer: completer));
             break;
-
           case EntityType.subscription:
             store.dispatch(
                 EditSubscription(subscription: entity, completer: completer));
             break;
-
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               taskStatus: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
               expenseCategory: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
               recurringInvoice: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.webhook:
             store.dispatch(EditWebhook(
               webhook: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.token:
             store.dispatch(EditToken(
               token: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
               paymentTerm: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.design:
             store.dispatch(EditDesign(
               design: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.credit:
             store.dispatch(EditCredit(
               credit: entity,
@@ -1327,15 +1318,12 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
     case EntityType.recurringExpense:
       handleRecurringExpenseAction(context, entities, action);
       break;
-
     case EntityType.subscription:
       handleSubscriptionAction(context, entities, action);
       break;
-
     case EntityType.taskStatus:
       handleTaskStatusAction(context, entities, action);
       break;
-
     case EntityType.expenseCategory:
       handleExpenseCategoryAction(context, entities, action);
       break;
