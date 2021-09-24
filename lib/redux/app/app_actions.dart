@@ -1400,6 +1400,8 @@ void selectEntity({
       store.dispatch(UpdateUserPreferences(showFilterSidebar: true));
       viewEntitiesByType(entityType: entity.entityType.relatedTypes.first);
       filterByEntity(context: context, entity: entity);
+    } else if (uiState.isEditing && entityUIState.editingId == entity.id) {
+      viewEntity(entity: entity);
     } else {
       editEntity(context: context, entity: entity);
     }
