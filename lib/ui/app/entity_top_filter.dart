@@ -20,6 +20,7 @@ class EntityTopFilter extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
+    final prefState = state.prefState;
 
     final filterEntityType = uiState.filterEntityType;
     final routeEntityType = uiState.entityTypeRoute;
@@ -33,10 +34,9 @@ class EntityTopFilter extends StatelessWidget {
             ?.toList() ??
         [];
 
-    final backgroundColor =
-        !state.prefState.enableDarkMode && state.hasAccentColor
-            ? state.accentColor
-            : Theme.of(context).cardColor;
+    final backgroundColor = !prefState.enableDarkMode && state.hasAccentColor
+        ? state.accentColor
+        : Theme.of(context).cardColor;
 
     return Material(
       color: backgroundColor,
@@ -56,37 +56,38 @@ class EntityTopFilter extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(width: 8),
-                    if (!state.prefState.showFilterSidebar)
+                    if (!prefState.showFilterSidebar) ...[
                       IconButton(
                         tooltip: localization.showSidebar,
                         icon: Icon(
                           Icons.chrome_reader_mode,
                           color: state.headerTextColor,
                         ),
-                        onPressed: () => store.dispatch(
-                            UpdateUserPreferences(showFilterSidebar: true)),
+                        onPressed: () => store.dispatch(UpdateUserPreferences(
+                            showFilterSidebar: !prefState.showFilterSidebar)),
                       ),
-                    SizedBox(width: 4),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 220),
-                      child: TextButton(
-                        child: Text(
-                          EntityPresenter()
-                              .initialize(filterEntity, context)
-                              .title(),
-                          style: TextStyle(
-                              fontSize: 17, color: state.headerTextColor),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        style: TextButton.styleFrom(
-                          minimumSize: Size(0, 36),
-                        ),
-                        onPressed: () => viewEntity(
-                          entity: filterEntity,
+                      SizedBox(width: 4),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 220),
+                        child: TextButton(
+                          child: Text(
+                            EntityPresenter()
+                                .initialize(filterEntity, context)
+                                .title(),
+                            style: TextStyle(
+                                fontSize: 17, color: state.headerTextColor),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          style: TextButton.styleFrom(
+                            minimumSize: Size(0, 36),
+                          ),
+                          onPressed: () => viewEntity(
+                            entity: filterEntity,
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                     Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
@@ -125,8 +126,7 @@ class EntityTopFilter extends StatelessWidget {
                                   border: relatedTypes[i] == routeEntityType
                                       ? Border(
                                           bottom: BorderSide(
-                                            color: state.prefState
-                                                        .enableDarkMode ||
+                                            color: prefState.enableDarkMode ||
                                                     !state.hasAccentColor
                                                 ? state.accentColor
                                                 : Colors.white,
