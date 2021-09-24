@@ -349,7 +349,12 @@ class EntityScreens extends StatelessWidget {
     }
 
     Widget child;
-    if (isFullScreen) {
+
+    // TODO rmeove this once full width project editor is
+    if (state.uiState.isEditing &&
+        state.uiState.filterEntityType == EntityType.project) {
+      child = ProjectEditScreen();
+    } else if (isFullScreen) {
       switch (mainRoute) {
         case InvoiceScreen.route:
           child = isPdf
