@@ -814,13 +814,23 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get canAddCompany =>
       userCompany.isOwner && companies.length < 10 && !isDemo;
 
-  bool get isMenuCollapsed =>
-      (prefState.isNotMobile &&
-          prefState.showFilterSidebar &&
-          prefState.showMenu &&
-          !uiState.isInSettings &&
-          uiState.filterEntityType != null) ||
-      prefState.isMenuCollapsed;
+  bool get isMenuCollapsed {
+    if (prefState.isMobile) {
+      return false;
+    }
+
+    if (uiState.isEditing &&
+        uiState.filterEntityId ==
+            getUIState(uiState.filterEntityType).editingId) {
+      return false;
+    }
+
+    return (prefState.showFilterSidebar &&
+            prefState.showMenu &&
+            !uiState.isInSettings &&
+            uiState.filterEntityType != null) ||
+        prefState.isMenuCollapsed;
+  }
 
   bool get isFullScreen {
     bool isFullScreen = false;

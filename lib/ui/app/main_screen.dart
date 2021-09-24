@@ -649,6 +649,12 @@ class EntityScreens extends StatelessWidget {
       }
     }
 
+    if (uiState.isEditing &&
+        uiState.filterEntityId ==
+            state.getUIState(uiState.filterEntityType).editingId) {
+      leftFilterChild = null;
+    }
+
     return Row(
       children: <Widget>[
         if (leftFilterChild != null)
