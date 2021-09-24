@@ -1389,8 +1389,12 @@ void selectEntity({
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
-    if (entity.entityType == EntityType.client) {
-      viewEntitiesByType(entityType: EntityType.invoice);
+    if ([
+      EntityType.client,
+      EntityType.project,
+      EntityType.vendor,
+    ].contains(entity.entityType)) {
+      viewEntitiesByType(entityType: entity.entityType.relatedTypes.first);
       filterByEntity(context: context, entity: entity);
     } else {
       editEntity(context: context, entity: entity);
