@@ -175,6 +175,7 @@ abstract class ClientEntity extends Object
   String get groupId;
 
   @nullable
+  @BuiltValueField(compare: false)
   int get loadedAt;
 
   bool get isLoaded => loadedAt != null && loadedAt > 0;
