@@ -122,10 +122,9 @@ class ClientEditVM {
                 if (state.prefState.isPreviewEnabled) {
                   viewEntity(entity: savedClient, force: true);
                 } else {
-                  editEntity(
-                      context: navigatorKey.currentContext,
-                      entity: savedClient,
-                      force: true);
+                  viewEntitiesByType(
+                      entityType: EntityType.invoice,
+                      filterEntity: savedClient);
                 }
               }
             }).catchError((Object error) {

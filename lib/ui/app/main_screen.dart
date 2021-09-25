@@ -352,7 +352,8 @@ class EntityScreens extends StatelessWidget {
 
     // TODO rmeove this once full width project editor is
     if (state.uiState.isEditing &&
-        state.uiState.filterEntityType == EntityType.project) {
+        state.uiState.filterEntityType == EntityType.project &&
+        state.uiState.currentRoute == ProjectEditScreen.route) {
       child = ProjectEditScreen();
     } else if (isFullScreen) {
       switch (mainRoute) {

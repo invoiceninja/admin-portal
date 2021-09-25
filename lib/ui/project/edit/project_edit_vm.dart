@@ -114,8 +114,8 @@ class ProjectEditVM {
               if (state.prefState.isPreviewEnabled) {
                 viewEntity(entity: savedProject, force: true);
               } else {
-                editEntity(
-                    context: navigatorKey.currentContext, entity: savedProject);
+                viewEntitiesByType(
+                    entityType: EntityType.task, filterEntity: savedProject);
               }
             }
           }).catchError((Object error) {
