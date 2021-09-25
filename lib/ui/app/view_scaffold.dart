@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -121,12 +122,16 @@ class ViewScaffold extends StatelessWidget {
                           )),
                     userCompany.canEditEntity(entity)
                         ? Builder(builder: (context) {
-                            return EditIconButton(
-                              isVisible: entity.isEditable,
-                              onPressed: () {
-                                editEntity(context: context, entity: entity);
-                              },
-                            );
+                            return entity.isEditable
+                                ? AppTextButton(
+                                    label: localization.edit,
+                                    isInHeader: true,
+                                    onPressed: () {
+                                      editEntity(
+                                          context: context, entity: entity);
+                                    },
+                                  )
+                                : SizedBox();
                           })
                         : Container(),
                     ViewActionMenuButton(
