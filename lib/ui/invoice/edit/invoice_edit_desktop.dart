@@ -273,9 +273,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               filterByEntity(context: context, entity: client);
                             }
                           },
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 40,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                minWidth: double.infinity, minHeight: 40),
                             child: Padding(
                               padding: const EdgeInsets.all(6),
                               child: Text(
