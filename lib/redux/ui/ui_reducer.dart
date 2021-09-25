@@ -165,10 +165,7 @@ Reducer<BuiltList<BaseEntity>> filterStackReducer = combineReducers([
   }),
   TypedReducer<BuiltList<BaseEntity>, FilterByEntity>((filterStack, action) {
     if (filterStack.isNotEmpty) {
-      if (action.entityId == filterStack.first.id &&
-          action.entityType == filterStack.first.entityType) {
-        return BuiltList<BaseEntity>();
-      } else if (action.entityId == filterStack.last.id &&
+      if (action.entityId == filterStack.last.id &&
           action.entityType == filterStack.last.entityType) {
         return BuiltList<BaseEntity>();
       }
