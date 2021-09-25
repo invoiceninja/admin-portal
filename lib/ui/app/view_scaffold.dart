@@ -56,16 +56,22 @@ class ViewScaffold extends StatelessWidget {
     if (isDesktop(context)) {
       if (isFilter == true &&
           entity.entityType == state.uiState.filterEntityType) {
-        leading = IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            final uiState = state.uiState;
-            store.dispatch(FilterByEntity(
-              entityId: uiState.filterEntityId,
-              entityType: uiState.filterEntityType,
-            ));
-          },
-        );
+        if (state.uiState.filterStack.length > 1) {
+          leading = IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => store.dispatch(PopFilterStack()),
+          );
+        } else {
+          leading = IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              final uiState = state.uiState;
+              store.dispatch(FilterByEntity(
+                entity: uiState.filterEntity,
+              ));
+            },
+          );
+        }
       } else if (state.uiState.previewStack.isNotEmpty) {
         leading = IconButton(
             tooltip: localization.back,

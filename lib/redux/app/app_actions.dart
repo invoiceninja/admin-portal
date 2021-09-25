@@ -215,6 +215,8 @@ class ClearPreviewStack {}
 
 class PopPreviewStack {}
 
+class PopFilterStack {}
+
 class ClearData {}
 
 class ClearLastError {}
@@ -231,14 +233,16 @@ class ClearEntitySelection {
 
 class FilterByEntity implements PersistUI {
   FilterByEntity({
-    @required this.entityId,
-    @required this.entityType,
+    @required this.entity,
     this.clearSelection = false,
   });
 
-  final String entityId;
-  final EntityType entityType;
+  final BaseEntity entity;
   final bool clearSelection;
+
+  String get entityId => entity.id;
+
+  EntityType get entityType => entity.entityType;
 }
 
 class FilterCompany implements PersistUI {
@@ -256,10 +260,7 @@ void filterByEntity({
   }
 
   final store = StoreProvider.of<AppState>(context);
-  store.dispatch(FilterByEntity(
-    entityId: entity.id,
-    entityType: entity.entityType,
-  ));
+  store.dispatch(FilterByEntity(entity: entity));
 }
 
 void viewEntitiesByType({
@@ -278,10 +279,7 @@ void viewEntitiesByType({
           if (uiState.filterEntityType != filterEntity.entityType ||
               uiState.filterEntityId != filterEntity.id) {
             store.dispatch(ClearEntitySelection(entityType: entityType));
-            store.dispatch(FilterByEntity(
-              entityId: filterEntity.id,
-              entityType: filterEntity.entityType,
-            ));
+            store.dispatch(FilterByEntity(entity: filterEntity));
           }
         } else if (uiState.filterEntityType != null) {
           store.dispatch(ClearEntityFilter());
@@ -436,18 +434,14 @@ void viewEntityById({
             (uiState.filterEntityType != filterEntity.entityType ||
                 uiState.filterEntityId != filterEntity.id)) {
           store.dispatch(ClearEntitySelection(entityType: entityType));
-          store.dispatch(FilterByEntity(
-            entityId: filterEntity.id,
-            entityType: filterEntity.entityType,
-          ));
+          store.dispatch(FilterByEntity(entity: filterEntity));
           // If the user selects a different entity of the same type as the current
           // filter then we clear the selection so new records are auto-selected
         } else if (uiState.filterEntityType != null &&
             uiState.filterEntityId != entityId &&
             uiState.filterEntityType == entityType) {
           store.dispatch(FilterByEntity(
-            entityId: entityId,
-            entityType: entityType,
+            entity: uiState.filterEntity,
             clearSelection: true,
           ));
         }
@@ -1440,8 +1434,7 @@ void inspectEntity({
         entityId: state.getUIState(entityType).selectedId,
       );
     } else {
-      store.dispatch(
-          FilterByEntity(entityType: entity.entityType, entityId: entity.id));
+      store.dispatch(FilterByEntity(entity: entity));
     }
   } else {
     if (longPress) {

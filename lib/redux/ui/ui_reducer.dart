@@ -50,25 +50,10 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reduc
 import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
-  if (action is ClearEntityFilter ||
-      (action is FilterByEntity &&
-          action.entityType == state.filterEntityType &&
-          action.entityId == state.filterEntityId)) {
-    state = state.rebuild((b) => b
-      ..filterEntityType = null
-      ..filterEntityId = null);
-  } else if (action is FilterByEntity) {
-    state = state.rebuild((b) => b
-      ..filterEntityType = action.entityType
-      ..filterEntityId = action.entityId);
-  }
-
   final currentRoute = currentRouteReducer(state.currentRoute, action);
   return state.rebuild((b) => b
     ..filter = filterReducer(state.filter, action)
     ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
-    ..filterEntityId = filterEntityIdReducer(
-        state.filterEntityId, state.filterEntityType, action)
     ..lastActivityAt = lastActivityReducer(state.lastActivityAt, action)
     ..selectedCompanyIndex =
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
@@ -79,6 +64,7 @@ UIState uiReducer(UIState state, dynamic action) {
             : state.currentRoute
     ..currentRoute = currentRoute
     ..previewStack.replace(previewStackReducer(state.previewStack, action))
+    ..filterStack.replace(filterStackReducer(state.filterStack, action))
     ..productUIState.replace(productUIReducer(state.productUIState, action))
     ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
@@ -116,39 +102,6 @@ UIState uiReducer(UIState state, dynamic action) {
     ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
     ..settingsUIState
         .replace(settingsUIReducer(state.settingsUIState, action)));
-}
-
-String filterEntityIdReducer(
-    String entityId, EntityType entityType, dynamic action) {
-  if (action is ViewClient && entityType == EntityType.client) {
-    return action.clientId;
-  } else if (action is ViewInvoice && entityType == EntityType.invoice) {
-    return action.invoiceId;
-  } else if (action is ViewPayment && entityType == EntityType.payment) {
-    return action.paymentId;
-  } else if (action is ViewQuote && entityType == EntityType.quote) {
-    return action.quoteId;
-  } else if (action is ViewCredit && entityType == EntityType.credit) {
-    return action.creditId;
-  } else if (action is ViewProject && entityType == EntityType.project) {
-    return action.projectId;
-  } else if (action is ViewTask && entityType == EntityType.task) {
-    return action.taskId;
-  } else if (action is ViewVendor && entityType == EntityType.vendor) {
-    return action.vendorId;
-  } else if (action is ViewExpense && entityType == EntityType.expense) {
-    return action.expenseId;
-  } else if (action is ViewGroup && entityType == EntityType.group) {
-    return action.groupId;
-  } else if (action is ViewCompanyGateway &&
-      entityType == EntityType.companyGateway) {
-    return action.companyGatewayId;
-    // TODO add to starter
-  } else if (action is ViewUser && entityType == EntityType.user) {
-    return action.userId;
-  }
-
-  return entityId;
 }
 
 Reducer<int> lastActivityReducer = combineReducers([
@@ -217,5 +170,30 @@ Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
   TypedReducer<BuiltList<EntityType>, PopPreviewStack>((previewStack, action) {
     return BuiltList(
         <EntityType>[...previewStack.sublist(0, previewStack.length - 1)]);
+  }),
+]);
+
+Reducer<BuiltList<BaseEntity>> filterStackReducer = combineReducers([
+  TypedReducer<BuiltList<BaseEntity>, ClearEntityFilter>((filterStack, action) {
+    return BuiltList<BaseEntity>();
+  }),
+  TypedReducer<BuiltList<BaseEntity>, FilterByEntity>((filterStack, action) {
+    if (filterStack.isNotEmpty) {
+      if (action.entityId == filterStack.first.id &&
+          action.entityType == filterStack.first.entityType) {
+        return BuiltList<BaseEntity>();
+      } else if (action.entityId == filterStack.last.id &&
+          action.entityType == filterStack.last.entityType) {
+        return BuiltList<BaseEntity>();
+      }
+    }
+    return BuiltList(<BaseEntity>[
+      ...filterStack.where((entity) => entity.entityType != action.entityType),
+      action.entity
+    ]);
+  }),
+  TypedReducer<BuiltList<BaseEntity>, PopFilterStack>((filterStack, action) {
+    return BuiltList(
+        <BaseEntity>[...filterStack.sublist(0, filterStack.length - 1)]);
   }),
 ]);

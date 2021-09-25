@@ -31,6 +31,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       serializers.serialize(object.previewStack,
           specifiedType:
               const FullType(BuiltList, const [const FullType(EntityType)])),
+      'filterStack',
+      serializers.serialize(object.filterStack,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(BaseEntity)])),
       'filterClearedAt',
       serializers.serialize(object.filterClearedAt,
           specifiedType: const FullType(int)),
@@ -120,20 +124,6 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           specifiedType: const FullType(ReportsUIState)),
     ];
     Object value;
-    value = object.filterEntityId;
-    if (value != null) {
-      result
-        ..add('filterEntityId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.filterEntityType;
-    if (value != null) {
-      result
-        ..add('filterEntityType')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EntityType)));
-    }
     value = object.filter;
     if (value != null) {
       result
@@ -173,13 +163,11 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
                       BuiltList, const [const FullType(EntityType)]))
               as BuiltList<Object>);
           break;
-        case 'filterEntityId':
-          result.filterEntityId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'filterEntityType':
-          result.filterEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
+        case 'filterStack':
+          result.filterStack.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(BaseEntity)]))
+              as BuiltList<Object>);
           break;
         case 'filter':
           result.filter = serializers.deserialize(value,
@@ -328,9 +316,7 @@ class _$UIState extends UIState {
   @override
   final BuiltList<EntityType> previewStack;
   @override
-  final String filterEntityId;
-  @override
-  final EntityType filterEntityType;
+  final BuiltList<BaseEntity> filterStack;
   @override
   final String filter;
   @override
@@ -400,8 +386,7 @@ class _$UIState extends UIState {
       this.currentRoute,
       this.previousRoute,
       this.previewStack,
-      this.filterEntityId,
-      this.filterEntityType,
+      this.filterStack,
       this.filter,
       this.filterClearedAt,
       this.lastActivityAt,
@@ -441,6 +426,8 @@ class _$UIState extends UIState {
         previousRoute, 'UIState', 'previousRoute');
     BuiltValueNullFieldError.checkNotNull(
         previewStack, 'UIState', 'previewStack');
+    BuiltValueNullFieldError.checkNotNull(
+        filterStack, 'UIState', 'filterStack');
     BuiltValueNullFieldError.checkNotNull(
         filterClearedAt, 'UIState', 'filterClearedAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -516,8 +503,7 @@ class _$UIState extends UIState {
         currentRoute == other.currentRoute &&
         previousRoute == other.previousRoute &&
         previewStack == other.previewStack &&
-        filterEntityId == other.filterEntityId &&
-        filterEntityType == other.filterEntityType &&
+        filterStack == other.filterStack &&
         filter == other.filter &&
         filterClearedAt == other.filterClearedAt &&
         lastActivityAt == other.lastActivityAt &&
@@ -571,7 +557,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), previewStack.hashCode), filterEntityId.hashCode), filterEntityType.hashCode), filter.hashCode), filterClearedAt.hashCode), lastActivityAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode), invoiceUIState.hashCode), recurringExpenseUIState.hashCode), subscriptionUIState.hashCode), taskStatusUIState.hashCode), expenseCategoryUIState.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), previewStack.hashCode), filterStack.hashCode), filter.hashCode), filterClearedAt.hashCode), lastActivityAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode), invoiceUIState.hashCode), recurringExpenseUIState.hashCode), subscriptionUIState.hashCode), taskStatusUIState.hashCode), expenseCategoryUIState.hashCode),
                                                                                 recurringInvoiceUIState.hashCode),
                                                                             webhookUIState.hashCode),
                                                                         tokenUIState.hashCode),
@@ -600,8 +586,7 @@ class _$UIState extends UIState {
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
           ..add('previewStack', previewStack)
-          ..add('filterEntityId', filterEntityId)
-          ..add('filterEntityType', filterEntityType)
+          ..add('filterStack', filterStack)
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt)
           ..add('lastActivityAt', lastActivityAt)
@@ -659,15 +644,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set previewStack(ListBuilder<EntityType> previewStack) =>
       _$this._previewStack = previewStack;
 
-  String _filterEntityId;
-  String get filterEntityId => _$this._filterEntityId;
-  set filterEntityId(String filterEntityId) =>
-      _$this._filterEntityId = filterEntityId;
-
-  EntityType _filterEntityType;
-  EntityType get filterEntityType => _$this._filterEntityType;
-  set filterEntityType(EntityType filterEntityType) =>
-      _$this._filterEntityType = filterEntityType;
+  ListBuilder<BaseEntity> _filterStack;
+  ListBuilder<BaseEntity> get filterStack =>
+      _$this._filterStack ??= new ListBuilder<BaseEntity>();
+  set filterStack(ListBuilder<BaseEntity> filterStack) =>
+      _$this._filterStack = filterStack;
 
   String _filter;
   String get filter => _$this._filter;
@@ -860,8 +841,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _currentRoute = $v.currentRoute;
       _previousRoute = $v.previousRoute;
       _previewStack = $v.previewStack.toBuilder();
-      _filterEntityId = $v.filterEntityId;
-      _filterEntityType = $v.filterEntityType;
+      _filterStack = $v.filterStack.toBuilder();
       _filter = $v.filter;
       _filterClearedAt = $v.filterClearedAt;
       _lastActivityAt = $v.lastActivityAt;
@@ -921,8 +901,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               previousRoute: BuiltValueNullFieldError.checkNotNull(
                   previousRoute, 'UIState', 'previousRoute'),
               previewStack: previewStack.build(),
-              filterEntityId: filterEntityId,
-              filterEntityType: filterEntityType,
+              filterStack: filterStack.build(),
               filter: filter,
               filterClearedAt: BuiltValueNullFieldError.checkNotNull(
                   filterClearedAt, 'UIState', 'filterClearedAt'),
@@ -960,6 +939,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       try {
         _$failedField = 'previewStack';
         previewStack.build();
+        _$failedField = 'filterStack';
+        filterStack.build();
 
         _$failedField = 'dashboardUIState';
         dashboardUIState.build();

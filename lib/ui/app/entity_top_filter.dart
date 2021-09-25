@@ -190,10 +190,7 @@ class EntityTopFilter extends StatelessWidget {
                         color: state.headerTextColor,
                       ),
                       onPressed: () => store.dispatch(
-                        FilterByEntity(
-                          entityId: uiState.filterEntityId,
-                          entityType: uiState.filterEntityType,
-                        ),
+                        FilterByEntity(entity: uiState.filterEntity),
                       ),
                     ),
                   ],

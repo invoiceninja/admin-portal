@@ -51,6 +51,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       currentRoute: currentRoute ?? LoginScreen.route,
       previousRoute: '',
       previewStack: BuiltList<EntityType>(),
+      filterStack: BuiltList<BaseEntity>(),
       dashboardUIState: DashboardUIState(),
       settingsUIState: SettingsUIState(),
       reportsUIState: ReportsUIState(),
@@ -102,11 +103,14 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   BuiltList<EntityType> get previewStack;
 
-  @nullable
-  String get filterEntityId;
+  BuiltList<BaseEntity> get filterStack;
 
-  @nullable
-  EntityType get filterEntityType;
+  BaseEntity get filterEntity => filterStack.last;
+
+  String get filterEntityId => filterStack.isEmpty ? null : filterEntity.id;
+
+  EntityType get filterEntityType =>
+      filterStack.isEmpty ? null : filterEntity.entityType;
 
   @nullable
   String get filter;
@@ -236,8 +240,9 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(UIStateBuilder builder) =>
-      builder..lastActivityAt = 0;
+  static void _initializeBuilder(UIStateBuilder builder) => builder
+    ..lastActivityAt = 0
+    ..filterStack.replace(BuiltList<BaseEntity>());
 
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 }
