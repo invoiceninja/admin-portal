@@ -60,14 +60,10 @@ class ViewScaffold extends StatelessWidget {
           icon: Icon(Icons.clear),
           onPressed: () {
             final uiState = state.uiState;
-            final entityType = uiState.filterEntityType;
             store.dispatch(FilterByEntity(
               entityId: uiState.filterEntityId,
               entityType: uiState.filterEntityType,
             ));
-            if (!state.uiState.isEditing) {
-              viewEntitiesByType(entityType: entityType);
-            }
           },
         );
       } else if (state.uiState.previewStack.isNotEmpty) {
