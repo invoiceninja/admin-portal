@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'buttons/edit_icon_button.dart';
 
 class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
