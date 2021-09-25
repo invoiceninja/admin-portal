@@ -687,7 +687,12 @@ class EntityScreens extends StatelessWidget {
           Expanded(
             flex: isFullScreen ? (listFlex + previewFlex) : previewFlex,
             child: AppBorder(
-              child: child,
+              child: Column(
+                children: [
+                  topFilterChild,
+                  Expanded(child: child),
+                ],
+              ),
               isLeft: true,
             ),
           ),

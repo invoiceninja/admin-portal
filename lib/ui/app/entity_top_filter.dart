@@ -57,16 +57,6 @@ class EntityTopFilter extends StatelessWidget {
                   children: [
                     SizedBox(width: 8),
                     if (!prefState.showFilterSidebar) ...[
-                      IconButton(
-                        tooltip: localization.showSidebar,
-                        icon: Icon(
-                          Icons.chrome_reader_mode,
-                          color: state.headerTextColor,
-                        ),
-                        onPressed: () => store.dispatch(UpdateUserPreferences(
-                            showFilterSidebar: !prefState.showFilterSidebar)),
-                      ),
-                      SizedBox(width: 4),
                       ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: 220),
                         child: TextButton(
@@ -82,9 +72,8 @@ class EntityTopFilter extends StatelessWidget {
                           style: TextButton.styleFrom(
                             minimumSize: Size(0, 36),
                           ),
-                          onPressed: () => viewEntity(
-                            entity: filterEntity,
-                          ),
+                          onPressed: () => store.dispatch(UpdateUserPreferences(
+                              showFilterSidebar: !prefState.showFilterSidebar)),
                         ),
                       ),
                     ],
