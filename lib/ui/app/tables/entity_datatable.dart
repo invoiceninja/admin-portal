@@ -117,6 +117,14 @@ class EntityDataTableSource extends AppDataTableSource {
           (field) => DataCell(
             entityPresenter.getField(field: field, context: context),
             onTap: () => onTap(entity),
+            onLongPress: () {
+              final store = StoreProvider.of<AppState>(context);
+              store.dispatch(UpdateUserPreferences(
+                  isPreviewEnabled: !state.prefState.isPreviewEnabled));
+              if (!state.prefState.isPreviewEnabled) {
+                viewEntity(entity: entity);
+              }
+            },
             backgroundColor: backgroundColor,
           ),
         )
