@@ -124,9 +124,6 @@ class ViewScaffold extends StatelessWidget {
                             return EditIconButton(
                               isVisible: entity.isEditable,
                               onPressed: () {
-                                if (state.uiState.isEditing) {
-                                  return;
-                                }
                                 editEntity(context: context, entity: entity);
                               },
                             );
