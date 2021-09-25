@@ -1386,7 +1386,9 @@ void selectEntity({
     handleEntityAction(entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
     if (entity.entityType.hasViewPage) {
-      store.dispatch(UpdateUserPreferences(showFilterSidebar: true));
+      if (!state.prefState.isPreviewEnabled) {
+        store.dispatch(UpdateUserPreferences(showFilterSidebar: true));
+      }
       viewEntitiesByType(entityType: entity.entityType.relatedTypes.first);
       filterByEntity(context: context, entity: entity);
     } else if (uiState.isEditing && entityUIState.editingId == entity.id) {

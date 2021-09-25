@@ -53,27 +53,30 @@ class EntityTopFilter extends StatelessWidget {
                   color: backgroundColor,
                 )
               : Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(width: 8),
                     if (!prefState.showFilterSidebar) ...[
+                      IconButton(
+                        tooltip: localization.showSidebar,
+                        icon: Icon(
+                          Icons.chrome_reader_mode,
+                          color: state.headerTextColor,
+                        ),
+                        onPressed: () => store.dispatch(UpdateUserPreferences(
+                            showFilterSidebar: !prefState.showFilterSidebar)),
+                      ),
+                      SizedBox(width: 8),
                       ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: 220),
-                        child: TextButton(
-                          child: Text(
-                            EntityPresenter()
-                                .initialize(filterEntity, context)
-                                .title(),
-                            style: TextStyle(
-                                fontSize: 17, color: state.headerTextColor),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          style: TextButton.styleFrom(
-                            minimumSize: Size(0, 36),
-                          ),
-                          onPressed: () => store.dispatch(UpdateUserPreferences(
-                              showFilterSidebar: !prefState.showFilterSidebar)),
+                        child: Text(
+                          EntityPresenter()
+                              .initialize(filterEntity, context)
+                              .title(),
+                          style: TextStyle(
+                              fontSize: 17, color: state.headerTextColor),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ),
                     ],

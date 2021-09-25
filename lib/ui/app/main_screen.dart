@@ -689,7 +689,8 @@ class EntityScreens extends StatelessWidget {
             child: AppBorder(
               child: Column(
                 children: [
-                  topFilterChild,
+                  if (!prefState.showFilterSidebar && isFullScreen)
+                    topFilterChild,
                   Expanded(child: child),
                 ],
               ),
