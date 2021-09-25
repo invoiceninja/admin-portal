@@ -105,8 +105,8 @@ class VendorEditVM {
               if (state.prefState.isPreviewEnabled) {
                 viewEntity(entity: savedVendor, force: true);
               } else {
-                editEntity(
-                    context: navigatorKey.currentContext, entity: savedVendor);
+                viewEntitiesByType(
+                    entityType: EntityType.expense, filterEntity: savedVendor);
               }
             }
           }).catchError((Object error) {
