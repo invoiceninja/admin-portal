@@ -542,10 +542,15 @@ abstract class TaskEntity extends Object
       {UserCompanyEntity userCompany,
       ClientEntity client,
       bool includeEdit = false,
+      bool includePreview = false,
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
+      if (includePreview && !multiselect) {
+        actions.add(EntityAction.preview);
+      }
+
       if (includeEdit &&
           userCompany.canEditEntity(this) &&
           !isDeleted &&

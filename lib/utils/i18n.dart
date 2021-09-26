@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'why_are_you_leaving': 'Help us improve by telling us why (optional)',
       'webhook_success': 'Webhook Success',
       'error_cross_client_tasks': 'Tasks must all belong to the same client',
       'error_cross_client_expenses':
@@ -62643,6 +62644,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['webhook_success'] ??
       _localizedValues['en']['webhook_success'];
 
+  String get whyAreYouLeaving =>
+      _localizedValues[localeCode]['why_are_you_leaving'] ??
+      _localizedValues['en']['why_are_you_leaving'];
 
   // STARTER: lang field - do not remove comment
 

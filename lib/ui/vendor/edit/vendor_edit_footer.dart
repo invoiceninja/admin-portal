@@ -21,8 +21,7 @@ class VendorEditFooter extends StatelessWidget {
     final state = store.state;
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.vendor] ?? false;
-    final showLayoutToggle =
-        isDesktop(context) && state.prefState.isPreviewEnabled;
+    final showLayoutToggle = isDesktop(context);
 
     return BottomAppBar(
       elevation: 0,

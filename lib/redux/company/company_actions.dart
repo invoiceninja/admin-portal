@@ -62,11 +62,13 @@ class DeleteCompanyRequest implements StartSaving {
     @required this.completer,
     @required this.password,
     @required this.idToken,
+    @required this.reason,
   });
 
   final Completer completer;
   final String password;
   final String idToken;
+  final String reason;
 }
 
 class DeleteCompanySuccess implements StopSaving, PersistData {}

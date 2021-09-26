@@ -121,10 +121,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       return false;
     }
 
-    if (!isPreviewEnabled) {
-      return true;
-    }
-
     return !(useSidebarEditor[entityType] ?? false);
   }
 

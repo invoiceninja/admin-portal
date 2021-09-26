@@ -67,9 +67,10 @@ void showMessageDialog({
 
 void confirmCallback({
   @required BuildContext context,
-  @required VoidCallback callback,
+  @required Function callback,
   String message,
   String typeToConfirm,
+  bool askForReason = false,
   bool skip = false,
 }) {
   if (skip) {
@@ -85,36 +86,56 @@ void confirmCallback({
     context: context,
     builder: (BuildContext context) {
       String _typed = '';
+      String _reason = '';
 
       void _onPressed() {
         if (typeToConfirm == null ||
             typeToConfirm.toLowerCase() == _typed.toLowerCase()) {
           Navigator.pop(context);
-          callback();
+          callback(_reason);
+        } else {
+          showMessageDialog(
+              context: context,
+              message: localization.pleaseTypeToConfirm
+                  .replaceFirst(':value', typeToConfirm));
         }
       }
 
       return PointerInterceptor(
         child: AlertDialog(
           semanticLabel: localization.areYouSure,
-          title: Text(title),
           content: typeToConfirm != null
-              ? Row(
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    SizedBox(height: 8),
                     Flexible(
                       child: Text(localization.pleaseTypeToConfirm
                               .replaceFirst(':value', typeToConfirm) +
                           ':'),
                     ),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: DecoratedFormField(
-                        autofocus: true,
-                        onChanged: (value) => _typed = value,
-                        hint: typeToConfirm,
-                        onSavePressed: (context) => _onPressed(),
-                      ),
+                    DecoratedFormField(
+                      autofocus: true,
+                      onChanged: (value) => _typed = value,
+                      hint: typeToConfirm,
+                      onSavePressed: (context) => _onPressed(),
                     ),
+                    if (askForReason) ...[
+                      SizedBox(height: 30),
+                      Flexible(child: Text(localization.whyAreYouLeaving)),
+                      DecoratedFormField(
+                        onChanged: (value) => _reason = value,
+                        minLines: 4,
+                        maxLines: 4,
+                      ),
+                    ],
+                    SizedBox(height: 30),
+                    Flexible(
+                        child: Text(
+                      title,
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    )),
                   ],
                 )
               : content == null
@@ -168,7 +189,8 @@ void passwordCallback({
 
   try {
     GoogleOAuth.signIn((idToken, accessToken) {
-      if (!state.company.oauthPasswordRequired || !state.user.hasPassword) {
+      if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
+          !state.user.hasPassword) {
         callback(null, idToken);
       } else {
         showDialog<AlertDialog>(

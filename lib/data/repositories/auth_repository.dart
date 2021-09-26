@@ -156,9 +156,17 @@ class AuthRepository {
     @required Credentials credentials,
     @required String companyId,
     @required String password,
+    @required String reason,
   }) async {
     final url = '${credentials.url}/companies/$companyId';
-    return webClient.delete(url, credentials.token, password: password);
+    return webClient.delete(
+      url,
+      credentials.token,
+      password: password,
+      data: json.encode(
+        {'cancellation_message': reason},
+      ),
+    );
   }
 
   Future<dynamic> purgeData({

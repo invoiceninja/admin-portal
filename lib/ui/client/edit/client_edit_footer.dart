@@ -21,8 +21,7 @@ class ClientEditFooter extends StatelessWidget {
     final state = store.state;
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.client] ?? false;
-    final showLayoutToggle =
-        isDesktop(context) && state.prefState.isPreviewEnabled;
+    final showLayoutToggle = isDesktop(context);
 
     return BottomAppBar(
       elevation: 0,

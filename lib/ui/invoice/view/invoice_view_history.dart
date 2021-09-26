@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class InvoiceViewHistory extends StatefulWidget {
@@ -39,6 +41,10 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
         .where((activity) => activity.history != null)
         .toList();
     activityList.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+
+    if (activityList.isEmpty) {
+      return HelpText(AppLocalization.of(context).noHistory);
+    }
 
     return ScrollableListViewBuilder(
       padding: const EdgeInsets.symmetric(vertical: 16),

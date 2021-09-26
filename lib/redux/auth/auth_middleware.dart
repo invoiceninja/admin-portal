@@ -373,9 +373,11 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
 
     repository
         .deleteCompany(
-            credentials: state.credentials,
-            password: action.password,
-            companyId: state.company.id)
+      credentials: state.credentials,
+      password: action.password,
+      companyId: state.company.id,
+      reason: action.reason,
+    )
         .then((dynamic value) {
       store.dispatch(DeleteCompanySuccess());
       action.completer.complete(null);

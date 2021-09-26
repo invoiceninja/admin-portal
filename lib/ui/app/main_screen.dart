@@ -408,8 +408,10 @@ class EntityScreens extends StatelessWidget {
               break;
           }
       }
-    } else if (subRoute == 'edit' && !editingFilterEntity) {
-      switch (entityType) {
+    } else if (subRoute == 'edit') {
+      final editEntityType =
+          editingFilterEntity ? uiState.filterEntityType : entityType;
+      switch (editEntityType) {
         case EntityType.client:
           child = ClientEditScreen();
           break;

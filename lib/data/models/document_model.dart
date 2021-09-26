@@ -200,6 +200,7 @@ abstract class DocumentEntity extends Object
       {UserCompanyEntity userCompany,
       ClientEntity client,
       bool includeEdit = false,
+      bool includePreview = false,
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 

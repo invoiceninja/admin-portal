@@ -402,13 +402,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   if (isDesktop(context))
                     IconButton(
                       tooltip: localization.preview,
-                      icon: Icon(
-                        Icons.chrome_reader_mode,
-                        color: prefState.isPreviewEnabled &&
-                                !prefState.enableDarkMode
-                            ? state.accentColor
-                            : null,
-                      ),
+                      icon: Icon(Icons.chrome_reader_mode),
                       onPressed: () {
                         store.dispatch(UpdateUserPreferences(
                             isPreviewEnabled:

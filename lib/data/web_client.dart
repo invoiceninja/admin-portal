@@ -161,6 +161,7 @@ class WebClient {
     String token, {
     String password,
     String idToken,
+    dynamic data,
   }) async {
     if (Config.DEMO_MODE) {
       throw 'Server requests are not supported in the demo';
@@ -181,6 +182,7 @@ class WebClient {
         password: password,
         idToken: idToken,
       ),
+      body: data,
     );
     client.close();
 

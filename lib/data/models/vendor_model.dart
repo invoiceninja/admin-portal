@@ -190,10 +190,15 @@ abstract class VendorEntity extends Object
       {UserCompanyEntity userCompany,
       ClientEntity client,
       bool includeEdit = false,
+      bool includePreview = false,
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted && !multiselect) {
+      if (includePreview) {
+        actions.add(EntityAction.preview);
+      }
+
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }

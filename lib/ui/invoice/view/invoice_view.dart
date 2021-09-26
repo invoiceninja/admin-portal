@@ -129,12 +129,12 @@ class _InvoiceViewState extends State<InvoiceView>
         isScrollable: true,
         tabs: [
           Tab(text: localization.overview),
-          if (invoice.isRecurring) Tab(text: localization.schedule),
           Tab(text: localization.contacts),
           Tab(
               text: documents.isEmpty
                   ? localization.documents
                   : '${localization.documents} (${documents.length})'),
+          if (invoice.isRecurring) Tab(text: localization.schedule),
           Tab(text: localization.history),
           Tab(text: localization.activity),
         ],
@@ -157,14 +157,6 @@ class _InvoiceViewState extends State<InvoiceView>
                           key: ValueKey(viewModel.invoice.id),
                         ),
                       ),
-                      if (invoice.isRecurring)
-                        RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
-                          child: InvoiceViewSchedule(
-                            viewModel: viewModel,
-                            key: ValueKey(viewModel.invoice.id),
-                          ),
-                        ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: InvoiceViewContacts(
@@ -179,6 +171,14 @@ class _InvoiceViewState extends State<InvoiceView>
                             invoice: viewModel.invoice,
                             key: ValueKey(viewModel.invoice.id)),
                       ),
+                      if (invoice.isRecurring)
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: InvoiceViewSchedule(
+                            viewModel: viewModel,
+                            key: ValueKey(viewModel.invoice.id),
+                          ),
+                        ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: InvoiceViewHistory(

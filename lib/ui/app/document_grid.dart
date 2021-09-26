@@ -146,6 +146,8 @@ class DocumentTile extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           final localization = AppLocalization.of(context);
+          final store = StoreProvider.of<AppState>(context);
+          final state = store.state;
 
           return AlertDialog(
             title: Text(document.name),
@@ -174,11 +176,16 @@ class DocumentTile extends StatelessWidget {
                             });
                       },
                     ),
+              /*
+              TextButton(
+                  onPressed: () => launch(state.account.defaultUrl +
+                      document.downloadUrl +
+                      '?inline=true'),
+                  child: Text(localization.view.toUpperCase())),
+                  */
               TextButton(
                 child: Text(localization.download.toUpperCase()),
                 onPressed: () async {
-                  final store = StoreProvider.of<AppState>(context);
-                  final state = store.state;
                   if (kIsWeb || (!Platform.isIOS && !Platform.isAndroid)) {
                     launch(state.account.defaultUrl + document.downloadUrl);
                   } else {

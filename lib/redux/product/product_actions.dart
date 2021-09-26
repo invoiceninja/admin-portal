@@ -265,6 +265,10 @@ void handleProductAction(
     case EntityAction.edit:
       editEntity(context: context, entity: product);
       break;
+    case EntityAction.preview:
+      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
+      viewEntity(entity: product);
+      break;
     case EntityAction.clone:
       createEntity(context: context, entity: (product as ProductEntity).clone);
       break;

@@ -285,6 +285,10 @@ void handleStubAction(
     case EntityAction.edit:
       editEntity(context: context, entity: stub);
       break;
+    case EntityAction.preview:
+      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
+      viewEntity(entity: stub);
+      break;
     case EntityAction.restore:
       store.dispatch(RestoreStubsRequest(
           snackBarCompleter<Null>(context, localization.restoredStub), stubIds));

@@ -754,10 +754,15 @@ abstract class InvoiceEntity extends Object
       {UserCompanyEntity userCompany,
       ClientEntity client,
       bool includeEdit = false,
+      bool includePreview = false,
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
+      if (includePreview && !multiselect) {
+        actions.add(EntityAction.preview);
+      }
+
       if (userCompany.canEditEntity(this)) {
         if (includeEdit && !multiselect) {
           actions.add(EntityAction.edit);

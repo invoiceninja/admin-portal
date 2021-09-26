@@ -27,8 +27,7 @@ class InvoiceEditFooter extends StatelessWidget {
         clientId: invoice.clientId);
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
-    final showLayoutToggle =
-        isDesktop(context) && state.prefState.isPreviewEnabled;
+    final showLayoutToggle = isDesktop(context);
 
     return BottomAppBar(
       elevation: 0,
