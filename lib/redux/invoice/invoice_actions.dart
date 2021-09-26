@@ -520,7 +520,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.edit:
       editEntity(context: context, entity: invoice);
       break;
-    case EntityAction.view:
+    case EntityAction.preview:
       store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
       viewEntity(entity: invoice);
       break;

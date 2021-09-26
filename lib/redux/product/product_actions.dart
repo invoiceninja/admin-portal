@@ -265,7 +265,7 @@ void handleProductAction(
     case EntityAction.edit:
       editEntity(context: context, entity: product);
       break;
-    case EntityAction.view:
+    case EntityAction.preview:
       store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
       viewEntity(entity: product);
       break;

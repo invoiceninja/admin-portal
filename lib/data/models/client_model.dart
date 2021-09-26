@@ -591,14 +591,14 @@ abstract class ClientEntity extends Object
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
       ClientEntity client,
-      bool includeView = false,
+      bool includePreview = false,
       bool includeEdit = false,
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted && !multiselect) {
-      if (includeView) {
-        actions.add(EntityAction.view);
+      if (includePreview) {
+        actions.add(EntityAction.preview);
       }
 
       if (includeEdit && userCompany.canEditEntity(this)) {

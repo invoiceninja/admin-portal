@@ -141,7 +141,7 @@ abstract class DesignEntity extends Object
       {UserCompanyEntity userCompany,
       ClientEntity client,
       bool includeEdit = false,
-      bool includeView = false,
+      bool includePreview = false,
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 

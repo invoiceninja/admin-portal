@@ -285,7 +285,7 @@ void handleClientAction(
     case EntityAction.edit:
       editEntity(context: context, entity: client);
       break;
-    case EntityAction.view:
+    case EntityAction.preview:
       store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
       viewEntity(entity: client);
       break;

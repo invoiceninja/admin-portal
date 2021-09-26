@@ -431,7 +431,7 @@ Future handleCreditAction(
     case EntityAction.edit:
       editEntity(context: context, entity: credit);
       break;
-    case EntityAction.view:
+    case EntityAction.preview:
       store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
       viewEntity(entity: credit);
       break;
