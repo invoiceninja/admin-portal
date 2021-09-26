@@ -546,6 +546,7 @@ class _AccountOverview extends StatelessWidget {
                         context: context,
                         message: message,
                         typeToConfirm: localization.delete.toLowerCase(),
+                        askForReason: true,
                         callback: () {
                           passwordCallback(
                               alwaysRequire: true,
