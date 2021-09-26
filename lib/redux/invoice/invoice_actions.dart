@@ -188,10 +188,12 @@ class SaveInvoiceRequest implements StartSaving {
   SaveInvoiceRequest({
     this.completer,
     this.invoice,
+    this.skipRefresh = false,
   });
 
   final Completer completer;
   final InvoiceEntity invoice;
+  final bool skipRefresh;
 }
 
 class SaveInvoiceSuccess implements StopSaving, PersistUI {

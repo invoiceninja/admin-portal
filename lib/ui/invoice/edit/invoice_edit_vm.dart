@@ -135,6 +135,10 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(SaveInvoiceRequest(
             completer: completer,
             invoice: invoice,
+            skipRefresh: [
+              EntityAction.markSent,
+              EntityAction.markPaid,
+            ].contains(action),
           ));
           return completer.future.then((savedInvoice) {
             showToast(invoice.isNew

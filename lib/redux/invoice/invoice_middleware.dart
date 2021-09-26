@@ -311,7 +311,7 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(MarkInvoicesSentFailure(error));
+      store.dispatch(MarkInvoicesPaidFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -410,7 +410,9 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       } else {
         store.dispatch(SaveInvoiceSuccess(invoice));
       }
-      store.dispatch(RefreshData());
+      if (!action.skipRefresh) {
+        store.dispatch(RefreshData());
+      }
       action.completer.complete(invoice);
     }).catchError((Object error) {
       print(error);
