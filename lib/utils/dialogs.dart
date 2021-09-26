@@ -104,6 +104,7 @@ void confirmCallback({
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    SizedBox(height: 8),
                     Flexible(
                       child: Text(localization.pleaseTypeToConfirm
                               .replaceFirst(':value', typeToConfirm) +
@@ -116,7 +117,7 @@ void confirmCallback({
                       onSavePressed: (context) => _onPressed(),
                     ),
                     if (askForReason) ...[
-                      SizedBox(height: 40),
+                      SizedBox(height: 30),
                       Flexible(child: Text(localization.whyAreYouLeaving)),
                       DecoratedFormField(
                         onChanged: (value) => _reason = value,
@@ -124,8 +125,12 @@ void confirmCallback({
                         maxLines: 4,
                       ),
                     ],
-                    SizedBox(height: 40),
-                    Flexible(child: Text(title)),
+                    SizedBox(height: 30),
+                    Flexible(
+                        child: Text(
+                      title,
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    )),
                   ],
                 )
               : content == null
