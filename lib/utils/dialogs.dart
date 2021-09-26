@@ -93,6 +93,11 @@ void confirmCallback({
             typeToConfirm.toLowerCase() == _typed.toLowerCase()) {
           Navigator.pop(context);
           callback(_reason);
+        } else {
+          showMessageDialog(
+              context: context,
+              message: localization.pleaseTypeToConfirm
+                  .replaceFirst(':value', typeToConfirm));
         }
       }
 
