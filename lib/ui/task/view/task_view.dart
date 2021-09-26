@@ -79,7 +79,6 @@ class _TaskViewState extends State<TaskView>
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: task,
-      showClearSelection: state.prefState.showKanban,
       appBarBottom: TabBar(
         controller: _controller,
         isScrollable: false,

@@ -20,7 +20,6 @@ class ViewScaffold extends StatelessWidget {
     this.appBarBottom,
     this.isFilter = false,
     this.onBackPressed,
-    this.showClearSelection = false,
   });
 
   final bool isFilter;
@@ -29,7 +28,6 @@ class ViewScaffold extends StatelessWidget {
   final Function onBackPressed;
   final Widget floatingActionButton;
   final Widget appBarBottom;
-  final bool showClearSelection;
 
   @override
   Widget build(BuildContext context) {
@@ -77,15 +75,11 @@ class ViewScaffold extends StatelessWidget {
             tooltip: localization.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
-      } else if (showClearSelection) {
+      } else if (isDesktop(context)) {
         leading = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {
-            viewEntityById(
-              entityType: entity.entityType,
-              entityId: '',
-              showError: false,
-            );
+            store.dispatch(UpdateUserPreferences(isPreviewEnabled: false));
           },
         );
       }
