@@ -131,7 +131,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (isDesktop(context) && state.prefState.isPreviewEnabled)
+                if (isDesktop(context))
                   Tooltip(
                     message: isFullscreen
                         ? localization.sidebarEditor
@@ -148,8 +148,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
                     ),
                   ),
                 AppBorder(
-                  isLeft:
-                      isDesktop(context) && state.prefState.isPreviewEnabled,
+                  isLeft: isDesktop(context),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: Align(
