@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -34,13 +35,23 @@ class _InvoiceViewScheduleState extends State<InvoiceViewSchedule> {
         Row(
           children: [
             Expanded(
-              child: Text(localization.sendDate),
+              child: Text(
+                localization.sendDate,
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             Expanded(
-              child: Text(localization.dueDate),
+              child: Text(
+                localization.dueDate,
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
           ],
         ),
+        if (invoice.isStale && invoice.recurringDates.isEmpty)
+          LoadingIndicator(
+            height: 300,
+          ),
         ...invoice.recurringDates
             .map((schedule) => Padding(
                   padding: const EdgeInsets.only(top: 16),
