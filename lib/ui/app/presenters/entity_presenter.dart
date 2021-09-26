@@ -36,7 +36,7 @@ class EntityPresenter {
           EntityType.user,
           EntityType.product,
         ].contains(entity.entityType) ||
-        (isMobile(context) && isShort)) {
+        isShort) {
       return name;
     } else if (isMobile(context)) {
       return '$type $name';
