@@ -126,8 +126,12 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
         store.dispatch(AddQuoteItems(items));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: InvoiceEntity(), force: true);
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        if (state.uiState.previousSubRoute == 'pdf') {
+          viewEntitiesByType(entityType: EntityType.quote);
+        } else {
+          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
     );
   }

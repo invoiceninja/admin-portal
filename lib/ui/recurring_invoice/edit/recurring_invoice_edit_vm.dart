@@ -132,8 +132,12 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
         store.dispatch(AddRecurringInvoiceItems(items));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: InvoiceEntity(), force: true);
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        if (state.uiState.previousSubRoute == 'pdf') {
+          viewEntitiesByType(entityType: EntityType.recurringInvoice);
+        } else {
+          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
     );
   }
