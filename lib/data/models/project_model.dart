@@ -167,6 +167,10 @@ abstract class ProjectEntity extends Object
     final actions = <EntityAction>[];
 
     if (!multiselect) {
+      if (includePreview) {
+        actions.add(EntityAction.preview);
+      }
+
       if (!isDeleted) {
         if (includeEdit && userCompany.canEditEntity(this)) {
           actions.add(EntityAction.edit);

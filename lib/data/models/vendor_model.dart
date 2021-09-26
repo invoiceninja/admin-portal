@@ -195,6 +195,10 @@ abstract class VendorEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted && !multiselect) {
+      if (includePreview) {
+        actions.add(EntityAction.preview);
+      }
+
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
