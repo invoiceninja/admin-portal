@@ -188,12 +188,12 @@ class SaveInvoiceRequest implements StartSaving {
   SaveInvoiceRequest({
     this.completer,
     this.invoice,
-    this.skipRefresh = false,
+    this.action,
   });
 
   final Completer completer;
   final InvoiceEntity invoice;
-  final bool skipRefresh;
+  final EntityAction action;
 }
 
 class SaveInvoiceSuccess implements StopSaving, PersistUI {
@@ -504,9 +504,8 @@ class UpdateInvoiceTab implements PersistUI {
   final int tabIndex;
 }
 
-void handleInvoiceAction(
-    BuildContext context, List<BaseEntity> invoices, EntityAction action,
-    {VoidCallback callback}) async {
+void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
+    EntityAction action) async {
   if (invoices.isEmpty) {
     return;
   }
@@ -536,8 +535,7 @@ void handleInvoiceAction(
               context,
               invoiceIds.length == 1
                   ? localization.markedInvoiceAsSent
-                  : localization.markedInvoicesAsSent,
-              callback: callback),
+                  : localization.markedInvoicesAsSent),
           invoiceIds));
       break;
     case EntityAction.reverse:
@@ -564,8 +562,7 @@ void handleInvoiceAction(
               context,
               invoiceIds.length == 1
                   ? localization.markedInvoiceAsPaid
-                  : localization.markedInvoicesAsPaid,
-              callback: callback),
+                  : localization.markedInvoicesAsPaid),
           invoiceIds));
       break;
     case EntityAction.emailInvoice:

@@ -403,16 +403,19 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
           .replace(action.invoice.lineItems.where((item) => !item.isEmpty)));
 
     repository
-        .saveData(store.state.credentials, updatedInvoice)
+        .saveData(
+      store.state.credentials,
+      updatedInvoice,
+      isSent: action.action == EntityAction.markSent,
+      isPaid: action.action == EntityAction.markPaid,
+    )
         .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));
       } else {
         store.dispatch(SaveInvoiceSuccess(invoice));
       }
-      if (!action.skipRefresh) {
-        store.dispatch(RefreshData());
-      }
+      store.dispatch(RefreshData());
       action.completer.complete(invoice);
     }).catchError((Object error) {
       print(error);

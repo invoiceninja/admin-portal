@@ -29,7 +29,7 @@ class InvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.id),
+          key: ValueKey(viewModel.invoice.updatedAt),
         );
       },
     );
@@ -135,10 +135,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(SaveInvoiceRequest(
             completer: completer,
             invoice: invoice,
-            skipRefresh: [
-              EntityAction.markSent,
-              EntityAction.markPaid,
-            ].contains(action),
+            action: action,
           ));
           return completer.future.then((savedInvoice) {
             showToast(invoice.isNew
@@ -162,14 +159,9 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                     force: true);
               }
 
-              if (action != null) {
-                handleInvoiceAction(context, [savedInvoice], action,
-                    callback: () {
-                  editEntity(
-                      context: navigatorKey.currentContext,
-                      entity: state.invoiceState.get(savedInvoice.id),
-                      force: true);
-                });
+              if ([EntityAction.emailInvoice, EntityAction.viewPdf]
+                  .contains(action)) {
+                handleEntityAction(savedInvoice, action);
               }
             }
           }).catchError((Object error) {
