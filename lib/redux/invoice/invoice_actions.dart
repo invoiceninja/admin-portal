@@ -504,8 +504,9 @@ class UpdateInvoiceTab implements PersistUI {
   final int tabIndex;
 }
 
-void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
-    EntityAction action) async {
+void handleInvoiceAction(
+    BuildContext context, List<BaseEntity> invoices, EntityAction action,
+    {VoidCallback callback}) async {
   if (invoices.isEmpty) {
     return;
   }
@@ -535,7 +536,8 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               context,
               invoiceIds.length == 1
                   ? localization.markedInvoiceAsSent
-                  : localization.markedInvoicesAsSent),
+                  : localization.markedInvoicesAsSent,
+              callback: callback),
           invoiceIds));
       break;
     case EntityAction.reverse:
@@ -562,7 +564,8 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               context,
               invoiceIds.length == 1
                   ? localization.markedInvoiceAsPaid
-                  : localization.markedInvoicesAsPaid),
+                  : localization.markedInvoicesAsPaid,
+              callback: callback),
           invoiceIds));
       break;
     case EntityAction.emailInvoice:

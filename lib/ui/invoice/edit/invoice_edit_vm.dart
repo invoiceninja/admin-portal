@@ -163,7 +163,13 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
               }
 
               if (action != null) {
-                handleEntityAction(savedInvoice, action);
+                handleInvoiceAction(context, [savedInvoice], action,
+                    callback: () {
+                  editEntity(
+                      context: navigatorKey.currentContext,
+                      entity: state.invoiceState.get(savedInvoice.id),
+                      force: true);
+                });
               }
             }
           }).catchError((Object error) {
