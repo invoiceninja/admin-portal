@@ -119,20 +119,22 @@ class ViewScaffold extends StatelessWidget {
                             localization.back,
                             style: TextStyle(color: state.headerTextColor),
                           )),
-                    userCompany.canEditEntity(entity)
-                        ? Builder(builder: (context) {
-                            return entity.isEditable
-                                ? AppTextButton(
-                                    label: localization.edit,
-                                    isInHeader: true,
-                                    onPressed: () {
-                                      editEntity(
-                                          context: context, entity: entity);
-                                    },
-                                  )
-                                : SizedBox();
-                          })
-                        : Container(),
+                    if (userCompany.canEditEntity(entity))
+                      Builder(builder: (context) {
+                        final isDisabled = state.uiState.isEditing &&
+                            state.uiState.mainRoute ==
+                                state.uiState.filterEntityType.toString();
+
+                        return AppTextButton(
+                          label: localization.edit,
+                          isInHeader: true,
+                          onPressed: isDisabled
+                              ? null
+                              : () {
+                                  editEntity(context: context, entity: entity);
+                                },
+                        );
+                      }),
                     ViewActionMenuButton(
                       isSaving: state.isSaving && !isFilter,
                       entity: entity,
