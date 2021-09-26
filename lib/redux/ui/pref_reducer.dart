@@ -528,6 +528,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, EditCredit>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.credit.id, entityType: EntityType.credit))),
+  TypedReducer<BuiltList<HistoryRecord>, FilterByEntity>(
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(id: action.entityId, entityType: action.entityType))),
 ]);
 
 BuiltList<HistoryRecord> _addToHistory(

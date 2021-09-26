@@ -407,11 +407,18 @@ void viewEntityById({
   final uiState = store.state.uiState;
 
   if (!state.prefState.isPreviewEnabled && !entityType.isSetting) {
-    editEntity(
-      context: navigatorKey.currentContext,
-      entity: state.getEntityMap(entityType)[entityId],
-      force: force,
-    );
+    final BaseEntity entity = state.getEntityMap(entityType)[entityId];
+    if (entityType.hasViewPage) {
+      viewEntitiesByType(
+          entityType: entity.entityType.relatedTypes.first,
+          filterEntity: entity);
+    } else {
+      editEntity(
+        context: navigatorKey.currentContext,
+        entity: entity,
+        force: force,
+      );
+    }
     return;
   }
 
