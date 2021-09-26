@@ -184,7 +184,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        if (state.uiState.previousSubRoute == 'pdf') {
+        if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
           viewEntitiesByType(entityType: EntityType.invoice);
         } else {
           createEntity(context: context, entity: InvoiceEntity(), force: true);

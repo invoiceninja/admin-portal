@@ -126,7 +126,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
         store.dispatch(AddQuoteItems(items));
       },
       onCancelPressed: (BuildContext context) {
-        if (state.uiState.previousSubRoute == 'pdf') {
+        if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
           viewEntitiesByType(entityType: EntityType.quote);
         } else {
           createEntity(context: context, entity: InvoiceEntity(), force: true);

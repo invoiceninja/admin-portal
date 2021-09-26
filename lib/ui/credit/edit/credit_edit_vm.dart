@@ -127,7 +127,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
         store.dispatch(AddCreditItems(items));
       },
       onCancelPressed: (BuildContext context) {
-        if (state.uiState.previousSubRoute == 'pdf') {
+        if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
           viewEntitiesByType(entityType: EntityType.credit);
         } else {
           createEntity(context: context, entity: InvoiceEntity(), force: true);
