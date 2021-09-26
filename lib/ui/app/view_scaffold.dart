@@ -7,10 +7,10 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'buttons/edit_icon_button.dart';
 
 class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
@@ -54,15 +54,24 @@ class ViewScaffold extends StatelessWidget {
 
     Widget leading;
     if (isDesktop(context)) {
-      if ((isFilter ?? false) &&
+      if (isFilter == true &&
           entity.entityType == state.uiState.filterEntityType) {
-        leading = IconButton(
-          tooltip: localization.hideSidebar,
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            store.dispatch(UpdateUserPreferences(showFilterSidebar: false));
-          },
-        );
+        if (state.uiState.filterStack.length > 1) {
+          leading = IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => store.dispatch(PopFilterStack()),
+          );
+        } else {
+          leading = IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              final uiState = state.uiState;
+              store.dispatch(FilterByEntity(
+                entity: uiState.filterEntity,
+              ));
+            },
+          );
+        }
       } else if (state.uiState.previewStack.isNotEmpty) {
         leading = IconButton(
             tooltip: localization.back,
@@ -110,15 +119,22 @@ class ViewScaffold extends StatelessWidget {
                             localization.back,
                             style: TextStyle(color: state.headerTextColor),
                           )),
-                    userCompany.canEditEntity(entity)
-                        ? Builder(builder: (context) {
-                            return EditIconButton(
-                              isVisible: entity.isEditable,
-                              onPressed: () =>
-                                  editEntity(context: context, entity: entity),
-                            );
-                          })
-                        : Container(),
+                    if (userCompany.canEditEntity(entity))
+                      Builder(builder: (context) {
+                        final isDisabled = state.uiState.isEditing &&
+                            state.uiState.mainRoute ==
+                                state.uiState.filterEntityType.toString();
+
+                        return AppTextButton(
+                          label: localization.edit,
+                          isInHeader: true,
+                          onPressed: isDisabled
+                              ? null
+                              : () {
+                                  editEntity(context: context, entity: entity);
+                                },
+                        );
+                      }),
                     ViewActionMenuButton(
                       isSaving: state.isSaving && !isFilter,
                       entity: entity,

@@ -106,6 +106,7 @@ abstract class CompanyGatewayEntity extends Object
   int get hashCode;
 
   @nullable
+  @BuiltValueField(compare: false)
   int get loadedAt;
 
   bool get isLoaded => loadedAt != null && loadedAt > 0;

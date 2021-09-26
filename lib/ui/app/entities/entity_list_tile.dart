@@ -74,22 +74,21 @@ class _EntityListTileState extends State<EntityListTile> {
           : handleEntityAction(widget.entity, action),
     );
 
-    final trailing = widget.isFilter
-        ? SizedBox()
-        : IgnorePointer(
-            ignoring: !isHovered,
-            child: IconButton(
-              icon: Icon(isHovered ||
-                      isMobile(context) ||
-                      state.uiState.previewStack.isNotEmpty
-                  ? Icons.chevron_right
-                  : Icons.filter_list),
-              onPressed: () => viewEntity(
-                entity: widget.entity,
-                addToStack: isDesktop(context) && !widget.isFilter,
-              ),
-            ),
-          );
+    final trailing = IgnorePointer(
+      ignoring: !isHovered || widget.isFilter,
+      child: IconButton(
+        icon: Icon(isHovered ||
+                widget.isFilter ||
+                isMobile(context) ||
+                state.uiState.previewStack.isNotEmpty
+            ? Icons.chevron_right
+            : Icons.filter_list),
+        onPressed: () => viewEntity(
+          entity: widget.entity,
+          addToStack: isDesktop(context) && !widget.isFilter,
+        ),
+      ),
+    );
 
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),
@@ -168,8 +167,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
     final entity = widget.entity;
     if (uiState.filterEntityId != entity.id ||
         uiState.filterEntityType != entity.entityType) {
-      store.dispatch(
-          FilterByEntity(entityId: entity.id, entityType: entity.entityType));
+      store.dispatch(FilterByEntity(entity: entity));
     }
     handleEntityAction(entity, EntityAction.newEntityType(widget.entityType));
   }
@@ -211,14 +209,12 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
                         onPressed: () => _onTap(context),
                       ),
                     ),
-              trailing: widget.isFilter
-                  ? SizedBox()
-                  : IgnorePointer(
-                      child: IconButton(
-                        icon: Icon(MdiIcons.chevronDoubleRight),
-                        onPressed: () => null,
-                      ),
-                    ),
+              trailing: IgnorePointer(
+                child: IconButton(
+                  icon: Icon(MdiIcons.chevronDoubleRight),
+                  onPressed: () => null,
+                ),
+              ),
               onTap: () => _onTap(context),
               onLongPress: _onLongPress,
             ),

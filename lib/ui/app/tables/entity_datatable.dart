@@ -65,8 +65,7 @@ class EntityDataTableSource extends AppDataTableSource {
 
     bool isSelected = false;
     if (!listState.isInMultiselect() &&
-        (state.prefState.isPreviewEnabled || state.uiState.isEditing) &&
-        (state.prefState.isPreviewVisible || state.uiState.isEditing)) {
+        (state.prefState.isPreviewEnabled || state.uiState.isEditing)) {
       if (state.uiState.isEditing
           ? entity.id == editingId
           : entity.id == uIState.selectedId) {
@@ -118,6 +117,14 @@ class EntityDataTableSource extends AppDataTableSource {
           (field) => DataCell(
             entityPresenter.getField(field: field, context: context),
             onTap: () => onTap(entity),
+            onLongPress: () {
+              final store = StoreProvider.of<AppState>(context);
+              store.dispatch(UpdateUserPreferences(
+                  isPreviewEnabled: !state.prefState.isPreviewEnabled));
+              if (!state.prefState.isPreviewEnabled) {
+                viewEntity(entity: entity);
+              }
+            },
             backgroundColor: backgroundColor,
           ),
         )

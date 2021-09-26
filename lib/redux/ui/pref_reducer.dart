@@ -47,8 +47,6 @@ PrefState prefReducer(
       ..appLayout = layoutReducer(state.appLayout, action)
       ..rowsPerPage = rowsPerPageReducer(state.rowsPerPage, action)
       ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
-      ..isPreviewVisible =
-          isPreviewVisibleReducer(state.isPreviewVisible, action)
       ..isPreviewEnabled =
           isPreviewEnabledReducer(state.isPreviewEnabled, action)
       ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
@@ -268,12 +266,6 @@ Reducer<bool> longPressReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>(
       (longPressSelectionIsDefault, action) {
     return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
-  }),
-]);
-
-Reducer<bool> isPreviewVisibleReducer = combineReducers([
-  TypedReducer<bool, UpdateUserPreferences>((isPreviewVisible, action) {
-    return action.isPreviewVisible ?? isPreviewVisible;
   }),
 ]);
 
@@ -536,6 +528,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, EditCredit>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.credit.id, entityType: EntityType.credit))),
+  TypedReducer<BuiltList<HistoryRecord>, FilterByEntity>(
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(id: action.entityId, entityType: action.entityType))),
 ]);
 
 BuiltList<HistoryRecord> _addToHistory(

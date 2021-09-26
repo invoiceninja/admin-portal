@@ -99,10 +99,15 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedQuote);
               }
             } else {
+              if (state.prefState.isPreviewEnabled) {
+                viewEntity(entity: savedQuote, force: true);
+              } else {
+                editEntity(
+                    context: navigatorKey.currentContext, entity: savedQuote);
+              }
+
               if (action != null) {
                 handleEntityAction(savedQuote, action);
-              } else {
-                viewEntity(entity: savedQuote, force: true);
               }
             }
           }).catchError((Object error) {
@@ -121,8 +126,12 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
         store.dispatch(AddQuoteItems(items));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: InvoiceEntity(), force: true);
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
+          viewEntitiesByType(entityType: EntityType.quote);
+        } else {
+          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
     );
   }

@@ -84,17 +84,23 @@ class EntityType extends EnumClass {
         EntityType.subscription,
       ].contains(this);
 
+  bool get hasViewPage => [
+        EntityType.client,
+        EntityType.project,
+        EntityType.vendor,
+      ].contains(this);
+
   List<EntityType> get relatedTypes {
     switch (this) {
       case EntityType.client:
         return [
           EntityType.invoice,
-          EntityType.task,
-          EntityType.expense,
           EntityType.payment,
           EntityType.quote,
           EntityType.credit,
           EntityType.project,
+          EntityType.task,
+          EntityType.expense,
           EntityType.recurringInvoice,
           EntityType.recurringExpense,
         ];

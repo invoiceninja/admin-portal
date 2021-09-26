@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewTaskList implements StopLoading {
@@ -340,8 +341,14 @@ void handleTaskAction(
       break;
     case EntityAction.invoiceTask:
       tasks.sort((taskA, taskB) {
-        final taskADate = (taskA as TaskEntity).getTaskTimes().first.startDate;
-        final taskBDate = (taskB as TaskEntity).getTaskTimes().first.startDate;
+        final taskATimes = (taskA as TaskEntity).getTaskTimes();
+        final taskBTimes = (taskB as TaskEntity).getTaskTimes();
+        final taskADate = taskATimes.isEmpty
+            ? convertTimestampToDate(taskA.createdAt)
+            : taskATimes.first.startDate;
+        final taskBDate = taskBTimes.isEmpty
+            ? convertTimestampToDate(taskB.createdAt)
+            : taskBTimes.first.startDate;
         return taskADate.compareTo(taskBDate);
       });
 
@@ -352,6 +359,7 @@ void handleTaskAction(
           })
           .map((task) => convertTaskToInvoiceItem(task: task, context: context))
           .toList();
+
       if (items.isNotEmpty) {
         createEntity(
             context: context,

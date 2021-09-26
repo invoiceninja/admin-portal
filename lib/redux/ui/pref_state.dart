@@ -13,8 +13,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.table,
-      isPreviewEnabled: true,
-      isPreviewVisible: true,
+      isPreviewEnabled: false,
       useSidebarEditor: BuiltMap<EntityType, bool>(),
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,
@@ -85,8 +84,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   BuiltMap<String, String> get customColors;
 
-  bool get isPreviewVisible;
-
   bool get isPreviewEnabled;
 
   bool get isMenuVisible;
@@ -119,8 +116,17 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isDesktop => appLayout == AppLayout.desktop;
 
-  bool isEditorFullScreen(EntityType entityType) =>
-      isDesktop && !(useSidebarEditor[entityType] ?? false);
+  bool isEditorFullScreen(EntityType entityType) {
+    if (!isDesktop) {
+      return false;
+    }
+
+    if (!isPreviewEnabled) {
+      return true;
+    }
+
+    return !(useSidebarEditor[entityType] ?? false);
+  }
 
   bool get isNotDesktop => !isDesktop;
 

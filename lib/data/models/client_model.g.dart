@@ -1139,7 +1139,6 @@ class _$ClientEntity extends ClientEntity {
     if (identical(other, this)) return true;
     return other is ClientEntity &&
         groupId == other.groupId &&
-        loadedAt == other.loadedAt &&
         name == other.name &&
         displayName == other.displayName &&
         balance == other.balance &&
@@ -1210,7 +1209,7 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), loadedAt.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), clientHash.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), number.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), clientHash.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), number.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
                                                                                 lastLogin.hashCode),
                                                                             customValue1.hashCode),
                                                                         customValue2.hashCode),

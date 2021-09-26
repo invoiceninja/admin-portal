@@ -118,6 +118,7 @@ class _ProjectViewState extends State<ProjectView>
             ),
             BottomButtons(
               entity: project,
+              isFilter: widget.isFilter,
               action1: EntityAction.newTask,
               action2: EntityAction.invoiceProject,
             ),

@@ -329,9 +329,7 @@ class EntityScreens extends StatelessWidget {
     final isPdf = subRoute == 'pdf';
 
     final isFullScreen = state.isFullScreen;
-    final isPreviewVisible =
-        prefState.isPreviewVisible && prefState.isPreviewEnabled;
-    bool isPreviewShown = isPreviewVisible;
+    bool isPreviewShown = prefState.isPreviewEnabled;
 
     if (subRoute != 'view' && subRoute.isNotEmpty) {
       isPreviewShown = true;
@@ -351,7 +349,13 @@ class EntityScreens extends StatelessWidget {
     }
 
     Widget child;
-    if (isFullScreen) {
+
+    // TODO rmeove this once full width project editor is
+    if (state.uiState.isEditing &&
+        state.uiState.filterEntityType == EntityType.project &&
+        state.uiState.currentRoute == ProjectEditScreen.route) {
+      child = ProjectEditScreen();
+    } else if (isFullScreen) {
       switch (mainRoute) {
         case InvoiceScreen.route:
           child = isPdf
@@ -523,72 +527,72 @@ class EntityScreens extends StatelessWidget {
       if (prefState.showFilterSidebar) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? ClientEditScreen()
                 : ClientViewScreen(isFilter: true);
             break;
           case EntityType.invoice:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? InvoiceViewScreen()
                 : InvoiceViewScreen(isFilter: true);
             break;
           case EntityType.quote:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? QuoteViewScreen()
                 : QuoteViewScreen(isFilter: true);
             break;
           case EntityType.credit:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? CreditViewScreen()
                 : CreditViewScreen(isFilter: true);
             break;
           case EntityType.payment:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? PaymentEditScreen()
                 : PaymentViewScreen(isFilter: true);
             break;
           case EntityType.user:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? UserEditScreen()
                 : UserViewScreen(isFilter: true);
             break;
           case EntityType.group:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? GroupEditScreen()
                 : GroupViewScreen(isFilter: true);
             break;
           case EntityType.subscription:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? SubscriptionEditScreen()
                 : SubscriptionViewScreen(isFilter: true);
             break;
           case EntityType.companyGateway:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? CompanyGatewayEditScreen()
                 : CompanyGatewayViewScreen(isFilter: true);
             break;
           case EntityType.recurringInvoice:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? RecurringInvoiceEditScreen()
                 : RecurringInvoiceViewScreen(isFilter: true);
             break;
           case EntityType.expenseCategory:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? ExpenseCategoryEditScreen()
                 : ExpenseCategoryViewScreen(isFilter: true);
             break;
           case EntityType.taskStatus:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? TaskStatusEditScreen()
                 : TaskStatusViewScreen(isFilter: true);
             break;
           case EntityType.vendor:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? VendorEditScreen()
                 : VendorViewScreen(isFilter: true);
             break;
           case EntityType.project:
-            leftFilterChild = editingFilterEntity
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? ProjectEditScreen()
                 : ProjectViewScreen(isFilter: true);
             break;
@@ -603,7 +607,7 @@ class EntityScreens extends StatelessWidget {
     }
 
     topFilterChild = EntityTopFilter(
-      show: uiState.filterEntityType != null,
+      show: uiState.filterEntityType != null && !prefState.showFilterSidebar,
     );
 
     Widget listWidget;
@@ -684,7 +688,13 @@ class EntityScreens extends StatelessWidget {
           Expanded(
             flex: isFullScreen ? (listFlex + previewFlex) : previewFlex,
             child: AppBorder(
-              child: child,
+              child: Column(
+                children: [
+                  if (!prefState.showFilterSidebar && isFullScreen)
+                    topFilterChild,
+                  Expanded(child: child),
+                ],
+              ),
               isLeft: true,
             ),
           ),

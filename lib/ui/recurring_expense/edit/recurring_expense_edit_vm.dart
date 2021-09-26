@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit.dart';
@@ -107,7 +108,13 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                 Navigator.of(context).pop(savedRecurringExpense);
               }
             } else {
-              viewEntity(entity: savedRecurringExpense, force: true);
+              if (state.prefState.isPreviewEnabled) {
+                viewEntity(entity: savedRecurringExpense, force: true);
+              } else {
+                editEntity(
+                    context: navigatorKey.currentContext,
+                    entity: savedRecurringExpense);
+              }
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

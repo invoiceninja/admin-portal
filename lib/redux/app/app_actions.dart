@@ -122,7 +122,6 @@ class UpdateUserPreferences implements PersistPrefs {
     this.enableDarkMode,
     this.requireAuthentication,
     this.longPressSelectionIsDefault,
-    this.isPreviewVisible,
     this.isPreviewEnabled,
     this.accentColor,
     this.menuMode,
@@ -144,7 +143,6 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
-  final bool isPreviewVisible;
   final bool isPreviewEnabled;
   final bool showFilterSidebar;
   final bool alwaysShowFilterSidebar;
@@ -217,6 +215,8 @@ class ClearPreviewStack {}
 
 class PopPreviewStack {}
 
+class PopFilterStack {}
+
 class ClearData {}
 
 class ClearLastError {}
@@ -233,14 +233,16 @@ class ClearEntitySelection {
 
 class FilterByEntity implements PersistUI {
   FilterByEntity({
-    @required this.entityId,
-    @required this.entityType,
+    @required this.entity,
     this.clearSelection = false,
   });
 
-  final String entityId;
-  final EntityType entityType;
+  final BaseEntity entity;
   final bool clearSelection;
+
+  String get entityId => entity.id;
+
+  EntityType get entityType => entity.entityType;
 }
 
 class FilterCompany implements PersistUI {
@@ -258,10 +260,7 @@ void filterByEntity({
   }
 
   final store = StoreProvider.of<AppState>(context);
-  store.dispatch(FilterByEntity(
-    entityId: entity.id,
-    entityType: entity.entityType,
-  ));
+  store.dispatch(FilterByEntity(entity: entity));
 }
 
 void viewEntitiesByType({
@@ -280,10 +279,7 @@ void viewEntitiesByType({
           if (uiState.filterEntityType != filterEntity.entityType ||
               uiState.filterEntityId != filterEntity.id) {
             store.dispatch(ClearEntitySelection(entityType: entityType));
-            store.dispatch(FilterByEntity(
-              entityId: filterEntity.id,
-              entityType: filterEntity.entityType,
-            ));
+            store.dispatch(FilterByEntity(entity: filterEntity));
           }
         } else if (uiState.filterEntityType != null) {
           store.dispatch(ClearEntityFilter());
@@ -410,6 +406,22 @@ void viewEntityById({
   final state = store.state;
   final uiState = store.state.uiState;
 
+  if (!state.prefState.isPreviewEnabled && !entityType.isSetting) {
+    final BaseEntity entity = state.getEntityMap(entityType)[entityId];
+    if (entityType.hasViewPage) {
+      viewEntitiesByType(
+          entityType: entity.entityType.relatedTypes.first,
+          filterEntity: entity);
+    } else {
+      editEntity(
+        context: navigatorKey.currentContext,
+        entity: entity,
+        force: force,
+      );
+    }
+    return;
+  }
+
   checkForChanges(
       store: store,
       context: navigatorKey.currentContext,
@@ -429,18 +441,14 @@ void viewEntityById({
             (uiState.filterEntityType != filterEntity.entityType ||
                 uiState.filterEntityId != filterEntity.id)) {
           store.dispatch(ClearEntitySelection(entityType: entityType));
-          store.dispatch(FilterByEntity(
-            entityId: filterEntity.id,
-            entityType: filterEntity.entityType,
-          ));
+          store.dispatch(FilterByEntity(entity: filterEntity));
           // If the user selects a different entity of the same type as the current
           // filter then we clear the selection so new records are auto-selected
         } else if (uiState.filterEntityType != null &&
             uiState.filterEntityId != entityId &&
             uiState.filterEntityType == entityType) {
           store.dispatch(FilterByEntity(
-            entityId: entityId,
-            entityType: entityType,
+            entity: uiState.filterEntity,
             clearSelection: true,
           ));
         }
@@ -453,11 +461,6 @@ void viewEntityById({
               context: navigatorKey.currentContext,
               message: localization.failedToFindRecord);
           return;
-        }
-
-        if (!state.prefState.isPreviewVisible &&
-            state.prefState.moduleLayout == ModuleLayout.table) {
-          store.dispatch(UpdateUserPreferences(isPreviewVisible: true));
         }
 
         switch (entityType) {
@@ -1046,23 +1049,22 @@ void createEntity({
       });
 }
 
-void editEntity(
-    {@required BuildContext context,
-    @required BaseEntity entity,
-    int subIndex,
-    Completer completer}) {
+void editEntity({
+  @required BuildContext context,
+  @required BaseEntity entity,
+  int subIndex,
+  bool force = false,
+  Completer completer,
+}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
   final entityType = entity.entityType;
 
-  if (!entity.isEditable) {
-    return;
-  }
-
   checkForChanges(
       store: store,
       context: context,
+      force: force,
       callback: () {
         switch (entityType) {
           case EntityType.client:
@@ -1161,61 +1163,52 @@ void editEntity(
             store.dispatch(EditRecurringExpense(
                 recurringExpense: entity, completer: completer));
             break;
-
           case EntityType.subscription:
             store.dispatch(
                 EditSubscription(subscription: entity, completer: completer));
             break;
-
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
               taskStatus: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
               expenseCategory: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
               recurringInvoice: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.webhook:
             store.dispatch(EditWebhook(
               webhook: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.token:
             store.dispatch(EditToken(
               token: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
               paymentTerm: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.design:
             store.dispatch(EditDesign(
               design: entity,
               completer: completer,
             ));
             break;
-
           case EntityType.credit:
             store.dispatch(EditCredit(
               credit: entity,
@@ -1331,15 +1324,12 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
     case EntityType.recurringExpense:
       handleRecurringExpenseAction(context, entities, action);
       break;
-
     case EntityType.subscription:
       handleSubscriptionAction(context, entities, action);
       break;
-
     case EntityType.taskStatus:
       handleTaskStatusAction(context, entities, action);
       break;
-
     case EntityType.expenseCategory:
       handleExpenseCategoryAction(context, entities, action);
       break;
@@ -1396,7 +1386,19 @@ void selectEntity({
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
-    editEntity(context: context, entity: entity);
+    if (entity.entityType.hasViewPage) {
+      if (!state.prefState.isPreviewEnabled) {
+        store.dispatch(UpdateUserPreferences(showFilterSidebar: true));
+      }
+      viewEntitiesByType(entityType: entity.entityType.relatedTypes.first);
+      filterByEntity(context: context, entity: entity);
+    } else if (uiState.isEditing && entityUIState.editingId == entity.id) {
+      viewEntitiesByType(entityType: entity.entityType);
+    } else if (entity.entityType.isSetting) {
+      viewEntity(entity: entity);
+    } else {
+      editEntity(context: context, entity: entity);
+    }
   } else if (isDesktop(context) &&
       (uiState.isEditing || uiState.previewStack.isNotEmpty)) {
     viewEntity(entity: entity);
@@ -1404,8 +1406,7 @@ void selectEntity({
       !forceView &&
       uiState.isViewing &&
       !entity.entityType.isSetting &&
-      entityUIState.selectedId == entity.id &&
-      (state.prefState.isPreviewVisible || state.prefState.isModuleList)) {
+      entityUIState.selectedId == entity.id) {
     if (entityUIState.tabIndex > 0) {
       store.dispatch(PreviewEntity());
     } else {
@@ -1440,8 +1441,7 @@ void inspectEntity({
         entityId: state.getUIState(entityType).selectedId,
       );
     } else {
-      store.dispatch(
-          FilterByEntity(entityType: entity.entityType, entityId: entity.id));
+      store.dispatch(FilterByEntity(entity: entity));
     }
   } else {
     if (longPress) {
@@ -1463,7 +1463,11 @@ void checkForChanges({
     return;
   }
 
-  if (!force && store.state.hasChanges() && !isMobile(context)) {
+  if (force) {
+    store.dispatch(DiscardChanges());
+    store.dispatch(ResetSettings());
+    callback();
+  } else if (store.state.hasChanges() && !isMobile(context)) {
     showDialog<MessageDialog>(
         context: context,
         builder: (BuildContext dialogContext) {

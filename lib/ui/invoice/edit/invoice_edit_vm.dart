@@ -29,7 +29,7 @@ class InvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.id),
+          key: ValueKey(viewModel.invoice.updatedAt),
         );
       },
     );
@@ -135,6 +135,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(SaveInvoiceRequest(
             completer: completer,
             invoice: invoice,
+            action: action,
           ));
           return completer.future.then((savedInvoice) {
             showToast(invoice.isNew
@@ -149,9 +150,17 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedInvoice);
               }
             } else {
-              viewEntity(entity: savedInvoice, force: true);
+              if (state.prefState.isPreviewEnabled) {
+                viewEntity(entity: savedInvoice, force: true);
+              } else {
+                editEntity(
+                    context: navigatorKey.currentContext,
+                    entity: savedInvoice,
+                    force: true);
+              }
 
-              if (action != null) {
+              if ([EntityAction.emailInvoice, EntityAction.viewPdf]
+                  .contains(action)) {
                 handleEntityAction(savedInvoice, action);
               }
             }
@@ -177,8 +186,12 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: InvoiceEntity(), force: true);
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
+          viewEntitiesByType(entityType: EntityType.invoice);
+        } else {
+          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
     );
   }

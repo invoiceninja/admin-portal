@@ -103,10 +103,16 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedRecurringInvoice);
               }
             } else {
+              if (state.prefState.isPreviewEnabled) {
+                viewEntity(entity: savedRecurringInvoice, force: true);
+              } else {
+                editEntity(
+                    context: navigatorKey.currentContext,
+                    entity: savedRecurringInvoice);
+              }
+
               if (action != null) {
                 handleEntityAction(savedRecurringInvoice, action);
-              } else {
-                viewEntity(entity: savedRecurringInvoice, force: true);
               }
             }
           }).catchError((Object error) {
@@ -126,8 +132,12 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
         store.dispatch(AddRecurringInvoiceItems(items));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: InvoiceEntity(), force: true);
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
+          viewEntitiesByType(entityType: EntityType.recurringInvoice);
+        } else {
+          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
       },
     );
   }

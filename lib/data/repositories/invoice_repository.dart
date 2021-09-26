@@ -60,19 +60,38 @@ class InvoiceRepository {
   }
 
   Future<InvoiceEntity> saveData(
-      Credentials credentials, InvoiceEntity invoice) async {
+    Credentials credentials,
+    InvoiceEntity invoice, {
+    bool isSent = false,
+    bool isPaid = false,
+  }) async {
     invoice = invoice.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     dynamic response;
+    String url;
 
     if (invoice.isNew) {
-      response = await webClient.post(
-          credentials.url + '/invoices?include=activities.history',
-          credentials.token,
-          data: json.encode(data));
+      url = credentials.url + '/invoices?include=activities.history';
+
+      response =
+          await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
-      final url =
+      url =
           '${credentials.url}/invoices/${invoice.id}?include=activities.history';
+      response =
+          await webClient.put(url, credentials.token, data: json.encode(data));
+    }
+
+    if (isSent) {
+      url += '&public=true';
+    } else if (isPaid) {
+      url += '&paid=true';
+    }
+
+    if (invoice.isNew) {
+      response =
+          await webClient.post(url, credentials.token, data: json.encode(data));
+    } else {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

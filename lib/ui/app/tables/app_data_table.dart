@@ -165,6 +165,7 @@ class DataCell {
     this.placeholder = false,
     this.showEditIcon = false,
     this.onTap,
+    this.onLongPress,
     this.backgroundColor,
   }) : assert(child != null);
 
@@ -204,6 +205,8 @@ class DataCell {
   /// null, tapping the cell will attempt to select the row (if
   /// [DataRow.onSelectChanged] is provided).
   final VoidCallback onTap;
+
+  final VoidCallback onLongPress;
 
   final Color backgroundColor;
 
@@ -587,6 +590,7 @@ class AppDataTable extends StatelessWidget {
     bool showEditIcon,
     Color backgroundColor,
     VoidCallback onTap,
+    VoidCallback onLongPress,
     VoidCallback onSelectChanged,
   }) {
     final bool isLightTheme = Theme.of(context).brightness == Brightness.light;
@@ -623,6 +627,7 @@ class AppDataTable extends StatelessWidget {
     if (onTap != null) {
       label = InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         child: label,
       );
     } else if (onSelectChanged != null) {
@@ -767,6 +772,7 @@ class AppDataTable extends StatelessWidget {
           placeholder: cell.placeholder,
           showEditIcon: cell.showEditIcon,
           onTap: cell.onTap,
+          onLongPress: cell.onLongPress,
           backgroundColor: cell.backgroundColor,
           onSelectChanged: () => row.onSelectChanged != null
               ? row.onSelectChanged(!row.selected)

@@ -311,7 +311,7 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(MarkInvoicesSentFailure(error));
+      store.dispatch(MarkInvoicesPaidFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -403,7 +403,12 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
           .replace(action.invoice.lineItems.where((item) => !item.isEmpty)));
 
     repository
-        .saveData(store.state.credentials, updatedInvoice)
+        .saveData(
+      store.state.credentials,
+      updatedInvoice,
+      isSent: action.action == EntityAction.markSent,
+      isPaid: action.action == EntityAction.markPaid,
+    )
         .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));

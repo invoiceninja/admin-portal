@@ -105,7 +105,13 @@ class PaymentEditVM {
               if (payment.isApplying == true) {
                 navigator.pop();
               } else {
-                viewEntity(entity: savedPayment, force: true);
+                if (state.prefState.isPreviewEnabled) {
+                  viewEntity(entity: savedPayment, force: true);
+                } else {
+                  editEntity(
+                      context: navigatorKey.currentContext,
+                      entity: savedPayment);
+                }
               }
             }
           }).catchError((Object error) {

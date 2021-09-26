@@ -475,6 +475,7 @@ abstract class InvoiceEntity extends Object
       balanceOrAmount - (taxAmount * balanceOrAmount / amount);
 
   @nullable
+  @BuiltValueField(compare: false)
   int get loadedAt;
 
   List<InvoiceHistoryEntity> get history => activities

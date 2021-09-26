@@ -871,7 +871,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyGatewayEntity &&
-        loadedAt == other.loadedAt &&
         gatewayId == other.gatewayId &&
         acceptedCreditCards == other.acceptedCreditCards &&
         requireShippingAddress == other.requireShippingAddress &&
@@ -924,7 +923,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, loadedAt.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode), requireCvv.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode), requireCvv.hashCode),
                                                                                 updateDetails.hashCode),
                                                                             feesAndLimitsMap.hashCode),
                                                                         systemLogs.hashCode),

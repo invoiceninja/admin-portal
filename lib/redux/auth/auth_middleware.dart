@@ -227,8 +227,12 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     if (action.clearData) {
       //
     } else {
-      if (state.isSaving || state.isLoading) {
-        print('## Skipping refresh request - pending request');
+      if (state.isSaving) {
+        print('## Skipping refresh request - pending save');
+        next(action);
+        return;
+      } else if (state.isLoading) {
+        print('## Skipping refresh request - pending load');
         next(action);
         return;
       } else if (state.company.isLarge && !state.isLoaded) {

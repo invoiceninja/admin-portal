@@ -259,8 +259,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile ||
-        !prefState.isPreviewEnabled ||
-        (!prefState.isPreviewVisible &&
+        (!prefState.isPreviewEnabled &&
             prefState.moduleLayout == ModuleLayout.table) ||
         uiState.isEditing ||
         entityType.isSetting ||
@@ -815,13 +814,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get canAddCompany =>
       userCompany.isOwner && companies.length < 10 && !isDemo;
 
-  bool get isMenuCollapsed =>
-      (prefState.isNotMobile &&
-          prefState.showFilterSidebar &&
-          prefState.showMenu &&
-          !uiState.isInSettings &&
-          uiState.filterEntityType != null) ||
-      prefState.isMenuCollapsed;
+  bool get isMenuCollapsed {
+    if (prefState.isMobile) {
+      return false;
+    }
+
+    return (prefState.showFilterSidebar &&
+            prefState.showMenu &&
+            !uiState.isInSettings &&
+            uiState.filterEntityType != null) ||
+        prefState.isMenuCollapsed;
+  }
 
   bool get isFullScreen {
     bool isFullScreen = false;
@@ -924,6 +927,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nPrevious: ${uiState.previousRoute}'
         '\nPreview: ${uiState.previewStack}'
         '\nFilter: ${uiState.filterEntityType} ${uiState.filterEntityId}'
+        '\nIs Loading: ${isLoading ? 'Yes' : 'No'}'
+        '\nIs Saving: ${isSaving ? 'Yes' : 'No'}'
         '\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}'
         '\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}'
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
