@@ -320,6 +320,10 @@ void handlePaymentAction(
     case EntityAction.edit:
       editEntity(context: context, entity: payment);
       break;
+    case EntityAction.view:
+      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
+      viewEntity(entity: payment);
+      break;
     case EntityAction.apply:
       viewEntity(entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {

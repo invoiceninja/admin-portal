@@ -99,6 +99,7 @@ class EntityDataTableSource extends AppDataTableSource {
                   entityActions: entity.getActions(
                       userCompany: state.userCompany,
                       includeEdit: true,
+                      includeView: !state.prefState.isPreviewEnabled,
                       client: entity is BelongsToClient
                           ? state.clientState
                               .map[(entity as BelongsToClient)?.clientId]

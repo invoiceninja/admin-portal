@@ -450,6 +450,10 @@ Future handleQuoteAction(
     case EntityAction.edit:
       editEntity(context: context, entity: quote);
       break;
+    case EntityAction.view:
+      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
+      viewEntity(entity: quote);
+      break;
     case EntityAction.viewPdf:
       store.dispatch(ShowPdfQuote(quote: quote, context: context));
       break;

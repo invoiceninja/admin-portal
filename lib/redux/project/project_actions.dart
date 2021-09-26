@@ -267,6 +267,10 @@ void handleProjectAction(
     case EntityAction.edit:
       editEntity(context: context, entity: project);
       break;
+    case EntityAction.view:
+      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
+      viewEntity(entity: project);
+      break;
     case EntityAction.newTask:
       createEntity(
           context: context,
