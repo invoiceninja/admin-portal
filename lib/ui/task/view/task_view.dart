@@ -74,7 +74,6 @@ class _TaskViewState extends State<TaskView>
     final task = viewModel.task;
     final localization = AppLocalization.of(context);
     final documents = task.documents;
-    final state = viewModel.state;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
