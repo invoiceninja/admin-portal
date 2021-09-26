@@ -57,7 +57,7 @@ class AccountManagementVM {
         company: state.uiState.settingsUIState.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
-        onCompanyDelete: (context, password, idToken) {
+        onCompanyDelete: (context, password, idToken, reason) {
           showDialog<AlertDialog>(
               context: context,
               barrierDismissible: false,
@@ -107,6 +107,7 @@ class AccountManagementVM {
             completer: deleteCompleter,
             password: password,
             idToken: idToken,
+            reason: reason,
           ));
         },
         onSavePressed: (context) {
@@ -136,7 +137,7 @@ class AccountManagementVM {
   final Function(BuildContext) onSavePressed;
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
-  final Function(BuildContext, String, String) onCompanyDelete;
+  final Function(BuildContext, String, String, String) onCompanyDelete;
   final Function(BuildContext, String, String) onPurgeData;
   final Function onAppliedLicense;
 }

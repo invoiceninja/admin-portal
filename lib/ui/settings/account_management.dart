@@ -547,13 +547,17 @@ class _AccountOverview extends StatelessWidget {
                         message: message,
                         typeToConfirm: localization.delete.toLowerCase(),
                         askForReason: true,
-                        callback: () {
+                        callback: (String reason) {
                           passwordCallback(
                               alwaysRequire: true,
                               context: context,
                               callback: (password, idToken) {
                                 viewModel.onCompanyDelete(
-                                    context, password, idToken);
+                                  context,
+                                  password,
+                                  idToken,
+                                  reason,
+                                );
                               });
                         });
                   },

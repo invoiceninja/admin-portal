@@ -67,7 +67,7 @@ void showMessageDialog({
 
 void confirmCallback({
   @required BuildContext context,
-  @required VoidCallback callback,
+  @required Function callback,
   String message,
   String typeToConfirm,
   bool askForReason = false,
@@ -92,7 +92,7 @@ void confirmCallback({
         if (typeToConfirm == null ||
             typeToConfirm.toLowerCase() == _typed.toLowerCase()) {
           Navigator.pop(context);
-          callback();
+          callback(_reason);
         }
       }
 
