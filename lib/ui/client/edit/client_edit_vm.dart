@@ -119,13 +119,10 @@ class ClientEditVM {
                   navigator.pop(savedClient);
                 }
               } else {
-                if (state.prefState.isPreviewVisible) {
-                  viewEntity(entity: savedClient, force: true);
-                } else {
-                  viewEntitiesByType(
-                      entityType: EntityType.invoice,
-                      filterEntity: savedClient);
+                if (!state.prefState.isPreviewVisible) {
+                  store.dispatch(TogglePreviewSidebar());
                 }
+                viewEntity(entity: savedClient, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

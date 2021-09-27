@@ -102,12 +102,10 @@ class VendorEditVM {
                 navigator.pop(savedVendor);
               }
             } else {
-              if (state.prefState.isPreviewVisible) {
-                viewEntity(entity: savedVendor, force: true);
-              } else {
-                viewEntitiesByType(
-                    entityType: EntityType.expense, filterEntity: savedVendor);
+              if (!state.prefState.isPreviewVisible) {
+                store.dispatch(TogglePreviewSidebar());
               }
+              viewEntity(entity: savedVendor, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

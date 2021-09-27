@@ -152,13 +152,11 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
                 navigator.pop(savedExpense);
               }
             } else {
-              if (state.prefState.isPreviewVisible) {
-                viewEntity(entity: savedExpense, force: true);
-              } else {
+              if (state.prefState.isEditorFullScreen(EntityType.expense)) {
                 editEntity(
-                    context: navigatorKey.currentContext,
-                    entity: savedExpense,
-                    force: true);
+                    context: navigatorKey.currentContext, entity: savedExpense);
+              } else {
+                viewEntity(entity: savedExpense);
               }
             }
           }).catchError((Object error) {

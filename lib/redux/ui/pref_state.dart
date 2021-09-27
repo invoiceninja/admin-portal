@@ -121,6 +121,16 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       return false;
     }
 
+    if ([
+      EntityType.credit,
+      EntityType.quote,
+      EntityType.recurringInvoice,
+    ].contains(entityType)) {
+      entityType = EntityType.invoice;
+    } else if ([EntityType.recurringExpense].contains(entityType)) {
+      entityType = EntityType.expense;
+    }
+
     return !(useSidebarEditor[entityType] ?? false);
   }
 

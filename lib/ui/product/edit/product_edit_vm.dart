@@ -91,12 +91,7 @@ class ProductEditVM {
                 navigator.pop(savedProduct);
               }
             } else {
-              if (state.prefState.isPreviewVisible) {
-                viewEntity(entity: savedProduct, force: true);
-              } else {
-                editEntity(
-                    context: navigatorKey.currentContext, entity: savedProduct);
-              }
+              viewEntity(entity: savedProduct);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

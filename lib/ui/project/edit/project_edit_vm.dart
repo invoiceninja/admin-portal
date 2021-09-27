@@ -111,12 +111,10 @@ class ProjectEditVM {
                 navigator.pop(savedProject);
               }
             } else {
-              if (state.prefState.isPreviewVisible) {
-                viewEntity(entity: savedProject, force: true);
-              } else {
-                viewEntitiesByType(
-                    entityType: EntityType.task, filterEntity: savedProject);
+              if (!state.prefState.isPreviewVisible) {
+                store.dispatch(TogglePreviewSidebar());
               }
+              viewEntity(entity: savedProject, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
