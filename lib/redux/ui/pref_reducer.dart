@@ -270,7 +270,7 @@ Reducer<bool> longPressReducer = combineReducers([
 
 Reducer<bool> isPreviewVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((isPreviewEnabled, action) {
-    return action.isPreviewEnabled ?? isPreviewEnabled;
+    return action.isPreviewVisible ?? isPreviewEnabled;
   }),
 ]);
 

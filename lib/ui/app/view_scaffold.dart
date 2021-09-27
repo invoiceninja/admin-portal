@@ -79,7 +79,7 @@ class ViewScaffold extends StatelessWidget {
         leading = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {
-            store.dispatch(UpdateUserPreferences(isPreviewEnabled: false));
+            store.dispatch(UpdateUserPreferences(isPreviewVisible: false));
           },
         );
       }

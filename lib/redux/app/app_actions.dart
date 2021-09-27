@@ -122,7 +122,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.enableDarkMode,
     this.requireAuthentication,
     this.longPressSelectionIsDefault,
-    this.isPreviewEnabled,
+    this.isPreviewVisible,
     this.accentColor,
     this.menuMode,
     this.historyMode,
@@ -142,7 +142,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
-  final bool isPreviewEnabled;
+  final bool isPreviewVisible;
   final bool showFilterSidebar;
   final bool showKanban;
   final String accentColor;
@@ -289,7 +289,7 @@ void viewEntitiesByType({
 
         if (store.state.prefState.isPreviewVisible &&
             store.state.prefState.moduleLayout == ModuleLayout.table) {
-          store.dispatch(UpdateUserPreferences(isPreviewEnabled: false));
+          store.dispatch(UpdateUserPreferences(isPreviewVisible: false));
         }
 
         switch (entityType) {
@@ -1377,7 +1377,7 @@ void selectEntity({
     if (uiState.isEditing && entityUIState.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
     } else {
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
+      store.dispatch(UpdateUserPreferences(isPreviewVisible: true));
       viewEntity(entity: entity);
     }
   } else if (isDesktop(context) &&
