@@ -118,7 +118,6 @@ class _TaskViewState extends State<TaskView>
             ),
             BottomButtons(
               entity: task,
-              isFilter: widget.isFilter,
               action1: task.isRunning
                   ? EntityAction.stop
                   : task.getTaskTimes().isEmpty
