@@ -13,7 +13,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.table,
-      isPreviewEnabled: false,
+      isPreviewVisible: false,
       useSidebarEditor: BuiltMap<EntityType, bool>(),
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,
@@ -23,7 +23,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       enableDarkMode: false,
       requireAuthentication: false,
       colorTheme: kColorThemeLight,
-      showFilterSidebar: false,
+      isFilterVisible: false,
       longPressSelectionIsDefault: true,
       showKanban: false,
       persistData: false,
@@ -84,7 +84,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   BuiltMap<String, String> get customColors;
 
-  bool get isPreviewEnabled;
+  bool get isPreviewVisible;
 
   bool get isMenuVisible;
 
@@ -94,7 +94,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get enableDarkMode;
 
-  bool get showFilterSidebar;
+  bool get isFilterVisible;
 
   bool get persistData;
 
@@ -121,6 +121,16 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       return false;
     }
 
+    if ([
+      EntityType.credit,
+      EntityType.quote,
+      EntityType.recurringInvoice,
+    ].contains(entityType)) {
+      entityType = EntityType.invoice;
+    } else if ([EntityType.recurringExpense].contains(entityType)) {
+      entityType = EntityType.expense;
+    }
+
     return !(useSidebarEditor[entityType] ?? false);
   }
 
@@ -131,7 +141,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get isNotMobile => !isMobile;
 
   bool get isModuleList {
-    if (isDesktop && !isPreviewEnabled) {
+    if (isDesktop && !isPreviewVisible) {
       return false;
     }
 
@@ -167,7 +177,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
         ? BuiltMap<String, String>()
         : BuiltMap<String, String>(PrefState.CONTRAST_COLORS))
     ..showKanban = false
-    ..isPreviewEnabled = true
+    ..isPreviewVisible = false
+    ..isFilterVisible = false
     ..persistData = false
     ..colorTheme =
         builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;

@@ -121,7 +121,6 @@ class _VendorViewState extends State<VendorView>
             ),
             BottomButtons(
               entity: vendor,
-              isFilter: widget.isFilter,
               action1: EntityAction.newExpense,
               action2: EntityAction.archive,
             ),

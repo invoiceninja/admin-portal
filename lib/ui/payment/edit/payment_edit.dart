@@ -191,7 +191,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     final body = Form(
       key: _formKey,
       child: Column(
-        key: ValueKey('__payment_${viewModel.payment.id}__'),
+        key: ValueKey('__payment_${payment.id}_${payment.updatedAt}__'),
         children: <Widget>[
           FormCard(
             children: <Widget>[

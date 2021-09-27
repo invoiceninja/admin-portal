@@ -47,8 +47,8 @@ PrefState prefReducer(
       ..appLayout = layoutReducer(state.appLayout, action)
       ..rowsPerPage = rowsPerPageReducer(state.rowsPerPage, action)
       ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
-      ..isPreviewEnabled =
-          isPreviewEnabledReducer(state.isPreviewEnabled, action)
+      ..isPreviewVisible =
+          isPreviewVisibleReducer(state.isPreviewVisible, action)
       ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
       ..historySidebarMode =
           historySidebarReducer(state.historySidebarMode, action)
@@ -57,8 +57,7 @@ PrefState prefReducer(
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
       ..persistData = persistDataReducer(state.persistData, action)
       ..showKanban = showKanbanReducer(state.showKanban, action)
-      ..showFilterSidebar =
-          showFilterSidebarReducer(state.showFilterSidebar, action)
+      ..isFilterVisible = isFilterVisibleReducer(state.isFilterVisible, action)
       ..longPressSelectionIsDefault =
           longPressReducer(state.longPressSelectionIsDefault, action)
       ..requireAuthentication =
@@ -256,9 +255,9 @@ Reducer<bool> showKanbanReducer = combineReducers([
   }),
 ]);
 
-Reducer<bool> showFilterSidebarReducer = combineReducers([
+Reducer<bool> isFilterVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((value, action) {
-    return action.showFilterSidebar ?? value;
+    return action.isFilterVisible ?? value;
   }),
 ]);
 
@@ -269,9 +268,12 @@ Reducer<bool> longPressReducer = combineReducers([
   }),
 ]);
 
-Reducer<bool> isPreviewEnabledReducer = combineReducers([
+Reducer<bool> isPreviewVisibleReducer = combineReducers([
+  TypedReducer<bool, TogglePreviewSidebar>((value, action) {
+    return !value;
+  }),
   TypedReducer<bool, UpdateUserPreferences>((isPreviewEnabled, action) {
-    return action.isPreviewEnabled ?? isPreviewEnabled;
+    return action.isPreviewVisible ?? isPreviewEnabled;
   }),
 ]);
 

@@ -399,33 +399,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       icon: Icon(Icons.check_box),
                       onPressed: () => widget.onCheckboxPressed(),
                     ),
-                  if (isDesktop(context))
-                    IconButton(
-                      tooltip: localization.preview,
-                      icon: Icon(Icons.chrome_reader_mode),
-                      onPressed: () {
-                        store.dispatch(UpdateUserPreferences(
-                            isPreviewEnabled:
-                                !state.prefState.isPreviewEnabled));
-                      },
-                    ),
-                  if (!widget.entityType.isSetting &&
-                      prefState.isPreviewEnabled)
-                    IconButton(
-                      tooltip: isList
-                          ? localization.showTable
-                          : localization.showList,
-                      icon: Icon(isList ? Icons.table_chart : Icons.view_list),
-                      onPressed: () {
-                        store.dispatch(SwitchListTableLayout());
-                      },
-                    ),
-                  if (isList && widget.sortFields.isNotEmpty)
-                    IconButton(
-                      tooltip: localization.sort,
-                      icon: Icon(Icons.sort_by_alpha),
-                      onPressed: _showSortSheet,
-                    ),
                 ],
                 IconButton(
                   tooltip: localization.filter,
@@ -492,6 +465,23 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         ? Theme.of(context).accentColor
                         : null,
                   ),
+                if (!widget.entityType.isSetting && prefState.isPreviewVisible)
+                  IconButton(
+                    tooltip:
+                        isList ? localization.showTable : localization.showList,
+                    icon: Icon(isList ? Icons.table_chart : Icons.view_list),
+                    onPressed: () {
+                      store.dispatch(SwitchListTableLayout());
+                    },
+                  ),
+                if (!widget.hideListOptions) ...[
+                  if (isList && widget.sortFields.isNotEmpty)
+                    IconButton(
+                      tooltip: localization.sort,
+                      icon: Icon(Icons.sort_by_alpha),
+                      onPressed: _showSortSheet,
+                    ),
+                ],
                 if (!state.prefState.isMenuFloated) Spacer(),
                 if (!widget.entityType.isSetting &&
                     !isList &&

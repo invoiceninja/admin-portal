@@ -94,7 +94,7 @@ class MainScreen extends StatelessWidget {
 
       bool showFilterSidebar = false;
       bool editingFilterEntity = false;
-      if (prefState.showFilterSidebar && uiState.filterEntityId != null) {
+      if (prefState.isFilterVisible && uiState.filterEntityId != null) {
         showFilterSidebar = true;
         if (mainRoute == '/${uiState.filterEntityType}' &&
             subRoute == '/edit') {
@@ -329,7 +329,7 @@ class EntityScreens extends StatelessWidget {
     final isPdf = subRoute == 'pdf';
 
     final isFullScreen = state.isFullScreen;
-    bool isPreviewShown = prefState.isPreviewEnabled;
+    bool isPreviewShown = prefState.isPreviewVisible;
 
     if (subRoute != 'view' && subRoute.isNotEmpty) {
       isPreviewShown = true;
@@ -526,7 +526,7 @@ class EntityScreens extends StatelessWidget {
     Widget topFilterChild;
 
     if (uiState.filterEntityType != null) {
-      if (prefState.showFilterSidebar) {
+      if (prefState.isFilterVisible) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
             leftFilterChild = editingFilterEntity && !uiState.isEditing
@@ -609,7 +609,7 @@ class EntityScreens extends StatelessWidget {
     }
 
     topFilterChild = EntityTopFilter(
-      show: uiState.filterEntityType != null && !prefState.showFilterSidebar,
+      show: uiState.filterEntityType != null,
     );
 
     Widget listWidget;
@@ -677,8 +677,7 @@ class EntityScreens extends StatelessWidget {
                           Expanded(
                             child: AppBorder(
                               isTop: uiState.filterEntityType != null &&
-                                  topFilterChild != null &&
-                                  !prefState.showFilterSidebar,
+                                  topFilterChild != null,
                               child: listWidget,
                             ),
                           )
@@ -694,9 +693,13 @@ class EntityScreens extends StatelessWidget {
             child: AppBorder(
               child: Column(
                 children: [
-                  if (!prefState.showFilterSidebar && isFullScreen)
-                    topFilterChild,
-                  Expanded(child: child),
+                  if (isFullScreen) topFilterChild,
+                  Expanded(
+                    child: AppBorder(
+                      child: child,
+                      isTop: isFullScreen,
+                    ),
+                  ),
                 ],
               ),
               isLeft: true,

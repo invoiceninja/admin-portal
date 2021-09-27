@@ -259,7 +259,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile ||
-        !prefState.isPreviewEnabled ||
+        !prefState.isPreviewVisible ||
         uiState.isEditing ||
         entityType.isSetting ||
         (entityList.isEmpty && (entityUIState.selectedId ?? '').isEmpty)) {
@@ -818,7 +818,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       return false;
     }
 
-    return (prefState.showFilterSidebar &&
+    return (prefState.isFilterVisible &&
             prefState.showMenu &&
             !uiState.isInSettings &&
             uiState.filterEntityType != null) ||

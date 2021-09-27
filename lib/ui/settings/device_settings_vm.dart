@@ -42,13 +42,11 @@ class DeviceSettingsVM {
     @required this.onLayoutChanged,
     @required this.onRequireAuthenticationChanged,
     @required this.onLongPressSelectionIsDefault,
-    @required this.onAlwaysShowSidebarChanged,
     @required this.authenticationSupported,
     @required this.onMenuModeChanged,
     @required this.onHistoryModeChanged,
     @required this.onColorThemeChanged,
     @required this.onRowsPerPageChanged,
-    @required this.onPreviewSidebarChanged,
     @required this.onCustomColorsChanged,
     @required this.onPersistDataChanged,
   });
@@ -97,14 +95,8 @@ class DeviceSettingsVM {
             store.dispatch(UpdateUserPreferences(colorTheme: value));
           }
         },
-        onPreviewSidebarChanged: (context, value) {
-          store.dispatch(UpdateUserPreferences(isPreviewEnabled: value));
-        },
         onRowsPerPageChanged: (context, value) {
           store.dispatch(UpdateUserPreferences(rowsPerPage: value));
-        },
-        onAlwaysShowSidebarChanged: (context, value) {
-          store.dispatch(UpdateUserPreferences(alwaysShowFilterSidebar: value));
         },
         onLayoutChanged: (BuildContext context, AppLayout value) async {
           if (store.state.prefState.appLayout == value) {
@@ -168,14 +160,12 @@ class DeviceSettingsVM {
   final Function(BuildContext) onLogoutTap;
   final Function(BuildContext, bool) onDarkModeChanged;
   final Function(BuildContext, BuiltMap<String, String>) onCustomColorsChanged;
-  final Function(BuildContext, bool) onPreviewSidebarChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
   final Function(BuildContext, AppSidebarMode) onHistoryModeChanged;
   final Function(BuildContext, String) onColorThemeChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
-  final Function(BuildContext, bool) onAlwaysShowSidebarChanged;
   final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, int) onRowsPerPageChanged;
   final Future<bool> authenticationSupported;

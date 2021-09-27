@@ -123,7 +123,7 @@ class _CreditEditState extends State<CreditEdit>
                 viewModel: widget.viewModel,
               )
             : TabBarView(
-                key: ValueKey('__credit_${viewModel.invoice.id}__'),
+                key: ValueKey('__invoice_${invoice.id}_${invoice.updatedAt}__'),
                 controller: _controller,
                 children: <Widget>[
                   CreditEditDetailsScreen(

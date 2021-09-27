@@ -105,13 +105,7 @@ class PaymentEditVM {
               if (payment.isApplying == true) {
                 navigator.pop();
               } else {
-                if (state.prefState.isPreviewEnabled) {
-                  viewEntity(entity: savedPayment, force: true);
-                } else {
-                  editEntity(
-                      context: navigatorKey.currentContext,
-                      entity: savedPayment);
-                }
+                viewEntity(entity: savedPayment);
               }
             }
           }).catchError((Object error) {

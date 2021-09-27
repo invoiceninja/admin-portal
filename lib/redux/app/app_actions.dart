@@ -114,6 +114,8 @@ class ToggleEditorLayout implements PersistPrefs {
   final EntityType entityType;
 }
 
+class TogglePreviewSidebar {}
+
 class UpdateUserPreferences implements PersistPrefs {
   UpdateUserPreferences({
     this.appLayout,
@@ -122,13 +124,12 @@ class UpdateUserPreferences implements PersistPrefs {
     this.enableDarkMode,
     this.requireAuthentication,
     this.longPressSelectionIsDefault,
-    this.isPreviewEnabled,
+    this.isPreviewVisible,
     this.accentColor,
     this.menuMode,
     this.historyMode,
     this.showKanban,
-    this.showFilterSidebar,
-    this.alwaysShowFilterSidebar,
+    this.isFilterVisible,
     this.rowsPerPage,
     this.colorTheme,
     this.customColors,
@@ -143,9 +144,8 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
-  final bool isPreviewEnabled;
-  final bool showFilterSidebar;
-  final bool alwaysShowFilterSidebar;
+  final bool isPreviewVisible;
+  final bool isFilterVisible;
   final bool showKanban;
   final String accentColor;
   final int rowsPerPage;
@@ -289,9 +289,9 @@ void viewEntitiesByType({
           store.dispatch(ClearPreviewStack());
         }
 
-        if (store.state.prefState.isPreviewEnabled &&
+        if (store.state.prefState.isPreviewVisible &&
             store.state.prefState.moduleLayout == ModuleLayout.table) {
-          store.dispatch(UpdateUserPreferences(isPreviewEnabled: false));
+          store.dispatch(TogglePreviewSidebar());
         }
 
         switch (entityType) {
@@ -411,24 +411,6 @@ void viewEntityById({
   final state = store.state;
   final uiState = store.state.uiState;
 
-  /*
-  if (!state.prefState.isPreviewEnabled && !entityType.isSetting) {
-    final BaseEntity entity = state.getEntityMap(entityType)[entityId];
-    if (entityType.hasViewPage) {
-      viewEntitiesByType(
-          entityType: entity.entityType.relatedTypes.first,
-          filterEntity: entity);
-    } else {
-      editEntity(
-        context: navigatorKey.currentContext,
-        entity: entity,
-        force: force,
-      );
-    }
-    return;
-  }
-  */
-
   checkForChanges(
       store: store,
       context: navigatorKey.currentContext,
@@ -442,6 +424,10 @@ void viewEntityById({
           return;
         } else if (state.uiState.previewStack.isNotEmpty) {
           store.dispatch(ClearPreviewStack());
+        }
+
+        if (state.prefState.isDesktop && !state.prefState.isPreviewVisible) {
+          store.dispatch(TogglePreviewSidebar());
         }
 
         if (filterEntity != null &&
@@ -1380,7 +1366,8 @@ void selectEntity({
 
   if (longPress == true) {
     final longPressIsSelection =
-        state.prefState.longPressSelectionIsDefault ?? true;
+        (state.prefState.longPressSelectionIsDefault ?? true) ||
+            state.prefState.moduleLayout == ModuleLayout.table;
     if (longPressIsSelection &&
         !isInMultiselect &&
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
@@ -1392,11 +1379,13 @@ void selectEntity({
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
-  } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
+  } else if (isDesktop(context) && !state.prefState.isPreviewVisible) {
     if (uiState.isEditing && entityUIState.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
     } else {
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
+      if (!state.prefState.isPreviewVisible) {
+        store.dispatch(TogglePreviewSidebar());
+      }
       viewEntity(entity: entity);
     }
   } else if (isDesktop(context) &&

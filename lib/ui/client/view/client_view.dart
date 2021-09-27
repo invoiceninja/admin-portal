@@ -162,7 +162,6 @@ class _ClientViewState extends State<ClientView>
             ),
             BottomButtons(
               entity: client,
-              isFilter: widget.isFilter,
               action1: EntityAction.settings,
               action2: EntityAction.clientPortal,
             ),

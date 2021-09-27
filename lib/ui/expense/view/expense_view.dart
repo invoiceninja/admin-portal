@@ -118,7 +118,6 @@ class _ExpenseViewState extends State<ExpenseView>
             ),
             BottomButtons(
               entity: expense,
-              isFilter: widget.isFilter,
               action1: expense.isRecurring
                   ? (expense.canBeStopped
                       ? EntityAction.stop

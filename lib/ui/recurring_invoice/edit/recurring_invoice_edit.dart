@@ -123,7 +123,8 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                 viewModel: widget.viewModel,
               )
             : TabBarView(
-                key: ValueKey('__recurring_invoice_${viewModel.invoice.id}__'),
+                key: ValueKey(
+                    '__recurring_invoice_${invoice.id}_${invoice.updatedAt}__'),
                 controller: _controller,
                 children: <Widget>[
                   RecurringInvoiceEditDetailsScreen(
