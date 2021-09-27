@@ -6,7 +6,6 @@ part of 'models.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-const EntityAction _$preview = const EntityAction._('preview');
 const EntityAction _$edit = const EntityAction._('edit');
 const EntityAction _$archive = const EntityAction._('archive');
 const EntityAction _$delete = const EntityAction._('delete');
@@ -70,8 +69,6 @@ const EntityAction _$resendInvite = const EntityAction._('resendInvite');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
-    case 'preview':
-      return _$preview;
     case 'edit':
       return _$edit;
     case 'archive':
@@ -185,7 +182,6 @@ EntityAction _$valueOf(String name) {
 
 final BuiltSet<EntityAction> _$values =
     new BuiltSet<EntityAction>(const <EntityAction>[
-  _$preview,
   _$edit,
   _$archive,
   _$delete,

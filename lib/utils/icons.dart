@@ -6,8 +6,6 @@ import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 
 IconData getEntityActionIcon(EntityAction entityAction) {
   switch (entityAction) {
-    case EntityAction.preview:
-      return Icons.chrome_reader_mode;
     case EntityAction.edit:
       return Icons.edit;
     case EntityAction.viewPdf:

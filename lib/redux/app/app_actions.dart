@@ -289,6 +289,11 @@ void viewEntitiesByType({
           store.dispatch(ClearPreviewStack());
         }
 
+        if (store.state.prefState.isPreviewEnabled &&
+            store.state.prefState.moduleLayout == ModuleLayout.table) {
+          store.dispatch(UpdateUserPreferences(isPreviewEnabled: false));
+        }
+
         switch (entityType) {
           case EntityType.dashboard:
             action = ViewDashboard();
@@ -406,6 +411,7 @@ void viewEntityById({
   final state = store.state;
   final uiState = store.state.uiState;
 
+  /*
   if (!state.prefState.isPreviewEnabled && !entityType.isSetting) {
     final BaseEntity entity = state.getEntityMap(entityType)[entityId];
     if (entityType.hasViewPage) {
@@ -421,6 +427,7 @@ void viewEntityById({
     }
     return;
   }
+  */
 
   checkForChanges(
       store: store,
@@ -1386,18 +1393,11 @@ void selectEntity({
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
-    if (entity.entityType.hasViewPage) {
-      if (!state.prefState.isPreviewEnabled) {
-        store.dispatch(UpdateUserPreferences(showFilterSidebar: true));
-      }
-      viewEntitiesByType(entityType: entity.entityType.relatedTypes.first);
-      filterByEntity(context: context, entity: entity);
-    } else if (uiState.isEditing && entityUIState.editingId == entity.id) {
+    if (uiState.isEditing && entityUIState.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
-    } else if (entity.entityType.isSetting) {
-      viewEntity(entity: entity);
     } else {
-      editEntity(context: context, entity: entity);
+      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
+      viewEntity(entity: entity);
     }
   } else if (isDesktop(context) &&
       (uiState.isEditing || uiState.previewStack.isNotEmpty)) {

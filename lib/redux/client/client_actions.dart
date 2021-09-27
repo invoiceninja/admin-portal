@@ -285,10 +285,6 @@ void handleClientAction(
     case EntityAction.edit:
       editEntity(context: context, entity: client);
       break;
-    case EntityAction.preview:
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
-      viewEntity(entity: client);
-      break;
     case EntityAction.clientPortal:
       final url = client.primaryContact?.silentLink ?? '';
       if (url.isNotEmpty && await canLaunch(url)) {

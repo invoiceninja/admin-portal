@@ -347,10 +347,6 @@ void handleRecurringExpenseAction(BuildContext context,
     case EntityAction.edit:
       editEntity(context: context, entity: recurringExpense);
       break;
-    case EntityAction.preview:
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
-      viewEntity(entity: recurringExpense);
-      break;
     case EntityAction.restore:
       store.dispatch(RestoreRecurringExpensesRequest(
           snackBarCompleter<Null>(

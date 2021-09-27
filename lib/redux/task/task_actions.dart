@@ -317,10 +317,6 @@ void handleTaskAction(
     case EntityAction.edit:
       editEntity(context: context, entity: task);
       break;
-    case EntityAction.preview:
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
-      viewEntity(entity: task);
-      break;
     case EntityAction.start:
     case EntityAction.stop:
     case EntityAction.resume:
