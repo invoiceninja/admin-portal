@@ -95,10 +95,10 @@ class _VendorEditState extends State<VendorEdit>
         child: isFullscreen
             ? VendorEditDesktop(
                 viewModel: viewModel,
-                key: ValueKey(viewModel.vendor.id),
+                key: ValueKey('__vendor_${vendor.id}_${vendor.updatedAt}__'),
               )
             : TabBarView(
-                key: ValueKey(viewModel.vendor.id),
+                key: ValueKey('__vendor_${vendor.id}_${vendor.updatedAt}__'),
                 controller: _controller,
                 children: <Widget>[
                   ScrollableListView(

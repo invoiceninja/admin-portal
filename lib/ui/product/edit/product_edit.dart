@@ -141,7 +141,7 @@ class _ProductEditState extends State<ProductEdit> {
         formKey: _formKey,
         focusNode: _focusNode,
         child: ScrollableListView(
-          key: ValueKey(widget.viewModel.product.id),
+          key: ValueKey('__product_${product.id}_${product.updatedAt}__'),
           children: <Widget>[
             FormCard(
               isLast: true,

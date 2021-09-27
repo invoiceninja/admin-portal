@@ -99,10 +99,10 @@ class _ClientEditState extends State<ClientEdit>
         child: isFullscreen
             ? ClientEditDesktop(
                 viewModel: viewModel,
-                key: ValueKey(viewModel.client.id),
+                key: ValueKey('__client_${client.id}_${client.updatedAt}__'),
               )
             : TabBarView(
-                key: ValueKey(viewModel.client.id),
+                key: ValueKey('__client_${client.id}_${client.updatedAt}__'),
                 controller: _controller,
                 children: <Widget>[
                   ScrollableListView(

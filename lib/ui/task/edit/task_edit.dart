@@ -118,9 +118,9 @@ class _TaskEditState extends State<TaskEdit>
         key: _formKey,
         child: isFullscreen
             ? TaskEditDetailsScreen(
-                key: ValueKey('__${task.id}_${_updatedAt}__'))
+                key: ValueKey('__task_${task.id}_${_updatedAt}__'))
             : TabBarView(
-                key: ValueKey(task.id),
+                key: ValueKey('__task_${task.id}_${_updatedAt}__'),
                 controller: _controller,
                 children: <Widget>[
                   TaskEditDetailsScreen(),

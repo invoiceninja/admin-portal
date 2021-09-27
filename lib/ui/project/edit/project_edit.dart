@@ -144,7 +144,7 @@ class _ProjectEditState extends State<ProjectEdit> {
         key: _formKey,
         child: Builder(builder: (BuildContext context) {
           return ScrollableListView(
-            key: ValueKey(viewModel.project.id),
+            key: ValueKey('__project_${project.id}_${project.updatedAt}__'),
             children: <Widget>[
               FormCard(
                 isLast: true,

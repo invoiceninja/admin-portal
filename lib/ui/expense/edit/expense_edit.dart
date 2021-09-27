@@ -102,10 +102,10 @@ class _ExpenseEditState extends State<ExpenseEdit>
         child: isFullscreen
             ? ExpenseEditDesktop(
                 viewModel: viewModel,
-                key: ValueKey(viewModel.expense.id),
+                key: ValueKey('__expense_${expense.id}_${expense.updatedAt}__'),
               )
             : TabBarView(
-                key: ValueKey(viewModel.expense.id),
+                key: ValueKey('__expense_${expense.id}_${expense.updatedAt}__'),
                 controller: _controller,
                 children: <Widget>[
                   ExpenseEditDetails(
