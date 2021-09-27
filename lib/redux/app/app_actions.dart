@@ -114,6 +114,8 @@ class ToggleEditorLayout implements PersistPrefs {
   final EntityType entityType;
 }
 
+class TogglePreviewSidebar {}
+
 class UpdateUserPreferences implements PersistPrefs {
   UpdateUserPreferences({
     this.appLayout,
@@ -289,7 +291,7 @@ void viewEntitiesByType({
 
         if (store.state.prefState.isPreviewVisible &&
             store.state.prefState.moduleLayout == ModuleLayout.table) {
-          store.dispatch(UpdateUserPreferences(isPreviewVisible: false));
+          store.dispatch(TogglePreviewSidebar());
         }
 
         switch (entityType) {
@@ -1377,7 +1379,9 @@ void selectEntity({
     if (uiState.isEditing && entityUIState.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
     } else {
-      store.dispatch(UpdateUserPreferences(isPreviewVisible: true));
+      if (!state.prefState.isPreviewVisible) {
+        store.dispatch(TogglePreviewSidebar());
+      }
       viewEntity(entity: entity);
     }
   } else if (isDesktop(context) &&

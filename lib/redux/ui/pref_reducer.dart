@@ -269,6 +269,9 @@ Reducer<bool> longPressReducer = combineReducers([
 ]);
 
 Reducer<bool> isPreviewVisibleReducer = combineReducers([
+  TypedReducer<bool, TogglePreviewSidebar>((value, action) {
+    return !value;
+  }),
   TypedReducer<bool, UpdateUserPreferences>((isPreviewEnabled, action) {
     return action.isPreviewVisible ?? isPreviewEnabled;
   }),
