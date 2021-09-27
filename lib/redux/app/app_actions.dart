@@ -128,7 +128,6 @@ class UpdateUserPreferences implements PersistPrefs {
     this.historyMode,
     this.showKanban,
     this.showFilterSidebar,
-    this.alwaysShowFilterSidebar,
     this.rowsPerPage,
     this.colorTheme,
     this.customColors,
@@ -145,7 +144,6 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool requireAuthentication;
   final bool isPreviewEnabled;
   final bool showFilterSidebar;
-  final bool alwaysShowFilterSidebar;
   final bool showKanban;
   final String accentColor;
   final int rowsPerPage;
