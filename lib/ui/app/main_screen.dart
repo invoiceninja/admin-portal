@@ -609,7 +609,7 @@ class EntityScreens extends StatelessWidget {
     }
 
     topFilterChild = EntityTopFilter(
-      show: uiState.filterEntityType != null && !prefState.isFilterVisible,
+      show: uiState.filterEntityType != null,
     );
 
     Widget listWidget;
