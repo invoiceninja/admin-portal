@@ -677,8 +677,7 @@ class EntityScreens extends StatelessWidget {
                           Expanded(
                             child: AppBorder(
                               isTop: uiState.filterEntityType != null &&
-                                  topFilterChild != null &&
-                                  !prefState.isFilterVisible,
+                                  topFilterChild != null,
                               child: listWidget,
                             ),
                           )
@@ -694,8 +693,7 @@ class EntityScreens extends StatelessWidget {
             child: AppBorder(
               child: Column(
                 children: [
-                  if (!prefState.isFilterVisible && isFullScreen)
-                    topFilterChild,
+                  if (isFullScreen) topFilterChild,
                   Expanded(child: child),
                 ],
               ),
