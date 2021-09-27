@@ -260,18 +260,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       else
                         InkWell(
                           onTap: () {
-                            // make sure the filder sidebar is shown
-                            if (!state.prefState.showFilterSidebar) {
-                              final store = StoreProvider.of<AppState>(context);
-                              store.dispatch(UpdateUserPreferences(
-                                  showFilterSidebar: true));
-                              if (state.uiState.filterEntityId != client.id) {
-                                filterByEntity(
-                                    context: context, entity: client);
-                              }
-                            } else {
-                              filterByEntity(context: context, entity: client);
-                            }
+                            filterByEntity(context: context, entity: client);
                           },
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
