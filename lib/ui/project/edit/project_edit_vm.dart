@@ -111,7 +111,7 @@ class ProjectEditVM {
                 navigator.pop(savedProject);
               }
             } else {
-              if (state.prefState.isPreviewEnabled) {
+              if (state.prefState.isPreviewVisible) {
                 viewEntity(entity: savedProject, force: true);
               } else {
                 viewEntitiesByType(

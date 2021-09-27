@@ -133,8 +133,8 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       serializers.serialize(object.customColors,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
-      'isPreviewEnabled',
-      serializers.serialize(object.isPreviewEnabled,
+      'isPreviewVisible',
+      serializers.serialize(object.isPreviewVisible,
           specifiedType: const FullType(bool)),
       'isMenuVisible',
       serializers.serialize(object.isMenuVisible,
@@ -148,8 +148,8 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'enableDarkMode',
       serializers.serialize(object.enableDarkMode,
           specifiedType: const FullType(bool)),
-      'showFilterSidebar',
-      serializers.serialize(object.showFilterSidebar,
+      'isFilterVisible',
+      serializers.serialize(object.isFilterVisible,
           specifiedType: const FullType(bool)),
       'persistData',
       serializers.serialize(object.persistData,
@@ -220,8 +220,8 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(String), const FullType(String)])));
           break;
-        case 'isPreviewEnabled':
-          result.isPreviewEnabled = serializers.deserialize(value,
+        case 'isPreviewVisible':
+          result.isPreviewVisible = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'isMenuVisible':
@@ -240,8 +240,8 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.enableDarkMode = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'showFilterSidebar':
-          result.showFilterSidebar = serializers.deserialize(value,
+        case 'isFilterVisible':
+          result.isFilterVisible = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'persistData':
@@ -521,7 +521,7 @@ class _$PrefState extends PrefState {
   @override
   final BuiltMap<String, String> customColors;
   @override
-  final bool isPreviewEnabled;
+  final bool isPreviewVisible;
   @override
   final bool isMenuVisible;
   @override
@@ -531,7 +531,7 @@ class _$PrefState extends PrefState {
   @override
   final bool enableDarkMode;
   @override
-  final bool showFilterSidebar;
+  final bool isFilterVisible;
   @override
   final bool persistData;
   @override
@@ -557,12 +557,12 @@ class _$PrefState extends PrefState {
       this.historySidebarMode,
       this.useSidebarEditor,
       this.customColors,
-      this.isPreviewEnabled,
+      this.isPreviewVisible,
       this.isMenuVisible,
       this.showKanban,
       this.isHistoryVisible,
       this.enableDarkMode,
-      this.showFilterSidebar,
+      this.isFilterVisible,
       this.persistData,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
@@ -583,7 +583,7 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         customColors, 'PrefState', 'customColors');
     BuiltValueNullFieldError.checkNotNull(
-        isPreviewEnabled, 'PrefState', 'isPreviewEnabled');
+        isPreviewVisible, 'PrefState', 'isPreviewVisible');
     BuiltValueNullFieldError.checkNotNull(
         isMenuVisible, 'PrefState', 'isMenuVisible');
     BuiltValueNullFieldError.checkNotNull(
@@ -593,7 +593,7 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         enableDarkMode, 'PrefState', 'enableDarkMode');
     BuiltValueNullFieldError.checkNotNull(
-        showFilterSidebar, 'PrefState', 'showFilterSidebar');
+        isFilterVisible, 'PrefState', 'isFilterVisible');
     BuiltValueNullFieldError.checkNotNull(
         persistData, 'PrefState', 'persistData');
     BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault,
@@ -627,12 +627,12 @@ class _$PrefState extends PrefState {
         historySidebarMode == other.historySidebarMode &&
         useSidebarEditor == other.useSidebarEditor &&
         customColors == other.customColors &&
-        isPreviewEnabled == other.isPreviewEnabled &&
+        isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
         showKanban == other.showKanban &&
         isHistoryVisible == other.isHistoryVisible &&
         enableDarkMode == other.enableDarkMode &&
-        showFilterSidebar == other.showFilterSidebar &&
+        isFilterVisible == other.isFilterVisible &&
         persistData == other.persistData &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
@@ -677,13 +677,13 @@ class _$PrefState extends PrefState {
                                                                     .hashCode),
                                                             customColors
                                                                 .hashCode),
-                                                        isPreviewEnabled
+                                                        isPreviewVisible
                                                             .hashCode),
                                                     isMenuVisible.hashCode),
                                                 showKanban.hashCode),
                                             isHistoryVisible.hashCode),
                                         enableDarkMode.hashCode),
-                                    showFilterSidebar.hashCode),
+                                    isFilterVisible.hashCode),
                                 persistData.hashCode),
                             longPressSelectionIsDefault.hashCode),
                         requireAuthentication.hashCode),
@@ -702,12 +702,12 @@ class _$PrefState extends PrefState {
           ..add('historySidebarMode', historySidebarMode)
           ..add('useSidebarEditor', useSidebarEditor)
           ..add('customColors', customColors)
-          ..add('isPreviewEnabled', isPreviewEnabled)
+          ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
           ..add('showKanban', showKanban)
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('enableDarkMode', enableDarkMode)
-          ..add('showFilterSidebar', showFilterSidebar)
+          ..add('isFilterVisible', isFilterVisible)
           ..add('persistData', persistData)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
@@ -753,10 +753,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set customColors(MapBuilder<String, String> customColors) =>
       _$this._customColors = customColors;
 
-  bool _isPreviewEnabled;
-  bool get isPreviewEnabled => _$this._isPreviewEnabled;
-  set isPreviewEnabled(bool isPreviewEnabled) =>
-      _$this._isPreviewEnabled = isPreviewEnabled;
+  bool _isPreviewVisible;
+  bool get isPreviewVisible => _$this._isPreviewVisible;
+  set isPreviewVisible(bool isPreviewVisible) =>
+      _$this._isPreviewVisible = isPreviewVisible;
 
   bool _isMenuVisible;
   bool get isMenuVisible => _$this._isMenuVisible;
@@ -777,10 +777,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set enableDarkMode(bool enableDarkMode) =>
       _$this._enableDarkMode = enableDarkMode;
 
-  bool _showFilterSidebar;
-  bool get showFilterSidebar => _$this._showFilterSidebar;
-  set showFilterSidebar(bool showFilterSidebar) =>
-      _$this._showFilterSidebar = showFilterSidebar;
+  bool _isFilterVisible;
+  bool get isFilterVisible => _$this._isFilterVisible;
+  set isFilterVisible(bool isFilterVisible) =>
+      _$this._isFilterVisible = isFilterVisible;
 
   bool _persistData;
   bool get persistData => _$this._persistData;
@@ -829,12 +829,12 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _historySidebarMode = $v.historySidebarMode;
       _useSidebarEditor = $v.useSidebarEditor.toBuilder();
       _customColors = $v.customColors.toBuilder();
-      _isPreviewEnabled = $v.isPreviewEnabled;
+      _isPreviewVisible = $v.isPreviewVisible;
       _isMenuVisible = $v.isMenuVisible;
       _showKanban = $v.showKanban;
       _isHistoryVisible = $v.isHistoryVisible;
       _enableDarkMode = $v.enableDarkMode;
-      _showFilterSidebar = $v.showFilterSidebar;
+      _isFilterVisible = $v.isFilterVisible;
       _persistData = $v.persistData;
       _longPressSelectionIsDefault = $v.longPressSelectionIsDefault;
       _requireAuthentication = $v.requireAuthentication;
@@ -874,8 +874,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
                   historySidebarMode, 'PrefState', 'historySidebarMode'),
               useSidebarEditor: useSidebarEditor.build(),
               customColors: customColors.build(),
-              isPreviewEnabled: BuiltValueNullFieldError.checkNotNull(
-                  isPreviewEnabled, 'PrefState', 'isPreviewEnabled'),
+              isPreviewVisible: BuiltValueNullFieldError.checkNotNull(
+                  isPreviewVisible, 'PrefState', 'isPreviewVisible'),
               isMenuVisible: BuiltValueNullFieldError.checkNotNull(
                   isMenuVisible, 'PrefState', 'isMenuVisible'),
               showKanban: BuiltValueNullFieldError.checkNotNull(
@@ -883,7 +883,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               isHistoryVisible: BuiltValueNullFieldError.checkNotNull(
                   isHistoryVisible, 'PrefState', 'isHistoryVisible'),
               enableDarkMode: BuiltValueNullFieldError.checkNotNull(enableDarkMode, 'PrefState', 'enableDarkMode'),
-              showFilterSidebar: BuiltValueNullFieldError.checkNotNull(showFilterSidebar, 'PrefState', 'showFilterSidebar'),
+              isFilterVisible: BuiltValueNullFieldError.checkNotNull(isFilterVisible, 'PrefState', 'isFilterVisible'),
               persistData: BuiltValueNullFieldError.checkNotNull(persistData, 'PrefState', 'persistData'),
               longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault, 'PrefState', 'longPressSelectionIsDefault'),
               requireAuthentication: BuiltValueNullFieldError.checkNotNull(requireAuthentication, 'PrefState', 'requireAuthentication'),

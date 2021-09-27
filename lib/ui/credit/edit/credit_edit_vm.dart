@@ -100,7 +100,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedCredit);
               }
             } else {
-              if (state.prefState.isPreviewEnabled) {
+              if (state.prefState.isPreviewVisible) {
                 viewEntity(entity: savedCredit, force: true);
               } else {
                 editEntity(

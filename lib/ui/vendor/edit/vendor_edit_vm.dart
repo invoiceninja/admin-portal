@@ -102,7 +102,7 @@ class VendorEditVM {
                 navigator.pop(savedVendor);
               }
             } else {
-              if (state.prefState.isPreviewEnabled) {
+              if (state.prefState.isPreviewVisible) {
                 viewEntity(entity: savedVendor, force: true);
               } else {
                 viewEntitiesByType(

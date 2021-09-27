@@ -119,7 +119,7 @@ class ClientEditVM {
                   navigator.pop(savedClient);
                 }
               } else {
-                if (state.prefState.isPreviewEnabled) {
+                if (state.prefState.isPreviewVisible) {
                   viewEntity(entity: savedClient, force: true);
                 } else {
                   viewEntitiesByType(

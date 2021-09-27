@@ -91,7 +91,7 @@ class ProductEditVM {
                 navigator.pop(savedProduct);
               }
             } else {
-              if (state.prefState.isPreviewEnabled) {
+              if (state.prefState.isPreviewVisible) {
                 viewEntity(entity: savedProduct, force: true);
               } else {
                 editEntity(

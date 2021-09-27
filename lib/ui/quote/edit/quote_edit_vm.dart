@@ -99,7 +99,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedQuote);
               }
             } else {
-              if (state.prefState.isPreviewEnabled) {
+              if (state.prefState.isPreviewVisible) {
                 viewEntity(entity: savedQuote, force: true);
               } else {
                 editEntity(

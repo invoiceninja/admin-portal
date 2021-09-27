@@ -287,7 +287,7 @@ void viewEntitiesByType({
           store.dispatch(ClearPreviewStack());
         }
 
-        if (store.state.prefState.isPreviewEnabled &&
+        if (store.state.prefState.isPreviewVisible &&
             store.state.prefState.moduleLayout == ModuleLayout.table) {
           store.dispatch(UpdateUserPreferences(isPreviewEnabled: false));
         }
@@ -1373,7 +1373,7 @@ void selectEntity({
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
-  } else if (isDesktop(context) && !state.prefState.isPreviewEnabled) {
+  } else if (isDesktop(context) && !state.prefState.isPreviewVisible) {
     if (uiState.isEditing && entityUIState.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
     } else {

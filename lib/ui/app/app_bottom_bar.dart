@@ -412,7 +412,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     ),
                     */
                   if (!widget.entityType.isSetting &&
-                      prefState.isPreviewEnabled)
+                      prefState.isPreviewVisible)
                     IconButton(
                       tooltip: isList
                           ? localization.showTable
