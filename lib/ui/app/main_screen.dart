@@ -676,7 +676,9 @@ class EntityScreens extends StatelessWidget {
                           topFilterChild,
                           Expanded(
                             child: AppBorder(
-                              isTop: uiState.filterEntityType != null,
+                              isTop: uiState.filterEntityType != null &&
+                                  topFilterChild != null &&
+                                  !prefState.showFilterSidebar,
                               child: listWidget,
                             ),
                           )
