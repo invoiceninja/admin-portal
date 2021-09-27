@@ -320,10 +320,6 @@ abstract class ExpenseEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (!multiselect && includePreview) {
-        actions.add(EntityAction.preview);
-      }
-
       if (includeEdit &&
           !multiselect &&
           userCompany.canEditEntity(this) &&

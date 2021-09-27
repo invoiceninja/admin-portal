@@ -385,10 +385,6 @@ abstract class PaymentEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includePreview && !multiselect) {
-        actions.add(EntityAction.preview);
-      }
-
       if (userCompany.canEditEntity(this)) {
         if (!multiselect) {
           if (includeEdit) {

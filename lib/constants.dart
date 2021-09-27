@@ -243,6 +243,8 @@ const String kGatewayTypeSofort = '7';
 const String kGatewayTypeApplePay = '8';
 const String kGatewayTypeSEPA = '9';
 const String kGatewayTypeCredit = '10';
+const String kGatewayTypeKBC = '11';
+const String kGatewayTypeBancontact = '12';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -253,6 +255,8 @@ const kGatewayTypes = {
   kGatewayTypeAlipay: 'alipay',
   kGatewayTypeSofort: 'sofort',
   kGatewayTypeApplePay: 'apple_pay',
+  kGatewayTypeKBC: 'kbc',
+  kGatewayTypeBancontact: 'bancontact',
 };
 
 const String kNotificationChannelEmail = 'email';

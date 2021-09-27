@@ -291,10 +291,6 @@ void handleVendorAction(
     case EntityAction.edit:
       editEntity(context: context, entity: vendor);
       break;
-    case EntityAction.preview:
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
-      viewEntity(entity: vendor);
-      break;
     case EntityAction.newExpense:
       createEntity(
         context: context,

@@ -520,10 +520,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.edit:
       editEntity(context: context, entity: invoice);
       break;
-    case EntityAction.preview:
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
-      viewEntity(entity: invoice);
-      break;
     case EntityAction.viewPdf:
       store.dispatch(ShowPdfInvoice(invoice: invoice, context: context));
       break;

@@ -255,10 +255,6 @@ void handleExpenseAction(
     case EntityAction.edit:
       editEntity(context: context, entity: expense);
       break;
-    case EntityAction.preview:
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
-      viewEntity(entity: expense);
-      break;
     case EntityAction.cloneToExpense:
       createEntity(
         context: context,

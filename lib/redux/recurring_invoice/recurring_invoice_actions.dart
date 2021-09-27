@@ -438,10 +438,6 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.edit:
       editEntity(context: context, entity: recurringInvoice);
       break;
-    case EntityAction.preview:
-      store.dispatch(UpdateUserPreferences(isPreviewEnabled: true));
-      viewEntity(entity: recurringInvoice);
-      break;
     case EntityAction.viewPdf:
       store.dispatch(
           ShowPdfRecurringInvoice(invoice: recurringInvoice, context: context));
