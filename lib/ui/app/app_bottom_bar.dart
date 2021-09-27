@@ -399,6 +399,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       icon: Icon(Icons.check_box),
                       onPressed: () => widget.onCheckboxPressed(),
                     ),
+                  /*
                   if (isDesktop(context))
                     IconButton(
                       tooltip: localization.preview,
@@ -409,6 +410,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                                 !state.prefState.isPreviewEnabled));
                       },
                     ),
+                    */
                   if (!widget.entityType.isSetting &&
                       prefState.isPreviewEnabled)
                     IconButton(

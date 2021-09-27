@@ -409,24 +409,6 @@ void viewEntityById({
   final state = store.state;
   final uiState = store.state.uiState;
 
-  /*
-  if (!state.prefState.isPreviewEnabled && !entityType.isSetting) {
-    final BaseEntity entity = state.getEntityMap(entityType)[entityId];
-    if (entityType.hasViewPage) {
-      viewEntitiesByType(
-          entityType: entity.entityType.relatedTypes.first,
-          filterEntity: entity);
-    } else {
-      editEntity(
-        context: navigatorKey.currentContext,
-        entity: entity,
-        force: force,
-      );
-    }
-    return;
-  }
-  */
-
   checkForChanges(
       store: store,
       context: navigatorKey.currentContext,
