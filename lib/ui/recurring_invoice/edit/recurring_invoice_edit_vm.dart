@@ -103,12 +103,12 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedRecurringInvoice);
               }
             } else {
+              viewEntity(entity: savedRecurringInvoice);
+
               if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
                 editEntity(
                     context: navigatorKey.currentContext,
                     entity: savedRecurringInvoice);
-              } else {
-                viewEntity(entity: savedRecurringInvoice);
               }
 
               if ([EntityAction.emailInvoice, EntityAction.viewPdf]

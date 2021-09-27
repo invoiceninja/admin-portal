@@ -150,11 +150,11 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedInvoice);
               }
             } else {
+              viewEntity(entity: savedInvoice);
+
               if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
                 editEntity(
                     context: navigatorKey.currentContext, entity: savedInvoice);
-              } else {
-                viewEntity(entity: savedInvoice);
               }
 
               if ([EntityAction.emailInvoice, EntityAction.viewPdf]

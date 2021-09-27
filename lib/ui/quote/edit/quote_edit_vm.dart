@@ -99,11 +99,11 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 navigator.pop(savedQuote);
               }
             } else {
+              viewEntity(entity: savedQuote);
+
               if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
                 editEntity(
                     context: navigatorKey.currentContext, entity: savedQuote);
-              } else {
-                viewEntity(entity: savedQuote);
               }
 
               if ([EntityAction.emailInvoice, EntityAction.viewPdf]
