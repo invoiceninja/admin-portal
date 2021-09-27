@@ -188,12 +188,12 @@ class SaveInvoiceRequest implements StartSaving {
   SaveInvoiceRequest({
     this.completer,
     this.invoice,
-    this.action,
+    this.entityAction,
   });
 
   final Completer completer;
   final InvoiceEntity invoice;
-  final EntityAction action;
+  final EntityAction entityAction;
 }
 
 class SaveInvoiceSuccess implements StopSaving, PersistUI {

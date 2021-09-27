@@ -406,8 +406,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
         .saveData(
       store.state.credentials,
       updatedInvoice,
-      isSent: action.action == EntityAction.markSent,
-      isPaid: action.action == EntityAction.markPaid,
+      action: action.entityAction,
     )
         .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
