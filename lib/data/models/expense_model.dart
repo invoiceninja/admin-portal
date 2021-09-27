@@ -157,6 +157,7 @@ abstract class ExpenseEntity extends Object
       lastSentDate: '',
       nextSendDate: '',
       remainingCycles: -1,
+      recurringDates: BuiltList<ExpenseScheduleEntity>(),
     );
   }
 
@@ -309,6 +310,10 @@ abstract class ExpenseEntity extends Object
 
   @BuiltValueField(wireName: 'remaining_cycles')
   int get remainingCycles;
+
+  @nullable
+  @BuiltValueField(wireName: 'recurring_dates')
+  BuiltList<ExpenseScheduleEntity> get recurringDates;
 
   @override
   List<EntityAction> getActions(
@@ -727,6 +732,27 @@ abstract class ExpenseEntity extends Object
     ..remainingCycles = -1;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
+}
+
+abstract class ExpenseScheduleEntity
+    implements Built<ExpenseScheduleEntity, ExpenseScheduleEntityBuilder> {
+  factory ExpenseScheduleEntity() {
+    return _$ExpenseScheduleEntity._(
+      sendDate: '',
+    );
+  }
+
+  ExpenseScheduleEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'send_date')
+  String get sendDate;
+
+  static Serializer<ExpenseScheduleEntity> get serializer =>
+      _$expenseScheduleEntitySerializer;
 }
 
 abstract class ExpenseStatusEntity extends Object

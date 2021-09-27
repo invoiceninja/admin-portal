@@ -12,6 +12,8 @@ Serializer<ExpenseItemResponse> _$expenseItemResponseSerializer =
     new _$ExpenseItemResponseSerializer();
 Serializer<ExpenseEntity> _$expenseEntitySerializer =
     new _$ExpenseEntitySerializer();
+Serializer<ExpenseScheduleEntity> _$expenseScheduleEntitySerializer =
+    new _$ExpenseScheduleEntitySerializer();
 Serializer<ExpenseStatusEntity> _$expenseStatusEntitySerializer =
     new _$ExpenseStatusEntitySerializer();
 
@@ -292,6 +294,14 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.recurringDates;
+    if (value != null) {
+      result
+        ..add('recurring_dates')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(ExpenseScheduleEntity)])));
+    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -512,6 +522,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.remainingCycles = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'recurring_dates':
+          result.recurringDates.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ExpenseScheduleEntity)]))
+              as BuiltList<Object>);
+          break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -546,6 +562,52 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ExpenseScheduleEntitySerializer
+    implements StructuredSerializer<ExpenseScheduleEntity> {
+  @override
+  final Iterable<Type> types = const [
+    ExpenseScheduleEntity,
+    _$ExpenseScheduleEntity
+  ];
+  @override
+  final String wireName = 'ExpenseScheduleEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, ExpenseScheduleEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'send_date',
+      serializers.serialize(object.sendDate,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  ExpenseScheduleEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ExpenseScheduleEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'send_date':
+          result.sendDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -877,6 +939,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final int remainingCycles;
   @override
+  final BuiltList<ExpenseScheduleEntity> recurringDates;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -941,6 +1005,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.lastSentDate,
       this.nextSendDate,
       this.remainingCycles,
+      this.recurringDates,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1078,6 +1143,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         lastSentDate == other.lastSentDate &&
         nextSendDate == other.nextSendDate &&
         remainingCycles == other.remainingCycles &&
+        recurringDates == other.recurringDates &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1110,17 +1176,17 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode), statusId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), taxAmount1.hashCode), taxAmount2.hashCode),
-                                                                                taxAmount3.hashCode),
-                                                                            usesInclusiveTaxes.hashCode),
-                                                                        calculateTaxByAmount.hashCode),
-                                                                    documents.hashCode),
-                                                                number.hashCode),
-                                                            recurringId.hashCode),
-                                                        frequencyId.hashCode),
-                                                    lastSentDate.hashCode),
-                                                nextSendDate.hashCode),
-                                            remainingCycles.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode), statusId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), taxAmount1.hashCode), taxAmount2.hashCode), taxAmount3.hashCode),
+                                                                                usesInclusiveTaxes.hashCode),
+                                                                            calculateTaxByAmount.hashCode),
+                                                                        documents.hashCode),
+                                                                    number.hashCode),
+                                                                recurringId.hashCode),
+                                                            frequencyId.hashCode),
+                                                        lastSentDate.hashCode),
+                                                    nextSendDate.hashCode),
+                                                remainingCycles.hashCode),
+                                            recurringDates.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -1177,6 +1243,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('lastSentDate', lastSentDate)
           ..add('nextSendDate', nextSendDate)
           ..add('remainingCycles', remainingCycles)
+          ..add('recurringDates', recurringDates)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1373,6 +1440,12 @@ class ExpenseEntityBuilder
   set remainingCycles(int remainingCycles) =>
       _$this._remainingCycles = remainingCycles;
 
+  ListBuilder<ExpenseScheduleEntity> _recurringDates;
+  ListBuilder<ExpenseScheduleEntity> get recurringDates =>
+      _$this._recurringDates ??= new ListBuilder<ExpenseScheduleEntity>();
+  set recurringDates(ListBuilder<ExpenseScheduleEntity> recurringDates) =>
+      _$this._recurringDates = recurringDates;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1460,6 +1533,7 @@ class ExpenseEntityBuilder
       _lastSentDate = $v.lastSentDate;
       _nextSendDate = $v.nextSendDate;
       _remainingCycles = $v.remainingCycles;
+      _recurringDates = $v.recurringDates?.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1540,6 +1614,7 @@ class ExpenseEntityBuilder
               lastSentDate: BuiltValueNullFieldError.checkNotNull(lastSentDate, 'ExpenseEntity', 'lastSentDate'),
               nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, 'ExpenseEntity', 'nextSendDate'),
               remainingCycles: BuiltValueNullFieldError.checkNotNull(remainingCycles, 'ExpenseEntity', 'remainingCycles'),
+              recurringDates: _recurringDates?.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ExpenseEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ExpenseEntity', 'updatedAt'),
@@ -1554,12 +1629,98 @@ class ExpenseEntityBuilder
       try {
         _$failedField = 'documents';
         documents.build();
+
+        _$failedField = 'recurringDates';
+        _recurringDates?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ExpenseEntity', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ExpenseScheduleEntity extends ExpenseScheduleEntity {
+  @override
+  final String sendDate;
+
+  factory _$ExpenseScheduleEntity(
+          [void Function(ExpenseScheduleEntityBuilder) updates]) =>
+      (new ExpenseScheduleEntityBuilder()..update(updates)).build();
+
+  _$ExpenseScheduleEntity._({this.sendDate}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        sendDate, 'ExpenseScheduleEntity', 'sendDate');
+  }
+
+  @override
+  ExpenseScheduleEntity rebuild(
+          void Function(ExpenseScheduleEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ExpenseScheduleEntityBuilder toBuilder() =>
+      new ExpenseScheduleEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ExpenseScheduleEntity && sendDate == other.sendDate;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(0, sendDate.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ExpenseScheduleEntity')
+          ..add('sendDate', sendDate))
+        .toString();
+  }
+}
+
+class ExpenseScheduleEntityBuilder
+    implements Builder<ExpenseScheduleEntity, ExpenseScheduleEntityBuilder> {
+  _$ExpenseScheduleEntity _$v;
+
+  String _sendDate;
+  String get sendDate => _$this._sendDate;
+  set sendDate(String sendDate) => _$this._sendDate = sendDate;
+
+  ExpenseScheduleEntityBuilder();
+
+  ExpenseScheduleEntityBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _sendDate = $v.sendDate;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ExpenseScheduleEntity other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$ExpenseScheduleEntity;
+  }
+
+  @override
+  void update(void Function(ExpenseScheduleEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ExpenseScheduleEntity build() {
+    final _$result = _$v ??
+        new _$ExpenseScheduleEntity._(
+            sendDate: BuiltValueNullFieldError.checkNotNull(
+                sendDate, 'ExpenseScheduleEntity', 'sendDate'));
     replace(_$result);
     return _$result;
   }
