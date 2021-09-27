@@ -400,7 +400,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 child: Text(localization.remove.toUpperCase()),
                 onPressed: () => confirmCallback(
                     context: context,
-                    callback: () {
+                    callback: (_) {
                       widget.viewModel.onRemoveContactPressed(widget.index);
                       Navigator.pop(context);
                     }),

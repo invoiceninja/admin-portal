@@ -247,7 +247,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     onTap: () {
                       confirmCallback(
                           context: context,
-                          callback: () {
+                          callback: (_) {
                             viewModel.onLogoutTap(context);
                           });
                     },

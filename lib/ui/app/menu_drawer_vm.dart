@@ -72,7 +72,7 @@ class MenuDrawerVM {
         confirmCallback(
             message: AppLocalization.of(context).logout,
             context: context,
-            callback: () async {
+            callback: (_) async {
               store.dispatch(UserLogout());
               if (store.state.user.isConnectedToGoogle) {
                 GoogleOAuth.signOut();
@@ -122,7 +122,7 @@ class MenuDrawerVM {
         confirmCallback(
             context: context,
             message: AppLocalization.of(context).addCompany,
-            callback: () async {
+            callback: (_) async {
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context).addedCompany,
                   shouldPop: true)

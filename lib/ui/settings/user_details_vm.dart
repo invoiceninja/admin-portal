@@ -91,7 +91,7 @@ class UserDetailsVM {
       onDisconnectGmailPressed: (context) {
         confirmCallback(
             context: context,
-            callback: () {
+            callback: (_) {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
@@ -114,7 +114,7 @@ class UserDetailsVM {
 
         confirmCallback(
             context: context,
-            callback: () {
+            callback: (_) {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
@@ -138,7 +138,7 @@ class UserDetailsVM {
 
         confirmCallback(
             context: context,
-            callback: () {
+            callback: (_) {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
@@ -235,7 +235,7 @@ class UserDetailsVM {
               skip: state.user.phone ==
                       state.uiState.settingsUIState.user.phone ||
                   !state.user.isTwoFactorEnabled,
-              callback: () {
+              callback: (_) {
                 passwordCallback(
                     context: context,
                     callback: (password, idToken) {

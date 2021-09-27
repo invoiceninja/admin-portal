@@ -67,14 +67,14 @@ void showMessageDialog({
 
 void confirmCallback({
   @required BuildContext context,
-  @required Function callback,
+  @required Function(String) callback,
   String message,
   String typeToConfirm,
   bool askForReason = false,
   bool skip = false,
 }) {
   if (skip) {
-    callback();
+    callback(null);
     return;
   }
 
@@ -104,6 +104,7 @@ void confirmCallback({
       return PointerInterceptor(
         child: AlertDialog(
           semanticLabel: localization.areYouSure,
+          title: typeToConfirm != null ? null : Text(title),
           content: typeToConfirm != null
               ? Column(
                   mainAxisSize: MainAxisSize.min,

@@ -500,7 +500,7 @@ void handleUserAction(
           ));
       confirmCallback(
           context: context,
-          callback: () {
+          callback: (_) {
             passwordCallback(
                 context: context,
                 callback: (password, idToken) {

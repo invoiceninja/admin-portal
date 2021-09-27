@@ -165,7 +165,7 @@ class DocumentTile extends StatelessWidget {
                       onPressed: () {
                         confirmCallback(
                             context: context,
-                            callback: () {
+                            callback: (_) {
                               passwordCallback(
                                   context: context,
                                   callback: (password, idToken) {
