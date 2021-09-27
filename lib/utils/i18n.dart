@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'kbc': 'KBC',
+      'bancontact': 'Bancontact',
       'why_are_you_leaving': 'Help us improve by telling us why (optional)',
       'webhook_success': 'Webhook Success',
       'error_cross_client_tasks': 'Tasks must all belong to the same client',
