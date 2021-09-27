@@ -61,6 +61,9 @@ class EntityTopFilter extends StatelessWidget {
                           store.dispatch(UpdateUserPreferences(
                               isFilterVisible: !prefState.isFilterVisible));
                         },
+                        onLongPress: () {
+                          editEntity(context: context, entity: filterEntity);
+                        },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
