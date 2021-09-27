@@ -219,7 +219,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
           child: Text(localization.remove.toUpperCase()),
           onPressed: () => confirmCallback(
               context: context,
-              callback: () {
+              callback: (_) {
                 widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
                 Navigator.of(context).pop();
               }),

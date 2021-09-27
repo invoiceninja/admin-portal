@@ -412,7 +412,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               onPressed: () {
                                 confirmCallback(
                                     context: context,
-                                    callback: () =>
+                                    callback: (_) =>
                                         viewModel.onDeleteLogo(context));
                               },
                             ),

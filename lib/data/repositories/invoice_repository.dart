@@ -62,8 +62,7 @@ class InvoiceRepository {
   Future<InvoiceEntity> saveData(
     Credentials credentials,
     InvoiceEntity invoice, {
-    bool isSent = false,
-    bool isPaid = false,
+    EntityAction action,
   }) async {
     invoice = invoice.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
@@ -82,10 +81,10 @@ class InvoiceRepository {
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
-    if (isSent) {
-      url += '&public=true';
-    } else if (isPaid) {
+    if (action == EntityAction.markPaid) {
       url += '&paid=true';
+    } else if (action == EntityAction.markSent) {
+      url += '&mark_sent=true';
     }
 
     if (invoice.isNew) {

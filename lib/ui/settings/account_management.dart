@@ -510,7 +510,7 @@ class _AccountOverview extends StatelessWidget {
                         message:
                             localization.purgeDataMessage + _getDataStats(),
                         typeToConfirm: localization.purge.toLowerCase(),
-                        callback: () {
+                        callback: (_) {
                           passwordCallback(
                               alwaysRequire: true,
                               context: context,
