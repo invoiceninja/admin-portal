@@ -47,7 +47,6 @@ class DeviceSettingsVM {
     @required this.onHistoryModeChanged,
     @required this.onColorThemeChanged,
     @required this.onRowsPerPageChanged,
-    @required this.onPreviewSidebarChanged,
     @required this.onCustomColorsChanged,
     @required this.onPersistDataChanged,
   });
@@ -95,9 +94,6 @@ class DeviceSettingsVM {
           if (store.state.prefState.colorTheme != value) {
             store.dispatch(UpdateUserPreferences(colorTheme: value));
           }
-        },
-        onPreviewSidebarChanged: (context, value) {
-          store.dispatch(UpdateUserPreferences(isPreviewEnabled: value));
         },
         onRowsPerPageChanged: (context, value) {
           store.dispatch(UpdateUserPreferences(rowsPerPage: value));
@@ -164,7 +160,6 @@ class DeviceSettingsVM {
   final Function(BuildContext) onLogoutTap;
   final Function(BuildContext, bool) onDarkModeChanged;
   final Function(BuildContext, BuiltMap<String, String>) onCustomColorsChanged;
-  final Function(BuildContext, bool) onPreviewSidebarChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
   final Function(BuildContext, AppSidebarMode) onHistoryModeChanged;
