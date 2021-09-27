@@ -426,6 +426,10 @@ void viewEntityById({
           store.dispatch(ClearPreviewStack());
         }
 
+        if (state.prefState.isDesktop && !state.prefState.isPreviewVisible) {
+          store.dispatch(TogglePreviewSidebar());
+        }
+
         if (filterEntity != null &&
             (uiState.filterEntityType != filterEntity.entityType ||
                 uiState.filterEntityId != filterEntity.id)) {
