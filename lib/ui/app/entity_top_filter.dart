@@ -59,7 +59,7 @@ class EntityTopFilter extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           store.dispatch(UpdateUserPreferences(
-                              showFilterSidebar: !prefState.isFilterVisible));
+                              isFilterVisible: !prefState.isFilterVisible));
                         },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,

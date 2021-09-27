@@ -88,7 +88,7 @@ class BottomButtons extends StatelessWidget {
                   message: localization.hideSidebar,
                   child: InkWell(
                     onTap: () => store.dispatch(
-                        UpdateUserPreferences(showFilterSidebar: false)),
+                        UpdateUserPreferences(isFilterVisible: false)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Icon(Icons.chevron_left),

@@ -257,7 +257,7 @@ Reducer<bool> showKanbanReducer = combineReducers([
 
 Reducer<bool> isFilterVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((value, action) {
-    return action.showFilterSidebar ?? value;
+    return action.isFilterVisible ?? value;
   }),
 ]);
 
