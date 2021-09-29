@@ -178,24 +178,15 @@ class ClientOverview extends StatelessWidget {
                 memoizedInvoiceStatsForClient(client.id, state.invoiceState.map)
                     .present(localization.active, localization.archived),
           ),
-        if (company.isModuleEnabled(EntityType.task))
+        if (company.isModuleEnabled(EntityType.recurringInvoice))
           EntitiesListTile(
             entity: client,
             isFilter: isFilter,
-            entityType: EntityType.task,
-            title: localization.tasks,
-            subtitle: memoizedTaskStatsForClient(client.id, state.taskState.map)
+            entityType: EntityType.recurringInvoice,
+            title: localization.recurringInvoices,
+            subtitle: memoizedRecurringInvoiceStatsForClient(
+                    client.id, state.recurringInvoiceState.map)
                 .present(localization.active, localization.archived),
-          ),
-        if (company.isModuleEnabled(EntityType.expense))
-          EntitiesListTile(
-            entity: client,
-            isFilter: isFilter,
-            entityType: EntityType.expense,
-            title: localization.expenses,
-            subtitle:
-                memoizedExpenseStatsForClient(client.id, state.expenseState.map)
-                    .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.payment))
           EntitiesListTile(
@@ -237,15 +228,24 @@ class ClientOverview extends StatelessWidget {
                 memoizedProjectStatsForClient(client.id, state.projectState.map)
                     .present(localization.active, localization.archived),
           ),
-        if (company.isModuleEnabled(EntityType.recurringInvoice))
+        if (company.isModuleEnabled(EntityType.task))
           EntitiesListTile(
             entity: client,
             isFilter: isFilter,
-            entityType: EntityType.recurringInvoice,
-            title: localization.recurringInvoices,
-            subtitle: memoizedRecurringInvoiceStatsForClient(
-                    client.id, state.recurringInvoiceState.map)
+            entityType: EntityType.task,
+            title: localization.tasks,
+            subtitle: memoizedTaskStatsForClient(client.id, state.taskState.map)
                 .present(localization.active, localization.archived),
+          ),
+        if (company.isModuleEnabled(EntityType.expense))
+          EntitiesListTile(
+            entity: client,
+            isFilter: isFilter,
+            entityType: EntityType.expense,
+            title: localization.expenses,
+            subtitle:
+                memoizedExpenseStatsForClient(client.id, state.expenseState.map)
+                    .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.recurringExpense))
           EntitiesListTile(
