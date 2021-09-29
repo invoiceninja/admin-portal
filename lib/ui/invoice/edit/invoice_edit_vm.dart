@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -173,8 +174,13 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
       },
       onItemsAdded: (items, clientId) {
         if (clientId != null && clientId.isNotEmpty) {
-          store.dispatch(
-              UpdateInvoice(invoice.rebuild((b) => b..clientId = clientId)));
+          final client = state.clientState.get(clientId);
+          store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
+            ..clientId = clientId
+            ..invitations.replace(BuiltList<InvitationEntity>(client.contacts
+                .where((contact) => contact.sendEmail)
+                .map((contact) => InvitationEntity(contactId: contact.id))
+                .toList())))));
         }
         store.dispatch(AddInvoiceItems(items));
 
