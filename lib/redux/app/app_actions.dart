@@ -877,6 +877,11 @@ void createEntity({
           store.dispatch(ClearPreviewStack());
         }
 
+        if (state.prefState.isDesktop &&
+            !state.prefState.isEditorFullScreen(entity.entityType)) {
+          store.dispatch(ToggleEditorLayout(entity.entityType));
+        }
+
         switch (entity.entityType) {
           case EntityType.client:
             store.dispatch(EditClient(
