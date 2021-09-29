@@ -73,7 +73,7 @@ class _VariablesHelpState extends State<VariablesHelp>
             children: [
               _VariableGrid(
                 fields: [
-                  'view_link', // TODO change to email variables
+                  'view_button', // TODO change to email variables
                   'view_url',
                   if (widget.showInvoiceAsQuote) ...[
                     QuoteFields.amount,
