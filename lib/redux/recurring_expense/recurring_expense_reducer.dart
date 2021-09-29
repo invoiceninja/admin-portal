@@ -306,8 +306,9 @@ RecurringExpenseState _stopRecurringExpensesSuccess(
 RecurringExpenseState _setLoadedRecurringExpense(
     RecurringExpenseState recurringExpenseState,
     LoadRecurringExpenseSuccess action) {
-  return recurringExpenseState.rebuild(
-      (b) => b..map[action.recurringExpense.id] = action.recurringExpense);
+  return recurringExpenseState.rebuild((b) => b
+    ..map[action.recurringExpense.id] = action.recurringExpense
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 RecurringExpenseState _setLoadedRecurringExpenses(
