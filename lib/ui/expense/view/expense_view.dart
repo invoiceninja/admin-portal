@@ -92,6 +92,10 @@ class _ExpenseViewState extends State<ExpenseView>
                 ? localization.documents
                 : '${localization.documents} (${expense.documents.length})',
           ),
+          if (expense.isRecurring)
+            Tab(
+              text: localization.schedule,
+            )
         ],
       ),
       body: Builder(builder: (context) {
@@ -113,6 +117,12 @@ class _ExpenseViewState extends State<ExpenseView>
                     child: ExpenseViewDocuments(
                         viewModel: viewModel, expense: viewModel.expense),
                   ),
+                  if (expense.isRecurring)
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ExpenseViewDocuments(
+                          viewModel: viewModel, expense: viewModel.expense),
+                    ),
                 ],
               ),
             ),

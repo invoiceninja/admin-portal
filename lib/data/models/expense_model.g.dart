@@ -302,6 +302,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
             specifiedType: const FullType(
                 BuiltList, const [const FullType(ExpenseScheduleEntity)])));
     }
+    value = object.loadedAt;
+    if (value != null) {
+      result
+        ..add('loadedAt')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -527,6 +533,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ExpenseScheduleEntity)]))
               as BuiltList<Object>);
+          break;
+        case 'loadedAt':
+          result.loadedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -941,6 +951,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final BuiltList<ExpenseScheduleEntity> recurringDates;
   @override
+  final int loadedAt;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1006,6 +1018,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.nextSendDate,
       this.remainingCycles,
       this.recurringDates,
+      this.loadedAt,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1244,6 +1257,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('nextSendDate', nextSendDate)
           ..add('remainingCycles', remainingCycles)
           ..add('recurringDates', recurringDates)
+          ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1446,6 +1460,10 @@ class ExpenseEntityBuilder
   set recurringDates(ListBuilder<ExpenseScheduleEntity> recurringDates) =>
       _$this._recurringDates = recurringDates;
 
+  int _loadedAt;
+  int get loadedAt => _$this._loadedAt;
+  set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1534,6 +1552,7 @@ class ExpenseEntityBuilder
       _nextSendDate = $v.nextSendDate;
       _remainingCycles = $v.remainingCycles;
       _recurringDates = $v.recurringDates?.toBuilder();
+      _loadedAt = $v.loadedAt;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1615,6 +1634,7 @@ class ExpenseEntityBuilder
               nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, 'ExpenseEntity', 'nextSendDate'),
               remainingCycles: BuiltValueNullFieldError.checkNotNull(remainingCycles, 'ExpenseEntity', 'remainingCycles'),
               recurringDates: _recurringDates?.build(),
+              loadedAt: loadedAt,
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ExpenseEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ExpenseEntity', 'updatedAt'),

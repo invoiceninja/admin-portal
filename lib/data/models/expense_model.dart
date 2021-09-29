@@ -604,9 +604,24 @@ abstract class ExpenseEntity extends Object
   @override
   String get listDisplayName => number ?? '';
 
+  @nullable
+  @BuiltValueField(compare: false)
+  int get loadedAt;
+
   bool isBetween(String startDate, String endDate) {
     return (startDate ?? '').compareTo(date ?? '') <= 0 &&
         (endDate ?? '').compareTo(date ?? '') >= 0;
+  }
+
+  bool get isLoaded => loadedAt != null && loadedAt > 0;
+
+  bool get isStale {
+    if (!isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - loadedAt >
+        kMillisecondsToRefreshActivities;
   }
 
   bool get isUpcoming => convertSqlDateToDateTime(date).isAfter(DateTime.now());
