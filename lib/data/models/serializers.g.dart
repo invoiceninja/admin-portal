@@ -69,6 +69,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ExpenseEntity.serializer)
       ..add(ExpenseItemResponse.serializer)
       ..add(ExpenseListResponse.serializer)
+      ..add(ExpenseScheduleEntity.serializer)
       ..add(ExpenseState.serializer)
       ..add(ExpenseStatusEntity.serializer)
       ..add(ExpenseUIState.serializer)
@@ -305,6 +306,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DocumentEntity)]),
           () => new ListBuilder<DocumentEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(ExpenseScheduleEntity)]),
+          () => new ListBuilder<ExpenseScheduleEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => new ListBuilder<EntityState>())
