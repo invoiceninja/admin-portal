@@ -1762,7 +1762,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         lineItems == other.lineItems &&
         invitations == other.invitations &&
         documents == other.documents &&
-        activities == other.activities &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1795,17 +1794,17 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode),
-                                                                                dueDateDays.hashCode),
-                                                                            invoiceId.hashCode),
-                                                                        recurringId.hashCode),
-                                                                    autoBillEnabled.hashCode),
-                                                                filename.hashCode),
-                                                            recurringDates.hashCode),
-                                                        lineItems.hashCode),
-                                                    invitations.hashCode),
-                                                documents.hashCode),
-                                            activities.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode),
+                                                                                remainingCycles.hashCode),
+                                                                            dueDateDays.hashCode),
+                                                                        invoiceId.hashCode),
+                                                                    recurringId.hashCode),
+                                                                autoBillEnabled.hashCode),
+                                                            filename.hashCode),
+                                                        recurringDates.hashCode),
+                                                    lineItems.hashCode),
+                                                invitations.hashCode),
+                                            documents.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),

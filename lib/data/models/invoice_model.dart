@@ -459,6 +459,7 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<DocumentEntity> get documents;
 
+  @BuiltValueField(compare: false)
   BuiltList<ActivityEntity> get activities;
 
   bool get isApproved => statusId == kQuoteStatusApproved;
