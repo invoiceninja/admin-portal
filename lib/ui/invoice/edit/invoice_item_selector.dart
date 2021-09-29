@@ -118,7 +118,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     if (selected != null) {
       _filterClientId = (selected as BelongsToClient).clientId;
-    } else if ((widget.clientId ?? 0) == 0) {
+    } else if ((widget.clientId ?? '').isEmpty) {
       _filterClientId = null;
     }
   }
