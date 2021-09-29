@@ -147,7 +147,7 @@ Reducer<BuiltMap<EntityType, PrefStateSortField>> sortFieldsReducer =
 
 Reducer<BuiltMap<EntityType, bool>> sidebarEditorReducer = combineReducers([
   TypedReducer<BuiltMap<EntityType, bool>, ToggleEditorLayout>((value, action) {
-    final entityType = action.entityType;
+    final entityType = action.entityType.baseType;
     if (value.containsKey(entityType)) {
       return value.rebuild((b) => b..[entityType] = !value[entityType]);
     } else {

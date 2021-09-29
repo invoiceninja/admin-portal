@@ -242,6 +242,7 @@ CompanyGatewayState _addCompanyGateway(
     CompanyGatewayState companyGatewayState, AddCompanyGatewaySuccess action) {
   return companyGatewayState.rebuild((b) => b
     ..map[action.companyGateway.id] = action.companyGateway
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch)
     ..list.add(action.companyGateway.id));
 }
 

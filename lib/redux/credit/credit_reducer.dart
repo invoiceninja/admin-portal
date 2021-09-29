@@ -346,6 +346,7 @@ CreditState _restoreCreditSuccess(
 CreditState _addCredit(CreditState creditState, AddCreditSuccess action) {
   return creditState.rebuild((b) => b
     ..map[action.credit.id] = action.credit
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch)
     ..list.add(action.credit.id));
 }
 

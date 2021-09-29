@@ -439,6 +439,7 @@ RecurringInvoiceState _addRecurringInvoice(
     AddRecurringInvoiceSuccess action) {
   return recurringInvoiceState.rebuild((b) => b
     ..map[action.recurringInvoice.id] = action.recurringInvoice
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch)
     ..list.add(action.recurringInvoice.id));
 }
 

@@ -118,7 +118,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     if (selected != null) {
       _filterClientId = (selected as BelongsToClient).clientId;
-    } else if ((widget.clientId ?? 0) == 0) {
+    } else if ((widget.clientId ?? '').isEmpty) {
       _filterClientId = null;
     }
   }
@@ -132,75 +132,44 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         (company.isModuleEnabled(EntityType.task) ||
             company.isModuleEnabled(EntityType.expense));
 
-    Widget _headerRow() {
-      return Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: Icon(Icons.search),
-          ),
-          Expanded(
-            child: TextField(
-              controller: _textController,
-              onChanged: (value) {
-                setState(() {
-                  _filter = value;
-                });
-              },
-              autofocus: true,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: _selected.isEmpty
-                    ? localization.filter
-                    : localization.countSelected
-                        .replaceFirst(':count', '${_selected.length}'),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  if (_textController.text.isNotEmpty) {
-                    setState(() {
-                      _filter = _textController.text = '';
-                    });
-                  } else {
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-              _selected.isNotEmpty
-                  ? IconButton(
-                      icon: Icon(Icons.check),
-                      onPressed: () => _onItemsSelected(context),
-                    )
-                  : !state.prefState.isEditorFullScreen(EntityType.invoice)
-                      ? IconButton(
-                          icon: Icon(Icons.add_circle_outline),
-                          tooltip: localization.createNew,
-                          onPressed: () => _addBlankItem(company),
-                        )
-                      : SizedBox(),
-            ],
-          )
-        ],
-      );
-    }
+    final products =
+        memoizedProductList(state.productState.map).where((entityId) {
+      final entity = state.productState.map[entityId];
+      return entity.isActive && entity.matchesFilter(_filter);
+    }).toList();
+
+    final tasks = memoizedTaskList(
+      state.taskState.map,
+      _filterClientId,
+      state.userState.map,
+      state.clientState.map,
+      state.projectState.map,
+    ).where((entityId) {
+      final task = state.taskState.get(entityId);
+      final client = state.clientState.get(task.clientId);
+      if (widget.excluded != null && widget.excluded.contains(task)) {
+        return false;
+      }
+      return task.matchesFilter(_filter) || client.matchesName(_filter);
+    }).toList();
+
+    final expenses = memoizedClientExpenseList(
+      state.expenseState.map,
+      _filterClientId,
+    ).where((entityId) {
+      final expense = state.expenseState.get(entityId);
+      final client = state.clientState.get(expense.clientId);
+      if (widget.excluded != null && widget.excluded.contains(expense)) {
+        return false;
+      }
+      return expense.matchesFilter(_filter) || client.matchesName(_filter);
+    }).toList();
 
     Widget _productList() {
-      final matches =
-          memoizedProductList(state.productState.map).where((entityId) {
-        final entity = state.productState.map[entityId];
-        return entity.isActive && entity.matchesFilter(_filter);
-      }).toList();
-
       return ScrollableListViewBuilder(
-        itemCount: matches.length,
+        itemCount: products.length,
         itemBuilder: (BuildContext context, int index) {
-          final String entityId = matches[index];
+          final String entityId = products[index];
           final product = state.productState.map[entityId];
           return ProductListItem(
             isDismissible: false,
@@ -222,24 +191,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     }
 
     Widget _taskList() {
-      final matches = memoizedTaskList(
-              state.taskState.map,
-              _filterClientId,
-              state.userState.map,
-              state.clientState.map,
-              state.projectState.map)
-          .where((entityId) {
-        final task = state.taskState.map[entityId];
-        if (widget.excluded != null && widget.excluded.contains(task)) {
-          return false;
-        }
-        return task.matchesFilter(_filter);
-      }).toList();
-
       return ScrollableListViewBuilder(
-        itemCount: matches.length,
+        itemCount: tasks.length,
         itemBuilder: (BuildContext context, int index) {
-          final String entityId = matches[index];
+          final String entityId = tasks[index];
           final task = state.taskState.map[entityId];
           return TaskListItem(
             isDismissible: false,
@@ -261,20 +216,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     }
 
     Widget _expenseList() {
-      final matches =
-          memoizedClientExpenseList(state.expenseState.map, _filterClientId)
-              .where((entityId) {
-        final expense = state.expenseState.map[entityId];
-        if (widget.excluded != null && widget.excluded.contains(expense)) {
-          return false;
-        }
-        return expense.matchesFilter(_filter);
-      }).toList();
-
       return ScrollableListViewBuilder(
-        itemCount: matches.length,
+        itemCount: expenses.length,
         itemBuilder: (BuildContext context, int index) {
-          final String entityId = matches[index];
+          final String entityId = expenses[index];
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
           return ExpenseListItem(
             isDismissible: false,
@@ -296,19 +241,28 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     }
 
     final List<Widget> tabs = [
-      Tab(text: localization.products),
+      Tab(
+        text: localization.products +
+            (products.isNotEmpty ? ' (${products.length})' : ''),
+      ),
     ];
     final List<Widget> tabViews = [
       _productList(),
     ];
 
     if (company.isModuleEnabled(EntityType.task)) {
-      tabs.add(Tab(text: localization.tasks));
+      tabs.add(Tab(
+        text:
+            localization.tasks + (tasks.isNotEmpty ? ' (${tasks.length})' : ''),
+      ));
       tabViews.add(_taskList());
     }
 
     if (company.isModuleEnabled(EntityType.expense)) {
-      tabs.add(Tab(text: localization.expenses));
+      tabs.add(Tab(
+        text: localization.expenses +
+            (expenses.isNotEmpty ? ' (${expenses.length})' : ''),
+      ));
       tabViews.add(_expenseList());
     }
 
@@ -316,7 +270,61 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       child: Material(
         elevation: 4.0,
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          _headerRow(),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: Icon(Icons.search),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: _textController,
+                  onChanged: (value) {
+                    setState(() {
+                      _filter = value;
+                    });
+                  },
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: _selected.isEmpty
+                        ? localization.filter
+                        : localization.countSelected
+                            .replaceFirst(':count', '${_selected.length}'),
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      if (_textController.text.isNotEmpty) {
+                        setState(() {
+                          _filter = _textController.text = '';
+                        });
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  _selected.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.check),
+                          onPressed: () => _onItemsSelected(context),
+                        )
+                      : !state.prefState.isEditorFullScreen(EntityType.invoice)
+                          ? IconButton(
+                              icon: Icon(Icons.add_circle_outline),
+                              tooltip: localization.createNew,
+                              onPressed: () => _addBlankItem(company),
+                            )
+                          : SizedBox(),
+                ],
+              )
+            ],
+          ),
           showTabBar
               ? AppTabBar(
                   controller: _tabController,

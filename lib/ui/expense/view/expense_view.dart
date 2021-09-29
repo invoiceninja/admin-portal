@@ -6,13 +6,16 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view_schedule.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ExpenseView extends StatefulWidget {
@@ -39,10 +42,11 @@ class _ExpenseViewState extends State<ExpenseView>
   void initState() {
     super.initState();
 
-    final state = widget.viewModel.state;
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: 2,
+        length: viewModel.expense.isRecurring ? 3 : 2,
         initialIndex: widget.isFilter ? 0 : state.expenseUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
@@ -53,7 +57,13 @@ class _ExpenseViewState extends State<ExpenseView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateExpenseTab(tabIndex: _controller.index));
+    final expense = widget.viewModel.expense;
+
+    if (expense.isRecurring) {
+      store.dispatch(UpdateRecurringExpenseTab(tabIndex: _controller.index));
+    } else {
+      store.dispatch(UpdateExpenseTab(tabIndex: _controller.index));
+    }
   }
 
   @override
@@ -83,6 +93,7 @@ class _ExpenseViewState extends State<ExpenseView>
       entity: expense,
       appBarBottom: TabBar(
         controller: _controller,
+        isScrollable: isMobile(context),
         tabs: [
           Tab(
             text: localization.overview,
@@ -92,6 +103,10 @@ class _ExpenseViewState extends State<ExpenseView>
                 ? localization.documents
                 : '${localization.documents} (${expense.documents.length})',
           ),
+          if (expense.isRecurring)
+            Tab(
+              text: localization.schedule,
+            )
         ],
       ),
       body: Builder(builder: (context) {
@@ -113,6 +128,11 @@ class _ExpenseViewState extends State<ExpenseView>
                     child: ExpenseViewDocuments(
                         viewModel: viewModel, expense: viewModel.expense),
                   ),
+                  if (expense.isRecurring)
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ExpenseViewSchedule(viewModel: viewModel),
+                    ),
                 ],
               ),
             ),

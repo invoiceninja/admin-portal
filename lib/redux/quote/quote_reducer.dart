@@ -355,6 +355,7 @@ QuoteState _convertQuoteSuccess(
 QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
   return quoteState.rebuild((b) => b
     ..map[action.quote.id] = action.quote
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch)
     ..list.add(action.quote.id));
 }
 

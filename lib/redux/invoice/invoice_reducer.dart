@@ -390,6 +390,7 @@ InvoiceState _restoreInvoiceSuccess(
 InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch)
     ..list.add(action.invoice.id));
 }
 
