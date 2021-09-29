@@ -277,8 +277,9 @@ RecurringExpenseState _addRecurringExpense(
 RecurringExpenseState _updateRecurringExpense(
     RecurringExpenseState recurringExpenseState,
     SaveRecurringExpenseSuccess action) {
-  return recurringExpenseState.rebuild(
-      (b) => b..map[action.recurringExpense.id] = action.recurringExpense);
+  return recurringExpenseState.rebuild((b) => b
+    ..map[action.recurringExpense.id] = action.recurringExpense
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 RecurringExpenseState _startRecurringExpensesSuccess(
