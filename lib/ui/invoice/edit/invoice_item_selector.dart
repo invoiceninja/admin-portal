@@ -138,9 +138,13 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       return entity.isActive && entity.matchesFilter(_filter);
     }).toList();
 
-    final tasks = memoizedTaskList(state.taskState.map, _filterClientId,
-            state.userState.map, state.clientState.map, state.projectState.map)
-        .where((entityId) {
+    final tasks = memoizedTaskList(
+      state.taskState.map,
+      _filterClientId,
+      state.userState.map,
+      state.clientState.map,
+      state.projectState.map,
+    ).where((entityId) {
       final task = state.taskState.get(entityId);
       final client = state.clientState.get(task.clientId);
       if (widget.excluded != null && widget.excluded.contains(task)) {
@@ -149,9 +153,10 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       return task.matchesFilter(_filter) || client.matchesName(_filter);
     }).toList();
 
-    final expenses =
-        memoizedClientExpenseList(state.expenseState.map, _filterClientId)
-            .where((entityId) {
+    final expenses = memoizedClientExpenseList(
+      state.expenseState.map,
+      _filterClientId,
+    ).where((entityId) {
       final expense = state.expenseState.get(entityId);
       final client = state.clientState.get(expense.clientId);
       if (widget.excluded != null && widget.excluded.contains(expense)) {
