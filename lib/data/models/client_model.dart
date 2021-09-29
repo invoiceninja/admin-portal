@@ -533,6 +533,9 @@ abstract class ClientEntity extends Object
     return response;
   }
 
+  bool matchesName(String filter) =>
+      displayName.toLowerCase().contains(filter.toLowerCase());
+
   @override
   bool matchesFilter(String filter) {
     for (var i = 0; i < contacts.length; i++) {
