@@ -628,6 +628,11 @@ void createEntityByType({
           store.dispatch(ClearPreviewStack());
         }
 
+        if (state.prefState.isDesktop &&
+            !state.prefState.isEditorFullScreen(entityType)) {
+          store.dispatch(ToggleEditorLayout(entityType));
+        }
+
         final filterEntityId = state.uiState.filterEntityId;
         final filterEntityType = state.uiState.filterEntityType;
         ClientEntity client;
@@ -1059,6 +1064,11 @@ void editEntity({
       context: context,
       force: force,
       callback: () {
+        if (state.prefState.isDesktop &&
+            !state.prefState.isEditorFullScreen(entityType)) {
+          store.dispatch(ToggleEditorLayout(entityType));
+        }
+
         switch (entityType) {
           case EntityType.client:
             store.dispatch(EditClient(
