@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
@@ -56,7 +57,13 @@ class _ExpenseViewState extends State<ExpenseView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateExpenseTab(tabIndex: _controller.index));
+    final expense = widget.viewModel.expense;
+
+    if (expense.isRecurring) {
+      store.dispatch(UpdateRecurringExpenseTab(tabIndex: _controller.index));
+    } else {
+      store.dispatch(UpdateExpenseTab(tabIndex: _controller.index));
+    }
   }
 
   @override
