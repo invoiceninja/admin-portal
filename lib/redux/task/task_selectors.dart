@@ -86,7 +86,7 @@ List<String> taskList(
     BuiltMap<String, ProjectEntity> projectMap) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
-    if (clientId != null && clientId != null && task.clientId != clientId) {
+    if ((clientId ?? '').isNotEmpty && task.clientId != clientId) {
       return false;
     }
     return task.isActive && task.isStopped && !task.isInvoiced;
