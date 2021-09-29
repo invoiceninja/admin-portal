@@ -290,6 +290,7 @@ ClientState _restoreClientSuccess(
 ClientState _addClient(ClientState clientState, AddClientSuccess action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch)
     ..list.add(action.client.id));
 }
 
