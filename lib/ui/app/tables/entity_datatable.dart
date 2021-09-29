@@ -117,8 +117,7 @@ class EntityDataTableSource extends AppDataTableSource {
           (field) => DataCell(
             entityPresenter.getField(field: field, context: context),
             onTap: () => onTap(entity),
-            onLongPress: () =>
-                selectEntity(entity: entity, context: context, longPress: true),
+            //onLongPress: () => selectEntity(entity: entity, context: context, longPress: true),
             backgroundColor: backgroundColor,
           ),
         )
