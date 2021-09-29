@@ -179,6 +179,20 @@ class EntityType extends EnumClass {
     }
   }
 
+  EntityType get baseType {
+    if ([
+      EntityType.credit,
+      EntityType.quote,
+      EntityType.recurringInvoice,
+    ].contains(this)) {
+      return EntityType.invoice;
+    } else if ([EntityType.recurringExpense].contains(this)) {
+      return EntityType.expense;
+    }
+
+    return this;
+  }
+
   String get snakeCase => toSnakeCase(toString());
 
   static BuiltSet<EntityType> get values => _$typeValues;
