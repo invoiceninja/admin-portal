@@ -76,6 +76,7 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
     final expenseCategory = viewModel.expenseCategory;
 
     return EditScaffold(
+      entity: expenseCategory,
       title: expenseCategory.isNew
           ? localization.newExpenseCategory
           : localization.editExpenseCategory,

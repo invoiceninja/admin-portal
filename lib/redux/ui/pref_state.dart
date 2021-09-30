@@ -121,6 +121,11 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       return false;
     }
 
+    if ([EntityType.product, EntityType.payment, EntityType.project]
+        .contains(entityType)) {
+      return false;
+    }
+
     return !(useSidebarEditor[entityType.baseType] ?? false);
   }
 

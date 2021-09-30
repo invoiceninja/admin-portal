@@ -81,6 +81,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
     final localization = AppLocalization.of(context);
 
     return EditScaffold(
+      entity: viewModel.taxRate,
       title: viewModel.taxRate.isNew
           ? localization.newTaxRate
           : localization.editTaxRate,

@@ -88,6 +88,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
     return EditScaffold(
+      entity: invoice,
       isFullscreen: isFullscreen,
       title: recurringInvoice.isNew
           ? localization.newRecurringInvoice

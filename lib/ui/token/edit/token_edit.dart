@@ -73,6 +73,7 @@ class _TokenEditState extends State<TokenEdit> {
     final token = viewModel.token;
 
     return EditScaffold(
+      entity: token,
       title: token.isNew ? localization.newToken : localization.editToken,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {

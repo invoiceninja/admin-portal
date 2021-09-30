@@ -77,6 +77,7 @@ class _GroupEditState extends State<GroupEdit> {
     final group = viewModel.group;
 
     return EditScaffold(
+      entity: group,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       title: group.isNew ? localization.newGroup : localization.editGroup,
       onSavePressed: (context) {
