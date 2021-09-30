@@ -1146,9 +1146,6 @@ class _$InvoiceHistoryEntitySerializer
       'activity_id',
       serializers.serialize(object.activityId,
           specifiedType: const FullType(String)),
-      'html_backup',
-      serializers.serialize(object.htmlBackup,
-          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -1178,10 +1175,6 @@ class _$InvoiceHistoryEntitySerializer
           break;
         case 'activity_id':
           result.activityId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'html_backup':
-          result.htmlBackup = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'created_at':
@@ -3175,8 +3168,6 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   @override
   final String activityId;
   @override
-  final String htmlBackup;
-  @override
   final int createdAt;
   @override
   final double amount;
@@ -3186,13 +3177,11 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
       (new InvoiceHistoryEntityBuilder()..update(updates)).build();
 
   _$InvoiceHistoryEntity._(
-      {this.id, this.activityId, this.htmlBackup, this.createdAt, this.amount})
+      {this.id, this.activityId, this.createdAt, this.amount})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'InvoiceHistoryEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
         activityId, 'InvoiceHistoryEntity', 'activityId');
-    BuiltValueNullFieldError.checkNotNull(
-        htmlBackup, 'InvoiceHistoryEntity', 'htmlBackup');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'InvoiceHistoryEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -3214,7 +3203,6 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
     return other is InvoiceHistoryEntity &&
         id == other.id &&
         activityId == other.activityId &&
-        htmlBackup == other.htmlBackup &&
         createdAt == other.createdAt &&
         amount == other.amount;
   }
@@ -3223,10 +3211,7 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc(
-            $jc($jc($jc(0, id.hashCode), activityId.hashCode),
-                htmlBackup.hashCode),
-            createdAt.hashCode),
+        $jc($jc($jc(0, id.hashCode), activityId.hashCode), createdAt.hashCode),
         amount.hashCode));
   }
 
@@ -3235,7 +3220,6 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
     return (newBuiltValueToStringHelper('InvoiceHistoryEntity')
           ..add('id', id)
           ..add('activityId', activityId)
-          ..add('htmlBackup', htmlBackup)
           ..add('createdAt', createdAt)
           ..add('amount', amount))
         .toString();
@@ -3254,10 +3238,6 @@ class InvoiceHistoryEntityBuilder
   String get activityId => _$this._activityId;
   set activityId(String activityId) => _$this._activityId = activityId;
 
-  String _htmlBackup;
-  String get htmlBackup => _$this._htmlBackup;
-  set htmlBackup(String htmlBackup) => _$this._htmlBackup = htmlBackup;
-
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -3273,7 +3253,6 @@ class InvoiceHistoryEntityBuilder
     if ($v != null) {
       _id = $v.id;
       _activityId = $v.activityId;
-      _htmlBackup = $v.htmlBackup;
       _createdAt = $v.createdAt;
       _amount = $v.amount;
       _$v = null;
@@ -3300,8 +3279,6 @@ class InvoiceHistoryEntityBuilder
                 id, 'InvoiceHistoryEntity', 'id'),
             activityId: BuiltValueNullFieldError.checkNotNull(
                 activityId, 'InvoiceHistoryEntity', 'activityId'),
-            htmlBackup: BuiltValueNullFieldError.checkNotNull(
-                htmlBackup, 'InvoiceHistoryEntity', 'htmlBackup'),
             createdAt: BuiltValueNullFieldError.checkNotNull(
                 createdAt, 'InvoiceHistoryEntity', 'createdAt'),
             amount: BuiltValueNullFieldError.checkNotNull(
