@@ -177,8 +177,8 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           final client = state.clientState.get(clientId);
           store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
             ..clientId = clientId
-            ..invitations.replace(BuiltList<InvitationEntity>(client.contacts
-                .where((contact) => contact.sendEmail)
+            ..invitations.replace(BuiltList<InvitationEntity>(client
+                .emailContacts
                 .map((contact) => InvitationEntity(contactId: contact.id))
                 .toList())))));
         }

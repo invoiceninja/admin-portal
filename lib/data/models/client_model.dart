@@ -350,6 +350,11 @@ abstract class ClientEntity extends Object
       contacts.firstWhere((contact) => contact.isPrimary,
           orElse: () => ContactEntity());
 
+  List<ContactEntity> get emailContacts {
+    final list = contacts.where((contact) => contact.sendEmail).toList();
+    return list.isEmpty ? [primaryContact] : list;
+  }
+
   bool get hasGroup => groupId != null && groupId.isNotEmpty;
 
   bool get hasUser => assignedUserId != null && assignedUserId.isNotEmpty;
