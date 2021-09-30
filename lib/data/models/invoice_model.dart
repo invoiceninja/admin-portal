@@ -480,7 +480,8 @@ abstract class InvoiceEntity extends Object
   int get loadedAt;
 
   List<InvoiceHistoryEntity> get history => activities
-      .where((activity) => activity.history != null)
+      .where((activity) =>
+          activity.history != null && (activity.history.id ?? '').isNotEmpty)
       .map((activity) => activity.history)
       .toList();
 
@@ -1518,7 +1519,6 @@ abstract class InvoiceHistoryEntity
   factory InvoiceHistoryEntity({String contactId}) {
     return _$InvoiceHistoryEntity._(
       id: '',
-      htmlBackup: '',
       createdAt: 0,
       activityId: '',
       amount: 0,
@@ -1535,9 +1535,6 @@ abstract class InvoiceHistoryEntity
 
   @BuiltValueField(wireName: 'activity_id')
   String get activityId;
-
-  @BuiltValueField(wireName: 'html_backup')
-  String get htmlBackup;
 
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
