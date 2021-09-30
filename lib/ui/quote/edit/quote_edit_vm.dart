@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
@@ -84,40 +85,55 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
-          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-          store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
-          return completer.future.then((savedQuote) {
-            showToast(quote.isNew
-                ? localization.createdQuote
-                : localization.updatedQuote);
+          if (!hasQuoteChanges(quote, state.quoteState.map) &&
+              [
+                EntityAction.emailQuote,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+            handleEntityAction(quote, action);
+          } else {
+            final Completer<InvoiceEntity> completer =
+                Completer<InvoiceEntity>();
+            store.dispatch(SaveQuoteRequest(
+              completer: completer,
+              quote: quote,
+              action: action,
+            ));
+            return completer.future.then((savedQuote) {
+              showToast(quote.isNew
+                  ? localization.createdQuote
+                  : localization.updatedQuote);
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
-              if (quote.isNew) {
-                navigator.pushReplacementNamed(QuoteViewScreen.route);
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
+                if (quote.isNew) {
+                  navigator.pushReplacementNamed(QuoteViewScreen.route);
+                } else {
+                  navigator.pop(savedQuote);
+                }
               } else {
-                navigator.pop(savedQuote);
-              }
-            } else {
-              viewEntity(entity: savedQuote);
+                viewEntity(entity: savedQuote);
 
-              if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
-                editEntity(
-                    context: navigatorKey.currentContext, entity: savedQuote);
-              }
+                if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
+                  editEntity(
+                      context: navigatorKey.currentContext, entity: savedQuote);
+                }
 
-              if ([EntityAction.emailInvoice, EntityAction.viewPdf]
-                  .contains(action)) {
-                handleEntityAction(savedQuote, action);
+                if ([
+                  EntityAction.emailQuote,
+                  EntityAction.viewPdf,
+                ].contains(action)) {
+                  handleEntityAction(savedQuote, action);
+                }
               }
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          }
         });
       },
       onItemsAdded: (items, clientId) {

@@ -107,6 +107,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
             .isEnabled);
 
     return EditScaffold(
+      entity: companyGateway,
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
           : origCompanyGateway.listDisplayName,

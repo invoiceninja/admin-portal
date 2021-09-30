@@ -253,8 +253,14 @@ Middleware<AppState> _saveRecurringInvoice(
     RecurringInvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveRecurringInvoiceRequest;
+
+    // remove any empty line items
+    final updatedInvoice = action.recurringInvoice.rebuild((b) => b
+      ..lineItems.replace(
+          action.recurringInvoice.lineItems.where((item) => !item.isEmpty)));
+
     repository
-        .saveData(store.state.credentials, action.recurringInvoice)
+        .saveData(store.state.credentials, updatedInvoice)
         .then((InvoiceEntity recurringInvoice) {
       if (action.recurringInvoice.isNew) {
         store.dispatch(AddRecurringInvoiceSuccess(recurringInvoice));

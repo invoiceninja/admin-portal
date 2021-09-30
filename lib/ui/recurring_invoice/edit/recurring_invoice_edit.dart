@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart'
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_notes_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceEdit extends StatefulWidget {
@@ -43,7 +44,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 4, initialIndex: index);
+    _controller = TabController(vsync: this, length: 5, initialIndex: index);
   }
 
   @override
@@ -88,6 +89,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
     return EditScaffold(
+      entity: invoice,
       isFullscreen: isFullscreen,
       title: recurringInvoice.isNew
           ? localization.newRecurringInvoice
@@ -100,7 +102,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,
-        //isScrollable: true,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.details,
@@ -113,6 +115,9 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
           ),
           Tab(
             text: localization.notes,
+          ),
+          Tab(
+            text: localization.pdf,
           ),
         ],
       ),
@@ -137,6 +142,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                     viewModel: widget.viewModel,
                   ),
                   RecurringInvoiceEditNotesScreen(),
+                  RecurringInvoiceEditPDFScreen(),
                 ],
               ),
       ),

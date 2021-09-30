@@ -6,6 +6,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit.dart';
@@ -84,39 +85,54 @@ class CreditEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
-          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-          store.dispatch(
-              SaveCreditRequest(completer: completer, credit: credit));
-          return completer.future.then((savedCredit) {
-            showToast(credit.isNew
-                ? localization.createdCredit
-                : localization.updatedCredit);
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
-              if (credit.isNew) {
-                navigator.pushReplacementNamed(CreditViewScreen.route);
+          if (!hasCreditChanges(credit, state.creditState.map) &&
+              [
+                EntityAction.emailCredit,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+            handleEntityAction(credit, action);
+          } else {
+            final Completer<InvoiceEntity> completer =
+                Completer<InvoiceEntity>();
+            store.dispatch(
+                SaveCreditRequest(completer: completer, credit: credit));
+            return completer.future.then((savedCredit) {
+              showToast(credit.isNew
+                  ? localization.createdCredit
+                  : localization.updatedCredit);
+
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
+                if (credit.isNew) {
+                  navigator.pushReplacementNamed(CreditViewScreen.route);
+                } else {
+                  navigator.pop(savedCredit);
+                }
               } else {
-                navigator.pop(savedCredit);
-              }
-            } else {
-              viewEntity(entity: savedCredit);
+                viewEntity(entity: savedCredit);
 
-              if (state.prefState.isEditorFullScreen(EntityType.credit)) {
-                editEntity(
-                    context: navigatorKey.currentContext, entity: savedCredit);
+                if (state.prefState.isEditorFullScreen(EntityType.credit)) {
+                  editEntity(
+                      context: navigatorKey.currentContext,
+                      entity: savedCredit);
+                }
+
+                if ([
+                  EntityAction.emailCredit,
+                  EntityAction.viewPdf,
+                ].contains(action)) {
+                  handleEntityAction(savedCredit, action);
+                }
               }
-              if (action != null) {
-                handleEntityAction(savedCredit, action);
-              }
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          }
         });
       },
       onItemsAdded: (items, clientId) {

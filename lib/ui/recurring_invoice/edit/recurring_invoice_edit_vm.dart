@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
@@ -85,44 +86,54 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
-          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-          store.dispatch(SaveRecurringInvoiceRequest(
-              completer: completer, recurringInvoice: recurringInvoice));
-          return completer.future.then((savedRecurringInvoice) {
-            showToast(recurringInvoice.isNew
-                ? localization.createdRecurringInvoice
-                : localization.updatedRecurringInvoice);
+          if (!hasRecurringInvoiceChanges(
+                  recurringInvoice, state.recurringInvoiceState.map) &&
+              [
+                EntityAction.emailInvoice,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+            handleEntityAction(recurringInvoice, action);
+          } else {
+            final Completer<InvoiceEntity> completer =
+                Completer<InvoiceEntity>();
+            store.dispatch(SaveRecurringInvoiceRequest(
+                completer: completer, recurringInvoice: recurringInvoice));
+            return completer.future.then((savedRecurringInvoice) {
+              showToast(recurringInvoice.isNew
+                  ? localization.createdRecurringInvoice
+                  : localization.updatedRecurringInvoice);
 
-            if (state.prefState.isMobile) {
-              store.dispatch(
-                  UpdateCurrentRoute(RecurringInvoiceViewScreen.route));
-              if (recurringInvoice.isNew) {
-                navigator
-                    .pushReplacementNamed(RecurringInvoiceViewScreen.route);
+              if (state.prefState.isMobile) {
+                store.dispatch(
+                    UpdateCurrentRoute(RecurringInvoiceViewScreen.route));
+                if (recurringInvoice.isNew) {
+                  navigator
+                      .pushReplacementNamed(RecurringInvoiceViewScreen.route);
+                } else {
+                  navigator.pop(savedRecurringInvoice);
+                }
               } else {
-                navigator.pop(savedRecurringInvoice);
-              }
-            } else {
-              viewEntity(entity: savedRecurringInvoice);
+                viewEntity(entity: savedRecurringInvoice);
 
-              if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
-                editEntity(
-                    context: navigatorKey.currentContext,
-                    entity: savedRecurringInvoice);
-              }
+                if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
+                  editEntity(
+                      context: navigatorKey.currentContext,
+                      entity: savedRecurringInvoice);
+                }
 
-              if ([EntityAction.emailInvoice, EntityAction.viewPdf]
-                  .contains(action)) {
-                handleEntityAction(savedRecurringInvoice, action);
+                if ([EntityAction.emailInvoice, EntityAction.viewPdf]
+                    .contains(action)) {
+                  handleEntityAction(savedRecurringInvoice, action);
+                }
               }
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          }
         });
       },
       onItemsAdded: (items, clientId) {

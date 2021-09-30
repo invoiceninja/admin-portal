@@ -60,19 +60,31 @@ class QuoteRepository {
   }
 
   Future<InvoiceEntity> saveData(
-      Credentials credentials, InvoiceEntity quote) async {
+    Credentials credentials,
+    InvoiceEntity quote,
+    EntityAction action,
+  ) async {
     quote = quote.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, quote);
+    String url;
     dynamic response;
 
     if (quote.isNew) {
-      response = await webClient.post(
-          credentials.url + '/quotes?include=history,activities',
-          credentials.token,
-          data: json.encode(data));
+      url = credentials.url + '/quotes?include=history,activities';
     } else {
-      final url =
-          '${credentials.url}/quotes/${quote.id}?include=history,activities';
+      url = '${credentials.url}/quotes/${quote.id}?include=history,activities';
+    }
+
+    if (action == EntityAction.convertToInvoice) {
+      url += '&convert=true';
+    } else if (action == EntityAction.markSent) {
+      url += '&mark_sent=true';
+    }
+
+    if (quote.isNew) {
+      response =
+          await webClient.post(url, credentials.token, data: json.encode(data));
+    } else {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

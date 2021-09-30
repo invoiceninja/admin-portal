@@ -135,7 +135,7 @@ abstract class InvoiceEntity extends Object
       balance: 0,
       paidToDate: 0,
       clientId: client?.id ?? '',
-      statusId: '',
+      statusId: kInvoiceStatusDraft,
       number: '',
       discount: 0,
       taxAmount: 0,
@@ -191,8 +191,7 @@ abstract class InvoiceEntity extends Object
       activities: BuiltList<ActivityEntity>(),
       invitations: client == null
           ? BuiltList<InvitationEntity>()
-          : BuiltList(client.contacts
-              .where((contact) => contact.sendEmail)
+          : BuiltList(client.emailContacts
               .map((contact) => InvitationEntity(contactId: contact.id))
               .toList()),
       updatedAt: 0,
@@ -462,7 +461,8 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(compare: false)
   BuiltList<ActivityEntity> get activities;
 
-  bool get isApproved => statusId == kQuoteStatusApproved;
+  bool get isApproved =>
+      [kQuoteStatusApproved, kQuoteStatusConverted].contains(statusId);
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 

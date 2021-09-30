@@ -83,6 +83,7 @@ class _WebhookEditState extends State<WebhookEdit> {
     final value = _headerValueController.text.trim();
 
     return EditScaffold(
+      entity: webhook,
       title: webhook.isNew ? localization.newWebhook : localization.editWebhook,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {

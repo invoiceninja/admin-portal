@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
@@ -117,7 +118,20 @@ class EditScaffold extends StatelessWidget {
           appBar: AppBar(
             centerTitle: false,
             automaticallyImplyLeading: isMobile(context),
-            title: Text(title),
+            title: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(title),
+                if (entity != null &&
+                    entity.isOld &&
+                    isDesktop(context) &&
+                    state.prefState.isEditorFullScreen(entity.entityType)) ...[
+                  SizedBox(width: 16),
+                  EntityStatusChip(
+                      entity: state.getEntity(entity.entityType, entity.id)),
+                ],
+              ],
+            ),
             actions: <Widget>[
               SaveCancelButtons(
                 isEnabled: isEnabled && onSavePressed != null,

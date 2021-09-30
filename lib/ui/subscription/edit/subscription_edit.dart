@@ -179,6 +179,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     final value = _postPurchaseHeaderValueController.text.trim();
 
     return EditScaffold(
+      entity: subscription,
       title: subscription.isNew
           ? localization.newSubscription
           : localization.editSubscription,

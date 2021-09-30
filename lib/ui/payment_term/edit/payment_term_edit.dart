@@ -74,6 +74,7 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
     final localization = AppLocalization.of(context);
 
     return EditScaffold(
+      entity: viewModel.paymentTerm,
       title: viewModel.paymentTerm.isNew
           ? localization.newPaymentTerm
           : localization.editPaymentTerm,

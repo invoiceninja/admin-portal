@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteEdit extends StatefulWidget {
@@ -43,7 +44,7 @@ class _QuoteEditState extends State<QuoteEdit>
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 4, initialIndex: index);
+    _controller = TabController(vsync: this, length: 5, initialIndex: index);
   }
 
   @override
@@ -95,11 +96,13 @@ class _QuoteEditState extends State<QuoteEdit>
       actions: [
         EntityAction.viewPdf,
         EntityAction.emailQuote,
+        if (!invoice.isSent) EntityAction.markSent,
+        if (false && !invoice.isApproved) EntityAction.convertToInvoice,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,
-        //isScrollable: true,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.details,
@@ -112,6 +115,9 @@ class _QuoteEditState extends State<QuoteEdit>
           ),
           Tab(
             text: localization.notes,
+          ),
+          Tab(
+            text: localization.pdf,
           ),
         ],
       ),
@@ -135,6 +141,7 @@ class _QuoteEditState extends State<QuoteEdit>
                     viewModel: widget.viewModel,
                   ),
                   QuoteEditNotesScreen(),
+                  QuoteEditPDFScreen(),
                 ],
               ),
       ),
