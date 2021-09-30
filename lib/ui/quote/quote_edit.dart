@@ -95,6 +95,7 @@ class _QuoteEditState extends State<QuoteEdit>
       actions: [
         EntityAction.viewPdf,
         EntityAction.emailQuote,
+        EntityAction.convertToInvoice,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
