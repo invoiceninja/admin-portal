@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
@@ -108,6 +109,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
+
           final state = store.state;
           final clientId = invoice.clientId;
           for (int i = 0; i < invoice.lineItems.length; i++) {
@@ -132,44 +134,55 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
               return null;
             }
           }
-          final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-          store.dispatch(SaveInvoiceRequest(
-            completer: completer,
-            invoice: invoice,
-            entityAction: action,
-          ));
-          return completer.future.then((savedInvoice) {
-            showToast(invoice.isNew
-                ? localization.createdInvoice
-                : localization.updatedInvoice);
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-              if (invoice.isNew) {
-                navigator.pushReplacementNamed(InvoiceViewScreen.route);
+          if (!hasInvoiceChanges(invoice, state.invoiceState.map) &&
+              [
+                EntityAction.emailInvoice,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+            handleEntityAction(invoice, action);
+          } else {
+            final Completer<InvoiceEntity> completer =
+                Completer<InvoiceEntity>();
+            store.dispatch(SaveInvoiceRequest(
+              completer: completer,
+              invoice: invoice,
+              entityAction: action,
+            ));
+            return completer.future.then((savedInvoice) {
+              showToast(invoice.isNew
+                  ? localization.createdInvoice
+                  : localization.updatedInvoice);
+
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+                if (invoice.isNew) {
+                  navigator.pushReplacementNamed(InvoiceViewScreen.route);
+                } else {
+                  navigator.pop(savedInvoice);
+                }
               } else {
-                navigator.pop(savedInvoice);
-              }
-            } else {
-              viewEntity(entity: savedInvoice);
+                viewEntity(entity: savedInvoice);
 
-              if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
-                editEntity(
-                    context: navigatorKey.currentContext, entity: savedInvoice);
-              }
+                if (state.prefState.isEditorFullScreen(EntityType.invoice)) {
+                  editEntity(
+                      context: navigatorKey.currentContext,
+                      entity: savedInvoice);
+                }
 
-              if ([EntityAction.emailInvoice, EntityAction.viewPdf]
-                  .contains(action)) {
-                handleEntityAction(savedInvoice, action);
+                if ([EntityAction.emailInvoice, EntityAction.viewPdf]
+                    .contains(action)) {
+                  handleEntityAction(savedInvoice, action);
+                }
               }
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          }
         });
       },
       onItemsAdded: (items, clientId) {

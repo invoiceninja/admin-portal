@@ -135,7 +135,7 @@ abstract class InvoiceEntity extends Object
       balance: 0,
       paidToDate: 0,
       clientId: client?.id ?? '',
-      statusId: '',
+      statusId: kInvoiceStatusDraft,
       number: '',
       discount: 0,
       taxAmount: 0,
