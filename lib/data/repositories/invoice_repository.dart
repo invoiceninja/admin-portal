@@ -71,14 +71,9 @@ class InvoiceRepository {
 
     if (invoice.isNew) {
       url = credentials.url + '/invoices?include=activities.history';
-
-      response =
-          await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
       url =
           '${credentials.url}/invoices/${invoice.id}?include=activities.history';
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     if (action == EntityAction.markPaid) {
