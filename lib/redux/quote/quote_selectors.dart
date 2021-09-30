@@ -54,6 +54,9 @@ List<String> filteredQuotesSelector(
     } else if (filterEntityType == EntityType.group &&
         client.groupId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.invoice &&
+        quote.invoiceId != filterEntityId) {
+      return false;
     }
 
     if (!quote.matchesStates(quoteListState.stateFilters)) {
