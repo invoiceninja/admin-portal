@@ -461,7 +461,8 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(compare: false)
   BuiltList<ActivityEntity> get activities;
 
-  bool get isApproved => statusId == kQuoteStatusApproved;
+  bool get isApproved =>
+      [kQuoteStatusApproved, kQuoteStatusConverted].contains(statusId);
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 
