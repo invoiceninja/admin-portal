@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
@@ -44,7 +45,7 @@ class _CreditEditState extends State<CreditEdit>
 
     final index =
         viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 4, initialIndex: index);
+    _controller = TabController(vsync: this, length: 5, initialIndex: index);
   }
 
   @override
@@ -100,7 +101,7 @@ class _CreditEditState extends State<CreditEdit>
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,
-        //isScrollable: true,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.details,
@@ -113,6 +114,9 @@ class _CreditEditState extends State<CreditEdit>
           ),
           Tab(
             text: localization.notes,
+          ),
+          Tab(
+            text: localization.pdf,
           ),
         ],
       ),
@@ -136,6 +140,7 @@ class _CreditEditState extends State<CreditEdit>
                     viewModel: widget.viewModel,
                   ),
                   CreditEditNotesScreen(),
+                  CreditEditPDFScreen(),
                 ],
               ),
       ),
