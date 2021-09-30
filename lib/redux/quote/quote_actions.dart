@@ -185,10 +185,15 @@ class DeleteQuoteItem implements PersistUI {
 }
 
 class SaveQuoteRequest implements StartSaving {
-  SaveQuoteRequest({this.completer, this.quote});
+  SaveQuoteRequest({
+    @required this.completer,
+    @required this.quote,
+    @required this.action,
+  });
 
   final Completer completer;
   final InvoiceEntity quote;
+  final EntityAction action;
 }
 
 class SaveQuoteSuccess implements StopSaving, PersistData, PersistUI {

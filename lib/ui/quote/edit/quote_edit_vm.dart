@@ -85,7 +85,11 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
             return null;
           }
           final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-          store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
+          store.dispatch(SaveQuoteRequest(
+            completer: completer,
+            quote: quote,
+            action: action,
+          ));
           return completer.future.then((savedQuote) {
             showToast(quote.isNew
                 ? localization.createdQuote
