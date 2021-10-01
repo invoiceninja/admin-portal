@@ -43,6 +43,7 @@ class AccountManagementVM {
     @required this.state,
     @required this.company,
     @required this.onCompanyChanged,
+    @required this.onSetPrimaryCompany,
     @required this.onSavePressed,
     @required this.onCompanyDelete,
     @required this.onPurgeData,
@@ -130,12 +131,18 @@ class AccountManagementVM {
         },
         onAppliedLicense: () {
           store.dispatch(RefreshData());
+        },
+        onSetPrimaryCompany: (context) {
+          final completer = snackBarCompleter<Null>(
+              context, AppLocalization.of(context).updatedCompany);
+          store.dispatch(SetDefaultCompanyRequest(completer: completer));
         });
   }
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
   final CompanyEntity company;
+  final Function(BuildContext) onSetPrimaryCompany;
   final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext, String, String, String) onCompanyDelete;
   final Function(BuildContext, String, String) onPurgeData;

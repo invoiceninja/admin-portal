@@ -29,6 +29,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   final recoverRequest = _createRecoverRequest(repository);
   final addCompany = _createCompany(repository);
   final deleteCompany = _deleteCompany(repository);
+  final setDefaultCompany = _setDefaultCompany(repository);
   final purgeData = _purgeData(repository);
   final resendConfirmation = _resendConfirmation(repository);
 
@@ -43,6 +44,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
     TypedMiddleware<AppState, RecoverPasswordRequest>(recoverRequest),
     TypedMiddleware<AppState, AddCompany>(addCompany),
     TypedMiddleware<AppState, DeleteCompanyRequest>(deleteCompany),
+    TypedMiddleware<AppState, SetDefaultCompanyRequest>(setDefaultCompany),
     TypedMiddleware<AppState, PurgeDataRequest>(purgeData),
     TypedMiddleware<AppState, ResendConfirmation>(resendConfirmation),
   ];
@@ -331,8 +333,8 @@ Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
       store.dispatch(RecoverPasswordSuccess());
       action.completer.complete(null);
     }).catchError((Object error) {
+      store.dispatch(RecoverPasswordFailure(error.toString()));
       if (action.completer != null) {
-        store.dispatch(RecoverPasswordFailure(error.toString()));
         action.completer.completeError(error);
       }
     });
@@ -359,6 +361,30 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
             action.completer.complete();
           }),
       ));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _setDefaultCompany(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as SetDefaultCompanyRequest;
+    final state = store.state;
+    final companyId = state.company.id;
+
+    repository
+        .setDefaultCompany(credentials: state.credentials, companyId: companyId)
+        .then((_) {
+      store.dispatch(SetDefaultCompanySuccess());
+      store.dispatch(RefreshData(allCompanies: true));
+      action.completer.complete();
+    }).catchError((Object error) {
+      store.dispatch(SetDefaultCompanyFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);

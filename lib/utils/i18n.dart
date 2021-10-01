@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'set_default_company': 'Set Default Company',
+      'updated_company': 'Successfully updated company',
       'kbc': 'KBC',
       'bancontact': 'Bancontact',
       'why_are_you_leaving': 'Help us improve by telling us why (optional)',
@@ -62649,6 +62651,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get whyAreYouLeaving =>
       _localizedValues[localeCode]['why_are_you_leaving'] ??
       _localizedValues['en']['why_are_you_leaving'];
+
+  String get updatedCompany =>
+      _localizedValues[localeCode]['updated_company'] ??
+      _localizedValues['en']['updated_company'];
+
+  String get setDefaultCompany =>
+      _localizedValues[localeCode]['set_default_company'] ??
+      _localizedValues['en']['set_default_company'];
 
   // STARTER: lang field - do not remove comment
 
