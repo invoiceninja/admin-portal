@@ -47,7 +47,7 @@ const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
     'https://app.swaggerhub.com/apis/invoiceninja/invoiceninja';
 const String kZapierURL =
-    'https://zapier.com/developer/public-invite/95884/5e4368b9efb9d377dc0a0b0465b7c1a7';
+    'https://zapier.com/developer/public-invite/95884/5e4368b9efb9d377dc0a0b0465b7c1a7/';
 const String kGatewayFeeHelpURL =
     'https://support.stripe.com/questions/passing-the-stripe-fee-on-to-customers';
 
