@@ -1436,17 +1436,17 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'client_contact_id')
   String get contactId;
 
-  @BuiltValueField(wireName: 'sent_date')
+  @BuiltValueField(wireName: 'sent_date', compare: false)
   String get sentDate;
 
-  @BuiltValueField(wireName: 'viewed_date')
+  @BuiltValueField(wireName: 'viewed_date', compare: false)
   String get viewedDate;
 
-  @BuiltValueField(wireName: 'opened_date')
+  @BuiltValueField(wireName: 'opened_date', compare: false)
   String get openedDate;
 
   @nullable
-  @BuiltValueField(wireName: 'email_status')
+  @BuiltValueField(wireName: 'email_status', compare: false)
   String get emailStatus;
 
   String get downloadLink =>
