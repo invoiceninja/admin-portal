@@ -2849,10 +2849,6 @@ class _$InvitationEntity extends InvitationEntity {
         key == other.key &&
         link == other.link &&
         contactId == other.contactId &&
-        sentDate == other.sentDate &&
-        viewedDate == other.viewedDate &&
-        openedDate == other.openedDate &&
-        emailStatus == other.emailStatus &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2877,19 +2873,9 @@ class _$InvitationEntity extends InvitationEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(0,
-                                                                    key.hashCode),
-                                                                link.hashCode),
-                                                            contactId.hashCode),
-                                                        sentDate.hashCode),
-                                                    viewedDate.hashCode),
-                                                openedDate.hashCode),
-                                            emailStatus.hashCode),
+                                            $jc($jc(0, key.hashCode),
+                                                link.hashCode),
+                                            contactId.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
