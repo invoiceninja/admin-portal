@@ -83,9 +83,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       } else if (entity.entityType == EntityType.expense) {
         final expense = entity as ExpenseEntity;
         items.add(convertExpenseToInvoiceItem(
-            expense: expense,
-            categoryMap: state.expenseCategoryState.map,
-            company: company));
+          expense: expense,
+          context: context,
+        ));
       }
     });
 

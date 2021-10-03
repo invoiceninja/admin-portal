@@ -1,16 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-List<InvoiceItemEntity> convertProjectToInvoiceItem(
-    {BuildContext context, ProjectEntity project}) {
+List<InvoiceItemEntity> convertProjectToInvoiceItem({
+  BuildContext context,
+  ProjectEntity project,
+}) {
   final List<InvoiceItemEntity> items = [];
   final state = StoreProvider.of<AppState>(context).state;
+
   final tasks = <TaskEntity>[];
   state.taskState.map.forEach((index, task) {
     if (task.isActive &&
@@ -21,15 +25,40 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem(
     }
   });
 
+  final expenses = <ExpenseEntity>[];
+  state.expenseState.map.forEach((index, expense) {
+    if (expense.isActive &&
+        expense.projectId == project.id &&
+        expense.isPending) {
+      expenses.add(expense);
+    }
+  });
+
   tasks.sort((taskA, taskB) {
     final taskADate = taskA.getTaskTimes().first.startDate;
     final taskBDate = taskB.getTaskTimes().first.startDate;
     return taskADate.compareTo(taskBDate);
   });
 
+  expenses.sort((expenseA, expenseB) {
+    return expenseA.date.compareTo(expenseB.date);
+  });
+
   for (var i = 0; i < tasks.length; i++) {
     final task = tasks[i];
     var item = convertTaskToInvoiceItem(task: task, context: context);
+
+    if (i == 0) {
+      item =
+          item.rebuild((b) => b.notes = '## ${project.name}\n\n${item.notes}');
+    }
+
+    items.add(item);
+  }
+
+  for (var i = 0; i < expenses.length; i++) {
+    final expense = expenses[i];
+    var item = convertExpenseToInvoiceItem(expense: expense, context: context);
 
     if (i == 0) {
       item =
