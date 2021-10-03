@@ -498,6 +498,8 @@ abstract class InvoiceEntity extends Object
 
   bool get hasTasks => lineItems.any((item) => item.isTask);
 
+  bool get hasProducts => lineItems.any((item) => !item.isTask);
+
   bool get hasExpenses => lineItems.any((item) => item.isExpense);
 
   @override
