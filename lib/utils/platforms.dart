@@ -81,6 +81,28 @@ String getPdfRequirements(BuildContext context) {
   }
 }
 
+String getPlatformLetter() {
+  if (kIsWeb) {
+    return 'C';
+  } else {
+    if (Platform.isIOS) {
+      return 'I';
+    } else if (Platform.isAndroid) {
+      return 'A';
+    } else if (Platform.isWindows) {
+      return 'W';
+    } else if (Platform.isLinux) {
+      return 'L';
+    } else if (Platform.isMacOS) {
+      return 'M';
+    } else if (Platform.isFuchsia) {
+      return 'F';
+    }
+  }
+
+  return 'U';
+}
+
 String getNativePlatform() {
   String userAgent = WebUtils.getHtmlValue('user-agent') ?? '';
   userAgent = userAgent.toLowerCase();
