@@ -440,12 +440,13 @@ Middleware<AppState> _createAccountLoaded() {
       NextDispatcher next) async {
     final action = dynamicAction as LoadAccountSuccess;
     final response = action.loginResponse;
-    final selectedCompanyIndex = store.state.uiState.selectedCompanyIndex;
     final loadedStaticData = response.static.currencies.isNotEmpty;
 
     if (loadedStaticData) {
       store.dispatch(LoadStaticSuccess(data: response.static));
     }
+
+    int selectedCompanyIndex = 0;
 
     try {
       print('## Account Loaded: ${response.userCompanies.length}');
@@ -462,6 +463,10 @@ Middleware<AppState> _createAccountLoaded() {
         store.dispatch(
             SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
         store.dispatch(LoadCompanySuccess(userCompany));
+
+        if (store.state.account.defaultCompanyId == userCompany.company.id) {
+          selectedCompanyIndex = i;
+        }
       }
     } catch (error) {
       action.completer?.completeError(error);
