@@ -580,6 +580,7 @@ abstract class GatewayEntity extends Object
       isOffsite: false,
       isVisible: false,
       options: BuiltMap<String, GatewayOptionsEntity>(),
+      siteUrl: '',
     );
   }
 
@@ -588,8 +589,6 @@ abstract class GatewayEntity extends Object
   @override
   @memoized
   int get hashCode;
-
-  static Serializer<GatewayEntity> get serializer => _$gatewayEntitySerializer;
 
   @override
   @BuiltValueField(wireName: 'key')
@@ -608,6 +607,9 @@ abstract class GatewayEntity extends Object
 
   @BuiltValueField(wireName: 'default_gateway_type_id')
   String get defaultGatewayTypeId;
+
+  @BuiltValueField(wireName: 'site_url')
+  String get siteUrl;
 
   @BuiltValueField(wireName: 'options')
   BuiltMap<String, GatewayOptionsEntity> get options;
@@ -703,6 +705,12 @@ abstract class GatewayEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+
+  // ignore: unused_element
+  static void _initializeBuilder(GatewayEntityBuilder builder) =>
+      builder..siteUrl = '';
+
+  static Serializer<GatewayEntity> get serializer => _$gatewayEntitySerializer;
 }
 
 abstract class GatewayOptionsEntity

@@ -781,6 +781,9 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
       'default_gateway_type_id',
       serializers.serialize(object.defaultGatewayTypeId,
           specifiedType: const FullType(String)),
+      'site_url',
+      serializers.serialize(object.siteUrl,
+          specifiedType: const FullType(String)),
       'options',
       serializers.serialize(object.options,
           specifiedType: const FullType(BuiltMap, const [
@@ -829,6 +832,10 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
           break;
         case 'default_gateway_type_id':
           result.defaultGatewayTypeId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'site_url':
+          result.siteUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'options':
@@ -2645,6 +2652,8 @@ class _$GatewayEntity extends GatewayEntity {
   @override
   final String defaultGatewayTypeId;
   @override
+  final String siteUrl;
+  @override
   final BuiltMap<String, GatewayOptionsEntity> options;
   @override
   final String fields;
@@ -2659,6 +2668,7 @@ class _$GatewayEntity extends GatewayEntity {
       this.isVisible,
       this.sortOrder,
       this.defaultGatewayTypeId,
+      this.siteUrl,
       this.options,
       this.fields})
       : super._() {
@@ -2672,6 +2682,7 @@ class _$GatewayEntity extends GatewayEntity {
         sortOrder, 'GatewayEntity', 'sortOrder');
     BuiltValueNullFieldError.checkNotNull(
         defaultGatewayTypeId, 'GatewayEntity', 'defaultGatewayTypeId');
+    BuiltValueNullFieldError.checkNotNull(siteUrl, 'GatewayEntity', 'siteUrl');
     BuiltValueNullFieldError.checkNotNull(options, 'GatewayEntity', 'options');
     BuiltValueNullFieldError.checkNotNull(fields, 'GatewayEntity', 'fields');
   }
@@ -2693,6 +2704,7 @@ class _$GatewayEntity extends GatewayEntity {
         isVisible == other.isVisible &&
         sortOrder == other.sortOrder &&
         defaultGatewayTypeId == other.defaultGatewayTypeId &&
+        siteUrl == other.siteUrl &&
         options == other.options &&
         fields == other.fields;
   }
@@ -2705,11 +2717,13 @@ class _$GatewayEntity extends GatewayEntity {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, id.hashCode), name.hashCode),
-                            isOffsite.hashCode),
-                        isVisible.hashCode),
-                    sortOrder.hashCode),
-                defaultGatewayTypeId.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), name.hashCode),
+                                isOffsite.hashCode),
+                            isVisible.hashCode),
+                        sortOrder.hashCode),
+                    defaultGatewayTypeId.hashCode),
+                siteUrl.hashCode),
             options.hashCode),
         fields.hashCode));
   }
@@ -2723,6 +2737,7 @@ class _$GatewayEntity extends GatewayEntity {
           ..add('isVisible', isVisible)
           ..add('sortOrder', sortOrder)
           ..add('defaultGatewayTypeId', defaultGatewayTypeId)
+          ..add('siteUrl', siteUrl)
           ..add('options', options)
           ..add('fields', fields))
         .toString();
@@ -2758,6 +2773,10 @@ class GatewayEntityBuilder
   set defaultGatewayTypeId(String defaultGatewayTypeId) =>
       _$this._defaultGatewayTypeId = defaultGatewayTypeId;
 
+  String _siteUrl;
+  String get siteUrl => _$this._siteUrl;
+  set siteUrl(String siteUrl) => _$this._siteUrl = siteUrl;
+
   MapBuilder<String, GatewayOptionsEntity> _options;
   MapBuilder<String, GatewayOptionsEntity> get options =>
       _$this._options ??= new MapBuilder<String, GatewayOptionsEntity>();
@@ -2768,7 +2787,9 @@ class GatewayEntityBuilder
   String get fields => _$this._fields;
   set fields(String fields) => _$this._fields = fields;
 
-  GatewayEntityBuilder();
+  GatewayEntityBuilder() {
+    GatewayEntity._initializeBuilder(this);
+  }
 
   GatewayEntityBuilder get _$this {
     final $v = _$v;
@@ -2779,6 +2800,7 @@ class GatewayEntityBuilder
       _isVisible = $v.isVisible;
       _sortOrder = $v.sortOrder;
       _defaultGatewayTypeId = $v.defaultGatewayTypeId;
+      _siteUrl = $v.siteUrl;
       _options = $v.options.toBuilder();
       _fields = $v.fields;
       _$v = null;
@@ -2817,6 +2839,8 @@ class GatewayEntityBuilder
                   defaultGatewayTypeId,
                   'GatewayEntity',
                   'defaultGatewayTypeId'),
+              siteUrl: BuiltValueNullFieldError.checkNotNull(
+                  siteUrl, 'GatewayEntity', 'siteUrl'),
               options: options.build(),
               fields: BuiltValueNullFieldError.checkNotNull(
                   fields, 'GatewayEntity', 'fields'));
