@@ -1211,6 +1211,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
             data: json.encode({
               'message': _message,
               'send_logs': _includeLogs ? 'true' : '',
+              'platform': getPlatformLetter(),
             }))
         .then((dynamic response) async {
       setState(() => _isSaving = false);
@@ -1278,15 +1279,17 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                     onChanged: (value) => _message = value,
                     keyboardType: TextInputType.multiline,
                   ),
-                  SizedBox(height: 10),
-                  SwitchListTile(
-                    value: _includeLogs,
-                    onChanged: (value) {
-                      setState(() => _includeLogs = value);
-                    },
-                    title: Text(localization.includeRecentErrors),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+                  if (state.isSelfHosted) ...[
+                    SizedBox(height: 10),
+                    SwitchListTile(
+                      value: _includeLogs,
+                      onChanged: (value) {
+                        setState(() => _includeLogs = value);
+                      },
+                      title: Text(localization.includeRecentErrors),
+                      activeColor: Theme.of(context).accentColor,
+                    ),
+                  ]
                 ]),
           ),
         ),

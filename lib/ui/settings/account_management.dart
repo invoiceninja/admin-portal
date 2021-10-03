@@ -321,6 +321,15 @@ class _AccountOverview extends StatelessWidget {
           secondValue: secondValue,
           message: account.isTrial ? localization.freeTrialHelp : null,
         ),
+        if (state.company.id != state.account.defaultCompanyId)
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+            child: AppButton(
+              iconData: Icons.business,
+              label: localization.setDefaultCompany.toUpperCase(),
+              onPressed: () => viewModel.onSetPrimaryCompany(context),
+            ),
+          ),
         if (state.userCompany.ninjaPortalUrl.isNotEmpty &&
             !isApple() &&
             state.isHosted)

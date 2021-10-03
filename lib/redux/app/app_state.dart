@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:invoiceninja_flutter/.env.dart';
@@ -85,6 +84,7 @@ import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 part 'app_state.g.dart';
@@ -219,22 +219,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       version += '-';
     }
 
-    if (kIsWeb) {
-      version += 'C';
-    } else {
-      if (Platform.isIOS) {
-        version += 'I';
-      } else if (Platform.isAndroid) {
-        version += 'A';
-      } else if (Platform.isWindows) {
-        version += 'W';
-      } else if (Platform.isLinux) {
-        version += 'L';
-      } else if (Platform.isMacOS) {
-        version += 'M';
-      }
-    }
-
+    version += getPlatformLetter();
     version += kClientVersion.split('.').last;
 
     return version;

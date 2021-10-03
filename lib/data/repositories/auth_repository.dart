@@ -141,6 +141,14 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
+  Future<void> setDefaultCompany({
+    @required Credentials credentials,
+    @required String companyId,
+  }) async {
+    final url = '${credentials.url}/companies/$companyId/default';
+    return webClient.post(url, credentials.token);
+  }
+
   Future<dynamic> addCompany({
     @required Credentials credentials,
   }) async {

@@ -128,3 +128,19 @@ class SaveCompanyDocumentFailure implements StopSaving {
 
   final Object error;
 }
+
+class SetDefaultCompanyRequest implements StartSaving {
+  SetDefaultCompanyRequest({
+    @required this.completer,
+  });
+
+  final Completer completer;
+}
+
+class SetDefaultCompanySuccess implements StopSaving {}
+
+class SetDefaultCompanyFailure implements StopSaving {
+  SetDefaultCompanyFailure(this.error);
+
+  final Object error;
+}
