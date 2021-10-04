@@ -74,21 +74,25 @@ class _EntityListTileState extends State<EntityListTile> {
           : handleEntityAction(widget.entity, action),
     );
 
-    final trailing = IgnorePointer(
-      ignoring: !isHovered || widget.isFilter,
-      child: IconButton(
-        icon: Icon(isHovered ||
-                widget.isFilter ||
-                isMobile(context) ||
-                state.uiState.previewStack.isNotEmpty
-            ? Icons.chevron_right
-            : Icons.filter_list),
-        onPressed: () => viewEntity(
-          entity: widget.entity,
-          addToStack: isDesktop(context) && !widget.isFilter,
-        ),
-      ),
-    );
+    // we may have the id (so it's not considered new) but it hasn't yet been
+    // created in the backend. ie, the invoice after converting a quote
+    final trailing = widget.entity.createdAt == 0
+        ? null
+        : IgnorePointer(
+            ignoring: !isHovered || widget.isFilter,
+            child: IconButton(
+              icon: Icon(isHovered ||
+                      widget.isFilter ||
+                      isMobile(context) ||
+                      state.uiState.previewStack.isNotEmpty
+                  ? Icons.chevron_right
+                  : Icons.filter_list),
+              onPressed: () => viewEntity(
+                entity: widget.entity,
+                addToStack: isDesktop(context) && !widget.isFilter,
+              ),
+            ),
+          );
 
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),

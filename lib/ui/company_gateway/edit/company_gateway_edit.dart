@@ -460,6 +460,7 @@ class GatewayConfigSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = viewModel.state;
+    final localization = AppLocalization.of(context);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
 
     if (gateway == null) {
@@ -467,7 +468,23 @@ class GatewayConfigSettings extends StatelessWidget {
     }
 
     return Column(
-        children: gateway.parsedFields.keys
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (gateway.siteUrl.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: OutlinedButton(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: IconText(
+                  icon: MdiIcons.openInNew,
+                  text: localization.learnMore.toUpperCase(),
+                ),
+              ),
+              onPressed: () => launch(gateway.siteUrl),
+            ),
+          ),
+        ...gateway.parsedFields.keys
             .map((field) => GatewayConfigField(
                   field: field,
                   value: companyGateway.parsedConfig[field],
@@ -478,7 +495,9 @@ class GatewayConfigSettings extends StatelessWidget {
                         .onChanged(companyGateway.updateConfig(field, value));
                   },
                 ))
-            .toList());
+            .toList()
+      ],
+    );
   }
 }
 

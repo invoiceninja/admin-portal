@@ -169,7 +169,7 @@ class ExpenseListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        formatNumber(expense.amount, context,
+                        formatNumber(expense.grossAmount, context,
                             currencyId: expense.currencyId),
                         style: textStyle,
                         textAlign: TextAlign.end,

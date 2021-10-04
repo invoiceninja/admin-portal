@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
@@ -8,9 +10,12 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 InvoiceItemEntity convertExpenseToInvoiceItem({
   @required ExpenseEntity expense,
-  @required BuiltMap<String, ExpenseCategoryEntity> categoryMap,
-  @required CompanyEntity company,
+  @required BuildContext context,
 }) {
+  final state = StoreProvider.of<AppState>(context).state;
+  final company = state.company;
+  final categoryMap = state.expenseCategoryState.map;
+
   return InvoiceItemEntity().rebuild((b) => b
     ..typeId = InvoiceItemEntity.TYPE_EXPENSE
     ..expenseId = expense.id

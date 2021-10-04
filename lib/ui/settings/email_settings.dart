@@ -229,6 +229,37 @@ class _EmailSettingsState extends State<EmailSettings> {
                 hint: localization.commaSeparatedList,
                 onSavePressed: viewModel.onSavePressed,
               ),
+              AppDropdownButton<int>(
+                  showBlank: true,
+                  showUseDefault: true,
+                  labelText: localization.sendTime,
+                  value: settings.entitySendTime,
+                  blankValue: null,
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..entitySendTime = value)),
+                  items: List<int>.generate(24, (i) => i).map((value) {
+                    final hour = value + 1;
+                    String timeLabel;
+                    if (viewModel.state.company.settings.enableMilitaryTime) {
+                      timeLabel = '$hour:00';
+                    } else {
+                      if (hour > 12) {
+                        timeLabel = '${hour - 12}:00 ';
+                      } else {
+                        timeLabel = '$hour:00 ';
+                      }
+
+                      if (hour < 12 || hour == 24) {
+                        timeLabel += 'AM';
+                      } else {
+                        timeLabel += 'PM';
+                      }
+                    }
+                    return DropdownMenuItem(
+                      child: Text(timeLabel),
+                      value: hour,
+                    );
+                  }).toList()),
               /*
               SizedBox(height: 10),
               BoolDropdownButton(
@@ -291,38 +322,6 @@ class _EmailSettingsState extends State<EmailSettings> {
           FormCard(
             isLast: true,
             children: <Widget>[
-              AppDropdownButton<int>(
-                  showBlank: true,
-                  showUseDefault: true,
-                  labelText: localization.sendTime,
-                  value: settings.entitySendTime,
-                  blankValue: null,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..entitySendTime = value)),
-                  items: List<int>.generate(24, (i) => i).map((value) {
-                    final hour = value + 1;
-                    String timeLabel;
-                    if (viewModel.state.company.settings.enableMilitaryTime) {
-                      timeLabel = '$hour:00';
-                    } else {
-                      if (hour > 12) {
-                        timeLabel = '${hour - 12}:00 ';
-                      } else {
-                        timeLabel = '$hour:00 ';
-                      }
-
-                      if (hour < 12 || hour == 24) {
-                        timeLabel += 'AM';
-                      } else {
-                        timeLabel += 'PM';
-                      }
-                    }
-                    return DropdownMenuItem(
-                      child: Text(timeLabel),
-                      value: hour,
-                    );
-                  }).toList()),
-              SizedBox(height: 12),
               BoolDropdownButton(
                 label: localization.attachPdf,
                 value: settings.pdfEmailAttachment,

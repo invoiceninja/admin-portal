@@ -1271,6 +1271,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    autofocus: true,
                     decoration: InputDecoration(
                       labelText: localization.message,
                     ),

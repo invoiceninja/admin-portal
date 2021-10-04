@@ -673,6 +673,7 @@ abstract class ActivityEntity
       kActivityEmailReminder2,
       kActivityEmailReminder3,
       kActivityEmailReminderEndless,
+      kActivityEmailInvoiceFailed,
     ].contains(activityTypeId)) {
       return EntityType.invoice;
     } else if ([
@@ -763,7 +764,8 @@ abstract class ActivityEntity
   }
 
   String getDescription(
-    String activity, {
+    String activity,
+    String systemString, {
     UserEntity user,
     ClientEntity client,
     InvoiceEntity invoice,
@@ -781,7 +783,8 @@ abstract class ActivityEntity
           .firstWhere((contact) => contact.id == contactId, orElse: () => null);
     }
 
-    activity = activity.replaceFirst(':user', user?.listDisplayName ?? '');
+    activity =
+        activity.replaceFirst(':user', user?.listDisplayName ?? systemString);
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.number ?? '');
     activity =

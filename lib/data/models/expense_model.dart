@@ -732,7 +732,13 @@ abstract class ExpenseEntity extends Object
 
   bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 
-  bool get isPending => !isInvoiced && shouldBeInvoiced;
+  bool get isPending {
+    if (isRecurring) {
+      return statusId == kRecurringExpenseStatusPending;
+    } else {
+      return !isInvoiced && shouldBeInvoiced;
+    }
+  }
 
   bool get isConverted => exchangeRate != 1 && exchangeRate != 0;
 

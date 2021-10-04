@@ -245,7 +245,6 @@ void handleExpenseAction(
     BuildContext context, List<BaseEntity> expenses, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final expense = expenses.first as ExpenseEntity;
   final expenseIds = expenses.map((expense) => expense.id).toList();
@@ -277,8 +276,7 @@ void handleExpenseAction(
           })
           .map((expense) => convertExpenseToInvoiceItem(
                 expense: expense,
-                categoryMap: state.expenseCategoryState.map,
-                company: company,
+                context: context,
               ))
           .toList();
       if (items.isNotEmpty) {
