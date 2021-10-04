@@ -242,16 +242,6 @@ class FilterProjectsByCustom4 implements PersistUI {
 
 void handleProjectAction(
     BuildContext context, List<BaseEntity> projects, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          projects.length == 1,
-      'Cannot perform this action on more than one project');
-
   if (projects.isEmpty) {
     return;
   }
@@ -275,8 +265,11 @@ void handleProjectAction(
             ..clientId = project.clientId));
       break;
     case EntityAction.invoiceProject:
-      final items =
-          convertProjectToInvoiceItem(project: project, context: context);
+      final items = <InvoiceItemEntity>[];
+      projects.forEach((project) {
+        items.addAll(
+            convertProjectToInvoiceItem(project: project, context: context));
+      });
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state, client: client)

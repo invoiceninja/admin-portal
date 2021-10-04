@@ -166,28 +166,27 @@ abstract class ProjectEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!multiselect) {
-      if (!isDeleted) {
-        if (includeEdit && userCompany.canEditEntity(this)) {
-          actions.add(EntityAction.edit);
-        }
-
-        if (isActive && client?.isActive == true) {
-          if (userCompany.canCreate(EntityType.task)) {
-            actions.add(EntityAction.newTask);
-          }
-          if (userCompany.canCreate(EntityType.expense)) {
-            actions.add(EntityAction.newExpense);
-          }
-          if (userCompany.canCreate(EntityType.invoice)) {
-            actions.add(EntityAction.invoiceProject);
-          }
-        }
+    if (!multiselect && !isDeleted) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
       }
 
-      if (userCompany.canCreate(EntityType.project)) {
-        actions.add(EntityAction.clone);
+      if (isActive) {
+        if (userCompany.canCreate(EntityType.task)) {
+          actions.add(EntityAction.newTask);
+        }
+        if (userCompany.canCreate(EntityType.expense)) {
+          actions.add(EntityAction.newExpense);
+        }
       }
+    }
+
+    if (userCompany.canCreate(EntityType.invoice) && !isDeleted) {
+      actions.add(EntityAction.invoiceProject);
+    }
+
+    if (userCompany.canCreate(EntityType.project)) {
+      actions.add(EntityAction.clone);
     }
 
     if (actions.isNotEmpty && actions.last != null) {
