@@ -1,17 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -53,13 +59,39 @@ class InvoiceDesignVM {
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
-        onSavePressed: (context) {
+        onSavePressed: (context, entityTypes) {
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
             switch (settingsUIState.entityType) {
               case EntityType.company:
                 final completer = snackBarCompleter<Null>(
-                    context, AppLocalization.of(context).savedSettings);
+                    context, AppLocalization.of(context).savedSettings)
+                  ..future.then((value) {
+                    final webClient = WebClient();
+                    final credentials = state.credentials;
+                    final url = '${credentials.url}/designs/set/default';
+                    final settings = store.state.company.settings;
+                    entityTypes.forEach((entityType) {
+                      webClient
+                          .post(
+                        url,
+                        credentials.token,
+                        data: json.encode({
+                          'entity': entityType.snakeCase,
+                          'design_id': settings.getDesignId(entityType),
+                        }),
+                      )
+                          .then((dynamic response) {
+                        showToast(
+                            AppLocalization.of(navigatorKey.currentContext)
+                                .savedSettings);
+                      }).catchError((dynamic error) {
+                        showErrorDialog(
+                            context: navigatorKey.currentContext,
+                            message: '$error');
+                      });
+                    });
+                  });
                 store.dispatch(SaveCompanyRequest(
                     completer: completer, company: settingsUIState.company));
                 break;
@@ -84,5 +116,5 @@ class InvoiceDesignVM {
   final SettingsEntity settings;
   final CompanyEntity company;
   final Function(SettingsEntity) onSettingsChanged;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext, List<EntityType>) onSavePressed;
 }

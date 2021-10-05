@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'update_all_records': 'Update all records',
       'system': 'System',
       'set_default_company': 'Set Default Company',
       'updated_company': 'Successfully updated company',
@@ -62664,6 +62665,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get system =>
       _localizedValues[localeCode]['system'] ??
       _localizedValues['en']['system'];
+
+  String get updateAllRecords =>
+      _localizedValues[localeCode]['update_all_records'] ??
+      _localizedValues['en']['update_all_records'];
 
   // STARTER: lang field - do not remove comment
 

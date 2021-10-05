@@ -819,6 +819,21 @@ abstract class SettingsEntity
     }
   }
 
+  String getDesignId(EntityType entityType) {
+    switch (entityType) {
+      case EntityType.invoice:
+        return defaultInvoiceDesignId;
+      case EntityType.quote:
+        return defaultQuoteDesignId;
+      case EntityType.credit:
+        return defaultCreditDesignId;
+    }
+
+    print('## Error: unhandled entity type: $entityType for design id');
+
+    return '';
+  }
+
   String getDefaultTerms(EntityType entityType) {
     switch (entityType) {
       case EntityType.invoice:
