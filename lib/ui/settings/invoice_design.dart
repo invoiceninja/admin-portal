@@ -155,7 +155,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             (b) => b..defaultInvoiceDesignId = value.id));
                       },
                     ),
-                    if (!isFiltered && _wasInvoiceDesignChanged)
+                    if (!isFiltered &&
+                        _wasInvoiceDesignChanged &&
+                        state.userCompany.isAdmin)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
@@ -180,7 +182,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             (b) => b..defaultQuoteDesignId = value.id));
                       },
                     ),
-                    if (!isFiltered && _wasQuoteDesignChanged)
+                    if (!isFiltered &&
+                        _wasQuoteDesignChanged &&
+                        state.userCompany.isAdmin)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
@@ -205,7 +209,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             (b) => b..defaultCreditDesignId = value.id));
                       },
                     ),
-                    if (!isFiltered && _wasCreditDesignChanged)
+                    if (!isFiltered &&
+                        _wasCreditDesignChanged &&
+                        state.userCompany.isAdmin)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
