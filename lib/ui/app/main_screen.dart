@@ -697,7 +697,7 @@ class EntityScreens extends StatelessWidget {
                   Expanded(
                     child: AppBorder(
                       child: child,
-                      isTop: isFullScreen,
+                      isTop: isFullScreen && uiState.filterEntityType != null,
                     ),
                   ),
                 ],
