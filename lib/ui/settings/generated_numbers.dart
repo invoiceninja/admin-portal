@@ -60,10 +60,11 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       EntityType.quote,
       EntityType.credit,
       EntityType.recurringInvoice,
+      EntityType.project,
       EntityType.task,
       EntityType.vendor,
       EntityType.expense,
-      EntityType.project,
+      EntityType.recurringExpense,
     ].forEach((entityType) {
       if (company.isModuleEnabled(entityType)) {
         tabs++;
@@ -135,10 +136,11 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       settings.quoteNumberPattern,
       settings.creditNumberPattern,
       settings.recurringInvoiceNumberPattern,
+      settings.projectNumberPattern,
       settings.taskNumberPattern,
       settings.vendorNumberPattern,
       settings.expenseNumberPattern,
-      settings.projectNumberPattern,
+      settings.recurringExpenseNumberPattern,
     ];
 
     bool isValid = true;
@@ -226,6 +228,10 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           if (company.isModuleEnabled(EntityType.expense))
             Tab(
               text: localization.expenses,
+            ),
+          if (company.isModuleEnabled(EntityType.recurringExpense))
+            Tab(
+              text: localization.recurringExpenses,
             ),
         ],
       ),
@@ -423,6 +429,17 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                   viewModel.onSettingsChanged(settings.rebuild((b) => b
                     ..expenseNumberCounter = counter
                     ..expenseNumberPattern = pattern)),
+            ),
+          if (company.isModuleEnabled(EntityType.recurringExpense))
+            EntityNumberSettings(
+              showClientFields: false,
+              showVendorFields: false,
+              counterValue: settings.recurringExpenseNumberCounter,
+              patternValue: settings.recurringExpenseNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..recurringExpenseNumberCounter = counter
+                    ..recurringExpenseNumberPattern = pattern)),
             ),
         ],
       ),
