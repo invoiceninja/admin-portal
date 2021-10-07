@@ -108,7 +108,7 @@ const double kTabletDialogPadding = 250;
 const double kTableColumnWidthMin = 40;
 const double kTableColumnWidthMax = 120;
 
-const int kTableListWidthCutoff = 500;
+const int kTableListWidthCutoff = 550;
 const int kDefaultAnimationDuration = 500;
 
 const int kCardTypeVisa = 1;
@@ -139,6 +139,7 @@ const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;
 const int kMaxPostSeconds = 30;
 const int kMaxRawPostSeconds = 180;
+const int kMaxEntitiesPerBulkAction = 100;
 const int kMillisecondsToTimerRefreshData = 1000 * 60 * 5; // 5 minutes
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kUpdatedAtBufferSeconds = 600;
@@ -245,6 +246,7 @@ const String kGatewayTypeSEPA = '9';
 const String kGatewayTypeCredit = '10';
 const String kGatewayTypeKBC = '11';
 const String kGatewayTypeBancontact = '12';
+const String kGatewayTypeIDeal = '13';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -257,6 +259,7 @@ const kGatewayTypes = {
   kGatewayTypeApplePay: 'apple_pay',
   kGatewayTypeKBC: 'kbc',
   kGatewayTypeBancontact: 'bancontact',
+  kGatewayTypeIDeal: 'ideal',
 };
 
 const String kNotificationChannelEmail = 'email';

@@ -14,23 +14,21 @@ import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 double round(double value, int precision) {
-  var rounded = value;
-
-  // Workaround for floating point issues: ie. .75 * 55.3 => 41.4749999999
-  if ('$value'.contains('9999999')) {
-    rounded = _round(value, precision + 1);
-  }
-
-  return _round(rounded, precision);
-}
-
-double _round(double value, int precision) {
   if (value == null || value.isNaN) {
     return 0;
   }
 
   final int fac = pow(10, precision);
-  return (value * fac).round() / fac;
+  double result = value * fac;
+
+  // Workaround for floating point issues:
+  // ie. 35 * 1.107 => 38.745
+  // ie. .75 * 55.3 => 41.4749999999
+  if ('$result'.contains('999999')) {
+    result += 0.000001;
+  }
+
+  return result.round() / fac;
 }
 
 int parseInt(String value, {bool zeroIsNull = false}) {

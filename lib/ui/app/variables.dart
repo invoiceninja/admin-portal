@@ -33,7 +33,7 @@ class _VariablesHelpState extends State<VariablesHelp>
   void initState() {
     super.initState();
     _controller =
-        TabController(vsync: this, length: widget.showEmailVariables ? 6 : 5);
+        TabController(vsync: this, length: widget.showEmailVariables ? 5 : 4);
   }
 
   @override
@@ -62,7 +62,6 @@ class _VariablesHelpState extends State<VariablesHelp>
             Tab(child: Text(localization.client)),
             Tab(child: Text(localization.contact)),
             Tab(child: Text(localization.company)),
-            Tab(child: Text(localization.user)),
             if (widget.showEmailVariables) Tab(child: Text(localization.email)),
           ],
         ),
@@ -75,6 +74,8 @@ class _VariablesHelpState extends State<VariablesHelp>
                 fields: [
                   'view_button', // TODO change to email variables
                   'view_url',
+                  'created_by_user',
+                  'assigned_to_user',
                   if (widget.showInvoiceAsQuote) ...[
                     QuoteFields.amount,
                     QuoteFields.discount,
@@ -184,22 +185,6 @@ class _VariablesHelpState extends State<VariablesHelp>
                   if (company.hasCustomField(CustomFieldType.company4))
                     CompanyFields.custom4,
                 ].map((field) => 'company.$field').toList(),
-              ),
-              _VariableGrid(
-                fields: [
-                  UserFields.firstName,
-                  UserFields.lastName,
-                  UserFields.phone,
-                  UserFields.email,
-                  if (company.hasCustomField(CustomFieldType.user1))
-                    UserFields.custom1,
-                  if (company.hasCustomField(CustomFieldType.user2))
-                    UserFields.custom2,
-                  if (company.hasCustomField(CustomFieldType.user3))
-                    UserFields.custom3,
-                  if (company.hasCustomField(CustomFieldType.user4))
-                    UserFields.custom4,
-                ].map((field) => 'user.$field').toList(),
               ),
               if (widget.showEmailVariables) SizedBox(),
             ],

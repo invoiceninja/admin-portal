@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -44,6 +45,10 @@ class ProductRepository {
 
   Future<List<ProductEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
+    if (ids.length > kMaxEntitiesPerBulkAction) {
+      ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
+    }
+
     final url = credentials.url + '/products/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));

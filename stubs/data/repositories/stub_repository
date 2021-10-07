@@ -38,6 +38,10 @@ class StubRepository {
   
     Future<List<StubEntity>> bulkAction(
         Credentials credentials, List<String> ids, EntityAction action) async {
+        if (ids.length > kMaxEntitiesPerBulkAction) {
+          ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
+      }
+
         final url = credentials.url + '/stubs/bulk';
         final dynamic response = await webClient.post(url, credentials.token,
             data: json.encode({'ids': ids, 'action': action.toApiParam()}));

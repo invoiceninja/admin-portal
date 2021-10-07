@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
@@ -35,7 +36,6 @@ class EntityList extends StatefulWidget {
     @required this.onSortColumn,
     @required this.itemBuilder,
     @required this.onClearMultiselect,
-    this.onPageChanged,
     this.presenter,
     this.tableColumns,
   }) : super(key: ValueKey('__${entityType}_${tableColumns}__'));
@@ -47,7 +47,6 @@ class EntityList extends StatefulWidget {
   final Function(BuildContext) onRefreshed;
   final EntityPresenter presenter;
   final Function(String) onSortColumn;
-  final Function(int) onPageChanged;
   final Function(BuildContext, int) itemBuilder;
   final Function onClearMultiselect;
 
@@ -57,6 +56,8 @@ class EntityList extends StatefulWidget {
 
 class _EntityListState extends State<EntityList> {
   EntityDataTableSource dataTableSource;
+
+  int _firstRowIndex = 0;
 
   @override
   void initState() {
@@ -79,6 +80,15 @@ class _EntityListState extends State<EntityList> {
       onTap: (BaseEntity entity) =>
           selectEntity(entity: entity, context: context),
     );
+
+    // make sure the initial page shows the selected record
+    final entityUIState = state.getUIState(entityType);
+    final selectedIndex = widget.entityList.indexOf(entityUIState.selectedId);
+    final rowsPerPage = state.prefState.rowsPerPage;
+
+    if (selectedIndex >= 0) {
+      _firstRowIndex = (selectedIndex / rowsPerPage).floor() * rowsPerPage;
+    }
   }
 
   @override
@@ -198,12 +208,7 @@ class _EntityListState extends State<EntityList> {
           return SizedBox();
         }
 
-        // make sure the initial page shows the selected record
-        final entityUIState = state.getUIState(entityType);
-        final selectedIndex =
-            widget.entityList.indexOf(entityUIState.selectedId);
         final rowsPerPage = state.prefState.rowsPerPage;
-
         final listStateHash = listUIState.custom1Filters.hashCode ^
             listUIState.custom2Filters.hashCode ^
             listUIState.custom3Filters.hashCode ^
@@ -214,12 +219,6 @@ class _EntityListState extends State<EntityList> {
             listUIState.filter.hashCode ^
             listUIState.sortAscending.hashCode ^
             listUIState.sortField.hashCode;
-
-        int initialFirstRowIndex = 0;
-        if (selectedIndex >= 0) {
-          initialFirstRowIndex =
-              (selectedIndex / rowsPerPage).floor() * rowsPerPage;
-        }
 
         return Column(
           mainAxisSize: MainAxisSize.max,
@@ -245,11 +244,16 @@ class _EntityListState extends State<EntityList> {
                     key: ValueKey(
                         '__${uiState.filterEntityId}_${uiState.filterEntityType}_${listStateHash}__'),
                     onSelectAll: (value) {
+                      final startIndex =
+                          min(_firstRowIndex, entityList.length - 1);
+                      final endIndex =
+                          min(_firstRowIndex + rowsPerPage, entityList.length);
                       final entities = entityList
-                          .map((String entityId) => entityMap[entityId])
+                          .sublist(startIndex, endIndex)
+                          .map<BaseEntity>(
+                              (String entityId) => entityMap[entityId])
                           .where((invoice) =>
                               value != listUIState.isSelected(invoice.id))
-                          .map((entity) => entity as BaseEntity)
                           .toList();
                       handleEntitiesActions(
                           entities, EntityAction.toggleMultiselect);
@@ -287,8 +291,8 @@ class _EntityListState extends State<EntityList> {
                             : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
-                    onPageChanged: widget.onPageChanged,
-                    initialFirstRowIndex: initialFirstRowIndex,
+                    onPageChanged: (row) => _firstRowIndex = row,
+                    initialFirstRowIndex: _firstRowIndex,
                   ),
                 ),
               ),
@@ -339,9 +343,10 @@ class _EntityListState extends State<EntityList> {
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
                           onChanged: (value) {
+                            final endIndex = min(
+                                entityList.length, state.prefState.rowsPerPage);
                             final entities = entityList
-                                .where((entityId) =>
-                                    value != listUIState.isSelected(entityId))
+                                .sublist(0, endIndex)
                                 .map<BaseEntity>(
                                     (entityId) => entityMap[entityId])
                                 .toList();

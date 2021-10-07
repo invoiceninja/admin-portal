@@ -5,6 +5,12 @@
         <!-- Show a splash screen on the activity. Automatically removed when
              Flutter draws its first frame -->
         <item name="android:windowBackground">@drawable/launch_background</item>
+
+        <!-- https://github.com/flutter/flutter/issues/16810#issuecomment-416962229 -->
+        <item name="android:defaultFocusHighlightEnabled">false</item>
+
+        <!-- https://github.com/fluttercommunity/flutter_webview_plugin/issues/909#issuecomment-867707222 -->
+        <item name="android:forceDarkAllowed">false</item>
     </style>
     <!-- Theme applied to the Android Window as soon as the process has started.
          This theme determines the color of the Android Window while your
