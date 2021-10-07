@@ -246,6 +246,7 @@ const String kGatewayTypeSEPA = '9';
 const String kGatewayTypeCredit = '10';
 const String kGatewayTypeKBC = '11';
 const String kGatewayTypeBancontact = '12';
+const String kGatewayTypeIDeal = '13';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -258,6 +259,7 @@ const kGatewayTypes = {
   kGatewayTypeApplePay: 'apple_pay',
   kGatewayTypeKBC: 'kbc',
   kGatewayTypeBancontact: 'bancontact',
+  kGatewayTypeIDeal: 'ideal',
 };
 
 const String kNotificationChannelEmail = 'email';
