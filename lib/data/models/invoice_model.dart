@@ -1010,7 +1010,7 @@ abstract class InvoiceEntity extends Object
   }
 
   bool get isPastDue {
-    if (dueDate.isEmpty) {
+    if (dueDate.isEmpty || balance == 0) {
       return false;
     }
 
