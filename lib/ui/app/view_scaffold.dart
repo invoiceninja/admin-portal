@@ -72,7 +72,7 @@ class ViewScaffold extends StatelessWidget {
             tooltip: localization.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
-      } else if (isDesktop(context)) {
+      } else if (isDesktop(context) && !entity.entityType.isSetting) {
         leading = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {

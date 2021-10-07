@@ -243,6 +243,14 @@ abstract class SettingsEntity
   int get expenseNumberCounter;
 
   @nullable
+  @BuiltValueField(wireName: 'recurring_expense_number_pattern')
+  String get recurringExpenseNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'recurring_expense_number_counter')
+  int get recurringExpenseNumberCounter;
+
+  @nullable
   @BuiltValueField(wireName: 'vendor_number_pattern')
   String get vendorNumberPattern;
 
