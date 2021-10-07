@@ -139,6 +139,7 @@ const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;
 const int kMaxPostSeconds = 30;
 const int kMaxRawPostSeconds = 180;
+const int kMaxEntitiesPerBulkAction = 100;
 const int kMillisecondsToTimerRefreshData = 1000 * 60 * 5; // 5 minutes
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kUpdatedAtBufferSeconds = 600;
