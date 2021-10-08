@@ -257,6 +257,8 @@ const kGatewayTypes = {
   kGatewayTypeAlipay: 'alipay',
   kGatewayTypeSofort: 'sofort',
   kGatewayTypeApplePay: 'apple_pay',
+  kGatewayTypeSEPA: 'sepa',
+  kGatewayTypeCredit: 'credit',
   kGatewayTypeKBC: 'kbc',
   kGatewayTypeBancontact: 'bancontact',
   kGatewayTypeIDeal: 'ideal',
