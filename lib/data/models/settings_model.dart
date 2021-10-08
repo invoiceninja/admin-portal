@@ -29,6 +29,18 @@ abstract class SettingsEntity
       defaultInvoiceFooter: clientSettings?.defaultInvoiceFooter ??
           groupSettings?.defaultInvoiceFooter ??
           companySettings?.defaultInvoiceFooter,
+      defaultQuoteTerms: clientSettings?.defaultQuoteTerms ??
+          groupSettings?.defaultQuoteTerms ??
+          companySettings?.defaultQuoteTerms,
+      defaultQuoteFooter: clientSettings?.defaultQuoteFooter ??
+          groupSettings?.defaultQuoteFooter ??
+          companySettings?.defaultQuoteFooter,
+      defaultCreditTerms: clientSettings?.defaultCreditTerms ??
+          groupSettings?.defaultCreditTerms ??
+          companySettings?.defaultCreditTerms,
+      defaultCreditFooter: clientSettings?.defaultCreditFooter ??
+          groupSettings?.defaultCreditFooter ??
+          companySettings?.defaultCreditFooter,
       lockInvoices: clientSettings?.lockInvoices ??
           groupSettings?.lockInvoices ??
           companySettings?.lockInvoices,
