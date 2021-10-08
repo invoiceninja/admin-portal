@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'view_statement': 'View Statement',
       'sepa': 'SEPA',
       'ideal': 'iDEAL',
       'update_all_records': 'Update all records',
@@ -62677,6 +62678,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get sepa =>
       _localizedValues[localeCode]['sepa'] ?? _localizedValues['en']['sepa'];
+
+  String get viewStatement =>
+      _localizedValues[localeCode]['view_statement'] ??
+      _localizedValues['en']['view_statement'];
 
   // STARTER: lang field - do not remove comment
 

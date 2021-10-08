@@ -608,11 +608,13 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.edit);
       }
 
+      actions.add(EntityAction.viewStatement);
+
+      actions.add(EntityAction.clientPortal);
+
       if (userCompany.canEditEntity(this)) {
         actions.add(EntityAction.settings);
       }
-
-      actions.add(EntityAction.clientPortal);
 
       if (actions.isNotEmpty && actions.last != null) {
         actions.add(null);

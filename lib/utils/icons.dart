@@ -8,6 +8,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
   switch (entityAction) {
     case EntityAction.edit:
       return Icons.edit;
+    case EntityAction.viewStatement:
     case EntityAction.viewPdf:
     case EntityAction.download:
       return Icons.picture_as_pdf;

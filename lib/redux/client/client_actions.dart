@@ -52,6 +52,13 @@ class EditContact implements PersistUI {
   final ContactEntity contact;
 }
 
+class ShowPdfClient {
+  ShowPdfClient({this.client, this.context});
+
+  final ClientEntity client;
+  final BuildContext context;
+}
+
 class UpdateClient implements PersistUI {
   UpdateClient(this.client);
 
@@ -284,6 +291,9 @@ void handleClientAction(
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: client);
+      break;
+    case EntityAction.viewStatement:
+      store.dispatch(ShowPdfClient(client: client, context: context));
       break;
     case EntityAction.clientPortal:
       final url = client.primaryContact?.silentLink ?? '';
