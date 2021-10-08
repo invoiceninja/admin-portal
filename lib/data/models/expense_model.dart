@@ -474,24 +474,34 @@ abstract class ExpenseEntity extends Object
         break;
       case ExpenseFields.currencyId:
         final currencyMap = staticState.currencyMap;
-        response = currencyMap[expenseA.currencyId]
-            .name
-            .compareTo(currencyMap[expenseB.currencyId].name);
+        final currencyA = currencyMap[expenseA.currencyId] ?? CurrencyEntity();
+        final currencyB = currencyMap[expenseB.currencyId] ?? CurrencyEntity();
+        response = currencyA.name
+            .toLowerCase()
+            .compareTo(currencyB.name.toLowerCase());
         break;
       case ExpenseFields.categoryId:
       case ExpenseFields.category:
-        response = expenseCategoryMap[expenseA.categoryId]
-            .name
-            .compareTo(expenseCategoryMap[expenseB.categoryId].name);
+        final categoryA =
+            expenseCategoryMap[expenseA.categoryId] ?? ExpenseCategoryEntity();
+        final categoryB =
+            expenseCategoryMap[expenseB.categoryId] ?? ExpenseCategoryEntity();
+        response = categoryA.name
+            .toLowerCase()
+            .compareTo(categoryB.name.toLowerCase());
         break;
       case ExpenseFields.exchangeRate:
         response = expenseA.exchangeRate.compareTo(expenseB.exchangeRate);
         break;
       case ExpenseFields.invoiceCurrencyId:
         final currencyMap = staticState.currencyMap;
-        response = currencyMap[expenseA.invoiceCurrencyId]
-            .name
-            .compareTo(currencyMap[expenseB.invoiceCurrencyId].name);
+        final currencyA =
+            currencyMap[expenseA.invoiceCurrencyId] ?? CurrencyEntity();
+        final currencyB =
+            currencyMap[expenseB.invoiceCurrencyId] ?? CurrencyEntity();
+        response = currencyA.name
+            .toLowerCase()
+            .compareTo(currencyB.name.toLowerCase());
         break;
       case ExpenseFields.taxName1:
         response = expenseA.taxName1.compareTo(expenseB.taxName1);
@@ -506,9 +516,9 @@ abstract class ExpenseEntity extends Object
         response = expenseA.taxRate2.compareTo(expenseB.taxRate2);
         break;
       case ExpenseFields.invoiceId:
-        response = invoiceMap[expenseA.invoiceId]
-            .listDisplayName
-            .compareTo(invoiceMap[expenseB.invoiceId].listDisplayName);
+        final invoiceA = invoiceMap[expenseA.invoiceId] ?? InvoiceEntity();
+        final invoiceB = invoiceMap[expenseB.invoiceId] ?? InvoiceEntity();
+        response = invoiceA.listDisplayName.compareTo(invoiceB.listDisplayName);
         break;
       case ExpenseFields.customValue1:
         response = expenseA.customValue1.compareTo(expenseB.customValue1);
