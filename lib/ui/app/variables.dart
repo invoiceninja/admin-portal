@@ -74,6 +74,8 @@ class _VariablesHelpState extends State<VariablesHelp>
                 fields: [
                   'view_button', // TODO change to email variables
                   'view_url',
+                  'payment_button',
+                  'payment_url',
                   'created_by_user',
                   'assigned_to_user',
                   if (widget.showInvoiceAsQuote) ...[
