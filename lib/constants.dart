@@ -262,6 +262,7 @@ const kGatewayTypes = {
   kGatewayTypeKBC: 'kbc',
   kGatewayTypeBancontact: 'bancontact',
   kGatewayTypeIDeal: 'ideal',
+  kGatewayTypeGiropay: 'giropay',
 };
 
 const String kNotificationChannelEmail = 'email';
