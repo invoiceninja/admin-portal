@@ -263,6 +263,7 @@ const kGatewayTypes = {
   kGatewayTypeBancontact: 'bancontact',
   kGatewayTypeIDeal: 'ideal',
   kGatewayTypeGiropay: 'giropay',
+  kGatewayTypePrzelewy24: 'przelewy24',
 };
 
 const String kNotificationChannelEmail = 'email';

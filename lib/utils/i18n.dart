@@ -18,6 +18,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'view_statement': 'View Statement',
       'sepa': 'SEPA',
       'ideal': 'iDEAL',
+	  'przelewy24': 'Przelewy24',
       'update_all_records': 'Update all records',
       'system': 'System',
       'set_default_company': 'Set Default Company',
@@ -62678,6 +62679,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get sepa =>
       _localizedValues[localeCode]['sepa'] ?? _localizedValues['en']['sepa'];
+	  
+  String get giropay =>
+      _localizedValues[localeCode]['giropay'] ?? _localizedValues['en']['giropay'];
+	  
+  String get przelewy24 =>
+      _localizedValues[localeCode]['przelewy24'] ?? _localizedValues['en']['przelewy24'];
 
   String get viewStatement =>
       _localizedValues[localeCode]['view_statement'] ??
