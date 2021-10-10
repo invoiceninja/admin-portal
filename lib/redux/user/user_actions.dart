@@ -342,6 +342,13 @@ void handleUserAction(
     case EntityAction.edit:
       editEntity(context: context, entity: user);
       break;
+    case EntityAction.newClient:
+      createEntity(
+          context: context,
+          entity: ClientEntity(state: state)
+              .rebuild((b) => b.assignedUserId = user.id),
+          filterEntity: user);
+      break;
     case EntityAction.newInvoice:
       createEntity(
           context: context,
