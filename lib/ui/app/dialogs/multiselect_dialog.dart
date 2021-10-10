@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -145,63 +144,60 @@ class MultiSelectListState extends State<MultiSelectList> {
           ),
           SizedBox(height: 20),
           Expanded(
-            child: AppScrollbar(
-              controller: _controller,
-              child: ReorderableListView(
-                scrollController: _controller,
-                children: selected.asMap().entries.map((entry) {
-                  final option = entry.value;
-                  final columnTitle = state.company.getCustomFieldLabel(option);
-                  return Padding(
-                    key: ValueKey('__${entry.key}_${entry.value}__'),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                    child: Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            setState(() => selected.remove(option));
-                            if (widget.liveChanges) {
-                              widget.onSelected(selected);
-                            }
-                          },
+            child: ReorderableListView(
+              scrollController: _controller,
+              children: selected.asMap().entries.map((entry) {
+                final option = entry.value;
+                final columnTitle = state.company.getCustomFieldLabel(option);
+                return Padding(
+                  key: ValueKey('__${entry.key}_${entry.value}__'),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          setState(() => selected.remove(option));
+                          if (widget.liveChanges) {
+                            widget.onSelected(selected);
+                          }
+                        },
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: Text(
+                          columnTitle.isEmpty
+                              ? lookupOption(option)
+                              : columnTitle,
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        SizedBox(width: 20),
-                        Expanded(
-                          child: Text(
-                            columnTitle.isEmpty
-                                ? lookupOption(option)
-                                : columnTitle,
-                            textAlign: TextAlign.left,
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-                onReorder: (oldIndex, newIndex) {
-                  // https://stackoverflow.com/a/54164333/497368
-                  // These two lines are workarounds for ReorderableListView problems
-                  if (newIndex > selected.length) {
-                    newIndex = selected.length;
-                  }
-                  if (oldIndex < newIndex) {
-                    newIndex--;
-                  }
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+              onReorder: (oldIndex, newIndex) {
+                // https://stackoverflow.com/a/54164333/497368
+                // These two lines are workarounds for ReorderableListView problems
+                if (newIndex > selected.length) {
+                  newIndex = selected.length;
+                }
+                if (oldIndex < newIndex) {
+                  newIndex--;
+                }
 
-                  setState(() {
-                    final field = selected[oldIndex];
-                    selected.removeAt(oldIndex);
-                    selected.insert(newIndex, field);
-                  });
+                setState(() {
+                  final field = selected[oldIndex];
+                  selected.removeAt(oldIndex);
+                  selected.insert(newIndex, field);
+                });
 
-                  if (widget.liveChanges) {
-                    widget.onSelected(selected);
-                  }
-                },
-              ),
+                if (widget.liveChanges) {
+                  widget.onSelected(selected);
+                }
+              },
             ),
           ),
           if (!widget.isDialog)
