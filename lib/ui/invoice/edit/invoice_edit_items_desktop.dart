@@ -273,12 +273,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             ..customValue2 = product.customValue2
                             ..customValue3 = product.customValue3
                             ..customValue4 = product.customValue4
-                            ..taxRate1 = product.taxRate1
-                            ..taxName1 = product.taxName1
-                            ..taxRate2 = product.taxRate2
-                            ..taxName2 = product.taxName2
-                            ..taxRate3 = product.taxRate3
-                            ..taxName3 = product.taxName3);
+                            ..taxName1 = company.numberOfItemTaxRates >= 1 ? product.taxName1 : ''
+                            ..taxRate1 = company.numberOfItemTaxRates >= 1 ? product.taxRate1 : 0
+                            ..taxName2 = company.numberOfItemTaxRates >= 2 ? product.taxName2 : ''
+                            ..taxRate2 = company.numberOfItemTaxRates >= 2 ? product.taxRate2 : 0
+                            ..taxName3 = company.numberOfItemTaxRates >= 3 ? product.taxName3 : ''
+                            ..taxRate3 = company.numberOfItemTaxRates >= 3 ? product.taxRate3 : 0);
                           _onChanged(updatedItem, index);
                           _updateTable();
                         },
@@ -389,12 +389,30 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     ..customValue2 = product.customValue2
                                     ..customValue3 = product.customValue3
                                     ..customValue4 = product.customValue4
-                                    ..taxRate1 = product.taxRate1
-                                    ..taxName1 = product.taxName1
-                                    ..taxRate2 = product.taxRate2
-                                    ..taxName2 = product.taxName2
-                                    ..taxRate3 = product.taxRate3
-                                    ..taxName3 = product.taxName3);
+                                    ..taxName1 =
+                                        company.numberOfItemTaxRates >= 1
+                                            ? product.taxName1
+                                            : ''
+                                    ..taxRate1 =
+                                        company.numberOfItemTaxRates >= 1
+                                            ? product.taxRate1
+                                            : 0
+                                    ..taxName2 =
+                                        company.numberOfItemTaxRates >= 2
+                                            ? product.taxName2
+                                            : ''
+                                    ..taxRate2 =
+                                        company.numberOfItemTaxRates >= 2
+                                            ? product.taxRate2
+                                            : 0
+                                    ..taxName3 =
+                                        company.numberOfItemTaxRates >= 3
+                                            ? product.taxName3
+                                            : ''
+                                    ..taxRate3 =
+                                        company.numberOfItemTaxRates >= 3
+                                            ? product.taxRate3
+                                            : 0);
                                   _onChanged(updatedItem, index,
                                       debounce: false);
                                   _updateTable();
@@ -442,12 +460,24 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 ..customValue2 = product.customValue2
                                 ..customValue3 = product.customValue3
                                 ..customValue4 = product.customValue4
-                                ..taxRate1 = product.taxRate1
-                                ..taxName1 = product.taxName1
-                                ..taxRate2 = product.taxRate2
-                                ..taxName2 = product.taxName2
-                                ..taxRate3 = product.taxRate3
-                                ..taxName3 = product.taxName3);
+                                ..taxName1 = company.numberOfItemTaxRates >= 1
+                                    ? product.taxName1
+                                    : ''
+                                ..taxRate1 = company.numberOfItemTaxRates >= 1
+                                    ? product.taxRate1
+                                    : 0
+                                ..taxName2 = company.numberOfItemTaxRates >= 2
+                                    ? product.taxName2
+                                    : ''
+                                ..taxRate2 = company.numberOfItemTaxRates >= 2
+                                    ? product.taxRate2
+                                    : 0
+                                ..taxName3 = company.numberOfItemTaxRates >= 3
+                                    ? product.taxName3
+                                    : ''
+                                ..taxRate3 = company.numberOfItemTaxRates >= 3
+                                    ? product.taxRate3
+                                    : 0);
                               _onChanged(updatedItem, index, debounce: false);
                               _updateTable();
                             },
