@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/client/client_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -19,6 +20,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   final viewClientList = _viewClientList();
   final viewClient = _viewClient();
   final editClient = _editClient();
+  final showPdfClient = _showPdfClient();
   final loadClients = _loadClients(repository);
   final loadClient = _loadClient(repository);
   final saveClient = _saveClient(repository);
@@ -31,6 +33,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
     TypedMiddleware<AppState, ViewClientList>(viewClientList),
     TypedMiddleware<AppState, ViewClient>(viewClient),
     TypedMiddleware<AppState, EditClient>(editClient),
+    TypedMiddleware<AppState, ShowPdfClient>(showPdfClient),
     TypedMiddleware<AppState, LoadClients>(loadClients),
     TypedMiddleware<AppState, LoadClient>(loadClient),
     TypedMiddleware<AppState, SaveClientRequest>(saveClient),
@@ -267,5 +270,20 @@ Middleware<AppState> _saveDocument(ClientRepository repository) {
     }
 
     next(action);
+  };
+}
+
+Middleware<AppState> _showPdfClient() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ShowPdfClient;
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(ClientPdfScreen.route));
+
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(ClientPdfScreen.route);
+    }
   };
 }
