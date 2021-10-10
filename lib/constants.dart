@@ -264,6 +264,9 @@ const kGatewayTypes = {
   kGatewayTypeIDeal: 'ideal',
   kGatewayTypeGiropay: 'giropay',
   kGatewayTypePrzelewy24: 'przelewy24',
+  kGatewayTypeFPX: 'fpx',
+  kGatewayTypeEPS: 'eps',
+
 };
 
 const String kNotificationChannelEmail = 'email';
