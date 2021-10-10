@@ -247,6 +247,8 @@ const String kGatewayTypeCredit = '10';
 const String kGatewayTypeKBC = '11';
 const String kGatewayTypeBancontact = '12';
 const String kGatewayTypeIDeal = '13';
+const String kGatewayTypeGiropay = '14';
+const String kGatewayTypePrzelewy24 = '15';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
