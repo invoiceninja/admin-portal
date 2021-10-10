@@ -244,7 +244,7 @@ Future<Response> _loadPDF(
       'start_date': '2020-01-01',
       'end_date': '2030-01-01',
       'show_payments': false,
-      'show_aging_tabley': false,
+      'show_aging_table': false,
     }),
     rawResponse: true,
   );
