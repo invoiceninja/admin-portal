@@ -11,7 +11,7 @@ class ClientPdfScreen extends StatelessWidget {
 
   final bool showAppBar;
 
-  static const String route = '/invoice/pdf';
+  static const String route = '/client/pdf';
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ClientPdfScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return ClientPdfView(
-          key: ValueKey('__invoice_pdf_${vm.client.id}__'),
+          key: ValueKey('__client_pdf_${vm.client.id}__'),
           viewModel: vm,
           showAppBar: showAppBar,
         );

@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/app/web_socket_refresh.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/lock_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/client/client_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
@@ -378,6 +379,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         ClientScreen.route: (context) => ClientScreenBuilder(),
                         ClientViewScreen.route: (context) => ClientViewScreen(),
                         ClientEditScreen.route: (context) => ClientEditScreen(),
+                        ClientPdfScreen.route: (context) => ClientPdfScreen(),
                         InvoiceScreen.route: (context) =>
                             InvoiceScreenBuilder(),
                         InvoiceViewScreen.route: (context) =>
