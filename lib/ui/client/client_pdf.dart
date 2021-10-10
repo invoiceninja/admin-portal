@@ -8,11 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_pdf_vm.dart';
@@ -44,6 +47,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   http.Response _response;
   PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
+
+  DateRange _dateRange = DateRange.thisQuarter;
+  String _startDate;
+  String _endDate;
+  bool _showPayments = false;
+  bool _showAging = false;
 
   @override
   void didChangeDependencies() {
@@ -138,6 +147,32 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       showEmail = false;
     }
 
+    final showPayments = Theme(
+      data: ThemeData(
+        unselectedWidgetColor: state.headerTextColor,
+      ),
+      child: Container(
+        width: 200,
+        child: CheckboxListTile(
+          title: Text(
+            localization.payments,
+            style: TextStyle(
+              color: state.headerTextColor,
+            ),
+          ),
+          value: _showPayments,
+          onChanged: (value) {
+            setState(() {
+              _showPayments = !_showPayments;
+              loadPdf();
+            });
+          },
+          controlAffinity: ListTileControlAffinity.leading,
+          activeColor: state.accentColor,
+        ),
+      ),
+    );
+
     return Scaffold(
         backgroundColor: Colors.grey,
         appBar: widget.showAppBar
@@ -152,7 +187,32 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           .initialize(client, context)
                           .title()),
                     ),
-                    if (isDesktop(context)) ...pageSelector,
+                    Flexible(
+                      child: AppDropdownButton<DateRange>(
+                        labelText: localization.dateRange,
+                        blankValue: null,
+                        value: _dateRange,
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            _dateRange = value;
+                          });
+
+                          print('## value');
+                        },
+                        items: DateRange.values
+                            .where((dateRange) => dateRange != DateRange.custom)
+                            .map((dateRange) => DropdownMenuItem<DateRange>(
+                                  child: Text(localization
+                                      .lookup(dateRange.toString())),
+                                  value: dateRange,
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                    if (isDesktop(context)) ...[
+                      showPayments,
+                      ...pageSelector,
+                    ],
                   ],
                 ),
                 actions: <Widget>[
