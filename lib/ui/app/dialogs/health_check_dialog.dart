@@ -116,12 +116,14 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       ? 'v$webPhpVersion'
                       : 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion',
                 ),
+                /*
                 if (!_response.execEnabled)
                   _HealthListTile(
                     title: 'PHP Exec',
                     isValid: false,
                     subtitle: 'Not enabled',
                   ),
+                  */
                 if (_response.pendingJobs > 0)
                   _HealthListTile(
                     title: 'Pending Jobs',
@@ -130,18 +132,20 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   ),
                 if (!state.account.isDocker) ...[
                   if (!_response.openBasedir)
+                    /*
                     _HealthListTile(
                       title: 'Open Basedir',
                       isWarning: true,
                       subtitle: 'Not enabled',
                     ),
-                  if (!_response.cacheEnabled)
-                    _HealthListTile(
-                      title: 'Config not cached',
-                      subtitle:
-                          'Run php artisan optimize to improve performance',
-                      isWarning: true,
-                    ),
+                    */
+                    if (!_response.cacheEnabled)
+                      _HealthListTile(
+                        title: 'Config not cached',
+                        subtitle:
+                            'Run php artisan optimize to improve performance',
+                        isWarning: true,
+                      ),
                 ],
                 if (_response.queue == 'sync')
                   _HealthListTile(
