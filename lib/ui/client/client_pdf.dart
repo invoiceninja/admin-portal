@@ -47,7 +47,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
 
-  DateRange _dateRange;
+  DateRange _dateRange = DateRange.thisQuarter;
   //String _startDate;
   //String _endDate;
   bool _showPayments = true;
@@ -273,7 +273,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     child: AppDropdownButton<DateRange>(
                       labelText: localization.dateRange,
                       blankValue: null,
-                      showBlank: true,
+                      //showBlank: true,
                       value: _dateRange,
                       onChanged: (dynamic value) {
                         setState(() {
@@ -295,7 +295,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     showPayments,
                     showAging,
                     ...pageSelector,
-                  ],
+                  ]
                 ],
               ),
               actions: <Widget>[
