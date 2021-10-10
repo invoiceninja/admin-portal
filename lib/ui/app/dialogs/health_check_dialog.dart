@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HealthCheckDialog extends StatefulWidget {
   @override
@@ -101,7 +102,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 _HealthListTile(
                   title: 'System Health',
                   subtitle:
-                      '${toTitleCase(_response.emailDriver)} • ${_response.pdfEngine.replaceFirst(' PDF Generator', '')}',
+                      'Email: ${toTitleCase(_response.emailDriver)}\nQueue: ${toTitleCase(_response.queue)}\nPDF: ${_response.pdfEngine.replaceFirst(' PDF Generator', '')}',
                   isValid: _response.systemHealth,
                 ),
                 _HealthListTile(
@@ -142,10 +143,21 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       isWarning: true,
                     ),
                 ],
+                if (_response.queue == 'sync')
+                  _HealthListTile(
+                    title: 'Queue not enabled',
+                    subtitle: 'Enable the queue for improved performance',
+                    isWarning: true,
+                    url:
+                        'https://invoiceninja.github.io/docs/self-host-installation/#final-setup-steps',
+                  ),
                 if (_response.phantomEnabled)
                   _HealthListTile(
-                    title: 'Using PhantomJS',
-                    subtitle: 'Use headless Chrome to generate PDFs locally',
+                    title: 'SnapPDF not enabled',
+                    subtitle: 'Use SnapPDF for faster PDF generation',
+                    isWarning: true,
+                    url:
+                        'https://invoiceninja.github.io/docs/self-host-troubleshooting/#pdf-conversion-issues',
                   )
               ],
             ),
@@ -175,12 +187,14 @@ class _HealthListTile extends StatelessWidget {
     this.isValid = true,
     this.isWarning = false,
     this.subtitle,
+    this.url,
   });
 
   final String title;
   final bool isValid;
   final bool isWarning;
   final String subtitle;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +212,7 @@ class _HealthListTile extends StatelessWidget {
         color:
             isWarning ? Colors.orange : (isValid ? Colors.green : Colors.red),
       ),
+      onTap: url != null ? () => launch(url) : null,
     );
   }
 }
