@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_pdf_vm.dart';
@@ -49,10 +48,10 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   int _pageNumber = 1, _pageCount = 1;
 
   DateRange _dateRange = DateRange.thisQuarter;
-  String _startDate;
-  String _endDate;
-  bool _showPayments = false;
-  bool _showAging = false;
+  //String _startDate;
+  //String _endDate;
+  bool _showPayments = true;
+  bool _showAging = true;
 
   @override
   void didChangeDependencies() {
