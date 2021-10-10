@@ -214,7 +214,9 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                     (((invoice.number ?? '').isEmpty
                                                 ? localization.pending
                                                 : invoice.number) +
-                                            ' • ' +
+                                            (invoice.nextSendDate.isNotEmpty
+                                                ? ' • '
+                                                : '') +
                                             formatDate(
                                                 invoice.nextSendDate, context) +
                                             (invoice.documents.isNotEmpty

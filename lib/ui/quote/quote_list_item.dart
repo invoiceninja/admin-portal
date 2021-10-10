@@ -205,7 +205,9 @@ class QuoteListItem extends StatelessWidget {
                                 ? Text((((quote.number ?? '').isEmpty
                                             ? localization.pending
                                             : quote.number) +
-                                        ' • ' +
+                                        (quote.dueDate.isNotEmpty
+                                            ? ' • '
+                                            : '') +
                                         formatDate(
                                             quote.dueDate.isNotEmpty
                                                 ? quote.dueDate

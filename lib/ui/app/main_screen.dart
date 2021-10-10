@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/client/client_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
@@ -387,7 +388,7 @@ class EntityScreens extends StatelessWidget {
           child = TaskEditScreen();
           break;
         case ClientScreen.route:
-          child = ClientEditScreen();
+          child = isPdf ? ClientPdfScreen() : ClientEditScreen();
           break;
         case VendorScreen.route:
           child = VendorEditScreen();

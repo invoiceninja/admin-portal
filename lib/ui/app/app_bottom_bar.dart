@@ -465,7 +465,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         ? Theme.of(context).accentColor
                         : null,
                   ),
-                if (!widget.entityType.isSetting && prefState.isPreviewVisible)
+                if (!widget.entityType.isSetting &&
+                    (prefState.isPreviewVisible || isMobile(context)))
                   IconButton(
                     tooltip:
                         isList ? localization.showTable : localization.showList,

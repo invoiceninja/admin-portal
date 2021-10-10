@@ -53,6 +53,7 @@ const EntityAction _$newPayment = const EntityAction._('newPayment');
 const EntityAction _$settings = const EntityAction._('settings');
 const EntityAction _$refund = const EntityAction._('refund');
 const EntityAction _$viewPdf = const EntityAction._('viewPdf');
+const EntityAction _$viewStatement = const EntityAction._('viewStatement');
 const EntityAction _$more = const EntityAction._('more');
 const EntityAction _$start = const EntityAction._('start');
 const EntityAction _$resume = const EntityAction._('resume');
@@ -151,6 +152,8 @@ EntityAction _$valueOf(String name) {
       return _$refund;
     case 'viewPdf':
       return _$viewPdf;
+    case 'viewStatement':
+      return _$viewStatement;
     case 'more':
       return _$more;
     case 'start':
@@ -223,6 +226,7 @@ final BuiltSet<EntityAction> _$values =
   _$settings,
   _$refund,
   _$viewPdf,
+  _$viewStatement,
   _$more,
   _$start,
   _$resume,
