@@ -174,113 +174,114 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     );
 
     return Scaffold(
-        backgroundColor: Colors.grey,
-        appBar: widget.showAppBar
-            ? AppBar(
-                centerTitle: false,
-                automaticallyImplyLeading: isMobile(context),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(EntityPresenter()
-                          .initialize(client, context)
-                          .title()),
-                    ),
-                    Flexible(
-                      child: AppDropdownButton<DateRange>(
-                        labelText: localization.dateRange,
-                        blankValue: null,
-                        value: _dateRange,
-                        onChanged: (dynamic value) {
-                          setState(() {
-                            _dateRange = value;
-                          });
-
-                          print('## value');
-                        },
-                        items: DateRange.values
-                            .where((dateRange) => dateRange != DateRange.custom)
-                            .map((dateRange) => DropdownMenuItem<DateRange>(
-                                  child: Text(localization
-                                      .lookup(dateRange.toString())),
-                                  value: dateRange,
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                    if (isDesktop(context)) ...[
-                      showPayments,
-                      ...pageSelector,
-                    ],
-                  ],
-                ),
-                actions: <Widget>[
-                  if (showEmail)
-                    TextButton(
-                      child: Text(localization.email,
-                          style: TextStyle(color: state.headerTextColor)),
-                      onPressed: () {
-                        handleEntityAction(client,
-                            EntityAction.emailEntityType(client.entityType));
-                      },
-                    ),
-                  AppTextButton(
-                    isInHeader: true,
-                    label: localization.download,
-                    onPressed: _response == null
-                        ? null
-                        : () async {
-                            final fileName = localization.statement +
-                                '_' +
-                                (client.number) +
-                                '.pdf';
-                            if (kIsWeb) {
-                              WebUtils.downloadBinaryFile(
-                                  fileName, _response.bodyBytes);
-                            } else {
-                              final directory =
-                                  await getExternalStorageDirectory();
-                              final filePath =
-                                  '${directory.path}/${client.number}.pdf';
-                              final pdfData = file.File(filePath);
-                              pdfData.writeAsBytes(_response.bodyBytes);
-                              await FlutterShare.shareFile(
-                                  title: fileName, filePath: filePath);
-                            }
-                          },
+      backgroundColor: Colors.grey,
+      appBar: widget.showAppBar
+          ? AppBar(
+              centerTitle: false,
+              automaticallyImplyLeading: isMobile(context),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                        EntityPresenter().initialize(client, context).title()),
                   ),
-                  if (isDesktop(context))
-                    TextButton(
-                      child: Text(localization.close,
-                          style: TextStyle(color: state.headerTextColor)),
-                      onPressed: () {
-                        viewEntity(entity: client);
+                  Flexible(
+                    child: AppDropdownButton<DateRange>(
+                      labelText: localization.dateRange,
+                      blankValue: null,
+                      value: _dateRange,
+                      onChanged: (dynamic value) {
+                        setState(() {
+                          _dateRange = value;
+                        });
+                        loadPdf();
                       },
+                      items: DateRange.values
+                          .where((dateRange) => dateRange != DateRange.custom)
+                          .map((dateRange) => DropdownMenuItem<DateRange>(
+                                child: Text(
+                                    localization.lookup(dateRange.toString())),
+                                value: dateRange,
+                              ))
+                          .toList(),
                     ),
+                  ),
+                  if (isDesktop(context)) ...[
+                    showPayments,
+                    ...pageSelector,
+                  ],
                 ],
-              )
-            : null,
-        body: _isLoading
-            ? LoadingIndicator()
-            : kIsWeb
-                ? HtmlElementView(viewType: _pdfString)
-                : Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: PdfView(
-                      controller: _pdfController,
-                      onDocumentLoaded: (document) {
-                        setState(() {
-                          _pageCount = document?.pagesCount ?? 0;
-                        });
-                      },
-                      onPageChanged: (page) {
-                        setState(() {
+              ),
+              actions: <Widget>[
+                if (showEmail)
+                  TextButton(
+                    child: Text(localization.email,
+                        style: TextStyle(color: state.headerTextColor)),
+                    onPressed: () {
+                      handleEntityAction(client,
+                          EntityAction.emailEntityType(client.entityType));
+                    },
+                  ),
+                AppTextButton(
+                  isInHeader: true,
+                  label: localization.download,
+                  onPressed: _response == null
+                      ? null
+                      : () async {
+                          final fileName = localization.statement +
+                              '_' +
+                              (client.number) +
+                              '.pdf';
+                          if (kIsWeb) {
+                            WebUtils.downloadBinaryFile(
+                                fileName, _response.bodyBytes);
+                          } else {
+                            final directory =
+                                await getExternalStorageDirectory();
+                            final filePath =
+                                '${directory.path}/${client.number}.pdf';
+                            final pdfData = file.File(filePath);
+                            pdfData.writeAsBytes(_response.bodyBytes);
+                            await FlutterShare.shareFile(
+                                title: fileName, filePath: filePath);
+                          }
+                        },
+                ),
+                if (isDesktop(context))
+                  TextButton(
+                    child: Text(localization.close,
+                        style: TextStyle(color: state.headerTextColor)),
+                    onPressed: () {
+                      viewEntity(entity: client);
+                    },
+                  ),
+              ],
+            )
+          : null,
+      body: _isLoading
+          ? LoadingIndicator()
+          : kIsWeb
+              ? HtmlElementView(viewType: _pdfString)
+              : Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: PdfView(
+                    controller: _pdfController,
+                    onDocumentLoaded: (document) {
+                      setState(() {
+                        _pageCount = document?.pagesCount ?? 0;
+                      });
+                    },
+                    onPageChanged: (page) {
+                      setState(
+                        () {
                           _pageNumber = page;
-                        });
-                      },
-                    ),
-                  ));
+                        },
+                      );
+                    },
+                  ),
+                ),
+    );
   }
 }
 
