@@ -226,15 +226,28 @@ class _ClientPdfViewState extends State<ClientPdfView> {
 
 Future<Response> _loadPDF(
   BuildContext context,
-  ClientEntity invoice,
+  ClientEntity client,
 ) async {
   http.Response response;
 
-  //final invitation = invoice.invitations.first;
-  final url = ''; //invitation.downloadLink;
-  final client = http.Client();
-  response = await client.get(Uri.parse(url));
-  client.close();
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+
+  final url = '${state.credentials.url}/client_statement';
+  final webClient = WebClient();
+
+  response = await webClient.post(
+    url,
+    state.credentials.token,
+    data: json.encode({
+      'client_id': client.id,
+      'start_date': '2020-01-01',
+      'end_date': '2030-01-01',
+      'show_payments': false,
+      'show_aging_tabley': false,
+    }),
+    rawResponse: true,
+  );
 
   if (response.statusCode >= 400) {
     String errorMessage =
