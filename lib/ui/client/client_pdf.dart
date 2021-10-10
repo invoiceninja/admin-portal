@@ -16,8 +16,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_pdf_vm.dart';
+import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -73,10 +73,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       _isLoading = true;
     });
 
-    _loadPDF(
-      context,
-      widget.viewModel.client,
-    ).then((response) {
+    _loadPDF().then((response) {
       setState(() {
         _response = response;
         _isLoading = false;
@@ -100,6 +97,54 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     }).catchError((Object error) {
       _isLoading = false;
     });
+  }
+
+  Future<Response> _loadPDF() async {
+    final client = widget.viewModel.client;
+    http.Response response;
+
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    final url = '${state.credentials.url}/client_statement';
+    final webClient = WebClient();
+
+    String startDate = '';
+    String endDate = '';
+    if (_dateRange != null) {
+      startDate =
+          calculateStartDate(company: state.company, dateRange: _dateRange);
+      endDate = calculateEndDate(company: state.company, dateRange: _dateRange);
+    }
+
+    response = await webClient.post(
+      url,
+      state.credentials.token,
+      data: json.encode({
+        'client_id': client.id,
+        'start_date': startDate,
+        'end_date': endDate,
+        'show_payments': _showPayments,
+        'show_aging_table': _showAging,
+      }),
+      rawResponse: true,
+    );
+
+    if (response.statusCode >= 400) {
+      String errorMessage =
+          '${response.statusCode}: ${response.reasonPhrase}\n\n';
+
+      try {
+        errorMessage += jsonDecode(response.body)['message'];
+      } catch (error) {
+        errorMessage += response.body;
+      }
+
+      showErrorDialog(context: context, message: errorMessage);
+      throw errorMessage;
+    }
+
+    return response;
   }
 
   @override
@@ -323,46 +368,4 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                 ),
     );
   }
-}
-
-Future<Response> _loadPDF(
-  BuildContext context,
-  ClientEntity client,
-) async {
-  http.Response response;
-
-  final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-
-  final url = '${state.credentials.url}/client_statement';
-  final webClient = WebClient();
-
-  response = await webClient.post(
-    url,
-    state.credentials.token,
-    data: json.encode({
-      'client_id': client.id,
-      'start_date': '2020-01-01',
-      'end_date': '2030-01-01',
-      'show_payments': false,
-      'show_aging_table': false,
-    }),
-    rawResponse: true,
-  );
-
-  if (response.statusCode >= 400) {
-    String errorMessage =
-        '${response.statusCode}: ${response.reasonPhrase}\n\n';
-
-    try {
-      errorMessage += jsonDecode(response.body)['message'];
-    } catch (error) {
-      errorMessage += response.body;
-    }
-
-    showErrorDialog(context: context, message: errorMessage);
-    throw errorMessage;
-  }
-
-  return response;
 }
