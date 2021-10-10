@@ -159,11 +159,11 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       data: ThemeData(
         unselectedWidgetColor: state.headerTextColor,
       ),
-      child: Container(
-        width: 200,
+      child: Flexible(
         child: CheckboxListTile(
           title: Text(
             localization.payments,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: state.headerTextColor,
             ),
@@ -172,6 +172,32 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           onChanged: (value) {
             setState(() {
               _showPayments = !_showPayments;
+              loadPdf();
+            });
+          },
+          controlAffinity: ListTileControlAffinity.leading,
+          activeColor: state.accentColor,
+        ),
+      ),
+    );
+
+    final showAging = Theme(
+      data: ThemeData(
+        unselectedWidgetColor: state.headerTextColor,
+      ),
+      child: Flexible(
+        child: CheckboxListTile(
+          title: Text(
+            localization.aging,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: state.headerTextColor,
+            ),
+          ),
+          value: _showAging,
+          onChanged: (value) {
+            setState(() {
+              _showAging = !_showAging;
               loadPdf();
             });
           },
@@ -191,11 +217,13 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  /*
                   Expanded(
                     child: Text(
                       EntityPresenter().initialize(client, context).title(),
                     ),
                   ),
+                  */
                   Flexible(
                     child: AppDropdownButton<DateRange>(
                       labelText: localization.dateRange,
@@ -220,6 +248,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   ),
                   if (isDesktop(context)) ...[
                     showPayments,
+                    showAging,
                     ...pageSelector,
                   ],
                 ],
