@@ -102,7 +102,7 @@ jobs:
           cp pubspec.foss.yaml pubspec.yaml 
           rm pubspec.lock
 
-          flutter build web --web-renderer html
+          flutter build web
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
           cd invoiceninja_foss
