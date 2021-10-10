@@ -44,25 +44,37 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
     return expenseA.date.compareTo(expenseB.date);
   });
 
-  for (var i = 0; i < tasks.length; i++) {
-    final task = tasks[i];
-    var item = convertTaskToInvoiceItem(task: task, context: context);
-
-    if (i == 0) {
-      item =
-          item.rebuild((b) => b.notes = '## ${project.name}\n\n${item.notes}');
-    }
-
-    items.add(item);
-  }
+  bool hasShownNotes = false;
 
   for (var i = 0; i < expenses.length; i++) {
     final expense = expenses[i];
     var item = convertExpenseToInvoiceItem(expense: expense, context: context);
 
     if (i == 0) {
-      item =
-          item.rebuild((b) => b.notes = '## ${project.name}\n\n${item.notes}');
+      String notes = '## ${project.name}\n\n';
+      if (project.publicNotes.isNotEmpty) {
+        notes += '${project.publicNotes}\n\n';
+        hasShownNotes = true;
+      }
+      notes += item.notes;
+      item = item.rebuild((b) => b.notes = notes);
+    }
+
+    items.add(item);
+  }
+
+  for (var i = 0; i < tasks.length; i++) {
+    final task = tasks[i];
+    var item = convertTaskToInvoiceItem(task: task, context: context);
+
+    if (i == 0) {
+      String notes = '## ${project.name}\n\n';
+      if (project.publicNotes.isNotEmpty && !hasShownNotes) {
+        notes += '${project.publicNotes}\n\n';
+      }
+      notes += item.notes;
+
+      item = item.rebuild((b) => b.notes = notes);
     }
 
     items.add(item);
