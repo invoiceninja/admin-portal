@@ -47,11 +47,20 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
 
-  DateRange _dateRange = DateRange.thisQuarter;
+  DateRange _dateRange;
   //String _startDate;
   //String _endDate;
   bool _showPayments = true;
   bool _showAging = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //final state = widget.viewModel.state;
+    //final settings = state.dashboardUIState.settings;
+    //_dateRange = settings.dateRange;
+  }
 
   @override
   void didChangeDependencies() {
@@ -180,15 +189,18 @@ class _ClientPdfViewState extends State<ClientPdfView> {
               automaticallyImplyLeading: isMobile(context),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Text(
-                        EntityPresenter().initialize(client, context).title()),
+                      EntityPresenter().initialize(client, context).title(),
+                    ),
                   ),
                   Flexible(
                     child: AppDropdownButton<DateRange>(
                       labelText: localization.dateRange,
                       blankValue: null,
+                      showBlank: true,
                       value: _dateRange,
                       onChanged: (dynamic value) {
                         setState(() {
