@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
@@ -86,43 +87,54 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onSavePressed: (BuildContext context) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
           final recurringExpense = store.state.recurringExpenseUIState.editing;
           final localization = AppLocalization.of(context);
-          final Completer<ExpenseEntity> completer =
-              new Completer<ExpenseEntity>();
-          store.dispatch(SaveRecurringExpenseRequest(
-              completer: completer, recurringExpense: recurringExpense));
-          return completer.future.then((savedRecurringExpense) {
-            showToast(recurringExpense.isNew
-                ? localization.createdRecurringExpense
-                : localization.updatedRecurringExpense);
-            if (state.prefState.isMobile) {
-              store.dispatch(
-                  UpdateCurrentRoute(RecurringExpenseViewScreen.route));
-              if (recurringExpense.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(RecurringExpenseViewScreen.route);
+          if (recurringExpense.isOld &&
+              !hasRecurringExpenseChanges(
+                  recurringExpense, state.recurringExpenseState.map) &&
+              action != null) {
+            handleEntityAction(recurringExpense, action);
+          } else {
+            final Completer<ExpenseEntity> completer =
+                new Completer<ExpenseEntity>();
+            store.dispatch(SaveRecurringExpenseRequest(
+                completer: completer, recurringExpense: recurringExpense));
+            return completer.future.then((savedRecurringExpense) {
+              showToast(recurringExpense.isNew
+                  ? localization.createdRecurringExpense
+                  : localization.updatedRecurringExpense);
+              if (state.prefState.isMobile) {
+                store.dispatch(
+                    UpdateCurrentRoute(RecurringExpenseViewScreen.route));
+                if (recurringExpense.isNew) {
+                  Navigator.of(context)
+                      .pushReplacementNamed(RecurringExpenseViewScreen.route);
+                } else {
+                  Navigator.of(context).pop(savedRecurringExpense);
+                }
               } else {
-                Navigator.of(context).pop(savedRecurringExpense);
-              }
-            } else {
-              viewEntity(entity: savedRecurringExpense);
+                viewEntity(entity: savedRecurringExpense);
 
-              if (state.prefState.isEditorFullScreen(EntityType.expense)) {
-                editEntity(
-                    context: navigatorKey.currentContext,
-                    entity: savedRecurringExpense);
+                if (state.prefState.isEditorFullScreen(EntityType.expense)) {
+                  editEntity(
+                      context: navigatorKey.currentContext,
+                      entity: savedRecurringExpense);
+                }
               }
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+
+              if (action != null) {
+                handleEntityAction(recurringExpense, action);
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          }
         });
       },
     );

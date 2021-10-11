@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -82,6 +83,10 @@ class _ExpenseEditState extends State<ExpenseEdit>
 
         viewModel.onSavePressed(context);
       },
+      actions: [
+        if (expense.isRecurring)
+          if (expense.isRunning) EntityAction.stop else EntityAction.start,
+      ],
       appBarBottom: TabBar(
         controller: _controller,
         //isScrollable: true,
