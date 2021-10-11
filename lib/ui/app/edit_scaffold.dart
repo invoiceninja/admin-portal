@@ -135,12 +135,9 @@ class EditScaffold extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 20),
                   child: Center(
                       child: SizedBox(
-                    width: 28,
-                    height: 28,
-                    child: CircularProgressIndicator(
-                      color:
-                          state.prefState.enableDarkMode ? Colors.white : null,
-                    ),
+                    width: 26,
+                    height: 26,
+                    child: CircularProgressIndicator(color: Colors.white),
                   )),
                 )
               else

@@ -36,12 +36,7 @@ class ActionMenuButton extends StatelessWidget {
         icon: SizedBox(
           width: 26,
           height: 26,
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(
-                state.prefState.enableDarkMode || state.hasAccentColor
-                    ? Colors.white
-                    : state.accentColor),
-          ),
+          child: CircularProgressIndicator(color: Colors.white),
         ),
       );
     }
