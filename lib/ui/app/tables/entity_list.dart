@@ -482,7 +482,9 @@ class _EntityListState extends State<EntityList> {
                   listOrTable(),
                   if ((state.isLoading &&
                           (isMobile(context) || !entityType.isSetting)) ||
-                      (state.isSaving && entityType.isSetting))
+                      (state.isSaving &&
+                          (entityType.isSetting ||
+                              !state.prefState.isPreviewVisible)))
                     LinearProgressIndicator(),
                 ],
               ),
