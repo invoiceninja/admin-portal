@@ -47,6 +47,22 @@ class _ExpenseEditState extends State<ExpenseEdit>
     super.dispose();
   }
 
+  void _onSavePressed(BuildContext context, [EntityAction action]) {
+    final bool isValid = _formKey.currentState.validate();
+
+    /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context, action);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -68,25 +84,12 @@ class _ExpenseEditState extends State<ExpenseEdit>
               ? localization.newExpense
               : localization.editExpense),
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        /*
-        setState(() {
-          autoValidate = !isValid ?? false;
-        })
-         */
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context) => _onSavePressed(context),
       actions: [
         if (expense.isRecurring)
           if (expense.isRunning) EntityAction.stop else EntityAction.start,
       ],
+      onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,
         //isScrollable: true,

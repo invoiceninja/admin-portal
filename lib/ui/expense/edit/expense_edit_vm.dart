@@ -50,7 +50,7 @@ abstract class AbstractExpenseEditVM {
 
   final ExpenseEntity expense;
   final Function(ExpenseEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext, [EntityAction]) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final ExpenseEntity origExpense;
   final AppState state;
