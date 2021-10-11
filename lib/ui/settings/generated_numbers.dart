@@ -592,7 +592,6 @@ class HelpPanel extends StatelessWidget {
       'group_counter',
       'year',
       'date:format',
-      'user_id',
       'client_number',
       'client_id_number',
       'client_custom1',
@@ -605,6 +604,11 @@ class HelpPanel extends StatelessWidget {
       'vendor_custom2',
       'vendor_custom3',
       'vendor_custom4',
+      'user_id',
+      'user_custom1',
+      'user_custom2',
+      'user_custom3',
+      'user_custom4',
     ];
 
     return FormCard(
