@@ -93,7 +93,7 @@ class TaskEditVM {
           store.dispatch(SaveTaskRequest(completer: completer, task: task));
           return completer.future.then((savedTask) {
             showToast(task.isNew
-                ? localization.createTask
+                ? localization.createdTask
                 : localization.updatedTask);
 
             if (state.prefState.isMobile) {
