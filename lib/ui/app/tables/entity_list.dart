@@ -484,7 +484,8 @@ class _EntityListState extends State<EntityList> {
                           (isMobile(context) || !entityType.isSetting)) ||
                       (state.isSaving &&
                           (entityType.isSetting ||
-                              !state.prefState.isPreviewVisible)))
+                              (!state.prefState.isPreviewVisible &&
+                                  !state.uiState.isEditing))))
                     LinearProgressIndicator(),
                 ],
               ),
