@@ -86,7 +86,8 @@ class CreditEditVM extends AbstractInvoiceEditVM {
             return null;
           }
 
-          if (!hasCreditChanges(credit, state.creditState.map) &&
+          if (credit.isOld &&
+              !hasCreditChanges(credit, state.creditState.map) &&
               [
                 EntityAction.emailCredit,
                 EntityAction.viewPdf,

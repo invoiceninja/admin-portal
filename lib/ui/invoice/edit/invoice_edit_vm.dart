@@ -135,7 +135,8 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
             }
           }
 
-          if (!hasInvoiceChanges(invoice, state.invoiceState.map) &&
+          if (invoice.isOld &&
+              !hasInvoiceChanges(invoice, state.invoiceState.map) &&
               [
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,

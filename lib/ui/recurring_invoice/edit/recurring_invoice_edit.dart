@@ -97,6 +97,10 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(context),
       actions: [
+        if (!recurringInvoice.isRunning)
+          EntityAction.start
+        else
+          EntityAction.stop,
         EntityAction.viewPdf,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),

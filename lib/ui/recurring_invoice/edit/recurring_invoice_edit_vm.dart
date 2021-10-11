@@ -86,12 +86,10 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
-          if (!hasRecurringInvoiceChanges(
+          if (recurringInvoice.isOld &&
+              !hasRecurringInvoiceChanges(
                   recurringInvoice, state.recurringInvoiceState.map) &&
-              [
-                EntityAction.emailInvoice,
-                EntityAction.viewPdf,
-              ].contains(action)) {
+              action != null) {
             handleEntityAction(recurringInvoice, action);
           } else {
             final Completer<InvoiceEntity> completer =
@@ -121,8 +119,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                       entity: savedRecurringInvoice);
                 }
 
-                if ([EntityAction.emailInvoice, EntityAction.viewPdf]
-                    .contains(action)) {
+                if (action != null) {
                   handleEntityAction(savedRecurringInvoice, action);
                 }
               }

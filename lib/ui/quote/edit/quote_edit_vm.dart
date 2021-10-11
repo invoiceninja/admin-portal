@@ -85,7 +85,8 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
-          if (!hasQuoteChanges(quote, state.quoteState.map) &&
+          if (quote.isOld &&
+              !hasQuoteChanges(quote, state.quoteState.map) &&
               [
                 EntityAction.emailQuote,
                 EntityAction.viewPdf,
