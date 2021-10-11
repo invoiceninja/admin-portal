@@ -31,7 +31,7 @@ class TokenEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return TokenEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.token.id),
+          key: ValueKey(viewModel.token.updatedAt),
         );
       },
     );

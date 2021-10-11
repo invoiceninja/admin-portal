@@ -57,7 +57,7 @@ class EditScaffold extends StatelessWidget {
             !state.uiState.isInSettings ||
             state.uiState.isEditing ||
             state.settingsUIState.isChanged) &&
-        (!state.isLoading && !state.isSaving) &&
+        !state.isSaving &&
         (entity?.isEditable ?? true);
     bool isCancelEnabled = false;
     String upgradeMessage = state.userCompany.isOwner
@@ -122,10 +122,7 @@ class EditScaffold extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(title),
-                if (entity != null &&
-                    entity.isOld &&
-                    isDesktop(context) &&
-                    state.prefState.isEditorFullScreen(entity.entityType)) ...[
+                if (entity != null && entity.isOld) ...[
                   SizedBox(width: 16),
                   EntityStatusChip(
                       entity: state.getEntity(entity.entityType, entity.id)),
@@ -133,31 +130,41 @@ class EditScaffold extends StatelessWidget {
               ],
             ),
             actions: <Widget>[
-              SaveCancelButtons(
-                isEnabled: isEnabled && onSavePressed != null,
-                isHeader: true,
-                isCancelEnabled: isCancelEnabled,
-                saveLabel: saveLabel,
-                isSaving: state.isSaving,
-                onSavePressed: (context) {
-                  // Clear focus now to prevent un-focus after save from
-                  // marking the form as changed and to hide the keyboard
-                  FocusScope.of(context).unfocus(
-                      disposition: UnfocusDisposition.previouslyFocusedChild);
+              if (state.isSaving)
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Center(
+                      child: SizedBox(
+                    width: 26,
+                    height: 26,
+                    child: CircularProgressIndicator(color: Colors.white),
+                  )),
+                )
+              else
+                SaveCancelButtons(
+                  isEnabled: isEnabled && onSavePressed != null,
+                  isHeader: true,
+                  isCancelEnabled: isCancelEnabled,
+                  saveLabel: saveLabel,
+                  onSavePressed: (context) {
+                    // Clear focus now to prevent un-focus after save from
+                    // marking the form as changed and to hide the keyboard
+                    FocusScope.of(context).unfocus(
+                        disposition: UnfocusDisposition.previouslyFocusedChild);
 
-                  onSavePressed(context);
-                },
-                onCancelPressed: isMobile(context)
-                    ? null
-                    : (context) {
-                        if (onCancelPressed != null) {
-                          onCancelPressed(context);
-                        } else {
-                          store.dispatch(ResetSettings());
-                        }
-                      },
-              ),
-              if (isDesktop(context) && actions != null && !state.isSaving)
+                    onSavePressed(context);
+                  },
+                  onCancelPressed: isMobile(context)
+                      ? null
+                      : (context) {
+                          if (onCancelPressed != null) {
+                            onCancelPressed(context);
+                          } else {
+                            store.dispatch(ResetSettings());
+                          }
+                        },
+                ),
+              if (actions != null)
                 PopupMenuButton<EntityAction>(
                   icon: Icon(
                     Icons.more_vert,

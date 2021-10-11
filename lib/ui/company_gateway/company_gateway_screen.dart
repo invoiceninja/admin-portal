@@ -88,7 +88,6 @@ class CompanyGatewayScreen extends StatelessWidget {
             isEnabled: settingsUIState.isChanged,
             isCancelEnabled: true,
             isHeader: true,
-            isSaving: state.isSaving,
             onSavePressed: viewModel.onSavePressed,
             onCancelPressed: isMobile(context) || !settingsUIState.isChanged
                 ? null

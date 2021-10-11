@@ -47,6 +47,7 @@ class ErrorDialog extends StatelessWidget {
                 Clipboard.setData(ClipboardData(text: errorStr));
               }),
           TextButton(
+              autofocus: true,
               child: Text(localization.dismiss.toUpperCase()),
               onPressed: () {
                 if (clearErrorOnDismiss) {

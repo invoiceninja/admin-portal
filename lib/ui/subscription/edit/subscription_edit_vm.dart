@@ -30,7 +30,7 @@ class SubscriptionEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return SubscriptionEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.subscription.id),
+          key: ValueKey(viewModel.subscription.updatedAt),
         );
       },
     );

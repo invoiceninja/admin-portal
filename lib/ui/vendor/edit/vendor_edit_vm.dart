@@ -30,7 +30,7 @@ class VendorEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return VendorEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.vendor.id),
+          key: ValueKey(viewModel.vendor.updatedAt),
         );
       },
     );

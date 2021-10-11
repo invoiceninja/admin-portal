@@ -35,7 +35,7 @@ class CompanyGatewayEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return CompanyGatewayEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.companyGateway.id),
+          key: ValueKey(viewModel.companyGateway.updatedAt),
         );
       },
     );

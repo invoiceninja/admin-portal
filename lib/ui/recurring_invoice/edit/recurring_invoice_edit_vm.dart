@@ -31,7 +31,7 @@ class RecurringInvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return RecurringInvoiceEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.id),
+          key: ValueKey(viewModel.invoice.updatedAt),
         );
       },
     );
@@ -86,12 +86,10 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
-          if (!hasRecurringInvoiceChanges(
+          if (recurringInvoice.isOld &&
+              !hasRecurringInvoiceChanges(
                   recurringInvoice, state.recurringInvoiceState.map) &&
-              [
-                EntityAction.emailInvoice,
-                EntityAction.viewPdf,
-              ].contains(action)) {
+              action != null) {
             handleEntityAction(recurringInvoice, action);
           } else {
             final Completer<InvoiceEntity> completer =
@@ -119,11 +117,6 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                   editEntity(
                       context: navigatorKey.currentContext,
                       entity: savedRecurringInvoice);
-                }
-
-                if ([EntityAction.emailInvoice, EntityAction.viewPdf]
-                    .contains(action)) {
-                  handleEntityAction(savedRecurringInvoice, action);
                 }
               }
             }).catchError((Object error) {

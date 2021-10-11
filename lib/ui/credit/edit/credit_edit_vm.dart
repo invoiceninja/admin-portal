@@ -31,7 +31,7 @@ class CreditEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return CreditEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.id),
+          key: ValueKey(viewModel.invoice.updatedAt),
         );
       },
     );
@@ -86,7 +86,8 @@ class CreditEditVM extends AbstractInvoiceEditVM {
             return null;
           }
 
-          if (!hasCreditChanges(credit, state.creditState.map) &&
+          if (credit.isOld &&
+              !hasCreditChanges(credit, state.creditState.map) &&
               [
                 EntityAction.emailCredit,
                 EntityAction.viewPdf,
@@ -117,13 +118,13 @@ class CreditEditVM extends AbstractInvoiceEditVM {
                       context: navigatorKey.currentContext,
                       entity: savedCredit);
                 }
+              }
 
-                if ([
-                  EntityAction.emailCredit,
-                  EntityAction.viewPdf,
-                ].contains(action)) {
-                  handleEntityAction(savedCredit, action);
-                }
+              if ([
+                EntityAction.emailCredit,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+                handleEntityAction(savedCredit, action);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

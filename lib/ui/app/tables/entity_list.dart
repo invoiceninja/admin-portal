@@ -268,11 +268,17 @@ class _EntityListState extends State<EntityList> {
                               'custom', entityType.snakeCase);
                           label = state.company.getCustomFieldLabel(key);
                         }
+                        var maxWidth = kTableColumnWidthMax;
+                        var minWidth = kTableColumnWidthMin;
+                        if (field == ProductFields.description) {
+                          maxWidth *= 5;
+                          minWidth *= 5;
+                        }
                         return DataColumn(
                             label: Container(
                               constraints: BoxConstraints(
-                                minWidth: kTableColumnWidthMin,
-                                maxWidth: kTableColumnWidthMax,
+                                minWidth: minWidth,
+                                maxWidth: maxWidth,
                               ),
                               child: Text(
                                 label,
@@ -338,7 +344,8 @@ class _EntityListState extends State<EntityList> {
                   curve: Curves.easeInOutCubic,
                   child: Row(
                     children: [
-                      if (state.prefState.moduleLayout == ModuleLayout.list)
+                      if (state.prefState.moduleLayout == ModuleLayout.list ||
+                          entityType.isSetting)
                         Checkbox(
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
@@ -476,7 +483,10 @@ class _EntityListState extends State<EntityList> {
                   listOrTable(),
                   if ((state.isLoading &&
                           (isMobile(context) || !entityType.isSetting)) ||
-                      (state.isSaving && entityType.isSetting))
+                      (state.isSaving &&
+                          (entityType.isSetting ||
+                              (!state.prefState.isPreviewVisible &&
+                                  !state.uiState.isEditing))))
                     LinearProgressIndicator(),
                 ],
               ),

@@ -31,7 +31,7 @@ class QuoteEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return QuoteEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.id),
+          key: ValueKey(viewModel.invoice.updatedAt),
         );
       },
     );
@@ -85,7 +85,8 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 });
             return null;
           }
-          if (!hasQuoteChanges(quote, state.quoteState.map) &&
+          if (quote.isOld &&
+              !hasQuoteChanges(quote, state.quoteState.map) &&
               [
                 EntityAction.emailQuote,
                 EntityAction.viewPdf,
@@ -118,13 +119,13 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                   editEntity(
                       context: navigatorKey.currentContext, entity: savedQuote);
                 }
+              }
 
-                if ([
-                  EntityAction.emailQuote,
-                  EntityAction.viewPdf,
-                ].contains(action)) {
-                  handleEntityAction(savedQuote, action);
-                }
+              if ([
+                EntityAction.emailQuote,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+                handleEntityAction(savedQuote, action);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

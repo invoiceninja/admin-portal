@@ -29,7 +29,7 @@ class TaskEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return TaskEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.task.id),
+          key: ValueKey(viewModel.task.updatedAt),
         );
       },
     );
@@ -93,7 +93,7 @@ class TaskEditVM {
           store.dispatch(SaveTaskRequest(completer: completer, task: task));
           return completer.future.then((savedTask) {
             showToast(task.isNew
-                ? localization.createTask
+                ? localization.createdTask
                 : localization.updatedTask);
 
             if (state.prefState.isMobile) {

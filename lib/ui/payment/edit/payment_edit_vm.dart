@@ -31,7 +31,7 @@ class PaymentEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return PaymentEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.payment.id),
+          key: ValueKey(viewModel.payment.updatedAt),
         );
       },
     );
