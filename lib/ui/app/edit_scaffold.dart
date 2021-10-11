@@ -130,30 +130,43 @@ class EditScaffold extends StatelessWidget {
               ],
             ),
             actions: <Widget>[
-              SaveCancelButtons(
-                isEnabled: isEnabled && onSavePressed != null,
-                isHeader: true,
-                isCancelEnabled: isCancelEnabled,
-                saveLabel: saveLabel,
-                isSaving: state.isSaving,
-                onSavePressed: (context) {
-                  // Clear focus now to prevent un-focus after save from
-                  // marking the form as changed and to hide the keyboard
-                  FocusScope.of(context).unfocus(
-                      disposition: UnfocusDisposition.previouslyFocusedChild);
+              if (state.isSaving)
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Center(
+                      child: SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: CircularProgressIndicator(
+                      color:
+                          state.prefState.enableDarkMode ? Colors.white : null,
+                    ),
+                  )),
+                )
+              else
+                SaveCancelButtons(
+                  isEnabled: isEnabled && onSavePressed != null,
+                  isHeader: true,
+                  isCancelEnabled: isCancelEnabled,
+                  saveLabel: saveLabel,
+                  onSavePressed: (context) {
+                    // Clear focus now to prevent un-focus after save from
+                    // marking the form as changed and to hide the keyboard
+                    FocusScope.of(context).unfocus(
+                        disposition: UnfocusDisposition.previouslyFocusedChild);
 
-                  onSavePressed(context);
-                },
-                onCancelPressed: isMobile(context)
-                    ? null
-                    : (context) {
-                        if (onCancelPressed != null) {
-                          onCancelPressed(context);
-                        } else {
-                          store.dispatch(ResetSettings());
-                        }
-                      },
-              ),
+                    onSavePressed(context);
+                  },
+                  onCancelPressed: isMobile(context)
+                      ? null
+                      : (context) {
+                          if (onCancelPressed != null) {
+                            onCancelPressed(context);
+                          } else {
+                            store.dispatch(ResetSettings());
+                          }
+                        },
+                ),
               if (actions != null && !state.isSaving)
                 PopupMenuButton<EntityAction>(
                   icon: Icon(

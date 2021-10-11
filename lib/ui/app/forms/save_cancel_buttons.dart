@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -10,14 +9,12 @@ class SaveCancelButtons extends StatelessWidget {
     this.saveLabel,
     this.cancelLabel,
     this.isHeader = true,
-    this.isSaving = false,
     this.isEnabled = true,
     this.isCancelEnabled = false,
   });
 
   final bool isEnabled;
   final bool isCancelEnabled;
-  final bool isSaving;
   final String saveLabel;
   final String cancelLabel;
   final bool isHeader;
@@ -32,7 +29,7 @@ class SaveCancelButtons extends StatelessWidget {
       crossAxisAlignment:
           isHeader ? CrossAxisAlignment.stretch : CrossAxisAlignment.center,
       children: <Widget>[
-        if (onCancelPressed != null && !isSaving)
+        if (onCancelPressed != null)
           Builder(builder: (BuildContext context) {
             return AppTextButton(
               label: cancelLabel ?? localization.cancel,
@@ -43,11 +40,9 @@ class SaveCancelButtons extends StatelessWidget {
             );
           }),
         Builder(builder: (BuildContext context) {
-          return ActionTextButton(
-            tooltip: saveLabel ?? localization.save,
-            isVisible: true,
-            isSaving: isSaving,
-            isHeader: isHeader,
+          return AppTextButton(
+            label: saveLabel ?? localization.save,
+            isInHeader: isHeader,
             onPressed: isEnabled ? () => onSavePressed(context) : null,
           );
         }),
