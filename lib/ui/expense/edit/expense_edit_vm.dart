@@ -65,7 +65,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
     AppState state,
     ExpenseEntity expense,
     Function(ExpenseEntity) onChanged,
-    Function(BuildContext) onSavePressed,
+    Function(BuildContext, [EntityAction]) onSavePressed,
     Function(BuildContext) onCancelPressed,
     bool isLoading,
     bool isSaving,
@@ -130,7 +130,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
           store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
         });
       },
-      onSavePressed: (BuildContext context) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
           final expense = store.state.expenseUIState.editing;
           final localization = navigatorKey.localization;
