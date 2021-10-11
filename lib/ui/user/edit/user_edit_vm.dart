@@ -31,7 +31,7 @@ class UserEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return UserEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.user.id),
+          key: ValueKey(viewModel.user.updatedAt),
         );
       },
     );

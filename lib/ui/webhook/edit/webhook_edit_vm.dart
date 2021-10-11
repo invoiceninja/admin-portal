@@ -31,7 +31,7 @@ class WebhookEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return WebhookEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.webhook.id),
+          key: ValueKey(viewModel.webhook.updatedAt),
         );
       },
     );

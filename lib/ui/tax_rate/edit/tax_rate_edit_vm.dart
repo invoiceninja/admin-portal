@@ -30,7 +30,7 @@ class TaxRateEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return TaxRateEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.taxRate.id),
+          key: ValueKey(viewModel.taxRate.updatedAt),
         );
       },
     );

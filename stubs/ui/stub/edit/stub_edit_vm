@@ -30,7 +30,7 @@ class StubEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return StubEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.stub.id),
+          key: ValueKey(viewModel.stub.updatedAt),
         );
       },
     );

@@ -31,7 +31,7 @@ class RecurringInvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return RecurringInvoiceEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.id),
+          key: ValueKey(viewModel.invoice.updatedAt),
         );
       },
     );

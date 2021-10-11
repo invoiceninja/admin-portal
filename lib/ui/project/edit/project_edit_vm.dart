@@ -32,7 +32,7 @@ class ProjectEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return ProjectEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.project.id),
+          key: ValueKey(viewModel.project.updatedAt),
         );
       },
     );

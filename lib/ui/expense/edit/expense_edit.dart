@@ -85,10 +85,12 @@ class _ExpenseEditState extends State<ExpenseEdit>
               : localization.editExpense),
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(context),
+      /*
       actions: [
         if (expense.isRecurring)
           if (expense.isRunning) EntityAction.stop else EntityAction.start,
       ],
+      */
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,

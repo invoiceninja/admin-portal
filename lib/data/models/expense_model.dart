@@ -155,7 +155,7 @@ abstract class ExpenseEntity extends Object
       updatedAt: 0,
       frequencyId: kFrequencyMonthly,
       lastSentDate: '',
-      nextSendDate: '',
+      nextSendDate: convertDateTimeToSqlDate(),
       remainingCycles: -1,
       recurringDates: BuiltList<ExpenseScheduleEntity>(),
     );

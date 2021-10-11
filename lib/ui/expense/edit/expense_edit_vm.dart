@@ -29,7 +29,7 @@ class ExpenseEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return ExpenseEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.expense.id),
+          key: ValueKey(viewModel.expense.updatedAt),
         );
       },
     );

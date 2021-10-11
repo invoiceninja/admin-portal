@@ -31,7 +31,7 @@ class CreditEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return CreditEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.id),
+          key: ValueKey(viewModel.invoice.updatedAt),
         );
       },
     );
