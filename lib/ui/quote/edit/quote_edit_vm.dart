@@ -119,13 +119,13 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                   editEntity(
                       context: navigatorKey.currentContext, entity: savedQuote);
                 }
+              }
 
-                if ([
-                  EntityAction.emailQuote,
-                  EntityAction.viewPdf,
-                ].contains(action)) {
-                  handleEntityAction(savedQuote, action);
-                }
+              if ([
+                EntityAction.emailQuote,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+                handleEntityAction(savedQuote, action);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

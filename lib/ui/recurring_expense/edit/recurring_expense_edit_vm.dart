@@ -123,10 +123,6 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                       entity: savedRecurringExpense);
                 }
               }
-
-              if (action != null) {
-                handleEntityAction(recurringExpense, action);
-              }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
                   context: context,

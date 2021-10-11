@@ -118,13 +118,13 @@ class CreditEditVM extends AbstractInvoiceEditVM {
                       context: navigatorKey.currentContext,
                       entity: savedCredit);
                 }
+              }
 
-                if ([
-                  EntityAction.emailCredit,
-                  EntityAction.viewPdf,
-                ].contains(action)) {
-                  handleEntityAction(savedCredit, action);
-                }
+              if ([
+                EntityAction.emailCredit,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+                handleEntityAction(savedCredit, action);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

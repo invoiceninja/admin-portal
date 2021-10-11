@@ -170,11 +170,11 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                       context: navigatorKey.currentContext,
                       entity: savedInvoice);
                 }
+              }
 
-                if ([EntityAction.emailInvoice, EntityAction.viewPdf]
-                    .contains(action)) {
-                  handleEntityAction(savedInvoice, action);
-                }
+              if ([EntityAction.emailInvoice, EntityAction.viewPdf]
+                  .contains(action)) {
+                handleEntityAction(savedInvoice, action);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

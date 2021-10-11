@@ -122,10 +122,7 @@ class EditScaffold extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(title),
-                if (entity != null &&
-                    entity.isOld &&
-                    isDesktop(context) &&
-                    state.prefState.isEditorFullScreen(entity.entityType)) ...[
+                if (entity != null && entity.isOld) ...[
                   SizedBox(width: 16),
                   EntityStatusChip(
                       entity: state.getEntity(entity.entityType, entity.id)),
@@ -157,7 +154,7 @@ class EditScaffold extends StatelessWidget {
                         }
                       },
               ),
-              if (isDesktop(context) && actions != null && !state.isSaving)
+              if (actions != null && !state.isSaving)
                 PopupMenuButton<EntityAction>(
                   icon: Icon(
                     Icons.more_vert,

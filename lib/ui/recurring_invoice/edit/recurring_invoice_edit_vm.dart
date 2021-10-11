@@ -118,10 +118,6 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                       context: navigatorKey.currentContext,
                       entity: savedRecurringInvoice);
                 }
-
-                if (action != null) {
-                  handleEntityAction(savedRecurringInvoice, action);
-                }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
