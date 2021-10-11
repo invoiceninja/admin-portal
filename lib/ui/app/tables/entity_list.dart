@@ -344,7 +344,8 @@ class _EntityListState extends State<EntityList> {
                   curve: Curves.easeInOutCubic,
                   child: Row(
                     children: [
-                      if (state.prefState.moduleLayout == ModuleLayout.list)
+                      if (state.prefState.moduleLayout == ModuleLayout.list ||
+                          entityType.isSetting)
                         Checkbox(
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
