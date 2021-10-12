@@ -249,6 +249,8 @@ const String kGatewayTypeBancontact = '12';
 const String kGatewayTypeIDeal = '13';
 const String kGatewayTypeGiropay = '14';
 const String kGatewayTypePrzelewy24 = '15';
+const String kGatewayTypeFPX = '16';
+const String kGatewayTypeEPS = '17';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -266,6 +268,8 @@ const kGatewayTypes = {
   kGatewayTypeIDeal: 'ideal',
   kGatewayTypeGiropay: 'giropay',
   kGatewayTypePrzelewy24: 'przelewy24',
+  kGatewayTypeFPX: 'fpx',
+  kGatewayTypeEPS: 'eps',
 };
 
 const String kNotificationChannelEmail = 'email';
