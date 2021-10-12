@@ -122,8 +122,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       state.credentials.token,
       data: json.encode({
         'client_id': client.id,
-        'start_date': startDate,
-        'end_date': endDate,
+        'start_date': kIsWeb ? '2019-01-01' : startDate,
+        'end_date': kIsWeb ? '2022-01-01' : endDate,
         'show_payments': _showPayments,
         'show_aging_table': _showAging,
       }),
