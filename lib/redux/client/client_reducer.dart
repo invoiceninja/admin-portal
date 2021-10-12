@@ -75,6 +75,7 @@ final selectedIdReducer = combineReducers<String>([
   TypedReducer<String, AddClientSuccess>((selectedId, action) {
     return action.client.id;
   }),
+  TypedReducer<String, ShowPdfClient>((selectedId, action) => action.client.id),
   TypedReducer<String, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
