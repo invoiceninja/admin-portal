@@ -19,6 +19,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'sepa': 'SEPA',
       'ideal': 'iDEAL',
 	  'przelewy24': 'Przelewy24',
+	    'eps' : 'EPS',
+	    'fpx' : 'FPX',
       'update_all_records': 'Update all records',
       'system': 'System',
       'set_default_company': 'Set Default Company',
@@ -62685,6 +62687,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 	  
   String get przelewy24 =>
       _localizedValues[localeCode]['przelewy24'] ?? _localizedValues['en']['przelewy24'];
+
+  String get eps =>
+      _localizedValues[localeCode]['eps'] ?? _localizedValues['en']['eps'];
+
+  String get fpx =>
+      _localizedValues[localeCode]['fpx'] ?? _localizedValues['en']['fpx'];
+
+  String get bancontact =>
+      _localizedValues[localeCode]['bancontact'] ?? _localizedValues['en']['bancontact'];
 
   String get viewStatement =>
       _localizedValues[localeCode]['view_statement'] ??
