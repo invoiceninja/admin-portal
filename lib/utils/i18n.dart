@@ -18,9 +18,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'view_statement': 'View Statement',
       'sepa': 'SEPA',
       'ideal': 'iDEAL',
-	  'przelewy24': 'Przelewy24',
-	    'eps' : 'EPS',
-	    'fpx' : 'FPX',
+      'przelewy24': 'Przelewy24',
+      'eps': 'EPS',
+      'fpx': 'FPX',
       'update_all_records': 'Update all records',
       'system': 'System',
       'set_default_company': 'Set Default Company',
@@ -62681,12 +62681,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get sepa =>
       _localizedValues[localeCode]['sepa'] ?? _localizedValues['en']['sepa'];
-	  
+
   String get giropay =>
-      _localizedValues[localeCode]['giropay'] ?? _localizedValues['en']['giropay'];
-	  
+      _localizedValues[localeCode]['giropay'] ??
+      _localizedValues['en']['giropay'];
+
   String get przelewy24 =>
-      _localizedValues[localeCode]['przelewy24'] ?? _localizedValues['en']['przelewy24'];
+      _localizedValues[localeCode]['przelewy24'] ??
+      _localizedValues['en']['przelewy24'];
 
   String get eps =>
       _localizedValues[localeCode]['eps'] ?? _localizedValues['en']['eps'];
@@ -62695,7 +62697,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['fpx'] ?? _localizedValues['en']['fpx'];
 
   String get bancontact =>
-      _localizedValues[localeCode]['bancontact'] ?? _localizedValues['en']['bancontact'];
+      _localizedValues[localeCode]['bancontact'] ??
+      _localizedValues['en']['bancontact'];
 
   String get viewStatement =>
       _localizedValues[localeCode]['view_statement'] ??

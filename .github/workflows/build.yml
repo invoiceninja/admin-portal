@@ -44,7 +44,7 @@ jobs:
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
 
-          flutter build web --web-renderer html --release --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
+          flutter build web --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
 
           sed -i '/index.html/d' build/web/flutter_service_worker.js
 
@@ -69,22 +69,9 @@ jobs:
 
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production          
-      - name: Build WASM App
-        run: |
-          flutter build web --web-renderer canvaskit --release
-
-          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_wasm
-          cd invoiceninja_wasm
-
-          git checkout v5-develop
-          cp ../build/web/main.dart.js ./public/main.wasm.dart.js
-          git add .
-          git commit -m 'Admin Portal - WASM'
-          git push
-          cd ..      
       - name: Build Profile App
         run: |
-          flutter build web --web-renderer html --profile
+          flutter build web --profile
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_profile
           cd invoiceninja_profile
@@ -143,7 +130,7 @@ jobs:
           echo ";" >> lib/flutter_version.dart
       - name: Build Hosted App
         run: |
-          flutter build web --web-renderer html --release
+          flutter build web
 
           sed -i '/index.html/d' build/web/flutter_service_worker.js
 
@@ -190,7 +177,7 @@ jobs:
           echo ";" >> lib/flutter_version.dart
       - name: Build Hosted App
         run: |
-          flutter build web --web-renderer html --release
+          flutter build web
 
           sed -i '/index.html/d' build/web/flutter_service_worker.js
 
