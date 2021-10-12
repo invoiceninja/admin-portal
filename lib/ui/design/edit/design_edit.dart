@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/ui/app/app_webview.dart';
@@ -368,19 +369,29 @@ class DesignSection extends StatelessWidget {
       child: Card(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: TextField(
-            controller: textController,
-            keyboardType: TextInputType.multiline,
-            minLines: 16,
-            maxLines: null,
-            decoration: InputDecoration(
-              border: InputBorder.none,
+          child: Actions(
+            actions: {InsertTabIntent: InsertTabAction()},
+            child: Shortcuts(
+              shortcuts: {
+                LogicalKeySet(LogicalKeyboardKey.tab):
+                    InsertTabIntent(4, textController),
+              },
+              child: TextField(
+                controller: textController,
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.newline,
+                minLines: 16,
+                maxLines: null,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  fontFeatures: [FontFeature.tabularFigures()],
+                ),
+                autocorrect: false,
+                autofocus: true,
+              ),
             ),
-            style: TextStyle(
-              fontFeatures: [FontFeature.tabularFigures()],
-            ),
-            autocorrect: false,
-            autofocus: true,
           ),
         ),
       ),
@@ -469,16 +480,26 @@ class _DesignSettingsState extends State<DesignSettings> {
         ),
         if (widget.draftMode)
           FormCard(
-            child: TextField(
-              controller: widget.htmlController,
-              keyboardType: TextInputType.multiline,
-              minLines: 16,
-              maxLines: null,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-              ),
-              style: TextStyle(
-                fontFeatures: [FontFeature.tabularFigures()],
+            child: Actions(
+              actions: {InsertTabIntent: InsertTabAction()},
+              child: Shortcuts(
+                shortcuts: {
+                  LogicalKeySet(LogicalKeyboardKey.tab):
+                      InsertTabIntent(4, widget.htmlController)
+                },
+                child: TextField(
+                  controller: widget.htmlController,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  minLines: 16,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    fontFeatures: [FontFeature.tabularFigures()],
+                  ),
+                ),
               ),
             ),
           )
@@ -609,5 +630,40 @@ class HtmlDesignPreview extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// https://stackoverflow.com/a/66575876/497368
+class InsertTabIntent extends Intent {
+  const InsertTabIntent(this.numSpaces, this.textController);
+  final int numSpaces;
+  final TextEditingController textController;
+}
+
+class InsertTabAction extends Action {
+  @override
+  Object invoke(covariant Intent intent) {
+    if (intent is InsertTabIntent) {
+      final oldValue = intent.textController.value;
+      final newComposing = TextRange.collapsed(oldValue.composing.start);
+      final newSelection = TextSelection.collapsed(
+          offset: oldValue.selection.start + intent.numSpaces);
+
+      final newText = StringBuffer(oldValue.selection.isValid
+          ? oldValue.selection.textBefore(oldValue.text)
+          : oldValue.text);
+      for (var i = 0; i < intent.numSpaces; i++) {
+        newText.write(' ');
+      }
+      newText.write(oldValue.selection.isValid
+          ? oldValue.selection.textAfter(oldValue.text)
+          : '');
+      intent.textController.value = intent.textController.value.copyWith(
+        composing: newComposing,
+        text: newText.toString(),
+        selection: newSelection,
+      );
+    }
+    return '';
   }
 }
