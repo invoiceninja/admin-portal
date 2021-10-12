@@ -455,14 +455,17 @@ class _DesignSettingsState extends State<DesignSettings> {
                   _selectedDesign = value;
                 },
                 initialValue: _selectedDesign?.id),
-            SizedBox(height: 16),
-            SwitchListTile(
-              activeColor: Theme.of(context).accentColor,
-              title: Text(localization.draftMode),
-              subtitle: Text(localization.draftModeHelp),
-              value: widget.draftMode,
-              onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
-            ),
+            // TODO remove this once browser supported on all platforms
+            if (kIsWeb || isMobileOS()) ...[
+              SizedBox(height: 16),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.draftMode),
+                subtitle: Text(localization.draftModeHelp),
+                value: widget.draftMode,
+                onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
+              ),
+            ]
           ],
         ),
         Padding(
