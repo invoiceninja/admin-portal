@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class AppDropdownButton<T> extends StatelessWidget {
   const AppDropdownButton({
@@ -13,7 +12,6 @@ class AppDropdownButton<T> extends StatelessWidget {
     this.showBlank,
     this.blankValue = '',
     this.enabled = true,
-    this.showUseDefault = false,
   }) : super(key: key);
 
   final String labelText;
@@ -22,7 +20,6 @@ class AppDropdownButton<T> extends StatelessWidget {
   final List<DropdownMenuItem<T>> items;
   final bool showBlank;
   final bool enabled;
-  final bool showUseDefault;
   final dynamic blankValue;
 
   @override
@@ -35,8 +32,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     if (!values.contains(value)) {
       checkedValue = blankValue;
     }
-    final bool isEmpty = (checkedValue == null || checkedValue == '') &&
-        (!state.settingsUIState.isFiltered || !showUseDefault);
+    final bool isEmpty = checkedValue == null || checkedValue == '';
 
     Widget dropDownButton = DropdownButtonHideUnderline(
       child: DropdownButton<T>(
@@ -48,9 +44,7 @@ class AppDropdownButton<T> extends StatelessWidget {
           if (_showBlank || isEmpty)
             DropdownMenuItem<T>(
               value: blankValue,
-              child: state.settingsUIState.isFiltered && showUseDefault
-                  ? Text(AppLocalization.of(context).useDefault)
-                  : SizedBox(),
+              child: SizedBox(),
             ),
           ...items
         ],

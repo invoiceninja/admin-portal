@@ -254,7 +254,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             children: <Widget>[
               FormCard(children: <Widget>[
                 AppDropdownButton<EmailTemplate>(
-                  showUseDefault: true,
                   labelText: localization.template,
                   value: template,
                   showBlank: false,
@@ -379,7 +378,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                       iconData: Icons.email,
                     ),
                     AppDropdownButton(
-                        showUseDefault: true,
                         labelText: localization.frequency,
                         value: settings.endlessReminderFrequencyId == '0'
                             ? null
@@ -517,7 +515,6 @@ class _ReminderSettingsState extends State<ReminderSettings> {
               keyboardType: TextInputType.number,
             ),
             AppDropdownButton(
-              showUseDefault: true,
               value: widget.schedule,
               labelText: localization.schedule,
               onChanged: (dynamic value) {

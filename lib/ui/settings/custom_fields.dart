@@ -424,7 +424,6 @@ class _CustomFormFieldState extends State<CustomFormField> {
               SizedBox(width: 16),
               Flexible(
                 child: AppDropdownButton(
-                  showUseDefault: true,
                   labelText: localization.fieldType,
                   value: _fieldType,
                   onChanged: (dynamic value) {

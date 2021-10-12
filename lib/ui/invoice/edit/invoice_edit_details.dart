@@ -206,7 +206,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 firstDate: DateTime.now(),
               ),
               AppDropdownButton<int>(
-                showUseDefault: true,
                 labelText: localization.remainingCycles,
                 value: invoice.remainingCycles,
                 blankValue: null,

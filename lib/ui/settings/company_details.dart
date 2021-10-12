@@ -310,7 +310,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   isLast: true,
                   children: <Widget>[
                     AppDropdownButton(
-                      showUseDefault: true,
                       value: company.sizeId,
                       labelText: localization.size,
                       items: memoizedSizeList(state.staticState.sizeMap)
@@ -484,7 +483,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                   if (company.isModuleEnabled(EntityType.invoice))
                     AppDropdownButton<String>(
-                      showUseDefault: true,
                       showBlank: true,
                       labelText: localization.invoicePaymentTerms,
                       items: memoizedDropdownPaymentTermList(
@@ -507,7 +505,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     ),
                   if (company.isModuleEnabled(EntityType.quote))
                     AppDropdownButton<String>(
-                      showUseDefault: true,
                       showBlank: true,
                       labelText: localization.quoteValidUntil,
                       items: memoizedDropdownPaymentTermList(

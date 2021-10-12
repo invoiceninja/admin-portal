@@ -323,7 +323,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           firstDate: DateTime.now(),
                         ),
                         AppDropdownButton<int>(
-                          showUseDefault: true,
                           labelText: localization.remainingCycles,
                           value: invoice.remainingCycles,
                           blankValue: null,

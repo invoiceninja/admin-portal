@@ -67,9 +67,7 @@ class BoolDropdownButton extends StatelessWidget {
                   onChanged: (value) => onChanged(value),
                   items: [
                     DropdownMenuItem(
-                      child: Text(state.settingsUIState.isFiltered
-                          ? localization.useDefault
-                          : ''),
+                      child: Text(''),
                       value: null,
                     ),
                     DropdownMenuItem(

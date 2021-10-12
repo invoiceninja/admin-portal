@@ -356,7 +356,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 firstDate: DateTime.now(),
               ),
               AppDropdownButton<int>(
-                showUseDefault: true,
                 labelText: localization.remainingCycles,
                 value: expense.remainingCycles,
                 blankValue: null,
