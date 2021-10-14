@@ -401,7 +401,7 @@ class DashboardPanels extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 74),
+          padding: const EdgeInsets.only(top: kTopBottomBarHeight),
           child: ScrollableListView(
             scrollController: scrollController,
             children: <Widget>[
@@ -445,7 +445,7 @@ class DashboardPanels extends StatelessWidget {
             ],
           ),
           constraints: BoxConstraints.loose(
-            Size(double.infinity, 74.0),
+            Size(double.infinity, kTopBottomBarHeight),
           ),
         ),
       ],
