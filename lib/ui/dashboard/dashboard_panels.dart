@@ -114,7 +114,8 @@ class DashboardPanels extends StatelessWidget {
         color: Theme.of(context).cardColor,
         elevation: 6.0,
         child: Padding(
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+          padding:
+              const EdgeInsets.only(top: 8, left: 16, right: 16, bottom: 2),
           child: Row(
             children: <Widget>[
               IconButton(
