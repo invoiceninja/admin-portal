@@ -231,7 +231,6 @@ class _EmailSettingsState extends State<EmailSettings> {
               ),
               AppDropdownButton<int>(
                   showBlank: true,
-                  showUseDefault: true,
                   labelText: localization.sendTime,
                   value: settings.entitySendTime,
                   blankValue: null,
@@ -276,7 +275,6 @@ class _EmailSettingsState extends State<EmailSettings> {
           FormCard(
             children: <Widget>[
               AppDropdownButton<String>(
-                showUseDefault: true,
                 labelText: localization.emailDesign,
                 value: viewModel.settings.emailStyle,
                 onChanged: (dynamic value) => viewModel.onSettingsChanged(

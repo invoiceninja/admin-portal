@@ -105,7 +105,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..company.replace(state.origCompany)
       ..entityType = EntityType.company
-      ..isChanged = false);
+      ..isChanged = false
+      ..tabIndex = 0);
   }),
   TypedReducer<SettingsUIState, UpdateSettingsTab>((state, action) {
     return state.rebuild((b) => b..tabIndex = action.tabIndex);

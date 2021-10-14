@@ -148,7 +148,6 @@ class NumberOfRatesSelector extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppDropdownButton(
-      showUseDefault: true,
       labelText: label,
       value: numberOfRates == null ? '' : '$numberOfRates',
       onChanged: (dynamic value) =>

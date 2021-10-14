@@ -55,7 +55,10 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     _focusNode = FocusScopeNode();
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+        vsync: this,
+        length: 2,
+        initialIndex:
+            settingsUIState.isFiltered ? 0 : settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -244,7 +247,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                 ),                
                  */
                     AppDropdownButton(
-                        showUseDefault: true,
                         labelText: localization.firstMonthOfTheYear,
                         value: company.firstMonthOfYear,
                         onChanged: (dynamic value) =>

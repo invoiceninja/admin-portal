@@ -430,14 +430,15 @@ class _ClientPortalState extends State<ClientPortal>
                       iconData: MdiIcons.upload,
                       onChanged: (value) => viewModel.onSettingsChanged(settings
                           .rebuild((b) => b..enablePortalUploads = value))),
-                  BoolDropdownButton(
-                    label: localization.storefront,
-                    helpLabel: localization.storefrontHelp,
-                    value: company.enableShopApi,
-                    iconData: MdiIcons.shopping,
-                    onChanged: (value) => viewModel.onCompanyChanged(
-                        company.rebuild((b) => b..enableShopApi = value)),
-                  ),
+                  if (!state.settingsUIState.isFiltered)
+                    BoolDropdownButton(
+                      label: localization.storefront,
+                      helpLabel: localization.storefrontHelp,
+                      value: company.enableShopApi,
+                      iconData: MdiIcons.shopping,
+                      onChanged: (value) => viewModel.onCompanyChanged(
+                          company.rebuild((b) => b..enableShopApi = value)),
+                    ),
                   if (!state.isDemo &&
                       (state.company.enableShopApi ?? false)) ...[
                     SizedBox(height: 16),

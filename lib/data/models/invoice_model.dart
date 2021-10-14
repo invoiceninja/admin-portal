@@ -789,7 +789,7 @@ abstract class InvoiceEntity extends Object
         }
       }
 
-      if (userCompany.canEditEntity(this)) {
+      if (userCompany.canEditEntity(this) && !isCancelledOrReversed) {
         if (multiselect) {
           if (entityType == EntityType.quote) {
             actions.add(EntityAction.bulkEmailQuote);
@@ -883,13 +883,15 @@ abstract class InvoiceEntity extends Object
       }
     }
 
-    if (userCompany.canEditEntity(this) && !isDeleted) {
+    if (userCompany.canEditEntity(this) &&
+        !isDeleted &&
+        !isCancelledOrReversed) {
       if (!isQuote && !isCredit && !isRecurringInvoice && isSent) {
-        if (!isCancelledOrReversed && !isPaid) {
+        if (!isPaid) {
           actions.add(EntityAction.cancel);
         }
 
-        if (userCompany.canCreate(EntityType.credit) && !isReversed) {
+        if (userCompany.canCreate(EntityType.credit)) {
           actions.add(EntityAction.reverse);
         }
       }

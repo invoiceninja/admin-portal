@@ -146,7 +146,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    Widget leading = SizedBox();
+    Widget leading;
 
     if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
@@ -173,14 +173,44 @@ class _DashboardScreenState extends State<DashboardScreen>
         centerTitle: false,
         automaticallyImplyLeading: false,
         leading: leading,
-        title: ListFilter(
-          key: ValueKey('__cleared_at_${state.uiState.filterClearedAt}__'),
-          entityType: EntityType.dashboard,
-          entityIds: [],
-          filter: state.uiState.filter,
-          onFilterChanged: (value) {
-            store.dispatch(FilterCompany(value));
-          },
+        title: Row(
+          children: [
+            if (isDesktop(context))
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: TabBar(
+                    controller: _mainTabController,
+                    isScrollable: true,
+                    tabs: [
+                      Tab(
+                        text: localization.overview,
+                      ),
+                      Tab(
+                        text: localization.activity,
+                      ),
+                      Tab(
+                        text: localization.systemLogs,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            Expanded(
+              flex: 2,
+              child: ListFilter(
+                key:
+                    ValueKey('__cleared_at_${state.uiState.filterClearedAt}__'),
+                entityType: EntityType.dashboard,
+                entityIds: [],
+                filter: state.uiState.filter,
+                onFilterChanged: (value) {
+                  store.dispatch(FilterCompany(value));
+                },
+              ),
+            ),
+          ],
         ),
         actions: [
           if (isMobile(context) || !state.prefState.isHistoryVisible)
@@ -200,44 +230,48 @@ class _DashboardScreenState extends State<DashboardScreen>
               ),
             ),
         ],
-        bottom: TabBar(
-          controller: _mainTabController,
-          isScrollable: isMobile(context),
-          tabs: [
-            Tab(
-              text: localization.overview,
-            ),
-            Tab(
-              text: localization.activity,
-            ),
-            Tab(
-              text: localization.systemLogs,
-            ),
-            if (isMobile(context) &&
-                company.isModuleEnabled(EntityType.invoice))
-              Tab(
-                text: localization.invoices,
-              ),
-            if (isMobile(context) &&
-                company.isModuleEnabled(EntityType.payment))
-              Tab(
-                text: localization.payments,
-              ),
-            if (isMobile(context) && company.isModuleEnabled(EntityType.quote))
-              Tab(
-                text: localization.quotes,
-              ),
-            if (isMobile(context) && company.isModuleEnabled(EntityType.task))
-              Tab(
-                text: localization.tasks,
-              ),
-            if (isMobile(context) &&
-                company.isModuleEnabled(EntityType.expense))
-              Tab(
-                text: localization.expense,
-              ),
-          ],
-        ),
+        bottom: isMobile(context)
+            ? TabBar(
+                controller: _mainTabController,
+                isScrollable: isMobile(context),
+                tabs: [
+                  Tab(
+                    text: localization.overview,
+                  ),
+                  Tab(
+                    text: localization.activity,
+                  ),
+                  Tab(
+                    text: localization.systemLogs,
+                  ),
+                  if (isMobile(context) &&
+                      company.isModuleEnabled(EntityType.invoice))
+                    Tab(
+                      text: localization.invoices,
+                    ),
+                  if (isMobile(context) &&
+                      company.isModuleEnabled(EntityType.payment))
+                    Tab(
+                      text: localization.payments,
+                    ),
+                  if (isMobile(context) &&
+                      company.isModuleEnabled(EntityType.quote))
+                    Tab(
+                      text: localization.quotes,
+                    ),
+                  if (isMobile(context) &&
+                      company.isModuleEnabled(EntityType.task))
+                    Tab(
+                      text: localization.tasks,
+                    ),
+                  if (isMobile(context) &&
+                      company.isModuleEnabled(EntityType.expense))
+                    Tab(
+                      text: localization.expense,
+                    ),
+                ],
+              )
+            : null,
       ),
       body: _CustomTabBarView(
         viewModel: widget.viewModel,

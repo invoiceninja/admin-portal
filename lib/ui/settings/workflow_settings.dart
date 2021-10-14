@@ -110,7 +110,6 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                   isLast: true,
                   children: <Widget>[
                     AppDropdownButton<String>(
-                      showUseDefault: true,
                       value: settings.lockInvoices,
                       onChanged: (dynamic value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..lockInvoices = value)),

@@ -201,14 +201,16 @@ class _SettingsListState extends State<SettingsList> {
               section: kSettingsTemplatesAndReminders,
               viewModel: widget.viewModel,
             ),
-            SettingsListTile(
-              section: kSettingsGroupSettings,
-              viewModel: widget.viewModel,
-            ),
-            SettingsListTile(
-              section: kSettingsSubscriptions,
-              viewModel: widget.viewModel,
-            ),
+            if (showAll)
+              SettingsListTile(
+                section: kSettingsGroupSettings,
+                viewModel: widget.viewModel,
+              ),
+            if (showAll)
+              SettingsListTile(
+                section: kSettingsSubscriptions,
+                viewModel: widget.viewModel,
+              ),
             /*
               if (showAll)
                 SettingsListTile(

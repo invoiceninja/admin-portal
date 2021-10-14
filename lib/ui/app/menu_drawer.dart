@@ -112,7 +112,7 @@ class MenuDrawer extends StatelessWidget {
     final _collapsedCompanySelector = PopupMenuButton<String>(
       tooltip: localization.selectCompany,
       child: SizedBox(
-        height: 48,
+        height: kTopBottomBarHeight,
         width: MenuDrawer.LOGO_WIDTH,
         child: _companyLogo(viewModel.selectedCompany),
       ),
@@ -168,54 +168,59 @@ class MenuDrawer extends StatelessWidget {
 
     final _expandedCompanySelector = state.companies.isEmpty
         ? SizedBox()
-        : AppDropdownButton<String>(
-            key: ValueKey(kSelectCompanyDropdownKey),
-            value: viewModel.selectedCompanyIndex,
-            items: [
-              ...state.companies
-                  .map((CompanyEntity company) => DropdownMenuItem<String>(
-                      value: (state.companies.indexOf(company)).toString(),
-                      child: _companyListItem(company)))
-                  .toList(),
-              if (state.canAddCompany)
+        : SizedBox(
+            height: kTopBottomBarHeight,
+            child: AppDropdownButton<String>(
+              key: ValueKey(kSelectCompanyDropdownKey),
+              value: viewModel.selectedCompanyIndex,
+              items: [
+                ...state.companies
+                    .map((CompanyEntity company) => DropdownMenuItem<String>(
+                        value: (state.companies.indexOf(company)).toString(),
+                        child: _companyListItem(company)))
+                    .toList(),
+                if (state.canAddCompany)
+                  DropdownMenuItem<String>(
+                    value: 'company',
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(width: 2),
+                        Icon(Icons.add_circle, size: 32),
+                        SizedBox(width: 20),
+                        Text(localization.addCompany),
+                      ],
+                    ),
+                  ),
                 DropdownMenuItem<String>(
-                  value: 'company',
+                  value: 'logout',
                   child: Row(
                     children: <Widget>[
                       SizedBox(width: 2),
-                      Icon(Icons.add_circle, size: 32),
+                      Icon(Icons.logout, size: 32),
                       SizedBox(width: 20),
-                      Text(localization.addCompany),
+                      Text(localization.logout),
                     ],
                   ),
                 ),
-              DropdownMenuItem<String>(
-                value: 'logout',
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 2),
-                    Icon(Icons.logout, size: 32),
-                    SizedBox(width: 20),
-                    Text(localization.logout),
-                  ],
-                ),
-              ),
-            ],
-            onChanged: (dynamic value) {
-              if (value == 'logout') {
-                viewModel.onLogoutTap(context);
-              } else if (!state.isLoaded || state.isLoading || state.isSaving) {
-                showMessageDialog(
-                    context: context, message: localization.waitForData);
-                return;
-              } else if (value == 'company') {
-                viewModel.onAddCompany(context);
-              } else {
-                final index = int.parse(value);
-                viewModel.onCompanyChanged(
-                    context, index, state.companies[index]);
-              }
-            },
+              ],
+              onChanged: (dynamic value) {
+                if (value == 'logout') {
+                  viewModel.onLogoutTap(context);
+                } else if (!state.isLoaded ||
+                    state.isLoading ||
+                    state.isSaving) {
+                  showMessageDialog(
+                      context: context, message: localization.waitForData);
+                  return;
+                } else if (value == 'company') {
+                  viewModel.onAddCompany(context);
+                } else {
+                  final index = int.parse(value);
+                  viewModel.onCompanyChanged(
+                      context, index, state.companies[index]);
+                }
+              },
+            ),
           );
 
     return FocusTraversalGroup(

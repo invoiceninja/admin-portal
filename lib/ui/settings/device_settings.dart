@@ -271,7 +271,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
                 ),
                 SizedBox(height: 16),
                 AppDropdownButton<String>(
-                  showUseDefault: true,
                   labelText: localization.statusColorTheme,
                   value: state.prefState.colorTheme,
                   items: [

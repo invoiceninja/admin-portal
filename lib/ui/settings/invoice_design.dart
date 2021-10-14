@@ -249,7 +249,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         .toList(),
                   ),
                   AppDropdownButton(
-                    showUseDefault: true,
                     labelText: localization.fontSize,
                     value:
                         settings.fontSize == null ? '' : '${settings.fontSize}',
