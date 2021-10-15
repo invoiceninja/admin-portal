@@ -247,10 +247,11 @@ const String kGatewayTypeCredit = '10';
 const String kGatewayTypeKBC = '11';
 const String kGatewayTypeBancontact = '12';
 const String kGatewayTypeIDeal = '13';
-const String kGatewayTypeGiropay = '14';
-const String kGatewayTypePrzelewy24 = '15';
-const String kGatewayTypeFPX = '16';
+const String kGatewayTypeHosted = '14';
+const String kGatewayTypeGiropay = '15';
+const String kGatewayTypePrzelewy24 = '16';
 const String kGatewayTypeEPS = '17';
+const String kGatewayTypeFPX = '18';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -266,6 +267,7 @@ const kGatewayTypes = {
   kGatewayTypeKBC: 'kbc',
   kGatewayTypeBancontact: 'bancontact',
   kGatewayTypeIDeal: 'ideal',
+  kGatewayTypeHosted: 'hosted',
   kGatewayTypeGiropay: 'giropay',
   kGatewayTypePrzelewy24: 'przelewy24',
   kGatewayTypeFPX: 'fpx',
