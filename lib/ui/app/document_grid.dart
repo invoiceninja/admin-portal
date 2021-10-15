@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -141,128 +142,138 @@ class DocumentTile extends StatelessWidget {
   final Function(DocumentEntity) onViewExpense;
   final bool isFromExpense;
 
-  void showDocumentModal(BuildContext context) {
-    showDialog<Column>(
-        context: context,
-        builder: (BuildContext context) {
-          final localization = AppLocalization.of(context);
-          final store = StoreProvider.of<AppState>(context);
-          final state = store.state;
-
-          return AlertDialog(
-            title: Text(document.name),
-            actions: [
-              isFromExpense && onViewExpense != null
-                  ? TextButton(
-                      child: Text(localization.expense.toUpperCase()),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        onViewExpense(document);
-                      },
-                    )
-                  : TextButton(
-                      child: Text(localization.delete.toUpperCase()),
-                      onPressed: () {
-                        confirmCallback(
-                            context: context,
-                            callback: (_) {
-                              passwordCallback(
-                                  context: context,
-                                  callback: (password, idToken) {
-                                    onDeleteDocument(
-                                        document, password, idToken);
-                                    Navigator.pop(context);
-                                  });
-                            });
-                      },
-                    ),
-              /*
-              TextButton(
-                  onPressed: () => launch(state.account.defaultUrl +
-                      document.downloadUrl +
-                      '?inline=true'),
-                  child: Text(localization.view.toUpperCase())),
-                  */
-              TextButton(
-                child: Text(localization.download.toUpperCase()),
-                onPressed: () async {
-                  if (kIsWeb || (!Platform.isIOS && !Platform.isAndroid)) {
-                    launch(state.account.defaultUrl + document.downloadUrl);
-                  } else {
-                    Directory directory;
-                    if (Platform.isAndroid) {
-                      directory = await getExternalStorageDirectory();
-                    } else {
-                      directory = await getApplicationDocumentsDirectory();
-                    }
-
-                    final String folder = '${directory.path}/documents';
-                    await Directory(folder).create(recursive: true);
-                    final filePath = '$folder/${document.name}';
-
-                    final http.Response response = await WebClient().get(
-                        document.url, state.credentials.token,
-                        rawResponse: true);
-
-                    await File(filePath).writeAsBytes(response.bodyBytes);
-                    await FlutterShare.shareFile(
-                      title: '${localization.name}',
-                      filePath: filePath,
-                    );
-                  }
-                },
-              ),
-              TextButton(
-                child: Text(localization.close.toUpperCase()),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        InkWell(
-          onTap: () => showDocumentModal(context),
-          child: Padding(
-            padding: const EdgeInsets.all(4),
-            child: Card(
-              elevation: 4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  DocumentPreview(
-                    document,
-                    height: 120,
+        Padding(
+          padding: const EdgeInsets.all(4),
+          child: Card(
+            elevation: 4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                DocumentPreview(
+                  document,
+                  height: 110,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Stack(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            document.name ?? '',
+                            style: Theme.of(context).textTheme.headline6,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          Text(
+                            '${formatDate(convertTimestampToDateString(document.createdAt), context)}\n${document.prettySize}',
+                            style: Theme.of(context).textTheme.caption,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 22),
+                          child: PopupMenuButton<String>(
+                            onSelected: (value) async {
+                              if (value == localization.view) {
+                                launch(state.account.defaultUrl +
+                                    document.downloadUrl +
+                                    '?inline=true');
+                              } else if (value == localization.download) {
+                                if (kIsWeb ||
+                                    (!Platform.isIOS && !Platform.isAndroid)) {
+                                  launch(state.account.defaultUrl +
+                                      document.downloadUrl);
+                                } else {
+                                  Directory directory;
+                                  if (Platform.isAndroid) {
+                                    directory =
+                                        await getExternalStorageDirectory();
+                                  } else {
+                                    directory =
+                                        await getApplicationDocumentsDirectory();
+                                  }
+
+                                  final String folder =
+                                      '${directory.path}/documents';
+                                  await Directory(folder)
+                                      .create(recursive: true);
+                                  final filePath = '$folder/${document.name}';
+
+                                  final http.Response response =
+                                      await WebClient().get(
+                                          document.url, state.credentials.token,
+                                          rawResponse: true);
+
+                                  await File(filePath)
+                                      .writeAsBytes(response.bodyBytes);
+                                  await FlutterShare.shareFile(
+                                    title: '${localization.name}',
+                                    filePath: filePath,
+                                  );
+                                }
+                              } else if (value == localization.delete) {
+                                confirmCallback(
+                                    context: context,
+                                    callback: (_) {
+                                      passwordCallback(
+                                          context: context,
+                                          callback: (password, idToken) {
+                                            onDeleteDocument(
+                                                document, password, idToken);
+                                            Navigator.pop(context);
+                                          });
+                                    });
+                              } else if (value == localization.viewExpense) {
+                                onViewExpense(document);
+                              }
+                            },
+                            itemBuilder: (context) {
+                              return [
+                                PopupMenuItem<String>(
+                                  child: IconText(
+                                    text: localization.view,
+                                    icon: Icons.open_in_browser,
+                                  ),
+                                  value: localization.view,
+                                ),
+                                PopupMenuItem<String>(
+                                  child: IconText(
+                                    text: localization.download,
+                                    icon: Icons.download,
+                                  ),
+                                  value: localization.download,
+                                ),
+                                PopupMenuItem<String>(
+                                  child: IconText(
+                                    text: localization.delete,
+                                    icon: Icons.delete,
+                                  ),
+                                  value: localization.delete,
+                                ),
+                              ];
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          document.name ?? '',
-                          style: Theme.of(context).textTheme.headline6,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        Text(
-                          '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
-                          style: Theme.of(context).textTheme.caption,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
