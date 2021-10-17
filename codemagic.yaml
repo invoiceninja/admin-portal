@@ -7,7 +7,7 @@ workflows:
     instance_type: linux
     max_build_duration: 120
     environment:
-      flutter: 2.0.1
+      flutter: 2.2.3
       xcode: latest
       cocoapods: default
     cache:
