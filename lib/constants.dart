@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.59';
+const String kClientVersion = '5.0.60';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -101,6 +101,7 @@ const double kDialogWidth = 400;
 const double kDashboardPanelHeight = 548; // TODO remove this
 const double kDashboardPanelHeightWeb = 541; // TODO remove this
 const double kListNumberWidth = 100;
+const double kBorderRadius = 2;
 
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;

@@ -222,9 +222,7 @@ class InvoiceListItem extends StatelessWidget {
                                 ? Text((((invoice.number ?? '').isEmpty
                                             ? localization.pending
                                             : invoice.number) +
-                                        (invoice.dueDate.isNotEmpty
-                                            ? ' • '
-                                            : '') +
+                                        ' • ' +
                                         formatDate(
                                             invoice.dueDate.isNotEmpty
                                                 ? invoice.dueDate

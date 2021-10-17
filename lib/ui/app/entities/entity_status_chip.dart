@@ -114,7 +114,7 @@ class EntityStatusChip extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
@@ -124,7 +124,7 @@ class EntityStatusChip extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
             child: Text(
-              label.toUpperCase(),
+              label,
               style: TextStyle(fontSize: 13, color: Colors.white),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

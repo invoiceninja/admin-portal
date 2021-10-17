@@ -31,7 +31,8 @@ class AppBorder extends StatelessWidget {
 
     return Container(
         decoration: BoxDecoration(
-          borderRadius: isAllSides ? BorderRadius.circular(5) : null,
+          borderRadius:
+              isAllSides ? BorderRadius.circular(kBorderRadius) : null,
           border: isAllSides
               ? Border.all(
                   width: borderWidth,
