@@ -118,7 +118,8 @@ class EntityHeader extends StatelessWidget {
                         color: entity.isArchived
                             ? Colors.orange
                             : prefState.colorThemeModel.colorDanger,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(kBorderRadius)),
                       ),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(

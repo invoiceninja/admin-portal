@@ -114,7 +114,7 @@ class EntityStatusChip extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(

@@ -116,7 +116,7 @@ class _ListFilterState extends State<ListFilter> {
         margin: EdgeInsets.only(bottom: 2.0),
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
         ),
         child: TextField(
           focusNode: _focusNode,

@@ -101,6 +101,7 @@ const double kDialogWidth = 400;
 const double kDashboardPanelHeight = 548; // TODO remove this
 const double kDashboardPanelHeightWeb = 541; // TODO remove this
 const double kListNumberWidth = 100;
+const double kBorderRadius = 2;
 
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
