@@ -326,6 +326,9 @@ abstract class VendorEntity extends Object
     return response;
   }
 
+  bool matchesName(String filter) =>
+      name.toLowerCase().contains(filter.toLowerCase());
+
   @override
   bool matchesFilter(String filter) {
     for (final contact in contacts) {
