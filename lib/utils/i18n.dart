@@ -62724,7 +62724,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
     final value = _localizedValues[localeCode][lookupKey] ??
         _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
-        key;
+        '';
 
     if (value.isEmpty) {
       print('## ERROR: localization key not found - $key');
