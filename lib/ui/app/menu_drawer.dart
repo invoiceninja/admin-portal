@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,7 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/flutter_version.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
@@ -746,6 +749,14 @@ class SidebarFooter extends StatelessWidget {
                     color: Theme.of(context).accentColor,
                   ),
                   onPressed: () => _showUpdate(context),
+                )
+              else if (state.isHosted && hasUnconnectedStripeAccount(state))
+                IconButton(
+                  onPressed: () => _showConnectStripe(context),
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.orange,
+                  ),
                 ),
             if (isHosted(context) && !isPaidAccount(context) && !isApple())
               IconButton(
@@ -958,6 +969,25 @@ void _showUpdate(BuildContext context) {
     barrierDismissible: false,
     builder: (BuildContext context) => UpdateDialog(),
   );
+}
+
+void _showConnectStripe(BuildContext context) {
+  final localization = AppLocalization.of(context);
+  showMessageDialog(
+      context: context,
+      message: localization.unauthorizedStripeWarning,
+      secondaryActions: [
+        TextButton(
+          child: Text(localization.viewSettings.toUpperCase()),
+          onPressed: () {
+            final context = navigatorKey.currentContext;
+            Navigator.of(context).pop();
+            final store = StoreProvider.of<AppState>(context);
+            final gateway = getUnconnectedStripeAccount(store.state);
+            editEntity(context: context, entity: gateway);
+          },
+        ),
+      ]);
 }
 
 void _showAbout(BuildContext context) async {
