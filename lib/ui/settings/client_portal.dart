@@ -393,12 +393,6 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enablePortalTasks = value)),
                   ),
-                ],
-              ),
-              FormCard(
-                isLast: true,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
                   BoolDropdownButton(
                       label: localization.documentUpload,
                       helpLabel: localization.documentUploadHelp,
@@ -434,8 +428,13 @@ class _ClientPortalState extends State<ClientPortal>
                             .replaceFirst(':value ', company.companyKey));
                       },
                     ),
-                    ListDivider(),
                   ],
+                ],
+              ),
+              FormCard(
+                isLast: true,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   DecoratedFormField(
                     controller: _termsController,
                     label: localization.termsOfService,
