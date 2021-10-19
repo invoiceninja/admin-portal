@@ -92,13 +92,13 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.dueDate:
         return Text(formatDate(invoice.dueDate, context));
       case InvoiceFields.customValue1:
-        return Text(presentCustomField(invoice.customValue1));
+        return Text(presentCustomField(context, invoice.customValue1));
       case InvoiceFields.customValue2:
-        return Text(presentCustomField(invoice.customValue2));
+        return Text(presentCustomField(context, invoice.customValue2));
       case InvoiceFields.customValue3:
-        return Text(presentCustomField(invoice.customValue3));
+        return Text(presentCustomField(context, invoice.customValue3));
       case InvoiceFields.customValue4:
-        return Text(presentCustomField(invoice.customValue4));
+        return Text(presentCustomField(context, invoice.customValue4));
       case InvoiceFields.publicNotes:
         return Text(invoice.publicNotes);
       case InvoiceFields.privateNotes:

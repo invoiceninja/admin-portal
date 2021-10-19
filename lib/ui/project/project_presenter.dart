@@ -64,13 +64,13 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.number:
         return Text(project.number ?? '');
       case ProjectFields.customValue1:
-        return Text(presentCustomField(project.customValue1));
+        return Text(presentCustomField(context, project.customValue1));
       case ProjectFields.customValue2:
-        return Text(presentCustomField(project.customValue2));
+        return Text(presentCustomField(context, project.customValue2));
       case ProjectFields.customValue3:
-        return Text(presentCustomField(project.customValue3));
+        return Text(presentCustomField(context, project.customValue3));
       case ProjectFields.customValue4:
-        return Text(presentCustomField(project.customValue4));
+        return Text(presentCustomField(context, project.customValue4));
       case ProjectFields.documents:
         return Text('${project.documents.length}');
     }

@@ -135,13 +135,13 @@ class ExpensePresenter extends EntityPresenter {
         return Text(
             state.invoiceState.map[expense.invoiceId]?.listDisplayName ?? '');
       case ExpenseFields.customValue1:
-        return Text(presentCustomField(expense.customValue1));
+        return Text(presentCustomField(context, expense.customValue1));
       case ExpenseFields.customValue2:
-        return Text(presentCustomField(expense.customValue2));
+        return Text(presentCustomField(context, expense.customValue2));
       case ExpenseFields.customValue3:
-        return Text(presentCustomField(expense.customValue3));
+        return Text(presentCustomField(context, expense.customValue3));
       case ExpenseFields.customValue4:
-        return Text(presentCustomField(expense.customValue4));
+        return Text(presentCustomField(context, expense.customValue4));
       case ExpenseFields.documents:
         return Text('${expense.documents.length}');
     }
