@@ -47,6 +47,9 @@ class FormCard extends StatelessWidget {
       child: FocusTraversalGroup(
         child: Card(
           elevation: elevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(kBorderRadius),
+          ),
           child: AppBorder(
             hideBorder: !isDarkMode(context),
             child: Padding(
