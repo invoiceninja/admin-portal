@@ -62,20 +62,33 @@ class RecurringInvoiceRepository {
   }
 
   Future<InvoiceEntity> saveData(
-      Credentials credentials, InvoiceEntity recurringInvoice) async {
+    Credentials credentials,
+    InvoiceEntity recurringInvoice, {
+    EntityAction action,
+  }) async {
     final data =
         serializers.serializeWith(InvoiceEntity.serializer, recurringInvoice);
     dynamic response;
+    String url;
 
     if (recurringInvoice.isNew) {
-      response = await webClient.post(
-          credentials.url +
-              '/recurring_invoices?include=activities,history&show_dates=true',
-          credentials.token,
-          data: json.encode(data));
+      url = credentials.url +
+          '/recurring_invoices?include=activities,history&show_dates=true';
     } else {
-      final url =
+      url =
           '${credentials.url}/recurring_invoices/${recurringInvoice.id}?include=activities,history&show_dates=true';
+    }
+
+    if (action == EntityAction.start) {
+      url += '&start=true';
+    } else if (action == EntityAction.stop) {
+      url += '&stop=true';
+    }
+
+    if (recurringInvoice.isNew) {
+      response =
+          await webClient.post(url, credentials.token, data: json.encode(data));
+    } else {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
