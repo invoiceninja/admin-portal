@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'registration': 'Registration',
       'unauthorized_stripe_warning':
           'Please authorize Stripe to accept online payments.',
       'view_expense': 'View Expense',
@@ -62715,6 +62716,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['unauthorized_stripe_warning'] ??
       _localizedValues['en']['unauthorized_stripe_warning'];
 
+  String get registration => _localizedValues[localeCode]['registration'] ?? '';
 
   // STARTER: lang field - do not remove comment
 
