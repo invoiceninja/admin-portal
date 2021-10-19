@@ -159,7 +159,7 @@ class _EntityListState extends State<EntityList> {
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
                   : ScrollableListViewBuilder(
-                      padding: const EdgeInsets.symmetric(vertical: 25),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       separatorBuilder: (context, index) =>
                           (index == 0 || index == entityList.length)
                               ? SizedBox()
@@ -239,7 +239,7 @@ class _EntityListState extends State<EntityList> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: AppPaginatedDataTable(
                     key: ValueKey(
                         '__${uiState.filterEntityId}_${uiState.filterEntityType}_${listStateHash}__'),
