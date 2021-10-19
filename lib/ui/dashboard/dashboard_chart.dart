@@ -110,7 +110,7 @@ class _DashboardChartState extends State<DashboardChart> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.only(bottom: 24, top: 8),
           child: Text(
             widget.title,
             style: theme.textTheme.headline5,
@@ -203,7 +203,7 @@ class _DashboardChartState extends State<DashboardChart> {
         ),
         Divider(height: 1.0),
         Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.symmetric(vertical: 16),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
@@ -213,13 +213,13 @@ class _DashboardChartState extends State<DashboardChart> {
                       ': ' +
                       formatNumber(series.average, context,
                           currencyId: widget.currencyId),
-                  style: theme.textTheme.headline5,
+                  style: theme.textTheme.headline6,
                 ),
               ),
               _selected != null
                   ? Text(
                       _selected,
-                      style: theme.textTheme.headline5,
+                      style: theme.textTheme.headline6,
                     )
                   : SizedBox(),
             ],
