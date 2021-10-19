@@ -484,6 +484,17 @@ class _ClientPortalState extends State<ClientPortal>
                     ],
                   ],
                 ),
+                FormCard(
+                  isLast: true,
+                  children: company.clientRegistrationFields
+                      .map((field) => SwitchListTile(
+                          title: Text(localization.lookup(field.key)),
+                          value: field.required,
+                          onChanged: (value) {
+                            //
+                          }))
+                      .toList(),
+                ),
               ],
             ),
           ScrollableListView(
