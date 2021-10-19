@@ -95,7 +95,9 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
             final Completer<InvoiceEntity> completer =
                 Completer<InvoiceEntity>();
             store.dispatch(SaveRecurringInvoiceRequest(
-                completer: completer, recurringInvoice: recurringInvoice));
+                completer: completer,
+                recurringInvoice: recurringInvoice,
+                action: action));
             return completer.future.then((savedRecurringInvoice) {
               showToast(recurringInvoice.isNew
                   ? localization.createdRecurringInvoice
