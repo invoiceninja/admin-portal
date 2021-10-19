@@ -491,7 +491,11 @@ class _ClientPortalState extends State<ClientPortal>
                           title: Text(localization.lookup(field.key)),
                           value: field.required,
                           onChanged: (value) {
-                            //
+                            final index =
+                                company.clientRegistrationFields.indexOf(field);
+                            viewModel.onCompanyChanged(company.rebuild((b) => b
+                              ..clientRegistrationFields[index] = field.rebuild(
+                                  (b) => b..required = !field.required)));
                           }))
                       .toList(),
                 ),
