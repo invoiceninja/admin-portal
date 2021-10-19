@@ -42,6 +42,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.custom4,
       ClientFields.documents,
       ClientFields.group,
+      ClientFields.contactPhone,
     ];
   }
 
@@ -58,6 +59,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.primaryContact.fullName);
       case ClientFields.contactEmail:
         return Text(client.primaryContact.email);
+      case ClientFields.contactPhone:
+        return Text(client.primaryContact.phone);
       case ClientFields.address1:
         return Text(client.address1);
       case ClientFields.address2:

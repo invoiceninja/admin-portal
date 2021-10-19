@@ -71,6 +71,7 @@ class ClientFields {
   static const String isDeleted = 'is_deleted';
   static const String contactName = 'contact_name';
   static const String contactEmail = 'contact_email';
+  static const String contactPhone = 'contact_phone';
   static const String state = 'state';
   static const String phone = 'phone';
   static const String website = 'website';
