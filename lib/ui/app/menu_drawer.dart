@@ -1213,6 +1213,27 @@ void _showAbout(BuildContext context) async {
                       color: Colors.purple,
                       onPressed: () => launch(getRateAppURL(context)),
                     ),
+                  SizedBox(height: 22),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        tooltip: 'Facebook',
+                        onPressed: () => launch(kFacebookUrl),
+                        icon: Icon(MdiIcons.facebook),
+                      ),
+                      IconButton(
+                        tooltip: 'Twitter',
+                        onPressed: () => launch(kTwitterUrl),
+                        icon: Icon(MdiIcons.twitter),
+                      ),
+                      IconButton(
+                        tooltip: 'YouTube',
+                        onPressed: () => launch(kYouTubeUrl),
+                        icon: Icon(MdiIcons.youtube),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
