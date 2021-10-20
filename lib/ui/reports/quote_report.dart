@@ -42,6 +42,17 @@ enum QuoteReportFields {
   tax_amount,
   net_amount,
   exchange_rate,
+  public_notes,
+  private_notes,
+  client_vat_number,
+  client_city,
+  client_postal_code,
+  tax_rate1,
+  tax_rate2,
+  tax_rate3,
+  tax_name1,
+  tax_name2,
+  tax_name3,
 }
 
 var memoizedQuoteReport = memo7((
@@ -209,6 +220,39 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.client_country:
           value = staticState.countryMap[client.countryId]?.name ?? '';
+          break;
+        case QuoteReportFields.client_postal_code:
+          value = client.postalCode;
+          break;
+        case QuoteReportFields.client_vat_number:
+          value = client.vatNumber;
+          break;
+        case QuoteReportFields.tax_name1:
+          value = quote.taxName1;
+          break;
+        case QuoteReportFields.tax_rate1:
+          value = quote.taxRate1;
+          break;
+        case QuoteReportFields.tax_name2:
+          value = quote.taxName2;
+          break;
+        case QuoteReportFields.tax_rate2:
+          value = quote.taxRate2;
+          break;
+        case QuoteReportFields.tax_name3:
+          value = quote.taxName1;
+          break;
+        case QuoteReportFields.tax_rate3:
+          value = quote.taxRate1;
+          break;
+        case QuoteReportFields.public_notes:
+          value = quote.publicNotes;
+          break;
+        case QuoteReportFields.private_notes:
+          value = quote.privateNotes;
+          break;
+        case QuoteReportFields.client_city:
+          value = client.city;
           break;
       }
 

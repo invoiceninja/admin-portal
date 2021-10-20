@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'client_postal_code': 'Client Postal Code',
+      'client_vat_number': 'Client VAT Number',
+      'has_tasks': 'Has Tasks',
       'registration': 'Registration',
       'unauthorized_stripe_warning':
           'Please authorize Stripe to accept online payments.',
@@ -62716,7 +62719,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['unauthorized_stripe_warning'] ??
       _localizedValues['en']['unauthorized_stripe_warning'];
 
-  String get registration => _localizedValues[localeCode]['registration'] ?? '';
+  String get registration =>
+      _localizedValues[localeCode]['registration'] ??
+      _localizedValues['en']['registration'];
+
+  String get hasTasks =>
+      _localizedValues[localeCode]['has_tasks'] ??
+      _localizedValues['en']['has_tasks'];
+
+  String get clientPostalCode =>
+      _localizedValues[localeCode]['client_postal_code'] ??
+      _localizedValues['en']['client_postal_code'];
+
+  String get clientVatNumber =>
+      _localizedValues[localeCode]['client_vat_number'] ??
+      _localizedValues['en']['client_vat_number'];
 
   // STARTER: lang field - do not remove comment
 
