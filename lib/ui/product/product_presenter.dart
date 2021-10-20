@@ -64,13 +64,13 @@ class ProductPresenter extends EntityPresenter {
               formatNumberType: FormatNumberType.double)),
         );
       case ProductFields.customValue1:
-        return Text(presentCustomField(product.customValue1));
+        return Text(presentCustomField(context, product.customValue1));
       case ProductFields.customValue2:
-        return Text(presentCustomField(product.customValue2));
+        return Text(presentCustomField(context, product.customValue2));
       case ProductFields.customValue3:
-        return Text(presentCustomField(product.customValue3));
+        return Text(presentCustomField(context, product.customValue3));
       case ProductFields.customValue4:
-        return Text(presentCustomField(product.customValue4));
+        return Text(presentCustomField(context, product.customValue4));
       case ProductFields.documents:
         return Text('${product.documents.length}');
       case ProductFields.taxName1:

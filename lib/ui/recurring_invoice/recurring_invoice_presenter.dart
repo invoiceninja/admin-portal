@@ -76,13 +76,13 @@ class RecurringInvoicePresenter extends EntityPresenter {
               clientId: invoice.clientId)),
         );
       case RecurringInvoiceFields.customValue1:
-        return Text(presentCustomField(invoice.customValue1));
+        return Text(presentCustomField(context, invoice.customValue1));
       case RecurringInvoiceFields.customValue2:
-        return Text(presentCustomField(invoice.customValue2));
+        return Text(presentCustomField(context, invoice.customValue2));
       case RecurringInvoiceFields.customValue3:
-        return Text(presentCustomField(invoice.customValue3));
+        return Text(presentCustomField(context, invoice.customValue3));
       case RecurringInvoiceFields.customValue4:
-        return Text(presentCustomField(invoice.customValue4));
+        return Text(presentCustomField(context, invoice.customValue4));
       case RecurringInvoiceFields.publicNotes:
         return Text(invoice.publicNotes);
       case RecurringInvoiceFields.privateNotes:

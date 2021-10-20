@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.60';
+const String kClientVersion = '5.0.61';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -34,6 +34,11 @@ const String kMacOSUrl = 'https://download.invoiceninja.com/macos';
 const String kLinuxUrl = 'https://download.invoiceninja.com/linux';
 const String kWindowsUrl =
     'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
+
+const String kTwitterUrl = 'https://twitter.com/invoiceninja';
+const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
+const String kYouTubeUrl =
+    'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
 
 const String kDocsUrl = 'https://invoiceninja.github.io/docs';
 const String kDocsCustomDomainUrl =
@@ -98,7 +103,7 @@ const double kDrawerWidth = 270;
 const double kTableColumnGap = 16;
 const double kTopBottomBarHeight = 50;
 const double kDialogWidth = 400;
-const double kDashboardPanelHeight = 548; // TODO remove this
+const double kDashboardPanelHeight = 545; // TODO remove this
 const double kDashboardPanelHeightWeb = 541; // TODO remove this
 const double kListNumberWidth = 100;
 const double kBorderRadius = 2;

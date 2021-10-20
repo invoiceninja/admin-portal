@@ -144,6 +144,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(RecurringExpenseUIState.serializer)
       ..add(RecurringInvoiceState.serializer)
       ..add(RecurringInvoiceUIState.serializer)
+      ..add(RegistrationFieldEntity.serializer)
       ..add(ReportSettingsEntity.serializer)
       ..add(ReportsUIState.serializer)
       ..add(SettingsEntity.serializer)
@@ -434,6 +435,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SystemLogEntity)]),
           () => new ListBuilder<SystemLogEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(RegistrationFieldEntity)]),
+          () => new ListBuilder<RegistrationFieldEntity>())
       ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(String), const FullType(String)]),

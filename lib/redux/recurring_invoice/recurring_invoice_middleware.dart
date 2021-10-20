@@ -260,7 +260,8 @@ Middleware<AppState> _saveRecurringInvoice(
           action.recurringInvoice.lineItems.where((item) => !item.isEmpty)));
 
     repository
-        .saveData(store.state.credentials, updatedInvoice)
+        .saveData(store.state.credentials, updatedInvoice,
+            action: action.action)
         .then((InvoiceEntity recurringInvoice) {
       if (action.recurringInvoice.isNew) {
         store.dispatch(AddRecurringInvoiceSuccess(recurringInvoice));

@@ -437,17 +437,8 @@ class DashboardPanels extends StatelessWidget {
             ],
           ),
         ),
-        ConstrainedBox(
-          child: Column(
-            children: [
-              _header(context),
-              if (state.isLoading) LinearProgressIndicator()
-            ],
-          ),
-          constraints: BoxConstraints.loose(
-            Size(double.infinity, kTopBottomBarHeight),
-          ),
-        ),
+        _header(context),
+        if (state.isLoading) LinearProgressIndicator(),
       ],
     );
   }

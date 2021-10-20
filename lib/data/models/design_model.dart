@@ -85,6 +85,11 @@ abstract class DesignEntity extends Object
     implements Built<DesignEntity, DesignEntityBuilder> {
   factory DesignEntity(
       {String id, AppState state, BuiltMap<String, String> design}) {
+    if (design == null && state != null) {
+      final designMap = state.designState.map;
+      design = designMap[state.company.settings.defaultInvoiceDesignId]?.design;
+    }
+
     return _$DesignEntity._(
       id: id ?? BaseEntity.nextId,
       createdAt: 0,
@@ -95,7 +100,6 @@ abstract class DesignEntity extends Object
       isFree: true,
       name: '',
       design: design ??
-          state?.designState?.cleanDesign?.design ??
           BuiltMap<String, String>({
             kDesignHeader: '',
             kDesignBody: '',

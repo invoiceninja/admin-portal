@@ -429,10 +429,16 @@ class _DesignSettingsState extends State<DesignSettings> {
   void initState() {
     super.initState();
 
-    final design = widget.viewModel.design;
+    final viewModel = widget.viewModel;
+    final design = viewModel.design;
 
     if (design.isOld) {
       _selectedDesign = design;
+    } else {
+      final state = viewModel.state;
+      final designMap = state.designState.map;
+      _selectedDesign =
+          designMap[state.company.settings.defaultInvoiceDesignId];
     }
   }
 
