@@ -71,7 +71,7 @@ jobs:
           sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production          
       - name: Build HTML App
         run: |
-          flutter build --web-renderer html
+          flutter build web --web-renderer html
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_html
           cd invoiceninja_html
