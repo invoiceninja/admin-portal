@@ -101,7 +101,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 _HealthListTile(
                   title: 'System Health',
                   subtitle:
-                      'Email: ${_response.emailDriver}\nQueue: ${_response.queue}\nPDF: ${_response.pdfEngine.replaceFirst(' PDF Generator', '')}',
+                      'Email: ${_response.emailDriver}\nQueue: ${_response.queue}\nPDF: ${_response.pdfEngine.replaceFirst(' Generator', '')}',
                   isValid: _response.systemHealth,
                 ),
                 _HealthListTile(
