@@ -48,7 +48,14 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'pdf_engine')
   String get pdfEngine;
 
+  @BuiltValueField(wireName: 'trailing_slash')
+  bool get trailingSlash;
+
   String get queue;
+
+  // ignore: unused_element
+  static void _initializeBuilder(HealthCheckResponseBuilder builder) =>
+      builder..trailingSlash = false;
 
   static Serializer<HealthCheckResponse> get serializer =>
       _$healthCheckResponseSerializer;

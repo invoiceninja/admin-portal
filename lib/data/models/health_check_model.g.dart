@@ -59,6 +59,9 @@ class _$HealthCheckResponseSerializer
       'pdf_engine',
       serializers.serialize(object.pdfEngine,
           specifiedType: const FullType(String)),
+      'trailing_slash',
+      serializers.serialize(object.trailingSlash,
+          specifiedType: const FullType(bool)),
       'queue',
       serializers.serialize(object.queue,
           specifiedType: const FullType(String)),
@@ -123,6 +126,10 @@ class _$HealthCheckResponseSerializer
         case 'pdf_engine':
           result.pdfEngine = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'trailing_slash':
+          result.trailingSlash = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'queue':
           result.queue = serializers.deserialize(value,
@@ -225,6 +232,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   @override
   final String pdfEngine;
   @override
+  final bool trailingSlash;
+  @override
   final String queue;
 
   factory _$HealthCheckResponse(
@@ -243,6 +252,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.emailDriver,
       this.pendingJobs,
       this.pdfEngine,
+      this.trailingSlash,
       this.queue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -267,6 +277,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         pendingJobs, 'HealthCheckResponse', 'pendingJobs');
     BuiltValueNullFieldError.checkNotNull(
         pdfEngine, 'HealthCheckResponse', 'pdfEngine');
+    BuiltValueNullFieldError.checkNotNull(
+        trailingSlash, 'HealthCheckResponse', 'trailingSlash');
     BuiltValueNullFieldError.checkNotNull(
         queue, 'HealthCheckResponse', 'queue');
   }
@@ -295,6 +307,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         emailDriver == other.emailDriver &&
         pendingJobs == other.pendingJobs &&
         pdfEngine == other.pdfEngine &&
+        trailingSlash == other.trailingSlash &&
         queue == other.queue;
   }
 
@@ -311,17 +324,21 @@ class _$HealthCheckResponse extends HealthCheckResponse {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, systemHealth.hashCode),
-                                                phpVersion.hashCode),
-                                            envWritable.hashCode),
-                                        dbCheck.hashCode),
-                                    cacheEnabled.hashCode),
-                                phantomEnabled.hashCode),
-                            openBasedir.hashCode),
-                        execEnabled.hashCode),
-                    emailDriver.hashCode),
-                pendingJobs.hashCode),
-            pdfEngine.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc(0,
+                                                        systemHealth.hashCode),
+                                                    phpVersion.hashCode),
+                                                envWritable.hashCode),
+                                            dbCheck.hashCode),
+                                        cacheEnabled.hashCode),
+                                    phantomEnabled.hashCode),
+                                openBasedir.hashCode),
+                            execEnabled.hashCode),
+                        emailDriver.hashCode),
+                    pendingJobs.hashCode),
+                pdfEngine.hashCode),
+            trailingSlash.hashCode),
         queue.hashCode));
   }
 
@@ -339,6 +356,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
           ..add('emailDriver', emailDriver)
           ..add('pendingJobs', pendingJobs)
           ..add('pdfEngine', pdfEngine)
+          ..add('trailingSlash', trailingSlash)
           ..add('queue', queue))
         .toString();
   }
@@ -395,11 +413,18 @@ class HealthCheckResponseBuilder
   String get pdfEngine => _$this._pdfEngine;
   set pdfEngine(String pdfEngine) => _$this._pdfEngine = pdfEngine;
 
+  bool _trailingSlash;
+  bool get trailingSlash => _$this._trailingSlash;
+  set trailingSlash(bool trailingSlash) =>
+      _$this._trailingSlash = trailingSlash;
+
   String _queue;
   String get queue => _$this._queue;
   set queue(String queue) => _$this._queue = queue;
 
-  HealthCheckResponseBuilder();
+  HealthCheckResponseBuilder() {
+    HealthCheckResponse._initializeBuilder(this);
+  }
 
   HealthCheckResponseBuilder get _$this {
     final $v = _$v;
@@ -415,6 +440,7 @@ class HealthCheckResponseBuilder
       _emailDriver = $v.emailDriver;
       _pendingJobs = $v.pendingJobs;
       _pdfEngine = $v.pdfEngine;
+      _trailingSlash = $v.trailingSlash;
       _queue = $v.queue;
       _$v = null;
     }
@@ -457,6 +483,7 @@ class HealthCheckResponseBuilder
                   emailDriver, 'HealthCheckResponse', 'emailDriver'),
               pendingJobs: BuiltValueNullFieldError.checkNotNull(pendingJobs, 'HealthCheckResponse', 'pendingJobs'),
               pdfEngine: BuiltValueNullFieldError.checkNotNull(pdfEngine, 'HealthCheckResponse', 'pdfEngine'),
+              trailingSlash: BuiltValueNullFieldError.checkNotNull(trailingSlash, 'HealthCheckResponse', 'trailingSlash'),
               queue: BuiltValueNullFieldError.checkNotNull(queue, 'HealthCheckResponse', 'queue'));
     } catch (_) {
       String _$failedField;
