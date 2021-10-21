@@ -421,5 +421,9 @@ EntityStats taskStatsForUser(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-bool hasTaskChanges(TaskEntity task, BuiltMap<String, TaskEntity> taskMap) =>
-    task.isNew ? task.isChanged : task != taskMap[task.id];
+bool hasTaskChanges(TaskEntity task, BuiltMap<String, TaskEntity> taskMap) {
+  print('## hasTaskChanges');
+  print(task);
+  print(taskMap[task.id]);
+  return task.isNew ? task.isChanged : task != taskMap[task.id];
+}
