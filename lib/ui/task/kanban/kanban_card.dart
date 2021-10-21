@@ -199,7 +199,8 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           onTap: task.isNew
                               ? null
                               : () {
-                                  if (state.taskUIState.selectedId == task.id) {
+                                  if (state.taskUIState.selectedId == task.id &&
+                                      !state.uiState.isEditing) {
                                     viewEntityById(
                                         entityId: '',
                                         entityType: EntityType.task,
