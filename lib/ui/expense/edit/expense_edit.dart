@@ -48,6 +48,8 @@ class _ExpenseEditState extends State<ExpenseEdit>
   }
 
   void _onSavePressed(BuildContext context, [EntityAction action]) {
+    // Gives the exchange rate conversion a change to calculate
+    // after the field loses focus
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       final bool isValid = _formKey.currentState.validate();
 
