@@ -1059,6 +1059,7 @@ void editEntity({
   @required BaseEntity entity,
   int subIndex,
   bool force = false,
+  bool fullScreen = true,
   Completer completer,
 }) {
   final store = StoreProvider.of<AppState>(context);
@@ -1071,9 +1072,11 @@ void editEntity({
       context: context,
       force: force,
       callback: () {
-        if (state.prefState.isDesktop &&
-            !state.prefState.isEditorFullScreen(entityType)) {
-          store.dispatch(ToggleEditorLayout(entityType));
+        if (state.prefState.isDesktop) {
+          final isFullScreen = state.prefState.isEditorFullScreen(entityType);
+          if (isFullScreen && !fullScreen || !isFullScreen && fullScreen) {
+            store.dispatch(ToggleEditorLayout(entityType));
+          }
         }
 
         switch (entityType) {

@@ -224,7 +224,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           onTap: task.isNew
                               ? null
                               : () {
-                                  editEntity(context: context, entity: task);
+                                  editEntity(
+                                      context: context,
+                                      entity: task,
+                                      fullScreen: false);
                                 },
                         ),
                       ),
@@ -303,7 +306,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                               } else if (value == localization.view) {
                                 viewEntity(entity: task);
                               } else if (value == localization.edit) {
-                                editEntity(context: context, entity: task);
+                                editEntity(
+                                    context: context,
+                                    entity: task,
+                                    fullScreen: false);
                               }
                             },
                           )
