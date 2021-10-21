@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'persist_data_help':
+          'Save data locally to enable the app to start faster\nMay affect performance',
+      'persist_data_ui':
+          'Save UI state to enable the app to start at the last location\nMay slightly affect performance',
       'client_postal_code': 'Client Postal Code',
       'client_vat_number': 'Client VAT Number',
       'has_tasks': 'Has Tasks',
@@ -46,8 +50,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'bulk_email_quote': 'Email Quote',
       'bulk_email_credit': 'Email Credit',
       'from_name': 'From Name',
-      'enabling_may_degrade_performance': 'Enabling may degrade performance',
-      'disabling_may_improve_performance': 'Disabling may improve performance',
       'clone_to_expense': 'Clone to Expense',
       'recurring_expense': 'Recurring Expense',
       'recurring_expenses': 'Recurring Expenses',
@@ -62616,14 +62618,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['clone_to_expense'] ??
       _localizedValues['en']['clone_to_expense'];
 
-  String get enablingMayDegradePerformance =>
-      _localizedValues[localeCode]['enabling_may_degrade_performance'] ??
-      _localizedValues['en']['enabling_may_degrade_performance'];
-
-  String get disablingMayImprovePerformance =>
-      _localizedValues[localeCode]['disabling_may_improve_performance'] ??
-      _localizedValues['en']['disabling_may_improve_performance'];
-
   String get fromName =>
       _localizedValues[localeCode]['from_name'] ??
       _localizedValues['en']['from_name'];
@@ -62734,6 +62728,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientVatNumber =>
       _localizedValues[localeCode]['client_vat_number'] ??
       _localizedValues['en']['client_vat_number'];
+
+  String get persistDataHelp =>
+      _localizedValues[localeCode]['persist_data_help'] ??
+      _localizedValues['en']['persist_data_help'];
+
+  String get persistUIHelp =>
+      _localizedValues[localeCode]['persist_ui_help'] ??
+      _localizedValues['en']['persist_ui_help'];
 
   // STARTER: lang field - do not remove comment
 
