@@ -19,7 +19,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Save data locally to enable the app to start faster, disabling may improve performance in large accounts',
       'persist_ui': 'Persist UI',
       'persist_ui_help':
-          'Save UI state to enable the app to start at the last location, disabling may slightly improve performance',
+          'Save UI state locally to enable the to start at the last location, disabling may improve performance',
       'client_postal_code': 'Client Postal Code',
       'client_vat_number': 'Client VAT Number',
       'has_tasks': 'Has Tasks',
