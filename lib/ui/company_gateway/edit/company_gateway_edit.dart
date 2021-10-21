@@ -91,7 +91,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final origCompanyGateway = state.companyGatewayState.get(companyGateway.id);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
     final accountId =
-        (companyGateway.parsedConfig['accountId'] ?? '').toString();
+        (companyGateway.parsedConfig['account_id'] ?? '').toString();
 
     final connectGateways = [
       kGatewayStripeConnect,
