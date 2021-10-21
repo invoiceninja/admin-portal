@@ -35,7 +35,10 @@ class AppButton extends StatelessWidget {
               text: label,
               alignment: MainAxisAlignment.center,
             )
-          : Text(label, overflow: TextOverflow.ellipsis),
+          : SizedBox(
+              child: Text(label, overflow: TextOverflow.ellipsis),
+              height: 24,
+            ),
       onPressed: onPressed,
     );
 
