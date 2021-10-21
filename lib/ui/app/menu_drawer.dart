@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -757,6 +755,14 @@ class SidebarFooter extends StatelessWidget {
                     Icons.warning,
                     color: Colors.orange,
                   ),
+                )
+              else if (!state.dismissedNativeWarning && false)
+                IconButton(
+                  onPressed: () => null,
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.orange,
+                  ),
                 ),
             if (isHosted(context) && !isPaidAccount(context) && !isApple())
               IconButton(
@@ -766,6 +772,7 @@ class SidebarFooter extends StatelessWidget {
                 icon: Icon(Icons.arrow_circle_up),
                 color: Colors.green,
                 onPressed: () async {
+                  /*
                   if (isHosted(context) &&
                       !kIsWeb &&
                       (Platform.isIOS || Platform.isAndroid)) {
@@ -775,6 +782,7 @@ class SidebarFooter extends StatelessWidget {
                           return UpgradeDialog();
                         });
                   }
+                  */
 
                   if (isHosted(context)) {
                     launch(state.userCompany.ninjaPortalUrl);

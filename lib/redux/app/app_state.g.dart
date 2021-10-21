@@ -27,6 +27,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'isTesting',
       serializers.serialize(object.isTesting,
           specifiedType: const FullType(bool)),
+      'dismissedNativeWarning',
+      serializers.serialize(object.dismissedNativeWarning,
+          specifiedType: const FullType(bool)),
       'lastError',
       serializers.serialize(object.lastError,
           specifiedType: const FullType(String)),
@@ -74,6 +77,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.isTesting = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'dismissedNativeWarning':
+          result.dismissedNativeWarning = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'lastError':
           result.lastError = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -115,6 +122,8 @@ class _$AppState extends AppState {
   @override
   final bool isTesting;
   @override
+  final bool dismissedNativeWarning;
+  @override
   final String lastError;
   @override
   final AuthState authState;
@@ -134,6 +143,7 @@ class _$AppState extends AppState {
       {this.isLoading,
       this.isSaving,
       this.isTesting,
+      this.dismissedNativeWarning,
       this.lastError,
       this.authState,
       this.staticState,
@@ -144,6 +154,8 @@ class _$AppState extends AppState {
     BuiltValueNullFieldError.checkNotNull(isLoading, 'AppState', 'isLoading');
     BuiltValueNullFieldError.checkNotNull(isSaving, 'AppState', 'isSaving');
     BuiltValueNullFieldError.checkNotNull(isTesting, 'AppState', 'isTesting');
+    BuiltValueNullFieldError.checkNotNull(
+        dismissedNativeWarning, 'AppState', 'dismissedNativeWarning');
     BuiltValueNullFieldError.checkNotNull(lastError, 'AppState', 'lastError');
     BuiltValueNullFieldError.checkNotNull(authState, 'AppState', 'authState');
     BuiltValueNullFieldError.checkNotNull(
@@ -168,6 +180,7 @@ class _$AppState extends AppState {
         isLoading == other.isLoading &&
         isSaving == other.isSaving &&
         isTesting == other.isTesting &&
+        dismissedNativeWarning == other.dismissedNativeWarning &&
         lastError == other.lastError &&
         authState == other.authState &&
         staticState == other.staticState &&
@@ -186,9 +199,11 @@ class _$AppState extends AppState {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, isLoading.hashCode),
-                                    isSaving.hashCode),
-                                isTesting.hashCode),
+                                $jc(
+                                    $jc($jc(0, isLoading.hashCode),
+                                        isSaving.hashCode),
+                                    isTesting.hashCode),
+                                dismissedNativeWarning.hashCode),
                             lastError.hashCode),
                         authState.hashCode),
                     staticState.hashCode),
@@ -212,6 +227,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   bool _isTesting;
   bool get isTesting => _$this._isTesting;
   set isTesting(bool isTesting) => _$this._isTesting = isTesting;
+
+  bool _dismissedNativeWarning;
+  bool get dismissedNativeWarning => _$this._dismissedNativeWarning;
+  set dismissedNativeWarning(bool dismissedNativeWarning) =>
+      _$this._dismissedNativeWarning = dismissedNativeWarning;
 
   String _lastError;
   String get lastError => _$this._lastError;
@@ -251,6 +271,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _isLoading = $v.isLoading;
       _isSaving = $v.isSaving;
       _isTesting = $v.isTesting;
+      _dismissedNativeWarning = $v.dismissedNativeWarning;
       _lastError = $v.lastError;
       _authState = $v.authState.toBuilder();
       _staticState = $v.staticState.toBuilder();
@@ -285,6 +306,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
                   isSaving, 'AppState', 'isSaving'),
               isTesting: BuiltValueNullFieldError.checkNotNull(
                   isTesting, 'AppState', 'isTesting'),
+              dismissedNativeWarning: BuiltValueNullFieldError.checkNotNull(
+                  dismissedNativeWarning, 'AppState', 'dismissedNativeWarning'),
               lastError: BuiltValueNullFieldError.checkNotNull(
                   lastError, 'AppState', 'lastError'),
               authState: authState.build(),

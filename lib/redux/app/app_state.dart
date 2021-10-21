@@ -101,6 +101,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isLoading: false,
       isSaving: false,
       isTesting: false,
+      dismissedNativeWarning: false,
       lastError: '',
       authState: AuthState(
         url: url,
@@ -128,6 +129,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isSaving;
 
   bool get isTesting;
+
+  bool get dismissedNativeWarning;
 
   String get lastError;
 
