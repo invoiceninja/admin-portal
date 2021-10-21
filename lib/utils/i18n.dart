@@ -16,9 +16,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'persist_data_help':
-          'Save data locally to enable the app to start faster\nMay affect performance',
-      'persist_data_ui':
-          'Save UI state to enable the app to start at the last location\nMay slightly affect performance',
+          'Save data locally to enable the app to start faster, disabling may improve performance in large accounts',
+      'persist_ui': 'Persist UI',
+      'persist_ui_help':
+          'Save UI state to enable the app to start at the last location, disabling may slightly improve performance',
       'client_postal_code': 'Client Postal Code',
       'client_vat_number': 'Client VAT Number',
       'has_tasks': 'Has Tasks',
@@ -62733,9 +62734,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['persist_data_help'] ??
       _localizedValues['en']['persist_data_help'];
 
-  String get persistUIHelp =>
+  String get persistUiHelp =>
       _localizedValues[localeCode]['persist_ui_help'] ??
       _localizedValues['en']['persist_ui_help'];
+
+  String get persistUi =>
+      _localizedValues[localeCode]['persist_ui'] ??
+      _localizedValues['en']['persist_ui'];
 
   // STARTER: lang field - do not remove comment
 

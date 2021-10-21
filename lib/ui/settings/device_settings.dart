@@ -197,6 +197,15 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     },
                   ),
                   SwitchListTile(
+                    title: Text(localization.persistUi),
+                    subtitle: Text(localization.persistUiHelp),
+                    value: prefState.persistUI,
+                    onChanged: (value) =>
+                        viewModel.onPersistUiChanged(context, value),
+                    activeColor: Theme.of(context).accentColor,
+                    secondary: Icon(Icons.save_alt),
+                  ),
+                  SwitchListTile(
                     title: Text(localization.persistData),
                     subtitle: Text(localization.persistDataHelp),
                     value: prefState.persistData,
