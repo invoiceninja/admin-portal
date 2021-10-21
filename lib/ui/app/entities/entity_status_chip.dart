@@ -97,8 +97,6 @@ class EntityStatusChip extends StatelessWidget {
                         .colors[task.calculateStatusId];
         break;
       default:
-        print(
-            'ERROR: unhandled entityType ${entity.entityType} in entity_status_chip.dart');
         return SizedBox();
         break;
     }
