@@ -641,6 +641,7 @@ void createEntityByType({
         ProjectEntity project;
         VendorEntity vendor;
         UserEntity user;
+        GroupEntity group;
 
         if (applyFilter && filterEntityType != null) {
           switch (filterEntityType) {
@@ -657,6 +658,9 @@ void createEntityByType({
             case EntityType.user:
               user = state.userState.get(filterEntityId);
               break;
+            case EntityType.group:
+              group = state.groupState.get(filterEntityId);
+              break;
           }
         }
 
@@ -666,6 +670,7 @@ void createEntityByType({
                 client: ClientEntity(
                   state: state,
                   user: user,
+                  group: group,
                 ),
                 force: force));
             break;

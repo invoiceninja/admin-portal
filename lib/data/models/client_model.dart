@@ -103,7 +103,12 @@ class ClientFields {
 abstract class ClientEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  factory ClientEntity({String id, AppState state, UserEntity user}) {
+  factory ClientEntity({
+    String id,
+    AppState state,
+    UserEntity user,
+    GroupEntity group,
+  }) {
     return _$ClientEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -133,7 +138,7 @@ abstract class ClientEntity extends Object
       shippingAddress2: '',
       shippingCity: '',
       shippingState: '',
-      groupId: '',
+      groupId: group?.id ?? '',
       shippingPostalCode: '',
       shippingCountryId: '',
       customValue1: '',
