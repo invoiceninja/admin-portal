@@ -165,7 +165,7 @@ CompanyGatewayEntity getUnconnectedStripeAccount(AppState state) {
 
   state.companyGatewayState.map.forEach((id, gateway) {
     if (gateway.gatewayId == kGatewayStripeConnect && gateway.isActive) {
-      final accountId = (gateway.parsedConfig['accountId'] ?? '').toString();
+      final accountId = (gateway.parsedConfig['account_id'] ?? '').toString();
       if (accountId.isEmpty) {
         unconnectedGateway = gateway;
       }
