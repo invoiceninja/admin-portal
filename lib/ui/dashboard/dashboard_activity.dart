@@ -23,7 +23,10 @@ class DashboardActivity extends StatelessWidget {
       separatorBuilder: (context, index) => ListDivider(),
       itemBuilder: (BuildContext context, index) {
         final activity = activities[index];
-        return ActivityListTile(activity: activity);
+        return Material(
+          child: ActivityListTile(activity: activity),
+          color: Theme.of(context).backgroundColor,
+        );
       },
     );
   }
