@@ -17,17 +17,16 @@ class DashboardActivity extends StatelessWidget {
     final company = viewModel.state.company;
     final activities = company.activities;
 
-    return ScrollableListViewBuilder(
-      itemCount: activities.length,
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      separatorBuilder: (context, index) => ListDivider(),
-      itemBuilder: (BuildContext context, index) {
-        final activity = activities[index];
-        return Material(
-          child: ActivityListTile(activity: activity),
-          color: Theme.of(context).backgroundColor,
-        );
-      },
+    return Material(
+      color: Theme.of(context).backgroundColor,
+      child: ScrollableListViewBuilder(
+        itemCount: activities.length,
+        separatorBuilder: (context, index) => ListDivider(),
+        itemBuilder: (BuildContext context, index) {
+          final activity = activities[index];
+          return ActivityListTile(activity: activity);
+        },
+      ),
     );
   }
 }
