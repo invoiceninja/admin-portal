@@ -417,7 +417,9 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
     next(action);
 
-    uiRepository.saveUIState(store.state.uiState);
+    if (store.state.prefState.persistData) {
+      uiRepository.saveUIState(store.state.uiState);
+    }
   };
 }
 
