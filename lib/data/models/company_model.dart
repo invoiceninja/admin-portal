@@ -956,8 +956,12 @@ abstract class ReportSettingsEntity
   BuiltList<String> get columns;
 
   // ignore: unused_element
-  static void _initializeBuilder(ReportSettingsEntityBuilder builder) =>
-      builder..sortColumn = '';
+  static void _initializeBuilder(ReportSettingsEntityBuilder builder) => builder
+    ..sortColumn = ''
+    ..sortAscending = true
+    ..sortTotalsAscending = true
+    ..sortTotalsIndex = 0
+    ..columns.replace(BuiltList<String>());
 
   static Serializer<ReportSettingsEntity> get serializer =>
       _$reportSettingsEntitySerializer;
