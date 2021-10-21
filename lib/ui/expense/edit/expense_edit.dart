@@ -48,19 +48,21 @@ class _ExpenseEditState extends State<ExpenseEdit>
   }
 
   void _onSavePressed(BuildContext context, [EntityAction action]) {
-    final bool isValid = _formKey.currentState.validate();
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      final bool isValid = _formKey.currentState.validate();
 
-    /*
+      /*
         setState(() {
           autoValidate = !isValid ?? false;
         });
          */
 
-    if (!isValid) {
-      return;
-    }
+      if (!isValid) {
+        return;
+      }
 
-    widget.viewModel.onSavePressed(context, action);
+      widget.viewModel.onSavePressed(context, action);
+    });
   }
 
   @override
