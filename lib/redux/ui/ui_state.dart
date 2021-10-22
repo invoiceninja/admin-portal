@@ -200,8 +200,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   String get baseSubRoute {
     String route = subRoute;
-    route = route.replaceAll('_edit', '');
-    route = route.replaceAll('_view', '');
+    route = route.replaceAll('/edit', '');
+    route = route.replaceAll('/view', '');
+    route = route.replaceAll('/pdf', '');
+    route = route.replaceAll('/email', '');
     return route;
   }
 
@@ -218,9 +220,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   bool get isEditing =>
-      currentRoute.endsWith('_edit') ||
-      currentRoute.endsWith('/edit') ||
-      currentRoute.endsWith('refund');
+      currentRoute.endsWith('/edit') || currentRoute.endsWith('refund');
 
   bool get isEmailing => currentRoute.endsWith('/email');
 

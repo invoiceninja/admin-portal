@@ -550,7 +550,7 @@ BuiltList<HistoryRecord> _addToHistory(
   }
 
   if (record.entityType == EntityType.settings) {
-    if ((record.id ?? '').endsWith('_edit')) {
+    if ((record.id ?? '').endsWith('/edit')) {
       return list;
     }
   }
