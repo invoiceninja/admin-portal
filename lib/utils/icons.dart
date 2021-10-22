@@ -10,8 +10,10 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.edit;
     case EntityAction.viewStatement:
     case EntityAction.viewPdf:
-    case EntityAction.download:
+    case EntityAction.bulkDownload:
       return Icons.picture_as_pdf;
+    case EntityAction.download:
+      return Icons.download;
     case EntityAction.clientPortal:
       return Icons.cloud_circle;
     case EntityAction.clone:

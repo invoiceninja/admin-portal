@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'bulk_download': 'Download',
       'persist_data_help':
           'Save data locally to enable the app to start faster, disabling may improve performance in large accounts',
       'persist_ui': 'Persist UI',

@@ -325,8 +325,8 @@ Middleware<AppState> _downloadInvoices(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DownloadInvoicesRequest;
     repository
-        .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.download)
+        .bulkAction(store.state.credentials, action.invoiceIds,
+            EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadInvoicesSuccess());
       if (action.completer != null) {

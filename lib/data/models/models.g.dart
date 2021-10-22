@@ -24,6 +24,7 @@ const EntityAction _$convertToInvoice =
 const EntityAction _$approve = const EntityAction._('approve');
 const EntityAction _$apply = const EntityAction._('apply');
 const EntityAction _$download = const EntityAction._('download');
+const EntityAction _$bulkDownload = const EntityAction._('bulkDownload');
 const EntityAction _$emailInvoice = const EntityAction._('emailInvoice');
 const EntityAction _$emailQuote = const EntityAction._('emailQuote');
 const EntityAction _$emailCredit = const EntityAction._('emailCredit');
@@ -102,6 +103,8 @@ EntityAction _$valueOf(String name) {
       return _$apply;
     case 'download':
       return _$download;
+    case 'bulkDownload':
+      return _$bulkDownload;
     case 'emailInvoice':
       return _$emailInvoice;
     case 'emailQuote':
@@ -201,6 +204,7 @@ final BuiltSet<EntityAction> _$values =
   _$approve,
   _$apply,
   _$download,
+  _$bulkDownload,
   _$emailInvoice,
   _$emailQuote,
   _$emailCredit,
