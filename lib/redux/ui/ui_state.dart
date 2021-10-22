@@ -237,6 +237,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   bool get isEmailing => currentRoute.endsWith('/email');
 
+  bool get isPDF => currentRoute.endsWith('/pdf');
+
   bool get isViewing => !isEditing && !isEmailing;
 
   bool get isInSettings => currentRoute.startsWith('/settings');

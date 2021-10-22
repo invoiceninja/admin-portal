@@ -111,7 +111,10 @@ class MenuDrawerVM {
                 ));
               }
 
-              if (uiState.isEditing || uiState.isViewing) {
+              if (uiState.isEditing ||
+                  uiState.isViewing ||
+                  uiState.isEmailing ||
+                  uiState.isPDF) {
                 store.dispatch(UpdateCurrentRoute(uiState.baseRoute));
               }
             });
