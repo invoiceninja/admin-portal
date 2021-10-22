@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -43,6 +44,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.documents,
       ClientFields.group,
       ClientFields.contactPhone,
+      ClientFields.contacts,
     ];
   }
 
@@ -122,6 +124,17 @@ class ClientPresenter extends EntityPresenter {
         return Text('${client.documents.length}');
       case ClientFields.group:
         return Text(state.groupState.get(client.groupId).name);
+      case ClientFields.contacts:
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
+          child: Flexible(
+            child: Text(
+              client.contacts.map((contact) => contact.fullName).join(', '),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        );
     }
 
     return super.getField(field: field, context: context);

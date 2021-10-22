@@ -69,6 +69,7 @@ class ClientFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String contacts = 'contacts';
   static const String contactName = 'contact_name';
   static const String contactEmail = 'contact_email';
   static const String contactPhone = 'contact_phone';
