@@ -290,7 +290,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                 ],
               )
             : null,
-        body: _isLoading
+        body: _isLoading || _response == null
             ? LoadingIndicator()
             : kIsWeb
                 ? HtmlElementView(viewType: _pdfString)
