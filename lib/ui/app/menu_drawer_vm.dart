@@ -112,9 +112,7 @@ class MenuDrawerVM {
               }
 
               if (uiState.isEditing || uiState.isViewing) {
-                store.dispatch(UpdateCurrentRoute(uiState.currentRoute
-                    .replaceFirst('/edit', '')
-                    .replaceFirst('/view', '')));
+                store.dispatch(UpdateCurrentRoute(uiState.baseRoute));
               }
             });
       },

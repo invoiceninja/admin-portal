@@ -198,6 +198,15 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     return parts.length > 1 ? parts[1] : '';
   }
 
+  String get baseRoute {
+    String route = currentRoute;
+    route = route.replaceAll('/edit', '');
+    route = route.replaceAll('/view', '');
+    route = route.replaceAll('/pdf', '');
+    route = route.replaceAll('/email', '');
+    return route;
+  }
+
   String get baseSubRoute {
     String route = subRoute;
     route = route.replaceAll('/edit', '');
