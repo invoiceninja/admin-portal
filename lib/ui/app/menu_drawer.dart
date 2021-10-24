@@ -205,7 +205,7 @@ class MenuDrawer extends StatelessWidget {
                 ),
               ],
               onChanged: (dynamic value) {
-                if (value == 'logout') {
+                if (value == 'logout' && !state.isLoading && !state.isSaving) {
                   viewModel.onLogoutTap(context);
                 } else if (!state.isLoaded ||
                     state.isLoading ||
