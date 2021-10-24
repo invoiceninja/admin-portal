@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'acss': 'ACSS',
+      'becs': 'BECS',
       'bulk_download': 'Download',
       'persist_data_help':
           'Save data locally to enable the app to start faster, disabling may improve performance in large accounts',
@@ -62742,6 +62744,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get persistUi =>
       _localizedValues[localeCode]['persist_ui'] ??
       _localizedValues['en']['persist_ui'];
+
+  String get acss =>
+      _localizedValues[localeCode]['acss'] ?? _localizedValues['en']['acss'];
+
+  String get becs =>
+      _localizedValues[localeCode]['becs'] ?? _localizedValues['en']['becs'];
 
   // STARTER: lang field - do not remove comment
 
