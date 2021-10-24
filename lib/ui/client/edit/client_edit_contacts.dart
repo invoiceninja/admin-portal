@@ -197,6 +197,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
+  bool _sendEmail = false;
 
   void _onDoneContactPressed() {
     if (widget.isDialog) {
@@ -238,6 +239,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _custom2Controller.text = contact.customValue2;
     _custom3Controller.text = contact.customValue3;
     _custom4Controller.text = contact.customValue4;
+    _sendEmail = contact.sendEmail;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -389,6 +391,21 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           value: widget.contact.customValue4,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
+        if (widget.isDialog)
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.addToInvoices),
+                value: _sendEmail,
+                onChanged: (value) {
+                  viewModel.onChangedContact(
+                    widget.contact.rebuild((b) => b..sendEmail = value),
+                    widget.index,
+                  );
+                  setState(() => _sendEmail = value);
+                }),
+          ),
       ],
     );
 
