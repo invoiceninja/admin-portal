@@ -262,6 +262,39 @@ abstract class InvoiceEntity extends Object
         .map((invitation) => InvitationEntity(contactId: invitation.contactId))
         .toList()));
 
+  InvoiceEntity applyClient(AppState state, ClientEntity client) {
+    final exchangeRate = getExchangeRate(state.staticState.currencyMap,
+        fromCurrencyId: state.company.currencyId,
+        toCurrencyId: client.currencyId);
+    final settings = getClientSettings(state, client);
+    return rebuild((b) => b
+      ..exchangeRate = exchangeRate
+      ..taxName1 = state.company.numberOfInvoiceTaxRates >= 1 &&
+              (settings.defaultTaxName1 ?? '').isNotEmpty
+          ? settings.defaultTaxName1
+          : taxName1
+      ..taxRate1 = state.company.numberOfInvoiceTaxRates >= 1 &&
+              (settings.defaultTaxName1 ?? '').isNotEmpty
+          ? settings.defaultTaxRate1
+          : taxRate1
+      ..taxName2 = state.company.numberOfInvoiceTaxRates >= 2 &&
+              (settings.defaultTaxName2 ?? '').isNotEmpty
+          ? settings.defaultTaxName2
+          : taxName2
+      ..taxRate2 = state.company.numberOfInvoiceTaxRates >= 2 &&
+              (settings.defaultTaxName2 ?? '').isNotEmpty
+          ? settings.defaultTaxRate2
+          : taxRate2
+      ..taxName3 = state.company.numberOfInvoiceTaxRates >= 3 &&
+              (settings.defaultTaxName3 ?? '').isNotEmpty
+          ? settings.defaultTaxName3
+          : taxName3
+      ..taxRate3 = state.company.numberOfInvoiceTaxRates >= 3 &&
+              (settings.defaultTaxName3 ?? '').isNotEmpty
+          ? settings.defaultTaxRate3
+          : taxRate3);
+  }
+
   double get amount;
 
   double get balance;

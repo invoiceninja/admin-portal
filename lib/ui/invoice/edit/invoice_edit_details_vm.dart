@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
-import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -104,13 +103,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (context, invoice, client) {
-        if (client != null) {
-          final exchangeRate = getExchangeRate(state.staticState.currencyMap,
-              fromCurrencyId: company.currencyId,
-              toCurrencyId: client.currencyId);
-          store.dispatch(UpdateInvoice(
-              invoice.rebuild((b) => b..exchangeRate = exchangeRate)));
-        }
+        store.dispatch(UpdateInvoice(invoice.applyClient(state, client)));
         store.dispatch(UpdateInvoiceClient(client: client));
       },
       onAddClientPressed: (context, completer) {
